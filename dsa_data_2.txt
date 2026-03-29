@@ -1,0 +1,400 @@
+**Binary Search**
+Efficient search algorithm that divides the search interval in half.
+
+**Classic Binary Search**
+Divide-and-conquer → narrow search space in sorted array. (0/6)
+
+- **Binary Search** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/binary-search/
+LeetCode: https://leetcode.com/problems/binary-search/
+- **Sqrt(x)** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/square-root-of-an-integer/
+LeetCode: https://leetcode.com/problems/sqrtx/
+- **Search Insert Position** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/search-insert-position/
+LeetCode: https://leetcode.com/problems/search-insert-position/
+- **Search in Rotated Sorted Array** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/search-in-rotated-sorted-array/
+LeetCode: https://leetcode.com/problems/search-in-rotated-sorted-array/
+- **Find Minimum in Rotated Sorted Array** — Microsoft, Apple, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/find-minimum-in-rotated-sorted-array/
+LeetCode: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+- **Find Peak Element** — Amazon, Google, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/find-a-peak-in-a-given-array/
+LeetCode: https://leetcode.com/problems/find-peak-element/
+
+**Lower / Upper Bound**
+Find first/last occurrence or smallest/largest index satisfying a condition. (0/5)
+
+- **Find First and Last Position of Element** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/find-first-and-last-position-of-element-in-sorted-array/
+LeetCode: https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+- **Find kth rotation** — Microsoft, Facebook, Morgan Stanley — Easy
+GFG: https://www.geeksforgeeks.org/find-rotation-count-rotated-sorted-array/
+LeetCode: Rotation count problems
+- **Count Occurrences** — Amazon, Google — Easy
+GFG: https://www.geeksforgeeks.org/count-occurrences-in-sorted-array/
+LeetCode: Binary search variants
+- **Ceiling in a Sorted Array** — Microsoft, Apple, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/ceiling-in-a-sorted-array/
+LeetCode: Ceiling via binary search
+- **Floor in a Sorted Array** — Amazon, Google, Zomato — Easy
+GFG: https://www.geeksforgeeks.org/floor-in-a-sorted-array/
+LeetCode: Floor via binary search
+
+**Binary Search on Answers**
+Treat answer space as sorted → binary search to find minimum/maximum feasible value. (0/8)
+
+- **Koko Eating Bananas** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/koko-eating-bananas/
+LeetCode: https://leetcode.com/problems/koko-eating-bananas/
+- **Capacity To Ship Packages Within D Days** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/capacity-to-ship-packages-within-d-days/
+LeetCode: https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
+- **Min Speed to Arrive on Time** — Microsoft, Apple, Goldman Sachs — Medium
+GFG: Search "Min Speed to Arrive on Time" on GFG
+LeetCode: https://leetcode.com/problems/minimum-speed-to-arrive-on-time/
+- **Aggressive cows** — Flipkart, PhonePe, Amazon — Medium
+GFG: https://www.geeksforgeeks.org/aggressive-cows/
+LeetCode: Similar binary search on answer
+- **Min number of days to make m bouquets** — Flipkart, PhonePe, Paytm — Medium
+GFG: https://www.geeksforgeeks.org/minimum-number-of-days-to-make-m-bouquets/
+LeetCode: https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/
+- **Magnetic Force Between Two Balls** — Flipkart, PhonePe, Paytm — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/magnetic-force-between-two-balls/
+- **Allocate Minimum Number of Pages** — Flipkart, PhonePe, Paytm — Medium
+GFG: https://www.geeksforgeeks.org/allocate-minimum-number-of-pages/
+LeetCode: https://leetcode.com/problems/split-array-largest-sum/
+- **Split Array Largest Sum** — Amazon, Google, Goldman Sachs — Hard
+GFG: https://www.geeksforgeeks.org/split-array-largest-sum/
+LeetCode: https://leetcode.com/problems/split-array-largest-sum/
+
+**Search in 2D Matrix**
+Apply binary search row-wise / column-wise or flattened array. (0/4)
+
+- **Search a 2D Matrix** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/search-a-2d-matrix/
+LeetCode: https://leetcode.com/problems/search-a-2d-matrix/
+- **Search a 2D Matrix II** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/search-a-2d-matrix-ii/
+LeetCode: https://leetcode.com/problems/search-a-2d-matrix-ii/
+- **Kth Smallest Element in Sorted Matrix** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/kth-smallest-element-in-sorted-matrix/
+LeetCode: https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/
+- **Matrix Median** — Amazon, Adobe, Sumo Logic — Hard
+GFG: https://www.geeksforgeeks.org/matrix-median/
+LeetCode: Matrix binary search problems
+
+**Stack**
+LIFO (Last In First Out) data structure patterns.
+
+**Monotonic Stack**
+Maintain a monotonic increasing/decreasing stack to find next/prev greater/smaller, histogram ranges, or collisions. (0/7)
+
+- **Next Greater Element I** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/next-greater-element/
+LeetCode: https://leetcode.com/problems/next-greater-element-i/
+- **Next Greater Element II** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/next-greater-element-ii/
+LeetCode: https://leetcode.com/problems/next-greater-element-ii/
+- **Daily Temperatures** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/daily-temperatures/
+LeetCode: https://leetcode.com/problems/daily-temperatures/
+- **Online Stock Span** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/online-stock-span/
+LeetCode: https://leetcode.com/problems/online-stock-span/
+- **Largest Rectangle in Histogram** — Google, PayPal, DE Shaw — Hard
+GFG: https://www.geeksforgeeks.org/largest-rectangle-under-histogram/
+LeetCode: https://leetcode.com/problems/largest-rectangle-in-histogram/
+- **Maximal Rectangle** — Amazon, Goldman Sachs, Zomato — Hard
+GFG: https://www.geeksforgeeks.org/maximal-rectangle/
+LeetCode: https://leetcode.com/problems/maximal-rectangle/
+- **Asteroid Collision** — Flipkart, PhonePe, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/asteroid-collision/
+LeetCode: https://leetcode.com/problems/asteroid-collision/
+
+**Expression Evaluation**
+Use two stacks or postfix evaluation to handle numbers and operators efficiently. (0/10)
+
+- **Basic Calculator I** — Amazon, Google, Goldman Sachs — Hard
+GFG: https://www.geeksforgeeks.org/basic-calculator/
+LeetCode: https://leetcode.com/problems/basic-calculator/
+- **Basic Calculator II** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/basic-calculator-ii/
+LeetCode: https://leetcode.com/problems/basic-calculator-ii/
+- **Evaluate Reverse Polish Notation** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/evaluate-reverse-polish-notation/
+LeetCode: https://leetcode.com/problems/evaluate-reverse-polish-notation/
+- **Decode String** — Google, PayPal, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/decode-string/
+LeetCode: https://leetcode.com/problems/decode-string/
+- **infix to prefix** — Microsoft, Morgan Stanley, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/convert-infix-to-prefix/
+LeetCode: Expression conversion problems
+- **infix to postfix** — Microsoft, Morgan Stanley, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/convert-infix-to-postfix/
+LeetCode: Expression conversion problems
+- **postfix to prefix** — Microsoft, Morgan Stanley, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/postfix-to-prefix/
+LeetCode: Expression conversion problems
+- **postfix to infix** — Microsoft, Morgan Stanley, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/postfix-to-infix/
+LeetCode: Expression conversion problems
+- **prefix to infix** — Microsoft, Morgan Stanley, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/prefix-to-infix/
+LeetCode: Expression conversion problems
+- **prefix to postfix** — Microsoft, Morgan Stanley, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/prefix-to-postfix/
+LeetCode: Expression conversion problems
+
+**Stack Simulation / Undo Operation**
+Simulate operations using a stack → pop on undo, remove adjacent duplicates, collapse characters. (0/4)
+
+- **Backspace String Compare** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/backspace-string-compare/
+LeetCode: https://leetcode.com/problems/backspace-string-compare/
+- **Remove All Adjacent Duplicates** — Microsoft, Facebook, Morgan Stanley — Easy
+GFG: https://www.geeksforgeeks.org/remove-all-adjacent-duplicates/
+LeetCode: https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
+- **Make the String Great** — Flipkart, Paytm, PhonePe — Easy
+GFG: Search "Make the String Great" on GFG
+LeetCode: https://leetcode.com/problems/make-the-string-great/
+- **Minimum String Length After Removing Substrings** — Google, PayPal, Zomato — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/minimum-string-length-after-removing-substrings/
+
+**Parenthesis & Scoring**
+Push opening symbols and validate closing ones; sometimes track count or score. (0/4)
+
+- **Valid Parentheses** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/valid-parentheses/
+LeetCode: https://leetcode.com/problems/valid-parentheses/
+- **Minimum Add to Make Parentheses Valid** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/
+- **Longest Valid Parentheses** — Flipkart, Paytm, PhonePe — Hard
+GFG: https://www.geeksforgeeks.org/longest-valid-parentheses/
+LeetCode: https://leetcode.com/problems/longest-valid-parentheses/
+- **Score of Parentheses** — Amazon, Adobe, Sumo Logic — Medium
+GFG: Search "Score of Parentheses" on GFG
+LeetCode: https://leetcode.com/problems/score-of-parentheses/
+
+**Stack-Based Design**
+Use two stacks to implement another data structure or maintain extra info. (0/5)
+
+- **Min Stack** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/design-a-stack-that-supports-getmin-in-o1-time-and-o1-extra-space/
+LeetCode: https://leetcode.com/problems/min-stack/
+- **Max Stack** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: Search "Max Stack" on GFG
+LeetCode: https://leetcode.com/problems/max-stack/
+- **Implement Queue using Stacks** — Flipkart, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/queue-using-stacks/
+LeetCode: https://leetcode.com/problems/implement-queue-using-stacks/
+- **Implement Stack using Queues** — Amazon, Adobe, Sumo Logic — Easy
+GFG: https://www.geeksforgeeks.org/implement-stack-using-queue/
+LeetCode: https://leetcode.com/problems/implement-stack-using-queues/
+- **Design Stack with Increment Operation** — Microsoft, Morgan Stanley, Goldman Sachs — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/design-a-stack-with-increment-operation/
+
+**Recursive Stack**
+Handle top/head element recursively → recurse on remaining stack/list → combine/insert results. (0/3)
+
+- **Reverse a Stack (Recursive)** — Amazon, Samsung — Medium
+GFG: https://www.geeksforgeeks.org/reverse-a-stack-using-recursion/
+LeetCode: Stack recursion problems
+- **Insert at Bottom of Stack** — Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/insert-at-bottom-of-stack/
+LeetCode: Stack recursion problems
+- **Delete Middle Element of Stack** — Amazon, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/delete-middle-element-of-a-stack/
+LeetCode: Stack recursion problems
+
+**Linked List**
+Linear data structure where elements are not stored at contiguous memory locations.
+
+**Basic Operations**
+Directly manipulate pointers to insert, delete, traverse, and get length. (0/5)
+
+- **Search in Linked List** — Facebook, DE Shaw, Zomato — Easy
+GFG: https://www.geeksforgeeks.org/search-an-element-in-a-linked-list/
+LeetCode: Basic linked list traversal
+- **Insert at Head / Tail / Nth Position** — Amazon, Paytm, PayPal — Easy
+GFG: https://www.geeksforgeeks.org/insert-a-node-at-the-beginning-of-a-linked-list/ (and variants)
+LeetCode: https://leetcode.com/problems/design-linked-list/
+- **Delete Head / Tail / Nth Node** — Google, Adobe, Morgan Stanley — Easy
+GFG: https://www.geeksforgeeks.org/delete-a-node-in-linked-list/
+LeetCode: Linked list deletion problems
+- **Design Linked List** — Amazon, Facebook, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/design-a-linked-list/
+LeetCode: https://leetcode.com/problems/design-linked-list/
+- **Odd–Even Linked List** — Google, PayPal, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/odd-even-linked-list/
+LeetCode: https://leetcode.com/problems/odd-even-linked-list/
+
+**Fast and Slow Pointers**
+Use two pointers at different speeds to detect cycles, middle node, or duplicates. (0/4)
+
+- **Middle of the Linked List** — DE Shaw, Flipkart, Paytm — Easy
+GFG: https://www.geeksforgeeks.org/middle-of-a-linked-list/
+LeetCode: https://leetcode.com/problems/middle-of-the-linked-list/
+- **Linked List Cycle** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/detect-loop-in-linked-list/
+LeetCode: https://leetcode.com/problems/linked-list-cycle/
+- **Linked List Cycle II** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/detect-and-remove-loop-in-linked-list/ (variant)
+LeetCode: https://leetcode.com/problems/linked-list-cycle-ii/
+- **Remove Nth Node From End** — Google, PayPal, Swiggy — Medium
+GFG: https://www.geeksforgeeks.org/remove-nth-node-from-end-of-linked-list/
+LeetCode: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+
+**Reversal Pattern**
+Reverse entire list, partial list, or groups to reorder nodes. (0/6)
+
+- **Reverse a Linked List** — Amazon, Microsoft, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/reverse-a-linked-list/
+LeetCode: https://leetcode.com/problems/reverse-linked-list/
+- **Reverse Linked List II (between m & n)** — DE Shaw, Flipkart, Paytm — Medium
+GFG: https://www.geeksforgeeks.org/reverse-a-linked-list-from-position-m-to-n/
+LeetCode: https://leetcode.com/problems/reverse-linked-list-ii/
+- **Palindrome Linked List** — Amazon, PhonePe, Adobe — Easy
+GFG: https://www.geeksforgeeks.org/check-if-linked-list-is-palindrome/
+LeetCode: https://leetcode.com/problems/palindrome-linked-list/
+- **Reverse Nodes in k-Group** — Google, Facebook, Morgan Stanley — Hard
+GFG: https://www.geeksforgeeks.org/reverse-nodes-in-k-group/
+LeetCode: https://leetcode.com/problems/reverse-nodes-in-k-group/
+- **Swap Nodes in Pairs** — Amazon, PhonePe, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/swap-nodes-in-pairs/
+LeetCode: https://leetcode.com/problems/swap-nodes-in-pairs/
+- **Rotate List** — Amazon, Microsoft, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/rotate-a-linked-list/
+LeetCode: https://leetcode.com/problems/rotate-list/
+
+**Merge / Sort**
+Merge sorted lists, sort list using merge sort, or reorder using middle + reverse + merge. (0/5)
+
+- **Merge Two Sorted Lists** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
+LeetCode: https://leetcode.com/problems/merge-two-sorted-lists/
+- **Merge K Sorted Lists** — Microsoft, Facebook, DE Shaw — Hard
+GFG: https://www.geeksforgeeks.org/merge-k-sorted-linked-lists/
+LeetCode: https://leetcode.com/problems/merge-k-sorted-lists/
+- **Sort List** — Flipkart, Paytm, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/sort-a-linked-list/
+LeetCode: https://leetcode.com/problems/sort-list/
+- **Reorder List** — Amazon, PayPal, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/reorder-list/
+LeetCode: https://leetcode.com/problems/reorder-list/
+- **Remove Duplicates from Sorted List** — Google, PhonePe, Sumo Logic — Easy
+GFG: https://www.geeksforgeeks.org/remove-duplicates-from-sorted-linked-list/
+LeetCode: https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+
+**Linked List + Stack**
+Use a stack to handle backward traversal, carry logic, or next greater node. (0/4)
+
+- **Add Two Numbers** — Amazon, Microsoft, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/add-two-numbers-represented-by-linked-lists/
+LeetCode: https://leetcode.com/problems/add-two-numbers/
+- **Add Two Numbers II** — Google, Facebook, DE Shaw — Medium
+GFG: https://www.geeksforgeeks.org/add-two-numbers-ii/
+LeetCode: https://leetcode.com/problems/add-two-numbers-ii/
+- **Next Greater Node in Linked List** — Flipkart, Paytm, PhonePe — Medium
+GFG: Search "Next Greater Node in Linked List" on GFG
+LeetCode: https://leetcode.com/problems/next-greater-node-in-linked-list/
+- **Remove Nodes From Linked List** — Amazon, Adobe, Morgan Stanley — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/remove-nodes-from-linked-list/
+
+**Double Linked List**
+Linked List with navigation in both forward and backward directions.
+
+**Basic DLL Operations**
+Maintain prev and next pointers carefully for insert, delete, traversal; use DLL + HashMap for O(1) cache operations. (0/6)
+
+- **Implement Doubly Linked List** — Amazon, Microsoft, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/doubly-linked-list/
+LeetCode: Design problems
+- **Insert a node in a doubly Linkedlist** — Amazon, Microsoft, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/insert-a-node-in-doubly-linked-list/
+LeetCode: Design problems
+- **Delete a node from a doubly Linkedlist** — Amazon, Microsoft, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/delete-a-node-in-doubly-linked-list/
+LeetCode: Design problems
+- **Reverse Doubly Linked List** — Flipkart, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/reverse-a-doubly-linked-list/
+LeetCode: Design problems
+- **LRU Cache** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/lru-cache-implementation/
+LeetCode: https://leetcode.com/problems/lru-cache/
+- **LFU Cache** — Amazon, Adobe, Sumo Logic — Hard
+GFG: https://www.geeksforgeeks.org/lfu-cache/
+LeetCode: https://leetcode.com/problems/lfu-cache/
+
+**Merge / Sort / Reorder**
+Use DLL properties (prev/next) to efficiently merge, sort, reorder, flatten, or perform pointer-based checks. (0/3)
+
+- **Merge Two Sorted DLLs** — Google, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/merge-sort-for-doubly-linked-list/ (variant)
+LeetCode: No direct
+- **Flatten Multilevel DLL** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/flatten-a-multilevel-linked-list/
+LeetCode: https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
+- **Convert DLL to Binary Tree** — Amazon, Google, Goldman Sachs — Medium
+GFG: Search "Convert DLL to Binary Tree" on GFG
+LeetCode: No direct
+
+**HashMap**
+Key-value pair data structure for O(1) average time complexity lookups.
+
+**Frequency Map / Counting**
+Count elements to find majority, top-k frequent, or sort by frequency. (0/4)
+
+- **Majority Element** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/majority-element/
+LeetCode: https://leetcode.com/problems/majority-element/
+- **Top K Frequent Elements** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/top-k-frequent-elements/
+LeetCode: https://leetcode.com/problems/top-k-frequent-elements/
+- **Sort Characters By Frequency** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/sort-characters-by-frequency/
+LeetCode: https://leetcode.com/problems/sort-characters-by-frequency/
+- **Task Scheduler (frequency-based greedy)** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/task-scheduler/
+LeetCode: https://leetcode.com/problems/task-scheduler/
+
+**Prefix-Sum with Map**
+Track cumulative sums; map stores first occurrence → solve subarray sum problems. (0/4)
+
+- **Subarray Sum Equals K** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/subarray-sum-equals-k/
+LeetCode: https://leetcode.com/problems/subarray-sum-equals-k/
+- **Continuous Subarray Sum** — Google, Zomato, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/continuous-subarray-sum/
+LeetCode: https://leetcode.com/problems/continuous-subarray-sum/
+- **Subarray Sums Divisible by K** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/subarray-sums-divisible-by-k/
+LeetCode: https://leetcode.com/problems/subarray-sums-divisible-by-k/
+- **Count Subarrays with Sum K** — Amazon, Microsoft, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/count-subarrays-with-sum-k/
+LeetCode: Subarray sum variants
+
+**Sliding Window + HashMap**
+Maintain counts in a moving window → expand/shrink → track longest/shortest satisfying condition. (0/5)
+
+- **Longest Substring Without Repeating Characters** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/longest-substring-without-repeating-characters/
+LeetCode: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+- **Find All Anagrams in a String** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/find-all-anagrams-in-a-string/
+LeetCode: https://leetcode.com/problems/find-all-anagrams-in-a-string/
+- **Minimum Window Substring** — Amazon, Adobe, Sumo Logic — Hard
+GFG: https://www.geeksforgeeks.org/minimum-window-substring/
+LeetCode: https://leetcode.com/problems/minimum-window-substring/
+- **Fruit Into Baskets** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/fruits-into-baskets/
+LeetCode: https://leetcode.com/problems/fruit-into-baskets/
+- **Longest Substring with At Most K Distinct Characters** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/longest-substring-with-at-most-k-distinct-characters/
+LeetCode: https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/

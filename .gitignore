@@ -1,0 +1,14 @@
+node_modules
+dist
+.DS_Store
+*.local
+.env
+.env.*
+test_*.js
+list_models.js
+test_models.js
+test_flash_latest.js
+test_2.0.js
+test_debug.js
+test_citations.js
+test_tavily.js

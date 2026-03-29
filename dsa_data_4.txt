@@ -1,0 +1,426 @@
+**Backtracking**
+Algorithmic technique for solving problems recursively by trying to build a solution incrementally.
+
+**Choice-Based Backtracking**
+It is commonly used in problems that ask to generate all possible combinations, subsets, or permutations. (0/10)
+
+- **Subsets** — Google, Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/subsets/
+LeetCode: https://leetcode.com/problems/subsets/
+- **Subsets II** — Amazon, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/subsets-ii/
+LeetCode: https://leetcode.com/problems/subsets-ii/
+- **Combination Sum** — Google, Amazon, Facebook — Medium
+GFG: https://www.geeksforgeeks.org/combination-sum/
+LeetCode: https://leetcode.com/problems/combination-sum/
+- **Combination Sum II** — Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/combination-sum-ii/
+LeetCode: https://leetcode.com/problems/combination-sum-ii/
+- **Permutations** — Google, Uber — Medium
+GFG: https://www.geeksforgeeks.org/permutations/
+LeetCode: https://leetcode.com/problems/permutations/
+- **Permutations II** — Amazon, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/permutations-ii/
+LeetCode: https://leetcode.com/problems/permutations-ii/
+- **Next Permutation** — Google, Facebook — Medium
+GFG: https://www.geeksforgeeks.org/next-permutation/
+LeetCode: https://leetcode.com/problems/next-permutation/
+- **Generate Parentheses** — Google, Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/generate-parentheses/
+LeetCode: https://leetcode.com/problems/generate-parentheses/
+- **Palindrome Partitioning** — Google, Apple — Medium
+GFG: https://www.geeksforgeeks.org/palindrome-partitioning/
+LeetCode: https://leetcode.com/problems/palindrome-partitioning/
+- **Restore IP Addresses** — Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/restore-ip-addresses/
+LeetCode: https://leetcode.com/problems/restore-ip-addresses/
+
+**Constraint-Based Backtracking**
+At each step, choose whether to include an element → explore all subsets/choices recursively. (0/5)
+
+- **N-Queens** — Google, Amazon, Microsoft — Hard
+GFG: https://www.geeksforgeeks.org/n-queen-problem/
+LeetCode: https://leetcode.com/problems/n-queens/
+- **N-Queens II** — Google, Amazon — Hard
+GFG: https://www.geeksforgeeks.org/n-queen-problem-ii/
+LeetCode: https://leetcode.com/problems/n-queens-ii/
+- **Graph Coloring (M-Coloring Problem)** — Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/m-coloring-problem/
+LeetCode: Graph coloring problems
+- **Knight’s Tour** — Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/knights-tour/
+LeetCode: Knight tour problems
+- **Partition to K Equal Sum Subsets** — LinkedIn, Google — Medium
+GFG: https://www.geeksforgeeks.org/partition-to-k-equal-sum-subsets/
+LeetCode: https://leetcode.com/problems/partition-to-k-equal-sum-subsets/
+
+**Grid / Path Backtracking**
+Move in grid recursively → explore all valid paths → backtrack after each move. (0/5)
+
+- **Rat in a Maze** — Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/rat-in-a-maze/
+LeetCode: Grid path problems
+- **Sudoku Solver** — Uber, Google — Hard
+GFG: https://www.geeksforgeeks.org/sudoku-solver/
+LeetCode: https://leetcode.com/problems/sudoku-solver/
+- **Word Search II** — Microsoft, Amazon — Hard
+GFG: https://www.geeksforgeeks.org/word-search-ii/
+LeetCode: https://leetcode.com/problems/word-search-ii/
+- **Unique Paths III** — Google, Apple — Hard
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/unique-paths-iii/
+- **Path with Maximum Gold** — Amazon, Google — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/path-with-maximum-gold/
+
+**Decision Tree / Sequence Generation**
+Generate sequences or strings recursively by making a choice at each step. (0/4)
+
+- **Letter Combinations of a Phone Number** — Google, Amazon — Medium
+GFG: https://www.geeksforgeeks.org/letter-combinations-of-a-phone-number/
+LeetCode: https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+- **Expression Add Operators** — Google, Facebook — Hard
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/expression-add-operators/
+- **All possible Full binary Trees** — Google, Facebook, Amazon — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/all-possible-full-binary-trees/
+- **Word Break 2** — Google, Facebook, Amazon — Hard
+GFG: https://www.geeksforgeeks.org/word-break-ii/
+LeetCode: https://leetcode.com/problems/word-break-ii/
+
+**Greedy**
+Algorithm paradigm that follows the problem solving heuristic of making the locally optimal choice.
+
+**Intervals & Reach**
+Sort intervals or extend reach as far as possible from current position → maximize tasks done / minimize steps. (0/10)
+
+- **Merge Intervals** — Amazon, PhonePe, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/merge-intervals/
+LeetCode: https://leetcode.com/problems/merge-intervals/
+- **Insert Interval** — Amazon, Adobe, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/insert-interval/
+LeetCode: https://leetcode.com/problems/insert-interval/
+- **Non-overlapping Intervals** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/non-overlapping-intervals/
+LeetCode: https://leetcode.com/problems/non-overlapping-intervals/
+- **Meeting Rooms II** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/meeting-rooms-ii/
+LeetCode: https://leetcode.com/problems/meeting-rooms-ii/
+- **Minimum Number of Arrows to Burst Balloons** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/minimum-number-of-arrows-to-burst-balloons/
+LeetCode: https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/
+- **Activity Selection Problem** — Microsoft, Facebook, Morgan Stanley — Easy
+GFG: https://www.geeksforgeeks.org/activity-selection-problem/
+LeetCode: Activity selection problems
+- **Jump Game** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/jump-game/
+LeetCode: https://leetcode.com/problems/jump-game/
+- **Jump Game II** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/jump-game-ii/
+LeetCode: https://leetcode.com/problems/jump-game-ii/
+- **Minimum Number of Taps to Open to Water Garden** — Google, Apple, Zomato — Hard
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/
+- **Car Pooling / Capacity to Transport** — Amazon, Microsoft, PhonePe — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/car-pooling/
+
+**Sorting / Local Choice**
+
+Sort array or select elements → make locally optimal choice → achieve global optimum. (0/8)
+
+- **Largest Number** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/largest-number/
+LeetCode: https://leetcode.com/problems/largest-number/
+- **Fractional Knapsack** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/fractional-knapsack/
+LeetCode: Knapsack greedy
+- **Partition Labels** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/partition-labels/
+LeetCode: https://leetcode.com/problems/partition-labels/
+- **Minimum Cost to Connect Sticks** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/minimum-cost-to-connect-sticks/
+LeetCode: https://leetcode.com/problems/minimum-cost-to-connect-sticks/
+- **Candy Distribution** — Google, Apple, Zomato — Hard
+GFG: Search "Candy Distribution" on GFG
+LeetCode: https://leetcode.com/problems/candy/
+- **Task Scheduler (frequency-based greedy)** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/task-scheduler/
+LeetCode: https://leetcode.com/problems/task-scheduler/
+- **Minimum Platforms / Resource Allocation** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/minimum-platforms-required-for-trains/
+LeetCode: Platform allocation problems
+- **Maximum Units on a Truck** — Amazon, Adobe, Sumo Logic — Easy
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/maximum-units-on-a-truck/
+
+**Dynamic Programming**
+Optimization method involving breaking down problems into simpler subproblems and storing their solutions.
+
+**1D / Linear DP**
+Track optimal solution using a 1D array → sequences, sums, or counts. (0/5)
+
+- **Climbing Stairs** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/climbing-stairs/
+LeetCode: https://leetcode.com/problems/climbing-stairs/
+- **House Robber** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/house-robber/
+LeetCode: https://leetcode.com/problems/house-robber/
+- **Maximum Subarray** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/maximum-subarray-sum/
+LeetCode: https://leetcode.com/problems/maximum-subarray/
+- **Maximum Product Subarray** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/maximum-product-subarray/
+LeetCode: https://leetcode.com/problems/maximum-product-subarray/
+- **Decode Ways** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/decode-ways/
+LeetCode: https://leetcode.com/problems/decode-ways/
+
+**2D / Grid DP**
+Use 2D array → track states for row/column → movement or path constraints. (0/8)
+
+- **Unique Paths** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/unique-paths/
+LeetCode: https://leetcode.com/problems/unique-paths/
+- **Unique Paths 2** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/unique-paths-ii/
+LeetCode: https://leetcode.com/problems/unique-paths-ii/
+- **Minimum Path Sum** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/minimum-path-sum/
+LeetCode: https://leetcode.com/problems/minimum-path-sum/
+- **Dungeon Game** — Flipkart, Paytm, PhonePe — Hard
+GFG: https://www.geeksforgeeks.org/dungeon-game/
+LeetCode: https://leetcode.com/problems/dungeon-game/
+- **Cherry Pickup** — Amazon, Adobe, Sumo Logic — Hard
+GFG: Search "Cherry Pickup" on GFG
+LeetCode: https://leetcode.com/problems/cherry-pickup/
+- **Maximum Path Sum in Grid** — Google, Apple, Zomato — Medium
+GFG: Search title on GFG
+LeetCode: Grid path DP
+- **Minimum Falling Path Sum** — Amazon, Microsoft, PhonePe — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/minimum-falling-path-sum/
+- **Running Sum 2D Array** — Flipkart, Paytm, PhonePe — Easy
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/matrix-block-sum/
+
+**DP on Strings**
+Use 2D DP → index i,j represent substrings/subsequences → solve LCS, palindrome, or edit distance. (0/10)
+
+- **Longest Common Subsequence** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/longest-common-subsequence/
+LeetCode: https://leetcode.com/problems/longest-common-subsequence/
+- **Longest Palindromic Subsequence** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/longest-palindromic-subsequence/
+LeetCode: https://leetcode.com/problems/longest-palindromic-subsequence/
+- **Minimum Insertions to Make String Palindrome** — Amazon, Microsoft, Google — Medium
+GFG: https://www.geeksforgeeks.org/minimum-insertions-to-make-string-palindrome/
+LeetCode: Palindrome DP
+- **Minimum Number of Insertions and Deletions** — Amazon, Adobe, Flipkart — Medium
+GFG: Search title on GFG
+LeetCode: Edit distance variants
+- **Edit Distance** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/edit-distance/
+LeetCode: https://leetcode.com/problems/edit-distance/
+- **Regular Expression Matching** — Amazon, Adobe, Sumo Logic — Hard
+GFG: https://www.geeksforgeeks.org/regular-expression-matching/
+LeetCode: https://leetcode.com/problems/regular-expression-matching/
+- **Distinct Subsequences** — Google, Apple, Zomato — Hard
+GFG: https://www.geeksforgeeks.org/distinct-subsequences/
+LeetCode: https://leetcode.com/problems/distinct-subsequences/
+- **Palindrome Partitioning II** — Amazon, Microsoft, PhonePe — Hard
+GFG: https://www.geeksforgeeks.org/palindrome-partitioning-ii/
+LeetCode: https://leetcode.com/problems/palindrome-partitioning-ii/
+- **Shortest Common Supersequence** — Google, Facebook, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/shortest-common-supersequence/
+LeetCode: https://leetcode.com/problems/shortest-common-supersequence/
+- **Scramble String** — Amazon, Google, Microsoft — Hard
+GFG: https://www.geeksforgeeks.org/scramble-string/
+LeetCode: https://leetcode.com/problems/scramble-string/
+
+**DP on Intervals**
+Track optimal solutions for subarrays/intervals → matrix chain, merging, or balloon burst patterns. (0/6)
+
+- **Matrix Chain Multiplication (MCM)** — Microsoft, Amazon, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/matrix-chain-multiplication/
+LeetCode: Matrix chain problems
+- **Burst Balloons** — Google, Flipkart, PhonePe — Hard
+GFG: https://www.geeksforgeeks.org/burst-balloons/
+LeetCode: https://leetcode.com/problems/burst-balloons/
+- **Minimum Cost to Merge Stones** — Amazon, Adobe, Sumo Logic — Hard
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/minimum-cost-to-merge-stones/
+- **Min cost to cut a stick** — Google, Apple, Zomato — Hard
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/minimum-cost-to-cut-a-stick/
+- **Merge Intervals with Cost** — Amazon, Microsoft, PhonePe — Medium
+GFG: Search title on GFG
+LeetCode: Interval DP
+- **Evaluate Expression to True (Boolean Parenthesization)** — Flipkart, Paytm, PhonePe — Hard
+GFG: https://www.geeksforgeeks.org/boolean-parenthesization/
+LeetCode: Boolean parenthesization problems
+
+**DP on Trees / DAGs**
+Recursion + memoization → track states along tree paths → post-order traversal. (0/6)
+
+- **Diameter of Binary Tree** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/diameter-of-binary-tree/
+LeetCode: https://leetcode.com/problems/diameter-of-binary-tree/
+- **House Robber III** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/house-robber-iii/
+LeetCode: https://leetcode.com/problems/house-robber-iii/
+- **Binary Tree Maximum Path Sum** — Microsoft, Facebook, Morgan Stanley — Hard
+GFG: https://www.geeksforgeeks.org/maximum-path-sum-in-binary-tree/
+LeetCode: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+- **Maximum Sum BST in Binary Tree** — Amazon, Adobe, Sumo Logic — Hard
+GFG: https://www.geeksforgeeks.org/maximum-sum-bst-in-binary-tree/
+LeetCode: https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/
+- **Binary Tree Cameras** — Google, Amazon, Microsoft — Hard
+GFG: Search "Binary Tree Cameras" on GFG
+LeetCode: https://leetcode.com/problems/binary-tree-cameras/
+- **Path Sum III** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/path-sum-iii/
+LeetCode: https://leetcode.com/problems/path-sum-iii/
+
+**Knapsack / Subset Sum**
+Track states based on weight/value → classic 0-1 / bounded / unbounded variants. (0/8)
+
+- **0-1 Knapsack** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/0-1-knapsack-problem/
+LeetCode: Knapsack problems
+- **Partition Equal Subset Sum** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/partition-equal-subset-sum/
+LeetCode: https://leetcode.com/problems/partition-equal-subset-sum/
+- **Partition with given difference** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: Search title on GFG
+LeetCode: Partition problems
+- **Coin Change** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/coin-change/
+LeetCode: https://leetcode.com/problems/coin-change/
+- **Coin Change II** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/coin-change-ii/
+LeetCode: https://leetcode.com/problems/coin-change-ii/
+- **Target Sum** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/target-sum/
+LeetCode: https://leetcode.com/problems/target-sum/
+- **Subset Sum** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/subset-sum-problem/
+LeetCode: Subset sum problems
+- **Combination Sum IV** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/combination-sum-iv/
+LeetCode: https://leetcode.com/problems/combination-sum-iv/
+
+**Trie**
+Tree-based data structure used for efficiently storing and retrieving keys in a dataset of strings.
+
+**Basic Trie Operations**
+Build Trie → insert words → search full word or prefix efficiently → collect suggestions in lexicographic order. (0/5)
+
+- **Implement Trie (Prefix Tree)** — Amazon, Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/implement-trie-prefix-tree/
+LeetCode: https://leetcode.com/problems/implement-trie-prefix-tree/
+- **Add and Search Word** — Flipkart, PhonePe, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/add-and-search-word/
+LeetCode: https://leetcode.com/problems/add-and-search-word-data-structure-design/
+- **Longest common prefix** — Flipkart, PhonePe, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/longest-common-prefix/
+LeetCode: https://leetcode.com/problems/longest-common-prefix/
+- **Longest word in dictionary** — Flipkart, PhonePe, Zomato — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/longest-word-in-dictionary/
+- **Search Suggestions System** — Amazon, Microsoft, Google — Medium
+GFG: https://www.geeksforgeeks.org/search-suggestions-system/
+LeetCode: https://leetcode.com/problems/search-suggestions-system/
+
+**Word Break / Segmentation**
+Use Trie for fast lookup → combine with DP or backtracking for word segmentation and concatenation. (0/4)
+
+- **Word Break** — Amazon, Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/word-break/
+LeetCode: https://leetcode.com/problems/word-break/
+- **Word Break 2** — Amazon, Google, Microsoft — Hard
+GFG: https://www.geeksforgeeks.org/word-break-ii/
+LeetCode: https://leetcode.com/problems/word-break-ii/
+- **Concatenated Words** — Flipkart, PhonePe, Zomato — Hard
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/concatenated-words/
+- **Replace Words** — Goldman Sachs, Apple, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/replace-words/
+LeetCode: https://leetcode.com/problems/replace-words/
+
+**Bitwise Trie / XOR**
+Use Trie for binary representation of numbers → efficiently find maximum/minimum XOR or subset XOR. (0/3)
+
+- **Maximum XOR of Two Numbers in Array** — Google, Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/maximum-xor-of-two-numbers-in-an-array/
+LeetCode: https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/
+- **Maximum XOR With an Element From Array** — Flipkart, PhonePe, Paytm — Hard
+GFG: https://www.geeksforgeeks.org/maximum-xor-with-an-element-from-array/
+LeetCode: XOR trie problems
+- **Bit Manipulation / Subset XOR Problems** — Amazon, Apple, Zomato — Medium
+GFG: Search title on GFG
+LeetCode: Bitwise problems
+
+**Bit Manipulation**
+Techniques that perform operations on data at the bit level.
+
+**Basic Bit Operations**
+Use XOR / AND / OR / shift operations → detect single/missing numbers or count bits efficiently. (0/9)
+
+- **Missing Number** — Goldman Sachs, Apple, Adobe — Easy
+GFG: https://www.geeksforgeeks.org/missing-number/
+LeetCode: https://leetcode.com/problems/missing-number/
+- **Number of 1 Bits / Hamming Weight** — Amazon, Sumo Logic, Paytm — Easy
+GFG: https://www.geeksforgeeks.org/number-of-1-bits/
+LeetCode: https://leetcode.com/problems/number-of-1-bits/
+- **Alternating Bits** — Amazon, Paypal, Paytm — Easy
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/binary-number-with-alternating-bits/
+- **Check kth bit is set or not** — Amazon, Google, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/check-whether-k-th-bit-is-set-or-not/
+LeetCode: Bit manipulation
+- **Power of Two** — Amazon, Google, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/power-of-two/
+LeetCode: https://leetcode.com/problems/power-of-two/
+- **Unique Numbers 2** — Amazon, Google, Microsoft — Medium
+GFG: Search title on GFG
+LeetCode: Single number variants
+- **Single Number** — Amazon, Google, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/single-number/
+LeetCode: https://leetcode.com/problems/single-number/
+- **Single Number II** — Flipkart, PhonePe, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/single-number-ii/
+LeetCode: https://leetcode.com/problems/single-number-ii/
+- **Single Number III** — Amazon, Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/single-number-iii/
+LeetCode: https://leetcode.com/problems/single-number-iii/
+
+**Subsets / Bitmask**
+Iterate through all subsets using bits → solve combinatorial or DP counting problems. (0/3)
+
+- **Subsets** — Amazon, Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/subsets/
+LeetCode: https://leetcode.com/problems/subsets/
+- **Subsets II** — Flipkart, PhonePe, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/subsets-ii/
+LeetCode: https://leetcode.com/problems/subsets-ii/
+- **Partition to K Equal Sum Subsets** — Goldman Sachs, Adobe, Apple — Medium
+GFG: https://www.geeksforgeeks.org/partition-to-k-equal-sum-subsets/
+LeetCode: https://leetcode.com/problems/partition-to-k-equal-sum-subsets/
+
+**Advanced XOR**
+Use XOR properties → maximize/minimize XOR over array/subarray or ranges. (0/4)
+
+- **Maximum XOR of Two Numbers in Array** — Google, Amazon, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/maximum-xor-of-two-numbers-in-an-array/
+LeetCode: https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/
+- **Maximum XOR With an Element From Array** — Flipkart, PhonePe, Paytm — Hard
+GFG: https://www.geeksforgeeks.org/maximum-xor-with-an-element-from-array/
+LeetCode: XOR maximization
+- **Subarray XOR Queries / K-th XOR** — Amazon, Google, Microsoft — Medium
+GFG: Search title on GFG
+LeetCode: Subarray XOR problems
+- **Sum of Subset XOR Totals** — Facebook, Apple, Adobe — Easy
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/sum-of-all-subset-xor-totals/

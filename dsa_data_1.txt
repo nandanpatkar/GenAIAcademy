@@ -1,0 +1,140 @@
+**Array**
+Fundamental collection of elements stored at contiguous memory locations.
+
+**Two-Pointer**
+Use two indices that move towards or away from each other to reduce redundant comparisons. (1/6)
+
+- **Two Sum II** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/two-sum-ii-input-array-is-sorted/
+LeetCode: https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+- **3Sum** — Facebook, Microsoft, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/3-sum/
+LeetCode: https://leetcode.com/problems/3sum/
+- **Sort Colors** — Microsoft, Flipkart, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/sort-an-array-of-0s-1s-and-2s/
+LeetCode: https://leetcode.com/problems/sort-colors/
+- **Move Zeroes** — Amazon, Google, Swiggy — Easy
+GFG: https://www.geeksforgeeks.org/move-zeroes-to-end-of-array/
+LeetCode: https://leetcode.com/problems/move-zeroes/
+- **Container With Most Water** — Amazon, Apple, DE Shaw — Medium
+GFG: https://www.geeksforgeeks.org/container-with-most-water/
+LeetCode: https://leetcode.com/problems/container-with-most-water/
+- **Trapping Rain Water** — Google, Goldman Sachs, Sumo Logic — Hard
+GFG: https://www.geeksforgeeks.org/trapping-rain-water/
+LeetCode: https://leetcode.com/problems/trapping-rain-water/
+
+**Sliding Window**
+Maintain a window of fixed size or expand/shrink it to satisfy a condition. (0/8)
+
+- **Maximum Sum Subarray of Size K** — Amazon, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/maximum-sum-subarray-of-size-k/
+LeetCode: (Fixed window sum problems)
+- **Max Consecutive ones** — Amazon, Google, Paytm — Easy
+GFG: https://www.geeksforgeeks.org/max-consecutive-ones/
+LeetCode: https://leetcode.com/problems/max-consecutive-ones/
+- **Max Consecutive ones III** — Amazon, Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/longest-subarray-with-at-most-k-zeros/
+LeetCode: https://leetcode.com/problems/max-consecutive-ones-iii/
+- **Subarray Product Less Than K** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/number-of-subarrays-with-product-less-than-k/
+LeetCode: https://leetcode.com/problems/subarray-product-less-than-k/
+- **Sliding Window Maximum** — Amazon, Google, DE Shaw — Hard
+GFG: https://www.geeksforgeeks.org/sliding-window-maximum/
+LeetCode: https://leetcode.com/problems/sliding-window-maximum/
+- **Subarray with k distinct integers** — Amazon, Google, Goldman Sachs — Hard
+GFG: https://www.geeksforgeeks.org/subarrays-with-exactly-k-different-integers/
+LeetCode: https://leetcode.com/problems/subarrays-with-k-different-integers/
+- **Fruits Into Baskets** — Amazon, Flipkart, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/fruits-into-baskets/
+LeetCode: https://leetcode.com/problems/fruit-into-baskets/
+- **Minimum Size Subarray Sum** — Amazon, Morgan Stanley, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/minimum-length-subarray-sum/
+LeetCode: https://leetcode.com/problems/minimum-size-subarray-sum/
+
+**Prefix Sum**
+Precompute cumulative sums so any subarray or range sum can be answered in O(1). (0/6)
+
+- **Subarray Sum Equals K** — Facebook, Amazon, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/subarray-sum-equals-k/
+LeetCode: https://leetcode.com/problems/subarray-sum-equals-k/
+- **Matrix Block Sum (Running Sum of 2D Array)** — Amazon, Google, Flipkart — Medium
+GFG: https://www.geeksforgeeks.org/matrix-block-sum/
+LeetCode: https://leetcode.com/problems/matrix-block-sum/
+- **Product of Array Except Self** — Amazon, Facebook, Flipkart — Medium
+GFG: https://www.geeksforgeeks.org/product-of-array-except-self/
+LeetCode: https://leetcode.com/problems/product-of-array-except-self/
+- **Continuous Subarray Sum** — Facebook, DE Shaw, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/continuous-subarray-sum/
+LeetCode: https://leetcode.com/problems/continuous-subarray-sum/
+- **Subarray Sum Divisible by K** — Goldman Sachs, Microsoft, PayPal — Medium
+GFG: https://www.geeksforgeeks.org/subarray-sums-divisible-by-k/
+LeetCode: https://leetcode.com/problems/subarray-sums-divisible-by-k/
+- **Find Pivot Index** — Amazon, Paytm, Morgan Stanley — Easy
+GFG: https://www.geeksforgeeks.org/find-pivot-index/
+LeetCode: https://leetcode.com/problems/find-pivot-index/
+
+**Kadane’s Algorithm**
+Track the best subarray sum ending at each index and update the global maximum. (0/5)
+
+- **Maximum Subarray** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/largest-sum-contiguous-subarray/
+LeetCode: https://leetcode.com/problems/maximum-subarray/
+- **Maximum Product Subarray** — Google, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/maximum-product-subarray/
+LeetCode: https://leetcode.com/problems/maximum-product-subarray/
+- **Maximum Sum Circular Subarray** — Amazon, Google, DE Shaw — Medium
+GFG: https://www.geeksforgeeks.org/maximum-sum-circular-subarray/
+LeetCode: https://leetcode.com/problems/maximum-sum-circular-subarray/
+- **Maximum Absolute Sum of Any Subarray** — Microsoft, Apple, Adobe — Medium
+GFG: Search "Maximum Absolute Sum of Any Subarray" on GFG
+LeetCode: https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/
+- **Largest Sum Contiguous Subarray** — Amazon, Flipkart, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/largest-sum-contiguous-subarray/
+LeetCode: https://leetcode.com/problems/maximum-subarray/
+
+**Strings**
+Sequence of characters and common string manipulation patterns.
+
+**Two-Pointer (Palindrome)**
+Compare characters from both ends and move inward until the condition fails. (0/5)
+
+- **Reverse a String** — Amazon, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/write-a-program-to-reverse-a-string/
+LeetCode: https://leetcode.com/problems/reverse-string/
+- **Valid Palindrome** — Amazon, Goldman Sachs, PayPal — Easy
+GFG: https://www.geeksforgeeks.org/valid-palindrome/
+LeetCode: https://leetcode.com/problems/valid-palindrome/
+- **Valid Palindrome II** — Microsoft, Morgan Stanley, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/valid-palindrome-ii/
+LeetCode: https://leetcode.com/problems/valid-palindrome-ii/
+- **Longest Palindromic Substring** — Google, Sumo Logic, DE Shaw — Medium
+GFG: https://www.geeksforgeeks.org/longest-palindromic-substring/
+LeetCode: https://leetcode.com/problems/longest-palindromic-substring/
+- **Palindromic Substrings** — Amazon, Adobe, Flipkart — Medium
+GFG: https://www.geeksforgeeks.org/count-palindromic-substrings/
+LeetCode: https://leetcode.com/problems/palindromic-substrings/
+
+**Sliding Window (String)**
+Maintain a moving window and adjust its size to satisfy character constraints. (0/7)
+
+- **Find All Anagrams in a String** — Facebook, PhonePe, Swiggy — Medium
+GFG: https://www.geeksforgeeks.org/find-all-anagrams-in-a-string/
+LeetCode: https://leetcode.com/problems/find-all-anagrams-in-a-string/
+- **Longest Substring Without Repeating Characters** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/longest-substring-without-repeating-characters/
+LeetCode: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+- **Minimum Window Substring** — Microsoft, Flipkart, PhonePe — Hard
+GFG: https://www.geeksforgeeks.org/minimum-window-substring/
+LeetCode: https://leetcode.com/problems/minimum-window-substring/
+- **Longest Substring with At Most K Distinct** — Amazon, Paytm, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/longest-substring-with-at-most-k-distinct-characters/
+LeetCode: https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/
+- **Permutation in String** — Google, PhonePe, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/permutation-in-string/
+LeetCode: https://leetcode.com/problems/permutation-in-string/
+- **Subarrays with K Different Integers** — Amazon, Goldman Sachs, Zomato — Hard
+GFG: https://www.geeksforgeeks.org/subarrays-with-exactly-k-different-integers/
+LeetCode: https://leetcode.com/problems/subarrays-with-k-different-integers/
+- **Longest Nice Substring** — Google, PayPal, Flipkart — Easy
+GFG: Search "Longest Nice Substring" on GFG
+LeetCode: https://leetcode.com/problems/longest-nice-substring/

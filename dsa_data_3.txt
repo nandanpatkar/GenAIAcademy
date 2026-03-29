@@ -1,0 +1,462 @@
+**Heap**
+Priority Queue data structure for efficient retrieval of highest/lowest priority elements.
+
+**Top-K Elements**
+Use min-heap for top-k largest, max-heap for top-k smallest → maintain heap of size k. (0/6)
+
+- **K Frequent Words** — Google, PayPal, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/k-most-frequent-words/
+LeetCode: https://leetcode.com/problems/top-k-frequent-words/
+- **Sort characters by frequency** — Google, PayPal, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/sort-characters-by-frequency/
+LeetCode: https://leetcode.com/problems/sort-characters-by-frequency/
+- **Kth Largest Element in an Array** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/kth-largest-element-in-an-array/
+LeetCode: https://leetcode.com/problems/kth-largest-element-in-an-array/
+- **Top K Frequent Elements** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/top-k-frequent-elements/
+LeetCode: https://leetcode.com/problems/top-k-frequent-elements/
+- **Find Median from Data Stream** — Flipkart, Paytm, PhonePe — Hard
+GFG: https://www.geeksforgeeks.org/find-median-from-data-stream/
+LeetCode: https://leetcode.com/problems/find-median-from-data-stream/
+- **Minimum Cost to Connect Ropes** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/minimum-cost-to-connect-ropes/
+LeetCode: https://leetcode.com/problems/minimum-cost-to-connect-sticks/
+
+**Merge K Sorted**
+Use min-heap to merge multiple sorted arrays/lists efficiently. (0/3)
+
+- **Merge K Sorted Lists** — Amazon, Google, Goldman Sachs — Hard
+GFG: https://www.geeksforgeeks.org/merge-k-sorted-linked-lists/
+LeetCode: https://leetcode.com/problems/merge-k-sorted-lists/
+- **Find K Pairs with Smallest Sums** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/find-k-pairs-smallest-sums/
+LeetCode: https://leetcode.com/problems/find-k-pairs-with-smallest-sums/
+- **Smallest Range Covering Elements from K Lists** — Amazon, Adobe, Sumo Logic — Hard
+GFG: https://www.geeksforgeeks.org/smallest-range-covering-elements-from-k-lists/
+LeetCode: https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/
+
+**Heap with Sliding Window**
+Maintain a heap of elements in the window → pop outdated elements → track maximum. (0/3)
+
+- **Sliding Window Maximum** — Amazon, Google, Goldman Sachs — Hard
+GFG: https://www.geeksforgeeks.org/sliding-window-maximum/
+LeetCode: https://leetcode.com/problems/sliding-window-maximum/
+- **Task Scheduler** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/task-scheduler/
+LeetCode: https://leetcode.com/problems/task-scheduler/
+- **Sliding Window Median** — Google, Apple, Zomato — Hard
+GFG: Search "Sliding Window Median" on GFG
+LeetCode: https://leetcode.com/problems/sliding-window-median/
+
+**Implementation of Heap**
+Design heap. (0/3)
+
+- **Implement priority queue** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/ (implementation)
+LeetCode: Heap design problems
+- **Implement min heap** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/implement-min-heap/
+LeetCode: Heap design problems
+- **Implement max heap** — Myntra, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/implement-max-heap/
+LeetCode: Heap design problems
+
+**Huffman pattern**
+Repeatedly combine the two smallest elements to minimize the total cost. (0/5)
+
+- **Minimum Cost to Connect Sticks** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/minimum-cost-to-connect-sticks/
+LeetCode: https://leetcode.com/problems/minimum-cost-to-connect-sticks/
+- **Minimum Cost of Ropes** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/minimum-cost-to-connect-ropes/
+LeetCode: Same as above
+- **Merge Files with Minimum Cost** — Myntra, Apple, Zomato — Medium
+GFG: Search title on GFG
+LeetCode: Huffman-style problems
+- **Combine Cards / Numbers with Minimum Cost** — Myntra, Apple, Zomato — Medium
+GFG: Search title on GFG
+LeetCode: Huffman-style problems
+- **Reorganize String** — Myntra, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/reorganize-string/
+LeetCode: https://leetcode.com/problems/reorganize-string/
+
+**Recursion**
+Solving problems by breaking them down into smaller, self-similar subproblems.
+
+**Linear Recursion**
+Solve problem by reducing to size n-1 → combine results linearly. (0/4)
+
+- **Factorial of a Number** — Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/factorial-of-a-number/
+LeetCode: Basic recursion
+- **Fibonacci Number** — Amazon, Adobe — Easy
+GFG: https://www.geeksforgeeks.org/fibonacci-number/
+LeetCode: https://leetcode.com/problems/fibonacci-number/
+- **Reverse String** — Google, Apple — Easy
+GFG: https://www.geeksforgeeks.org/reverse-a-string/
+LeetCode: https://leetcode.com/problems/reverse-string/
+- **Power of X** — Facebook, LinkedIn — Medium
+GFG: https://www.geeksforgeeks.org/power-of-x/
+LeetCode: https://leetcode.com/problems/powx-n/
+
+**Divide & Conquer**
+Break problem into independent subproblems → solve recursively → combine results. (0/4)
+
+- **Binary Search** — Amazon, Google — Easy
+GFG: https://www.geeksforgeeks.org/binary-search/
+LeetCode: https://leetcode.com/problems/binary-search/
+- **Merge Sort** — Microsoft, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/merge-sort/
+LeetCode: Sorting problems
+- **Maximum Subarray** — Amazon, Apple — Medium
+GFG: https://www.geeksforgeeks.org/maximum-subarray-sum/
+LeetCode: https://leetcode.com/problems/maximum-subarray/
+- **Search in Rotated Sorted Array** — Facebook, Google — Medium
+GFG: https://www.geeksforgeeks.org/search-in-rotated-sorted-array/
+LeetCode: https://leetcode.com/problems/search-in-rotated-sorted-array/
+
+**Recursive String Processing**
+Recursively process substrings or characters → combine results. (0/4)
+
+- **Reverse String** — Amazon, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/reverse-a-string/
+LeetCode: https://leetcode.com/problems/reverse-string/
+- **Palindrome Check** — Google — Easy
+GFG: https://www.geeksforgeeks.org/palindrome-check/
+LeetCode: https://leetcode.com/problems/valid-palindrome/
+- **Decode String** — Google, Cisco — Medium
+GFG: https://www.geeksforgeeks.org/decode-string/
+LeetCode: https://leetcode.com/problems/decode-string/
+- **Different Ways to Add Parentheses** — Amazon, Kart — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/different-ways-to-add-parentheses/
+
+**Recursive Stack / Linked List**
+Handle top/head element recursively → recurse on remaining stack/list → combine/insert results. (0/3)
+
+- **Insert at Bottom of Stack** — Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/insert-at-bottom-of-stack/
+LeetCode: Recursion on stack
+- **Reverse a Linked List** — Amazon, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/reverse-a-linked-list/
+LeetCode: https://leetcode.com/problems/reverse-linked-list/
+- **Merge Two Sorted Lists** — Amazon, Apple — Easy
+GFG: https://www.geeksforgeeks.org/merge-two-sorted-linked-lists/
+LeetCode: https://leetcode.com/problems/merge-two-sorted-lists/
+
+**Tree**
+Hierarchical data structure with a root value and subtrees of children.
+
+**DFS Traversals**
+Standard DFS → used for max depth, path sums, subtree calculations. (0/15)
+
+- **Inorder Traversal** — Amazon, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/inorder-tree-traversal/
+LeetCode: https://leetcode.com/problems/binary-tree-inorder-traversal/
+- **Preorder Traversal** — Flipkart, Paytm, Zomato — Easy
+GFG: https://www.geeksforgeeks.org/preorder-tree-traversal/
+LeetCode: https://leetcode.com/problems/binary-tree-preorder-traversal/
+- **Postorder Traversal** — Flipkart, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/postorder-tree-traversal/
+LeetCode: https://leetcode.com/problems/binary-tree-postorder-traversal/
+- **Same Tree Check (DFS variant)** — Amazon, Microsoft — Easy
+GFG: https://www.geeksforgeeks.org/check-if-two-trees-are-identical/
+LeetCode: https://leetcode.com/problems/same-tree/
+- **Diameter of Binary Tree** — Amazon, Google, Goldman Sachs — Easy
+GFG: https://www.geeksforgeeks.org/diameter-of-binary-tree/
+LeetCode: https://leetcode.com/problems/diameter-of-binary-tree/
+- **Maximum Depth of Binary Tree** — Flipkart, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/maximum-depth-of-binary-tree/
+LeetCode: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+- **Path Sum** — Flipkart, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/path-sum/
+LeetCode: https://leetcode.com/problems/path-sum/
+- **Binary Tree Maximum Path Sum** — Microsoft, Facebook, Morgan Stanley — Hard
+GFG: https://www.geeksforgeeks.org/maximum-path-sum-in-binary-tree/
+LeetCode: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+- **Check if Nodes are Cousins** — Amazon, Google — Medium
+GFG: https://www.geeksforgeeks.org/check-if-two-nodes-are-cousins-in-a-binary-tree/
+LeetCode: https://leetcode.com/problems/cousins-in-binary-tree/
+- **Minimum Height of a Binary Tree** — Microsoft, Flipkart — Easy
+GFG: https://www.geeksforgeeks.org/minimum-height-of-a-binary-tree/
+LeetCode: https://leetcode.com/problems/minimum-depth-of-binary-tree/
+- **Print All Nodes at Distance K** — Amazon, Google — Medium
+GFG: https://www.geeksforgeeks.org/print-all-nodes-at-distance-k-from-given-node/
+LeetCode: https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/
+- **Boundary Traversal of a Binary Tree** — Microsoft, Amazon — Medium
+GFG: https://www.geeksforgeeks.org/boundary-traversal-of-a-binary-tree/
+LeetCode: Boundary traversal problems
+- **Vertical Order Traversal** — Google, Microsoft — Medium
+GFG: https://www.geeksforgeeks.org/vertical-order-traversal-of-binary-tree/
+LeetCode: https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/
+- **Top View of a Binary Tree** — Microsoft, Amazon — Medium
+GFG: https://www.geeksforgeeks.org/top-view-of-binary-tree/
+LeetCode: Vertical order variant
+- **Binary Tree Cameras** — Google, Facebook — Hard
+GFG: Search "Binary Tree Cameras" on GFG
+LeetCode: https://leetcode.com/problems/binary-tree-cameras/
+
+**BFS / Level-Order**
+Use queue → traverse level by level → calculate sums, averages, or side views. (0/5)
+
+- **Binary Tree Level Order Traversal** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/level-order-tree-traversal/
+LeetCode: https://leetcode.com/problems/binary-tree-level-order-traversal/
+- **Binary Tree Zigzag Level Order Traversal** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/zigzag-tree-traversal/
+LeetCode: https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+- **Binary Tree Right Side View** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/right-view-of-binary-tree/
+LeetCode: https://leetcode.com/problems/binary-tree-right-side-view/
+- **Minimum Depth of Binary Tree** — Amazon, Adobe, Sumo Logic — Easy
+GFG: https://www.geeksforgeeks.org/minimum-depth-of-binary-tree/
+LeetCode: https://leetcode.com/problems/minimum-depth-of-binary-tree/
+- **Average of Levels in Binary Tree** — Amazon, Microsoft, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/average-of-levels-in-binary-tree/
+LeetCode: https://leetcode.com/problems/average-of-levels-in-binary-tree/
+
+**Lowest Common Ancestor**
+DFS recursion or parent-pointer mapping → find common ancestor efficiently. (0/3)
+
+- **Lowest Common Ancestor of Binary Tree** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/lowest-common-ancestor-in-binary-tree/
+LeetCode: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
+- **Find Distance Between Nodes** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/find-distance-between-two-nodes-in-a-binary-tree/
+LeetCode: Distance problems
+- **Distance Between Two Nodes in a Tree** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: Search title on GFG
+LeetCode: Distance problems
+
+**Serialization / Construction**
+Preorder / level-order encode-decode → reconstruct tree or flatten. (0/5)
+
+- **Serialize and Deserialize Binary Tree** — Amazon, Google, Goldman Sachs — Hard
+GFG: https://www.geeksforgeeks.org/serialize-and-deserialize-binary-tree/
+LeetCode: https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+- **Flatten Binary Tree to Linked List** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/flatten-binary-tree-to-linked-list/
+LeetCode: https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+- **Populating Next Right Pointers** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/populating-next-right-pointers-in-each-node/
+LeetCode: https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
+- **Invert Binary Tree** — Amazon, Adobe, Sumo Logic — Easy
+GFG: https://www.geeksforgeeks.org/invert-binary-tree/
+LeetCode: https://leetcode.com/problems/invert-binary-tree/
+- **Construct Binary Tree from Preorder & Inorder** — Amazon, Microsoft, Google — Medium
+GFG: https://www.geeksforgeeks.org/construct-binary-tree-from-preorder-and-inorder-traversal/
+LeetCode: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+
+**Binary Search Tree**
+Tree data structure where left child < root < right child.
+
+**BST Operations**
+Leverage BST property (left < root < right) for search, insertion, deletion, and range queries. (0/8)
+
+- **Convert Sorted Array to BST** — Microsoft, Facebook, Morgan Stanley — Easy
+GFG: https://www.geeksforgeeks.org/convert-sorted-array-to-binary-search-tree/
+LeetCode: https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
+- **Search in a BST** — Flipkart, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/search-in-a-binary-search-tree/
+LeetCode: https://leetcode.com/problems/search-in-a-binary-search-tree/
+- **Insert into a BST** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/insert-into-a-binary-search-tree/
+LeetCode: https://leetcode.com/problems/insert-into-a-binary-search-tree/
+- **Validate Binary Search Tree** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/validate-binary-search-tree/
+LeetCode: https://leetcode.com/problems/validate-binary-search-tree/
+- **Delete Node in a BST** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/delete-node-in-a-bst/
+LeetCode: https://leetcode.com/problems/delete-node-in-a-bst/
+- **Recover BST** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/recover-bst/
+LeetCode: https://leetcode.com/problems/recover-binary-search-tree/
+- **Merge 2 BST** — Microsoft, Facebook, Amazon — Medium
+GFG: https://www.geeksforgeeks.org/merge-two-bsts/
+LeetCode: Merge BST problems
+- **Maximum sum BST in binary Tree** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/maximum-sum-bst-in-binary-tree/
+LeetCode: https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/
+
+**LCA & Range Queries**
+Use BST property → traverse from root to find split point → LCA. (0/4)
+
+- **Lowest Common Ancestor of BST** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/lowest-common-ancestor-in-bst/
+LeetCode: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+- **Distance Between Two Nodes in BST** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: Search title on GFG
+LeetCode: BST distance problems
+- **Closest Binary Search Tree Value** — Flipkart, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/closest-binary-search-tree-value/
+LeetCode: https://leetcode.com/problems/closest-binary-search-tree-value/
+- **Closest Leaf in BST** — Amazon, Adobe, Sumo Logic — Medium
+GFG: Search title on GFG
+LeetCode: Closest leaf problems
+
+**Graph**
+Non-linear data structure consisting of nodes and edges.
+
+**BFS (Unweighted Path)**
+Standard BFS → track distance/levels → queue-based traversal → multi-source if needed. (0/6)
+
+- **01 Matrix** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/01-matrix/
+LeetCode: https://leetcode.com/problems/01-matrix/
+- **Word Ladder** — Microsoft, Facebook, Morgan Stanley — Hard
+GFG: https://www.geeksforgeeks.org/word-ladder/
+LeetCode: https://leetcode.com/problems/word-ladder/
+- **Clone Graph** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/clone-graph/
+LeetCode: https://leetcode.com/problems/clone-graph/
+- **Rotting Oranges** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/rotting-oranges/
+LeetCode: https://leetcode.com/problems/rotting-oranges/
+- **Shortest Path in Binary Matrix** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/shortest-path-in-binary-matrix/
+LeetCode: https://leetcode.com/problems/shortest-path-in-binary-matrix/
+- **Walls and Gates** — Amazon, Microsoft, PhonePe — Medium
+GFG: Search "Walls and Gates" on GFG
+LeetCode: https://leetcode.com/problems/walls-and-gates/
+
+**DFS (Connectivity)**
+DFS recursion or stack → track visited → identify connected components or detect cycles. (0/12)
+
+- **Number of Islands** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/number-of-islands/
+LeetCode: https://leetcode.com/problems/number-of-islands/
+- **All paths from source to target** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/all-paths-from-source-to-target/
+LeetCode: https://leetcode.com/problems/all-paths-from-source-to-target/
+- **Flood Fill** — Flipkart, Paytm, PhonePe — Easy
+GFG: https://www.geeksforgeeks.org/flood-fill-algorithm/
+LeetCode: https://leetcode.com/problems/flood-fill/
+- **Find Eventual Safe States** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/find-eventual-safe-states/
+LeetCode: https://leetcode.com/problems/find-eventual-safe-states/
+- **Count Components in Graph** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/count-number-of-connected-components-in-graph/
+LeetCode: https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+- **Surrounded Regions** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/surrounded-regions/
+LeetCode: https://leetcode.com/problems/surrounded-regions/
+- **Is Graph Bipartite** — Amazon, Google, Adobe — Medium
+GFG: https://www.geeksforgeeks.org/bipartite-graph/
+LeetCode: https://leetcode.com/problems/is-graph-bipartite/
+- **Directed Cycle Detection** — Amazon, Microsoft, Paytm — Medium
+GFG: https://www.geeksforgeeks.org/detect-cycle-in-directed-graph/
+LeetCode: Cycle detection problems
+- **Undirected Cycle Detection** — Google, Flipkart, Ola — Medium
+GFG: https://www.geeksforgeeks.org/detect-cycle-in-undirected-graph/
+LeetCode: Cycle detection problems
+- **Longest Cycle in a Graph** — Amazon, Microsoft — Hard
+GFG: Search "Longest Cycle in a Graph" on GFG
+LeetCode: https://leetcode.com/problems/longest-cycle-in-a-graph/
+- **Articulation Points** — Amazon, Google — Hard
+GFG: https://www.geeksforgeeks.org/articulation-points-or-cut-vertices-in-a-graph/
+LeetCode: Articulation points problems
+- **Bridges in Graph / Critical Connections** — Amazon, Facebook, Google — Hard
+GFG: https://www.geeksforgeeks.org/bridges-in-a-graph/
+LeetCode: https://leetcode.com/problems/critical-connections-in-a-network/
+
+**Topological Sort**
+DFS postorder or BFS (Kahn’s algorithm) → order nodes respecting dependencies. (0/7)
+
+- **Task Scheduling with Dependencies** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/task-scheduling-with-dependencies/
+LeetCode: https://leetcode.com/problems/course-schedule/
+- **Course Schedule** — Amazon, Google, Facebook — Medium
+GFG: https://www.geeksforgeeks.org/course-schedule/
+LeetCode: https://leetcode.com/problems/course-schedule/
+- **Course Schedule II** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/course-schedule-ii/
+LeetCode: https://leetcode.com/problems/course-schedule-ii/
+- **Find Eventual Safe States** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/find-eventual-safe-states/
+LeetCode: https://leetcode.com/problems/find-eventual-safe-states/
+- **Alien Dictionary** — Microsoft, Facebook, Morgan Stanley — Hard
+GFG: https://www.geeksforgeeks.org/alien-dictionary/
+LeetCode: https://leetcode.com/problems/alien-dictionary/
+- **Cycle Detection in Directed Graph** — Amazon, Microsoft, Paytm — Medium
+GFG: https://www.geeksforgeeks.org/detect-cycle-in-directed-graph/
+LeetCode: Cycle detection
+- **Reconstruct Itinerary** — Google, Apple, Zomato — Hard
+GFG: https://www.geeksforgeeks.org/reconstruct-itinerary/
+LeetCode: https://leetcode.com/problems/reconstruct-itinerary/
+
+**MST / Union-Find**
+Use Kruskal’s / Prim’s algorithm or Union-Find → find MST, minimum cost connections, or detect cycles. (0/7)
+
+- **Minimum spanning Tree** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/minimum-spanning-tree/
+LeetCode: MST problems
+- **Kruskal’s algorithm** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/kruskals-algorithm/
+LeetCode: MST problems
+- **Lexicographically Smallest Equivalent String** — Amazon, Google, Goldman Sachs — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/lexicographically-smallest-equivalent-string/
+- **Number of Connected Components in Graph** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/number-of-connected-components-in-graph/
+LeetCode: https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+- **Redundant Connection** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/redundant-connection/
+LeetCode: https://leetcode.com/problems/redundant-connection/
+- **Connecting Cities With Minimum Cost** — Amazon, Adobe, Sumo Logic — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/connecting-cities-with-minimum-cost/
+- **Accounts Merge** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/accounts-merge/
+LeetCode: https://leetcode.com/problems/accounts-merge/
+
+**Dijkstra (Weighted)**
+Use priority queue → relax edges → track shortest distances. (0/7)
+
+- **Dijkstra Implementation** — Google, Apple, Zomato — Medium
+GFG: https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm/
+LeetCode: Shortest path problems
+- **Shortest Path in Weighted Graph** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/shortest-path-in-weighted-graph/
+LeetCode: Shortest path problems
+- **Minimum Cost Path in Grid** — Amazon, Adobe, Sumo Logic — Medium
+GFG: https://www.geeksforgeeks.org/minimum-cost-path-in-grid/
+LeetCode: https://leetcode.com/problems/minimum-cost-path-in-grid/ (similar)
+- **Network Delay Time** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/network-delay-time/
+LeetCode: https://leetcode.com/problems/network-delay-time/
+- **Cheapest Flights Within K Stops** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/cheapest-flights-within-k-stops/
+LeetCode: https://leetcode.com/problems/cheapest-flights-within-k-stops/
+- **Swim in Rising Water** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/swim-in-rising-water/
+LeetCode: https://leetcode.com/problems/swim-in-rising-water/
+- **Path With Minimum Effort** — Flipkart, Paytm, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/path-with-minimum-effort/
+LeetCode: https://leetcode.com/problems/path-with-minimum-effort/
+
+**Bellman-Ford**
+Relax all edges V-1 times → detect negative cycles. (0/3)
+
+- **Negative Weight Cycle Detection** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/bellman-ford-algorithm/
+LeetCode: Negative cycle problems
+- **Cheapest Flights Within K Stops (Bellman-Ford variant)** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/cheapest-flights-within-k-stops/
+LeetCode: https://leetcode.com/problems/cheapest-flights-within-k-stops/
+- **Find the City With the Smallest Number of Neighbors at a Threshold Distance** — Amazon, Adobe, Sumo Logic — Medium
+GFG: Search title on GFG
+LeetCode: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+
+**Floyd-Warshall**
+DP over adjacency matrix → shortest paths between all pairs of nodes. (0/3)
+
+- **Transitive Closure** — Amazon, Google, Goldman Sachs — Medium
+GFG: https://www.geeksforgeeks.org/transitive-closure-of-a-graph/
+LeetCode: All-pairs problems
+- **All-Pairs Shortest Path** — Microsoft, Facebook, Morgan Stanley — Medium
+GFG: https://www.geeksforgeeks.org/floyd-warshall-algorithm/
+LeetCode: All-pairs problems
+- **Detect Negative Cycle Using Floyd-Warshall** — Amazon, Microsoft, PhonePe — Medium
+GFG: https://www.geeksforgeeks.org/detect-negative-cycle-using-floyd-warshall/
+LeetCode: Negative cycle problems
