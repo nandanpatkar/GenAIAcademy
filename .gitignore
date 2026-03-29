@@ -12,3 +12,6 @@ test_2.0.js
 test_debug.js
 test_citations.js
 test_tavily.js
+.env.local
+.vercel
+.env*.local
