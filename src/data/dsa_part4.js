@@ -13,32 +13,33 @@ export const dsaPart4 = [
         "status": "locked",
         "duration": "4 problems",
         "subtopics": [
-          "Majority Element",
-          "Top K Frequent Elements",
-          "Sort Characters By Frequency",
-          "Task Scheduler (frequency-based greedy)"
+          {
+            "title": "Majority Element",
+            "status": "pending"
+          },
+          {
+            "title": "Top K Frequent Elements",
+            "status": "pending"
+          },
+          {
+            "title": "Sort Characters By Frequency",
+            "status": "pending"
+          },
+          {
+            "title": "Task Scheduler (frequency-based greedy)",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Majority Element \u2014 Practice",
-            "url": "https://leetcode.com/problems/majority-element/"
-          },
-          {
-            "title": "Top K Frequent Elements \u2014 Practice",
-            "url": "https://leetcode.com/problems/top-k-frequent-elements/"
-          },
-          {
-            "title": "Sort Characters By Frequency \u2014 Practice",
-            "url": "https://leetcode.com/problems/sort-characters-by-frequency/"
-          },
-          {
-            "title": "Task Scheduler (frequency-based greedy) \u2014 Practice",
-            "url": "https://leetcode.com/problems/task-scheduler/"
+            "url": "https://leetcode.com/problems/majority-element/",
+            "difficulty": "Easy"
           }
         ],
-        "overview": "Mastering Frequency Map / Counting optimally natively."
+        "overview": "Mastering Frequency Map / Counting (0/4) optimally natively."
       },
       {
         "id": "sub-prefix-sum",
@@ -47,28 +48,43 @@ export const dsaPart4 = [
         "status": "locked",
         "duration": "4 problems",
         "subtopics": [
-          "Subarray Sum Equals K",
-          "Continuous Subarray Sum",
-          "Subarray Sums Divisible by K",
-          "Count Subarrays with Sum K"
+          {
+            "title": "Subarray Sum Equals K",
+            "status": "pending"
+          },
+          {
+            "title": "Continuous Subarray Sum",
+            "status": "pending"
+          },
+          {
+            "title": "Subarray Sums Divisible by K",
+            "status": "pending"
+          },
+          {
+            "title": "Count Subarrays with Sum K",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Subarray Sum Equals K \u2014 Practice",
-            "url": "https://leetcode.com/problems/subarray-sum-equals-k/"
+            "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
+            "difficulty": "Medium"
           },
           {
             "title": "Continuous Subarray Sum \u2014 Practice",
-            "url": "https://leetcode.com/problems/continuous-subarray-sum/"
+            "url": "https://leetcode.com/problems/continuous-subarray-sum/",
+            "difficulty": "Medium"
           },
           {
             "title": "Subarray Sums Divisible by K \u2014 Practice",
-            "url": "https://leetcode.com/problems/subarray-sums-divisible-by-k/"
+            "url": "https://leetcode.com/problems/subarray-sums-divisible-by-k/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Prefix-Sum with Map optimally natively."
+        "overview": "Mastering Prefix-Sum with Map (0/4) optimally natively."
       },
       {
         "id": "sub-sliding-wi",
@@ -77,37 +93,57 @@ export const dsaPart4 = [
         "status": "locked",
         "duration": "5 problems",
         "subtopics": [
-          "Longest Substring Without Repeating Characters",
-          "Find All Anagrams in a String",
-          "Minimum Window Substring",
-          "Fruit Into Baskets",
-          "Longest Substring with At Most K Distinct Characters"
+          {
+            "title": "Longest Substring Without Repeating Characters",
+            "status": "pending"
+          },
+          {
+            "title": "Find All Anagrams in a String",
+            "status": "pending"
+          },
+          {
+            "title": "Minimum Window Substring",
+            "status": "pending"
+          },
+          {
+            "title": "Fruit Into Baskets",
+            "status": "pending"
+          },
+          {
+            "title": "Longest Substring with At Most K Distinct Characters",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Longest Substring Without Repeating Characters \u2014 Practice",
-            "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/"
+            "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+            "difficulty": "Medium"
           },
           {
             "title": "Find All Anagrams in a String \u2014 Practice",
-            "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/"
+            "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/",
+            "difficulty": "Medium"
           },
           {
             "title": "Minimum Window Substring \u2014 Practice",
-            "url": "https://leetcode.com/problems/minimum-window-substring/"
+            "url": "https://leetcode.com/problems/minimum-window-substring/",
+            "difficulty": "Hard"
           },
           {
             "title": "Fruit Into Baskets \u2014 Practice",
-            "url": "https://leetcode.com/problems/fruit-into-baskets/"
+            "url": "https://leetcode.com/problems/fruit-into-baskets/",
+            "difficulty": "Medium"
           },
           {
             "title": "Longest Substring with At Most K Distinct Characters \u2014 Practice",
-            "url": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/"
+            "url": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Sliding Window + HashMap optimally natively."
+        "overview": "Mastering Sliding Window + HashMap (0/5) optimally natively."
       }
     ]
   },
@@ -125,42 +161,66 @@ export const dsaPart4 = [
         "status": "locked",
         "duration": "6 problems",
         "subtopics": [
-          "K Frequent Words",
-          "Sort characters by frequency",
-          "Kth Largest Element in an Array",
-          "Top K Frequent Elements",
-          "Find Median from Data Stream",
-          "Minimum Cost to Connect Ropes"
+          {
+            "title": "K Frequent Words",
+            "status": "pending"
+          },
+          {
+            "title": "Sort characters by frequency",
+            "status": "pending"
+          },
+          {
+            "title": "Kth Largest Element in an Array",
+            "status": "pending"
+          },
+          {
+            "title": "Top K Frequent Elements",
+            "status": "pending"
+          },
+          {
+            "title": "Find Median from Data Stream",
+            "status": "pending"
+          },
+          {
+            "title": "Minimum Cost to Connect Ropes",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "K Frequent Words \u2014 Practice",
-            "url": "https://leetcode.com/problems/top-k-frequent-words/"
+            "url": "https://leetcode.com/problems/top-k-frequent-words/",
+            "difficulty": "Medium"
           },
           {
             "title": "Sort characters by frequency \u2014 Practice",
-            "url": "https://leetcode.com/problems/sort-characters-by-frequency/"
+            "url": "https://leetcode.com/problems/sort-characters-by-frequency/",
+            "difficulty": "Medium"
           },
           {
             "title": "Kth Largest Element in an Array \u2014 Practice",
-            "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/"
+            "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
+            "difficulty": "Medium"
           },
           {
             "title": "Top K Frequent Elements \u2014 Practice",
-            "url": "https://leetcode.com/problems/top-k-frequent-elements/"
+            "url": "https://leetcode.com/problems/top-k-frequent-elements/",
+            "difficulty": "Medium"
           },
           {
             "title": "Find Median from Data Stream \u2014 Practice",
-            "url": "https://leetcode.com/problems/find-median-from-data-stream/"
+            "url": "https://leetcode.com/problems/find-median-from-data-stream/",
+            "difficulty": "Hard"
           },
           {
             "title": "Minimum Cost to Connect Ropes \u2014 Practice",
-            "url": "https://leetcode.com/problems/minimum-cost-to-connect-sticks/"
+            "url": "https://leetcode.com/problems/minimum-cost-to-connect-sticks/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Top-K Elements optimally natively."
+        "overview": "Mastering Top-K Elements (0/6) optimally natively."
       },
       {
         "id": "sub-merge-k-so",
@@ -169,27 +229,39 @@ export const dsaPart4 = [
         "status": "locked",
         "duration": "3 problems",
         "subtopics": [
-          "Merge K Sorted Lists",
-          "Find K Pairs with Smallest Sums",
-          "Smallest Range Covering Elements from K Lists"
+          {
+            "title": "Merge K Sorted Lists",
+            "status": "pending"
+          },
+          {
+            "title": "Find K Pairs with Smallest Sums",
+            "status": "pending"
+          },
+          {
+            "title": "Smallest Range Covering Elements from K Lists",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Merge K Sorted Lists \u2014 Practice",
-            "url": "https://leetcode.com/problems/merge-k-sorted-lists/"
+            "url": "https://leetcode.com/problems/merge-k-sorted-lists/",
+            "difficulty": "Hard"
           },
           {
             "title": "Find K Pairs with Smallest Sums \u2014 Practice",
-            "url": "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/"
+            "url": "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/",
+            "difficulty": "Medium"
           },
           {
             "title": "Smallest Range Covering Elements from K Lists \u2014 Practice",
-            "url": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/"
+            "url": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/",
+            "difficulty": "Hard"
           }
         ],
-        "overview": "Mastering Merge K Sorted optimally natively."
+        "overview": "Mastering Merge K Sorted (0/3) optimally natively."
       },
       {
         "id": "sub-heap-with-",
@@ -198,43 +270,64 @@ export const dsaPart4 = [
         "status": "locked",
         "duration": "3 problems",
         "subtopics": [
-          "Sliding Window Maximum",
-          "Task Scheduler",
-          "Sliding Window Median"
+          {
+            "title": "Sliding Window Maximum",
+            "status": "pending"
+          },
+          {
+            "title": "Task Scheduler",
+            "status": "pending"
+          },
+          {
+            "title": "Sliding Window Median",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Sliding Window Maximum \u2014 Practice",
-            "url": "https://leetcode.com/problems/sliding-window-maximum/"
+            "url": "https://leetcode.com/problems/sliding-window-maximum/",
+            "difficulty": "Hard"
           },
           {
             "title": "Task Scheduler \u2014 Practice",
-            "url": "https://leetcode.com/problems/task-scheduler/"
+            "url": "https://leetcode.com/problems/task-scheduler/",
+            "difficulty": "Medium"
           },
           {
             "title": "Sliding Window Median \u2014 Practice",
-            "url": "https://leetcode.com/problems/sliding-window-median/"
+            "url": "https://leetcode.com/problems/sliding-window-median/",
+            "difficulty": "Hard"
           }
         ],
-        "overview": "Mastering Heap with Sliding Window optimally natively."
+        "overview": "Mastering Heap with Sliding Window (0/3) optimally natively."
       },
       {
         "id": "sub-implementa",
         "title": "Implementation of Heap",
-        "subtitle": "Design heap.",
+        "subtitle": "Design and implement heap operations (push, pop, heapify) from scratch.",
         "status": "locked",
         "duration": "3 problems",
         "subtopics": [
-          "Implement priority queue",
-          "Implement min heap",
-          "Implement max heap"
+          {
+            "title": "Implement priority queue",
+            "status": "pending"
+          },
+          {
+            "title": "Implement min heap",
+            "status": "pending"
+          },
+          {
+            "title": "Implement max heap",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [],
-        "overview": "Mastering Implementation of Heap optimally natively."
+        "overview": "Mastering Implementation of Heap (0/3) optimally natively."
       },
       {
         "id": "sub-huffman-pa",
@@ -243,25 +336,42 @@ export const dsaPart4 = [
         "status": "locked",
         "duration": "5 problems",
         "subtopics": [
-          "Minimum Cost to Connect Sticks",
-          "Minimum Cost of Ropes",
-          "Merge Files with Minimum Cost",
-          "Combine Cards / Numbers with Minimum Cost",
-          "Reorganize String"
+          {
+            "title": "Minimum Cost to Connect Sticks",
+            "status": "pending"
+          },
+          {
+            "title": "Minimum Cost of Ropes",
+            "status": "pending"
+          },
+          {
+            "title": "Merge Files with Minimum Cost",
+            "status": "pending"
+          },
+          {
+            "title": "Combine Cards / Numbers with Minimum Cost",
+            "status": "pending"
+          },
+          {
+            "title": "Reorganize String",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Minimum Cost to Connect Sticks \u2014 Practice",
-            "url": "https://leetcode.com/problems/minimum-cost-to-connect-sticks/"
+            "url": "https://leetcode.com/problems/minimum-cost-to-connect-sticks/",
+            "difficulty": "Medium"
           },
           {
             "title": "Reorganize String \u2014 Practice",
-            "url": "https://leetcode.com/problems/reorganize-string/"
+            "url": "https://leetcode.com/problems/reorganize-string/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Huffman pattern optimally natively."
+        "overview": "Mastering Huffman pattern (0/5) optimally natively."
       }
     ]
   }

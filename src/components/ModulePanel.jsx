@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Box, Hexagon, Star, CheckCircle, Navigation, ArrowLeft } from "lucide-react";
 
 const SECTION_ICONS = {
@@ -9,9 +10,14 @@ const SECTION_ICONS = {
 };
 
 export default function ModulePanel({ 
-  node, activeModule, setActiveModule, pathColor, onClose, onBack, onAddModule, onEditModule, isEditMode
+  node, activeModule, setActiveModule, pathColor, onClose, onBack, onAddModule, onEditModule, isEditMode, activePath
 }) {
   const sections = ["Overview", "Fundamentals", "Advanced", "Mastery", "Certification"];
+
+  
+  const filteredModules = node.modules || [];
+
+
   const doneCount = node.modules?.filter((m) => m.status === "complete").length || 0;
   const pct = Math.round((doneCount / (node.modules?.length || 1)) * 100);
 
@@ -68,33 +74,45 @@ export default function ModulePanel({
 
       {/* Module list */}
       <div className="mp-modules">
-        <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "1px", color: "var(--text3)", marginBottom: 8, textTransform: "uppercase" }}>
-          Modules · {node.modules?.length || 0}
-        </div>
-        {node.modules?.map((mod) => (
-          <div
-            key={mod.id}
-            className={`mp-module-item ${activeModule?.id === mod.id ? "active" : ""}`}
-            onClick={() => setActiveModule(mod)}
-          >
-            <div className={`mp-module-status ${mod.status}`}>
-              {mod.status === "complete" ? "✓" : mod.status === "in_progress" ? "⟳" : mod.status === "locked" ? "🔒" : "◌"}
-            </div>
-            <div className="mp-module-body" style={{ position: "relative" }}>
-              <div className="mp-module-title">{mod.title}</div>
-              {isEditMode && (
-                <button 
-                  className="edit-btn" 
-                  onClick={(e) => { e.stopPropagation(); onEditModule(mod); }}
-                  title="Edit Module"
-                  style={{ width: 22, height: 22, fontSize: 10, position: "absolute", right: 12, top: 12 }}
-                >✎</button>
-              )}
-              <div className="mp-module-sub" style={{ paddingRight: 24 }}>{mod.subtitle}</div>
-              <div className="mp-module-dur">{mod.duration} · {mod.subtopics?.length || 0} topics</div>
-            </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+          <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "1px", color: "var(--text3)", textTransform: "uppercase" }}>
+            Modules · {filteredModules.length}
           </div>
-        ))}
+        </div>
+
+        {filteredModules.map((mod) => {
+          return (
+
+            <div
+              key={mod.id}
+              className={`mp-module-item ${activeModule?.id === mod.id ? "active" : ""}`}
+              onClick={() => setActiveModule(mod)}
+            >
+              <div className={`mp-module-status ${mod.status}`}>
+                {mod.status === "complete" ? "✓" : mod.status === "in_progress" ? "⟳" : mod.status === "locked" ? "🔒" : "◌"}
+              </div>
+              <div className="mp-module-body" style={{ position: "relative" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div className="mp-module-title">{mod.title}</div>
+                </div>
+
+                {isEditMode && (
+                  <button 
+                    className="edit-btn" 
+                    onClick={(e) => { e.stopPropagation(); onEditModule(mod); }}
+                    title="Edit Module"
+                    style={{ width: 22, height: 22, fontSize: 10, position: "absolute", right: 12, top: 12 }}
+                  >✎</button>
+                )}
+                <div className="mp-module-sub" style={{ paddingRight: 24, marginBottom: 8 }}>{mod.subtitle}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div className="mp-module-dur">{mod.duration} · {mod.subtopics?.length || 0} topics</div>
+                </div>
+
+              </div>
+            </div>
+          );
+        })}
         
         {isEditMode && (
           <button className="add-module-btn" onClick={onAddModule}>

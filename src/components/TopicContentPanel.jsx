@@ -16,6 +16,7 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
   const [saveText, setSaveText] = useState("SAVE CHANGES");
   const [showTutor, setShowTutor] = useState(false);
 
+
   const { runPython, stdout, stderr, isLoading, isRunning, interruptExecution } = useSimplePyodide();
 
   useEffect(() => {
@@ -25,11 +26,13 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
     setPythonCode(topic.pythonCode || "# Write your python solution here...\n");
   }, [topic]);
 
-  const practiceLinks = module?.links?.filter(l => 
-    l.title.includes(title) || 
-    title.includes(l.title.split('(')[0].trim()) || 
-    title.includes(l.title.split('—')[0].trim())
-  ) || [];
+  const practiceLinks = module?.links?.filter(l => {
+    const matchTopic = l.title.includes(title) || 
+                       title.includes(l.title.split('(')[0].trim()) || 
+                       title.includes(l.title.split('—')[0].trim());
+    return matchTopic;
+  }) || [];
+
 
   const handleSave = () => {
     onSaveTopic({ ...topic, title, content, linkUrl, pythonCode });
@@ -75,17 +78,29 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
             </button>
           )}
           {practiceLinks.length > 0 ? (
-            <div style={{ display: "flex", gap: 8 }}>
+            <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
               {practiceLinks.map((link, i) => (
-                <a 
-                  key={i}
-                  href={link.url}
-                  target="_blank" 
-                  rel="noreferrer"
-                  style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--text)", textDecoration: "none", fontSize: 12, fontWeight: 600, background: "var(--bg3)", padding: "6px 12px", borderRadius: 6, border: "1px solid var(--border)", transition: "all .2s" }}
-                >
-                  <ExternalLink size={14} /> {link.title.includes("LeetCode") || link.title.includes("Practice") ? "LeetCode" : "Problem Link"}
-                </a>
+
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "var(--bg3)", padding: "6px 12px", borderRadius: 6, border: "1px solid var(--border)", transition: "all .2s" }}>
+                  <a 
+                    href={link.url}
+                    target="_blank" 
+                    rel="noreferrer"
+                    style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--text)", textDecoration: "none", fontSize: 12, fontWeight: 600 }}
+                  >
+                    <ExternalLink size={14} /> 
+                    <span>{link.title.includes("LeetCode") || link.title.includes("Practice") ? "LeetCode" : link.title.split('—')[0].trim()}</span>
+
+                  </a>
+                  {link.companies && link.companies.length > 0 && (
+                    <div style={{ display: "flex", gap: 4, marginLeft: 8, borderLeft: "1px solid var(--border)", paddingLeft: 8 }}>
+                      {link.companies.slice(0, 2).map((c, ci) => (
+                        <span key={ci} style={{ fontSize: 8, fontWeight: 700, color: "var(--text3)", background: "var(--bg4)", padding: "2px 6px", borderRadius: 4, textTransform: "uppercase" }}>{c}</span>
+                      ))}
+                      {link.companies.length > 2 && <span key="more" style={{ fontSize: 8, color: "var(--text3)" }}>+{link.companies.length - 2}</span>}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           ) : !isEditMode && linkUrl && (
@@ -136,7 +151,21 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
             </div>
           ) : (
             <div className="markdown-body" style={{ color: "var(--text)", fontSize: 15, lineHeight: 1.7, fontFamily: "var(--font)", paddingRight: 10 }}>
-              <h1 style={{ fontSize: 32, fontWeight: 800, color: "var(--text)", marginBottom: 24, letterSpacing: "-1px" }}>{title || "Untitled Topic"}</h1>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <h1 style={{ fontSize: 32, fontWeight: 800, color: "var(--text)", marginBottom: 0, letterSpacing: "-1px" }}>{title || "Untitled Topic"}</h1>
+                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                </div>
+
+              </div>
+              
+              {topic.companies && topic.companies.length > 0 && (
+                <div style={{ display: "flex", gap: 6, marginBottom: 24, flexWrap: "wrap" }}>
+                  {topic.companies.map((c, ci) => (
+                    <span key={ci} style={{ fontSize: 9, fontWeight: 700, color: "var(--text2)", background: "var(--bg3)", padding: "3px 8px", borderRadius: 6, border: "1px solid var(--border)", textTransform: "uppercase", letterSpacing: "0.5px" }}>{c}</span>
+                  ))}
+                </div>
+              )}
+
               {content ? (
                 <ReactMarkdown 
                   remarkPlugins={[remarkGfm]} 
@@ -207,9 +236,10 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
                 </button>
                 {isLoading && <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--text3)", fontSize: 12 }}><Loader size={14} className="spin" /> Loading Kernel...</div>}
                 {isRunning ? (
-                  <button onClick={stopExecution} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", background: "transparent", color: "#ef4444", border: "1px solid #ef4444", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
+                  <button onClick={interruptExecution} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", background: "transparent", color: "#ef4444", border: "1px solid #ef4444", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
                     <Square size={12} fill="currentColor" /> STOP
                   </button>
+
                 ) : (
                   <button onClick={handleRun} disabled={isLoading} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", background: isLoading ? "var(--bg3)" : (pathColor || "#00ff88"), color: "#000", border: "none", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: isLoading ? "not-allowed" : "pointer", opacity: isLoading ? 0.5 : 1 }}>
                     <Play size={12} fill="currentColor" /> RUN CODE

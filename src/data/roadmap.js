@@ -1,7 +1,13 @@
 import { DSA_PATH } from "./dsa_path";
+import { AICXM_AWS_PATH } from "./aicxm_aws_path";
+import { AICXM_AZURE_PATH } from "./aicxm_azure_path";
+import { AICXM_DATABRICKS_PATH } from "./aicxm_databricks_path";
 
 export const PATHS = {
   dsa: DSA_PATH,
+  aicxm_aws: AICXM_AWS_PATH,
+  aicxm_azure: AICXM_AZURE_PATH,
+  aicxm_databricks: AICXM_DATABRICKS_PATH,
   ds: {
     id: "ds",
     label: "Data Science",

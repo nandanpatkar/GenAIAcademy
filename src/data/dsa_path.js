@@ -13,6 +13,14 @@ export const DSA_PATH = {
   title: "Pattern Wise DSA",
   subtitle: "Comprehensive algorithmic mastery mapping 450+ foundational patterns optimally.",
   nodes: [
-    ...dsaPart1,   ...dsaPart2,   ...dsaPart3, ...dsaPart4,   ...dsaPart5,   ...dsaPart6,   ...dsaPart7,   ...dsaPart8,   ...dsaPart9
+    ...dsaPart1,
+    ...dsaPart2,
+    ...dsaPart3,
+    ...dsaPart4,
+    ...dsaPart5,
+    ...dsaPart6,
+    ...dsaPart7,
+    ...dsaPart8,
+    ...dsaPart9
   ]
 };

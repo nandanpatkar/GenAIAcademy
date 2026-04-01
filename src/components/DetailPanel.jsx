@@ -3,7 +3,8 @@ import { Box } from "lucide-react";
 const STATUS_LABELS = { complete: "COMPLETE", in_progress: "IN PROGRESS", locked: "LOCKED", default: "NOT STARTED" };
 const STATUS_COLORS = { complete: "#00ff88", in_progress: "#f59e0b", locked: "#555570", default: "#555570" };
 
-export default function DetailPanel({ node, module, pathColor, onMarkDone, onMarkProgress, onMarkModuleStatus, nodeState, onModuleSelect, onTopicSelect, isEditMode }) {
+export default function DetailPanel({ node, module, pathColor, onMarkDone, onMarkProgress, onMarkModuleStatus, onToggleSubtopicStatus, nodeState, onModuleSelect, onTopicSelect, isEditMode }) {
+
   if (!node || !module) return (
     <div className="no-select">
       <div className="no-select-icon"><Box size={48} strokeWidth={1} /></div>
@@ -60,63 +61,83 @@ export default function DetailPanel({ node, module, pathColor, onMarkDone, onMar
         {/* Overview */}
         <div className="dp-overview">{module.overview}</div>
 
-        {/* Subtopics */}
-        <div className="dp-section-label">What you'll learn</div>
-        <div className="dp-subtopic-grid">
-          {module.subtopics?.map((s, idx) => {
-            const isObj = typeof s === "object";
-            const topicId = isObj ? s.id : s;
-            const topicTitle = isObj ? s.title : s;
-            const topicObj = isObj ? s : { id: s, title: s, content: "" };
-            
-            return (
-              <div 
-                key={topicId || idx} 
-                className="dp-subtopic" 
-                onClick={() => onTopicSelect && onTopicSelect(topicObj)}
-                style={{ cursor: "pointer", transition: "all .15s" }}
-              >
-                {topicTitle}
-              </div>
-            );
-          })}
-          {onTopicSelect && isEditMode && (
-            <div 
-              className="dp-subtopic"
-              style={{ background: "transparent", border: "1px dashed var(--border2)", cursor: "pointer", color: "var(--text3)" }}
-              onClick={() => onTopicSelect({ id: `topic-${Date.now()}`, title: "New Topic", content: "" })}
-            >
-              + Add Topic
-            </div>
-          )}
-        </div>
-
         {/* All modules in this node */}
         <div className="dp-section-label">All modules in this node</div>
         <div className="dp-module-list">
-          {node.modules?.map((m) => (
-            <div 
-              key={m.id} 
-              className={`dp-module-row ${m.id === module.id ? "active" : ""}`}
-              onClick={() => onModuleSelect && onModuleSelect(m)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className={`dp-module-circle ${m.status}`}>
-                {m.status === "complete" ? "✓" : m.status === "in_progress" ? "⟳" : m.status === "locked" ? "🔒" : "◌"}
-              </div>
-              <div className="dp-module-info">
-                <div className="dp-module-name">{m.title}</div>
-                <div className="dp-module-desc">{m.subtitle}</div>
-              </div>
-              <div>
-                {(m.status === "complete" || m.status === "in_progress") && (
-                  <span className={`dp-module-status-pill ${m.status}`}>
-                    {m.status === "complete" ? "COMPLETE" : "IN PROGRESS"}
-                  </span>
+
+          {node.modules?.map((m) => {
+            const isActive = m.id === module.id;
+            return (
+              <div key={m.id} style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                <div 
+                  className={`dp-module-row ${isActive ? "active" : ""}`}
+                  onClick={() => onModuleSelect && onModuleSelect(m)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <div className={`dp-module-circle ${m.status}`}>
+                    {m.status === "complete" ? "✓" : m.status === "in_progress" ? "⟳" : m.status === "locked" ? "🔒" : "◌"}
+                  </div>
+                  <div className="dp-module-info">
+                    <div className="dp-module-name">{m.title}</div>
+                    <div className="dp-module-desc">{m.subtitle}</div>
+                  </div>
+                  <div>
+                    {(m.status === "complete" || m.status === "in_progress") && (
+                      <span className={`dp-module-status-pill ${m.status}`}>
+                        {m.status === "complete" ? "COMPLETE" : "IN PROGRESS"}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                
+                {isActive && m.subtopics && m.subtopics.length > 0 && (
+                  <div style={{ marginLeft: 36, paddingLeft: 16, borderLeft: "2px solid var(--border)", display: "flex", flexDirection: "column", gap: 4, marginBottom: 12, marginTop: 4 }}>
+                    {m.subtopics.map((s, sidx) => {
+                      const st = typeof s === "object" ? s : { title: s, status: "pending" };
+                      const isComplete = st.status === "complete";
+                      
+                      return (
+                        <div 
+                          key={sidx} 
+                          onClick={(e) => { e.stopPropagation(); onTopicSelect && onTopicSelect(st); }}
+                          style={{ 
+                            fontSize: 12, fontWeight: 600, color: isComplete ? "var(--text)" : "var(--text2)", cursor: "pointer", 
+                            padding: "8px 12px", borderRadius: 6, background: isComplete ? "rgba(0,255,136,0.05)" : "rgba(255,255,255,0.02)", 
+                            display: "flex", justifyContent: "space-between", alignItems: "center",
+                            transition: "all .15s"
+                          }}
+                          className="hover-node"
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <div 
+                              onClick={(e) => { e.stopPropagation(); onToggleSubtopicStatus && onToggleSubtopicStatus(st.title); }}
+                              style={{ 
+                                width: 12, height: 12, borderRadius: "50%", 
+                                border: `1.5px solid ${isComplete ? "#00ff88" : "var(--text3)"}`,
+                                display: "flex", alignItems: "center", justifyContent: "center",
+                                fontSize: 8, color: "#00ff88", cursor: "pointer",
+                                background: isComplete ? "rgba(0,255,136,0.1)" : "transparent"
+                              }}
+                            >
+                              {isComplete && "✓"}
+                            </div>
+                            <span>{st.title}</span>
+                          </div>
+
+                          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                            {st.companies && st.companies.length > 0 && (
+                              <span style={{ fontSize: 8, color: "var(--text3)", background: "var(--bg3)", padding: "2px 6px", borderRadius: 4 }}>{st.companies[0]}</span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 )}
+
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Stats */}

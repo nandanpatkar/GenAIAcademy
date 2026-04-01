@@ -18,6 +18,7 @@
     "react-markdown": "^10.1.0",
     "react-py": "^1.11.7",
     "react-syntax-highlighter": "^16.1.1",
+    "reactflow": "^11.11.4",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {

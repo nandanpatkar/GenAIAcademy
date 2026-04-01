@@ -13,29 +13,47 @@ export const dsaPart3 = [
         "status": "locked",
         "duration": "5 problems",
         "subtopics": [
-          "Search in Linked List",
-          "Insert at Head / Tail / Nth Position",
-          "Delete Head / Tail / Nth Node",
-          "Design Linked List",
-          "Odd\u2013Even Linked List"
+          {
+            "title": "Search in Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "Insert at Head / Tail / Nth Position",
+            "status": "pending"
+          },
+          {
+            "title": "Delete Head / Tail / Nth Node",
+            "status": "pending"
+          },
+          {
+            "title": "Design Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "Odd\u2013Even Linked List",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Insert at Head / Tail / Nth Position \u2014 Practice",
-            "url": "https://leetcode.com/problems/design-linked-list/"
+            "url": "https://leetcode.com/problems/design-linked-list/",
+            "difficulty": "Easy"
           },
           {
             "title": "Design Linked List \u2014 Practice",
-            "url": "https://leetcode.com/problems/design-linked-list/"
+            "url": "https://leetcode.com/problems/design-linked-list/",
+            "difficulty": "Medium"
           },
           {
             "title": "Odd\u2013Even Linked List \u2014 Practice",
-            "url": "https://leetcode.com/problems/odd-even-linked-list/"
+            "url": "https://leetcode.com/problems/odd-even-linked-list/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Basic Operations optimally natively."
+        "overview": "Mastering Basic Operations (0/5) optimally natively."
       },
       {
         "id": "sub-fast-and-s",
@@ -44,32 +62,48 @@ export const dsaPart3 = [
         "status": "locked",
         "duration": "4 problems",
         "subtopics": [
-          "Middle of the Linked List",
-          "Linked List Cycle",
-          "Linked List Cycle II",
-          "Remove Nth Node From End"
+          {
+            "title": "Middle of the Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "Linked List Cycle",
+            "status": "pending"
+          },
+          {
+            "title": "Linked List Cycle II",
+            "status": "pending"
+          },
+          {
+            "title": "Remove Nth Node From End",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Middle of the Linked List \u2014 Practice",
-            "url": "https://leetcode.com/problems/middle-of-the-linked-list/"
+            "url": "https://leetcode.com/problems/middle-of-a-linked-list/",
+            "difficulty": "Easy"
           },
           {
             "title": "Linked List Cycle \u2014 Practice",
-            "url": "https://leetcode.com/problems/linked-list-cycle/"
+            "url": "https://leetcode.com/problems/linked-list-cycle/",
+            "difficulty": "Easy"
           },
           {
             "title": "Linked List Cycle II \u2014 Practice",
-            "url": "https://leetcode.com/problems/linked-list-cycle-ii/"
+            "url": "https://leetcode.com/problems/linked-list-cycle-ii/",
+            "difficulty": "Medium"
           },
           {
             "title": "Remove Nth Node From End \u2014 Practice",
-            "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/"
+            "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Fast and Slow Pointers optimally natively."
+        "overview": "Mastering Fast and Slow Pointers (0/4) optimally natively."
       },
       {
         "id": "sub-reversal-p",
@@ -78,42 +112,61 @@ export const dsaPart3 = [
         "status": "locked",
         "duration": "6 problems",
         "subtopics": [
-          "Reverse a Linked List",
-          "Reverse Linked List II (between m & n)",
-          "Palindrome Linked List",
-          "Reverse Nodes in k-Group",
-          "Swap Nodes in Pairs",
-          "Rotate List"
+          {
+            "title": "Reverse a Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "Reverse Linked List II (between m & n)",
+            "status": "pending"
+          },
+          {
+            "title": "Palindrome Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "Reverse Nodes in k-Group",
+            "status": "pending"
+          },
+          {
+            "title": "Swap Nodes in Pairs",
+            "status": "pending"
+          },
+          {
+            "title": "Rotate List",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
-            "title": "Reverse a Linked List \u2014 Practice",
-            "url": "https://leetcode.com/problems/reverse-linked-list/"
-          },
-          {
             "title": "Reverse Linked List II (between m & n) \u2014 Practice",
-            "url": "https://leetcode.com/problems/reverse-linked-list-ii/"
+            "url": "https://leetcode.com/problems/reverse-linked-list-ii/",
+            "difficulty": "Medium"
           },
           {
             "title": "Palindrome Linked List \u2014 Practice",
-            "url": "https://leetcode.com/problems/palindrome-linked-list/"
+            "url": "https://leetcode.com/problems/palindrome-linked-list/",
+            "difficulty": "Easy"
           },
           {
             "title": "Reverse Nodes in k-Group \u2014 Practice",
-            "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/"
+            "url": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
+            "difficulty": "Hard"
           },
           {
             "title": "Swap Nodes in Pairs \u2014 Practice",
-            "url": "https://leetcode.com/problems/swap-nodes-in-pairs/"
+            "url": "https://leetcode.com/problems/swap-nodes-in-pairs/",
+            "difficulty": "Medium"
           },
           {
             "title": "Rotate List \u2014 Practice",
-            "url": "https://leetcode.com/problems/rotate-list/"
+            "url": "https://leetcode.com/problems/rotate-list/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Reversal Pattern optimally natively."
+        "overview": "Mastering Reversal Pattern (0/6) optimally natively."
       },
       {
         "id": "sub-merge--sor",
@@ -122,37 +175,47 @@ export const dsaPart3 = [
         "status": "locked",
         "duration": "5 problems",
         "subtopics": [
-          "Merge Two Sorted Lists",
-          "Merge K Sorted Lists",
-          "Sort List",
-          "Reorder List",
-          "Remove Duplicates from Sorted List"
+          {
+            "title": "Merge Two Sorted Lists",
+            "status": "pending"
+          },
+          {
+            "title": "Merge K Sorted Lists",
+            "status": "pending"
+          },
+          {
+            "title": "Sort List",
+            "status": "pending"
+          },
+          {
+            "title": "Reorder List",
+            "status": "pending"
+          },
+          {
+            "title": "Remove Duplicates from Sorted List",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
-            "title": "Merge Two Sorted Lists \u2014 Practice",
-            "url": "https://leetcode.com/problems/merge-two-sorted-lists/"
-          },
-          {
-            "title": "Merge K Sorted Lists \u2014 Practice",
-            "url": "https://leetcode.com/problems/merge-k-sorted-lists/"
-          },
-          {
             "title": "Sort List \u2014 Practice",
-            "url": "https://leetcode.com/problems/sort-list/"
+            "url": "https://leetcode.com/problems/sort-list/",
+            "difficulty": "Medium"
           },
           {
             "title": "Reorder List \u2014 Practice",
-            "url": "https://leetcode.com/problems/reorder-list/"
+            "url": "https://leetcode.com/problems/reorder-list/",
+            "difficulty": "Medium"
           },
           {
             "title": "Remove Duplicates from Sorted List \u2014 Practice",
-            "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-list/"
+            "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-list/",
+            "difficulty": "Easy"
           }
         ],
-        "overview": "Mastering Merge / Sort optimally natively."
+        "overview": "Mastering Merge / Sort (0/5) optimally natively."
       },
       {
         "id": "sub-linked-lis",
@@ -161,32 +224,48 @@ export const dsaPart3 = [
         "status": "locked",
         "duration": "4 problems",
         "subtopics": [
-          "Add Two Numbers",
-          "Add Two Numbers II",
-          "Next Greater Node in Linked List",
-          "Remove Nodes From Linked List"
+          {
+            "title": "Add Two Numbers",
+            "status": "pending"
+          },
+          {
+            "title": "Add Two Numbers II",
+            "status": "pending"
+          },
+          {
+            "title": "Next Greater Node in Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "Remove Nodes From Linked List",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Add Two Numbers \u2014 Practice",
-            "url": "https://leetcode.com/problems/add-two-numbers/"
+            "url": "https://leetcode.com/problems/add-two-numbers/",
+            "difficulty": "Medium"
           },
           {
             "title": "Add Two Numbers II \u2014 Practice",
-            "url": "https://leetcode.com/problems/add-two-numbers-ii/"
+            "url": "https://leetcode.com/problems/add-two-numbers-ii/",
+            "difficulty": "Medium"
           },
           {
             "title": "Next Greater Node in Linked List \u2014 Practice",
-            "url": "https://leetcode.com/problems/next-greater-node-in-linked-list/"
+            "url": "https://leetcode.com/problems/next-greater-node-in-linked-list/",
+            "difficulty": "Medium"
           },
           {
             "title": "Remove Nodes From Linked List \u2014 Practice",
-            "url": "https://leetcode.com/problems/remove-nodes-from-linked-list/"
+            "url": "https://leetcode.com/problems/remove-nodes-from-linked-list/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Linked List + Stack optimally natively."
+        "overview": "Mastering Linked List + Stack (0/4) optimally natively."
       }
     ]
   },
@@ -200,51 +279,81 @@ export const dsaPart3 = [
       {
         "id": "sub-basic-dll-",
         "title": "Basic DLL Operations",
-        "subtitle": "Maintain prev and next pointers carefully for insert, delete, traversal; use DLL + HashMap for O",
+        "subtitle": "Maintain prev and next pointers carefully for insert, delete, traversal; use DLL + HashMap for O(1) cache operations.",
         "status": "locked",
         "duration": "6 problems",
         "subtopics": [
-          "Implement Doubly Linked List",
-          "Insert a node in a doubly Linkedlist",
-          "Delete a node from a doubly Linkedlist",
-          "Reverse Doubly Linked List",
-          "LRU Cache",
-          "LFU Cache"
+          {
+            "title": "Implement Doubly Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "Insert a node in a doubly Linkedlist",
+            "status": "pending"
+          },
+          {
+            "title": "Delete a node from a doubly Linkedlist",
+            "status": "pending"
+          },
+          {
+            "title": "Reverse Doubly Linked List",
+            "status": "pending"
+          },
+          {
+            "title": "LRU Cache",
+            "status": "pending"
+          },
+          {
+            "title": "LFU Cache",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "LRU Cache \u2014 Practice",
-            "url": "https://leetcode.com/problems/lru-cache/"
+            "url": "https://leetcode.com/problems/lru-cache/",
+            "difficulty": "Medium"
           },
           {
             "title": "LFU Cache \u2014 Practice",
-            "url": "https://leetcode.com/problems/lfu-cache/"
+            "url": "https://leetcode.com/problems/lfu-cache/",
+            "difficulty": "Hard"
           }
         ],
-        "overview": "Mastering Basic DLL Operations optimally natively."
+        "overview": "Mastering Basic DLL Operations (0/6) optimally natively."
       },
       {
         "id": "sub-merge--sor",
         "title": "Merge / Sort / Reorder",
-        "subtitle": "Use DLL properties",
+        "subtitle": "Use DLL properties (prev/next) to efficiently merge, sort, reorder, flatten, or perform pointer-based checks.",
         "status": "locked",
         "duration": "3 problems",
         "subtopics": [
-          "Merge Two Sorted DLLs",
-          "Flatten Multilevel DLL",
-          "Convert DLL to Binary Tree"
+          {
+            "title": "Merge Two Sorted DLLs",
+            "status": "pending"
+          },
+          {
+            "title": "Flatten Multilevel DLL",
+            "status": "pending"
+          },
+          {
+            "title": "Convert DLL to Binary Tree",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Flatten Multilevel DLL \u2014 Practice",
-            "url": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/"
+            "url": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Merge / Sort / Reorder optimally natively."
+        "overview": "Mastering Merge / Sort / Reorder (0/3) optimally natively."
       }
     ]
   }

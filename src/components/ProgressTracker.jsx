@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Target, TrendingUp, CircleDashed, CheckCircle2, Lock, BookOpen, ChevronRight, ChevronDown, Activity, Award } from 'lucide-react';
 
+
 export default function ProgressTracker({ pathsData, onClose }) {
   const [expandedPaths, setExpandedPaths] = useState({});
   const [expandedNodes, setExpandedNodes] = useState({});
@@ -23,8 +24,9 @@ export default function ProgressTracker({ pathsData, onClose }) {
     
     let pathsInfo = [];
 
-    Object.keys(pathsData).forEach(pk => {
+    Object.keys(pathsData || {}).forEach(pk => {
       const p = pathsData[pk];
+      if (!p) return;
       let pTotal = 0;
       let pComplete = 0;
       let pInProg = 0;
@@ -40,6 +42,7 @@ export default function ProgressTracker({ pathsData, onClose }) {
           if (m.status === 'complete') { complete++; pComplete++; nComplete++; }
           else if (m.status === 'in_progress') { inProgress++; pInProg++; pInProgN++; }
           else locked++;
+
         });
 
         nodesInfo.push({
@@ -174,6 +177,8 @@ export default function ProgressTracker({ pathsData, onClose }) {
 
         {/* Right Col: Deep Hierarchy Tracker */}
         <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 24 }}>
+          <ActivityHeatmap pathsData={pathsData} />
+
           {stats.pathsInfo.map(path => (
             <div key={path.key} style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden" }}>
               {/* Path Header */}
@@ -245,3 +250,184 @@ export default function ProgressTracker({ pathsData, onClose }) {
     </div>
   );
 }
+
+const ActivityHeatmap = ({ pathsData }) => {
+  const weeks = 52;
+  const daysPerWeek = 7;
+  const totalDays = weeks * daysPerWeek;
+  
+  const { data, monthLabels, stats } = useMemo(() => {
+    const activity = new Array(totalDays).fill(0);
+    const dateObjects = new Array(totalDays).fill(null);
+    const now = new Date();
+    
+    // To align with Mon-Sun rows, we start the grid on a Monday
+    // Find the Monday of the current week (or last week if we want today to be near the end)
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const dayOfWeek = today.getDay(); // 0 (Sun) to 6 (Sat)
+    const diffToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+    const lastSunday = new Date(today);
+    lastSunday.setDate(today.getDate() + (6 - (dayOfWeek === 0 ? 7 : dayOfWeek) + 1)); // End of current week
+
+    const endDate = new Date(today);
+    // Let's keep it simple: the last day of the grid is the Sunday of the current week
+    const gridEnd = new Date(today);
+    gridEnd.setDate(today.getDate() + (dayOfWeek === 0 ? 0 : 7 - dayOfWeek));
+    
+    const gridStart = new Date(gridEnd);
+    gridStart.setDate(gridEnd.getDate() - totalDays + 1);
+    gridStart.setHours(0, 0, 0, 0);
+
+    const completionEvents = [];
+    
+    // Scan all paths for any subtopic or module with a completionDate
+    Object.values(pathsData || {}).forEach(path => {
+      (path.nodes || []).forEach(node => {
+        (node.modules || []).forEach(module => {
+          if (module.status === 'complete' && module.completionDate) {
+            completionEvents.push({ date: new Date(module.completionDate), title: module.title });
+          }
+          (module.subtopics || []).forEach(subtopic => {
+            if (typeof subtopic === 'object' && subtopic.completionDate) {
+              completionEvents.push({ date: new Date(subtopic.completionDate), title: subtopic.title });
+            }
+          });
+        });
+      });
+    });
+
+    completionEvents.forEach(event => {
+      const diffTime = event.date.getTime() - gridStart.getTime();
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays >= 0 && diffDays < totalDays) {
+        activity[diffDays]++;
+      }
+    });
+
+    // Generate month labels centered over their weeks
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const labels = [];
+    let lastMonth = -1;
+    for (let w = 0; w < weeks; w++) {
+      const weekDate = new Date(gridStart);
+      weekDate.setDate(gridStart.getDate() + w * 7);
+      const month = weekDate.getMonth();
+      if (month !== lastMonth) {
+        labels.push({ name: monthNames[month], index: w });
+        lastMonth = month;
+      }
+    }
+
+    // Prepare square data
+    const squares = activity.map((count, i) => {
+      const date = new Date(gridStart);
+      date.setDate(gridStart.getDate() + i);
+      
+      let level = 0;
+      if (count > 0) {
+        if (count <= 2) level = 1;
+        else if (count <= 4) level = 2;
+        else if (count <= 8) level = 3;
+        else level = 4;
+      }
+
+      return {
+        level,
+        count,
+        date: date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }),
+        isToday: date.getTime() === today.getTime()
+      };
+    });
+
+    return { data: squares, monthLabels: labels, stats: { total: completionEvents.length } };
+  }, [pathsData, totalDays]);
+
+  const getColor = (level) => {
+    switch (level) {
+      case 0: return 'var(--bg4)';
+      case 1: return '#064e3b';
+      case 2: return '#065f46';
+      case 3: return '#059669';
+      case 4: return '#10b981';
+      default: return 'var(--bg4)';
+    }
+  };
+
+  return (
+    <div style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, padding: "24px", marginBottom: "24px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+        <h3 style={{ margin: 0, fontSize: 13, textTransform: "uppercase", letterSpacing: "1px", color: "var(--text2)", fontWeight: 800 }}>Learning Activity</h3>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "var(--text3)", fontWeight: 600 }}>
+          <span>Less</span>
+          {[0, 1, 2, 3, 4].map(l => (
+            <div key={l} style={{ width: 10, height: 10, borderRadius: 2, background: getColor(l) }} />
+          ))}
+          <span>More</span>
+        </div>
+      </div>
+      
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 4, overflowX: 'auto' }}>
+        {/* Month Labels */}
+        <div style={{ position: 'relative', height: 15, marginLeft: 38, marginBottom: 4 }}>
+          {monthLabels.map((m, idx) => (
+            <div key={idx} style={{ 
+              position: 'absolute', 
+              left: `${(m.index / weeks) * 100}%`, 
+              fontSize: 9, 
+              color: "var(--text3)",
+              whiteSpace: 'nowrap'
+            }}>
+              {m.name}
+            </div>
+          ))}
+        </div>
+        
+        <div style={{ display: 'flex', gap: 8 }}>
+          {/* Day Labels */}
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '4px 0', height: 90, width: 30 }}>
+            {['Mon', 'Wed', 'Fri', 'Sun'].map(d => (
+              <span key={d} style={{ fontSize: 9, color: "var(--text3)" }}>{d}</span>
+            ))}
+          </div>
+          
+          {/* Heatmap Grid */}
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: `repeat(${weeks}, 1fr)`, 
+            gridTemplateRows: `repeat(${daysPerWeek}, 1fr)`, 
+            gridAutoFlow: 'column',
+            gap: 3, 
+            flex: 1,
+            minWidth: 650
+          }}>
+            {data.map((day, i) => (
+              <div 
+                key={i} 
+                title={`${day.count} activities on ${day.date}`}
+                style={{ 
+                  width: '100%', 
+                  aspectRatio: '1/1', 
+                  background: getColor(day.level), 
+                  borderRadius: 2,
+                  transition: 'all 0.2s',
+                  cursor: 'pointer',
+                  border: day.isToday ? '1px solid #00ff88' : 'none',
+                  boxShadow: day.isToday ? '0 0 5px rgba(0,255,136,0.5)' : 'none'
+                }} 
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'scale(1.4)';
+                  e.currentTarget.style.zIndex = '10';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.zIndex = '1';
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+

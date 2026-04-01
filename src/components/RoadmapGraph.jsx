@@ -7,7 +7,8 @@ const PATH_ICONS = {
 };
 
 export default function RoadmapGraph({
-  path, activePath, activeNode, onNodeClick,
+  path, activePath, setActivePath, pathsData,
+  activeNode, onNodeClick,
   getNodeState, completedCount, onMarkState,
   onAddNode, onEditNode, isEditMode
 }) {
@@ -32,12 +33,20 @@ export default function RoadmapGraph({
   const accent = words.length > 1 ? words.pop() : "";
   const plain = words.join(" ");
 
-  const tabLabels = [
-     { key: "dsa", label: "DSA" },
-    { key: "ds", label: "DATA SCIENCE" },
-    { key: "genai", label: "GEN AI" },
-    { key: "agentic", label: "AGENTIC AI" }
-  ];
+  // Build tabs only from paths that actually exist, with friendly labels
+  const PATH_LABELS = {
+    dsa:              "DSA",
+    aicxm_aws:        "AICXM AWS",
+    aicxm_azure:      "AICXM AZURE",
+    aicxm_databricks: "AICXM DATABRICKS",
+    ds:               "DATA SCIENCE",
+    genai:            "GEN AI",
+    agentic:          "AGENTIC AI",
+  };
+  const tabLabels = Object.keys(pathsData || {}).map(key => ({
+    key,
+    label: PATH_LABELS[key] || (pathsData[key]?.title || key).toUpperCase(),
+  }));
 
   return (
     <div className="roadmap-graph">
@@ -49,9 +58,10 @@ export default function RoadmapGraph({
               key={t.key}
               className={`rg-tab ${activePath === t.key ? "active" : ""}`}
               style={{
-                "--tab-color": path.color,
-                "--tab-bg": activePath === t.key ? path.bgColor : "transparent",
+                "--tab-color": activePath === t.key ? path.color : undefined,
+                "--tab-bg":    activePath === t.key ? `${path.color}12` : "transparent",
               }}
+              onClick={() => setActivePath && setActivePath(t.key)}
             >
               {t.label}
             </button>

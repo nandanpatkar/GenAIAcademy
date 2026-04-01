@@ -13,42 +13,56 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "6 problems",
         "subtopics": [
-          "Binary Search",
-          "Sqrt(x)",
-          "Search Insert Position",
-          "Search in Rotated Sorted Array",
-          "Find Minimum in Rotated Sorted Array",
-          "Find Peak Element"
+          {
+            "title": "Binary Search",
+            "status": "pending"
+          },
+          {
+            "title": "Sqrt(x)",
+            "status": "pending"
+          },
+          {
+            "title": "Search Insert Position",
+            "status": "pending"
+          },
+          {
+            "title": "Search in Rotated Sorted Array",
+            "status": "pending"
+          },
+          {
+            "title": "Find Minimum in Rotated Sorted Array",
+            "status": "pending"
+          },
+          {
+            "title": "Find Peak Element",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
-            "title": "Binary Search \u2014 Practice",
-            "url": "https://leetcode.com/problems/binary-search/"
-          },
-          {
             "title": "Sqrt(x) \u2014 Practice",
-            "url": "https://leetcode.com/problems/sqrtx/"
+            "url": "https://leetcode.com/problems/sqrtx/",
+            "difficulty": "Easy"
           },
           {
             "title": "Search Insert Position \u2014 Practice",
-            "url": "https://leetcode.com/problems/search-insert-position/"
-          },
-          {
-            "title": "Search in Rotated Sorted Array \u2014 Practice",
-            "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
+            "url": "https://leetcode.com/problems/search-insert-position/",
+            "difficulty": "Easy"
           },
           {
             "title": "Find Minimum in Rotated Sorted Array \u2014 Practice",
-            "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
+            "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+            "difficulty": "Medium"
           },
           {
             "title": "Find Peak Element \u2014 Practice",
-            "url": "https://leetcode.com/problems/find-peak-element/"
+            "url": "https://leetcode.com/problems/find-peak-element/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Classic Binary Search optimally natively."
+        "overview": "Mastering Classic Binary Search (0/6) optimally natively."
       },
       {
         "id": "sub-lower--upp",
@@ -57,21 +71,37 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "5 problems",
         "subtopics": [
-          "Find First and Last Position of Element",
-          "Find kth rotation",
-          "Count Occurrences",
-          "Ceiling in a Sorted Array",
-          "Floor in a Sorted Array"
+          {
+            "title": "Find First and Last Position of Element",
+            "status": "pending"
+          },
+          {
+            "title": "Find kth rotation",
+            "status": "pending"
+          },
+          {
+            "title": "Count Occurrences",
+            "status": "pending"
+          },
+          {
+            "title": "Ceiling in a Sorted Array",
+            "status": "pending"
+          },
+          {
+            "title": "Floor in a Sorted Array",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Find First and Last Position of Element \u2014 Practice",
-            "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"
+            "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Lower / Upper Bound optimally natively."
+        "overview": "Mastering Lower / Upper Bound (0/5) optimally natively."
       },
       {
         "id": "sub-binary-sea",
@@ -80,48 +110,79 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "8 problems",
         "subtopics": [
-          "Koko Eating Bananas",
-          "Capacity To Ship Packages Within D Days",
-          "Min Speed to Arrive on Time",
-          "Aggressive cows",
-          "Min number of days to make m bouquets",
-          "Magnetic Force Between Two Balls",
-          "Allocate Minimum Number of Pages",
-          "Split Array Largest Sum"
+          {
+            "title": "Koko Eating Bananas",
+            "status": "pending"
+          },
+          {
+            "title": "Capacity To Ship Packages Within D Days",
+            "status": "pending"
+          },
+          {
+            "title": "Min Speed to Arrive on Time",
+            "status": "pending"
+          },
+          {
+            "title": "Aggressive cows",
+            "status": "pending"
+          },
+          {
+            "title": "Min number of days to make m bouquets",
+            "status": "pending"
+          },
+          {
+            "title": "Magnetic Force Between Two Balls",
+            "status": "pending"
+          },
+          {
+            "title": "Allocate Minimum Number of Pages",
+            "status": "pending"
+          },
+          {
+            "title": "Split Array Largest Sum",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Koko Eating Bananas \u2014 Practice",
-            "url": "https://leetcode.com/problems/koko-eating-bananas/"
+            "url": "https://leetcode.com/problems/koko-eating-bananas/",
+            "difficulty": "Medium"
           },
           {
             "title": "Capacity To Ship Packages Within D Days \u2014 Practice",
-            "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/"
+            "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/",
+            "difficulty": "Medium"
           },
           {
             "title": "Min Speed to Arrive on Time \u2014 Practice",
-            "url": "https://leetcode.com/problems/minimum-speed-to-arrive-on-time/"
+            "url": "https://leetcode.com/problems/minimum-speed-to-arrive-on-time/",
+            "difficulty": "Medium"
           },
           {
             "title": "Min number of days to make m bouquets \u2014 Practice",
-            "url": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/"
+            "url": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/",
+            "difficulty": "Medium"
           },
           {
             "title": "Magnetic Force Between Two Balls \u2014 Practice",
-            "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/"
+            "url": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
+            "difficulty": "Medium"
           },
           {
             "title": "Allocate Minimum Number of Pages \u2014 Practice",
-            "url": "https://leetcode.com/problems/split-array-largest-sum/"
+            "url": "https://leetcode.com/problems/split-array-largest-sum/",
+            "difficulty": "Medium"
           },
           {
             "title": "Split Array Largest Sum \u2014 Practice",
-            "url": "https://leetcode.com/problems/split-array-largest-sum/"
+            "url": "https://leetcode.com/problems/split-array-largest-sum/",
+            "difficulty": "Hard"
           }
         ],
-        "overview": "Mastering Binary Search on Answers optimally natively."
+        "overview": "Mastering Binary Search on Answers (0/8) optimally natively."
       },
       {
         "id": "sub-search-in-",
@@ -130,28 +191,43 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "4 problems",
         "subtopics": [
-          "Search a 2D Matrix",
-          "Search a 2D Matrix II",
-          "Kth Smallest Element in Sorted Matrix",
-          "Matrix Median"
+          {
+            "title": "Search a 2D Matrix",
+            "status": "pending"
+          },
+          {
+            "title": "Search a 2D Matrix II",
+            "status": "pending"
+          },
+          {
+            "title": "Kth Smallest Element in Sorted Matrix",
+            "status": "pending"
+          },
+          {
+            "title": "Matrix Median",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Search a 2D Matrix \u2014 Practice",
-            "url": "https://leetcode.com/problems/search-a-2d-matrix/"
+            "url": "https://leetcode.com/problems/search-a-2d-matrix/",
+            "difficulty": "Medium"
           },
           {
             "title": "Search a 2D Matrix II \u2014 Practice",
-            "url": "https://leetcode.com/problems/search-a-2d-matrix-ii/"
+            "url": "https://leetcode.com/problems/search-a-2d-matrix-ii/",
+            "difficulty": "Medium"
           },
           {
             "title": "Kth Smallest Element in Sorted Matrix \u2014 Practice",
-            "url": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/"
+            "url": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Search in 2D Matrix optimally natively."
+        "overview": "Mastering Search in 2D Matrix (0/4) optimally natively."
       }
     ]
   },
@@ -169,47 +245,75 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "7 problems",
         "subtopics": [
-          "Next Greater Element I",
-          "Next Greater Element II",
-          "Daily Temperatures",
-          "Online Stock Span",
-          "Largest Rectangle in Histogram",
-          "Maximal Rectangle",
-          "Asteroid Collision"
+          {
+            "title": "Next Greater Element I",
+            "status": "pending"
+          },
+          {
+            "title": "Next Greater Element II",
+            "status": "pending"
+          },
+          {
+            "title": "Daily Temperatures",
+            "status": "pending"
+          },
+          {
+            "title": "Online Stock Span",
+            "status": "pending"
+          },
+          {
+            "title": "Largest Rectangle in Histogram",
+            "status": "pending"
+          },
+          {
+            "title": "Maximal Rectangle",
+            "status": "pending"
+          },
+          {
+            "title": "Asteroid Collision",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Next Greater Element I \u2014 Practice",
-            "url": "https://leetcode.com/problems/next-greater-element-i/"
+            "url": "https://leetcode.com/problems/next-greater-element-i/",
+            "difficulty": "Easy"
           },
           {
             "title": "Next Greater Element II \u2014 Practice",
-            "url": "https://leetcode.com/problems/next-greater-element-ii/"
+            "url": "https://leetcode.com/problems/next-greater-element-ii/",
+            "difficulty": "Medium"
           },
           {
             "title": "Daily Temperatures \u2014 Practice",
-            "url": "https://leetcode.com/problems/daily-temperatures/"
+            "url": "https://leetcode.com/problems/daily-temperatures/",
+            "difficulty": "Medium"
           },
           {
             "title": "Online Stock Span \u2014 Practice",
-            "url": "https://leetcode.com/problems/online-stock-span/"
+            "url": "https://leetcode.com/problems/online-stock-span/",
+            "difficulty": "Medium"
           },
           {
             "title": "Largest Rectangle in Histogram \u2014 Practice",
-            "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/"
+            "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+            "difficulty": "Hard"
           },
           {
             "title": "Maximal Rectangle \u2014 Practice",
-            "url": "https://leetcode.com/problems/maximal-rectangle/"
+            "url": "https://leetcode.com/problems/maximal-rectangle/",
+            "difficulty": "Hard"
           },
           {
             "title": "Asteroid Collision \u2014 Practice",
-            "url": "https://leetcode.com/problems/asteroid-collision/"
+            "url": "https://leetcode.com/problems/asteroid-collision/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Monotonic Stack optimally natively."
+        "overview": "Mastering Monotonic Stack (0/7) optimally natively."
       },
       {
         "id": "sub-expression",
@@ -218,38 +322,67 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "10 problems",
         "subtopics": [
-          "Basic Calculator I",
-          "Basic Calculator II",
-          "Evaluate Reverse Polish Notation",
-          "Decode String",
-          "infix to prefix",
-          "infix to postfix",
-          "postfix to prefix",
-          "postfix to infix",
-          "prefix to infix",
-          "prefix to postfix"
+          {
+            "title": "Basic Calculator I",
+            "status": "pending"
+          },
+          {
+            "title": "Basic Calculator II",
+            "status": "pending"
+          },
+          {
+            "title": "Evaluate Reverse Polish Notation",
+            "status": "pending"
+          },
+          {
+            "title": "Decode String",
+            "status": "pending"
+          },
+          {
+            "title": "infix to prefix",
+            "status": "pending"
+          },
+          {
+            "title": "infix to postfix",
+            "status": "pending"
+          },
+          {
+            "title": "postfix to prefix",
+            "status": "pending"
+          },
+          {
+            "title": "postfix to infix",
+            "status": "pending"
+          },
+          {
+            "title": "prefix to infix",
+            "status": "pending"
+          },
+          {
+            "title": "prefix to postfix",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Basic Calculator I \u2014 Practice",
-            "url": "https://leetcode.com/problems/basic-calculator/"
+            "url": "https://leetcode.com/problems/basic-calculator/",
+            "difficulty": "Hard"
           },
           {
             "title": "Basic Calculator II \u2014 Practice",
-            "url": "https://leetcode.com/problems/basic-calculator-ii/"
+            "url": "https://leetcode.com/problems/basic-calculator-ii/",
+            "difficulty": "Medium"
           },
           {
             "title": "Evaluate Reverse Polish Notation \u2014 Practice",
-            "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/"
-          },
-          {
-            "title": "Decode String \u2014 Practice",
-            "url": "https://leetcode.com/problems/decode-string/"
+            "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Expression Evaluation optimally natively."
+        "overview": "Mastering Expression Evaluation (0/10) optimally natively."
       },
       {
         "id": "sub-stack-simu",
@@ -258,32 +391,48 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "4 problems",
         "subtopics": [
-          "Backspace String Compare",
-          "Remove All Adjacent Duplicates",
-          "Make the String Great",
-          "Minimum String Length After Removing Substrings"
+          {
+            "title": "Backspace String Compare",
+            "status": "pending"
+          },
+          {
+            "title": "Remove All Adjacent Duplicates",
+            "status": "pending"
+          },
+          {
+            "title": "Make the String Great",
+            "status": "pending"
+          },
+          {
+            "title": "Minimum String Length After Removing Substrings",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Backspace String Compare \u2014 Practice",
-            "url": "https://leetcode.com/problems/backspace-string-compare/"
+            "url": "https://leetcode.com/problems/backspace-string-compare/",
+            "difficulty": "Easy"
           },
           {
             "title": "Remove All Adjacent Duplicates \u2014 Practice",
-            "url": "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/"
+            "url": "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/",
+            "difficulty": "Easy"
           },
           {
             "title": "Make the String Great \u2014 Practice",
-            "url": "https://leetcode.com/problems/make-the-string-great/"
+            "url": "https://leetcode.com/problems/make-the-string-great/",
+            "difficulty": "Easy"
           },
           {
             "title": "Minimum String Length After Removing Substrings \u2014 Practice",
-            "url": "https://leetcode.com/problems/minimum-string-length-after-removing-substrings/"
+            "url": "https://leetcode.com/problems/minimum-string-length-after-removing-substrings/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Stack Simulation / Undo Operation optimally natively."
+        "overview": "Mastering Stack Simulation / Undo Operation (0/4) optimally natively."
       },
       {
         "id": "sub-parenthesi",
@@ -292,32 +441,48 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "4 problems",
         "subtopics": [
-          "Valid Parentheses",
-          "Minimum Add to Make Parentheses Valid",
-          "Longest Valid Parentheses",
-          "Score of Parentheses"
+          {
+            "title": "Valid Parentheses",
+            "status": "pending"
+          },
+          {
+            "title": "Minimum Add to Make Parentheses Valid",
+            "status": "pending"
+          },
+          {
+            "title": "Longest Valid Parentheses",
+            "status": "pending"
+          },
+          {
+            "title": "Score of Parentheses",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Valid Parentheses \u2014 Practice",
-            "url": "https://leetcode.com/problems/valid-parentheses/"
+            "url": "https://leetcode.com/problems/valid-parentheses/",
+            "difficulty": "Easy"
           },
           {
             "title": "Minimum Add to Make Parentheses Valid \u2014 Practice",
-            "url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/"
+            "url": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/",
+            "difficulty": "Medium"
           },
           {
             "title": "Longest Valid Parentheses \u2014 Practice",
-            "url": "https://leetcode.com/problems/longest-valid-parentheses/"
+            "url": "https://leetcode.com/problems/longest-valid-parentheses/",
+            "difficulty": "Hard"
           },
           {
             "title": "Score of Parentheses \u2014 Practice",
-            "url": "https://leetcode.com/problems/score-of-parentheses/"
+            "url": "https://leetcode.com/problems/score-of-parentheses/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Parenthesis & Scoring optimally natively."
+        "overview": "Mastering Parenthesis & Scoring (0/4) optimally natively."
       },
       {
         "id": "sub-stack-base",
@@ -326,53 +491,82 @@ export const dsaPart2 = [
         "status": "locked",
         "duration": "5 problems",
         "subtopics": [
-          "Min Stack",
-          "Max Stack",
-          "Implement Queue using Stacks",
-          "Implement Stack using Queues",
-          "Design Stack with Increment Operation"
+          {
+            "title": "Min Stack",
+            "status": "pending"
+          },
+          {
+            "title": "Max Stack",
+            "status": "pending"
+          },
+          {
+            "title": "Implement Queue using Stacks",
+            "status": "pending"
+          },
+          {
+            "title": "Implement Stack using Queues",
+            "status": "pending"
+          },
+          {
+            "title": "Design Stack with Increment Operation",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [
           {
             "title": "Min Stack \u2014 Practice",
-            "url": "https://leetcode.com/problems/min-stack/"
+            "url": "https://leetcode.com/problems/min-stack/",
+            "difficulty": "Medium"
           },
           {
             "title": "Max Stack \u2014 Practice",
-            "url": "https://leetcode.com/problems/max-stack/"
+            "url": "https://leetcode.com/problems/max-stack/",
+            "difficulty": "Medium"
           },
           {
             "title": "Implement Queue using Stacks \u2014 Practice",
-            "url": "https://leetcode.com/problems/implement-queue-using-stacks/"
+            "url": "https://leetcode.com/problems/implement-queue-using-stacks/",
+            "difficulty": "Easy"
           },
           {
             "title": "Implement Stack using Queues \u2014 Practice",
-            "url": "https://leetcode.com/problems/implement-stack-using-queues/"
+            "url": "https://leetcode.com/problems/implement-stack-using-queues/",
+            "difficulty": "Easy"
           },
           {
             "title": "Design Stack with Increment Operation \u2014 Practice",
-            "url": "https://leetcode.com/problems/design-a-stack-with-increment-operation/"
+            "url": "https://leetcode.com/problems/design-a-stack-with-increment-operation/",
+            "difficulty": "Medium"
           }
         ],
-        "overview": "Mastering Stack-Based Design optimally natively."
+        "overview": "Mastering Stack-Based Design (0/5) optimally natively."
       },
       {
         "id": "sub-recursive-",
         "title": "Recursive Stack",
-        "subtitle": "Handle top/head element recursively \u2192 recurse on remaining stack/list \u2192 combine/insert results.",
+        "subtitle": "Use recursion to reverse or manipulate stack elements without extra data structures.",
         "status": "locked",
         "duration": "3 problems",
         "subtopics": [
-          "Reverse a Stack (Recursive)",
-          "Insert at Bottom of Stack",
-          "Delete Middle Element of Stack"
+          {
+            "title": "Reverse a Stack (Recursive)",
+            "status": "pending"
+          },
+          {
+            "title": "Insert at Bottom of Stack",
+            "status": "pending"
+          },
+          {
+            "title": "Delete Middle Element of Stack",
+            "status": "pending"
+          }
         ],
         "videos": [],
         "files": [],
         "links": [],
-        "overview": "Mastering Recursive Stack optimally natively."
+        "overview": "Mastering Recursive Stack (0/3) optimally natively."
       }
     ]
   }

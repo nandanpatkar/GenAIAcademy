@@ -55,8 +55,6 @@ export default async function handler(req, res) {
         Key: key,
         Body: fileBuffer,
         ContentType: contentType,
-        // Makes the file publicly readable
-        ACL: "public-read",
       })
     );
 

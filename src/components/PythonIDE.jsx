@@ -64,7 +64,7 @@ export function useSimplePyodide() {
 }
 
 export default function PythonIDE({ onClose }) {
-  const [code, setCode] = useState("# Write your Python code here...\nprint('Hello, GenAI Academy!')\n\n# Try math operations\na = 24\nb = 42\nprint(f\"The sum of {a} and {b} is {a + b}\")");
+  const [code, setCode] = useState("# Write your Python code here...\nprint('Hello, GenAI Academy!')\n\n");
   const { runPython, stdout, stderr, isLoading, isRunning, interruptExecution } = useSimplePyodide();
 
   // Snippets Logic
