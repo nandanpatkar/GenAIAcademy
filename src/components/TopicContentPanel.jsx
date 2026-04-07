@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -9,6 +9,9 @@ import { useSimplePyodide } from "./PythonIDE";
 import AITutorPanel from "./AITutorPanel";
 
 export default function TopicContentPanel({ topic, module, pathColor, activePath, onClose, onSaveTopic, isEditMode }) {
+  // Derive a stable identity for this topic
+  const topicIdentity = topic.id || topic.title || "";
+
   const [content, setContent] = useState(topic.content || "");
   const [title, setTitle] = useState(topic.title || "");
   const [linkUrl, setLinkUrl] = useState(topic.linkUrl || "");
@@ -16,15 +19,31 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
   const [saveText, setSaveText] = useState("SAVE CHANGES");
   const [showTutor, setShowTutor] = useState(false);
 
+  // Track which topic we last synced from props — prevents re-sync when same topic saves
+  const lastSyncedIdentity = useRef(topicIdentity);
+  const isFirstMount = useRef(true);
+  const hasEdited = useRef(false);
 
   const { runPython, stdout, stderr, isLoading, isRunning, interruptExecution } = useSimplePyodide();
 
+  // Only reset local state when switching to a DIFFERENT topic (identity changed)
   useEffect(() => {
-    setContent(topic.content || "");
-    setTitle(topic.title || "");
-    setLinkUrl(topic.linkUrl || "");
-    setPythonCode(topic.pythonCode || "# Write your python solution here...\n");
-  }, [topic]);
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      lastSyncedIdentity.current = topicIdentity;
+      return;
+    }
+    if (topicIdentity !== lastSyncedIdentity.current) {
+      // Actually switching topics — reset local edits from the new topic's data
+      setContent(topic.content || "");
+      setTitle(topic.title || "");
+      setLinkUrl(topic.linkUrl || "");
+      setPythonCode(topic.pythonCode || "# Write your python solution here...\n");
+      lastSyncedIdentity.current = topicIdentity;
+      // Reset autosave guard so the state sync doesn't trigger a spurious save
+      hasEdited.current = false;
+    }
+  }, [topicIdentity, topic]);
 
   const practiceLinks = module?.links?.filter(l => {
     const matchTopic = l.title.includes(title) || 
@@ -33,23 +52,43 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
     return matchTopic;
   }) || [];
 
+  // Stable save function to avoid re-triggering autosave effect
+  const latestVals = useRef({ title, content, linkUrl, pythonCode });
+  latestVals.current = { title, content, linkUrl, pythonCode };
+
+  const doSave = useCallback(() => {
+    const vals = latestVals.current;
+    onSaveTopic({ ...topic, ...vals });
+  }, [onSaveTopic, topic]);
 
   const handleSave = () => {
-    onSaveTopic({ ...topic, title, content, linkUrl, pythonCode });
+    doSave();
     setSaveText("✓ SAVED!");
     setTimeout(() => setSaveText("SAVE CHANGES"), 2000);
   };
   
-  // Aggressive autosave for all fields (Code, Description, Title)
+  // Autosave: debounce 1s after any local edit
   useEffect(() => {
-    const hasChanges = topic.pythonCode !== pythonCode || topic.content !== content || topic.title !== title || topic.linkUrl !== linkUrl;
-    if (hasChanges) {
-      const timeout = setTimeout(() => {
-        onSaveTopic({ ...topic, title, content, linkUrl, pythonCode });
-      }, 500);
-      return () => clearTimeout(timeout);
+    if (!hasEdited.current) {
+      // Mark as ready after first render — don't autosave on mount
+      hasEdited.current = true;
+      return;
     }
-  }, [pythonCode, content, title, linkUrl, topic, onSaveTopic]);
+    const timeout = setTimeout(() => {
+      doSave();
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [pythonCode, content, title, linkUrl]); // intentionally omit doSave to avoid loop
+
+  // Save on unmount — catches sign-out and navigation away before debounce fires
+  const doSaveRef = useRef(doSave);
+  doSaveRef.current = doSave;
+  useEffect(() => {
+    return () => {
+      // Flush any unsaved edits when this component is torn down
+      doSaveRef.current();
+    };
+  }, []);
 
   const handleRun = () => {
     runPython(pythonCode);

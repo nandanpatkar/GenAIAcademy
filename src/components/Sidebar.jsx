@@ -1,6 +1,5 @@
 import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard } from "lucide-react";
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 
 export default function Sidebar({
   activePath, setActivePath, paths,
@@ -12,9 +11,9 @@ export default function Sidebar({
   showPlayground, setShowPlayground,
   showDSAAnimator, setShowDSAAnimator,
   setActiveNode, setActiveModule, setActiveTopic,
-  theme, toggleTheme
+  theme, toggleTheme,
+  onSignOut
 }) {
-  const { signOut } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const navItems = [
@@ -172,7 +171,12 @@ export default function Sidebar({
                 gap: 8,
                 padding: "8px 10px"
               }}
-              onClick={() => setActivePath(p.key)}
+              onClick={() => {
+                setActivePath(p.key);
+                if (setActiveNode) setActiveNode(null);
+                if (setActiveModule) setActiveModule(null);
+                if (setActiveTopic) setActiveTopic(null);
+              }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8, width: "100%" }}>
                 <span className="pill-dot" style={{ flexShrink: 0 }} />
@@ -244,7 +248,7 @@ export default function Sidebar({
         </div>
         <div
           className="sidebar-footer-item sidebar-footer-signout"
-          onClick={signOut}
+          onClick={onSignOut}
           data-label="Sign Out"
         >
           <LogOut size={15} />

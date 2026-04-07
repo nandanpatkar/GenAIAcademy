@@ -71,8 +71,43 @@ function MainApp() {
   const [activeTopic, setActiveTopic] = useState(null);
   const [nodeStates, setNodeStates] = useState({});
 
+  // Keep a ref to latest pathsData so the flush function always has current data
+  const pathsDataRef = React.useRef(pathsData);
+  React.useEffect(() => { pathsDataRef.current = pathsData; }, [pathsData]);
+
+  // Flush save to Supabase immediately, then sign out
+  const handleSignOut = React.useCallback(async () => {
+    // Step 1: Close the topic panel — this triggers its unmount effect which flushes
+    // any unsaved local edits into pathsData via onSaveTopic → setPathsData
+    setActiveTopic(null);
+
+    // Step 2: Wait for React to process the state updates from the unmount flush
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    // Step 3: Now pathsDataRef has the absolute latest data — save to Supabase
+    const currentData = pathsDataRef.current;
+    if (user && Object.keys(currentData).length > 0) {
+      try {
+        localStorage.setItem("genai_paths_v3", JSON.stringify(currentData));
+        await supabase
+          .from('user_curriculum')
+          .upsert({ id: user.id, paths_data: currentData, updated_at: new Date().toISOString() });
+      } catch (e) {
+        console.error("Flush save before sign-out failed:", e);
+      }
+    }
+    // Reset fetch guard so re-login triggers a fresh fetch
+    hasFetched.current = false;
+    setIsDataLoaded(false);
+    signOut();
+  }, [user, signOut]);
+
+  const hasFetched = React.useRef(false);
   useEffect(() => {
     if (!user) return;
+    if (hasFetched.current) return; // Only fetch ONCE per session
+    hasFetched.current = true;
+
     const fetchCurriculum = async () => {
       const { data } = await supabase
         .from('user_curriculum')
@@ -82,9 +117,58 @@ function MainApp() {
 
       if (data && data.paths_data && Object.keys(data.paths_data).length > 0) {
         const defaultPaths = injectDefaultIcons(PATHS);
-        const mergedData = { ...defaultPaths, ...data.paths_data };
 
-        setPathsData(mergedData);
+        // Deep merge ALL paths: preserve user content while keeping default structure
+        const mergedData = {};
+        const allKeys = new Set([...Object.keys(defaultPaths), ...Object.keys(data.paths_data)]);
+
+        for (const key of allKeys) {
+          const defaultPath = defaultPaths[key];
+          const savedPath = data.paths_data[key];
+
+          // If no default exists, use saved as-is (user-created path)
+          if (!defaultPath) { mergedData[key] = savedPath; continue; }
+          // If no saved exists, use default as-is
+          if (!savedPath) { mergedData[key] = defaultPath; continue; }
+
+          // Deep merge nodes: keep default structure, overlay saved user data
+          const savedNodes = savedPath.nodes || [];
+          const mergedNodes = (defaultPath.nodes || []).map(defaultNode => {
+            const savedNode = savedNodes.find(n => n.id === defaultNode.id);
+            if (!savedNode) return defaultNode;
+
+            return {
+              ...defaultNode,
+              modules: (defaultNode.modules || []).map(defaultModule => {
+                const savedModule = (savedNode.modules || []).find(m => m.id === defaultModule.id);
+                if (!savedModule) return defaultModule;
+
+                return {
+                  ...defaultModule,
+                  status: savedModule.status ?? defaultModule.status,
+                  completionDate: savedModule.completionDate ?? null,
+                  subtopics: (defaultModule.subtopics || []).map(defaultSub => {
+                    const defaultTitle = typeof defaultSub === "object" ? defaultSub.title : defaultSub;
+                    const savedSub = (savedModule.subtopics || []).find(s =>
+                      (typeof s === "object" ? s.title : s) === defaultTitle
+                    );
+                    if (!savedSub || typeof savedSub !== "object") return defaultSub;
+                    // Merge: default as base, overlay all saved fields (content, code, status, id, etc.)
+                    const base = typeof defaultSub === "object" ? defaultSub : { title: defaultSub, status: "pending" };
+                    return { ...base, ...savedSub };
+                  }),
+                };
+              }),
+            };
+          });
+
+          // Also include any saved nodes not in defaults (user-added nodes)
+          const extraNodes = savedNodes.filter(sn => !(defaultPath.nodes || []).some(dn => dn.id === sn.id));
+
+          mergedData[key] = { ...defaultPath, ...savedPath, nodes: [...mergedNodes, ...extraNodes] };
+        }
+
+  setPathsData(mergedData);
         const keys = Object.keys(mergedData);
         if (keys.length > 0) setActivePath(keys[0]);
       } else {
@@ -120,13 +204,11 @@ function MainApp() {
     localStorage.setItem("genai_paths_v3", JSON.stringify(pathsData));
 
     const timeoutId = setTimeout(async () => {
-      console.log("Supabase upserting pathsData:", JSON.stringify(pathsData).slice(0, 100) + "...");
       const { error } = await supabase
         .from('user_curriculum')
         .upsert({ id: user.id, paths_data: pathsData, updated_at: new Date().toISOString() });
       if (error) console.error("Supabase upsert error!", error);
-      else console.log("Supabase upsert SUCCESS!");
-    }, 500);
+    }, 1500);
 
     return () => clearTimeout(timeoutId);
   }, [pathsData, user, isDataLoaded]);
@@ -169,6 +251,7 @@ function MainApp() {
   const handleNodeClick = (node) => {
     setActiveNode(node);
     setActiveModule(node.modules?.[0] || null);
+    setActiveTopic(null); // CRITICAL: close any open topic when switching nodes
   };
 
   const handleMarkState = (nodeId, state) => {
@@ -244,54 +327,49 @@ function MainApp() {
 
   const handleSaveTopic = (updatedTopic) => {
     if (!activeNode || !activeModule) return;
+
     setPathsData(prev => {
       const parent = prev[activePath];
+      if (!parent) return prev;
+
       const updatedNodes = parent.nodes.map(n => {
-        if (n.id === activeNode.id) {
-          const updatedModules = n.modules?.map(m => {
-            if (m.id === activeModule.id) {
-              let found = false;
-              const newSubtopics = (m.subtopics || []).map(s => {
-                const isObj = typeof s === "object";
-                const sid = isObj ? s.id : null;
-                const stitle = isObj ? s.title : s;
-                
-                // Match by ID if possible, otherwise by Title
-                const isMatch = (updatedTopic.id && sid === updatedTopic.id) || 
-                                (!updatedTopic.id && stitle === updatedTopic.title);
-                
-                if (isMatch) { 
-                  found = true; 
-                  // CRITICAL: if s is already an object with an ID, prefer sid. Otherwise fallback to updatedTopic.id
-                  const targetId = sid || updatedTopic.id || `topic-${Date.now()}`;
-                  updatedTopic.id = targetId; // Mutate to ensure consistent ID is returned
-                  return { ...updatedTopic, id: targetId }; 
-                }
-                return isObj ? s : { id: `topic-${Math.random().toString(36).substr(2, 9)}`, title: s, status: "pending", content: "" };
-              });
-              
-              if (!found) {
-                const newId = updatedTopic.id || `topic-${Date.now()}`;
-                updatedTopic.id = newId;
-                newSubtopics.push({ 
-                  ...updatedTopic, 
-                  id: newId
-                });
-              }
-              return { ...m, subtopics: newSubtopics };
+        if (n.id !== activeNode.id) return n;
+
+        const updatedModules = (n.modules || []).map(m => {
+          if (m.id !== activeModule.id) return m;
+
+          let found = false;
+          const newSubtopics = (m.subtopics || []).map(s => {
+            const sObj = typeof s === "object" ? s : { title: s, status: "pending" };
+            
+            // Match by ID first, then by title
+            const isMatch = (updatedTopic.id && sObj.id && sObj.id === updatedTopic.id) ||
+                            (sObj.title === updatedTopic.title);
+
+            if (isMatch) {
+              found = true;
+              const stableId = sObj.id || updatedTopic.id || `topic-${Date.now()}`;
+              return { ...sObj, ...updatedTopic, id: stableId };
             }
-            return m;
+            return sObj.id ? sObj : { ...sObj, id: `topic-${sObj.title.replace(/\s+/g, '-').toLowerCase()}` };
           });
-          return { ...n, modules: updatedModules };
-        }
-        return n;
+
+          if (!found) {
+            const newId = updatedTopic.id || `topic-${Date.now()}`;
+            newSubtopics.push({ ...updatedTopic, id: newId });
+          }
+
+          return { ...m, subtopics: newSubtopics };
+        });
+
+        return { ...n, modules: updatedModules };
       });
-      console.log("handleSaveTopic updated nodes", updatedNodes);
+
       return { ...prev, [activePath]: { ...parent, nodes: updatedNodes } };
     });
-    
-    // Pass back the topic with the exactly assigned ID
-    setActiveTopic({ ...updatedTopic, id: updatedTopic.id });
+    // NOTE: Do NOT call setActiveTopic/setActiveNode/setActiveModule here.
+    // pathsData is the source of truth. freshActiveNode/freshActiveModule derive from it.
+    // TopicContentPanel owns its local edits and only reads from activeTopic on identity change.
   };
 
   const handleDeleteNode = (nodeId) => {
@@ -461,6 +539,7 @@ function MainApp() {
         setActiveTopic={setActiveTopic}
         theme={theme}
         toggleTheme={toggleTheme}
+        onSignOut={handleSignOut}
       />
 
       {/* ── View Switcher ── */}
