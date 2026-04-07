@@ -36,7 +36,7 @@ export default function EditorModal({ type, data, onClose, onSave, onDelete, pat
             id: `node-${Date.now()}`,
             title: "",
             subtitle: "",
-            tag: "NEW",
+            tag: "CORE MODULE",
             tagColor: pathColor || "#00ff88",
             icon: "◈",
             modules: []
@@ -88,8 +88,14 @@ export default function EditorModal({ type, data, onClose, onSave, onDelete, pat
           </div>
           
           <div className="em-field">
-            <label>Subtitle / Description</label>
-            <textarea name="subtitle" value={formData.subtitle || ""} onChange={handleChange} rows={2} />
+            <label>{isPath ? "Subtitle" : "Description"}</label>
+            <textarea 
+              name="subtitle" 
+              value={formData.subtitle || ""} 
+              onChange={handleChange} 
+              rows={2} 
+              placeholder={isPath ? "Curriculum subtitle..." : "Brief overview of this node..."}
+            />
           </div>
 
           {isPath && (

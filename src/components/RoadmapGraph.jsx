@@ -35,13 +35,13 @@ export default function RoadmapGraph({
 
   // Build tabs only from paths that actually exist, with friendly labels
   const PATH_LABELS = {
-    dsa:              "DSA",
-    aicxm_aws:        "AICXM AWS",
-    aicxm_azure:      "AICXM AZURE",
+    dsa: "DSA",
+    aicxm_aws: "AICXM AWS",
+    aicxm_azure: "AICXM AZURE",
     aicxm_databricks: "AICXM DATABRICKS",
-    ds:               "DATA SCIENCE",
-    genai:            "GEN AI",
-    agentic:          "AGENTIC AI",
+    ds: "DATA SCIENCE",
+    genai: "GEN AI",
+    agentic: "AGENTIC AI",
   };
   const tabLabels = Object.keys(pathsData || {}).map(key => ({
     key,
@@ -59,7 +59,7 @@ export default function RoadmapGraph({
               className={`rg-tab ${activePath === t.key ? "active" : ""}`}
               style={{
                 "--tab-color": activePath === t.key ? path.color : undefined,
-                "--tab-bg":    activePath === t.key ? `${path.color}12` : "transparent",
+                "--tab-bg": activePath === t.key ? `${path.color}12` : "transparent",
               }}
               onClick={() => setActivePath && setActivePath(t.key)}
             >

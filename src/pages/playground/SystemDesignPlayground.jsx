@@ -22,6 +22,7 @@ import {
 
 import { CATEGORIES, COLORS, COLOR_OVERRIDES, PORT_TYPES } from "./data/nodes.js";
 import { TEMPLATES } from "./data/templates.js";
+import NLFlowGenerator from "./NLFlowGenerator";
 import { useFlowStore } from "./hooks/useFlowStore.js";
 import { autoLayout, validateFlow, exportFlowJSON, exportFlowSVG, exportFlowPNG, importFlowJSON } from "./utils/flowUtils.js";
 import InspectorPanel from "./components/InspectorPanel.jsx";
@@ -192,6 +193,7 @@ export default function SystemDesignPlayground({ onClose }) {
   const [showMinimap,   setShowMinimap]   = useState(true);
   const [showValidation,setShowValidation]= useState(false);
   const [showFlowMgr,   setShowFlowMgr]   = useState(false);
+  const [showNLGen,     setShowNLGen]     = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [editingEdge,   setEditingEdge]   = useState(null);
   const [hoveredNode,   setHoveredNode]   = useState(null);
@@ -358,6 +360,21 @@ export default function SystemDesignPlayground({ onClose }) {
     setShowFlowMgr(false);
   };
 
+  // ── NL Generator apply ─────────────────────────────────────────────────────
+  const handleNLApply = ({ nodes: newNodes, edges: newEdges, name, mode }) => {
+    store.snapshot(nodes, edges);
+    if (mode === "append") {
+      setNodes(nds => nds.concat(newNodes));
+      setEdges(eds => eds.concat(newEdges));
+    } else {
+      setNodes(newNodes);
+      setEdges(newEdges);
+      setFlowName(name || "Untitled Architecture");
+    }
+    setSideTab("nodes");
+    setTimeout(() => rfi?.fitView({ padding: 0.12 }), 80);
+  };
+
   // ── Import JSON ────────────────────────────────────────────────────────────
   const handleFileImport = (e) => {
     const file = e.target.files[0];
@@ -433,8 +450,8 @@ export default function SystemDesignPlayground({ onClose }) {
 
           {/* Tabs */}
           <div style={{ display: "flex", borderBottom: "1px solid var(--pg-border)" }}>
-            {[{ id: "nodes", icon: Layers, label: "Nodes" }, { id: "templates", icon: LayoutTemplate, label: "Templates" }].map(tab => (
-              <button key={tab.id} onClick={() => setSideTab(tab.id)}
+            {[{ id: "nodes", icon: Layers, label: "Nodes" }, { id: "templates", icon: LayoutTemplate, label: "Templates" }, { id: "generate", icon: Sparkles, label: "Generate" }].map(tab => (
+              <button key={tab.id} onClick={() => { if (tab.id === "generate") { setShowNLGen(true); } else { setSideTab(tab.id); } }}
                 style={{ flex: 1, background: "none", border: "none", padding: "10px 6px", cursor: "pointer", fontFamily: "'DM Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: sideTab === tab.id ? "var(--pg-text)" : "var(--pg-text3)", borderBottom: `2px solid ${sideTab === tab.id ? "var(--pg-accent)" : "transparent"}`, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, transition: "all 0.15s" }}>
                 <tab.icon size={10} /> {tab.label}
               </button>
@@ -678,6 +695,15 @@ export default function SystemDesignPlayground({ onClose }) {
             )}
           </div>
         </div>
+
+        {/* ── NL Flow Generator ── */}
+        {showNLGen && (
+          <NLFlowGenerator
+            onClose={() => setShowNLGen(false)}
+            onApply={handleNLApply}
+            hasExistingNodes={nodes.length > 0}
+          />
+        )}
 
         {/* ── Overlays ── */}
         {ctxMenu && (

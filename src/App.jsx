@@ -12,6 +12,9 @@ import ResourceManager from "./components/ResourceManager";
 import ProgressTracker from "./components/ProgressTracker";
 import SystemDesignPlayground from "./pages/playground/SystemDesignPlayground";
 import DSAAnimator from "./components/DSAAnimator";
+import BlogPage from "./pages/blog/BlogPage";
+import ContentStudio from "./components/ContentStudio";
+import AdminManagement from "./components/AdminManagement";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { supabase } from "./config/supabaseClient";
@@ -60,7 +63,7 @@ const injectDefaultIcons = (paths) => {
 };
 
 function MainApp() {
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, isLocked, signOut } = useAuth();
 
   const [theme, setTheme] = useState(() => localStorage.getItem("genai_theme") || "dark");
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -74,6 +77,8 @@ function MainApp() {
   // Keep a ref to latest pathsData so the flush function always has current data
   const pathsDataRef = React.useRef(pathsData);
   React.useEffect(() => { pathsDataRef.current = pathsData; }, [pathsData]);
+
+  const hasFetched = React.useRef(false);
 
   // Flush save to Supabase immediately, then sign out
   const handleSignOut = React.useCallback(async () => {
@@ -102,7 +107,6 @@ function MainApp() {
     signOut();
   }, [user, signOut]);
 
-  const hasFetched = React.useRef(false);
   useEffect(() => {
     if (!user) return;
     if (hasFetched.current) return; // Only fetch ONCE per session
@@ -235,6 +239,9 @@ function MainApp() {
   const [showProgress, setShowProgress] = useState(false);
   const [showPlayground, setShowPlayground] = useState(false);
   const [showDSAAnimator, setShowDSAAnimator] = useState(false);  // ← NEW
+  const [showBlog, setShowBlog] = useState(false);
+  const [showContentStudio, setShowContentStudio] = useState(false);
+  const [showAdminManagement, setShowAdminManagement] = useState(false);
 
   // Helper to close all panels at once
   const closeAllPanels = () => {
@@ -244,6 +251,9 @@ function MainApp() {
     setShowProgress(false);
     setShowPlayground(false);
     setShowDSAAnimator(false);
+    setShowBlog(false);
+    setShowContentStudio(false);
+    setShowAdminManagement(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
@@ -504,6 +514,23 @@ function MainApp() {
     return <AuthInterface />;
   }
 
+  if (isLocked) {
+    return (
+      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', color: 'var(--text)', gap: 24, padding: 40, textAlign: 'center' }}>
+        <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
+          <Lock size={40} />
+        </div>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, margin: 0 }}>Access Restricted</h1>
+        <p style={{ maxWidth: 500, fontSize: '1.1rem', color: 'var(--text2)', lineHeight: 1.6 }}>
+          Your account has been locked by a system administrator. If you believe this is an error, please contact support.
+        </p>
+        <button className="rg-btn" onClick={() => signOut()} style={{ padding: '12px 32px', background: 'var(--bg2)', border: '1px solid var(--border)' }}>
+           Sign Out
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <Sidebar
@@ -533,6 +560,12 @@ function MainApp() {
         setShowPlayground={setShowPlayground}
         showDSAAnimator={showDSAAnimator}
         setShowDSAAnimator={setShowDSAAnimator}
+        showBlog={showBlog}
+        setShowBlog={setShowBlog}
+        showContentStudio={showContentStudio}
+        setShowContentStudio={setShowContentStudio}
+        showAdminManagement={showAdminManagement}
+        setShowAdminManagement={setShowAdminManagement}
         activeNode={activeNode}
         setActiveNode={setActiveNode}
         setActiveModule={setActiveModule}
@@ -543,7 +576,13 @@ function MainApp() {
       />
 
       {/* ── View Switcher ── */}
-      {showDSAAnimator ? (
+      {showAdminManagement && isAdmin ? (
+        <AdminManagement onClose={() => setShowAdminManagement(false)} />
+      ) : showContentStudio && isAdmin ? (
+        <ContentStudio pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowContentStudio(false)} theme={theme} />
+      ) : showBlog ? (
+        <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} />
+      ) : showDSAAnimator ? (
         <DSAAnimator onClose={() => setShowDSAAnimator(false)} />
       ) : showPlayground ? (
         <SystemDesignPlayground theme={theme} onClose={() => setShowPlayground(false)} />

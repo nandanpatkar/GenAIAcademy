@@ -1,5 +1,6 @@
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Sidebar({
   activePath, setActivePath, paths,
@@ -10,11 +11,15 @@ export default function Sidebar({
   showProgress, setShowProgress,
   showPlayground, setShowPlayground,
   showDSAAnimator, setShowDSAAnimator,
+  showBlog, setShowBlog,
+  showContentStudio, setShowContentStudio,
+  showAdminManagement, setShowAdminManagement,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
   onSignOut
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isAdmin } = useAuth();
 
   const navItems = [
     { icon: <LayoutDashboard size={16} />,  label: "Overview",      id: "overview" },
@@ -25,10 +30,18 @@ export default function Sidebar({
     { icon: <BookOpen size={16} />,         label: "Resources",      id: "resources" },
     { icon: <Boxes size={16} />,            label: "Playground",     id: "playground" },
     { icon: <Clapperboard size={16} />,     label: "DSA Animator",   id: "dsa_animator" },
+    { icon: <BookMarked size={16} />,       label: "Blog",           id: "blog" },
+    ...(isAdmin ? [
+      { icon: <Database size={16} />, label: "Content Studio", id: "content_studio" },
+      { icon: <Shield size={16} />,   label: "System Admin",   id: "admin_management" }
+    ] : []),
     { icon: <Users size={16} />,            label: "Community",      id: "community" },
   ];
 
   const getActiveId = () => {
+    if (showAdminManagement) return "admin_management";
+    if (showContentStudio) return "content_studio";
+    if (showBlog)          return "blog";
     if (showDSAAnimator)   return "dsa_animator";
     if (showPlayground)    return "playground";
     if (showProgress)      return "progress";
@@ -53,6 +66,9 @@ export default function Sidebar({
     if (setShowProgress)      setShowProgress(false);
     if (setShowPlayground)    setShowPlayground(false);
     if (setShowDSAAnimator)   setShowDSAAnimator(false);
+    if (setShowBlog)          setShowBlog(false);
+    if (setShowContentStudio) setShowContentStudio(false);
+    if (setShowAdminManagement) setShowAdminManagement(false);
 
     // Open selected
     switch (id) {
@@ -62,6 +78,9 @@ export default function Sidebar({
       case "progress":       if (setShowProgress)     setShowProgress(true);     break;
       case "playground":     if (setShowPlayground)   setShowPlayground(true);   break;
       case "dsa_animator":   if (setShowDSAAnimator)  setShowDSAAnimator(true);  break;
+      case "blog":           if (setShowBlog)         setShowBlog(true);         break;
+      case "content_studio": if (setShowContentStudio)setShowContentStudio(true); break;
+      case "admin_management": if (setShowAdminManagement) setShowAdminManagement(true); break;
       default: break;
     }
   };

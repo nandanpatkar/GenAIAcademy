@@ -1,0 +1,292 @@
+{
+  "id": "system-design-curriculum",
+  "title": "System Design Mastery",
+  "color": "#6366f1",
+  "nodes": [
+    {
+      "id": "node-basics",
+      "title": "System Design Fundamentals",
+      "modules": [
+        {
+          "id": "mod-intro",
+          "title": "Introduction to System Design",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-what-is-sd",
+              "title": "What is System Design?",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "video",
+                  "title": "System Design Basics",
+                  "url": "https://www.youtube.com/watch?v=UzLMhqg3_Wc"
+                },
+                {
+                  "type": "link",
+                  "title": "System Design Primer",
+                  "url": "https://github.com/donnemartin/system-design-primer"
+                }
+              ]
+            },
+            {
+              "id": "topic-functional-nonfunctional",
+              "title": "Functional vs Non-Functional Requirements",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "article",
+                  "title": "Understanding Requirements",
+                  "url": "https://example.com/requirements"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mod-cap-theorem",
+          "title": "CAP Theorem & Tradeoffs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-cap",
+              "title": "Consistency, Availability, Partition Tolerance",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "video",
+                  "title": "CAP Theorem Explained",
+                  "url": "https://www.youtube.com/watch?v=k-Yaq8AHlFA"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node-scalability",
+      "title": "Scalability & Performance",
+      "modules": [
+        {
+          "id": "mod-scaling",
+          "title": "Scaling Systems",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-horizontal-scaling",
+              "title": "Horizontal vs Vertical Scaling",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "article",
+                  "title": "Scaling Techniques",
+                  "url": "https://example.com/scaling"
+                }
+              ]
+            },
+            {
+              "id": "topic-load-balancing",
+              "title": "Load Balancing Strategies",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "video",
+                  "title": "Load Balancers Explained",
+                  "url": "https://www.youtube.com/watch?v=K0Ta65OqQkY"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mod-caching",
+          "title": "Caching Strategies",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-cache-types",
+              "title": "Client, CDN, Application Cache",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "link",
+                  "title": "Caching Guide",
+                  "url": "https://example.com/caching"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node-databases",
+      "title": "Database Design",
+      "modules": [
+        {
+          "id": "mod-db-types",
+          "title": "SQL vs NoSQL",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-sql-nosql",
+              "title": "Choosing the Right Database",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "video",
+                  "title": "SQL vs NoSQL",
+                  "url": "https://www.youtube.com/watch?v=ZS_kXvOeQ5Y"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mod-indexing",
+          "title": "Indexing & Query Optimization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-indexing",
+              "title": "Indexes & Performance",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "article",
+                  "title": "Database Indexing Guide",
+                  "url": "https://example.com/indexing"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node-distributed",
+      "title": "Distributed Systems",
+      "modules": [
+        {
+          "id": "mod-distributed-basics",
+          "title": "Distributed Architecture",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-microservices",
+              "title": "Monolith vs Microservices",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "video",
+                  "title": "Microservices Architecture",
+                  "url": "https://www.youtube.com/watch?v=rv4LlmLmVWk"
+                }
+              ]
+            },
+            {
+              "id": "topic-message-queues",
+              "title": "Message Queues & Event-Driven Systems",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "link",
+                  "title": "Kafka Basics",
+                  "url": "https://example.com/kafka"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mod-consistency",
+          "title": "Consistency Models",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-eventual-consistency",
+              "title": "Strong vs Eventual Consistency",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "article",
+                  "title": "Consistency Explained",
+                  "url": "https://example.com/consistency"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node-design",
+      "title": "Real World System Design",
+      "modules": [
+        {
+          "id": "mod-design-patterns",
+          "title": "Design Patterns",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-rate-limiter",
+              "title": "Design Rate Limiter",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "video",
+                  "title": "Rate Limiter Design",
+                  "url": "https://www.youtube.com/watch?v=FU4WlwfS3G0"
+                }
+              ]
+            },
+            {
+              "id": "topic-url-shortener",
+              "title": "Design URL Shortener",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "article",
+                  "title": "TinyURL System Design",
+                  "url": "https://example.com/url-shortener"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "mod-case-studies",
+          "title": "Case Studies",
+          "status": "pending",
+          "subtopics": [
+            {
+              "id": "topic-instagram",
+              "title": "Design Instagram",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "video",
+                  "title": "Instagram System Design",
+                  "url": "https://www.youtube.com/watch?v=VJpfO6KdyWE"
+                }
+              ]
+            },
+            {
+              "id": "topic-whatsapp",
+              "title": "Design WhatsApp",
+              "status": "pending",
+              "resources": [
+                {
+                  "type": "article",
+                  "title": "WhatsApp Architecture",
+                  "url": "https://example.com/whatsapp"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

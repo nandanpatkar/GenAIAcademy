@@ -45,12 +45,15 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
     }
   }, [topicIdentity, topic]);
 
-  const practiceLinks = module?.links?.filter(l => {
-    const matchTopic = l.title.includes(title) || 
-                       title.includes(l.title.split('(')[0].trim()) || 
-                       title.includes(l.title.split('—')[0].trim());
-    return matchTopic;
-  }) || [];
+  const practiceLinks = [
+    ...(module?.links?.filter(l => {
+      const matchTopic = l.title.includes(title) || 
+                        title.includes(l.title.split('(')[0].trim()) || 
+                        title.includes(l.title.split('—')[0].trim());
+      return matchTopic;
+    }) || []),
+    ...(topic.resources?.filter(r => r.type === 'link' || r.type === 'article') || [])
+  ];
 
   // Stable save function to avoid re-triggering autosave effect
   const latestVals = useRef({ title, content, linkUrl, pythonCode });
@@ -238,7 +241,7 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
                   </div>
                   {practiceLinks.length > 0 && (
                     <div style={{ display: "flex", flexDirection: "column", gap: 16, background: "rgba(255,255,255,0.02)", padding: 24, borderRadius: 12, border: "1px solid var(--border)" }}>
-                      <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text2)", letterSpacing: "1px" }}>PRACTICE LINKS</div>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text2)", letterSpacing: "1px" }}>RESOURCES & LINKS</div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                         {practiceLinks.map((link, i) => (
                           <a 
@@ -248,7 +251,7 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
                             rel="noreferrer"
                             style={{ display: "flex", alignItems: "center", gap: 12, color: pathColor || "var(--neon)", textDecoration: "none", fontSize: 15, fontWeight: 600, padding: "12px 16px", background: "var(--bg3)", borderRadius: 8, border: "1px solid var(--border)", transition: "all .2s" }}
                           >
-                            <ExternalLink size={16} /> 
+                            {link.type === 'video' ? <Play size={16} /> : <ExternalLink size={16} />}
                             {link.title.includes("LeetCode") || link.title.includes("Practice") ? "Solve on LeetCode" : link.title}
                           </a>
                         ))}

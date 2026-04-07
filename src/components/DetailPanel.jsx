@@ -1,4 +1,5 @@
 import { Box } from "lucide-react";
+import ProjectIdeasPanel from "./ProjectIdeasPanel";
 
 const STATUS_LABELS = { complete: "COMPLETE", in_progress: "IN PROGRESS", locked: "LOCKED", default: "NOT STARTED" };
 const STATUS_COLORS = { complete: "#00ff88", in_progress: "#f59e0b", locked: "#555570", default: "#555570" };
@@ -154,6 +155,9 @@ export default function DetailPanel({ node, module, pathColor, onMarkDone, onMar
             </div>
           ))}
         </div>
+
+        {/* Project Ideas */}
+        <ProjectIdeasPanel module={module} pathColor={pathColor} />
       </div>
 
       {/* Actions */}
