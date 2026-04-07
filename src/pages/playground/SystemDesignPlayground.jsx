@@ -28,6 +28,7 @@ import InspectorPanel from "./components/InspectorPanel.jsx";
 import FlowManager from "./components/FlowManager.jsx";
 import SaveModal from "./components/SaveModal.jsx";
 import { ValidationPanel, NodePopover } from "./components/Overlays.jsx";
+import ArchitectureDesign from "./ArchitectureDesign";
 
 // ─── Icon Registry ─────────────────────────────────────────────────────────────
 const ICON_MAP = {
@@ -198,6 +199,7 @@ export default function SystemDesignPlayground({ onClose }) {
   const [flowDesc,      setFlowDesc]      = useState("");
   const [flowTags,      setFlowTags]      = useState([]);
   const [activeFlowId,  setActiveFlowId]  = useState(null);
+  const [mainTab,       setMainTab]       = useState("system"); // "system" | "arch"
 
   const rfWrapper = useRef(null);
   const [rfi, setRfi] = useState(null);
@@ -342,7 +344,7 @@ export default function SystemDesignPlayground({ onClose }) {
     setFlowDesc(desc);
     setFlowTags(tags);
     setShowSaveModal(false);
-    setShowFlowMgr(true); // ← auto-open My Flows so user sees the saved flow
+    setShowFlowMgr(true);
   };
 
   const handleLoadFlow = (flow) => {
@@ -387,322 +389,358 @@ export default function SystemDesignPlayground({ onClose }) {
   const warnCount  = validationIssues.filter(i => i.type === "warning").length;
 
   return (
-    <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg)", fontFamily: "'DM Mono','Fira Code',monospace", color: "var(--pg-text)", overflow: "hidden" }}>
+    <div style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", overflow: "hidden" }}>
 
-      {/* ══ SIDEBAR ══════════════════════════════════════════════════════════ */}
-      <div style={{ width: 230, minWidth: 230, background: "var(--pg-sidebar)", borderRight: "1px solid var(--pg-border)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      {/* ══ TOP TAB BAR ══════════════════════════════════════════════════════ */}
+      <div style={{
+        display: "flex", alignItems: "center",
+        background: "var(--pg-sidebar)", borderBottom: "1px solid var(--pg-border)",
+        padding: "0 16px", height: 42, flexShrink: 0,
+      }}>
+        {[
+          { id: "system", label: "⚙️  System Design"       },
+          { id: "arch",   label: "🏗️  Architecture Design" },
+        ].map(t => (
+          <button key={t.id} onClick={() => setMainTab(t.id)}
+            style={{
+              background: "none", border: "none", padding: "0 18px",
+              height: "100%", cursor: "pointer",
+              fontFamily: "'DM Mono',monospace", fontSize: 10.5,
+              fontWeight: 700, letterSpacing: "0.05em",
+              color: mainTab === t.id ? "var(--pg-text)" : "var(--pg-text3)",
+              borderBottom: `2px solid ${mainTab === t.id ? "var(--pg-accent)" : "transparent"}`,
+              transition: "all 0.15s",
+            }}>
+            {t.label}
+          </button>
+        ))}
+        <div style={{ flex: 1 }} />
+        <button onClick={onClose}
+          style={{ background: "none", border: "none", cursor: "pointer", color: "var(--pg-text3)", fontSize: 18, padding: "4px 8px", borderRadius: 5, lineHeight: 1 }}>
+          ✕
+        </button>
+      </div>
 
-        {/* Tabs */}
-        <div style={{ display: "flex", borderBottom: "1px solid var(--pg-border)" }}>
-          {[{ id: "nodes", icon: Layers, label: "Nodes" }, { id: "templates", icon: LayoutTemplate, label: "Templates" }].map(tab => (
-            <button key={tab.id} onClick={() => setSideTab(tab.id)}
-              style={{ flex: 1, background: "none", border: "none", padding: "10px 6px", cursor: "pointer", fontFamily: "'DM Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: sideTab === tab.id ? "var(--pg-text)" : "var(--pg-text3)", borderBottom: `2px solid ${sideTab === tab.id ? "var(--pg-accent)" : "transparent"}`, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, transition: "all 0.15s" }}>
-              <tab.icon size={10} /> {tab.label}
-            </button>
-          ))}
-        </div>
+      {/* ══ TAB CONTENT ══════════════════════════════════════════════════════ */}
+      {mainTab === "arch" ? (
+        <ArchitectureDesign />
+      ) : (
 
-        {sideTab === "nodes" ? (<>
-          {/* Search */}
-          <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--pg-border)" }}>
-            <div style={{ position: "relative" }}>
-              <Search size={12} color="var(--pg-text3)" style={{ position: "absolute", left: 10, top: 9 }} />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search node types..."
-                style={{ width: "100%", background: "var(--pg-panel)", border: "1px solid var(--pg-border2)", borderRadius: 6, color: "var(--pg-text)", fontSize: 11, padding: "7px 10px 7px 30px", outline: "none", fontFamily: "'DM Mono',monospace" }} />
-            </div>
-          </div>
+      <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg)", fontFamily: "'DM Mono','Fira Code',monospace", color: "var(--pg-text)", overflow: "hidden" }}>
 
-          {/* Category list */}
-          <div style={{ flex: 1, overflowY: "auto" }}>
-            {filtered.map(cat => {
-              const isOpen = !!openCats[cat.id];
-              return (
-                <div key={cat.id}>
-                  <button onClick={() => setOpenCats(p => ({ ...p, [cat.id]: !isOpen }))}
-                    style={{ 
-                      width: "100%", 
-                      background: "none", 
-                      border: "none", 
-                      padding: "8px 12px", 
-                      display: "flex", 
-                      alignItems: "center", 
-                      justifyContent: "space-between", 
-                      cursor: "pointer", 
-                      fontFamily: "'DM Mono',monospace",
-                      transition: "all 0.2s",
-                      borderRadius: 6,
-                      margin: "2px 0"
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = "var(--pg-panel)"}
-                    onMouseLeave={e => e.currentTarget.style.background = "none"}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-                      <div style={{ 
-                        width: 22, 
-                        height: 22, 
-                        borderRadius: 6, 
-                        background: isOpen ? "rgba(148, 163, 184, 0.1)" : "transparent",
-                        border: isOpen ? "1px solid rgba(148, 163, 184, 0.2)" : "1px solid transparent",
-                        display: "flex", 
-                        alignItems: "center", 
-                        justifyContent: "center",
-                        transition: "all 0.2s"
-                      }}>
-                        <IC name={cat.icon} size={11} color={isOpen ? "var(--pg-text2)" : "var(--pg-text3)"} />
-                      </div>
-                      <span style={{ fontSize: 11, fontWeight: 600, color: isOpen ? "var(--pg-text)" : "var(--pg-text2)", letterSpacing: "0.02em" }}>{cat.label}</span>
-                      <span style={{ fontSize: 9, color: "var(--pg-text3)", background: "var(--pg-border2)", borderRadius: 4, padding: "1px 5px", fontWeight: 700 }}>{cat.nodes.length}</span>
-                    </div>
-                    {isOpen ? <ChevronDown size={11} color="var(--pg-text3)" /> : <ChevronRight size={11} color="var(--pg-text3)" />}
-                  </button>
+        {/* ══ SIDEBAR ══════════════════════════════════════════════════════════ */}
+        <div style={{ width: 230, minWidth: 230, background: "var(--pg-sidebar)", borderRight: "1px solid var(--pg-border)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
-                  {isOpen && cat.nodes.map(item => (
-                    <div key={item.id} draggable
-                      onDragStart={e => { e.dataTransfer.setData("application/genai-node", JSON.stringify(item)); e.dataTransfer.effectAllowed = "move"; }}
-                      style={{ margin: "2px 7px", padding: "6px 8px", background: "var(--pg-sidebar)", border: `1px solid ${COLORS[item.color]?.border}`, borderRadius: 6, cursor: "grab", display: "flex", alignItems: "center", gap: 7, transition: "all 0.12s", userSelect: "none" }}
-                      onMouseEnter={e => { e.currentTarget.style.background = COLORS[item.color]?.dim; e.currentTarget.style.borderColor = COLORS[item.color]?.bg + "77"; e.currentTarget.style.transform = "translateX(2px)"; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = "var(--pg-sidebar)"; e.currentTarget.style.borderColor = COLORS[item.color]?.border; e.currentTarget.style.transform = "translateX(0)"; }}>
-                      <div style={{ width: 20, height: 20, borderRadius: 4, background: COLORS[item.color]?.dim, border: `1px solid ${COLORS[item.color]?.border}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <IC name={item.icon} size={10} color={COLORS[item.color]?.bg} />
-                      </div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: 10, fontWeight: 700, color: "var(--pg-text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.label}</div>
-                        <div style={{ fontSize: 8, color: "var(--pg-text3)", marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.sub}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
-          <div style={{ padding: "12px", borderTop: "1px solid var(--pg-border)" }}>
-            <div style={{ background: "rgba(129, 140, 248, 0.05)", border: "1px solid var(--pg-border2)", borderRadius: 10, padding: 12 }}>
-              <div style={{ fontSize: 9.5, fontWeight: 700, color: "var(--pg-accent)", display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                <Activity size={10} /> GENAI ANALYTICS
-              </div>
-              <div style={{ fontSize: 13, fontWeight: 800, color: "var(--pg-text)" }}>{nodes.length} Components</div>
-              <div style={{ fontSize: 9, color: "var(--pg-text3)", marginTop: 2 }}>{edges.length} flow connections active</div>
-            </div>
-          </div>
-        </>) : (
-          /* Templates tab */
-          <div style={{ flex: 1, overflowY: "auto", padding: "8px 7px" }}>
-            <div style={{ fontSize: 8.5, color: "var(--pg-text3)", textTransform: "uppercase", letterSpacing: "0.1em", padding: "6px 4px 8px" }}>Starter Templates</div>
-            {TEMPLATES.map(tpl => (
-              <div key={tpl.id} onClick={() => loadTemplate(tpl)}
-                style={{ marginBottom: 8, padding: 10, background: "var(--pg-panel)", border: "1px solid var(--pg-border)", borderRadius: 8, cursor: "pointer", transition: "all 0.15s" }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--pg-accent)"; e.currentTarget.style.background = "var(--pg-border2)"; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--pg-border)"; e.currentTarget.style.background = "var(--pg-panel)"; }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 5 }}>
-                  <div style={{ width: 22, height: 22, borderRadius: 5, background: "var(--pg-accent)1a", border: "1px solid var(--pg-accent)40", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <IC name={tpl.icon} size={11} color="var(--pg-accent)" />
-                  </div>
-                  <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--pg-text)" }}>{tpl.label}</span>
-                </div>
-                <div style={{ fontSize: 8.5, color: "var(--pg-text3)", lineHeight: 1.5, marginBottom: 5 }}>{tpl.description}</div>
-                <div style={{ display: "flex", gap: 4 }}>
-                  {(tpl.tags || []).map(t => <span key={t} style={{ fontSize: 7.5, color: "var(--pg-accent)", background: "var(--pg-accent)11", border: "1px solid var(--pg-accent)33", padding: "1px 5px", borderRadius: 3 }}>{t}</span>)}
-                </div>
-                <div style={{ marginTop: 5, fontSize: 8, color: "var(--pg-text3)" }}>{tpl.nodes.length} nodes · {tpl.edges.length} edges · click to load</div>
-              </div>
+          {/* Tabs */}
+          <div style={{ display: "flex", borderBottom: "1px solid var(--pg-border)" }}>
+            {[{ id: "nodes", icon: Layers, label: "Nodes" }, { id: "templates", icon: LayoutTemplate, label: "Templates" }].map(tab => (
+              <button key={tab.id} onClick={() => setSideTab(tab.id)}
+                style={{ flex: 1, background: "none", border: "none", padding: "10px 6px", cursor: "pointer", fontFamily: "'DM Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: sideTab === tab.id ? "var(--pg-text)" : "var(--pg-text3)", borderBottom: `2px solid ${sideTab === tab.id ? "var(--pg-accent)" : "transparent"}`, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, transition: "all 0.15s" }}>
+                <tab.icon size={10} /> {tab.label}
+              </button>
             ))}
           </div>
-        )}
-      </div>
 
-      {/* ══ CANVAS + TOOLBAR ═════════════════════════════════════════════════ */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-
-        {/* Toolbar row 1 */}
-        <div style={{ height: 46, background: "var(--pg-sidebar)", borderBottom: "1px solid var(--pg-border)", display: "flex", alignItems: "center", padding: "0 12px", justifyContent: "space-between", gap: 6 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <div style={{ fontSize: 10, color: "var(--pg-accent)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
-              <Workflow size={11} /> System Design
-            </div>
-            <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
-            {editingName
-              ? <input autoFocus value={flowName} onChange={e => setFlowName(e.target.value)} onBlur={() => setEditingName(false)} onKeyDown={e => e.key === "Enter" && setEditingName(false)}
-                  style={{ background: "var(--pg-panel)", border: "1px solid var(--pg-accent)", borderRadius: 5, color: "var(--pg-text)", fontSize: 11, padding: "2px 7px", fontFamily: "'DM Mono',monospace", outline: "none", width: 180 }} />
-              : <span onClick={() => setEditingName(true)}
-                  style={{ fontSize: 11, color: activeFlowId ? "var(--pg-text)" : "var(--pg-text3)", cursor: "text", padding: "2px 5px", borderRadius: 4, border: "1px solid transparent", display: "flex", alignItems: "center", gap: 4, transition: "all 0.15s", whiteSpace: "nowrap" }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--pg-border2)"; e.currentTarget.style.background = "var(--pg-panel)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "transparent"; e.currentTarget.style.background = "transparent"; }}>
-                  {flowName} <Edit3 size={8} />
-                </span>
-            }
-          </div>
-
-          <div style={{ display: "flex", gap: 4, alignItems: "center", flexWrap: "nowrap" }}>
-            {/* Undo/Redo */}
-            <TBtn icon={RotateCcw} label="Undo"  onClick={doUndo} disabled={!store.canUndo} />
-            <TBtn icon={Redo2}     label="Redo"  onClick={doRedo} disabled={!store.canRedo} />
-            <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
-
-            {/* Canvas tools */}
-            <TBtn icon={Grid3X3}   label="Snap to Grid" onClick={() => setSnapToGrid(!snapToGrid)} active={snapToGrid} />
-            <TBtn icon={Map}       label="Toggle Minimap" onClick={() => setShowMinimap(!showMinimap)} active={showMinimap} />
-            <TBtn icon={Maximize2} label="Auto Layout" onClick={doAutoLayout} />
-            <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
-
-            {/* Zoom */}
-            <TBtn icon={ZoomOut}   label="50%"  onClick={() => setZoom(0.5)} />
-            <TBtn icon={Maximize2} label="Fit"  onClick={fitView} />
-            <TBtn icon={ZoomIn}    label="150%" onClick={() => setZoom(1.5)} />
-            <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
-
-            {/* Validation */}
-            <button onClick={() => setShowValidation(!showValidation)} title="Validate flow"
-              style={{ background: showValidation ? "#f8717122" : "none", border: `1px solid ${errorCount > 0 ? "#f87171" : warnCount > 0 ? "#fbbf24" : "var(--pg-border)"}`, borderRadius: 5, color: errorCount > 0 ? "#f87171" : warnCount > 0 ? "#fbbf24" : "var(--pg-text3)", fontSize: 9, padding: "4px 7px", cursor: "pointer", fontFamily: "'DM Mono',monospace", display: "flex", alignItems: "center", gap: 4 }}>
-              <AlertCircle size={11} />
-              {(errorCount + warnCount) > 0 && <span>{errorCount + warnCount}</span>}
-            </button>
-            <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
-
-            {/* Flow management */}
-            <TBtn icon={FolderOpenIcon} label="My Flows"  onClick={() => setShowFlowMgr(true)} />
-            <TBtn icon={Save}           label="Save Flow" onClick={() => setShowSaveModal(true)} accent="#34d399" />
-            <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
-
-            {/* Import */}
-            <input ref={fileImportRef} type="file" accept=".json" onChange={handleFileImport} style={{ display: "none" }} />
-            <TBtn icon={Upload} label="Import JSON" onClick={() => fileImportRef.current.click()} />
-
-            {/* Export menu */}
-            <div style={{ position: "relative" }}>
-              <button
-                style={{ background: "var(--pg-accent)", border: "none", borderRadius: 5, color: "#fff", fontSize: 9.5, fontWeight: 700, padding: "5px 10px", cursor: "pointer", fontFamily: "'DM Mono',monospace", letterSpacing: "0.05em", display: "flex", alignItems: "center", gap: 4 }}
-                onClick={() => {
-                  const choice = prompt("Export as:\n1 = PNG\n2 = JSON\n3 = SVG\n\nEnter 1, 2, or 3:");
-                  if (choice === "1") exportFlowPNG(rfWrapper.current, flowName);
-                  else if (choice === "2") exportFlowJSON(flowName, nodes, edges, flowTags, flowDesc);
-                  else if (choice === "3") exportFlowSVG(rfi, flowName);
-                }}>
-                <Download size={10} /> Export
-              </button>
-            </div>
-
-            {/* Stats */}
-            <span style={{ fontSize: 8.5, color: "var(--pg-border2)", whiteSpace: "nowrap" }}>{nodes.length}n · {edges.length}e</span>
-
-            {/* Clear */}
-            <TBtn icon={Trash2} label="Clear canvas" onClick={() => { if (window.confirm("Clear canvas?")) { store.snapshot(nodes, edges); setNodes([]); setEdges([]); setSelNode(null); setShowInspect(false); }}} danger />
-
-            {/* Back */}
-            {onClose && <TBtn icon={ArrowLeft} label="Back to Academy" onClick={onClose} />}
-          </div>
-        </div>
-
-        {/* Canvas + Inspector row */}
-        <div style={{ flex: 1, display: "flex", overflow: "hidden", background: "var(--pg-bg)" }}>
-          <div ref={rfWrapper} style={{ flex: 1, position: "relative" }} onDragOver={onDragOver} onDrop={onDrop}>
-            <ReactFlow
-              nodes={nodes} edges={edges}
-              onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}
-              onConnect={onConnect} onInit={setRfi}
-              nodeTypes={NODE_TYPES}
-              onNodeClick={onNodeClick}
-              onNodeContextMenu={onNodeCtx}
-              onNodeMouseEnter={onNodeMouseEnter}
-              onNodeMouseLeave={onNodeMouseLeave}
-              onPaneClick={onPaneClick}
-              onEdgeDoubleClick={onEdgeDblClick}
-              deleteKeyCode="Delete"
-              snapToGrid={snapToGrid}
-              snapGrid={[20, 20]}
-              fitView
-              style={{ background: "var(--pg-bg)" }}
-              defaultEdgeOptions={edgeDefaults}
-            >
-              <Background variant={snapToGrid ? BackgroundVariant.Lines : BackgroundVariant.Dots} gap={snapToGrid ? 20 : 28} size={1} color="var(--pg-border2)" />
-              <Controls style={{ background: "var(--pg-sidebar)", border: "1px solid var(--pg-border)", borderRadius: 8 }} />
-              {showMinimap && <MiniMap style={{ background: "var(--pg-sidebar)", border: "1px solid var(--pg-border)", borderRadius: 8 }} nodeColor={n => COLORS[n.data?.colorOverride || n.data?.colorKey]?.bg || "var(--pg-accent)"} maskColor="var(--pg-bg)bb" />}
-            </ReactFlow>
-
-            {nodes.length === 0 && (
-              <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", textAlign: "center", pointerEvents: "none" }}>
-                <Workflow size={40} color="var(--pg-border2)" style={{ marginBottom: 12 }} />
-                <div style={{ fontSize: 11, color: "var(--pg-border2)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 5 }}>Drag nodes · Load a template</div>
-                <div style={{ fontSize: 9, color: "var(--pg-border2)" }}>Double-click edges to add labels · Right-click nodes for actions</div>
+          {sideTab === "nodes" ? (<>
+            {/* Search */}
+            <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--pg-border)" }}>
+              <div style={{ position: "relative" }}>
+                <Search size={12} color="var(--pg-text3)" style={{ position: "absolute", left: 10, top: 9 }} />
+                <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search node types..."
+                  style={{ width: "100%", background: "var(--pg-panel)", border: "1px solid var(--pg-border2)", borderRadius: 6, color: "var(--pg-text)", fontSize: 11, padding: "7px 10px 7px 30px", outline: "none", fontFamily: "'DM Mono',monospace" }} />
               </div>
-            )}
+            </div>
 
-            {/* Validation panel */}
-            {showValidation && <ValidationPanelInline issues={validationIssues} onClose={() => setShowValidation(false)} />}
-          </div>
+            {/* Category list */}
+            <div style={{ flex: 1, overflowY: "auto" }}>
+              {filtered.map(cat => {
+                const isOpen = !!openCats[cat.id];
+                return (
+                  <div key={cat.id}>
+                    <button onClick={() => setOpenCats(p => ({ ...p, [cat.id]: !isOpen }))}
+                      style={{
+                        width: "100%",
+                        background: "none",
+                        border: "none",
+                        padding: "8px 12px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        cursor: "pointer",
+                        fontFamily: "'DM Mono',monospace",
+                        transition: "all 0.2s",
+                        borderRadius: 6,
+                        margin: "2px 0"
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.background = "var(--pg-panel)"}
+                      onMouseLeave={e => e.currentTarget.style.background = "none"}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                        <div style={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: 6,
+                          background: isOpen ? "rgba(148, 163, 184, 0.1)" : "transparent",
+                          border: isOpen ? "1px solid rgba(148, 163, 184, 0.2)" : "1px solid transparent",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          transition: "all 0.2s"
+                        }}>
+                          <IC name={cat.icon} size={11} color={isOpen ? "var(--pg-text2)" : "var(--pg-text3)"} />
+                        </div>
+                        <span style={{ fontSize: 11, fontWeight: 600, color: isOpen ? "var(--pg-text)" : "var(--pg-text2)", letterSpacing: "0.02em" }}>{cat.label}</span>
+                        <span style={{ fontSize: 9, color: "var(--pg-text3)", background: "var(--pg-border2)", borderRadius: 4, padding: "1px 5px", fontWeight: 700 }}>{cat.nodes.length}</span>
+                      </div>
+                      {isOpen ? <ChevronDown size={11} color="var(--pg-text3)" /> : <ChevronRight size={11} color="var(--pg-text3)" />}
+                    </button>
 
-          {/* Inspector */}
-          {showInspect && selNode && selNode.type === "genai" && (
-            <InspectorPanel
-              node={selNode}
-              issues={validationIssues}
-              onClose={() => { setShowInspect(false); setSelNode(null); }}
-              onUpdate={updateNode}
-              onDelete={deleteNode}
-              onDuplicate={duplicateNode}
-            />
+                    {isOpen && cat.nodes.map(item => (
+                      <div key={item.id} draggable
+                        onDragStart={e => { e.dataTransfer.setData("application/genai-node", JSON.stringify(item)); e.dataTransfer.effectAllowed = "move"; }}
+                        style={{ margin: "2px 7px", padding: "6px 8px", background: "var(--pg-sidebar)", border: `1px solid ${COLORS[item.color]?.border}`, borderRadius: 6, cursor: "grab", display: "flex", alignItems: "center", gap: 7, transition: "all 0.12s", userSelect: "none" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = COLORS[item.color]?.dim; e.currentTarget.style.borderColor = COLORS[item.color]?.bg + "77"; e.currentTarget.style.transform = "translateX(2px)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "var(--pg-sidebar)"; e.currentTarget.style.borderColor = COLORS[item.color]?.border; e.currentTarget.style.transform = "translateX(0)"; }}>
+                        <div style={{ width: 20, height: 20, borderRadius: 4, background: COLORS[item.color]?.dim, border: `1px solid ${COLORS[item.color]?.border}`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <IC name={item.icon} size={10} color={COLORS[item.color]?.bg} />
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: 10, fontWeight: 700, color: "var(--pg-text)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.label}</div>
+                          <div style={{ fontSize: 8, color: "var(--pg-text3)", marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.sub}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ padding: "12px", borderTop: "1px solid var(--pg-border)" }}>
+              <div style={{ background: "rgba(129, 140, 248, 0.05)", border: "1px solid var(--pg-border2)", borderRadius: 10, padding: 12 }}>
+                <div style={{ fontSize: 9.5, fontWeight: 700, color: "var(--pg-accent)", display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                  <Activity size={10} /> GENAI ANALYTICS
+                </div>
+                <div style={{ fontSize: 13, fontWeight: 800, color: "var(--pg-text)" }}>{nodes.length} Components</div>
+                <div style={{ fontSize: 9, color: "var(--pg-text3)", marginTop: 2 }}>{edges.length} flow connections active</div>
+              </div>
+            </div>
+          </>) : (
+            /* Templates tab */
+            <div style={{ flex: 1, overflowY: "auto", padding: "8px 7px" }}>
+              <div style={{ fontSize: 8.5, color: "var(--pg-text3)", textTransform: "uppercase", letterSpacing: "0.1em", padding: "6px 4px 8px" }}>Starter Templates</div>
+              {TEMPLATES.map(tpl => (
+                <div key={tpl.id} onClick={() => loadTemplate(tpl)}
+                  style={{ marginBottom: 8, padding: 10, background: "var(--pg-panel)", border: "1px solid var(--pg-border)", borderRadius: 8, cursor: "pointer", transition: "all 0.15s" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--pg-accent)"; e.currentTarget.style.background = "var(--pg-border2)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--pg-border)"; e.currentTarget.style.background = "var(--pg-panel)"; }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 5 }}>
+                    <div style={{ width: 22, height: 22, borderRadius: 5, background: "var(--pg-accent)1a", border: "1px solid var(--pg-accent)40", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <IC name={tpl.icon} size={11} color="var(--pg-accent)" />
+                    </div>
+                    <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--pg-text)" }}>{tpl.label}</span>
+                  </div>
+                  <div style={{ fontSize: 8.5, color: "var(--pg-text3)", lineHeight: 1.5, marginBottom: 5 }}>{tpl.description}</div>
+                  <div style={{ display: "flex", gap: 4 }}>
+                    {(tpl.tags || []).map(t => <span key={t} style={{ fontSize: 7.5, color: "var(--pg-accent)", background: "var(--pg-accent)11", border: "1px solid var(--pg-accent)33", padding: "1px 5px", borderRadius: 3 }}>{t}</span>)}
+                  </div>
+                  <div style={{ marginTop: 5, fontSize: 8, color: "var(--pg-text3)" }}>{tpl.nodes.length} nodes · {tpl.edges.length} edges · click to load</div>
+                </div>
+              ))}
+            </div>
           )}
         </div>
+
+        {/* ══ CANVAS + TOOLBAR ═════════════════════════════════════════════════ */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+
+          {/* Toolbar row 1 */}
+          <div style={{ height: 46, background: "var(--pg-sidebar)", borderBottom: "1px solid var(--pg-border)", display: "flex", alignItems: "center", padding: "0 12px", justifyContent: "space-between", gap: 6 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ fontSize: 10, color: "var(--pg-accent)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
+                <Workflow size={11} /> System Design
+              </div>
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
+              {editingName
+                ? <input autoFocus value={flowName} onChange={e => setFlowName(e.target.value)} onBlur={() => setEditingName(false)} onKeyDown={e => e.key === "Enter" && setEditingName(false)}
+                    style={{ background: "var(--pg-panel)", border: "1px solid var(--pg-accent)", borderRadius: 5, color: "var(--pg-text)", fontSize: 11, padding: "2px 7px", fontFamily: "'DM Mono',monospace", outline: "none", width: 180 }} />
+                : <span onClick={() => setEditingName(true)}
+                    style={{ fontSize: 11, color: activeFlowId ? "var(--pg-text)" : "var(--pg-text3)", cursor: "text", padding: "2px 5px", borderRadius: 4, border: "1px solid transparent", display: "flex", alignItems: "center", gap: 4, transition: "all 0.15s", whiteSpace: "nowrap" }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--pg-border2)"; e.currentTarget.style.background = "var(--pg-panel)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = "transparent"; e.currentTarget.style.background = "transparent"; }}>
+                    {flowName} <Edit3 size={8} />
+                  </span>
+              }
+            </div>
+
+            <div style={{ display: "flex", gap: 4, alignItems: "center", flexWrap: "nowrap" }}>
+              {/* Undo/Redo */}
+              <TBtn icon={RotateCcw} label="Undo"  onClick={doUndo} disabled={!store.canUndo} />
+              <TBtn icon={Redo2}     label="Redo"  onClick={doRedo} disabled={!store.canRedo} />
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
+
+              {/* Canvas tools */}
+              <TBtn icon={Grid3X3}   label="Snap to Grid" onClick={() => setSnapToGrid(!snapToGrid)} active={snapToGrid} />
+              <TBtn icon={Map}       label="Toggle Minimap" onClick={() => setShowMinimap(!showMinimap)} active={showMinimap} />
+              <TBtn icon={Maximize2} label="Auto Layout" onClick={doAutoLayout} />
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
+
+              {/* Zoom */}
+              <TBtn icon={ZoomOut}   label="50%"  onClick={() => setZoom(0.5)} />
+              <TBtn icon={Maximize2} label="Fit"  onClick={fitView} />
+              <TBtn icon={ZoomIn}    label="150%" onClick={() => setZoom(1.5)} />
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
+
+              {/* Validation */}
+              <button onClick={() => setShowValidation(!showValidation)} title="Validate flow"
+                style={{ background: showValidation ? "#f8717122" : "none", border: `1px solid ${errorCount > 0 ? "#f87171" : warnCount > 0 ? "#fbbf24" : "var(--pg-border)"}`, borderRadius: 5, color: errorCount > 0 ? "#f87171" : warnCount > 0 ? "#fbbf24" : "var(--pg-text3)", fontSize: 9, padding: "4px 7px", cursor: "pointer", fontFamily: "'DM Mono',monospace", display: "flex", alignItems: "center", gap: 4 }}>
+                <AlertCircle size={11} />
+                {(errorCount + warnCount) > 0 && <span>{errorCount + warnCount}</span>}
+              </button>
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
+
+              {/* Flow management */}
+              <TBtn icon={FolderOpenIcon} label="My Flows"  onClick={() => setShowFlowMgr(true)} />
+              <TBtn icon={Save}           label="Save Flow" onClick={() => setShowSaveModal(true)} accent="#34d399" />
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
+
+              {/* Import */}
+              <input ref={fileImportRef} type="file" accept=".json" onChange={handleFileImport} style={{ display: "none" }} />
+              <TBtn icon={Upload} label="Import JSON" onClick={() => fileImportRef.current.click()} />
+
+              {/* Export menu */}
+              <div style={{ position: "relative" }}>
+                <button
+                  style={{ background: "var(--pg-accent)", border: "none", borderRadius: 5, color: "#fff", fontSize: 9.5, fontWeight: 700, padding: "5px 10px", cursor: "pointer", fontFamily: "'DM Mono',monospace", letterSpacing: "0.05em", display: "flex", alignItems: "center", gap: 4 }}
+                  onClick={() => {
+                    const choice = prompt("Export as:\n1 = PNG\n2 = JSON\n3 = SVG\n\nEnter 1, 2, or 3:");
+                    if (choice === "1") exportFlowPNG(rfWrapper.current, flowName);
+                    else if (choice === "2") exportFlowJSON(flowName, nodes, edges, flowTags, flowDesc);
+                    else if (choice === "3") exportFlowSVG(rfi, flowName);
+                  }}>
+                  <Download size={10} /> Export
+                </button>
+              </div>
+
+              {/* Stats */}
+              <span style={{ fontSize: 8.5, color: "var(--pg-border2)", whiteSpace: "nowrap" }}>{nodes.length}n · {edges.length}e</span>
+
+              {/* Clear */}
+              <TBtn icon={Trash2} label="Clear canvas" onClick={() => { if (window.confirm("Clear canvas?")) { store.snapshot(nodes, edges); setNodes([]); setEdges([]); setSelNode(null); setShowInspect(false); }}} danger />
+            </div>
+          </div>
+
+          {/* Canvas + Inspector row */}
+          <div style={{ flex: 1, display: "flex", overflow: "hidden", background: "var(--pg-bg)" }}>
+            <div ref={rfWrapper} style={{ flex: 1, position: "relative" }} onDragOver={onDragOver} onDrop={onDrop}>
+              <ReactFlow
+                nodes={nodes} edges={edges}
+                onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}
+                onConnect={onConnect} onInit={setRfi}
+                nodeTypes={NODE_TYPES}
+                onNodeClick={onNodeClick}
+                onNodeContextMenu={onNodeCtx}
+                onNodeMouseEnter={onNodeMouseEnter}
+                onNodeMouseLeave={onNodeMouseLeave}
+                onPaneClick={onPaneClick}
+                onEdgeDoubleClick={onEdgeDblClick}
+                deleteKeyCode="Delete"
+                snapToGrid={snapToGrid}
+                snapGrid={[20, 20]}
+                fitView
+                style={{ background: "var(--pg-bg)" }}
+                defaultEdgeOptions={edgeDefaults}
+              >
+                <Background variant={snapToGrid ? BackgroundVariant.Lines : BackgroundVariant.Dots} gap={snapToGrid ? 20 : 28} size={1} color="var(--pg-border2)" />
+                <Controls style={{ background: "var(--pg-sidebar)", border: "1px solid var(--pg-border)", borderRadius: 8 }} />
+                {showMinimap && <MiniMap style={{ background: "var(--pg-sidebar)", border: "1px solid var(--pg-border)", borderRadius: 8 }} nodeColor={n => COLORS[n.data?.colorOverride || n.data?.colorKey]?.bg || "var(--pg-accent)"} maskColor="var(--pg-bg)bb" />}
+              </ReactFlow>
+
+              {nodes.length === 0 && (
+                <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", textAlign: "center", pointerEvents: "none" }}>
+                  <Workflow size={40} color="var(--pg-border2)" style={{ marginBottom: 12 }} />
+                  <div style={{ fontSize: 11, color: "var(--pg-border2)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 5 }}>Drag nodes · Load a template</div>
+                  <div style={{ fontSize: 9, color: "var(--pg-border2)" }}>Double-click edges to add labels · Right-click nodes for actions</div>
+                </div>
+              )}
+
+              {/* Validation panel */}
+              {showValidation && <ValidationPanelInline issues={validationIssues} onClose={() => setShowValidation(false)} />}
+            </div>
+
+            {/* Inspector */}
+            {showInspect && selNode && selNode.type === "genai" && (
+              <InspectorPanel
+                node={selNode}
+                issues={validationIssues}
+                onClose={() => { setShowInspect(false); setSelNode(null); }}
+                onUpdate={updateNode}
+                onDelete={deleteNode}
+                onDuplicate={duplicateNode}
+              />
+            )}
+          </div>
+        </div>
+
+        {/* ── Overlays ── */}
+        {ctxMenu && (
+          <CtxMenu x={ctxMenu.x} y={ctxMenu.y} nodeId={ctxMenu.nodeId}
+            onClose={() => setCtxMenu(null)}
+            onDelete={deleteNode}
+            onDuplicate={duplicateNode}
+            onInspect={id => { const n = nodes.find(n => n.id === id); if (n) { setSelNode(n); setShowInspect(true); } }}
+          />
+        )}
+
+        {hoveredNode && !showInspect && <NodePopoverInline node={hoveredNode} position={hoverPos} />}
+
+        {editingEdge && (
+          <EdgeLabelModal
+            edge={editingEdge}
+            onSave={label => {
+              setEdges(eds => eds.map(e => e.id === editingEdge.id ? { ...e, label } : e));
+              setEditingEdge(null);
+            }}
+            onClose={() => setEditingEdge(null)}
+          />
+        )}
+
+        {showFlowMgr && (
+          <FlowManager
+            flows={store.savedFlows}
+            onLoad={handleLoadFlow}
+            onDelete={store.deleteFlow}
+            onDuplicate={store.duplicateFlow}
+            onFavorite={store.toggleFavorite}
+            onNew={() => { setNodes([]); setEdges([]); setFlowName("Untitled Architecture"); setActiveFlowId(null); setShowFlowMgr(false); }}
+            onImport={(data) => { store.snapshot(nodes, edges); setNodes(data.nodes); setEdges(data.edges); setFlowName(data.name); setShowFlowMgr(false); }}
+            onClose={() => setShowFlowMgr(false)}
+          />
+        )}
+
+        {showSaveModal && (
+          <SaveModal
+            initialName={flowName}
+            initialDesc={flowDesc}
+            initialTags={flowTags}
+            onSave={handleSaveFlow}
+            onClose={() => setShowSaveModal(false)}
+          />
+        )}
+
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
+          .react-flow__controls button { background: #0d1117 !important; border-color: #21262d !important; color: #484f58 !important; }
+          .react-flow__controls button:hover { background: #161b22 !important; color: #818cf8 !important; }
+          .react-flow__edge-path { stroke: #818cf8 !important; }
+          .react-flow__edge.selected .react-flow__edge-path { stroke: #a78bfa !important; stroke-width: 2 !important; }
+          .react-flow__edge:hover .react-flow__edge-path { stroke: #a78bfa !important; }
+          ::-webkit-scrollbar { width: 4px; }
+          ::-webkit-scrollbar-track { background: #0d1117; }
+          ::-webkit-scrollbar-thumb { background: #21262d; border-radius: 4px; }
+          ::-webkit-scrollbar-thumb:hover { background: #30363d; }
+          .react-flow__minimap-mask { fill: rgba(1,4,9,0.75); }
+          .react-flow__background { background-color: #010409 !important; }
+        `}</style>
       </div>
-
-      {/* ── Overlays ── */}
-      {ctxMenu && (
-        <CtxMenu x={ctxMenu.x} y={ctxMenu.y} nodeId={ctxMenu.nodeId}
-          onClose={() => setCtxMenu(null)}
-          onDelete={deleteNode}
-          onDuplicate={duplicateNode}
-          onInspect={id => { const n = nodes.find(n => n.id === id); if (n) { setSelNode(n); setShowInspect(true); } }}
-        />
       )}
-
-      {hoveredNode && !showInspect && <NodePopoverInline node={hoveredNode} position={hoverPos} />}
-
-      {editingEdge && (
-        <EdgeLabelModal
-          edge={editingEdge}
-          onSave={label => {
-            setEdges(eds => eds.map(e => e.id === editingEdge.id ? { ...e, label } : e));
-            setEditingEdge(null);
-          }}
-          onClose={() => setEditingEdge(null)}
-        />
-      )}
-
-      {showFlowMgr && (
-        <FlowManager
-          flows={store.savedFlows}
-          onLoad={handleLoadFlow}
-          onDelete={store.deleteFlow}
-          onDuplicate={store.duplicateFlow}
-          onFavorite={store.toggleFavorite}
-          onNew={() => { setNodes([]); setEdges([]); setFlowName("Untitled Architecture"); setActiveFlowId(null); setShowFlowMgr(false); }}
-          onImport={(data) => { store.snapshot(nodes, edges); setNodes(data.nodes); setEdges(data.edges); setFlowName(data.name); setShowFlowMgr(false); }}
-          onClose={() => setShowFlowMgr(false)}
-        />
-      )}
-
-      {showSaveModal && (
-        <SaveModal
-          initialName={flowName}
-          initialDesc={flowDesc}
-          initialTags={flowTags}
-          onSave={handleSaveFlow}
-          onClose={() => setShowSaveModal(false)}
-        />
-      )}
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
-        .react-flow__controls button { background: #0d1117 !important; border-color: #21262d !important; color: #484f58 !important; }
-        .react-flow__controls button:hover { background: #161b22 !important; color: #818cf8 !important; }
-        .react-flow__edge-path { stroke: #818cf8 !important; }
-        .react-flow__edge.selected .react-flow__edge-path { stroke: #a78bfa !important; stroke-width: 2 !important; }
-        .react-flow__edge:hover .react-flow__edge-path { stroke: #a78bfa !important; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #0d1117; }
-        ::-webkit-scrollbar-thumb { background: #21262d; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #30363d; }
-        .react-flow__minimap-mask { fill: rgba(1,4,9,0.75); }
-        .react-flow__background { background-color: #010409 !important; }
-      `}</style>
     </div>
   );
 }
