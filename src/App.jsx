@@ -11,6 +11,7 @@ import PythonIDE from "./components/PythonIDE";
 import ResourceManager from "./components/ResourceManager";
 import ProgressTracker from "./components/ProgressTracker";
 import SystemDesignPlayground from "./pages/playground/SystemDesignPlayground";
+import DSAAnimator from "./components/DSAAnimator";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { supabase } from "./config/supabaseClient";
@@ -83,10 +84,6 @@ function MainApp() {
         const defaultPaths = injectDefaultIcons(PATHS);
         const mergedData = { ...defaultPaths, ...data.paths_data };
 
-        if (defaultPaths["dsa"] && mergedData["dsa"]) {
-          mergedData["dsa"].nodes = defaultPaths["dsa"].nodes;
-        }
-
         setPathsData(mergedData);
         const keys = Object.keys(mergedData);
         if (keys.length > 0) setActivePath(keys[0]);
@@ -102,10 +99,6 @@ function MainApp() {
         } else {
           const defaultPaths = injectDefaultIcons(PATHS);
           initialData = { ...defaultPaths, ...injectDefaultIcons(initialData) };
-
-          if (defaultPaths["dsa"] && initialData["dsa"]) {
-            initialData["dsa"].nodes = defaultPaths["dsa"].nodes;
-          }
         }
 
         setPathsData(initialData);
@@ -127,10 +120,13 @@ function MainApp() {
     localStorage.setItem("genai_paths_v3", JSON.stringify(pathsData));
 
     const timeoutId = setTimeout(async () => {
-      await supabase
+      console.log("Supabase upserting pathsData:", JSON.stringify(pathsData).slice(0, 100) + "...");
+      const { error } = await supabase
         .from('user_curriculum')
         .upsert({ id: user.id, paths_data: pathsData, updated_at: new Date().toISOString() });
-    }, 1000);
+      if (error) console.error("Supabase upsert error!", error);
+      else console.log("Supabase upsert SUCCESS!");
+    }, 500);
 
     return () => clearTimeout(timeoutId);
   }, [pathsData, user, isDataLoaded]);
@@ -155,7 +151,8 @@ function MainApp() {
   const [showIDE, setShowIDE] = useState(false);
   const [showResources, setShowResources] = useState(false);
   const [showProgress, setShowProgress] = useState(false);
-  const [showPlayground, setShowPlayground] = useState(false);  // ← NEW
+  const [showPlayground, setShowPlayground] = useState(false);
+  const [showDSAAnimator, setShowDSAAnimator] = useState(false);  // ← NEW
 
   // Helper to close all panels at once
   const closeAllPanels = () => {
@@ -164,6 +161,7 @@ function MainApp() {
     setShowResources(false);
     setShowProgress(false);
     setShowPlayground(false);
+    setShowDSAAnimator(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
@@ -260,19 +258,24 @@ function MainApp() {
                 
                 // Match by ID if possible, otherwise by Title
                 const isMatch = (updatedTopic.id && sid === updatedTopic.id) || 
-                                (stitle === updatedTopic.title);
+                                (!updatedTopic.id && stitle === updatedTopic.title);
                 
                 if (isMatch) { 
                   found = true; 
-                  return { ...updatedTopic, id: sid || updatedTopic.id || `topic-${Date.now()}` }; 
+                  // CRITICAL: if s is already an object with an ID, prefer sid. Otherwise fallback to updatedTopic.id
+                  const targetId = sid || updatedTopic.id || `topic-${Date.now()}`;
+                  updatedTopic.id = targetId; // Mutate to ensure consistent ID is returned
+                  return { ...updatedTopic, id: targetId }; 
                 }
                 return isObj ? s : { id: `topic-${Math.random().toString(36).substr(2, 9)}`, title: s, status: "pending", content: "" };
               });
               
               if (!found) {
+                const newId = updatedTopic.id || `topic-${Date.now()}`;
+                updatedTopic.id = newId;
                 newSubtopics.push({ 
                   ...updatedTopic, 
-                  id: updatedTopic.id || `topic-${Date.now()}` 
+                  id: newId
                 });
               }
               return { ...m, subtopics: newSubtopics };
@@ -283,9 +286,12 @@ function MainApp() {
         }
         return n;
       });
+      console.log("handleSaveTopic updated nodes", updatedNodes);
       return { ...prev, [activePath]: { ...parent, nodes: updatedNodes } };
     });
-    setActiveTopic(updatedTopic);
+    
+    // Pass back the topic with the exactly assigned ID
+    setActiveTopic({ ...updatedTopic, id: updatedTopic.id });
   };
 
   const handleDeleteNode = (nodeId) => {
@@ -447,6 +453,8 @@ function MainApp() {
         setShowProgress={setShowProgress}
         showPlayground={showPlayground}
         setShowPlayground={setShowPlayground}
+        showDSAAnimator={showDSAAnimator}
+        setShowDSAAnimator={setShowDSAAnimator}
         activeNode={activeNode}
         setActiveNode={setActiveNode}
         setActiveModule={setActiveModule}
@@ -456,7 +464,9 @@ function MainApp() {
       />
 
       {/* ── View Switcher ── */}
-      {showPlayground ? (
+      {showDSAAnimator ? (
+        <DSAAnimator onClose={() => setShowDSAAnimator(false)} />
+      ) : showPlayground ? (
         <SystemDesignPlayground theme={theme} onClose={() => setShowPlayground(false)} />
       ) : showProgress ? (
         <ProgressTracker

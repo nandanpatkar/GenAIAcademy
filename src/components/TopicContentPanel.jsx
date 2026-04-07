@@ -40,16 +40,16 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
     setTimeout(() => setSaveText("SAVE CHANGES"), 2000);
   };
   
-  // Autosave code changes when typing so they aren't lost if unmounted
-  // This is optional if we prefer manual saves, but for coding autosave is better.
+  // Aggressive autosave for all fields (Code, Description, Title)
   useEffect(() => {
-    if (!isEditMode && topic.pythonCode !== pythonCode) {
+    const hasChanges = topic.pythonCode !== pythonCode || topic.content !== content || topic.title !== title || topic.linkUrl !== linkUrl;
+    if (hasChanges) {
       const timeout = setTimeout(() => {
         onSaveTopic({ ...topic, title, content, linkUrl, pythonCode });
-      }, 2000);
+      }, 500);
       return () => clearTimeout(timeout);
     }
-  }, [pythonCode, isEditMode, topic, title, content, linkUrl, onSaveTopic]);
+  }, [pythonCode, content, title, linkUrl, topic, onSaveTopic]);
 
   const handleRun = () => {
     runPython(pythonCode);

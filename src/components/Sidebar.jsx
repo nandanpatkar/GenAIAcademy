@@ -1,4 +1,4 @@
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -10,6 +10,7 @@ export default function Sidebar({
   showResources, setShowResources,
   showProgress, setShowProgress,
   showPlayground, setShowPlayground,
+  showDSAAnimator, setShowDSAAnimator,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme
 }) {
@@ -17,17 +18,19 @@ export default function Sidebar({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const navItems = [
-    { icon: <LayoutDashboard size={16} />, label: "Overview",      id: "overview" },
-    { icon: <Network size={16} />,         label: "Curriculum Map", id: "curriculum_map" },
-    { icon: <Terminal size={16} />,        label: "Practice IDE",   id: "ide" },
-    { icon: <CheckSquare size={16} />,     label: "Tasks",          id: "tasks" },
-    { icon: <CircleDashed size={16} />,    label: "Progress",       id: "progress" },
-    { icon: <BookOpen size={16} />,        label: "Resources",      id: "resources" },
-    { icon: <Boxes size={16} />,           label: "Playground",     id: "playground" },
-    { icon: <Users size={16} />,           label: "Community",      id: "community" },
+    { icon: <LayoutDashboard size={16} />,  label: "Overview",      id: "overview" },
+    { icon: <Network size={16} />,          label: "Curriculum Map", id: "curriculum_map" },
+    { icon: <Terminal size={16} />,         label: "Practice IDE",   id: "ide" },
+    { icon: <CheckSquare size={16} />,      label: "Tasks",          id: "tasks" },
+    { icon: <CircleDashed size={16} />,     label: "Progress",       id: "progress" },
+    { icon: <BookOpen size={16} />,         label: "Resources",      id: "resources" },
+    { icon: <Boxes size={16} />,            label: "Playground",     id: "playground" },
+    { icon: <Clapperboard size={16} />,     label: "DSA Animator",   id: "dsa_animator" },
+    { icon: <Users size={16} />,            label: "Community",      id: "community" },
   ];
 
   const getActiveId = () => {
+    if (showDSAAnimator)   return "dsa_animator";
     if (showPlayground)    return "playground";
     if (showProgress)      return "progress";
     if (showIDE)           return "ide";
@@ -46,18 +49,20 @@ export default function Sidebar({
 
     // Close all panels
     setShowCurriculumMap(false);
-    if (setShowIDE)        setShowIDE(false);
-    if (setShowResources)  setShowResources(false);
-    if (setShowProgress)   setShowProgress(false);
-    if (setShowPlayground) setShowPlayground(false);
+    if (setShowIDE)           setShowIDE(false);
+    if (setShowResources)     setShowResources(false);
+    if (setShowProgress)      setShowProgress(false);
+    if (setShowPlayground)    setShowPlayground(false);
+    if (setShowDSAAnimator)   setShowDSAAnimator(false);
 
     // Open selected
     switch (id) {
-      case "curriculum_map": setShowCurriculumMap(true);             break;
-      case "ide":            if (setShowIDE)        setShowIDE(true);        break;
-      case "resources":      if (setShowResources)  setShowResources(true);  break;
-      case "progress":       if (setShowProgress)   setShowProgress(true);   break;
-      case "playground":     if (setShowPlayground) setShowPlayground(true); break;
+      case "curriculum_map": setShowCurriculumMap(true);                             break;
+      case "ide":            if (setShowIDE)          setShowIDE(true);          break;
+      case "resources":      if (setShowResources)    setShowResources(true);    break;
+      case "progress":       if (setShowProgress)     setShowProgress(true);     break;
+      case "playground":     if (setShowPlayground)   setShowPlayground(true);   break;
+      case "dsa_animator":   if (setShowDSAAnimator)  setShowDSAAnimator(true);  break;
       default: break;
     }
   };
