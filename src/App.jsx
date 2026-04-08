@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Component } from "react";
 import Sidebar from "./components/Sidebar";
+import TopBar from "./components/TopBar";
 import RoadmapGraph from "./components/RoadmapGraph";
 import ModulePanel from "./components/ModulePanel";
 import ResourcePanel from "./components/ResourcePanel";
@@ -683,6 +684,7 @@ function MainApp() {
           )}
         </>
       )}
+
 
       {/* ── Modals ── */}
       {editingPath && (

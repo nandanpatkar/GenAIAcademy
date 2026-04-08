@@ -125,17 +125,83 @@ export default function Sidebar({
 
   return (
     <aside className={`sidebar${isCollapsed ? " sidebar-collapsed" : ""}`}>
-      {/* Header */}
-      <div className="sidebar-logo">
-        <div style={{
-          width: 28, height: 28, borderRadius: 8,
-          background: "rgba(0,255,136,.15)", border: "1px solid rgba(0,255,136,.3)",
-          display: "flex", alignItems: "center", justifyContent: "center", color: "#00ff88",
-          flexShrink: 0
-        }}>
-          <Hexagon size={16} />
+      {/* ── Morphing Header ── */}
+      <div className="sidebar-logo morphing-header">
+        <div className="logo-orb">
+          <svg className="quantum-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Outer Orbit 1 */}
+            <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(-30 50 50)" className="logo-orbit" />
+            {/* Outer Orbit 2 */}
+            <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(30 50 50)" className="logo-orbit" />
+            {/* Outer Orbit 3 */}
+            <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(90 50 50)" className="logo-orbit" />
+            
+            {/* Orbiting Nodes */}
+            <circle r="3" className="logo-node node-1" />
+            <circle r="3" className="logo-node node-2" />
+            <circle r="3" className="logo-node node-3" />
+
+            {/* Central Nucleus */}
+            <path d="M50 35L63 42.5V57.5L50 65L37 57.5V42.5L50 35Z" className="logo-nucleus" />
+            <circle cx="50" cy="50" r="4" className="logo-core" />
+          </svg>
+          <div className="logo-pulse" />
         </div>
-        {!isCollapsed && <span className="brand">GenAI<span>Academy</span></span>}
+        
+        <div className="logo-morph-wrapper">
+          <div className="brand-layer">
+            <span className="brand pixar-brand">
+              {"GenAI".split("").map((char, i) => (
+                <span key={i} className={`pixar-char ${char === 'I' ? 'char-i' : ''}`} style={{ "--idx": i }}>
+                  {char}
+                </span>
+              ))}
+              <span className="pixar-space">&nbsp;</span>
+              {"Academy".split("").map((char, i) => (
+                <span key={i + 5} className="pixar-char academy-char" style={{ "--idx": i + 6 }}>
+                  {char}
+                </span>
+              ))}
+            </span>
+          </div>
+
+          <div className="controls-layer">
+            <button 
+              className={`morph-icon ${isEditMode ? "active" : ""}`}
+              onClick={() => setIsEditMode(!isEditMode)}
+              title={isEditMode ? "Edit Mode: ON" : "View Mode"}
+              style={{ "--idx": 1 }}
+            >
+              {isEditMode ? <Edit3 size={14} /> : <Eye size={14} />}
+            </button>
+            <button 
+              className="morph-icon"
+              onClick={toggleTheme}
+              title={theme === "dark" ? "Light Mode" : "Dark Mode"}
+              style={{ "--idx": 2 }}
+            >
+              {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
+            <button 
+              className="morph-icon warning"
+              onClick={onReset}
+              title="Reset Defaults"
+              style={{ "--idx": 3 }}
+            >
+              <RotateCcw size={14} />
+            </button>
+            <div className="morph-divider" />
+            <button 
+              className="morph-icon danger"
+              onClick={onSignOut}
+              title="Sign Out"
+              style={{ "--idx": 4 }}
+            >
+              <LogOut size={14} />
+            </button>
+          </div>
+        </div>
+
         <button
           className="sidebar-collapse-btn"
           onClick={() => setIsCollapsed(c => !c)}
@@ -145,135 +211,106 @@ export default function Sidebar({
         </button>
       </div>
 
-      {/* Nav */}
-      <div className="sidebar-nav">
-        <div className="sidebar-section">
-          {navItems.map((item) => (
+      {/* ── Independent Navigation Scroll ── */}
+      <div className="sidebar-nav-container">
+        <div className="sidebar-nav">
+          <div className="sidebar-section">
+            {navItems.map((item) => (
+              <div
+                key={item.id}
+                className={`sidebar-item ${activeNavId === item.id ? "active" : ""}`}
+                onClick={() => handleNavClick(item.id)}
+                data-label={item.label}
+              >
+                <span className="sidebar-item-icon">
+                  {item.icon}
+                </span>
+                {!isCollapsed && <span>{item.label}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="sidebar-divider" />
+
+      {/* ── Independent Paths Scroll ── */}
+      <div className="sidebar-paths-container">
+        {/* Collapsed: active path dot indicator */}
+        {isCollapsed && (
+          <div className="sidebar-path-dot-strip">
             <div
-              key={item.id}
-              className={`sidebar-item ${activeNavId === item.id ? "active" : ""}`}
-              onClick={() => handleNavClick(item.id)}
-              data-label={item.label}
-            >
-              <span className="sidebar-item-icon">
-                {item.icon}
-              </span>
-              {!isCollapsed && <span>{item.label}</span>}
+              className="sidebar-path-dot-btn"
+              style={{ background: activePColor, boxShadow: `0 0 8px ${activePColor}80` }}
+              title={pathList.find(p => p?.key === activePath)?.label || "Active Path"}
+            />
+          </div>
+        )}
+
+        {!isCollapsed && <div className="sidebar-path-pills">
+          <div className="sidebar-section-label">Learning Paths</div>
+          {pathList.filter(Boolean).map((p) => (
+            <div key={p.key} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
+              <button
+                className={`path-pill ${activePath === p.key ? "active" : ""}`}
+                style={{
+                  "--pill-color": p.color,
+                  "--pill-bg": p.bg,
+                  flex: 1,
+                  flexDirection: "column",
+                  alignItems: "stretch",
+                  gap: 8,
+                  padding: "8px 10px"
+                }}
+                onClick={() => {
+                  setActivePath(p.key);
+                  if (setActiveNode) setActiveNode(null);
+                  if (setActiveModule) setActiveModule(null);
+                  if (setActiveTopic) setActiveTopic(null);
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8, width: "100%" }}>
+                  <span className="pill-dot" style={{ flexShrink: 0 }} />
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1, textAlign: "left" }}>
+                    {p.label}
+                  </span>
+                  <span className="pill-badge" style={{ marginLeft: "auto" }}>{p.progressPercent}%</span>
+                </div>
+                <div style={{ width: "100%", height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 3, overflow: "hidden" }}>
+                  <div style={{ width: `${p.progressPercent}%`, height: "100%", background: p.color, transition: "width 0.4s ease-out" }} />
+                </div>
+              </button>
+              {isEditMode && activePath === p.key && onEditPath && (
+                <button
+                  onClick={() => onEditPath(paths[p.key])}
+                  className="rg-btn"
+                  style={{ padding: "8px", background: "var(--bg3)", flexShrink: 0 }}
+                  title="Edit Path Settings"
+                >
+                  <Edit2 size={12} />
+                </button>
+              )}
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Collapsed: active path dot indicator */}
-      {isCollapsed && (
-        <div className="sidebar-path-dot-strip">
-          <div
-            className="sidebar-path-dot-btn"
-            style={{ background: activePColor, boxShadow: `0 0 8px ${activePColor}80` }}
-            title={pathList.find(p => p?.key === activePath)?.label || "Active Path"}
-          />
-        </div>
-      )}
-
-      {!isCollapsed && <div className="sidebar-path-pills">
-        <div className="sidebar-section-label">Learning Paths</div>
-        {pathList.filter(Boolean).map((p) => (
-          <div key={p.key} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          {isEditMode && onAddPath && (
             <button
-              className={`path-pill ${activePath === p.key ? "active" : ""}`}
+              className="path-pill"
               style={{
-                "--pill-color": p.color,
-                "--pill-bg": p.bg,
-                flex: 1,
-                flexDirection: "column",
-                alignItems: "stretch",
-                gap: 8,
-                padding: "8px 10px"
+                "--pill-color": "var(--text3)",
+                "--pill-bg": "transparent",
+                border: "1px dashed var(--border2)",
+                justifyContent: "center",
+                marginTop: 8
               }}
-              onClick={() => {
-                setActivePath(p.key);
-                if (setActiveNode) setActiveNode(null);
-                if (setActiveModule) setActiveModule(null);
-                if (setActiveTopic) setActiveTopic(null);
-              }}
+              onClick={onAddPath}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 8, width: "100%" }}>
-                <span className="pill-dot" style={{ flexShrink: 0 }} />
-                <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1, textAlign: "left" }}>
-                  {p.label}
-                </span>
-                <span className="pill-badge" style={{ marginLeft: "auto" }}>{p.progressPercent}%</span>
-              </div>
-              <div style={{ width: "100%", height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 3, overflow: "hidden" }}>
-                <div style={{ width: `${p.progressPercent}%`, height: "100%", background: p.color, transition: "width 0.4s ease-out" }} />
-              </div>
+              + Create New Path
             </button>
-            {isEditMode && activePath === p.key && onEditPath && (
-              <button
-                onClick={() => onEditPath(paths[p.key])}
-                className="rg-btn"
-                style={{ padding: "8px", background: "var(--bg3)", flexShrink: 0 }}
-                title="Edit Path Settings"
-              >
-                <Edit2 size={12} />
-              </button>
-            )}
-          </div>
-        ))}
-        {isEditMode && onAddPath && (
-          <button
-            className="path-pill"
-            style={{
-              "--pill-color": "var(--text3)",
-              "--pill-bg": "transparent",
-              border: "1px dashed var(--border2)",
-              justifyContent: "center",
-              marginTop: 8
-            }}
-            onClick={onAddPath}
-          >
-            + Create New Path
-          </button>
-        )}
-      </div>}
-
-      <div className="sidebar-footer">
-        <div
-          className="sidebar-footer-item"
-          onClick={() => setIsEditMode(!isEditMode)}
-          data-label={isEditMode ? "Edit Mode: ON" : "View Mode"}
-          style={{ cursor: "pointer", color: isEditMode ? "#f59e0b" : "var(--text2)", fontWeight: 700 }}
-        >
-          {isEditMode ? <Edit3 size={15} /> : <Eye size={15} />}
-          {!isCollapsed && <span>{isEditMode ? "Edit Mode: ON" : "View Mode"}</span>}
-        </div>
-        <div
-          className="sidebar-footer-item"
-          onClick={toggleTheme}
-          data-label={theme === "dark" ? "Light Mode" : "Dark Mode"}
-          style={{ cursor: "pointer", color: "var(--text2)", fontWeight: 700 }}
-        >
-          {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
-          {!isCollapsed && <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>}
-        </div>
-        <div
-          className="sidebar-footer-item"
-          onClick={onReset}
-          data-label="Reset Defaults"
-          style={{ cursor: "pointer", color: "#ec4899", fontWeight: 700 }}
-        >
-          <RotateCcw size={15} />
-          {!isCollapsed && <span>Reset Defaults</span>}
-        </div>
-        <div
-          className="sidebar-footer-item sidebar-footer-signout"
-          onClick={onSignOut}
-          data-label="Sign Out"
-        >
-          <LogOut size={15} />
-          {!isCollapsed && <span>Sign Out</span>}
-        </div>
+          )}
+        </div>}
       </div>
+
+
     </aside>
   );
 }
