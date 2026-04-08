@@ -1,4 +1,4 @@
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -12,8 +12,8 @@ export default function Sidebar({
   showPlayground, setShowPlayground,
   showDSAAnimator, setShowDSAAnimator,
   showBlog, setShowBlog,
-  showContentStudio, setShowContentStudio,
   showAdminManagement, setShowAdminManagement,
+  showSimulator, setShowSimulator,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
   onSignOut
@@ -28,11 +28,11 @@ export default function Sidebar({
     { icon: <CheckSquare size={16} />,      label: "Tasks",          id: "tasks" },
     { icon: <CircleDashed size={16} />,     label: "Progress",       id: "progress" },
     { icon: <BookOpen size={16} />,         label: "Resources",      id: "resources" },
-    { icon: <Boxes size={16} />,            label: "Playground",     id: "playground" },
-    { icon: <Clapperboard size={16} />,     label: "DSA Animator",   id: "dsa_animator" },
-    { icon: <BookMarked size={16} />,       label: "Blog",           id: "blog" },
+    { icon: <Boxes size={16} />,            label: "Playground",          id: "playground" },
+    { icon: <Clapperboard size={16} />,     label: "DSA Animator",        id: "dsa_animator" },
+    { icon: <Cpu size={16} />,              label: "System Design Sim",   id: "simulator" },
+    { icon: <BookMarked size={16} />,       label: "Blog",                id: "blog" },
     ...(isAdmin ? [
-      { icon: <Database size={16} />, label: "Content Studio", id: "content_studio" },
       { icon: <Shield size={16} />,   label: "System Admin",   id: "admin_management" }
     ] : []),
     { icon: <Users size={16} />,            label: "Community",      id: "community" },
@@ -40,8 +40,8 @@ export default function Sidebar({
 
   const getActiveId = () => {
     if (showAdminManagement) return "admin_management";
-    if (showContentStudio) return "content_studio";
     if (showBlog)          return "blog";
+    if (showSimulator)     return "simulator";
     if (showDSAAnimator)   return "dsa_animator";
     if (showPlayground)    return "playground";
     if (showProgress)      return "progress";
@@ -67,8 +67,8 @@ export default function Sidebar({
     if (setShowPlayground)    setShowPlayground(false);
     if (setShowDSAAnimator)   setShowDSAAnimator(false);
     if (setShowBlog)          setShowBlog(false);
-    if (setShowContentStudio) setShowContentStudio(false);
     if (setShowAdminManagement) setShowAdminManagement(false);
+    if (setShowSimulator)     setShowSimulator(false);
 
     // Open selected
     switch (id) {
@@ -78,9 +78,11 @@ export default function Sidebar({
       case "progress":       if (setShowProgress)     setShowProgress(true);     break;
       case "playground":     if (setShowPlayground)   setShowPlayground(true);   break;
       case "dsa_animator":   if (setShowDSAAnimator)  setShowDSAAnimator(true);  break;
+      case "simulator":      if (setShowSimulator)    setShowSimulator(true);    break;
       case "blog":           if (setShowBlog)         setShowBlog(true);         break;
-      case "content_studio": if (setShowContentStudio)setShowContentStudio(true); break;
-      case "admin_management": if (setShowAdminManagement) setShowAdminManagement(true); break;
+      case "admin_management": 
+        if (setShowAdminManagement) setShowAdminManagement(true);
+        break;
       default: break;
     }
   };
@@ -248,20 +250,17 @@ export default function Sidebar({
         )}
 
         {!isCollapsed && <div className="sidebar-path-pills">
-          <div className="sidebar-section-label">Learning Paths</div>
+          <div className="sidebar-section-header">
+            <span className="sidebar-section-label">Learning Paths</span>
+          </div>
           {pathList.filter(Boolean).map((p) => (
-            <div key={p.key} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 8 }}>
+            <div 
+              key={p.key} 
+              className={`path-pill-container ${activePath === p.key ? "active" : ""}`}
+              style={{ "--pill-color": p.color, "--pill-bg": p.bg }}
+            >
               <button
-                className={`path-pill ${activePath === p.key ? "active" : ""}`}
-                style={{
-                  "--pill-color": p.color,
-                  "--pill-bg": p.bg,
-                  flex: 1,
-                  flexDirection: "column",
-                  alignItems: "stretch",
-                  gap: 8,
-                  padding: "8px 10px"
-                }}
+                className="path-pill"
                 onClick={() => {
                   setActivePath(p.key);
                   if (setActiveNode) setActiveNode(null);
@@ -269,42 +268,35 @@ export default function Sidebar({
                   if (setActiveTopic) setActiveTopic(null);
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 8, width: "100%" }}>
-                  <span className="pill-dot" style={{ flexShrink: 0 }} />
-                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1, textAlign: "left" }}>
-                    {p.label}
-                  </span>
-                  <span className="pill-badge" style={{ marginLeft: "auto" }}>{p.progressPercent}%</span>
+                <div className="path-pill-main">
+                  <span className="pill-dot" />
+                  <span className="pill-label">{p.label}</span>
+                  <span className="pill-percentage">{p.progressPercent}%</span>
                 </div>
-                <div style={{ width: "100%", height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 3, overflow: "hidden" }}>
-                  <div style={{ width: `${p.progressPercent}%`, height: "100%", background: p.color, transition: "width 0.4s ease-out" }} />
+                <div className="path-pill-progress">
+                  <div className="path-pill-progress-fill" style={{ width: `${p.progressPercent}%`, background: p.color }} />
                 </div>
               </button>
+              
               {isEditMode && activePath === p.key && onEditPath && (
                 <button
                   onClick={() => onEditPath(paths[p.key])}
-                  className="rg-btn"
-                  style={{ padding: "8px", background: "var(--bg3)", flexShrink: 0 }}
-                  title="Edit Path Settings"
+                  className="path-edit-btn"
+                  title="Path Settings"
                 >
-                  <Edit2 size={12} />
+                  <Edit2 size={11} />
                 </button>
               )}
             </div>
           ))}
+          
           {isEditMode && onAddPath && (
             <button
-              className="path-pill"
-              style={{
-                "--pill-color": "var(--text3)",
-                "--pill-bg": "transparent",
-                border: "1px dashed var(--border2)",
-                justifyContent: "center",
-                marginTop: 8
-              }}
+              className="path-pill-add"
               onClick={onAddPath}
             >
-              + Create New Path
+              <Edit3 size={12} style={{ opacity: 0.6 }} />
+              <span>Create New Path</span>
             </button>
           )}
         </div>}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronRight, Hexagon, Minus, Box } from "lucide-react";
 
 export default function CurriculumTreePanel({
+  paths, activePath, setActivePath,
   pathData,
   activeNode, setActiveNode,
   activeModule, setActiveModule,
@@ -14,6 +15,20 @@ export default function CurriculumTreePanel({
   const [expandedModules, setExpandedModules] = useState({});
   const [viewMode, setViewMode] = useState("flowchart"); // "list" | "flowchart"
   const [zoomLevel, setZoomLevel] = useState(1);
+
+  const PATH_LABELS = {
+    agentic: "AGENTIC AI",
+    aicxm_aws: "AICXM AWS",
+    aicxm_azure: "AICXM AZURE",
+    aicxm_databricks: "AICXM DATABRICKS",
+    ds: "DATA SCIENCE",
+    genai: "GEN AI",
+  };
+
+  const tabLabels = Object.keys(paths || {}).map(key => ({
+    key,
+    label: PATH_LABELS[key] || (paths[key]?.title || key).toUpperCase(),
+  }));
 
   const toggleNode = (e, nodeId) => {
     e.stopPropagation();
@@ -52,47 +67,70 @@ export default function CurriculumTreePanel({
   };
 
   return (
-    <div className="curriculum-tree-panel" style={{ flex: 1, padding: '40px', overflowY: "auto", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32, borderBottom: "1px solid var(--border)", paddingBottom: 24, flexShrink: 0 }}>
-        <div>
-          <h1 style={{ fontSize: 28, fontWeight: 800, margin: 0, color: "var(--text)" }}>Curriculum Map</h1>
-          <p style={{ color: "var(--text2)", margin: "8px 0 0 0", fontSize: 14 }}>A macroscopic view of your entire learning path architecture.</p>
+    <div className="curriculum-tree-panel" style={{ "--path-color": pathData.color }}>
+      <header className="cm-header">
+        <div className="cm-header-top">
+          <div className="cm-title-group">
+            <h1>Curriculum Map</h1>
+            <p>Architectural visualization of the current learning path.</p>
+          </div>
+
+          <div className="rg-tabs-overlay">
+            {tabLabels.map((t) => (
+              <button
+                key={t.key}
+                className={`rg-tab ${activePath === t.key ? "active" : ""}`}
+                style={{
+                  "--tab-color": activePath === t.key ? paths[t.key]?.color : undefined,
+                  "--tab-bg": activePath === t.key ? `${paths[t.key]?.color}12` : "rgba(255,255,255,0.03)",
+                }}
+                onClick={() => setActivePath(t.key)}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+
+          <button onClick={onClose} className="cm-close-btn">
+            Close Map ✕
+          </button>
         </div>
-        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          
-          <div style={{ display: "flex", background: "var(--bg2)", borderRadius: 6, padding: 4, marginRight: 16 }}>
+
+        <div className="cm-controls-bar">
+          {/* View Mode Switching */}
+          <div className="cm-control-group">
             <button 
+              className={`cm-view-btn ${viewMode === "list" ? "active" : ""}`}
               onClick={() => setViewMode("list")} 
-              style={{ padding: "6px 16px", background: viewMode === "list" ? "var(--bg4)" : "transparent", color: viewMode === "list" ? "var(--text)" : "var(--text3)", border: "none", borderRadius: 4, fontSize: 13, fontWeight: 700, cursor: "pointer", transition: "all 0.2s" }}
             >
               Directory List
             </button>
             <button 
+              className={`cm-view-btn ${viewMode === "flowchart" ? "active" : ""}`}
               onClick={() => setViewMode("flowchart")} 
-              style={{ padding: "6px 16px", background: viewMode === "flowchart" ? `${pathData.color}33` : "transparent", color: viewMode === "flowchart" ? pathData.color : "var(--text3)", border: "none", borderRadius: 4, fontSize: 13, fontWeight: 700, cursor: "pointer", transition: "all 0.2s", marginLeft: 4 }}
             >
               Hybrid Flowchart
             </button>
           </div>
 
+          {/* Zoom Controls (Flowchart only) */}
           {viewMode === "flowchart" && (
-            <div style={{ display: "flex", background: "var(--bg2)", borderRadius: 6, padding: "4px 12px", marginRight: 16, alignItems: "center", gap: 12, border: "1px solid var(--border)" }}>
-              <button onClick={() => setZoomLevel(z => Math.max(z - 0.2, 0.4))} style={{ background: "transparent", border: "none", color: "var(--text)", cursor: "pointer", fontSize: 16, fontWeight: 800 }}>-</button>
-              <span style={{ fontSize: 11, fontWeight: 800, color: "var(--text2)", minWidth: 44, textAlign: "center", letterSpacing: "1px" }}>{Math.round(zoomLevel * 100)}%</span>
-              <button onClick={() => setZoomLevel(z => Math.min(z + 0.2, 3))} style={{ background: "transparent", border: "none", color: "var(--text)", cursor: "pointer", fontSize: 16, fontWeight: 800 }}>+</button>
-              <button onClick={() => setZoomLevel(1)} style={{ background: "transparent", border: "none", color: "var(--text3)", cursor: "pointer", fontSize: 10, marginLeft: 8, fontWeight: 700 }}>RESET</button>
+            <div className="cm-control-group cm-zoom-bar">
+              <button onClick={() => setZoomLevel(z => Math.max(z - 0.2, 0.4))}>-</button>
+              <span className="cm-zoom-pct">{Math.round(zoomLevel * 100)}%</span>
+              <button onClick={() => setZoomLevel(z => Math.min(z + 0.2, 3))}>+</button>
+              <div className="cm-divider" />
+              <button className="cm-reset-btn" onClick={() => setZoomLevel(1)}>RESET</button>
             </div>
           )}
 
-          {(
-            <>
-              <button onClick={expandAll} className="rg-btn" style={{ padding: "8px 14px", background: "var(--bg2)", color: "var(--text2)", fontSize: 12, borderRadius: 6 }}>Expand All</button>
-              <button onClick={collapseAll} className="rg-btn" style={{ padding: "8px 14px", background: "var(--bg2)", color: "var(--text2)", fontSize: 12, borderRadius: 6 }}>Collapse All</button>
-            </>
-          )}
-          <button onClick={onClose} className="rg-btn" style={{ padding: "8px 20px", background: "var(--bg3)", color: "var(--text)", border: "1px solid var(--border)", borderRadius: 6, cursor: "pointer", fontWeight: 600 }}>Close Map</button>
+          {/* Global Actions */}
+          <div className="cm-control-group">
+            <button className="cm-action-btn" onClick={expandAll}>Expand All</button>
+            <button className="cm-action-btn" onClick={collapseAll}>Collapse All</button>
+          </div>
         </div>
-      </div>
+      </header>
 
       {viewMode === "list" ? (
         <div className="full-tree-container" style={{ display: "flex", flexDirection: "column", gap: 16 }}>

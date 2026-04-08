@@ -27,162 +27,195 @@ import {
   Download, Search, X, Layers, Trash2,
   Grid, Maximize2, RotateCcw, RotateCw,
   Sparkles, MousePointer, ChevronDown, ChevronRight, Loader2,
-  Type, Square, Circle
+  Type, Square, Circle, Cloud, Boxes, Database, Brain, Server,
+  Key, Box, Activity, LayoutTemplate, MessageSquare, PanelLeft
 } from "lucide-react";
+import { generateArchitectureDiagram } from "../../services/aiService";
+import * as LucideIcons from "lucide-react";
+
+// Helper for dynamic Lucide icons
+const LucideIcon = ({ name, size = 11, color }) => {
+  const C = LucideIcons[name] || LucideIcons.Box;
+  return <C size={size} color={color} />;
+};
 
 // ─── ICON REGISTRY ────────────────────────────────────────────────────────────
-// Uses @iconify/react "logos:" + "carbon:" sets — same icons as Eraser.io
-// Browse all: https://icon-sets.iconify.design/logos/
+// Uses @iconify/react "logos:" + "simple-icons:" sets
 const ICON_MAP = {
   // ── AWS ───────────────────────────────────────────────────────────────────
-  "aws-s3":              { icon: "logos:amazon-s3",               label: "S3",               sub: "Object Storage",    bg: "#3F8624" },
-  "aws-lambda":          { icon: "logos:aws-lambda",              label: "Lambda",           sub: "Serverless",        bg: "#E7800D" },
-  "aws-ec2":             { icon: "logos:amazon-ec2",              label: "EC2",              sub: "Virtual Machine",   bg: "#E7800D" },
-  "aws-rds":             { icon: "logos:amazon-rds",              label: "RDS",              sub: "Relational DB",     bg: "#3F8624" },
-  "aws-bedrock":         { icon: "logos:aws",                     label: "Bedrock",          sub: "GenAI Platform",    bg: "#7B2D8B" },
-  "aws-sqs":             { icon: "logos:amazon-sqs",              label: "SQS",              sub: "Message Queue",     bg: "#E7800D" },
-  "aws-sns":             { icon: "logos:amazon-sns",              label: "SNS",              sub: "Pub/Sub",           bg: "#E7800D" },
-  "aws-api-gateway":     { icon: "logos:aws-api-gateway",         label: "API Gateway",      sub: "API Management",    bg: "#E7800D" },
-  "aws-cloudfront":      { icon: "logos:aws-cloudfront",          label: "CloudFront",       sub: "CDN",               bg: "#8C4FFF" },
-  "aws-cognito":         { icon: "logos:aws-cognito",             label: "Cognito",          sub: "Auth",              bg: "#E7800D" },
-  "aws-elb":             { icon: "logos:aws",                     label: "ELB",              sub: "Load Balancer",     bg: "#8C4FFF" },
-  "aws-ecs":             { icon: "logos:amazon-ecs",              label: "ECS",              sub: "Containers",        bg: "#E7800D" },
-  "aws-eks":             { icon: "logos:amazon-eks",              label: "EKS",              sub: "Kubernetes",        bg: "#E7800D" },
-  "aws-dynamodb":        { icon: "logos:amazon-dynamodb",         label: "DynamoDB",         sub: "NoSQL DB",          bg: "#3F8624" },
-  "aws-kinesis":         { icon: "logos:aws",                     label: "Kinesis",          sub: "Streaming",         bg: "#8C4FFF" },
-  "aws-step-functions":  { icon: "logos:aws",                     label: "Step Functions",   sub: "Orchestration",     bg: "#E7800D" },
-  "aws-secrets-manager": { icon: "logos:aws",                     label: "Secrets Manager",  sub: "Secrets",           bg: "#DD344C" },
-  "aws-cloudwatch":      { icon: "logos:amazon-cloudwatch",       label: "CloudWatch",       sub: "Monitoring",        bg: "#E7800D" },
-  "aws-glue":            { icon: "logos:aws",                     label: "Glue",             sub: "ETL",               bg: "#3F8624" },
-  "aws-athena":          { icon: "logos:aws",                     label: "Athena",           sub: "Serverless Query",  bg: "#8C4FFF" },
+  "aws-s3":              { icon: "logos:amazon-s3",               label: "S3",               sub: "Object Storage",    bg: "#FF9900" },
+  "aws-lambda":          { icon: "logos:aws-lambda",               label: "Lambda",           sub: "Serverless",        bg: "#FF9900" },
+  "aws-ec2":             { icon: "logos:aws-ec2",                  label: "EC2",              sub: "Compute",           bg: "#FF9900" },
+  "aws-rds":             { icon: "logos:aws-rds",                  label: "RDS",              sub: "Relational DB",     bg: "#FF9900" },
+  "aws-bedrock":         { icon: "logos:aws-bedrock",              label: "Bedrock",          sub: "AI Services",       bg: "#FF9900" },
+  "aws-sqs":             { icon: "logos:amazon-sqs",              label: "SQS",              sub: "Message Queue",     bg: "#FF9900" },
+  "aws-sns":             { icon: "logos:amazon-sns",              label: "SNS",              sub: "Notification",      bg: "#FF9900" },
+  "aws-api-gateway":     { icon: "logos:aws-api-gateway",          label: "API Gateway",      sub: "API Mgmt",          bg: "#FF9900" },
+  "aws-cloudfront":      { icon: "logos:aws-cloudfront",           label: "CloudFront",       sub: "CDN",               bg: "#FF9900" },
+  "aws-cognito":         { icon: "logos:aws-cognito",              label: "Cognito",          sub: "Identity",          bg: "#FF9900" },
+  "aws-elb":             { icon: "logos:aws-elb",                  label: "Load Balancer",    sub: "Traffic Dist",      bg: "#FF9900" },
+  "aws-ecs":             { icon: "logos:aws-ecs",                  label: "ECS",              sub: "Containers",        bg: "#FF9900" },
+  "aws-eks":             { icon: "logos:aws-eks",                  label: "EKS",              sub: "Managed K8s",       bg: "#FF9900" },
+  "aws-dynamodb":        { icon: "logos:amazon-dynamodb",          label: "DynamoDB",         sub: "NoSQL DB",          bg: "#FF9900" },
+  "aws-kinesis":         { icon: "logos:aws-kinesis",              label: "Kinesis",          sub: "Streaming",         bg: "#FF9900" },
+  "aws-step-functions":  { icon: "logos:aws-step-functions",       label: "Step Functions",   sub: "Workflows",         bg: "#FF9900" },
+  "aws-secrets-manager": { icon: "logos:aws-secrets-manager",      label: "Secrets",          sub: "Vault",             bg: "#FF9900" },
+  "aws-cloudwatch":      { icon: "logos:amazon-cloudwatch",        label: "CloudWatch",       sub: "Monitoring",        bg: "#FF9900" },
+  "aws-glue":            { icon: "logos:aws-glue",                 label: "Glue",             sub: "ETL",               bg: "#FF9900" },
+  "aws-athena":          { icon: "logos:aws-athena",               label: "Athena",           sub: "Query Service",     bg: "#FF9900" },
+  "aws-route53":         { icon: "logos:aws-route53",              label: "Route 53",         sub: "DNS",               bg: "#FF9900" },
+  "aws-iam":             { icon: "logos:aws-iam",                  label: "IAM",              sub: "Access Mgmt",       bg: "#FF9900" },
+  "aws-cloudtrail":      { icon: "logos:aws-cloudtrail",           label: "CloudTrail",       sub: "Audit Logs",        bg: "#FF9900" },
+  "aws-shield":          { icon: "logos:aws-shield",               label: "Shield",           sub: "DDoS Protect",      bg: "#FF9900" },
 
   // ── AZURE ─────────────────────────────────────────────────────────────────
-  "azure-blob":          { icon: "logos:microsoft-azure",         label: "Blob Storage",     sub: "Object Storage",    bg: "#0078D4" },
-  "azure-functions":     { icon: "logos:azure-functions",         label: "Functions",        sub: "Serverless",        bg: "#0078D4" },
-  "azure-sql":           { icon: "logos:microsoft-azure",         label: "Azure SQL",        sub: "Relational DB",     bg: "#0078D4" },
-  "azure-cosmos":        { icon: "logos:azure-cosmos-db",         label: "Cosmos DB",        sub: "Multi-model DB",    bg: "#0078D4" },
+  "azure-blob":          { icon: "logos:azure-blob-storage",       label: "Blob",             sub: "Object Storage",    bg: "#0078D4" },
+  "azure-functions":     { icon: "logos:azure-functions",          label: "Functions",        sub: "Serverless",        bg: "#0078D4" },
+  "azure-sql":           { icon: "logos:azure-sql",                label: "SQL",              sub: "Relational DB",     bg: "#0078D4" },
+  "azure-cosmos":        { icon: "logos:azure-cosmos-db",          label: "Cosmos DB",        sub: "NoSQL DB",          bg: "#0078D4" },
   "azure-openai":        { icon: "logos:openai-icon",             label: "Azure OpenAI",     sub: "AI Models",         bg: "#0078D4" },
-  "azure-ai-foundry":    { icon: "logos:microsoft-azure",         label: "AI Foundry",       sub: "GenAI Platform",    bg: "#5C2D91" },
-  "azure-aks":           { icon: "logos:microsoft-azure",         label: "AKS",              sub: "Kubernetes",        bg: "#0078D4" },
-  "azure-service-bus":   { icon: "logos:microsoft-azure",         label: "Service Bus",      sub: "Messaging",         bg: "#0078D4" },
-  "azure-monitor":       { icon: "logos:microsoft-azure",         label: "Monitor",          sub: "Observability",     bg: "#0078D4" },
-  "azure-cdn":           { icon: "logos:microsoft-azure",         label: "CDN",              sub: "Edge Network",      bg: "#0078D4" },
-  "azure-keyvault":      { icon: "logos:microsoft-azure",         label: "Key Vault",        sub: "Secrets",           bg: "#0078D4" },
+  "azure-ai-foundry":    { icon: "logos:microsoft-azure",          label: "AI Foundry",       sub: "GenAI Platform",    bg: "#5C2D91" },
+  "azure-aks":           { icon: "logos:azure-kubernetes-service", label: "AKS",              sub: "Kubernetes",        bg: "#0078D4" },
+  "azure-service-bus":   { icon: "logos:azure-service-bus",        label: "Service Bus",      sub: "Messaging",         bg: "#0078D4" },
+  "azure-monitor":       { icon: "logos:azure-monitor",            label: "Monitor",          sub: "Observability",     bg: "#0078D4" },
+  "azure-cdn":           { icon: "logos:azure-cdn",                label: "CDN",              sub: "Edge Network",      bg: "#0078D4" },
+  "azure-keyvault":      { icon: "logos:azure-key-vault",          label: "Key Vault",        sub: "Secrets",           bg: "#0078D4" },
+  "azure-pipelines":     { icon: "logos:azure-pipelines",          label: "Pipelines",        sub: "CI/CD",             bg: "#0078D4" },
+  "azure-devops":        { icon: "logos:azure-devops",             label: "DevOps",           sub: "Platform",          bg: "#0078D4" },
 
   // ── GCP ───────────────────────────────────────────────────────────────────
-  "gcp-gcs":             { icon: "logos:google-cloud-storage",    label: "Cloud Storage",    sub: "Object Storage",    bg: "#4285F4" },
-  "gcp-cloud-functions": { icon: "logos:google-cloud-functions",  label: "Cloud Functions",  sub: "Serverless",        bg: "#34A853" },
-  "gcp-bigquery":        { icon: "logos:google-bigquery",         label: "BigQuery",         sub: "Data Warehouse",    bg: "#4285F4" },
-  "gcp-vertex-ai":       { icon: "logos:google-cloud",            label: "Vertex AI",        sub: "ML Platform",       bg: "#4285F4" },
-  "gcp-pub-sub":         { icon: "logos:google-cloud",            label: "Pub/Sub",          sub: "Messaging",         bg: "#FBBC05" },
-  "gcp-cloud-run":       { icon: "logos:google-cloud-run",        label: "Cloud Run",        sub: "Containers",        bg: "#34A853" },
-  "gcp-firestore":       { icon: "logos:google-cloud-firestore",  label: "Firestore",        sub: "NoSQL DB",          bg: "#FBBC05" },
-  "gcp-gke":             { icon: "logos:google-kubernetes-engine",label: "GKE",              sub: "Kubernetes",        bg: "#4285F4" },
-  "gcp-spanner":         { icon: "logos:google-cloud-spanner",    label: "Spanner",          sub: "Distributed SQL",   bg: "#4285F4" },
+  "gcp-gcs":             { icon: "logos:google-cloud-storage",    label: "GCS",              sub: "Object Storage",    bg: "#4285F4" },
+  "gcp-cloud-functions": { icon: "logos:google-cloud-functions",  label: "Cloud Functions",  sub: "Serverless",        bg: "#4285F4" },
+  "gcp-bigquery":        { icon: "logos:google-cloud-bigquery",    label: "BigQuery",         sub: "Data Warehouse",    bg: "#4285F4" },
+  "gcp-vertex-ai":       { icon: "logos:google-cloud-vertex-ai",   label: "Vertex AI",        sub: "AI Platform",       bg: "#4285F4" },
+  "gcp-pub-sub":         { icon: "logos:google-cloud-pubsub",      label: "Pub/Sub",          sub: "Messaging",         bg: "#4285F4" },
+  "gcp-cloud-run":       { icon: "logos:google-cloud-run",        label: "Cloud Run",        sub: "Containers",        bg: "#4285F4" },
+  "gcp-firestore":       { icon: "logos:google-cloud-firestore",  label: "Firestore",        sub: "NoSQL DB",          bg: "#4285F4" },
+  "gcp-gke":             { icon: "logos:google-cloud-kubernetes-engine",label: "GKE",        sub: "Managed K8s",       bg: "#4285F4" },
+  "gcp-spanner":         { icon: "simple-icons:googlecloudspanner",label: "Spanner",          sub: "Distributed SQL",   bg: "#4285F4" },
+  "gcp-bigtable":        { icon: "simple-icons:googlecloudbigtable",label: "Bigtable",        sub: "NoSQL DB",          bg: "#4285F4" },
 
   // ── DATABRICKS ────────────────────────────────────────────────────────────
-  "databricks-workspace":    { icon: "logos:databricks",          label: "Workspace",        sub: "Dev Environment",   bg: "#FF3621" },
-  "databricks-mlflow":       { icon: "logos:mlflow",              label: "MLflow",           sub: "ML Lifecycle",      bg: "#0db7ed" },
-  "databricks-delta":        { icon: "logos:databricks",          label: "Delta Lake",       sub: "Lakehouse",         bg: "#FF3621" },
-  "databricks-unity":        { icon: "logos:databricks",          label: "Unity Catalog",    sub: "Governance",        bg: "#FF3621" },
-  "databricks-agentbricks":  { icon: "logos:databricks",          label: "AgentBricks",      sub: "Agent Platform",    bg: "#FF3621" },
+  "databricks-workspace":{ icon: "logos:databricks",               label: "Workspace",        sub: "Notebooks",         bg: "#FF3621" },
+  "databricks-mlflow":   { icon: "logos:mlflow",                   label: "MLflow",           sub: "Ops",               bg: "#FF3621" },
+  "databricks-delta":    { icon: "logos:databricks-icon",          label: "Delta Lake",       sub: "Storage",           bg: "#FF3621" },
+  "databricks-unity":    { icon: "logos:databricks-icon",          label: "Unity Catalog",    sub: "Governance",        bg: "#FF3621" },
+  "databricks-agentbricks": { icon: "logos:databricks-icon",       label: "AgentBricks",      sub: "AI Agents",         bg: "#FF3621" },
 
-  // ── MESSAGING & STREAMING ─────────────────────────────────────────────────
-  "kafka":               { icon: "logos:kafka",                   label: "Kafka",            sub: "Stream Processing", bg: "#231F20" },
-  "rabbitmq":            { icon: "logos:rabbitmq",                label: "RabbitMQ",         sub: "Message Queue",     bg: "#FF6600" },
-  "twilio":              { icon: "logos:twilio",                  label: "Twilio",           sub: "Communications",    bg: "#F22F46" },
-  "nats":                { icon: "logos:nats-icon",               label: "NATS",             sub: "Messaging",         bg: "#27AAE1" },
+  // ── MESSAGING & TOOLS ─────────────────────────────────────────────────────
+  "kafka":               { icon: "logos:kafka",                   label: "Kafka",            sub: "Streaming",         bg: "#000000" },
+  "rabbitmq":            { icon: "logos:rabbitmq-icon",           label: "RabbitMQ",         sub: "Message Queue",     bg: "#FF6600" },
+  "twilio":              { icon: "logos:twilio-icon",             label: "Twilio",           sub: "Comm API",          bg: "#F22F46" },
+  "nats":                { icon: "logos:nats-icon",               label: "NATS",             sub: "JetStream",         bg: "#27AAE1" },
+  "slack":               { icon: "logos:slack-icon",              label: "Slack",            sub: "Chat Ops",          bg: "#4A154B" },
+  "discord":             { icon: "logos:discord-icon",            label: "Discord",          sub: "Comm",              bg: "#5865F2" },
+  "pagerduty":           { icon: "logos:pagerduty-icon",          label: "PagerDuty",        sub: "Incidents",         bg: "#00A23E" },
 
-  // ── DATABASES & CACHE ─────────────────────────────────────────────────────
+  // ── DATABASES & STORAGE ───────────────────────────────────────────────────
   "postgres":            { icon: "logos:postgresql",              label: "PostgreSQL",       sub: "Relational DB",     bg: "#336791" },
-  "mongodb":             { icon: "logos:mongodb-icon",            label: "MongoDB",          sub: "Document DB",       bg: "#13AA52" },
-  "redis":               { icon: "logos:redis",                   label: "Redis",            sub: "In-memory Cache",   bg: "#DC382D" },
-  "elasticsearch":       { icon: "logos:elasticsearch",           label: "Elasticsearch",    sub: "Search Engine",     bg: "#F6D000" },
+  "mongodb":             { icon: "logos:mongodb-icon",            label: "MongoDB",          sub: "NoSQL DB",          bg: "#47A248" },
+  "redis":               { icon: "logos:redis",                   label: "Redis",            sub: "Cache",             bg: "#DC382D" },
+  "elasticsearch":       { icon: "logos:elasticsearch",           label: "Elasticsearch",    sub: "Search Engine",     bg: "#005571" },
   "mysql":               { icon: "logos:mysql",                   label: "MySQL",            sub: "Relational DB",     bg: "#4479A1" },
-  "neo4j":               { icon: "logos:neo4j",                   label: "Neo4j",            sub: "Graph DB",          bg: "#018BFF" },
-  "cassandra":           { icon: "logos:cassandra",               label: "Cassandra",        sub: "Wide-column DB",    bg: "#1287B1" },
-  "cockroachdb":         { icon: "logos:cockroachdb",             label: "CockroachDB",      sub: "Distributed SQL",   bg: "#6933FF" },
-  "supabase":            { icon: "logos:supabase",                label: "Supabase",         sub: "BaaS",              bg: "#3ECF8E" },
+  "neo4j":               { icon: "logos:neo4j",                   label: "Neo4j",            sub: "Graph DB",          bg: "#008CC1" },
+  "cassandra":           { icon: "logos:cassandra",               label: "Cassandra",        sub: "Columnar DB",       bg: "#1287B1" },
+  "cockroachdb":         { icon: "logos:cockroachdb-icon",        label: "CockroachDB",      sub: "Distributed DB",    bg: "#6933FF" },
+  "supabase":            { icon: "logos:supabase-icon",           label: "Supabase",         sub: "BaaS",              bg: "#3ECF8E" },
+  "snowflake":           { icon: "logos:snowflake-icon",          label: "Snowflake",        sub: "Data Cloud",        bg: "#29B5E8" },
+  "scylladb":            { icon: "simple-icons:scylladb",         label: "ScyllaDB",         sub: "NoSQL DB",          bg: "#4B5563" },
+  "clickhouse":          { icon: "logos:clickhouse-icon",         label: "ClickHouse",       sub: "OLAP DB",           bg: "#FFCC01" },
+  "upstash":             { icon: "logos:upstash-icon",            label: "Upstash",          sub: "Serverless DB",     bg: "#00E9A3" },
+  "tidb":                { icon: "logos:tidb-icon",               label: "TiDB",             sub: "Distributed SQL",   bg: "#3B82F6" },
+  "influxdb":            { icon: "logos:influxdb-icon",           label: "InfluxDB",         sub: "Time Series",       bg: "#22ADF6" },
 
-  // ── AI & LLMs ─────────────────────────────────────────────────────────────
-  "openai":              { icon: "logos:openai-icon",             label: "OpenAI",           sub: "GPT Models",        bg: "#10a37f" },
-  "anthropic":           { icon: "logos:anthropic",               label: "Anthropic",        sub: "Claude Models",     bg: "#CC785C" },
-  "langchain":           { icon: "logos:langchain",               label: "LangChain",        sub: "LLM Framework",     bg: "#1C3C3C" },
-  "huggingface":         { icon: "logos:hugging-face-icon",       label: "HuggingFace",      sub: "Model Hub",         bg: "#FFD21E" },
-  "ollama":              { icon: "logos:ollama",                  label: "Ollama",           sub: "Local LLMs",        bg: "#333"    },
-  "pinecone":            { icon: "logos:pinecone",                label: "Pinecone",         sub: "Vector DB",         bg: "#000"    },
-  "weaviate":            { icon: "logos:weaviate",                label: "Weaviate",         sub: "Vector DB",         bg: "#E94E3C" },
-  "qdrant":              { icon: "logos:qdrant",                  label: "Qdrant",           sub: "Vector DB",         bg: "#24386C" },
-  "cohere":              { icon: "logos:cohere",                  label: "Cohere",           sub: "AI Platform",       bg: "#39594D" },
+  // ── AI & LLMS ─────────────────────────────────────────────────────────────
+  "openai":              { icon: "logos:openai-icon",             label: "OpenAI",           sub: "GPT-4o",            bg: "#10a37f" },
+  "anthropic":           { icon: "logos:anthropic-icon",          label: "Anthropic",        sub: "Claude 3.5",        bg: "#D97706" },
+  "mistral":             { icon: "logos:mistral-ai-icon",         label: "Mistral",          sub: "Mistral Large",     bg: "#000000" },
+  "meta_llama":          { icon: "logos:meta-icon",               label: "Meta Llama",       sub: "Llama 3.1",         bg: "#0668E1" },
+  "deepseek":            { icon: "logos:deepseek-icon",           label: "DeepSeek",         sub: "V2.5",              bg: "#2D5CFE" },
+  "perplexity":          { icon: "logos:perplexity-icon",         label: "Perplexity",       sub: "Search AI",         bg: "#191919" },
+  "ollama":              { icon: "simple-icons:ollama",           label: "Ollama",           sub: "Local LLMs",        bg: "#000000" },
+  "langchain":           { icon: "simple-icons:langchain",         label: "LangChain",        sub: "Orchestration",     bg: "#000000" },
+  "huggingface":         { icon: "logos:huggingface-icon",        label: "Hugging Face",     sub: "Model Hub",         bg: "#FFD21E" },
+  "pinecone":            { icon: "logos:pinecone-icon",           label: "Pinecone",         sub: "Vector DB",         bg: "#000000" },
+  "milvus":              { icon: "logos:milvus-icon",             label: "Milvus",           sub: "Vector DB",         bg: "#4B5563" },
+  "chroma":              { icon: "logos:chroma",                  label: "Chroma",           sub: "Vector DB",         bg: "#4B5563" },
+  "weaviate":            { icon: "carbon:cloud-data-ops",         label: "Weaviate",         sub: "Vector DB",         bg: "#4B5563" },
+  "qdrant":              { icon: "logos:qdrant-icon",             label: "Qdrant",           sub: "Vector DB",         bg: "#FF4A4A" },
+  "cohere":              { icon: "carbon:brain",                  label: "Cohere",           sub: "LLM Provider",      bg: "#4B5563" },
+  "pytorch":             { icon: "logos:pytorch-icon",            label: "PyTorch",          sub: "Deep Learning",     bg: "#EE4C2C" },
+  "tensorflow":          { icon: "logos:tensorflow",              label: "TensorFlow",       sub: "ML Framework",      bg: "#FF6F00" },
+  "dask":                { icon: "simple-icons:dask",            label: "Dask",             sub: "Parallel Computing", bg: "#4B5563" },
 
-  // ── INFRASTRUCTURE & DEVOPS ───────────────────────────────────────────────
+  // ── INFRASTRUCTURE ────────────────────────────────────────────────────────
   "docker":              { icon: "logos:docker-icon",             label: "Docker",           sub: "Containers",        bg: "#2496ED" },
   "kubernetes":          { icon: "logos:kubernetes",              label: "Kubernetes",       sub: "Orchestration",     bg: "#326CE5" },
-  "nginx":               { icon: "logos:nginx",                   label: "Nginx",            sub: "Web Server / LB",   bg: "#009900" },
+  "nginx":               { icon: "logos:nginx",                   label: "NGINX",            sub: "Web Server",        bg: "#009639" },
   "terraform":           { icon: "logos:terraform-icon",          label: "Terraform",        sub: "IaC",               bg: "#7B42BC" },
   "github-actions":      { icon: "logos:github-actions",          label: "GitHub Actions",   sub: "CI/CD",             bg: "#2088FF" },
-  "jenkins":             { icon: "logos:jenkins",                 label: "Jenkins",          sub: "CI/CD",             bg: "#D24939" },
-  "prometheus":          { icon: "logos:prometheus",              label: "Prometheus",       sub: "Metrics",           bg: "#E6522C" },
+  "jenkins":             { icon: "logos:jenkins",                 label: "Jenkins",          sub: "Automation",        bg: "#D24939" },
+  "prometheus":          { icon: "logos:prometheus",              label: "Prometheus",       sub: "Monitoring",        bg: "#E6522C" },
   "grafana":             { icon: "logos:grafana",                 label: "Grafana",          sub: "Dashboards",        bg: "#F46800" },
-  "datadog":             { icon: "logos:datadog",                 label: "Datadog",          sub: "Observability",     bg: "#632CA6" },
-  "cloudflare":          { icon: "logos:cloudflare",              label: "Cloudflare",       sub: "CDN / Security",    bg: "#F48120" },
+  "datadog":             { icon: "logos:datadog",                 label: "Datadog",          sub: "Observations",       bg: "#632CA6" },
+  "cloudflare":          { icon: "logos:cloudflare",              label: "Cloudflare",       sub: "Security/CDN",      bg: "#F38020" },
+  "sentry":              { icon: "logos:sentry-icon",             label: "Sentry",           sub: "Error Tracking",    bg: "#362D59" },
+  "postman":             { icon: "logos:postman-icon",            label: "Postman",          sub: "API Testing",       bg: "#FF6C37" },
 
-  // ── API, AUTH & PAYMENTS ──────────────────────────────────────────────────
-  "graphql":             { icon: "logos:graphql",                 label: "GraphQL",          sub: "API Query Lang",    bg: "#E10098" },
-  "grpc":                { icon: "logos:grpc",                    label: "gRPC",             sub: "RPC Framework",     bg: "#244C5A" },
-  "stripe":              { icon: "logos:stripe",                  label: "Stripe",           sub: "Payments",          bg: "#635BFF" },
-  "auth0":               { icon: "logos:auth0",                   label: "Auth0",            sub: "Auth",              bg: "#EB5424" },
+  // ── API & WEB ─────────────────────────────────────────────────────────────
+  "graphql":             { icon: "logos:graphql",                 label: "GraphQL",          sub: "Query Lang",        bg: "#E10098" },
+  "grpc":                { icon: "simple-icons:grpc",             label: "gRPC",             sub: "RPC Framework",     bg: "#244c5a" },
+  "stripe":              { icon: "logos:stripe",                  label: "Stripe",           sub: "Payments",          bg: "#008CDD" },
+  "auth0":               { icon: "logos:auth0-icon",              label: "Auth0",            sub: "Authentication",     bg: "#EB5424" },
+  "react":               { icon: "logos:react",                   label: "React",            sub: "UI Library",        bg: "#61DAFB" },
+  "nextjs":              { icon: "logos:nextjs-icon",             label: "Next.js",          sub: "Framework",         bg: "#000000" },
+  "vercel":              { icon: "logos:vercel-icon",             label: "Vercel",           sub: "Hosting",           bg: "#000000" },
 
-  // ── FRONTEND & DEPLOYMENT ─────────────────────────────────────────────────
-  "react":               { icon: "logos:react",                   label: "React",            sub: "UI Framework",      bg: "#20232a" },
-  "nextjs":              { icon: "logos:nextjs-icon",             label: "Next.js",          sub: "Full-stack React",  bg: "#000"    },
-  "vercel":              { icon: "logos:vercel-icon",             label: "Vercel",           sub: "Deployment",        bg: "#000"    },
-
-  // ── GENERIC COMPONENTS ────────────────────────────────────────────────────
-  "user":                { icon: "carbon:user-filled",            label: "User",             sub: "End User",          bg: "#4B5563" },
-  "browser":             { icon: "carbon:application-web",        label: "Browser",          sub: "Web Client",        bg: "#4B5563" },
-  "mobile":              { icon: "carbon:mobile",                 label: "Mobile App",       sub: "iOS / Android",     bg: "#4B5563" },
-  "server":              { icon: "carbon:server",                 label: "Server",           sub: "Backend Server",    bg: "#374151" },
-  "database":            { icon: "carbon:data-base",              label: "Database",         sub: "Generic DB",        bg: "#374151" },
-  "api":                 { icon: "carbon:api",                    label: "API",              sub: "REST / HTTP",       bg: "#374151" },
-  "queue":               { icon: "carbon:ibm-mq",                 label: "Queue",            sub: "Message Queue",     bg: "#374151" },
-  "cache":               { icon: "carbon:cache",                  label: "Cache",            sub: "Caching Layer",     bg: "#374151" },
-  "cdn":                 { icon: "carbon:cloud-satellite",        label: "CDN",              sub: "Edge Network",      bg: "#374151" },
-  "microservice":        { icon: "carbon:microservices-1",        label: "Microservice",     sub: "Service",           bg: "#374151" },
-  "gateway":             { icon: "carbon:gateway",                label: "Gateway",          sub: "API / Service GW",  bg: "#374151" },
-  "firewall":            { icon: "carbon:firewall",               label: "Firewall",         sub: "Security",          bg: "#374151" },
-  "vpn":                 { icon: "carbon:vpn",                    label: "VPN",              sub: "Secure Tunnel",     bg: "#374151" },
-  "load-balancer":       { icon: "carbon:load-balancer-global",   label: "Load Balancer",    sub: "Traffic",           bg: "#374151" },
-  "monitoring":          { icon: "carbon:activity",               label: "Monitoring",       sub: "Observability",     bg: "#374151" },
-  "scheduler":           { icon: "carbon:timer",                  label: "Scheduler",        sub: "Cron / Jobs",       bg: "#374151" },
-  "webhook":             { icon: "carbon:webhook",                label: "Webhook",          sub: "Event Trigger",     bg: "#374151" },
+  // ── GENERIC & TOOLS ───────────────────────────────────────────────────────
+  "user":                { icon: "logos:chrome",                  label: "User",             sub: "End User",          bg: "#4B5563" },
+  "browser":             { icon: "logos:chrome",                  label: "Browser",          sub: "Web Client",        bg: "#4B5563" },
+  "mobile":              { icon: "logos:apple-app-store",          label: "Mobile",           sub: "iOS/Android",       bg: "#4B5563" },
+  "server":              { icon: "logos:ubuntu",                  label: "Server",           sub: "Compute Node",      bg: "#4B5563" },
+  "database":            { icon: "logos:postgresql",              label: "Database",         sub: "Data Store",        bg: "#4B5563" },
+  "api":                 { icon: "carbon:api",                    label: "API",              sub: "Endpoint",          bg: "#4B5563" },
+  "queue":               { icon: "carbon:queue",                  label: "Queue",            sub: "Message Buffer",    bg: "#4B5563" },
+  "cache":               { icon: "logos:redis",                   label: "Cache",            sub: "Fast Storage",      bg: "#4B5563" },
+  "cdn":                 { icon: "logos:cloudflare",              label: "CDN",              sub: "Edge Network",      bg: "#4B5563" },
+  "microservice":        { icon: "carbon:cube",                   label: "Microservice",     sub: "App Component",     bg: "#4B5563" },
+  "gateway":             { icon: "carbon:gateway",                label: "Gateway",          sub: "API Entry",         bg: "#4B5563" },
+  "firewall":            { icon: "carbon:firewall",               label: "Firewall",         sub: "Security",          bg: "#4B5563" },
+  "vpn":                 { icon: "carbon:vpn",                    label: "VPN",              sub: "Secure Tunnel",     bg: "#4B5563" },
+  "load-balancer":       { icon: "carbon:load-balancer-global",   label: "LB",               sub: "Traffic Dist",      bg: "#4B5563" },
+  "monitoring":          { icon: "logos:grafana",                 label: "Observability",    sub: "Metrics",           bg: "#4B5563" },
+  "scheduler":           { icon: "carbon:timer",                  label: "Scheduler",        sub: "Cron Job",          bg: "#4B5563" },
+  "webhook":             { icon: "carbon:webhook",                label: "Webhook",          sub: "Event Trigger",     bg: "#4B5563" },
 };
 
 // ─── CATEGORIES ───────────────────────────────────────────────────────────────
 const CATEGORIES = [
-  { id: "aws",       label: "Amazon Web Services",     color: "#E7800D", items: ["aws-s3","aws-lambda","aws-ec2","aws-rds","aws-bedrock","aws-sqs","aws-sns","aws-api-gateway","aws-cloudfront","aws-cognito","aws-elb","aws-ecs","aws-eks","aws-dynamodb","aws-kinesis","aws-step-functions","aws-secrets-manager","aws-cloudwatch","aws-glue","aws-athena"] },
-  { id: "azure",     label: "Microsoft Azure",         color: "#0078D4", items: ["azure-blob","azure-functions","azure-sql","azure-cosmos","azure-openai","azure-ai-foundry","azure-aks","azure-service-bus","azure-monitor","azure-cdn","azure-keyvault"] },
-  { id: "gcp",       label: "Google Cloud",            color: "#4285F4", items: ["gcp-gcs","gcp-cloud-functions","gcp-bigquery","gcp-vertex-ai","gcp-pub-sub","gcp-cloud-run","gcp-firestore","gcp-gke","gcp-spanner"] },
-  { id: "databricks",label: "Databricks",              color: "#FF3621", items: ["databricks-workspace","databricks-mlflow","databricks-delta","databricks-unity","databricks-agentbricks"] },
-  { id: "messaging", label: "Messaging & Streaming",   color: "#FF6600", items: ["kafka","rabbitmq","twilio","nats"] },
-  { id: "data",      label: "Databases & Cache",       color: "#336791", items: ["postgres","mongodb","redis","elasticsearch","mysql","neo4j","cassandra","cockroachdb","supabase"] },
-  { id: "ai",        label: "AI & LLMs",               color: "#10a37f", items: ["openai","anthropic","langchain","huggingface","ollama","pinecone","weaviate","qdrant","cohere"] },
-  { id: "infra",     label: "Infrastructure & DevOps", color: "#326CE5", items: ["docker","kubernetes","nginx","terraform","github-actions","jenkins","prometheus","grafana","datadog","cloudflare"] },
-  { id: "api",       label: "API, Auth & Payments",    color: "#635BFF", items: ["graphql","grpc","stripe","auth0"] },
-  { id: "frontend",  label: "Frontend & Deployment",   color: "#61DAFB", items: ["react","nextjs","vercel"] },
-  { id: "generic",   label: "Generic Components",      color: "#6B7280", items: ["user","browser","mobile","server","database","api","queue","cache","cdn","microservice","gateway","firewall","vpn","load-balancer","monitoring","scheduler","webhook"] },
+  { id: "aws",       label: "Amazon Web Services",     color: "#fb923c", icon: "Cloud",         items: ["aws-s3","aws-lambda","aws-ec2","aws-rds","aws-bedrock","aws-sqs","aws-sns","aws-api-gateway","aws-cloudfront","aws-cognito","aws-elb","aws-ecs","aws-eks","aws-dynamodb","aws-kinesis","aws-step-functions","aws-secrets-manager","aws-cloudwatch","aws-glue","aws-athena","aws-route53","aws-iam","aws-cloudtrail","aws-shield"] },
+  { id: "azure",     label: "Microsoft Azure",         color: "#60a5fa", icon: "Cloud",         items: ["azure-blob","azure-functions","azure-sql","azure-cosmos","azure-openai","azure-ai-foundry","azure-aks","azure-service-bus","azure-monitor","azure-cdn","azure-keyvault","azure-pipelines","azure-devops"] },
+  { id: "gcp",       label: "Google Cloud",            color: "#38bdf8", icon: "Cloud",         items: ["gcp-gcs","gcp-cloud-functions","gcp-bigquery","gcp-vertex-ai","gcp-pub-sub","gcp-cloud-run","gcp-firestore","gcp-gke","gcp-spanner","gcp-bigtable"] },
+  { id: "databricks",label: "Databricks",              color: "#f87171", icon: "Boxes",         items: ["databricks-workspace","databricks-mlflow","databricks-delta","databricks-unity","databricks-agentbricks"] },
+  { id: "messaging", label: "Messaging & Tools",       color: "#fb923c", icon: "MessageSquare", items: ["kafka","rabbitmq","twilio","nats","slack","discord","pagerduty"] },
+  { id: "data",      label: "Databases & Storage",     color: "#60a5fa", icon: "Database",      items: ["postgres","mongodb","redis","elasticsearch","mysql","neo4j","cassandra","cockroachdb","supabase","snowflake","scylladb","clickhouse","upstash","tidb","influxdb"] },
+  { id: "ai",        label: "AI & LLMs",               color: "#10b981", icon: "Brain",         items: ["openai","anthropic","mistral","meta_llama","deepseek","perplexity","ollama","langchain","huggingface","pinecone","milvus","chroma","weaviate","qdrant","cohere","pytorch","tensorflow","dask"] },
+  { id: "infra",     label: "Infrastructure & DevOps", color: "#818cf8", icon: "Server",        items: ["docker","kubernetes","nginx","terraform","github-actions","jenkins","prometheus","grafana","datadog","cloudflare","sentry"] },
+  { id: "api",       label: "API, Auth & Payments",    color: "#a78bfa", icon: "Key",           items: ["graphql","grpc","stripe","auth0","postman"] },
+  { id: "frontend",  label: "Frontend & Deployment",   color: "#22d3ee", icon: "Layout",        items: ["react","nextjs","vercel"] },
+  { id: "generic",   label: "Generic Components",      color: "#94a3b8", icon: "Cpu",           items: ["user","browser","mobile","server","database","api","queue","cache","cdn","microservice","gateway","firewall","vpn","load-balancer","monitoring","scheduler","webhook"] },
 ];
 
 // ─── ZONE PRESETS ─────────────────────────────────────────────────────────────
 const ZONE_PRESETS = [
-  { id: "vpc",      label: "VPC",               color: "#f97316", bg: "#f9731608" },
-  { id: "subnet",   label: "Subnet",            color: "#3b82f6", bg: "#3b82f608" },
-  { id: "region",   label: "Region",            color: "#8b5cf6", bg: "#8b5cf608" },
-  { id: "k8s",      label: "K8s Cluster",       color: "#326CE5", bg: "#326CE508" },
+  { id: "vpc",      label: "VPC",               color: "#fb923c", bg: "#fb923c08" },
+  { id: "subnet",   label: "Subnet",            color: "#60a5fa", bg: "#60a5fa08" },
+  { id: "region",   label: "Region",            color: "#818cf8", bg: "#818cf808" },
+  { id: "k8s",      label: "K8s Cluster",       color: "#38bdf8", bg: "#38bdf808" },
   { id: "az",       label: "Availability Zone", color: "#10b981", bg: "#10b98108" },
-  { id: "swimlane", label: "Swimlane",          color: "#6366f1", bg: "#6366f108" },
+  { id: "swimlane", label: "Swimlane",          color: "#818cf8", bg: "#818cf808" },
   { id: "boundary", label: "System Boundary",   color: "#94a3b8", bg: "#94a3b808" },
-  { id: "private",  label: "Private Network",   color: "#f43f5e", bg: "#f43f5e08" },
+  { id: "private",  label: "Private Network",   color: "#f87171", bg: "#f8717108" },
   { id: "dmz",      label: "DMZ",               color: "#fb923c", bg: "#fb923c08" },
 ];
 
@@ -194,39 +227,99 @@ function ArchNode({ data, selected }) {
     <div
       style={{
         display: "flex", flexDirection: "column", alignItems: "center",
-        padding: "8px 6px 5px",
-        background: selected ? `${catColor}20` : "rgba(255,255,255,0.03)",
-        border: `2px solid ${selected ? catColor : "transparent"}`,
-        borderRadius: 12, cursor: "pointer", minWidth: 76,
-        transition: "all 0.15s", backdropFilter: "blur(4px)",
-        position: "relative"
+        padding: "10px 8px 8px",
+        background: selected ? `linear-gradient(135deg, ${catColor}22, ${catColor}11)` : "rgba(255,255,255,0.02)",
+        border: `1.5px solid ${selected ? catColor : "rgba(255,255,255,0.05)"}`,
+        borderRadius: 14, cursor: "pointer", minWidth: 84,
+        transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)", backdropFilter: "blur(8px)",
+        position: "relative",
+        boxShadow: selected ? `0 8px 24px -8px ${catColor}44` : "0 4px 6px -1px rgba(0,0,0,0.1)",
       }}
-      onMouseEnter={e => { if (!selected) { e.currentTarget.style.border = `2px solid ${catColor}66`; e.currentTarget.style.background = `${catColor}10`; }}}
-      onMouseLeave={e => { if (!selected) { e.currentTarget.style.border = "2px solid transparent"; e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}}
+      onMouseEnter={e => {
+        if (!selected) {
+          e.currentTarget.style.borderColor = `${catColor}66`;
+          e.currentTarget.style.background = `linear-gradient(135deg, ${catColor}11, transparent)`;
+          e.currentTarget.style.transform = "translateY(-2px)";
+        }
+      }}
+      onMouseLeave={e => {
+        if (!selected) {
+          e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
+          e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+          e.currentTarget.style.transform = "translateY(0)";
+        }
+      }}
     >
       <Handle type="source" position={Position.Top} id="top" className="arch-handle" />
       <Handle type="source" position={Position.Right} id="right" className="arch-handle" />
       <Handle type="source" position={Position.Bottom} id="bottom" className="arch-handle" />
       <Handle type="source" position={Position.Left} id="left" className="arch-handle" />
-      <div style={{ width: 48, height: 48, borderRadius: 10, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 5 }}>
-        <Icon icon={meta.icon} width={32} height={32} />
+
+      {/* Glossy Icon Container */}
+      <div style={{
+        width: 44, height: 44, borderRadius: 12,
+        background: "rgba(0,0,0,0.3)",
+        border: `1.5px solid ${catColor}33`,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        marginBottom: 8,
+        boxShadow: `0 4px 12px -2px rgba(0,0,0,0.2)`
+      }}>
+        <Icon icon={meta.icon} width={28} height={28} />
       </div>
-      <div style={{ fontSize: 10, fontWeight: 600, color: "var(--pg-text, #e6edf3)", fontFamily: "'DM Mono',monospace", textAlign: "center", maxWidth: 84, lineHeight: 1.25, wordBreak: "break-word" }}>{data.label}</div>
-      {data.sub && <div style={{ fontSize: 8, color: "var(--pg-text3, #8b949e)", textAlign: "center", fontFamily: "'DM Mono',monospace", marginTop: 2, maxWidth: 84 }}>{data.sub}</div>}
+
+      <div style={{ fontSize: 10, fontWeight: 700, color: "var(--pg-text, #e6edf3)", fontFamily: "'DM Mono',monospace", textAlign: "center", maxWidth: 90, lineHeight: 1.3, letterSpacing: "-0.01em" }}>{data.label}</div>
+      {data.sub && <div style={{ fontSize: 8, color: "#8b949e", textAlign: "center", fontFamily: "'DM Mono',monospace", marginTop: 2, maxWidth: 90, opacity: 0.8 }}>{data.sub}</div>}
+
+      {/* Selection Glow */}
+      {selected && <div style={{ position: "absolute", inset: -4, borderRadius: 18, border: `1px solid ${catColor}33`, pointerEvents: "none" }} />}
     </div>
   );
 }
 
 // ─── ZONE NODE ────────────────────────────────────────────────────────────────
 function ZoneNode({ data, selected }) {
+  const borderColor = data.color || "#6B7280";
   return (
-    <div style={{ width: data.width || 340, height: data.height || 220, border: `2px dashed ${data.color || "#6B7280"}`, borderRadius: 14, background: data.bg || "transparent", position: "relative", boxSizing: "border-box" }}>
+    <div style={{
+      width: data.width || 340, height: data.height || 220,
+      border: `2px dashed ${borderColor}66`,
+      borderRadius: 16,
+      background: data.bg || "rgba(255,255,255,0.01)",
+      position: "relative",
+      boxSizing: "border-box",
+      backdropFilter: "blur(2px)",
+      transition: "all 0.2s"
+    }}>
       <Handle type="source" position={Position.Top} id="top" className="arch-handle" />
       <Handle type="source" position={Position.Right} id="right" className="arch-handle" />
       <Handle type="source" position={Position.Bottom} id="bottom" className="arch-handle" />
       <Handle type="source" position={Position.Left} id="left" className="arch-handle" />
-      <div style={{ position: "absolute", top: -11, left: 14, background: "var(--pg-bg, #0f1117)", padding: "1px 10px", fontSize: 9.5, fontWeight: 800, color: data.color || "#6B7280", fontFamily: "'DM Mono',monospace", letterSpacing: "0.12em", textTransform: "uppercase", borderRadius: 4, border: `1px solid ${data.color || "#6B7280"}44` }}>{data.label}</div>
-      {selected && <div style={{ position: "absolute", inset: 3, borderRadius: 10, border: `1px solid ${data.color || "#6B7280"}`, opacity: 0.3, pointerEvents: "none" }} />}
+
+      {/* Zone Label Tag */}
+      <div style={{
+        position: "absolute", top: -12, left: 16,
+        background: "var(--pg-bg, #0f1117)",
+        padding: "2px 12px",
+        fontSize: 10, fontWeight: 800,
+        color: borderColor,
+        fontFamily: "'DM Mono',monospace",
+        letterSpacing: "0.1em",
+        textTransform: "uppercase",
+        borderRadius: 6,
+        border: `1px solid ${borderColor}88`,
+        boxShadow: `0 4px 12px -2px rgba(0,0,0,0.3)`
+      }}>
+        {data.label}
+      </div>
+
+      {/* Inner Highlight for selection */}
+      {selected && (
+        <div style={{
+          position: "absolute", inset: -2, borderRadius: 18,
+          border: `2px solid ${borderColor}`,
+          opacity: 0.4, pointerEvents: "none"
+        }} />
+      )}
     </div>
   );
 }
@@ -313,6 +406,7 @@ function ArchCanvas() {
   const [aiLoading, setAiLoading]     = useState(false);
   const [snapGrid, setSnapGrid]       = useState(false);
   const [sideTab, setSideTab]         = useState("icons");
+  const [showSidebar, setShowSidebar] = useState(true);
   const [history, setHistory]         = useState([]);
   const [histIdx, setHistIdx]         = useState(-1);
   const rfWrapper = useRef(null);
@@ -375,44 +469,19 @@ function ArchCanvas() {
     setAiLoading(true);
     try {
       const availableIds = Object.keys(ICON_MAP).join(", ");
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [{
-            role: "user",
-            content: `Generate a React Flow architecture diagram JSON for: "${aiPrompt}".
-
-Return ONLY valid JSON (no markdown, no explanation) with this exact structure:
-{
-  "nodes": [
-    { "id": "1", "type": "archNode", "position": {"x": 100, "y": 150}, "data": { "iconId": "aws-lambda", "label": "Lambda", "sub": "Serverless" } }
-  ],
-  "edges": [
-    { "id": "e1-2", "source": "1", "target": "2", "type": "labelled", "data": { "label": "invoke" } }
-  ]
-}
-
-Available iconIds (ONLY use these exact strings): ${availableIds}
-
-Rules:
-- Pick the most accurate iconId for each component from the list above
-- Space nodes 220px apart horizontally, 160px vertically in a logical left-to-right flow
-- Max 14 nodes, max 16 edges
-- Every edge source and target must reference valid node ids
-- Return ONLY the raw JSON object, nothing else`
-          }]
-        }),
-      });
-      const result = await res.json();
-      const text = (result.content || []).map(b => b.text || "").join("");
-      const clean = text.replace(/```json|```/g, "").trim();
-      const parsed = JSON.parse(clean);
+      const parsed = await generateArchitectureDiagram(aiPrompt, availableIds);
+      
       snapshot();
       setNodes(parsed.nodes || []);
-      setEdges((parsed.edges || []).map(e => ({ ...e, type: "labelled", animated: false, style: { stroke: "#6b7280", strokeWidth: 1.5 }, markerEnd: { type: MarkerType.ArrowClosed, width: 14, height: 14, color: "#6b7280" }, data: e.data || { label: "" } })));
+      setEdges((parsed.edges || []).map(e => ({
+        ...e,
+        type: "labelled",
+        animated: false,
+        style: { stroke: "#6b7280", strokeWidth: 1.5 },
+        markerEnd: { type: MarkerType.ArrowClosed, width: 14, height: 14, color: "#6b7280" },
+        data: e.data || { label: "" }
+      })));
+      
       setTimeout(() => rfi.fitView({ padding: 0.12 }), 120);
       setShowAI(false);
       setAiPrompt("");
@@ -453,13 +522,15 @@ Rules:
     <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg, #0f1117)", fontFamily: "'DM Mono','Fira Code',monospace", overflow: "hidden" }}>
 
       {/* ═══ SIDEBAR ════════════════════════════════════════════════════════ */}
-      <div style={{ width: 234, minWidth: 234, background: "var(--pg-sidebar, #161b22)", borderRight: "1px solid var(--pg-border, #30363d)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      {showSidebar && (
+      <div style={{ width: 234, minWidth: 234, background: "var(--pg-sidebar, #161b22)", borderRight: "1px solid var(--pg-border, #30363d)", display: "flex", flexDirection: "column", overflow: "hidden", flexShrink: 0 }}>
 
         {/* Tabs */}
         <div style={{ display: "flex", borderBottom: "1px solid var(--pg-border, #30363d)" }}>
-          {[{ id: "icons", label: "Icons" }, { id: "zones", label: "Zones" }].map(t => (
+          {[{ id: "icons", label: "Icons", icon: "Layers" }, { id: "zones", label: "Zones", icon: "LayoutTemplate" }].map(t => (
             <button key={t.id} onClick={() => setSideTab(t.id)}
-              style={{ flex: 1, background: "none", border: "none", padding: "10px 6px", cursor: "pointer", fontFamily: "'DM Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: sideTab === t.id ? "var(--pg-text, #e6edf3)" : "var(--pg-text3, #8b949e)", borderBottom: `2px solid ${sideTab === t.id ? "var(--pg-accent, #818cf8)" : "transparent"}`, transition: "all 0.15s" }}>
+              style={{ flex: 1, background: "none", border: "none", padding: "10px 6px", cursor: "pointer", fontFamily: "'DM Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: sideTab === t.id ? "var(--pg-text, #e6edf3)" : "var(--pg-text3, #8b949e)", borderBottom: `2px solid ${sideTab === t.id ? "var(--pg-accent, #818cf8)" : "transparent"}`, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, transition: "all 0.15s" }}>
+              <LucideIcon name={t.icon} size={11} color={sideTab === t.id ? "var(--pg-accent, #818cf8)" : "currentColor"} />
               {t.label}
             </button>
           ))}
@@ -467,11 +538,11 @@ Rules:
 
         {sideTab === "icons" ? (<>
           {/* Search */}
-          <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--pg-border, #30363d)" }}>
+          <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--pg-border, #30363d)" }}>
             <div style={{ position: "relative" }}>
-              <Search size={11} color="#8b949e" style={{ position: "absolute", left: 9, top: 8 }} />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search icons..."
-                style={{ width: "100%", background: "var(--pg-panel, #1c2128)", border: "1px solid var(--pg-border2, #21262d)", borderRadius: 6, color: "var(--pg-text, #e6edf3)", fontSize: 11, padding: "6px 8px 6px 28px", outline: "none", fontFamily: "'DM Mono',monospace", boxSizing: "border-box" }} />
+              <Search size={12} color="#8b949e" style={{ position: "absolute", left: 10, top: 9 }} />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search services..."
+                style={{ width: "100%", background: "var(--pg-panel, #1c2128)", border: "1px solid var(--pg-border2, #21262d)", borderRadius: 6, color: "var(--pg-text, #e6edf3)", fontSize: 11, padding: "7px 10px 7px 30px", outline: "none", fontFamily: "'DM Mono',monospace", boxSizing: "border-box" }} />
             </div>
           </div>
 
@@ -482,15 +553,17 @@ Rules:
               return (
                 <div key={cat.id}>
                   <button onClick={() => setOpenCats(p => ({ ...p, [cat.id]: !isOpen }))}
-                    style={{ width: "100%", background: "none", border: "none", padding: "7px 12px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", fontFamily: "'DM Mono',monospace" }}
+                    style={{ width: "100%", background: "none", border: "none", padding: "8px 12px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", fontFamily: "'DM Mono',monospace", transition: "all 0.2s", borderRadius: 6, margin: "2px 0" }}
                     onMouseEnter={e => e.currentTarget.style.background = "var(--pg-panel, #1c2128)"}
                     onMouseLeave={e => e.currentTarget.style.background = "none"}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: cat.color, flexShrink: 0 }} />
-                      <span style={{ fontSize: 10, fontWeight: 700, color: isOpen ? "var(--pg-text, #e6edf3)" : "var(--pg-text3, #8b949e)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{cat.label}</span>
-                      <span style={{ fontSize: 9, color: "var(--pg-text3, #8b949e)", background: "var(--pg-border2, #21262d)", borderRadius: 3, padding: "1px 4px" }}>{cat.items.length}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                      <div style={{ width: 22, height: 22, borderRadius: 6, background: isOpen ? `${cat.color}11` : "transparent", border: isOpen ? `1px solid ${cat.color}33` : "1px solid transparent", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.2s" }}>
+                        <LucideIcon name={cat.icon} size={11} color={isOpen ? cat.color : "#8b949e"} />
+                      </div>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: isOpen ? "var(--pg-text, #e6edf3)" : "#8b949e", letterSpacing: "0.02em" }}>{cat.label}</span>
+                      <span style={{ fontSize: 9, color: "#8b949e", background: "var(--pg-border2, #21262d)", borderRadius: 4, padding: "1px 5px", fontWeight: 700 }}>{cat.items.length}</span>
                     </div>
-                    {isOpen ? <ChevronDown size={10} color="#8b949e" /> : <ChevronRight size={10} color="#8b949e" />}
+                    {isOpen ? <ChevronDown size={11} color="#8b949e" /> : <ChevronRight size={11} color="#8b949e" />}
                   </button>
 
                   {isOpen && (
@@ -498,16 +571,16 @@ Rules:
                       {cat.items.map(item => (
                         <div key={item.id} draggable
                           onDragStart={e => { e.dataTransfer.setData("arch/iconId", item.id); e.dataTransfer.setData("arch/label", item.label); e.dataTransfer.setData("arch/sub", item.sub); }}
-                          style={{ display: "flex", alignItems: "center", gap: 9, padding: "5px 6px", borderRadius: 7, cursor: "grab", marginBottom: 1, transition: "background 0.1s" }}
-                          onMouseEnter={e => e.currentTarget.style.background = "var(--pg-panel, #1c2128)"}
-                          onMouseLeave={e => e.currentTarget.style.background = "none"}>
+                          style={{ margin: "2px 0", padding: "6px 8px", background: "rgba(255,255,255,0.01)", border: `1px solid ${cat.color}22`, borderRadius: 7, cursor: "grab", display: "flex", alignItems: "center", gap: 9, transition: "all 0.12s", userSelect: "none" }}
+                          onMouseEnter={e => { e.currentTarget.style.background = `${cat.color}11`; e.currentTarget.style.borderColor = `${cat.color}44`; e.currentTarget.style.transform = "translateX(3px)"; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.01)"; e.currentTarget.style.borderColor = `${cat.color}22`; e.currentTarget.style.transform = "translateX(0)"; }}>
                           {/* Real brand icon */}
-                          <div style={{ width: 32, height: 32, borderRadius: 7, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.07)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <div style={{ width: 32, height: 32, borderRadius: 7, background: "rgba(0,0,0,0.2)", border: `1px solid ${cat.color}33`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                             <Icon icon={item.icon} width={22} height={22} />
                           </div>
-                          <div>
-                            <div style={{ fontSize: 10.5, fontWeight: 600, color: "var(--pg-text, #e6edf3)" }}>{item.label}</div>
-                            <div style={{ fontSize: 8.5, color: "var(--pg-text3, #8b949e)" }}>{item.sub}</div>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: 10.5, fontWeight: 700, color: "var(--pg-text, #e6edf3)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.label}</div>
+                            <div style={{ fontSize: 8.5, color: "#8b949e", marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.sub}</div>
                           </div>
                         </div>
                       ))}
@@ -541,12 +614,22 @@ Rules:
           </div>
         </div>
       </div>
+      )}
 
       {/* ═══ CANVAS AREA ════════════════════════════════════════════════════ */}
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
         {/* Toolbar */}
         <div style={{ height: 46, background: "var(--pg-sidebar, #161b22)", borderBottom: "1px solid var(--pg-border, #30363d)", display: "flex", alignItems: "center", padding: "0 12px", gap: 6, flexShrink: 0 }}>
+          {/* Sidebar toggle */}
+          <button
+            onClick={() => setShowSidebar(s => !s)}
+            title="Toggle Sidebar"
+            style={{ background: showSidebar ? "#818cf822" : "none", border: `1px solid ${showSidebar ? "#818cf855" : "var(--pg-border2, #21262d)"}`, borderRadius: 5, color: showSidebar ? "#818cf8" : "#8b949e", cursor: "pointer", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .15s" }}
+          >
+            <PanelLeft size={13} />
+          </button>
+          <div style={{ width: 1, height: 14, background: "var(--pg-border, #30363d)" }} />
           <div style={{ fontSize: 10, color: "var(--pg-accent, #818cf8)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
             <Layers size={11} /> Architecture
           </div>

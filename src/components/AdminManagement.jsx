@@ -1,16 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { Users, Shield, Lock, Unlock, BarChart3, Search, UserPlus, X, Trash2, ShieldCheck, Activity, Globe, Map } from "lucide-react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import { Users, Shield, Lock, Unlock, BarChart3, Search, UserPlus, X, Trash2, ShieldCheck, Activity, Globe, Map, TrendingUp, Clock, CheckCircle2, ChevronRight, UploadCloud, FileJson, FileText, Download, Database, AlertCircle, Copy, Cpu, Layout, Server } from "lucide-react";
 import { supabase } from "../config/supabaseClient";
 import { useAuth } from "../contexts/AuthContext";
 import "../styles/global.css";
 
-export default function AdminManagement({ onClose }) {
+/* --- Tiny Component: SVG Line Chart --- */
+const SimpleLineChart = ({ data, color }) => {
+  const max = Math.max(...data, 10);
+  const height = 100;
+  const width = 300;
+  const points = data.map((d, i) => `${(i / (data.length - 1)) * width},${height - (d / max) * height}`).join(' ');
+  return (
+    <svg viewBox={`0 0 ${width} ${height}`} className="admin-svg-chart">
+      <defs>
+        <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.5" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={`M 0,${height} ${points} V ${height} Z`} fill="url(#lineGrad)" />
+      <polyline points={points} fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: `drop-shadow(0 0 5px ${color})` }} />
+    </svg>
+  );
+};
+
+/* --- Tiny Component: SVG Doughnut --- */
+const SimpleDoughnut = ({ percent, color, label }) => {
+  const radius = 35;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percent / 100) * circumference;
+  return (
+    <div className="admin-doughnut-wrapper">
+      <svg viewBox="0 0 100 100" className="admin-svg-doughnut">
+        <circle cx="50" cy="50" r={radius} stroke="rgba(255,255,255,0.05)" strokeWidth="8" fill="none" />
+        <circle cx="50" cy="50" r={radius} stroke={color} strokeWidth="8" fill="none" 
+                strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
+                transform="rotate(-90 50 50)" style={{ transition: 'stroke-dashoffset 1s ease-out' }} />
+        <text x="50" y="55" textAnchor="middle" fill="var(--text)" fontSize="14" fontWeight="800">
+          {percent}%
+        </text>
+      </svg>
+      <span className="doughnut-label">{label}</span>
+    </div>
+  );
+};
+
+export default function AdminManagement({ onClose, pathsData, setPathsData }) {
   const { adminsList, setAdminsList, lockedUsers, setLockedUsers } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [newAdminEmail, setNewAdminEmail] = useState("");
-  const [activeTab, setActiveTab] = useState("users"); // "users" | "analytics" | "admins"
+
+  // Content Studio State
+  const [dragActive, setDragActive] = useState(false);
+  const [errorInfo, setErrorInfo] = useState(null);
+  const [successInfo, setSuccessInfo] = useState(null);
+  const [activeImportTab, setActiveImportTab] = useState("file"); 
+  const [rawPasteContent, setRawPasteContent] = useState("");
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     fetchUsers();
@@ -22,8 +70,7 @@ export default function AdminManagement({ onClose }) {
       const { data, error } = await supabase
         .from('user_curriculum')
         .select('*')
-        .not('id', 'eq', '00000000-0000-0000-0000-000000000000'); // Exclude global config
-      
+        .not('id', 'eq', '00000000-0000-0000-0000-000000000000'); 
       if (error) throw error;
       setUsers(data || []);
     } catch (err) {
@@ -38,283 +85,316 @@ export default function AdminManagement({ onClose }) {
         .from('user_curriculum')
         .upsert({
           id: '00000000-0000-0000-0000-000000000000',
-          paths_data: {
-            admins: newAdmins,
-            locked: newLocked,
-            updated_at: new Date().toISOString()
-          }
+          paths_data: { admins: newAdmins, locked: newLocked, updated_at: new Date().toISOString() }
         });
-    } catch (err) {
-      console.error("Error updating global config:", err);
-    }
+    } catch (err) { console.error(err); }
   };
 
-  const handleToggleLock = async (userId) => {
-    let newLocked;
-    if (lockedUsers.includes(userId)) {
-      newLocked = lockedUsers.filter(id => id !== userId);
-    } else {
-      newLocked = [...lockedUsers, userId];
-    }
-    setLockedUsers(newLocked);
-    await updateGlobalConfig(adminsList, newLocked);
-  };
+  const stats = useMemo(() => ({
+    totalUsers: users.length,
+    activeAdmins: adminsList.length,
+    lockedCount: lockedUsers.length,
+    totalNodes: Object.values(pathsData || {}).reduce((acc, p) => acc + (p.nodes?.length || 0), 0),
+    totalPaths: Object.keys(pathsData || {}).length,
+    weeklyGrowth: [12, 18, 15, 22, 28, 35, 42],
+  }), [users, adminsList, lockedUsers, pathsData]);
 
-  const handleAddAdmin = async () => {
-    if (!newAdminEmail || !newAdminEmail.includes("@")) return;
-    if (adminsList.includes(newAdminEmail)) return;
+  const pathCounts = ['ds', 'genai', 'agentic'].map(path => {
+    const count = users.filter(u => u.paths_data && u.paths_data[path]).length;
+    return { path, count, percent: stats.totalUsers > 0 ? (count / stats.totalUsers) * 100 : 0 };
+  });
 
-    const newAdmins = [...adminsList, newAdminEmail];
-    setAdminsList(newAdmins);
-    setNewAdminEmail("");
-    await updateGlobalConfig(newAdmins, lockedUsers);
-  };
-
-  const handleRemoveAdmin = async (email) => {
-    if (adminsList.length <= 1) return alert("Cannot remove the last admin.");
-    const newAdmins = adminsList.filter(e => e !== email);
-    setAdminsList(newAdmins);
-    await updateGlobalConfig(newAdmins, lockedUsers);
-  };
-
+  /* --- Operations Logic --- */
   const filteredUsers = users.filter(u => 
     u.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
     (u.paths_data?.title || "").toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const stats = {
-    totalUsers: users.length,
-    activeAdmins: adminsList.length,
-    lockedCount: lockedUsers.length,
-    totalNodes: users.reduce((acc, u) => acc + (Object.values(u.paths_data || {}).reduce((a, b) => a + (b.nodes?.length || 0), 0)), 0)
+  const handleToggleLock = async (userId) => {
+    let newLocked = lockedUsers.includes(userId) ? lockedUsers.filter(id => id !== userId) : [...lockedUsers, userId];
+    setLockedUsers(newLocked); await updateGlobalConfig(adminsList, newLocked);
+  };
+
+  const handleAddAdmin = async () => {
+    if (!newAdminEmail || adminsList.includes(newAdminEmail)) return;
+    const newAdmins = [...adminsList, newAdminEmail];
+    setAdminsList(newAdmins); setNewAdminEmail(""); await updateGlobalConfig(newAdmins, lockedUsers);
+  };
+
+  const handleRemoveAdmin = async (email) => {
+    if (adminsList.length <= 1) return;
+    const newAdmins = adminsList.filter(e => e !== email);
+    setAdminsList(newAdmins); await updateGlobalConfig(newAdmins, lockedUsers);
+  };
+
+  /* --- Content Studio Logic --- */
+  const handleDrag = (e) => {
+    e.preventDefault(); e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") setDragActive(true);
+    else if (e.type === "dragleave") setDragActive(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault(); e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  };
+
+  const handleFile = async (file) => {
+    setErrorInfo(null); setSuccessInfo(null);
+    const text = await file.text();
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (ext === "json") {
+      try {
+        const json = JSON.parse(text);
+        if (json.nodes || json.id || json.title) importPath(json);
+        else if (typeof json === "object") {
+          let count = 0; let newPathsData = { ...pathsData };
+          for (const key of Object.keys(json)) { newPathsData[key] = json[key]; count++; }
+          setPathsData(newPathsData); setSuccessInfo(`Successfully imported ${count} paths.`);
+        }
+      } catch (err) { setErrorInfo("JSON Error: " + err.message); }
+    } else if (ext === "md" || ext === "markdown" || ext === "txt") {
+      try { importPath(parseMarkdown(text, file.name)); } catch (err) { setErrorInfo(err.message); }
+    }
+  };
+
+  const parseMarkdown = (text, filename) => {
+    const newPath = { id: `path-${Date.now()}`, title: filename.replace('.md', ''), color: "#8b5cf6", nodes: [] };
+    let currentNode = null; let currentModule = null;
+    const lines = text.split('\n');
+    for (let line of lines) {
+      line = line.trim(); if (!line) continue;
+      if (line.startsWith('# ')) newPath.title = line.substring(2).trim();
+      else if (line.startsWith('## ')) {
+        currentNode = { id: `node-${Date.now()}`, title: line.substring(3).trim(), modules: [] };
+        newPath.nodes.push(currentNode); currentModule = null;
+      } else if (line.startsWith('### ')) {
+        if (!currentNode) { currentNode = { id: `node-${Date.now()}`, title: "Module", modules: [] }; newPath.nodes.push(currentNode); }
+        currentModule = { id: `mod-${Date.now()}`, title: line.substring(4).trim(), subtopics: [], status: "pending" };
+        currentNode.modules.push(currentModule);
+      } else if (line.startsWith('- ') || line.startsWith('* ')) {
+        if (!currentModule) {
+           currentModule = { id: `mod-${Date.now()}`, title: "Unit", subtopics: [], status: "pending" };
+           if (currentNode) currentNode.modules.push(currentModule);
+        }
+        currentModule.subtopics.push({ title: line.substring(2).trim(), status: "pending", id: `topic-${Math.random().toString(36).substr(2, 5)}` });
+      }
+    }
+    return newPath;
+  };
+
+  const importPath = (pathObj) => {
+    const id = pathObj.id || `path-${Date.now()}`;
+    const cleanPath = { ...pathObj, id, title: pathObj.title || "Untitled Path" };
+    setPathsData(prev => ({ ...prev, [id]: cleanPath }));
+    setSuccessInfo(`Architecture Synchronized: ${cleanPath.title}`);
+  };
+
+  const handlePasteProcess = () => {
+    setErrorInfo(null); setSuccessInfo(null);
+    if (!rawPasteContent.trim()) return setErrorInfo("Payload required.");
+    const trimmed = rawPasteContent.trim();
+    if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+      try { importPath(JSON.parse(trimmed)); } catch (e) { setErrorInfo(e.message); }
+    } else {
+      try { importPath(parseMarkdown(trimmed, "Pasted Blueprint.md")); } catch (e) { setErrorInfo(e.message); }
+    }
+  };
+
+  const downloadSample = (type) => {
+    let content = type === 'md' ? "# AI Roadmap\n## Theory\n### Basics\n- Introduction" : JSON.stringify({ title: "Sample", nodes: [] }, null, 2);
+    const b = new Blob([content], { type: "text/plain" });
+    const u = URL.createObjectURL(b); const a = document.createElement('a');
+    a.href = u; a.download = `sample.${type}`; a.click(); URL.revokeObjectURL(u);
   };
 
   return (
-    <div className="admin-management-page" style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>
-      {/* Header */}
-      <div style={{ padding: '32px 48px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg2)', backdropFilter: 'blur(10px)' }}>
-        <div>
-          <h1 style={{ fontSize: '2rem', fontWeight: 800, margin: 0, letterSpacing: '-0.02em', color: 'var(--text)' }}>
-            Admin Management
-          </h1>
-          <p style={{ color: 'var(--text3)', margin: '4px 0 0', fontSize: '0.95rem' }}>
-            System control panel for user access and platform analytics.
-          </p>
-        </div>
-        <button className="rg-btn" onClick={onClose} style={{ padding: '8px 16px', background: 'var(--bg3)', border: '1px solid var(--border)', color: 'var(--text2)' }}>
-          <X size={18} /> Close Panel
-        </button>
-      </div>
-
-      {/* Tabs */}
-      <div style={{ padding: '0 48px', display: 'flex', gap: 32, borderBottom: '1px solid var(--border)', background: 'var(--bg2)' }}>
-        {[
-          { id: 'users', label: 'Registered Users', icon: <Users size={16} /> },
-          { id: 'analytics', label: 'Platform Analytics', icon: <BarChart3 size={16} /> },
-          { id: 'admins', label: 'System Admins', icon: <Shield size={16} /> }
-        ].map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            style={{
-              padding: '16px 4px',
-              background: 'none',
-              border: 'none',
-              borderBottom: `2px solid ${activeTab === tab.id ? 'var(--primary)' : 'transparent'}`,
-              color: activeTab === tab.id ? 'var(--primary)' : 'var(--text3)',
-              fontSize: '0.9rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              transition: 'all 0.2s'
-            }}
-          >
-            {tab.icon} {tab.label}
-          </button>
-        ))}
-      </div>
-
-      <div style={{ flex: 1, overflowY: 'auto', padding: '40px 48px' }}>
-        {activeTab === 'users' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: 400 }}>
-                <Search size={18} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text3)' }} />
-                <input 
-                  type="text" 
-                  placeholder="Search user ID or curriculum..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  style={{ width: '100%', padding: '12px 14px 12px 42px', background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, color: 'var(--text)', outline: 'none' }}
-                />
-              </div>
-              <button className="rg-btn" onClick={fetchUsers} style={{ padding: '10px 16px' }}>
-                 <Activity size={16} /> Refresh List
-              </button>
-            </div>
-
-            <div style={{ background: 'var(--bg2)', borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-                <thead>
-                  <tr style={{ borderBottom: '1px solid var(--border)', color: 'var(--text3)', fontSize: '0.85rem' }}>
-                    <th style={{ padding: '16px 24px' }}>User ID</th>
-                    <th style={{ padding: '16px 24px' }}>Last Updated</th>
-                    <th style={{ padding: '16px 24px' }}>Status</th>
-                    <th style={{ padding: '16px 24px', textAlign: 'right' }}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {loading ? (
-                    <tr><td colSpan="4" style={{ padding: 40, textAlign: 'center', color: 'var(--text3)' }}>Loading users...</td></tr>
-                  ) : filteredUsers.map(user => (
-                    <tr key={user.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.2s' }}>
-                      <td style={{ padding: '20px 24px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                          <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--bg3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>👤</div>
-                          <span style={{ fontSize: '0.9rem', fontFamily: 'monospace', color: 'var(--text)' }}>{user.id}</span>
-                        </div>
-                      </td>
-                      <td style={{ padding: '20px 24px', fontSize: '0.85rem', color: 'var(--text2)' }}>
-                        {new Date(user.updated_at).toLocaleString()}
-                      </td>
-                      <td style={{ padding: '20px 24px' }}>
-                        <span style={{ 
-                          padding: '4px 10px', 
-                          borderRadius: 20, 
-                          fontSize: '0.75rem', 
-                          fontWeight: 700, 
-                          background: lockedUsers.includes(user.id) ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
-                          color: lockedUsers.includes(user.id) ? '#ef4444' : '#10b981',
-                          border: `1px solid ${lockedUsers.includes(user.id) ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)'}`
-                        }}>
-                          {lockedUsers.includes(user.id) ? 'Locked' : 'Active'}
-                        </span>
-                      </td>
-                      <td style={{ padding: '20px 24px', textAlign: 'right' }}>
-                        <button 
-                          onClick={() => handleToggleLock(user.id)}
-                          style={{ 
-                            background: 'none', 
-                            border: 'none', 
-                            color: lockedUsers.includes(user.id) ? '#10b981' : '#ef4444', 
-                            cursor: 'pointer',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: 6,
-                            fontSize: '0.85rem',
-                            fontWeight: 600
-                          }}
-                        >
-                          {lockedUsers.includes(user.id) ? <><Unlock size={14} /> Unlock</> : <><Lock size={14} /> Lock Access</>}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+    <div className="admin-page unified-dashboard">
+      <header className="admin-header sticky-header">
+        <div className="admin-header-left">
+          <div className="admin-logo-orb">
+             <Shield size={24} className="admin-shield" />
+             <div className="orb-pulse" />
           </div>
-        )}
+          <div>
+            <h1>Command Center</h1>
+            <p>Unified ecosystem intelligence & resource engineering.</p>
+          </div>
+        </div>
+        <div className="header-actions">
+           <button className="admin-refresh-btn" onClick={fetchUsers}><Activity size={16} /> <span>Sync</span></button>
+           <button className="admin-close-btn" onClick={onClose}><X size={18} /></button>
+        </div>
+      </header>
 
-        {activeTab === 'analytics' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
-            {/* Quick Stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24 }}>
+      <main className="admin-content scrolling-layout">
+        
+        {/* Row 1: Key Metrics */}
+        <section className="dashboard-section metrics-section">
+           <div className="admin-stats-grid">
               {[
-                { label: 'Total Registered', value: stats.totalUsers, icon: <Users />, color: 'var(--primary)' },
-                { label: 'Active Admins', value: stats.activeAdmins, icon: <Shield />, color: '#8b5cf6' },
-                { label: 'Access Restricted', value: stats.lockedCount, icon: <Lock />, color: '#ef4444' },
-                { label: 'Total Learning Nodes', value: stats.totalNodes, icon: <Map />, color: '#3b82f6' }
+                { label: 'Ecosystem Enrolled', value: stats.totalUsers, icon: <Users />, color: 'var(--neon)', trend: '+12%' },
+                { label: 'Architectures', value: stats.totalPaths, icon: <Map />, color: '#3b82f6', trend: 'Global' },
+                { label: 'Infrastructure Nodes', value: stats.totalNodes, icon: <Cpu />, color: '#a855f7', trend: 'Live' },
+                { label: 'Admin Authority', value: stats.activeAdmins, icon: <ShieldCheck />, color: '#fbbf24', trend: 'Stable' }
               ].map((s, i) => (
-                <div key={i} style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 24, padding: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <span style={{ color: 'var(--text3)', fontSize: '0.85rem', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em' }}>{s.label}</span>
-                    <h3 style={{ fontSize: '2.5rem', margin: '8px 0 0', fontWeight: 800, color: 'var(--text)' }}>{s.value}</h3>
+                <div key={i} className="admin-stat-card" style={{ "--stat-color": s.color }}>
+                  <div className="stat-card-header">
+                    <div className="stat-icon-wrapper">{React.cloneElement(s.icon, { size: 18 })}</div>
+                    <span className="stat-trend">{s.trend}</span>
                   </div>
-                  <div style={{ color: s.color, opacity: 0.2 }}>
-                    {React.cloneElement(s.icon, { size: 48 })}
-                  </div>
+                  <div className="stat-card-body"><h3>{s.value}</h3><p>{s.label}</p></div>
                 </div>
               ))}
-            </div>
+           </div>
+        </section>
 
-            {/* Path Distribution */}
-            <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 24, padding: 40 }}>
-               <h3 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 24px', color: 'var(--text)' }}>Learning Path Popularity</h3>
-               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                  {['ds', 'genai', 'agentic'].map(path => {
-                    const count = users.filter(u => u.paths_data && u.paths_data[path]).length;
-                    const percent = stats.totalUsers > 0 ? (count / stats.totalUsers) * 100 : 0;
-                    return (
-                      <div key={path} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem' }}>
-                            <span style={{ fontWeight: 600, color: 'var(--text2)', textTransform: 'capitalize' }}>{path} Curriculum</span>
-                            <span style={{ color: 'var(--text1)' }}>{count} users ({percent.toFixed(1)}%)</span>
-                         </div>
-                         <div style={{ height: 8, background: 'var(--bg3)', borderRadius: 4, overflow: 'hidden' }}>
-                            <div style={{ width: `${percent}%`, height: '100%', background: 'var(--primary)', boxShadow: '0 0 10px var(--primary)' }} />
-                         </div>
-                      </div>
-                    );
-                  })}
-               </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'admins' && (
-          <div style={{ maxWidth: 800, display: 'flex', flexDirection: 'column', gap: 32 }}>
-            <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 24, padding: 32 }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, margin: '0 0 8px', color: 'var(--text)' }}>Grant Administrative Access</h3>
-              <p style={{ color: 'var(--text3)', margin: '0 0 24px', fontSize: '0.9rem' }}>Invite other users to manage content and platform settings.</p>
-              
-              <div style={{ display: 'flex', gap: 12 }}>
-                <input 
-                  type="email" 
-                  placeholder="Enter email address..."
-                  value={newAdminEmail}
-                  onChange={e => setNewAdminEmail(e.target.value)}
-                  style={{ flex: 1, padding: '12px 14px', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: 12, color: 'var(--text)', outline: 'none' }}
-                />
-                <button onClick={handleAddAdmin} className="rg-btn" style={{ padding: '0 24px' }}>
-                  <UserPlus size={18} /> Add Admin
-                </button>
+        {/* Row 2: Intelligence Visualizers */}
+        <section className="dashboard-section charts-section">
+           <div className="admin-grid-two">
+              <div className="admin-card chart-card glass-panel">
+                 <div className="card-header">
+                    <div className="header-icon-mini"><TrendingUp size={14} /></div>
+                    <div><h3>Registration Velocity</h3><p>7-day user acquisition trend.</p></div>
+                 </div>
+                 <div className="chart-wrapper"><SimpleLineChart data={stats.weeklyGrowth} color="var(--neon)" /></div>
               </div>
-            </div>
-
-            <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 24, overflow: 'hidden' }}>
-              <div style={{ padding: '24px 32px', borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,0.02)' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0, color: 'var(--text)' }}>Active Administrators</h3>
+              <div className="admin-card chart-card glass-panel">
+                 <div className="card-header">
+                    <div className="header-icon-mini"><Globe size={14} /></div>
+                    <div><h3>Path Distribution</h3><p>Curriculum engagement metrics.</p></div>
+                 </div>
+                 <div className="doughnut-grid">
+                    {pathCounts.map(p => <SimpleDoughnut key={p.path} percent={Math.round(p.percent)} color={p.path === 'ds' ? '#3b82f6' : 'var(--neon)'} label={p.path.toUpperCase()} />)}
+                 </div>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {adminsList.map(email => (
-                  <div key={email} style={{ padding: '20px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <ShieldCheck size={20} />
-                      </div>
-                      <span style={{ fontSize: '0.95rem', color: 'var(--text1)', fontWeight: 500 }}>{email}</span>
-                      {email === 'nandanpatkar14114@gmail.com' && (
-                        <span style={{ fontSize: '0.7rem', padding: '2px 8px', borderRadius: 4, background: 'var(--bg3)', color: 'var(--text3)', fontWeight: 800 }}>CORE</span>
-                      )}
+           </div>
+        </section>
+
+        {/* Row 3: Operations & Authority */}
+        <section className="dashboard-section operations-section">
+           <div className="admin-grid-main">
+              {/* Wide Left: Ecosystem Registry */}
+              <div className="admin-card glass-panel registry-card">
+                 <div className="card-header split">
+                    <div>
+                       <h3>Ecosystem Registry</h3>
+                       <p>Real-time synchronization of all user instances.</p>
                     </div>
-                    <button 
-                      onClick={() => handleRemoveAdmin(email)}
-                      style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', transition: 'color 0.2s' }}
-                      onMouseEnter={e => e.currentTarget.style.color = '#ef4444'}
-                      onMouseLeave={e => e.currentTarget.style.color = 'var(--text3)'}
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                ))}
+                    <div className="admin-search-wrapper">
+                       <Search size={16} />
+                       <input type="text" placeholder="Filter identities..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+                    </div>
+                 </div>
+                 <div className="admin-table-wrapper mini-scrollbar">
+                    <table className="admin-table">
+                       <thead><tr><th>Identity Identifier</th><th>Temporal Update</th><th>Status</th><th style={{ textAlign: 'right' }}>Actions</th></tr></thead>
+                       <tbody>
+                          {filteredUsers.map(u => (
+                            <tr key={u.id} className="admin-table-row">
+                              <td className="cell-user"><code>{u.id.substring(0, 32)}...</code></td>
+                              <td className="cell-date">{new Date(u.updated_at).toLocaleString()}</td>
+                              <td className="cell-status">
+                                 <span className={`admin-status-badge ${lockedUsers.includes(u.id) ? 'locked' : 'active'}`}>
+                                    {lockedUsers.includes(u.id) ? 'Restricted' : 'Active'}
+                                 </span>
+                              </td>
+                              <td className="cell-actions">
+                                 <button className={`admin-lock-toggle ${lockedUsers.includes(u.id) ? 'unlock' : 'lock'}`} onClick={() => handleToggleLock(u.id)}>
+                                    {lockedUsers.includes(u.id) ? <Unlock size={14} /> : <Lock size={14} />}
+                                 </button>
+                              </td>
+                            </tr>
+                          ))}
+                       </tbody>
+                    </table>
+                 </div>
               </div>
-            </div>
-          </div>
-        )}
-      </div>
+
+              {/* Narrow Right: Authority Control */}
+              <div className="admin-card glass-panel authority-card">
+                 <div className="card-header">
+                    <h3>Authority Registry</h3>
+                    <p>Manage system operators.</p>
+                 </div>
+                 <div className="invite-form-minimal">
+                    <input type="email" placeholder="new.operator@genai.com" value={newAdminEmail} onChange={e => setNewAdminEmail(e.target.value)} />
+                    <button onClick={handleAddAdmin} className="mini-action-btn"><UserPlus size={14} /></button>
+                 </div>
+                 <div className="authority-list mini-scrollbar">
+                    {adminsList.map(email => (
+                      <div key={email} className="authority-item-compact">
+                         <div className="auth-user-info">
+                            <Shield size={14} className="auth-icon" />
+                            <span className="auth-email">{email}</span>
+                         </div>
+                         {email !== 'nandanpatkar14114@gmail.com' && (
+                           <button className="auth-remove-btn" onClick={() => handleRemoveAdmin(email)}><Trash2 size={14} /></button>
+                         )}
+                      </div>
+                    ))}
+                 </div>
+              </div>
+           </div>
+        </section>
+
+        {/* Row 4: Engineering (Studio) */}
+        <section className="dashboard-section engineering-section">
+           <div className="admin-card glass-panel studio-forge-card">
+              <div className="card-header split">
+                 <div className="studio-header-main">
+                    <div className="studio-icon-bg"><Server size={20} /></div>
+                    <div>
+                       <h3>Architecture Forge</h3>
+                       <p>Mass curriculum synchronization & injection engine.</p>
+                    </div>
+                 </div>
+                 <div className="studio-tabs-row">
+                    {['file', 'paste'].map(t => <button key={t} className={`studio-tab-btn ${activeImportTab === t ? 'active' : ''}`} onClick={() => setActiveImportTab(t)}>{t}</button>)}
+                 </div>
+              </div>
+
+              <div className="forge-body-unified">
+                 {activeImportTab === 'file' ? (
+                   <div className={`forge-drop-well ${dragActive ? 'drag-active' : ''}`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop} onClick={() => fileInputRef.current?.click()}>
+                      <input ref={fileInputRef} type="file" accept=".json,.md,.txt" onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} style={{ display: 'none' }} />
+                      <Activity size={24} className="well-icon" />
+                      <div>
+                         <h4>Inject Architectural Payload</h4>
+                         <p>Directly drop curriculum files (.json / .md)</p>
+                      </div>
+                   </div>
+                 ) : (
+                   <div className="forge-paste-container">
+                      <textarea value={rawPasteContent} onChange={e => setRawPasteContent(e.target.value)} placeholder="Paste architectural blueprint JSON or Markdown..." className="forge-textarea-compact" />
+                      <div className="forge-actions">
+                         <button className="forge-btn-exec" onClick={handlePasteProcess}><CheckCircle2 size={16} /> Execute Injection</button>
+                         <button className="forge-btn-clear" onClick={() => setRawPasteContent("")}><Trash2 size={16} /></button>
+                      </div>
+                   </div>
+                 )}
+
+                 {(errorInfo || successInfo) && (
+                   <div className={`forge-notifier ${errorInfo ? 'error' : 'success'}`}>
+                      {errorInfo ? <AlertCircle size={16} /> : <CheckCircle2 size={16} />}
+                      <span>{errorInfo || successInfo}</span>
+                      <button onClick={() => { setErrorInfo(null); setSuccessInfo(null); }} className="notifier-close"><X size={12} /></button>
+                   </div>
+                 )}
+              </div>
+              
+              <div className="forge-footer-unified">
+                 <div className="template-links">
+                    <span className="label">Download Blueprints:</span>
+                    <button onClick={() => downloadSample('md')}><FileText size={12} /> MD Template</button>
+                    <button onClick={() => downloadSample('json')}><FileJson size={12} /> JSON Schema</button>
+                 </div>
+              </div>
+           </div>
+        </section>
+
+      </main>
     </div>
   );
 }

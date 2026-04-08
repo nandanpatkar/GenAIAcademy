@@ -1,8 +1,12 @@
-const API_KEY = "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";
+const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const MODEL_ID = "minimax/minimax-m2.5:free";
 
 // ─── Internal: call OpenRouter with a system prompt + history ────────────────────
 async function callOpenRouter(messages, maxTokens = 1024, temperature = 0.7, jsonMode = false) {
+  if (!API_KEY || API_KEY.includes("your-api-key")) {
+    throw new Error("Missing OpenRouter API Key. Please add VITE_OPENROUTER_API_KEY to your .env file.");
+  }
+
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -250,5 +254,51 @@ export const generateStudyContent = async (mode, moduleData) => {
   } catch (error) {
     console.error("Study Content Generation Error:", error);
     throw new Error("Failed to generate study materials.");
+  }
+};
+
+// ─── Public: Architecture Diagram Generation ─────────────────────────────────
+export const generateArchitectureDiagram = async (prompt, availableIconIds) => {
+  const systemPrompt = `You are an expert software architect. Convert the user's description into a formal architecture diagram.
+Return ONLY a valid JSON object. No explanation or markdown fences.
+
+Schema:
+{
+  "nodes": [
+    { "id": "1", "type": "archNode", "position": {"x": 100, "y": 150}, "data": { "iconId": "aws-lambda", "label": "Lambda", "sub": "Serverless" } }
+  ],
+  "edges": [
+    { "id": "e1-2", "source": "1", "target": "2", "type": "labelled", "data": { "label": "invoke" } }
+  ]
+}
+
+Available iconIds (ONLY use these exact strings): ${availableIconIds}
+
+Rules:
+1. Pick the most accurate iconId for each component from the provided list.
+2. Space nodes at least 220px apart horizontally and 160px vertically for a clean layout.
+3. Max 14 nodes, max 16 edges.
+4. Ensure every edge source and target references a valid node ID.
+5. Return ONLY the raw JSON object.`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Generate an architecture for: "${prompt}"` }
+    ];
+    const raw = await callOpenRouter(messages, 2048, 0.2, true);
+    
+    // Aggressive cleanup for JSON
+    let clean = raw.trim();
+    if (clean.includes("```")) {
+      clean = clean.split("```")[1];
+      if (clean.startsWith("json")) clean = clean.substring(4);
+      clean = clean.split("```")[0];
+    }
+    
+    return JSON.parse(clean.trim());
+  } catch (error) {
+    console.error("Architecture Diagram Error:", error);
+    throw new Error("Failed to generate architecture diagram.");
   }
 };

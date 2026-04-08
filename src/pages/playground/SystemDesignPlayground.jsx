@@ -12,7 +12,7 @@ import {
   Code2, Shield, Zap, Network, Cloud, Server, GitBranch,
   MessageSquare, Mail, BarChart2, Lock, RefreshCw, Settings,
   Webhook, Boxes, ScanSearch, Filter, BookOpen, Workflow,
-  Check, ArrowLeft, Link2, Sparkles, CircuitBoard,
+  Check, ArrowLeft, Link2, Sparkles, CircuitBoard, Layout,
   Save, FolderOpen as FolderOpenIcon, AlertCircle, RotateCcw, Redo2,
   StickyNote, Square, Grid3X3, Map, Maximize2, ZoomIn, ZoomOut,
   Play, Info, Star, Tag, CheckCircle, Minimize2, ExternalLink,
@@ -202,6 +202,7 @@ export default function SystemDesignPlayground({ onClose }) {
   const [flowTags,      setFlowTags]      = useState([]);
   const [activeFlowId,  setActiveFlowId]  = useState(null);
   const [mainTab,       setMainTab]       = useState("system"); // "system" | "arch"
+  const [showSidebar,   setShowSidebar]   = useState(true);
 
   const rfWrapper = useRef(null);
   const [rfi, setRfi] = useState(null);
@@ -411,26 +412,73 @@ export default function SystemDesignPlayground({ onClose }) {
       {/* ══ TOP TAB BAR ══════════════════════════════════════════════════════ */}
       <div style={{
         display: "flex", alignItems: "center",
-        background: "var(--pg-sidebar)", borderBottom: "1px solid var(--pg-border)",
-        padding: "0 16px", height: 42, flexShrink: 0,
+        background: "rgba(13, 17, 23, 0.8)",
+        backdropFilter: "blur(12px)",
+        borderBottom: "1px solid var(--pg-border)",
+        padding: "0 20px", height: 52, flexShrink: 0,
+        gap: 12,
+        zIndex: 10,
       }}>
         {[
-          { id: "system", label: "⚙️  System Design"       },
-          { id: "arch",   label: "🏗️  Architecture Design" },
-        ].map(t => (
-          <button key={t.id} onClick={() => setMainTab(t.id)}
-            style={{
-              background: "none", border: "none", padding: "0 18px",
-              height: "100%", cursor: "pointer",
-              fontFamily: "'DM Mono',monospace", fontSize: 10.5,
-              fontWeight: 700, letterSpacing: "0.05em",
-              color: mainTab === t.id ? "var(--pg-text)" : "var(--pg-text3)",
-              borderBottom: `2px solid ${mainTab === t.id ? "var(--pg-accent)" : "transparent"}`,
-              transition: "all 0.15s",
-            }}>
-            {t.label}
-          </button>
-        ))}
+          { id: "system", label: "System Design", icon: Activity, color: "#00ff88" },
+          { id: "arch",   label: "Architecture Design", icon: Layout, color: "#818cf8" },
+        ].map(t => {
+          const isActive = mainTab === t.id;
+          return (
+            <button key={t.id} onClick={() => setMainTab(t.id)}
+              style={{
+                background: isActive ? "rgba(255, 255, 255, 0.03)" : "none",
+                border: "none",
+                padding: "8px 16px",
+                height: 36,
+                borderRadius: 8,
+                cursor: "pointer",
+                fontFamily: "'DM Mono',monospace",
+                fontSize: 10.5,
+                fontWeight: isActive ? 700 : 500,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: isActive ? "#fff" : "var(--pg-text3)",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                position: "relative",
+                overflow: "hidden",
+                transform: `translateY(${isActive ? "0" : "0"}) scale(${isActive ? 1 : 0.98})`,
+              }}
+              onMouseEnter={e => {
+                if (!isActive) {
+                  e.currentTarget.style.color = "#fff";
+                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
+                  e.currentTarget.style.transform = "translateY(-1px) scale(1)";
+                }
+              }}
+              onMouseLeave={e => {
+                if (!isActive) {
+                  e.currentTarget.style.color = "var(--pg-text3)";
+                  e.currentTarget.style.background = "none";
+                  e.currentTarget.style.transform = "translateY(0) scale(0.98)";
+                }
+              }}>
+              <t.icon size={13} color={isActive ? t.color : "currentColor"} style={{ transition: "all 0.3s" }} />
+              {t.label}
+              {isActive && (
+                <div style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: "20%",
+                  right: "20%",
+                  height: 2,
+                  background: t.color,
+                  borderRadius: "2px 2px 0 0",
+                  boxShadow: `0 0 10px ${t.color}`,
+                  animation: "tabFadeIn 0.3s forwards",
+                }} />
+              )}
+            </button>
+          );
+        })}
         <div style={{ flex: 1 }} />
         <button onClick={onClose}
           style={{ background: "none", border: "none", cursor: "pointer", color: "var(--pg-text3)", fontSize: 18, padding: "4px 8px", borderRadius: 5, lineHeight: 1 }}>
@@ -446,12 +494,13 @@ export default function SystemDesignPlayground({ onClose }) {
       <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg)", fontFamily: "'DM Mono','Fira Code',monospace", color: "var(--pg-text)", overflow: "hidden" }}>
 
         {/* ══ SIDEBAR ══════════════════════════════════════════════════════════ */}
-        <div style={{ width: 230, minWidth: 230, background: "var(--pg-sidebar)", borderRight: "1px solid var(--pg-border)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        {showSidebar && (
+        <div style={{ width: 230, minWidth: 230, background: "var(--pg-sidebar)", borderRight: "1px solid var(--pg-border)", display: "flex", flexDirection: "column", overflow: "hidden", flexShrink: 0 }}>
 
           {/* Tabs */}
           <div style={{ display: "flex", borderBottom: "1px solid var(--pg-border)" }}>
-            {[{ id: "nodes", icon: Layers, label: "Nodes" }, { id: "templates", icon: LayoutTemplate, label: "Templates" }, { id: "generate", icon: Sparkles, label: "Generate" }].map(tab => (
-              <button key={tab.id} onClick={() => { if (tab.id === "generate") { setShowNLGen(true); } else { setSideTab(tab.id); } }}
+            {[{ id: "nodes", icon: Layers, label: "Nodes" }, { id: "templates", icon: LayoutTemplate, label: "Templates" }].map(tab => (
+              <button key={tab.id} onClick={() => setSideTab(tab.id)}
                 style={{ flex: 1, background: "none", border: "none", padding: "10px 6px", cursor: "pointer", fontFamily: "'DM Mono',monospace", fontSize: 9.5, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: sideTab === tab.id ? "var(--pg-text)" : "var(--pg-text3)", borderBottom: `2px solid ${sideTab === tab.id ? "var(--pg-accent)" : "transparent"}`, display: "flex", alignItems: "center", justifyContent: "center", gap: 5, transition: "all 0.15s" }}>
                 <tab.icon size={10} /> {tab.label}
               </button>
@@ -564,6 +613,7 @@ export default function SystemDesignPlayground({ onClose }) {
             </div>
           )}
         </div>
+        )}
 
         {/* ══ CANVAS + TOOLBAR ═════════════════════════════════════════════════ */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
@@ -571,6 +621,15 @@ export default function SystemDesignPlayground({ onClose }) {
           {/* Toolbar row 1 */}
           <div style={{ height: 46, background: "var(--pg-sidebar)", borderBottom: "1px solid var(--pg-border)", display: "flex", alignItems: "center", padding: "0 12px", justifyContent: "space-between", gap: 6 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              {/* Sidebar toggle */}
+              <button
+                onClick={() => setShowSidebar(s => !s)}
+                title="Toggle Sidebar"
+                style={{ background: showSidebar ? "var(--pg-panel)" : "transparent", border: `1px solid ${showSidebar ? "var(--pg-border2)" : "transparent"}`, borderRadius: 5, color: showSidebar ? "var(--pg-text)" : "var(--pg-text3)", cursor: "pointer", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .15s" }}
+              >
+                <PanelLeft size={13} />
+              </button>
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
               <div style={{ fontSize: 10, color: "var(--pg-accent)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
                 <Workflow size={11} /> System Design
               </div>
@@ -621,6 +680,12 @@ export default function SystemDesignPlayground({ onClose }) {
               {/* Import */}
               <input ref={fileImportRef} type="file" accept=".json" onChange={handleFileImport} style={{ display: "none" }} />
               <TBtn icon={Upload} label="Import JSON" onClick={() => fileImportRef.current.click()} />
+              <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
+
+              {/* AI Generate */}
+              <button onClick={() => setShowNLGen(true)} style={{ background: "linear-gradient(135deg,#818cf8,#a78bfa)", border: "none", borderRadius: 5, color: "#fff", fontSize: 9.5, fontWeight: 700, padding: "5px 11px", cursor: "pointer", fontFamily: "'DM Mono',monospace", letterSpacing: "0.05em", display: "flex", alignItems: "center", gap: 5, boxShadow: "0 4px 12px rgba(129,140,248,0.25)" }}>
+                <Sparkles size={11} /> AI Generate
+              </button>
 
               {/* Export menu */}
               <div style={{ position: "relative" }}>
@@ -764,6 +829,10 @@ export default function SystemDesignPlayground({ onClose }) {
           ::-webkit-scrollbar-thumb:hover { background: #30363d; }
           .react-flow__minimap-mask { fill: rgba(1,4,9,0.75); }
           .react-flow__background { background-color: #010409 !important; }
+          @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(2px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
         `}</style>
       </div>
       )}

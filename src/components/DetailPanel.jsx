@@ -213,11 +213,27 @@ function AIStudyPanel({ module, pathColor }) {
           {/* Error */}
           {error && (
             <div style={{
-              padding: "10px 12px", borderRadius: 8,
-              background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)",
+              padding: "12px 14px", borderRadius: 12,
+              background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)",
               color: "#ef4444", fontSize: 11,
+              animation: "fadeIn 0.3s ease-out"
             }}>
-              ⚠️ {error}
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <AlertCircle size={14} />
+                  <span style={{ fontWeight: 800, letterSpacing: "0.5px" }}>GENERATION FAILED</span>
+                </div>
+                <div style={{ opacity: 0.9, lineHeight: 1.4 }}>{error}</div>
+                {error.includes("API Key") && (
+                  <div style={{ 
+                    marginTop: 6, padding: "8px 10px", background: "rgba(0,0,0,0.15)", 
+                    borderRadius: 8, fontSize: 10, border: "1px solid rgba(239,68,68,0.15)",
+                    color: "rgba(239,68,68,0.9)", lineHeight: 1.4
+                  }}>
+                    <strong>Tip:</strong> Ensure your <code>VITE_OPENROUTER_API_KEY</code> is correctly set in <code>.env.local</code>. Refer to <code>.env.example</code> for guidance.
+                  </div>
+                )}
+              </div>
             </div>
           )}
 

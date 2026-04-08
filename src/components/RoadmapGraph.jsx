@@ -1,10 +1,5 @@
-import { Box, Edit2 } from "lucide-react";
-
-const PATH_ICONS = {
-  ds: ["🐍", "📊", "🔬", "🗄️", "🤖", "🧠", "💬", "🚀"],
-  genai: ["🏗️", "✨", "⛓️", "🗃️", "🔍", "🎯", "📡", "☁️"],
-  agentic: ["🤖", "🕸️", "👥", "🛠️", "🧠", "☁️", "⚡"],
-};
+import React from "react";
+import { Box, Edit2, Folder, Eye, ArrowRight, Plus, Layers } from "lucide-react";
 
 export default function RoadmapGraph({
   path, activePath, setActivePath, pathsData,
@@ -21,19 +16,13 @@ export default function RoadmapGraph({
     );
   }
 
-  const { title, subtitle, color, nodes } = path;
-
-  const total = nodes?.length || 1;
-  const pct = nodes?.length === 0 ? 0 : Math.round((completedCount / nodes.length) * 100);
+  const { title, subtitle, color, nodes = [] } = path;
+  const total = nodes.length || 0;
+  const pct = total === 0 ? 0 : Math.round((completedCount / total) * 100);
   const inProgress = (nodes || []).filter((n) => getNodeState(n.id) === "progress").length;
-  const icons = PATH_ICONS[activePath] || [];
+  const notStarted = Math.max(0, total - completedCount - inProgress);
 
-  // Dynamically split title to retain two-tone aesthetic for infinite custom paths
-  const words = (path.title || "Custom Path").trim().split(" ");
-  const accent = words.length > 1 ? words.pop() : "";
-  const plain = words.join(" ");
-
-  // Build tabs only from paths that actually exist, with friendly labels
+  // Build tabs
   const PATH_LABELS = {
     dsa: "DSA",
     aicxm_aws: "AICXM AWS",
@@ -43,131 +32,161 @@ export default function RoadmapGraph({
     genai: "GEN AI",
     agentic: "AGENTIC AI",
   };
+  
   const tabLabels = Object.keys(pathsData || {}).map(key => ({
     key,
     label: PATH_LABELS[key] || (pathsData[key]?.title || key).toUpperCase(),
   }));
 
+  const getStatusConfig = (state) => {
+    switch (state) {
+      case "done": return { label: "COMPLETED", color: "#00ff88" };
+      case "progress": return { label: "IN PROGRESS", color: "#a855f7" };
+      default: return { label: "READY", color: "#ffffff" };
+    }
+  };
+
   return (
-    <div className="roadmap-graph">
-      {/* Header */}
-      <div className="rg-header" style={{ paddingTop: 32 }}>
-        <div className="rg-path-tabs">
-          {tabLabels.map((t) => (
-            <button
-              key={t.key}
-              className={`rg-tab ${activePath === t.key ? "active" : ""}`}
-              style={{
-                "--tab-color": activePath === t.key ? path.color : undefined,
-                "--tab-bg": activePath === t.key ? `${path.color}12` : "transparent",
-              }}
-              onClick={() => setActivePath && setActivePath(t.key)}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+    <div className="roadmap-graph" style={{ "--path-color": color }}>
+      {/* Path Tabs Overlay */}
+      <div className="rg-tabs-overlay desktop-only">
+        {tabLabels.map((t) => (
+          <button
+            key={t.key}
+            className={`rg-tab ${activePath === t.key ? "active" : ""}`}
+            style={{
+              "--tab-color": activePath === t.key ? path.color : undefined,
+              "--tab-bg": activePath === t.key ? `${path.color}12` : "rgba(255,255,255,0.03)",
+            }}
+            onClick={() => setActivePath && setActivePath(t.key)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
 
-        <div className="rg-title" style={{ "--path-color": path.color }}>
-          {plain} <span>{accent}</span>
-        </div>
-        <div className="rg-subtitle">{path.description}</div>
+      <div className="rg-premium-header">
+        <div className="rg-progress-pill">
+          <div className="rg-pill-top">
+            <div className="rg-pill-stats">
+              <span className="rg-pill-title">{completedCount} / {total} COMPLETED</span>
+              <span className="rg-pill-pct">{pct}%</span>
+            </div>
+            <div className="rg-pill-estimate">
+              ESTIMATED TIME: {path.estimatedHours || "400+ HOURS"}
+            </div>
+          </div>
+          
+          <div className="rg-pill-bar-container">
+            <div 
+              className="rg-pill-bar-fill" 
+              style={{ width: `${pct}%`, background: color }}
+            />
+          </div>
 
-        <div className="rg-progress-row">
-          <span className="rg-progress-label">{completedCount} / {total} COMPLETED</span>
-          <span className="rg-progress-pct">{pct}%</span>
-        </div>
-        <div className="rg-progress-bar">
-          <div
-            className="rg-progress-fill"
-            style={{ width: `${pct}%`, background: path.color }}
-          />
-        </div>
-        <div className="rg-stats">
-          <span className="rg-stat done">✓ {completedCount} done</span>
-          <span className="rg-stat progress">⟳ {inProgress} progress</span>
-          <span className="rg-stat none">◌ {total - completedCount - inProgress} todo</span>
+          <div className="rg-pill-badges">
+            <div className="rg-pill-badge">{inProgress} IN PROGRESS</div>
+            <div className="rg-pill-badge">{notStarted} NOT STARTED</div>
+          </div>
         </div>
       </div>
 
-      {/* Node list */}
       <div className="rg-nodes">
-        {path.nodes.map((node, i) => {
-          const state = getNodeState(node.id);
-          const isActive = activeNode?.id === node.id;
-          const icon = <Box size={20} />;
+        <div className="rg-nodes-container">
+          {/* Central Line */}
+          <div className="rg-central-line" />
 
-          return (
-            <div key={node.id}>
-              {i > 0 && (
-                <div className="node-connector">
-                  <div className="node-connector-line" />
-                  <div className="node-connector-dot" />
-                </div>
-              )}
-              <div
-                className={`node-card ${state} ${isActive ? "active" : ""}`}
-                style={{ "--node-color": path.color }}
-                onClick={() => onNodeClick(node)}
+          {nodes.map((node, i) => {
+            const state = getNodeState(node.id);
+            const statusConfig = getStatusConfig(state);
+            const isActive = activeNode?.id === node.id;
+            const isLeft = i % 2 === 0;
+
+            return (
+              <div 
+                key={node.id} 
+                className={`rg-node-item ${isLeft ? 'left' : 'right'}`}
               >
-                <div
-                  className="node-card-glow"
-                  style={{ background: path.color }}
+                {/* Glowing Point on Line */}
+                <div 
+                  className="rg-line-point" 
+                  style={{ "--status-color": statusConfig.color }}
                 />
-                <div className="node-row">
-                  <div
-                    className="node-icon"
-                    style={{ background: isActive ? path.bgColor : "var(--bg3)", border: `1px solid ${isActive ? path.borderColor : "var(--border)"}` }}
-                  >
-                    {icon}
-                  </div>
-                  <div className="node-body">
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                      <div>
-                        <div className="node-num">
-                          {String(i + 1).padStart(2, "0")} · {node.modules?.length || 0} modules
-                        </div>
-                        <div className="node-title">{node.title}</div>
+
+                {/* The Card */}
+                <div 
+                  className={`rg-node-card ${isActive ? 'active' : ''}`}
+                  onClick={() => onNodeClick(node)}
+                  style={{ "--node-color": color }}
+                >
+                  <div className="rg-node-card-header">
+                    <div className="rg-node-idx-pill">
+                      <div className="rg-node-num">{String(i + 1).padStart(2, "0")}</div>
+                      <div className="rg-node-subnodes-tag">
+                        <Layers size={10} />
+                        {node.modules?.length || 0} SUBNODES
                       </div>
+                    </div>
+                    <div className="rg-node-actions">
+                      <Folder size={14} className="rg-node-action-icon" />
+                      <Eye size={14} className="rg-node-action-icon" />
                       {isEditMode && (
-                        <button
-                          className="edit-btn"
+                        <div 
+                          className="rg-node-action-icon"
                           onClick={(e) => { e.stopPropagation(); onEditNode(node); }}
-                          title="Edit Node"
-                        ><Edit2 size={12} /></button>
+                        >
+                          <Edit2 size={14} />
+                        </div>
                       )}
                     </div>
-                    <div className="node-subtitle">{node.subtitle}</div>
-                    <div
-                      className="node-tag"
-                      style={{ color: node.tagColor, borderColor: `${node.tagColor}40`, background: `${node.tagColor}10` }}
+                  </div>
+
+                  {/* Floating Module Waves */}
+                  <div className="rg-module-waves">
+                    {(node.modules || []).slice(0, 5).map((mod, idx) => (
+                      <div 
+                        key={mod.id} 
+                        className="rg-module-wave"
+                        style={{ "--idx": idx, "--count": Math.min(node.modules.length, 5) }}
+                      >
+                        <div className="rg-module-string" />
+                        {mod.title}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="rg-node-title">{node.title}</div>
+                  <div className="rg-node-desc">{node.subtitle || node.description}</div>
+
+                  <div className="rg-node-card-footer">
+                    <div 
+                      className="rg-node-status-label"
+                      style={{ "--status-color": statusConfig.color }}
                     >
-                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: node.tagColor, display: "inline-block" }} />
-                      {node.tag}
+                      <div className="rg-node-status-dot" />
+                      {statusConfig.label}
+                    </div>
+                    <div className="rg-node-explore">
+                      EXPLORE <ArrowRight size={14} />
                     </div>
                   </div>
-                  <div className={`node-status-dot ${state}`} />
                 </div>
               </div>
+            );
+          })}
+
+          {/* Add Node Button */}
+          {isEditMode && (
+            <div className="rg-add-node-btn-container" onClick={onAddNode}>
+              <div className="rg-add-icon-circle">
+                <Plus size={24} />
+              </div>
+              <span className="rg-add-label">Add New Node</span>
             </div>
-          );
-        })}
-
-        {/* Add Node Button */}
-        {isEditMode && (
-          <div className="add-node-card" onClick={onAddNode}>
-            + ADD NODE TO PATH
-          </div>
-        )}
-
-        {/* CTA */}
-        <div className="rg-cta" style={{ marginTop: 24 }}>
-          <div style={{ fontSize: 22, marginBottom: 8 }}>✦</div>
-          <h4>Evolve into a {activePath === "ds" ? "Data Scientist" : activePath === "genai" ? "GenAI Engineer" : "AI Architect"}</h4>
-          <p>Complete this roadmap to unlock advanced projects and career pathways in high-performance AI.</p>
-          <button className="rg-cta-btn">Initialize Path</button>
+          )}
         </div>
       </div>
     </div>
   );
 }
+

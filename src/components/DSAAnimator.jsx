@@ -63,6 +63,7 @@ export default function DSAAnimator({ onClose }) {
     <div style={{
       flex: 1, display: "flex", flexDirection: "column", overflow: "hidden",
       background: "var(--bg)", color: "var(--text)",
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     }}>
 
       {/* ── Top Header ───────────────────────────────────────────────────── */}
@@ -97,7 +98,7 @@ export default function DSAAnimator({ onClose }) {
           <Clapperboard size={18} strokeWidth={2.5} />
         </div>
         <div>
-          <div style={{ fontSize: 14, fontWeight: 800, letterSpacing: "-.3px" }}>
+          <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-.5px", fontFamily: "var(--font)", color: "var(--text)" }}>
             DSA Animator
           </div>
           <div style={{ fontSize: 10, color: "var(--text3)" }}>
@@ -191,7 +192,7 @@ export default function DSAAnimator({ onClose }) {
                 placeholder="Search problems…"
                 style={{
                   flex: 1, background: "transparent", border: "none", outline: "none",
-                  color: "var(--text)", fontSize: 12, fontFamily: "var(--font)",
+                  color: "var(--text)", fontSize: 12, fontFamily: "inherit",
                 }}
               />
               {search && (
@@ -225,7 +226,7 @@ export default function DSAAnimator({ onClose }) {
                     cursor: "pointer", color: "var(--text2)", textAlign: "left",
                   }}
                 >
-                  <span style={{ flex: 1, fontSize: 12, fontWeight: 700, color: "var(--text)" }}>
+                  <span style={{ flex: 1, fontSize: 12, fontWeight: 700, color: "var(--text)", fontFamily: "var(--font)" }}>
                     {cat.label}
                   </span>
                   <span style={{
@@ -324,7 +325,7 @@ export default function DSAAnimator({ onClose }) {
                 <Clapperboard size={34} strokeWidth={1.5} />
               </div>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text2)", marginBottom: 6 }}>
+                <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text2)", marginBottom: 6, fontFamily: "var(--font)" }}>
                   Select a Problem to Animate
                 </div>
                 <div style={{ fontSize: 12, maxWidth: 320, lineHeight: 1.6 }}>
@@ -351,7 +352,7 @@ export default function DSAAnimator({ onClose }) {
                       padding: "8px 12px", borderRadius: 9,
                       background: "var(--bg3)", border: "1px solid var(--border)",
                       color: "var(--text2)", cursor: "pointer", fontSize: 11,
-                      fontWeight: 600, fontFamily: "var(--font)", transition: "all .15s",
+                      fontWeight: 600, fontFamily: "inherit", transition: "all .15s",
                     }}
                     onMouseEnter={e=>{ e.currentTarget.style.background="var(--bg4)"; e.currentTarget.style.color="var(--text)"; }}
                     onMouseLeave={e=>{ e.currentTarget.style.background="var(--bg3)"; e.currentTarget.style.color="var(--text2)"; }}

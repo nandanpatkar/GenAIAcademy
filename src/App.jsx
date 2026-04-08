@@ -11,9 +11,9 @@ import PythonIDE from "./components/PythonIDE";
 import ResourceManager from "./components/ResourceManager";
 import ProgressTracker from "./components/ProgressTracker";
 import SystemDesignPlayground from "./pages/playground/SystemDesignPlayground";
+import SystemDesignSimulator from "./pages/simulator/SystemDesignSimulator";
 import DSAAnimator from "./components/DSAAnimator";
 import BlogPage from "./pages/blog/BlogPage";
-import ContentStudio from "./components/ContentStudio";
 import AdminManagement from "./components/AdminManagement";
 import { 
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
@@ -218,8 +218,8 @@ function MainApp() {
   const [showPlayground, setShowPlayground] = useState(false);
   const [showDSAAnimator, setShowDSAAnimator] = useState(false);
   const [showBlog, setShowBlog] = useState(false);
-  const [showContentStudio, setShowContentStudio] = useState(false);
   const [showAdminManagement, setShowAdminManagement] = useState(false);
+  const [showSimulator, setShowSimulator] = useState(false);
 
   const closeAllPanels = () => {
     setShowCurriculumMap(false);
@@ -229,8 +229,8 @@ function MainApp() {
     setShowPlayground(false);
     setShowDSAAnimator(false);
     setShowBlog(false);
-    setShowContentStudio(false);
     setShowAdminManagement(false);
+    setShowSimulator(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
@@ -426,8 +426,8 @@ function MainApp() {
         showPlayground={showPlayground} setShowPlayground={setShowPlayground}
         showDSAAnimator={showDSAAnimator} setShowDSAAnimator={setShowDSAAnimator}
         showBlog={showBlog} setShowBlog={setShowBlog}
-        showContentStudio={showContentStudio} setShowContentStudio={setShowContentStudio}
         showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
+        showSimulator={showSimulator} setShowSimulator={setShowSimulator}
         activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
         theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut}
       />
@@ -443,15 +443,21 @@ function MainApp() {
         }}
       />
 
-      {showAdminManagement && isAdmin ? <AdminManagement onClose={() => setShowAdminManagement(false)} /> :
-       showContentStudio && isAdmin ? <ContentStudio pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowContentStudio(false)} theme={theme} /> :
+      {showAdminManagement && isAdmin ? (
+        <AdminManagement 
+          onClose={() => setShowAdminManagement(false)} 
+          pathsData={pathsData}
+          setPathsData={setPathsData}
+        />
+      ) :
        showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} /> :
+       showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
        showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
        showPlayground ? <SystemDesignPlayground theme={theme} onClose={() => setShowPlayground(false)} /> :
        showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
        showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
        showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} /></ErrorBoundary> :
-       showCurriculumMap ? <CurriculumTreePanel pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
+       showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
        <>
          {!freshActiveNode && (
            <RoadmapGraph
