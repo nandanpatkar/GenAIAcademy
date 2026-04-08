@@ -1,28 +1,37 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const API_KEY = "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";
+const MODEL_ID = "minimax/minimax-m2.5:free";
 
-// ─── Gemini 2.0 Flash (supports browser CORS, fast, free tier) ───────────────
-const API_KEY = "AIzaSyDTdGP5-o2HNKNM7ZFyrdgyycWrHUAUAIU";
-const genAI   = new GoogleGenerativeAI(API_KEY);
-const model   = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+// ─── Internal: call OpenRouter with a system prompt + history ────────────────────
+async function callOpenRouter(messages, maxTokens = 1024, temperature = 0.7, jsonMode = false) {
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": window.location.origin,
+        "X-Title": "GenAI Academy",
+      },
+      body: JSON.stringify({
+        model: MODEL_ID,
+        messages,
+        max_tokens: maxTokens,
+        temperature,
+        response_format: jsonMode ? { type: "json_object" } : undefined,
+      }),
+    });
 
-// ─── Internal: call Gemini with a system prompt + history ────────────────────
-async function callGemini(systemPrompt, chatHistory, userMessage, maxTokens = 1024) {
-  const history = [
-    { role: "user",  parts: [{ text: systemPrompt }] },
-    { role: "model", parts: [{ text: "Understood! I'm ready. Ask me anything." }] },
-    ...chatHistory.map(m => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }],
-    })),
-  ];
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error?.message || `API error: ${response.status}`);
+    }
 
-  const chat = model.startChat({
-    history,
-    generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 },
-  });
-
-  const result = await chat.sendMessage(userMessage);
-  return result.response.text();
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (error) {
+    console.error("OpenRouter Error:", error);
+    throw error;
+  }
 }
 
 // ─── Public: AI Tutor ────────────────────────────────────────────────────────
@@ -39,7 +48,16 @@ export const askAITutor = async (userMessage, contextData, chatHistory = []) => 
       `- Use friendly, encouraging language.\n` +
       `- Respond in clean Markdown with bolding, lists, and code blocks as needed.`;
 
-    return await callGemini(systemPrompt, chatHistory, userMessage, 1024);
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...chatHistory.map(m => ({
+        role: m.role === "assistant" ? "assistant" : "user",
+        content: m.content
+      })),
+      { role: "user", content: userMessage }
+    ];
+
+    return await callOpenRouter(messages, 1024);
   } catch (error) {
     console.error("AI Tutor Error:", error);
     throw new Error("I hit a temporary snag. Please try again.");
@@ -50,18 +68,21 @@ export const askAITutor = async (userMessage, contextData, chatHistory = []) => 
 export const generateProjectIdeas = async (moduleTitle, subtopics) => {
   const systemPrompt =
     `You are an expert GenAI/ML curriculum designer. ` +
-    `When asked, return ONLY a valid JSON array with no markdown, no backticks, no explanation. ` +
+    `Return ONLY a valid JSON array with no markdown fences, no explaination. ` +
     `Schema for each item: { "level": "beginner"|"intermediate"|"advanced", "title": string, "description": string, "stack": string[], "githubQuery": string }`;
 
   const userMessage =
     `Generate exactly 3 project ideas for learners studying:\n` +
     `Module: "${moduleTitle}"\nSubtopics: ${subtopics}\n\n` +
-    `Return ONLY the JSON array. No markdown fences. No explanation.`;
+    `Return ONLY the JSON array.`;
 
   try {
-    const raw   = await callGemini(systemPrompt, [], userMessage, 1024);
-    const clean = raw.replace(/```json|```/g, "").trim();
-    return JSON.parse(clean);
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userMessage }
+    ];
+    const raw = await callOpenRouter(messages, 1024, 0.4, true);
+    return JSON.parse(raw);
   } catch (error) {
     console.error("Project Ideas Error:", error);
     throw new Error("Failed to generate project ideas.");
@@ -70,63 +91,41 @@ export const generateProjectIdeas = async (moduleTitle, subtopics) => {
 
 // ─── Public: Flow Architecture ───────────────────────────────────────────────────
 export const generateFlowArchitecture = async (description) => {
-  const systemPrompt = `You are an expert GenAI system architect. Convert this natural language description into a ReactFlow diagram for a GenAI system design playground.
-
-Description: "${description}"
-
-Return ONLY a valid JSON object. No markdown, no backticks, no explanation.
+  const systemPrompt = `You are an expert GenAI system architect. Convert this natural language description into a ReactFlow diagram.
+Return ONLY a valid JSON object. No explanation.
 
 Schema:
 {
-  "name": "short architecture name (max 6 words)",
+  "name": "short architecture name",
   "description": "one sentence summary",
   "nodes": [
     {
-      "id": "unique_string_id",
-      "label": "Node Name (max 4 words)",
-      "sub": "short subtitle (max 4 words)",
-      "icon": "one of: Bot|Brain|Database|Server|Shield|Search|Sparkles|Layers|Network|Cpu|Code2|BarChart2|Zap|MessageSquare|Cloud|Workflow|Filter|FileText|GitBranch|RefreshCw|Mic|Volume2|Eye|Globe|Lock|Key|Webhook|MemoryStick|CircuitBoard|ScanSearch",
-      "colorKey": "one of: agent|llm|memory|processing|vectordb|store|datasource|tool|eval|observ|security|workflow|io|multimodal|mcp|aws|azure|databricks|image|audio",
-      "inputPort": "one of: text|embeddings|json|tokens|docs|signal|memory|tool_call|any|audio|image",
-      "outputPort": "one of: text|embeddings|json|tokens|docs|signal|memory|tool_call|any|audio|image",
-      "info": "2-sentence explanation of what this node does and why it's here"
+      "id": "unique_id",
+      "label": "Name",
+      "sub": "subtitle",
+      "icon": "Bot|Brain|Database|Server|Shield|Search|Sparkles|Layers|Network|Cpu|Code2|BarChart2|Zap|MessageSquare|Cloud|Workflow|Filter|FileText|GitBranch|RefreshCw|Mic|Volume2|Eye|Globe|Lock|Key|Webhook|MemoryStick|CircuitBoard|ScanSearch",
+      "colorKey": "agent|llm|memory|processing|vectordb|store|datasource|tool|eval|observ|security|workflow|io|multimodal|mcp|aws|azure|databricks|image|audio",
+      "inputPort": "text|embeddings|json|tokens|docs|signal|memory|tool_call|any|audio|image",
+      "outputPort": "text|embeddings|json|tokens|docs|signal|memory|tool_call|any|audio|image",
+      "info": "description"
     }
   ],
   "edges": [
     {
-      "source": "source_node_id",
-      "target": "target_node_id",
-      "label": "data type label (1-2 words, e.g. text|embeddings|json|audio|stream)"
+      "source": "source_id",
+      "target": "target_id",
+      "label": "data type"
     }
   ]
-}
-
-Rules:
-- Include 5–14 nodes depending on complexity
-- Every node must have at least one incoming or outgoing edge (no orphans)
-- Edges must only reference node ids that exist in the nodes array
-- Use real component names (e.g. "Pinecone", "Gemini 1.5", "LangGraph", "Whisper")
-- colorKey must match the node's function category exactly
-- Order nodes roughly left-to-right: input → processing → output
-- Do NOT include position — it will be computed automatically`;
+}`;
 
   try {
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: systemPrompt + "\n\nTarget description: " + description }] }],
-      generationConfig: {
-        maxOutputTokens: 8192, // Increased from 2000 to solve JSON cutoff
-        temperature: 0.2,
-        responseMimeType: "application/json"
-      }
-    });
-
-    const raw = result.response.text();
-    try {
-       return JSON.parse(raw);
-    } catch (e) {
-       console.error("Raw Model Output:", raw);
-       throw e;
-    }
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Target description: ${description}` }
+    ];
+    const raw = await callOpenRouter(messages, 4096, 0.2, true);
+    return JSON.parse(raw);
   } catch (error) {
     console.error("Flow Architecture Error:", error);
     throw new Error("Failed to generate architecture.");
@@ -136,26 +135,120 @@ Rules:
 // ─── Public: Blog TL;DR Generation ───────────────────────────────────────────
 export const generateAI_TLDR = async (htmlContent) => {
   const systemPrompt = `You are a technical writing assistant. 
-Create an extremely concise summary (TL;DR) of the following article content.
-Return 5-7 sentences max. Use markdown formatting to highlight key terms.
-Do not start with "Here is a summary" or similar fluff.
-
-Content:
-${htmlContent}
-`;
+Create an extremely concise summary (TL;DR) of the article.
+Return 5-7 sentences max. Use markdown formatting.`;
 
   try {
-    const result = await model.generateContent({
-      contents: [{ role: "user", parts: [{ text: systemPrompt }] }],
-      generationConfig: {
-        maxOutputTokens: 256,
-        temperature: 0.3,
-      }
-    });
-
-    return result.response.text().trim();
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Content:\n${htmlContent}` }
+    ];
+    return await callOpenRouter(messages, 512, 0.3);
   } catch (error) {
     console.error("TL;DR Generation Error:", error);
     throw new Error("Failed to generate article summary.");
+  }
+};
+
+// ─── Study Suite Prompts ───────────────────────────────────────────────────
+const STUDY_PROMPTS = {
+  quiz: (context) => `
+You are an expert GenAI instructor.
+Given the module context below, generate exactly 5 multiple-choice questions.
+
+RULES:
+- Each question has exactly 4 options.
+- Exactly one option is correct.
+- Include a short explanation for the correct answer.
+- Return ONLY valid JSON, no markdown fences, no extra text.
+
+FORMAT:
+{"questions":[{"question":"...","options":["A","B","C","D"],"answer":"A","explanation":"..."}]}
+
+MODULE CONTEXT:
+${context}`,
+
+  flashcards: (context) => `
+You are an expert GenAI instructor.
+Generate exactly 8 flashcards for the module context below.
+
+RULES:
+- term: 6 words max.
+- definition: 1-2 clear sentences.
+- Return ONLY valid JSON, no markdown fences, no extra text.
+
+FORMAT:
+{"cards":[{"term":"...","definition":"..."}]}
+
+MODULE CONTEXT:
+${context}`,
+
+  mindmap: (context) => `
+You are an expert GenAI instructor.
+Create a structured mind map for the module context below.
+
+RULES:
+- root = module title.
+- 3-5 main branches from subtopics.
+- Each branch has 2-5 leaf nodes.
+- IMPORTANT: Provide a "desc" (description) for the root, each branch, and each leaf node.
+- Descriptions should be 10-15 words max.
+- Return ONLY valid JSON, no markdown fences, no extra text.
+
+FORMAT:
+{"mindmap":{"root":"Title","desc":"Root description","branches":[{"label":"Branch","desc":"Branch description","children":[{"label":"Leaf","desc":"Leaf description"}]}]}}
+
+MODULE CONTEXT:
+${context}`,
+
+  summary: (context) => `
+You are an expert GenAI instructor.
+Write a concise study summary for the module context below.
+
+RULES:
+- 150-200 words, plain flowing text, no bullet points.
+- Return ONLY valid JSON, no markdown fences, no extra text.
+
+FORMAT:
+{"summary":"..."}
+
+MODULE CONTEXT:
+${context}`,
+};
+
+// ─── Public: Study Content Generation ───────────────────────────────────────
+export const generateStudyContent = async (mode, moduleData) => {
+  const { title, subtitle, subtopics, overview, links, videos } = moduleData;
+  
+  const contextLines = [
+    `Module: ${title || "Unknown"}`,
+    `Subtitle: ${subtitle || ""}`,
+    `Overview: ${overview || ""}`,
+    `Subtopics: ${(subtopics || []).join(", ")}`,
+  ];
+  if (links?.length) contextLines.push(`Reference Links: ${links.slice(0, 5).join(", ")}`);
+  if (videos?.length) contextLines.push(`YouTube Videos: ${videos.slice(0, 3).join(", ")}`);
+  
+  const context = contextLines.join("\n");
+  const prompt = (STUDY_PROMPTS[mode] || STUDY_PROMPTS.summary)(context);
+
+  try {
+    const messages = [{ role: "user", content: prompt }];
+    const raw = await callOpenRouter(messages, 2048, 0.3, true);
+    
+    // Aggressive cleanup for JSON
+    let clean = raw.trim();
+    if (clean.includes("```")) {
+      clean = clean.split("```")[1];
+      if (clean.startsWith("json")) clean = clean.substring(4);
+      clean = clean.split("```")[0];
+    }
+    
+    const json = JSON.parse(clean.trim());
+    json._source = "qwen3.6-plus-frontend";
+    return json;
+  } catch (error) {
+    console.error("Study Content Generation Error:", error);
+    throw new Error("Failed to generate study materials.");
   }
 };
