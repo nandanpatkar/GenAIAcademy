@@ -222,6 +222,7 @@ function MainApp() {
   const [showAdminManagement, setShowAdminManagement] = useState(false);
   const [showSimulator, setShowSimulator] = useState(false);
   const [showGalaxy, setShowGalaxy] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const closeAllPanels = () => {
     setShowCurriculumMap(false);
@@ -234,6 +235,7 @@ function MainApp() {
     setShowAdminManagement(false);
     setShowSimulator(false);
     setShowGalaxy(false);
+    setIsMobileMenuOpen(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
@@ -243,6 +245,7 @@ function MainApp() {
     setActiveNode(node);
     setActiveModule(node.modules?.[0] || null);
     setActiveTopic(null);
+    setIsMobileMenuOpen(false);
   };
 
   const handleMarkState = (nodeId, state) => {
@@ -417,7 +420,14 @@ function MainApp() {
 
   return (
     <div className="app">
-      <MobileHeader theme={theme} toggleTheme={toggleTheme} user={user} onSignOut={handleSignOut} />
+      <MobileHeader 
+        theme={theme} 
+        toggleTheme={toggleTheme} 
+        user={user} 
+        onSignOut={handleSignOut} 
+        isMobileMenuOpen={isMobileMenuOpen}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+      />
       <Sidebar
         activePath={activePath} setActivePath={p => { setActivePath(p); closeAllPanels(); }}
         paths={pathsData} onReset={handleResetData} isEditMode={isEditMode} setIsEditMode={setIsEditMode}
@@ -433,6 +443,7 @@ function MainApp() {
         showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
         showSimulator={showSimulator} setShowSimulator={setShowSimulator}
         showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
+        isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
         activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
         theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut}
       />
@@ -540,14 +551,22 @@ function MainApp() {
   );
 }
 
-function MobileHeader({ theme, toggleTheme, user, onSignOut }) {
+function MobileHeader({ theme, toggleTheme, user, onSignOut, isMobileMenuOpen, setIsMobileMenuOpen }) {
   return (
     <div className="mobile-header mobile-only">
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, #00ff88, #0088ff)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 15px rgba(0,255,136,0.3)" }}>
-          <Sparkles size={18} color="black" />
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          style={{ background: "none", border: "none", color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center", padding: 4 }}
+        >
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ width: 28, height: 28, borderRadius: 8, background: "linear-gradient(135deg, #00ff88, #0088ff)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 15px rgba(0,255,136,0.2)" }}>
+            <Sparkles size={16} color="black" />
+          </div>
+          <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: 0.5 }}>GEN<span>AI</span> ACADEMY</div>
         </div>
-        <div style={{ fontSize: 13, fontWeight: 900 }}>GEN<span>AI</span> ACADEMY</div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <button onClick={toggleTheme} style={{ background: "none", border: "none", color: "var(--text2)" }}>

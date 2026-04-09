@@ -1872,7 +1872,26 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   }
 
   .sidebar {
-    display: none !important;
+    position: fixed;
+    top: 56px;
+    left: -280px;
+    bottom: 0;
+    width: 280px;
+    z-index: 2100;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+    height: calc(100vh - 56px);
+    display: flex !important;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .sidebar.sidebar-mobile-open {
+    left: 0;
+    visibility: visible;
+    opacity: 1;
   }
 
   .roadmap-graph {
@@ -1968,6 +1987,19 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   .rg-cta {
     margin: 16px 8px 80px; /* Extra bottom margin for nav */
   }
+
+  .rg-tabs-overlay {
+    margin: 16px 12px 0 !important;
+    max-width: calc(100% - 24px) !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    justify-content: flex-start !important;
+    padding: 8px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .rg-tabs-overlay::-webkit-scrollbar { display: none; }
+  .rg-tab { flex-shrink: 0; }
 }
 
 /* Visibility Utilities */
@@ -1975,7 +2007,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   .mobile-only { display: none !important; }
 }
 @media (max-width: 768px) {
-  .desktop-only { display: none !important; }
+  /* .desktop-only { display: none !important; } */
 }
 
 /* ── RESOURCE PANEL ─────────────────────────────────────────────────── */

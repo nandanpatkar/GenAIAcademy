@@ -49,7 +49,7 @@ export default function RoadmapGraph({
   return (
     <div className="roadmap-graph" style={{ "--path-color": color }}>
       {/* Path Tabs Overlay */}
-      <div className="rg-tabs-overlay desktop-only">
+      <div className="rg-tabs-overlay">
         {tabLabels.map((t) => (
           <button
             key={t.key}

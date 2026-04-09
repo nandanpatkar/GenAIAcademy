@@ -15,6 +15,7 @@ export default function Sidebar({
   showAdminManagement, setShowAdminManagement,
   showSimulator, setShowSimulator,
   showGalaxy, setShowGalaxy,
+  isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
   onSignOut
@@ -90,6 +91,8 @@ export default function Sidebar({
         break;
       default: break;
     }
+
+    if (setIsMobileMenuOpen) setIsMobileMenuOpen(false);
   };
 
   const pathList = Object.keys(paths || {}).map(k => {
@@ -131,7 +134,7 @@ export default function Sidebar({
   const activePColor = pathList.find(p => p?.key === activePath)?.color || "#00ff88";
 
   return (
-    <aside className={`sidebar${isCollapsed ? " sidebar-collapsed" : ""}`}>
+    <aside className={`sidebar${isCollapsed ? " sidebar-collapsed" : ""}${isMobileMenuOpen ? " sidebar-mobile-open" : ""}`}>
       {/* ── Morphing Header ── */}
       <div className="sidebar-logo morphing-header">
         <div className="logo-orb">
@@ -271,6 +274,7 @@ export default function Sidebar({
                   if (setActiveNode) setActiveNode(null);
                   if (setActiveModule) setActiveModule(null);
                   if (setActiveTopic) setActiveTopic(null);
+                  if (setIsMobileMenuOpen) setIsMobileMenuOpen(false);
                 }}
               >
                 <div className="path-pill-main">
