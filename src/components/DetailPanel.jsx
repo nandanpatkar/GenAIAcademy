@@ -8,7 +8,7 @@ import {
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
   Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2, AlertCircle,
   BookmarkCheck, Trash2, FolderOpen, Save, RotateCcw, Clock,
-  Maximize2, Minimize2
+  Maximize2, Minimize2, Orbit
 } from "lucide-react";
 import { AIResult } from "./AIStudyContent";
 
@@ -471,7 +471,8 @@ function AIStudyPanel({ module, pathColor }) {
 export default function DetailPanel({
   node, module, pathColor,
   onMarkDone, onMarkProgress, onMarkModuleStatus, onToggleSubtopicStatus,
-  nodeState, onModuleSelect, onTopicSelect, isEditMode, onBackToGalaxy
+  nodeState, onModuleSelect, onTopicSelect, isEditMode, onBackToGalaxy,
+  onEnterFocusMode, onVideoSelect
 }) {
   if (!node || !module) return (
     <div className="no-select">
@@ -526,6 +527,43 @@ export default function DetailPanel({
             </div>
           </div>
           <div style={{ display: "flex", gap: 8 }}>
+            {onEnterFocusMode && (
+              <button 
+                className="dp-focus-btn" 
+                onClick={onEnterFocusMode}
+                style={{
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "var(--text2)",
+                  padding: "6px 14px",
+                  borderRadius: 8,
+                  fontSize: "9px",
+                  fontWeight: 900,
+                  letterSpacing: "1px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  cursor: "pointer",
+                  transition: "all 0.3s cubic-bezier(0.19, 1, 0.22, 1)",
+                  boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.color = "var(--text2)";
+                }}
+              >
+                <Orbit size={12} className="pulse-icon" />
+                FOCUS
+              </button>
+            )}
             {onBackToGalaxy && (
               <button className="dp-back-galaxy-btn" onClick={onBackToGalaxy}>🌌 GALAXY</button>
             )}
@@ -640,6 +678,12 @@ export default function DetailPanel({
                   href={toAbsoluteUrl(v.url)}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={(e) => {
+                    if (onVideoSelect) {
+                      e.preventDefault();
+                      onVideoSelect(v);
+                    }
+                  }}
                   style={{
                     display: "flex", alignItems: "center", gap: 12,
                     padding: "12px 16px", borderRadius: 12,

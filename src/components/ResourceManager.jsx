@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { getSavedSets, deleteSavedSet, MODE_LABELS } from "../store/savedStudyStore";
 import { AIResult } from "./AIStudyContent";
+import YouTubeThumbnail from './YouTubeThumbnail';
 
 const MODE_ICONS = { quiz: CheckSquare, flashcards: Library, mindmap: Network, summary: AlignLeft };
 
@@ -25,7 +26,7 @@ const getFileIcon = (type) => {
   return <File size={18} />;
 };
 
-export default function ResourceManager({ pathsData, setPathsData, onClose, isEditMode }) {
+export default function ResourceManager({ pathsData, setPathsData, onClose, isEditMode, onVideoSelect }) {
   const [expandedPaths, setExpandedPaths] = useState({});
   const [expandedNodes, setExpandedNodes] = useState({});
   const [customData, setCustomData] = useState(() => {
@@ -97,13 +98,21 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
       files = folderAssets.filter(a => a.assetType === 'file').map(f => ({ ...f, source: selected.folder.name, pathColor: '#f59e0b' }));
       links = folderAssets.filter(a => a.assetType === 'link').map(l => ({ ...l, source: selected.folder.name, pathColor: '#f59e0b' }));
     } else {
-      const extract = (obj, pKey) => {
+      const extract = (obj, pKey, nId, mId) => {
         const p = pathsData[pKey] || {};
         const pColor = p.color || "#3b82f6";
         const src = obj.title || p.title || `Path ${pKey}`;
-        (obj.videos || []).forEach(v => videos.push({ ...v, parentId: obj.id, source: src, pathColor: pColor }));
-        (obj.files || []).forEach(f => files.push({ ...f, parentId: obj.id, source: src, pathColor: pColor }));
-        (obj.links || []).forEach(l => links.push({ ...l, parentId: obj.id, source: src, pathColor: pColor }));
+        (obj.videos || []).forEach(v => videos.push({ 
+          ...v, 
+          parentId: obj.id, 
+          source: src, 
+          pathColor: pColor,
+          pathKey: pKey,
+          nodeId: nId,
+          moduleId: mId || (obj.subtopics ? obj.id : null) // If obj is a module, it has subtopics
+        }));
+        (obj.files || []).forEach(f => files.push({ ...f, parentId: obj.id, source: src, pathColor: pColor, pathKey: pKey, nodeId: nId, moduleId: mId }));
+        (obj.links || []).forEach(l => links.push({ ...l, parentId: obj.id, source: src, pathColor: pColor, pathKey: pKey, nodeId: nId, moduleId: mId }));
       };
 
       if (selected.type === 'path') {
@@ -111,22 +120,22 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
         if (p) {
           extract(p, selected.pathKey);
           (p.nodes || []).forEach(n => {
-            extract(n, selected.pathKey);
-            (n.modules || []).forEach(m => extract(m, selected.pathKey));
+            extract(n, selected.pathKey, n.id);
+            (n.modules || []).forEach(m => extract(m, selected.pathKey, n.id, m.id));
           });
         }
       } else if (selected.type === 'node') {
         const p = pathsData[selected.pathKey];
         const n = p?.nodes?.find(nx => nx.id === selected.nodeId);
         if (n) {
-          extract(n, selected.pathKey);
-          (n.modules || []).forEach(m => extract(m, selected.pathKey));
+          extract(n, selected.pathKey, n.id);
+          (n.modules || []).forEach(m => extract(m, selected.pathKey, n.id, m.id));
         }
       } else if (selected.type === 'module') {
         const p = pathsData[selected.pathKey];
         const n = p?.nodes?.find(nx => nx.id === selected.nodeId);
         const m = n?.modules?.find(mx => mx.id === selected.module.id);
-        if (m) extract(m, selected.pathKey);
+        if (m) extract(m, selected.pathKey, n.id, m.id);
       }
     }
     return { videos, files, links };
@@ -319,10 +328,14 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                 {tab === 'videos' && (
                   <div className="video-grid">
                     {filtered.videos.map((v, i) => (
-                      <div key={i} className="video-premium-card" onClick={() => v.url && window.open(getSafeUrl(v.url), '_blank')}>
+                      <div key={i} className="video-premium-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v) : window.open(getSafeUrl(v.url), '_blank')}>
                         <div className="video-thumb-container">
                           {extractYTId(v.url) ? (
-                            <img src={`https://img.youtube.com/vi/${extractYTId(v.url)}/maxresdefault.jpg`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <YouTubeThumbnail 
+                              url={v.url} 
+                              alt={v.title}
+                              style={{ width: '100%', height: '100%' }}
+                            />
                           ) : <div style={{ width: '100%', height: '100%', background: 'linear-gradient(45deg, #111, #222)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Video size={32} color="var(--text3)" /></div>}
                           <div className="video-play-overlay" style={{ opacity: 1, background: 'rgba(0,0,0,0.2)' }}><Play size={20} fill="currentColor" /></div>
                         </div>

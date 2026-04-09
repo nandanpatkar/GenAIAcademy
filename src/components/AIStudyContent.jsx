@@ -16,9 +16,13 @@ export function AIResult({ result, mode, pathColor, flip, setFlip }) {
             {result.questions.length} Knowledge Checks
           </div>
         </div>
-        {result.questions.map((q, i) => (
-          <QuizCard key={i} q={q} i={i} pathColor={pathColor} />
-        ))}
+        {!result.questions || !Array.isArray(result.questions) ? (
+          <div style={{ padding: 20, opacity: 0.5, fontSize: 11 }}>Malformed knowledge check data. Try regenerating.</div>
+        ) : (
+          result.questions.map((q, i) => (
+            <QuizCard key={i} q={q} i={i} pathColor={pathColor} />
+          ))
+        )}
       </div>
     );
   }
@@ -33,102 +37,106 @@ export function AIResult({ result, mode, pathColor, flip, setFlip }) {
           </div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 20 }}>
-          {result.cards.map((c, i) => (
-            <div
-              key={i}
-              onClick={() => setFlip((f) => ({ ...f, [i]: !f[i] }))}
-              style={{
-                perspective: "1000px",
-                height: "220px",
-                cursor: "pointer",
-                width: "100%",
-                maxWidth: "100%",
-              }}
-            >
-              <div style={{
-                position: "relative",
-                width: "100%",
-                height: "100%",
-                transition: "transform 0.8s cubic-bezier(0.19, 1, 0.22, 1)",
-                transformStyle: "preserve-3d",
-                transform: flip[i] ? "rotateY(180deg)" : "rotateY(0deg)",
-              }}>
-                {/* Front Face (Term) */}
+          {!result.cards || !Array.isArray(result.cards) ? (
+            <div style={{ padding: 20, opacity: 0.5, fontSize: 11 }}>Flashcard data unavailable.</div>
+          ) : (
+            result.cards.map((c, i) => (
+              <div
+                key={i}
+                onClick={() => setFlip((f) => ({ ...f, [i]: !f[i] }))}
+                style={{
+                  perspective: "1000px",
+                  height: "220px",
+                  cursor: "pointer",
+                  width: "100%",
+                  maxWidth: "100%",
+                }}
+              >
                 <div style={{
-                  position: "absolute",
+                  position: "relative",
                   width: "100%",
                   height: "100%",
-                  backfaceVisibility: "hidden",
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid var(--border)",
-                  borderRadius: 24,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "24px",
-                  textAlign: "center",
-                  boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-                  backdropFilter: "blur(10px)",
+                  transition: "transform 0.8s cubic-bezier(0.19, 1, 0.22, 1)",
+                  transformStyle: "preserve-3d",
+                  transform: flip[i] ? "rotateY(180deg)" : "rotateY(0deg)",
                 }}>
-                  <div style={{ 
-                    fontSize: 9, fontWeight: 900, color: pathColor, 
-                    letterSpacing: "1px", textTransform: "uppercase",
-                    marginBottom: 12, opacity: 0.6
+                  {/* Front Face (Term) */}
+                  <div style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    backfaceVisibility: "hidden",
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid var(--border)",
+                    borderRadius: 24,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "24px",
+                    textAlign: "center",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+                    backdropFilter: "blur(10px)",
                   }}>
-                    Definition
+                    <div style={{ 
+                      fontSize: 9, fontWeight: 900, color: pathColor, 
+                      letterSpacing: "1px", textTransform: "uppercase",
+                      marginBottom: 12, opacity: 0.6
+                    }}>
+                      Definition
+                    </div>
+                    <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text)", letterSpacing: "-0.5px" }}>
+                      {c.term}
+                    </div>
+                    <div style={{ 
+                      marginTop: 20, width: 40, height: 2, 
+                      background: `linear-gradient(90deg, transparent, ${pathColor}, transparent)` 
+                    }} />
+                    <div style={{ 
+                      position: "absolute", bottom: 12, right: 16, 
+                      fontSize: 8, color: "var(--text3)", opacity: 0.4, letterSpacing: "1px" 
+                    }}>
+                      TAP TO FLIP
+                    </div>
                   </div>
-                  <div style={{ fontSize: 20, fontWeight: 900, color: "var(--text)", letterSpacing: "-0.5px" }}>
-                    {c.term}
-                  </div>
-                  <div style={{ 
-                    marginTop: 20, width: 40, height: 2, 
-                    background: `linear-gradient(90deg, transparent, ${pathColor}, transparent)` 
-                  }} />
-                  <div style={{ 
-                    position: "absolute", bottom: 12, right: 16, 
-                    fontSize: 8, color: "var(--text3)", opacity: 0.4, letterSpacing: "1px" 
+  
+                  {/* Back Face (Definition) */}
+                  <div style={{
+                    position: "absolute",
+                    width: "100%",
+                    height: "100%",
+                    backfaceVisibility: "hidden",
+                    background: `${pathColor}08`,
+                    border: `1px solid ${pathColor}40`,
+                    borderRadius: 24,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "32px",
+                    textAlign: "center",
+                    transform: "rotateY(180deg)",
+                    boxShadow: `0 8px 40px ${pathColor}15`,
+                    backdropFilter: "blur(15px)",
                   }}>
-                    TAP TO FLIP
-                  </div>
-                </div>
-
-                {/* Back Face (Definition) */}
-                <div style={{
-                  position: "absolute",
-                  width: "100%",
-                  height: "100%",
-                  backfaceVisibility: "hidden",
-                  background: `${pathColor}08`,
-                  border: `1px solid ${pathColor}40`,
-                  borderRadius: 24,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "32px",
-                  textAlign: "center",
-                  transform: "rotateY(180deg)",
-                  boxShadow: `0 8px 40px ${pathColor}15`,
-                  backdropFilter: "blur(15px)",
-                }}>
-                  <div style={{ 
-                    fontSize: 9, fontWeight: 900, color: pathColor, 
-                    letterSpacing: "1px", textTransform: "uppercase",
-                    marginBottom: 16, opacity: 0.8
-                  }}>
-                    Insight
-                  </div>
-                  <div style={{ 
-                    fontSize: 14, fontWeight: 600, color: "var(--text)", 
-                    lineHeight: 1.7, maxWidth: 320 
-                  }}>
-                    {c.definition}
+                    <div style={{ 
+                      fontSize: 9, fontWeight: 900, color: pathColor, 
+                      letterSpacing: "1px", textTransform: "uppercase",
+                      marginBottom: 16, opacity: 0.8
+                    }}>
+                      Insight
+                    </div>
+                    <div style={{ 
+                      fontSize: 14, fontWeight: 600, color: "var(--text)", 
+                      lineHeight: 1.7, maxWidth: 320 
+                    }}>
+                      {c.definition}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     );
@@ -196,52 +204,56 @@ export function QuizCard({ q, i, pathColor }) {
         {q.question}
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {q.options.map((opt, oi) => {
-          const isCorrect = opt === q.answer;
-          const isSelected = selected === oi;
-          let bg = "rgba(255,255,255,0.03)", border = "rgba(255,255,255,0.05)", color = "var(--text2)";
-          
-          if (revealed) {
-            if (isCorrect) { 
-              bg = "rgba(0,255,136,0.08)"; 
-              border = "#00ff8840"; 
-              color = "#00ff88"; 
+        {!q || !q.options || !Array.isArray(q.options) ? (
+          <div style={{ fontSize: 11, fontStyle: "italic", opacity: 0.5 }}>Option data missing for this question.</div>
+        ) : (
+          q.options.map((opt, oi) => {
+            const isCorrect = opt === q.answer;
+            const isSelected = selected === oi;
+            let bg = "rgba(255,255,255,0.03)", border = "rgba(255,255,255,0.05)", color = "var(--text2)";
+            
+            if (revealed) {
+              if (isCorrect) { 
+                bg = "rgba(0,255,136,0.08)"; 
+                border = "#00ff8840"; 
+                color = "#00ff88"; 
+              }
+              else if (isSelected && !isCorrect) { 
+                bg = "rgba(239,68,68,0.08)"; 
+                border = "#ef444440"; 
+                color = "#ef4444"; 
+              }
+            } else if (isSelected) {
+              bg = `${pathColor}15`; border = pathColor; color = "var(--text)";
             }
-            else if (isSelected && !isCorrect) { 
-              bg = "rgba(239,68,68,0.08)"; 
-              border = "#ef444440"; 
-              color = "#ef4444"; 
-            }
-          } else if (isSelected) {
-            bg = `${pathColor}15`; border = pathColor; color = "var(--text)";
-          }
 
-          return (
-            <div
-              key={oi}
-              onClick={() => { if (!revealed) { setSelected(oi); setRevealed(true); } }}
-              style={{
-                padding: "12px 16px", borderRadius: 10,
-                border: `1px solid ${border}`, background: bg, color,
-                fontSize: 11, fontWeight: 600, cursor: revealed ? "default" : "pointer",
-                transition: "all 0.2s cubic-bezier(0.19, 1, 0.22, 1)",
-                display: "flex", alignItems: "center", gap: 10,
-              }}
-            >
-              <div style={{ 
-                width: 18, height: 18, borderRadius: 6, 
-                background: isSelected ? pathColor : "rgba(255,255,255,0.05)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: 9, color: isSelected ? "black" : "var(--text3)",
-                fontWeight: 900
-              }}>
-                {["A", "B", "C", "D"][oi]}
+            return (
+              <div
+                key={oi}
+                onClick={() => { if (!revealed) { setSelected(oi); setRevealed(true); } }}
+                style={{
+                  padding: "12px 16px", borderRadius: 10,
+                  border: `1px solid ${border}`, background: bg, color,
+                  fontSize: 11, fontWeight: 600, cursor: revealed ? "default" : "pointer",
+                  transition: "all 0.2s cubic-bezier(0.19, 1, 0.22, 1)",
+                  display: "flex", alignItems: "center", gap: 10,
+                }}
+              >
+                <div style={{ 
+                  width: 18, height: 18, borderRadius: 6, 
+                  background: isSelected ? pathColor : "rgba(255,255,255,0.05)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 9, color: isSelected ? "black" : "var(--text3)",
+                  fontWeight: 900
+                }}>
+                  {["A", "B", "C", "D"][oi]}
+                </div>
+                {opt}
+                {revealed && isCorrect && <CheckCircle2 size={12} style={{ marginLeft: "auto" }} />}
               </div>
-              {opt}
-              {revealed && isCorrect && <CheckCircle2 size={12} style={{ marginLeft: "auto" }} />}
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
       {revealed && q.explanation && (
         <div style={{

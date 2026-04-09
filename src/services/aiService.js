@@ -10,6 +10,38 @@ const MODELS = [
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
+const extractJSON = (raw) => {
+  let clean = raw.trim();
+  // Find the first occurrence of { or [
+  const startIdx = clean.search(/[{\[]/);
+  // Find the last occurrence of } or ]
+  const endIdx = clean.lastIndexOf("}") > clean.lastIndexOf("]") 
+    ? clean.lastIndexOf("}") 
+    : clean.lastIndexOf("]");
+    
+  if (startIdx === -1 || endIdx === -1) return clean;
+  return clean.substring(startIdx, endIdx + 1);
+};
+
+// Normalize AI variations (choices vs options, etc)
+const normalizeStudyData = (json) => {
+  if (json.questions && Array.isArray(json.questions)) {
+    json.questions = json.questions.map(q => ({
+      ...q,
+      options: q.options || q.choices || q.variants || [],
+      answer: q.answer || q.correctAnswer || q.ans || ""
+    }));
+  }
+  if (json.cards && Array.isArray(json.cards)) {
+    json.cards = json.cards.map(c => ({
+      ...c,
+      term: c.term || c.title || c.word || "",
+      definition: c.definition || c.description || c.meaning || ""
+    }));
+  }
+  return json;
+};
+
 // ─── Internal: call OpenRouter — model fallback + 429 retry ──────────────────
 // onStatus(msg: string) — optional callback for UI status updates during retry
 async function callOpenRouter(messages, maxTokens = 1024, temperature = 0.7, jsonMode = false, onStatus = null) {
@@ -147,7 +179,7 @@ export const generateProjectIdeas = async (moduleTitle, subtopics) => {
       { role: "user", content: userMessage }
     ];
     const raw = await callOpenRouter(messages, 1024, 0.4, true);
-    return JSON.parse(raw);
+    return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Project Ideas Error:", error);
     throw new Error("Failed to generate project ideas.");
@@ -190,7 +222,7 @@ Schema:
       { role: "user", content: `Target description: ${description}` }
     ];
     const raw = await callOpenRouter(messages, 4096, 0.2, true);
-    return JSON.parse(raw);
+    return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Flow Architecture Error:", error);
     throw new Error("Failed to generate architecture.");
@@ -219,7 +251,7 @@ Return 5-7 sentences max. Use markdown formatting.`;
 const STUDY_PROMPTS = {
   quiz: (context) => `
 You are an expert GenAI instructor.
-Given the module context below, generate exactly 10 multiple-choice questions.
+Given the module context below, generate exactly 6 multiple-choice questions.
 
 RULES:
 - Each question has exactly 4 options.
@@ -235,7 +267,7 @@ ${context}`,
 
   flashcards: (context) => `
 You are an expert GenAI instructor.
-Generate exactly 8 flashcards for the module context below.
+Generate exactly 6 flashcards for the module context below.
 
 RULES:
 - term: 6 words max.
@@ -292,7 +324,7 @@ ${context}`,
 // ─── Public: Study Content Generation ───────────────────────────────────────
 // onStatus(msg) — optional callback to surface retry progress in the UI
 export const generateStudyContent = async (mode, moduleData, onStatus = null) => {
-  const { title, subtitle, subtopics, overview, links, videos } = moduleData;
+  const { title, subtitle, subtopics, overview, links, videos, videoTitle, promptOverride } = moduleData;
 
   const contextLines = [
     `Module: ${title || "Unknown"}`,
@@ -303,23 +335,26 @@ export const generateStudyContent = async (mode, moduleData, onStatus = null) =>
   if (links?.length) contextLines.push(`Reference Links: ${links.slice(0, 5).join(", ")}`);
   if (videos?.length) contextLines.push(`YouTube Videos: ${videos.slice(0, 3).join(", ")}`);
 
+  if (videoTitle) contextLines.push(`SPECIFIC VIDEO FOCUS: ${videoTitle}`);
+
   const context = contextLines.join("\n");
-  const prompt = (STUDY_PROMPTS[mode] || STUDY_PROMPTS.summary)(context);
+  const prompt = promptOverride || (STUDY_PROMPTS[mode] || STUDY_PROMPTS.summary)(context);
 
   const messages = [{ role: "user", content: prompt }];
   // Pass onStatus so callers get live retry countdown messages
   const raw = await callOpenRouter(messages, 4500, 0.3, true, onStatus);
 
-  // Aggressive JSON cleanup (some models wrap in markdown fences)
-  let clean = raw.trim();
-  if (clean.includes("```")) {
-    clean = clean.split("```")[1];
-    if (clean.startsWith("json")) clean = clean.substring(4);
-    clean = clean.split("```")[0];
+  // Aggressive JSON extraction (some models wrap in markdown fences or prefix with text)
+  const clean = extractJSON(raw);
+  
+  try {
+    const json = JSON.parse(clean);
+    return normalizeStudyData(json);
+  } catch (parseError) {
+    console.error("JSON Parsing Error. Raw Content:", raw);
+    console.error("Cleaned Content:", clean);
+    throw new Error("The AI returned an invalid data format.");
   }
-
-  const json = JSON.parse(clean.trim());
-  return json;
 };
 
 // ─── Public: Architecture Diagram Generation ─────────────────────────────────
@@ -365,5 +400,168 @@ Rules:
   } catch (error) {
     console.error("Architecture Diagram Error:", error);
     throw new Error("Failed to generate architecture diagram.");
+  }
+};
+
+// ─── Public: Video Intelligence ──────────────────────────────────────────────
+export const generateVideoIntelligence = async (videoTitle, moduleData) => {
+  const { title, subtitle, subtopics, overview } = moduleData;
+
+  const context = `
+    Video Title: ${videoTitle}
+    Module: ${title}
+    Subtitle: ${subtitle || ""}
+    Overview: ${overview || ""}
+    Subtopics: ${(subtopics || []).map((s) => (typeof s === "object" ? s.title : s)).join(", ")}
+  `;
+
+  const systemPrompt = `You are an expert AI tutor for the GenAI Academy.
+Given the video title and module context, generate a "Smart Learning Hub" dataset.
+Return ONLY valid JSON. No markdown fences.
+
+Schema:
+{
+  "summary": "3-4 concise sentences of what this video likely covers.",
+  "keyTakeaways": ["Point 1", "Point 2", "Point 3"],
+  "learningObjectives": ["Goal 1", "Goal 2"],
+  "technicalKeywords": ["Term 1", "Term 2"]
+}`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Module Context: ${context}` }
+    ];
+    const raw = await callOpenRouter(messages, 1024, 0.4, true);
+    
+    // Cleanup
+    let clean = raw.trim();
+    if (clean.includes("```")) {
+      clean = clean.split("```")[1];
+      if (clean.startsWith("json")) clean = clean.substring(4);
+      clean = clean.split("```")[0];
+    }
+    
+    return JSON.parse(clean.trim());
+  } catch (error) {
+    console.error("Video Intelligence Error:", error);
+    throw new Error("Failed to generate video summary.");
+  }
+};
+
+// ─── Public: Interview Expert Coach ──────────────────────────────────────────
+export const generateInterviewCoachContent = async (videoTitle, moduleData, onStatus = null) => {
+  const { title, subtopics, overview } = moduleData;
+
+  const context = `
+    Video: ${videoTitle}
+    Module: ${title}
+    Context: ${overview}
+    Subtopics: ${(subtopics || []).map(s => (typeof s === 'object' ? s.title : s)).join(', ')}
+  `;
+
+  const systemPrompt = `You are a Senior Data Scientist, ML Engineer, and Interview Coach.
+Your task is to help the user prepare for Data Science and GenAI interviews (fresher to experienced level).
+
+CORE RESPONSE RULES:
+1. INTERVIEW-FIRST THINKING: Answer as if an interviewer is sitting in front of the user. Focus on follow-up questions and practical understanding.
+2. STRUCTURED ANSWERS: For the concept, use: What is it? Why needed? How it works (step-by-step)? Mathematical intuition? Real-world example? Where is it used? Pros/Cons?
+3. SIMPLE -> DEEP FLOW: Start simple (5-year-old level) then go deep (PhD/Researcher level).
+4. 🎤 INTERVIEW PREPARATION: Mention Interview traps, "What NOT to say" (Red Flags), and 3-4 deep follow-up questions.
+5. 🧩 NEGATIVE LEARNING: Mention common misconceptions and what the concept is NOT.
+6. VISUAL LOGIC: You must also provide a flowchart representing the logic of the concept.
+
+RETURN FORMAT (Return ONLY a valid JSON object):
+{
+  "fullMarkdown": "The full detailed study guide in Markdown. Use # ## headings, **bold**, and --- separators. Include the Negative Learning and Interview segments clearly.",
+  "flowData": {
+    "nodes": [
+       { "id": "n1", "data": { "label": "Concept Start" }, "position": { "x": 100, "y": 0 }, "type": "input", "style": { "background": "#10b981", "color": "white", "borderRadius": "8px" } },
+       { "id": "n2", "data": { "label": "Step 2" }, "position": { "x": 100, "y": 100 }, "style": { "background": "#3b82f6", "color": "white", "borderRadius": "8px" } }
+    ],
+    "edges": [
+       { "id": "e1-2", "source": "n1", "target": "n2", "animated": true, "label": "Transition" }
+    ]
+  }
+}
+
+Use sensible spacing for nodes. Nodes should have a modern look.`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Generate a deep-dive interview guide for the core concept in: "${videoTitle}" (Module: "${title}").` }
+    ];
+    
+    const raw = await callOpenRouter(messages, 4500, 0.3, true, onStatus);
+    const clean = extractJSON(raw);
+    const json = JSON.parse(clean);
+    return json;
+  } catch (error) {
+    console.error("Interview Coach Error:", error);
+    throw new Error("Failed to generate interview coaching content.");
+  }
+};
+
+// ─── Public: Senior AI Detailed Notes (Coach Persona) ─────────────────────────
+export const generateDetailedNotes = async (videoTitle, moduleData, onStatus = null) => {
+  const { title, subtopics, overview } = moduleData;
+
+  const context = `
+    Video Title: ${videoTitle}
+    Module: ${title}
+    Core Overview: ${overview}
+    Keywords/Subtopics: ${(subtopics || []).map(s => (typeof s === 'object' ? s.title : s)).join(', ')}
+  `;
+
+  const systemPrompt = `You are a Senior Data Scientist, ML Engineer, and Interview Coach.
+Your task is to help a user learn Data Science and GenAI concepts with a focus on preparation for top-tier tech interviews.
+
+CORE RESPONSE RULES:
+1. INTERVIEW-FIRST THINKING: Answer as if an interviewer is sitting in front of the user. Focus on follow-up questions and practical depth.
+2. STRUCTURED FLOW (MANDATORY): For every core concept mentioned in the video topic, use this exact structure:
+   - WHAT IS IT? (Definition)
+   - WHY IS IT NEEDED? (The problem it solves)
+   - HOW DOES IT WORK? (Step-by-step logic)
+   - MATHEMATICAL INTUITION (Simple explanation of the core math/algorithm)
+   - REAL-WORLD EXAMPLE (Case study style)
+   - PROS & CONS (The trade-offs)
+   - INTERVIEW TRAPS (Misconceptions and "What NOT to say")
+3. SIMPLE -> DEEP FLOW: Explain for a beginner first, then escalate to Senior/Lead Engineer level.
+4. FOLLOW-UP READINESS: Provide 3-4 deep follow-up questions an interviewer might ask.
+5. VISUAL LOGIC: You must also provide a flowchart representing the logic of the concept.
+
+RETURN FORMAT:
+Return ONLY a valid JSON object. No markdown fences.
+
+Schema:
+{
+  "title": "Topic Title",
+  "content": "Full markdown string with headings, lists, and formatted blocks.",
+  "checkpoints": [
+    { "time": "Approx timestamp", "instruction": "Visual cue" }
+  ],
+  "flowData": {
+    "nodes": [
+       { "id": "n1", "data": { "label": "Start" }, "position": { "x": 100, "y": 0 }, "type": "custom" }
+    ],
+    "edges": [
+       { "id": "e1-2", "source": "n1", "target": "n2", "animated": true }
+    ]
+  }
+}`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Generate detailed, interview-ready study notes for: "${videoTitle}" in the context of "${title}".` }
+    ];
+    
+    const raw = await callOpenRouter(messages, 4500, 0.3, true, onStatus);
+    const clean = extractJSON(raw);
+    return JSON.parse(clean);
+  } catch (error) {
+    console.error("Detailed Notes Error:", error);
+    throw new Error("Failed to generate detailed study notes.");
   }
 };

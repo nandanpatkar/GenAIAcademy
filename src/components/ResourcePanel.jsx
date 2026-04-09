@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Play } from "lucide-react";
+import YouTubeThumbnail from './YouTubeThumbnail';
 
 const FILE_ICONS = { pdf: "📄", doc: "📝", docx: "📝", ipynb: "📓", pptx: "📊", default: "📁" };
 
-export default function ResourcePanel({ module, pathColor, onClose, onEditModule, isEditMode }) {
+export default function ResourcePanel({ module, pathColor, onClose, onEditModule, isEditMode, onVideoSelect }) {
   const [tab, setTab] = useState("videos");
   const [urlInput, setUrlInput] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -112,7 +113,7 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
         {tab === "videos" && (
           <>
             {module.videos?.length ? module.videos.map((v, i) => (
-              <div key={i} className="vid-card" onClick={() => v.url && window.open(getSafeUrl(v.url), '_blank')}>
+              <div key={i} className="vid-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v) : window.open(getSafeUrl(v.url), '_blank')}>
                 <div className="vid-thumb">
                   {v.url && extractYTId(v.url) ? (
                     <>

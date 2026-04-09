@@ -8,7 +8,7 @@ import Editor from "@monaco-editor/react";
 import { useSimplePyodide } from "./PythonIDE";
 import AITutorPanel from "./AITutorPanel";
 
-export default function TopicContentPanel({ topic, module, pathColor, activePath, onClose, onSaveTopic, isEditMode }) {
+export default function TopicContentPanel({ topic, module, pathColor, activePath, onClose, onSaveTopic, isEditMode, onVideoSelect }) {
   // Derive a stable identity for this topic
   const topicIdentity = topic.id || topic.title || "";
 
@@ -249,6 +249,12 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
                             href={link.url}
                             target="_blank" 
                             rel="noreferrer"
+                            onClick={(e) => {
+                              if (onVideoSelect && link.type === 'video') {
+                                e.preventDefault();
+                                onVideoSelect(link);
+                              }
+                            }}
                             style={{ display: "flex", alignItems: "center", gap: 12, color: pathColor || "var(--neon)", textDecoration: "none", fontSize: 15, fontWeight: 600, padding: "12px 16px", background: "var(--bg3)", borderRadius: 8, border: "1px solid var(--border)", transition: "all .2s" }}
                           >
                             {link.type === 'video' ? <Play size={16} /> : <ExternalLink size={16} />}

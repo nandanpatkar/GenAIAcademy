@@ -26,6 +26,9 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { supabase } from "./config/supabaseClient";
 import AuthInterface from "./components/AuthInterface";
 import KnowledgeGalaxy from "./components/KnowledgeGalaxy";
+import FocusPulse from "./components/FocusPulse";
+import VideoModal from "./components/VideoModal";
+import { AnimatePresence } from "framer-motion";
 import "./styles/global.css";
 
 class ErrorBoundary extends Component {
@@ -80,6 +83,33 @@ function MainApp() {
   const [activeModule, setActiveModule] = useState(null);
   const [activeTopic, setActiveTopic] = useState(null);
   const [nodeStates, setNodeStates] = useState({});
+  const [focusNodeId, setFocusNodeId] = useState(null);
+  const [activeVideo, setActiveVideo] = useState(null);
+  const [lastCompletedNodeId, setLastCompletedNodeId] = useState(null);
+
+  const handleVideoSelect = (video) => {
+    if (video.pathKey) setActivePath(video.pathKey);
+    if (video.nodeId) {
+      const p = pathsData[video.pathKey] || activePathData;
+      const node = p?.nodes?.find(n => n.id === video.nodeId);
+      if (node) setActiveNode(node);
+    }
+    if (video.moduleId && activeNode) {
+      const mod = activeNode.modules?.find(m => m.id === video.moduleId);
+      if (mod) setActiveModule(mod);
+    } else if (video.moduleId) {
+      // If node wasn't active yet, find it
+      const p = pathsData[video.pathKey] || activePathData;
+      const foundNode = p?.nodes?.find(n => n.modules?.some(m => m.id === video.moduleId));
+      if (foundNode) {
+        setActiveNode(foundNode);
+        const mod = foundNode.modules.find(m => m.id === video.moduleId);
+        if (mod) setActiveModule(mod);
+      }
+    }
+    setActiveVideo(video);
+  };
+  const handleCloseVideo = () => setActiveVideo(null);
 
   // Keep a ref to latest pathsData so the flush function always has current data
   const pathsDataRef = React.useRef(pathsData);
@@ -192,12 +222,68 @@ function MainApp() {
     if (Object.keys(pathsData).length === 0) return;
     localStorage.setItem("genai_paths_v3", JSON.stringify(pathsData));
     const timeoutId = setTimeout(async () => {
+      // Ensure videoIntelligence structure exists in paths_data for legacy updates
+      const dataToSync = {
+        ...pathsData,
+        videoIntelligence: pathsData.videoIntelligence || {}
+      };
       await supabase
         .from('user_curriculum')
-        .upsert({ id: user.id, paths_data: pathsData, updated_at: new Date().toISOString() });
+        .upsert({ 
+          id: user.id, 
+          paths_data: dataToSync, 
+          updated_at: new Date().toISOString() 
+        });
     }, 1500);
     return () => clearTimeout(timeoutId);
   }, [pathsData, user, isDataLoaded]);
+
+  const handleUpdateVideoProgress = (videoId, currentTime) => {
+    setPathsData(prev => ({
+      ...prev,
+      videoIntelligence: {
+        ...(prev.videoIntelligence || {}),
+        [videoId]: {
+          ...(prev.videoIntelligence?.[videoId] || {}),
+          progress: currentTime
+        }
+      }
+    }));
+  };
+
+  const handleSaveVideoNote = (videoId, note) => {
+    setPathsData(prev => {
+      const vidData = prev.videoIntelligence?.[videoId] || {};
+      const notes = vidData.notes || [];
+      return {
+        ...prev,
+        videoIntelligence: {
+          ...(prev.videoIntelligence || {}),
+          [videoId]: {
+            ...vidData,
+            notes: [...notes, { ...note, id: Date.now().toString() }]
+          }
+        }
+      };
+    });
+  };
+
+  const handleDeleteVideoNote = (videoId, noteId) => {
+    setPathsData(prev => {
+      const vidData = prev.videoIntelligence?.[videoId] || {};
+      const notes = (vidData.notes || []).filter(n => n.id !== noteId);
+      return {
+        ...prev,
+        videoIntelligence: {
+          ...(prev.videoIntelligence || {}),
+          [videoId]: {
+            ...vidData,
+            notes
+          }
+        }
+      };
+    });
+  };
 
   useEffect(() => {
     localStorage.setItem("genai_theme", theme);
@@ -250,6 +336,9 @@ function MainApp() {
 
   const handleMarkState = (nodeId, state) => {
     setNodeStates((prev) => ({ ...prev, [`${activePath}_${nodeId}`]: state }));
+    if (state === "done") {
+      setLastCompletedNodeId(nodeId);
+    }
   };
 
   const getNodeState = (nodeId) => nodeStates[`${activePath}_${nodeId}`] || "default";
@@ -492,7 +581,7 @@ function MainApp() {
        showPlayground ? <SystemDesignPlayground theme={theme} onClose={() => setShowPlayground(false)} /> :
        showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
        showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
-       showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} /></ErrorBoundary> :
+       showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
        showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
        <>
          {!freshActiveNode && (
@@ -503,6 +592,8 @@ function MainApp() {
              onAddNode={() => { setEditData(null); setEditingNode(true); }}
              onEditNode={n => { setEditData(n); setEditingNode(true); }}
              isEditMode={isEditMode}
+             lastCompletedNodeId={lastCompletedNodeId}
+             onAnimationTriggered={() => setLastCompletedNodeId(null)}
            />
          )}
          {freshActiveNode && !activeTopic && (
@@ -518,12 +609,14 @@ function MainApp() {
          {freshActiveModule && freshActiveNode && !activeTopic && (
             <DetailPanel
               node={freshActiveNode} module={freshActiveModule} pathColor={pathData.color}
-              onMarkDone={() => handleMarkState(freshActiveNode.id, "done")}
+              onMarkDone={() => { handleMarkState(freshActiveNode.id, "done"); setActiveNode(null); }}
               onMarkProgress={() => handleMarkState(freshActiveNode.id, "progress")}
               onMarkModuleStatus={status => handleMarkModuleStatus(freshActiveModule.id, status)}
               onToggleSubtopicStatus={title => handleToggleSubtopicStatus(freshActiveModule.id, title)}
               nodeState={getNodeState(freshActiveNode.id)} onModuleSelect={setActiveModule} onTopicSelect={setActiveTopic} isEditMode={isEditMode}
               onBackToGalaxy={() => setShowGalaxy(true)}
+              onEnterFocusMode={() => setFocusNodeId(freshActiveNode.id)}
+              onVideoSelect={handleVideoSelect}
             />
          )}
          {freshActiveModule && freshActiveNode && !activeTopic && (
@@ -533,16 +626,54 @@ function MainApp() {
              onClose={() => setActiveModule(null)}
              onEditModule={handleSaveModule}
              isEditMode={isEditMode}
+             onVideoSelect={handleVideoSelect}
            />
          )}
          {activeTopic && (
            <TopicContentPanel
              topic={activeTopic} module={freshActiveModule} pathColor={pathData.color}
              activePath={activePath} onClose={() => setActiveTopic(null)} isEditMode={isEditMode} onSaveTopic={handleSaveTopic}
+             onVideoSelect={handleVideoSelect}
            />
          )}
        </>
       }
+
+      <AnimatePresence>
+        {focusNodeId && freshActiveNode && freshActiveModule && (
+          <FocusPulse 
+            node={freshActiveNode}
+            module={freshActiveModule}
+            onClose={() => setFocusNodeId(null)}
+            onToggleSubtopicStatus={title => handleToggleSubtopicStatus(freshActiveModule.id, title)}
+            onVideoSelect={handleVideoSelect}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activeVideo && (
+          <VideoModal 
+            video={activeVideo} 
+            onClose={handleCloseVideo} 
+            videoIntelligence={pathsData.videoIntelligence?.[activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1]] || {}}
+            onUpdateProgress={(time) => handleUpdateVideoProgress(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], time)}
+            onSaveNote={(note) => handleSaveVideoNote(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], note)}
+            onDeleteNote={(noteId) => handleDeleteVideoNote(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], noteId)}
+            moduleContext={freshActiveModule}
+            pathsData={pathsData}
+            onNavigate={(p, n, m) => {
+              if (p) setActivePath(p);
+              if (n) setActiveNode(n);
+              if (m) {
+                setActiveModule(m);
+                setActiveTopic(null);
+                setShowGalaxy(false);
+              }
+            }}
+          />
+        )}
+      </AnimatePresence>
 
       {editingPath && <EditorModal type="path" data={editData} pathColor={editData?.color || "#3b82f6"} onClose={() => setEditingPath(false)} onSave={handleSavePath} onDelete={handleDeletePath} />}
       {editingNode && <EditorModal type="node" data={editData} pathColor={pathData.color} onClose={() => setEditingNode(false)} onSave={handleSaveNode} onDelete={handleDeleteNode} />}
@@ -569,9 +700,11 @@ function MobileHeader({ theme, toggleTheme, user, onSignOut, isMobileMenuOpen, s
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <button onClick={toggleTheme} style={{ background: "none", border: "none", color: "var(--text2)" }}>
-          {theme === "dark" ? <Sparkles size={18} /> : <Brain size={18} />}
-        </button>
+        <div className={`theme-switch ${theme === "dark" ? "active" : ""}`} onClick={toggleTheme}>
+          <div className="theme-switch-icon left"><Brain size={12} /></div>
+          <div className="theme-switch-icon right"><Sparkles size={12} /></div>
+          <div className="theme-switch-thumb"></div>
+        </div>
         <div onClick={onSignOut} style={{ cursor: "pointer", opacity: 0.6 }}><User size={18} /></div>
       </div>
     </div>

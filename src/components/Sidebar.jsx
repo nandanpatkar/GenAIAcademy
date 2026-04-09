@@ -1,6 +1,7 @@
 import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import BentoCard from "./BentoCard";
 
 export default function Sidebar({
   activePath, setActivePath, paths,
@@ -24,69 +25,69 @@ export default function Sidebar({
   const { isAdmin } = useAuth();
 
   const navItems = [
-    { icon: <LayoutDashboard size={16} />,  label: "Overview",      id: "overview" },
-    { icon: <Orbit size={16} />,            label: "Knowledge Galaxy", id: "galaxy" },
-    { icon: <Network size={16} />,          label: "Curriculum Map", id: "curriculum_map" },
-    { icon: <Terminal size={16} />,         label: "Practice IDE",   id: "ide" },
-    { icon: <CheckSquare size={16} />,      label: "Tasks",          id: "tasks" },
-    { icon: <CircleDashed size={16} />,     label: "Progress",       id: "progress" },
-    { icon: <BookOpen size={16} />,         label: "Resources",      id: "resources" },
-    { icon: <Boxes size={16} />,            label: "Playground",          id: "playground" },
-    { icon: <Clapperboard size={16} />,     label: "DSA Animator",        id: "dsa_animator" },
-    { icon: <Cpu size={16} />,              label: "System Design Sim",   id: "simulator" },
-    { icon: <BookMarked size={16} />,       label: "Blog",                id: "blog" },
+    { icon: <LayoutDashboard size={16} />, label: "Overview", id: "overview" },
+    { icon: <Orbit size={16} />, label: "Knowledge Galaxy", id: "galaxy" },
+    { icon: <Network size={16} />, label: "Curriculum Map", id: "curriculum_map" },
+    { icon: <Terminal size={16} />, label: "Practice IDE", id: "ide" },
+    { icon: <CheckSquare size={16} />, label: "Tasks", id: "tasks" },
+    { icon: <CircleDashed size={16} />, label: "Progress", id: "progress" },
+    { icon: <BookOpen size={16} />, label: "Resources", id: "resources" },
+    { icon: <Boxes size={16} />, label: "Playground", id: "playground" },
+    { icon: <Clapperboard size={16} />, label: "DSA Animator", id: "dsa_animator" },
+    { icon: <Cpu size={16} />, label: "System Design Sim", id: "simulator" },
+    { icon: <BookMarked size={16} />, label: "Blog", id: "blog" },
     ...(isAdmin ? [
-      { icon: <Shield size={16} />,   label: "System Admin",   id: "admin_management" }
+      { icon: <Shield size={16} />, label: "System Admin", id: "admin_management" }
     ] : []),
-    { icon: <Users size={16} />,            label: "Community",      id: "community" },
+    { icon: <Users size={16} />, label: "Community", id: "community" },
   ];
 
   const getActiveId = () => {
     if (showAdminManagement) return "admin_management";
-    if (showBlog)          return "blog";
-    if (showSimulator)     return "simulator";
-    if (showGalaxy)        return "galaxy";
-    if (showDSAAnimator)   return "dsa_animator";
-    if (showPlayground)    return "playground";
-    if (showProgress)      return "progress";
-    if (showIDE)           return "ide";
-    if (showResources)     return "resources";
+    if (showBlog) return "blog";
+    if (showSimulator) return "simulator";
+    if (showGalaxy) return "galaxy";
+    if (showDSAAnimator) return "dsa_animator";
+    if (showPlayground) return "playground";
+    if (showProgress) return "progress";
+    if (showIDE) return "ide";
+    if (showResources) return "resources";
     if (showCurriculumMap) return "curriculum_map";
-    if (!activeNode)       return "overview";
+    if (!activeNode) return "overview";
     return null;
   };
 
   const activeNavId = getActiveId();
 
   const handleNavClick = (id) => {
-    if (setActiveNode)   setActiveNode(null);
+    if (setActiveNode) setActiveNode(null);
     if (setActiveModule) setActiveModule(null);
-    if (setActiveTopic)  setActiveTopic(null);
+    if (setActiveTopic) setActiveTopic(null);
 
     // Close all panels
     setShowCurriculumMap(false);
-    if (setShowIDE)           setShowIDE(false);
-    if (setShowResources)     setShowResources(false);
-    if (setShowProgress)      setShowProgress(false);
-    if (setShowPlayground)    setShowPlayground(false);
-    if (setShowDSAAnimator)   setShowDSAAnimator(false);
-    if (setShowBlog)          setShowBlog(false);
+    if (setShowIDE) setShowIDE(false);
+    if (setShowResources) setShowResources(false);
+    if (setShowProgress) setShowProgress(false);
+    if (setShowPlayground) setShowPlayground(false);
+    if (setShowDSAAnimator) setShowDSAAnimator(false);
+    if (setShowBlog) setShowBlog(false);
     if (setShowAdminManagement) setShowAdminManagement(false);
-    if (setShowSimulator)     setShowSimulator(false);
-    if (setShowGalaxy)        setShowGalaxy(false);
+    if (setShowSimulator) setShowSimulator(false);
+    if (setShowGalaxy) setShowGalaxy(false);
 
     // Open selected
     switch (id) {
-      case "curriculum_map": setShowCurriculumMap(true);                             break;
-      case "ide":            if (setShowIDE)          setShowIDE(true);          break;
-      case "resources":      if (setShowResources)    setShowResources(true);    break;
-      case "progress":       if (setShowProgress)     setShowProgress(true);     break;
-      case "playground":     if (setShowPlayground)   setShowPlayground(true);   break;
-      case "dsa_animator":   if (setShowDSAAnimator)  setShowDSAAnimator(true);  break;
-      case "simulator":      if (setShowSimulator)    setShowSimulator(true);    break;
-      case "galaxy":         if (setShowGalaxy)       setShowGalaxy(true);       break;
-      case "blog":           if (setShowBlog)         setShowBlog(true);         break;
-      case "admin_management": 
+      case "curriculum_map": setShowCurriculumMap(true); break;
+      case "ide": if (setShowIDE) setShowIDE(true); break;
+      case "resources": if (setShowResources) setShowResources(true); break;
+      case "progress": if (setShowProgress) setShowProgress(true); break;
+      case "playground": if (setShowPlayground) setShowPlayground(true); break;
+      case "dsa_animator": if (setShowDSAAnimator) setShowDSAAnimator(true); break;
+      case "simulator": if (setShowSimulator) setShowSimulator(true); break;
+      case "galaxy": if (setShowGalaxy) setShowGalaxy(true); break;
+      case "blog": if (setShowBlog) setShowBlog(true); break;
+      case "admin_management":
         if (setShowAdminManagement) setShowAdminManagement(true);
         break;
       default: break;
@@ -122,9 +123,9 @@ export default function Sidebar({
     }
 
     let label = p.title || p.id || k;
-    if (k === "ds"      && (!p.title || p.title === "Data Science Curriculum")) label = "Data Science";
-    if (k === "genai"   && (!p.title || p.title === "Gen AI Curriculum"))       label = "Gen AI";
-    if (k === "agentic" && (!p.title || p.title === "Agentic AI Curriculum"))   label = "Agentic AI";
+    if (k === "ds" && (!p.title || p.title === "Data Science Curriculum")) label = "Data Science";
+    if (k === "genai" && (!p.title || p.title === "Gen AI Curriculum")) label = "Gen AI";
+    if (k === "agentic" && (!p.title || p.title === "Agentic AI Curriculum")) label = "Agentic AI";
     if (label.includes("Curriculum")) label = label.replace(" Curriculum", "");
 
     return { key: k, label, color: p.color || "#00ff88", bg, badge: `${nodeCount} nodes`, progressPercent };
@@ -145,7 +146,7 @@ export default function Sidebar({
             <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(30 50 50)" className="logo-orbit" />
             {/* Outer Orbit 3 */}
             <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(90 50 50)" className="logo-orbit" />
-            
+
             {/* Orbiting Nodes */}
             <circle r="3" className="logo-node node-1" />
             <circle r="3" className="logo-node node-2" />
@@ -157,7 +158,7 @@ export default function Sidebar({
           </svg>
           <div className="logo-pulse" />
         </div>
-        
+
         <div className="logo-morph-wrapper">
           <div className="brand-layer">
             <span className="brand pixar-brand">
@@ -176,7 +177,7 @@ export default function Sidebar({
           </div>
 
           <div className="controls-layer">
-            <button 
+            <button
               className={`morph-icon ${isEditMode ? "active" : ""}`}
               onClick={() => setIsEditMode(!isEditMode)}
               title={isEditMode ? "Edit Mode: ON" : "View Mode"}
@@ -184,15 +185,17 @@ export default function Sidebar({
             >
               {isEditMode ? <Edit3 size={14} /> : <Eye size={14} />}
             </button>
-            <button 
-              className="morph-icon"
+            <div
+              className={`theme-switch ${theme === "dark" ? "active" : ""}`}
               onClick={toggleTheme}
               title={theme === "dark" ? "Light Mode" : "Dark Mode"}
               style={{ "--idx": 2 }}
             >
-              {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-            </button>
-            <button 
+              <div className="theme-switch-icon left"><Sun size={12} /></div>
+              <div className="theme-switch-icon right"><Moon size={12} /></div>
+              <div className="theme-switch-thumb"></div>
+            </div>
+            <button
               className="morph-icon warning"
               onClick={onReset}
               title="Reset Defaults"
@@ -201,7 +204,7 @@ export default function Sidebar({
               <RotateCcw size={14} />
             </button>
             <div className="morph-divider" />
-            <button 
+            <button
               className="morph-icon danger"
               onClick={onSignOut}
               title="Sign Out"
@@ -262,8 +265,8 @@ export default function Sidebar({
             <span className="sidebar-section-label">Learning Paths</span>
           </div>
           {pathList.filter(Boolean).map((p) => (
-            <div 
-              key={p.key} 
+            <div
+              key={p.key}
               className={`path-pill-container ${activePath === p.key ? "active" : ""}`}
               style={{ "--pill-color": p.color, "--pill-bg": p.bg }}
             >
@@ -286,7 +289,7 @@ export default function Sidebar({
                   <div className="path-pill-progress-fill" style={{ width: `${p.progressPercent}%`, background: p.color }} />
                 </div>
               </button>
-              
+
               {isEditMode && activePath === p.key && onEditPath && (
                 <button
                   onClick={() => onEditPath(paths[p.key])}
@@ -298,7 +301,7 @@ export default function Sidebar({
               )}
             </div>
           ))}
-          
+
           {isEditMode && onAddPath && (
             <button
               className="path-pill-add"
@@ -308,6 +311,14 @@ export default function Sidebar({
               <span>Create New Path</span>
             </button>
           )}
+
+          <div style={{ marginTop: "24px" }}>
+            <BentoCard
+              title="Unlock Agentic Pro"
+              description="Get infinite AI mentorship, automated portfolio generation, and prioritized generation queues."
+              glowColor="var(--neon)"
+            />
+          </div>
         </div>}
       </div>
 

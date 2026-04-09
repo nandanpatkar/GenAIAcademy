@@ -1,12 +1,57 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Box, Edit2, Folder, Eye, ArrowRight, Plus, Layers } from "lucide-react";
 
 export default function RoadmapGraph({
   path, activePath, setActivePath, pathsData,
   activeNode, onNodeClick,
   getNodeState, completedCount, onMarkState,
-  onAddNode, onEditNode, isEditMode
+  onAddNode, onEditNode, isEditMode,
+  lastCompletedNodeId, onAnimationTriggered
 }) {
+  const containerRef = useRef(null);
+  const nodeRefs = useRef({});
+  const [traveler, setTraveler] = useState(null);
+
+  useEffect(() => {
+    if (!path?.nodes || !lastCompletedNodeId) return;
+    
+    // Find the node that was just completed
+    const nodeIdx = path.nodes.findIndex(n => n.id === lastCompletedNodeId);
+    if (nodeIdx !== -1) {
+      const node = path.nodes[nodeIdx];
+      const nextNode = path.nodes[nodeIdx + 1];
+
+      if (nextNode) {
+        // Wait a small bit for layout to settle after remount
+        const timer = setTimeout(() => {
+          const fromEl = nodeRefs.current[node.id];
+          const toEl = nodeRefs.current[nextNode.id];
+          const containerEl = containerRef.current;
+
+          if (fromEl && toEl && containerEl) {
+            // Auto-scroll to ensure target is visible
+            toEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            const containerRect = containerEl.getBoundingClientRect();
+            const fromRect = fromEl.getBoundingClientRect();
+            const toRect = toEl.getBoundingClientRect();
+
+            const fromY = (fromRect.top + fromRect.height / 2) - containerRect.top;
+            const toY = (toRect.top + toRect.height / 2) - containerRect.top;
+
+            setTraveler({ fromY, toY, nextNode });
+            if (onAnimationTriggered) onAnimationTriggered();
+          }
+        }, 100);
+        return () => clearTimeout(timer);
+      } else {
+        // No next node, still clear it
+        if (onAnimationTriggered) onAnimationTriggered();
+      }
+    }
+  }, [path?.nodes, lastCompletedNodeId, onAnimationTriggered]);
+
   if (!path) {
     return (
       <div className="roadmap-graph" style={{ padding: 40, color: "var(--text2)", textAlign: "center" }}>
@@ -92,9 +137,45 @@ export default function RoadmapGraph({
       </div>
 
       <div className="rg-nodes">
-        <div className="rg-nodes-container">
+        <div className="rg-nodes-container" ref={containerRef}>
           {/* Central Line */}
           <div className="rg-central-line" />
+
+          {/* Minimalist Traveler Animation */}
+          <AnimatePresence>
+            {traveler && (
+              <motion.div
+                key="traveler-dot"
+                className="rg-traveler-dot"
+                initial={{ 
+                  top: traveler.fromY, 
+                  left: "50%", 
+                  translateX: "-50%", 
+                  opacity: 0, 
+                  scale: 0 
+                }}
+                animate={{ 
+                  top: traveler.toY, 
+                  opacity: [0, 1, 1, 0], 
+                  scale: [0, 1.4, 1.2, 0] 
+                }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ 
+                  duration: 2.2, 
+                  ease: [0.65, 0, 0.35, 1],
+                }}
+                onAnimationComplete={() => {
+                  // Add a small delay so the dot "lands" before opening the next node
+                  setTimeout(() => {
+                    if (traveler.nextNode && onNodeClick) {
+                      onNodeClick(traveler.nextNode);
+                    }
+                    setTraveler(null);
+                  }, 500); 
+                }}
+              />
+            )}
+          </AnimatePresence>
 
           {nodes.map((node, i) => {
             const state = getNodeState(node.id);
@@ -109,6 +190,7 @@ export default function RoadmapGraph({
               >
                 {/* Glowing Point on Line */}
                 <div 
+                  ref={el => nodeRefs.current[node.id] = el}
                   className="rg-line-point" 
                   style={{ "--status-color": statusConfig.color }}
                 />
