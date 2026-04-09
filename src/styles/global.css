@@ -4028,3 +4028,50 @@ pre, code,
 }
 
 
+
+/* --- DetailPanel Additions --- */
+.dp-back-galaxy-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(142, 255, 113, 0.1);
+  border: 1px solid rgba(142, 255, 113, 0.3);
+  color: #8eff71;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  font-family: var(--font);
+}
+
+.dp-back-galaxy-btn:hover {
+  background: rgba(142, 255, 113, 0.2);
+  border-color: #8eff71;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(142, 255, 113, 0.2);
+}
+
+.dp-share-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: var(--font);
+}
+
+.dp-share-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  border-color: var(--text3);
+}

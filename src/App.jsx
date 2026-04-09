@@ -19,12 +19,13 @@ import {
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
   Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2,
-  Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock
+  Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit
 } from "lucide-react";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { supabase } from "./config/supabaseClient";
 import AuthInterface from "./components/AuthInterface";
+import KnowledgeGalaxy from "./components/KnowledgeGalaxy";
 import "./styles/global.css";
 
 class ErrorBoundary extends Component {
@@ -220,6 +221,7 @@ function MainApp() {
   const [showBlog, setShowBlog] = useState(false);
   const [showAdminManagement, setShowAdminManagement] = useState(false);
   const [showSimulator, setShowSimulator] = useState(false);
+  const [showGalaxy, setShowGalaxy] = useState(false);
 
   const closeAllPanels = () => {
     setShowCurriculumMap(false);
@@ -231,11 +233,13 @@ function MainApp() {
     setShowBlog(false);
     setShowAdminManagement(false);
     setShowSimulator(false);
+    setShowGalaxy(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
 
-  const handleNodeClick = (node) => {
+  const handleNodeClick = (node, pathId) => {
+    if (pathId) setActivePath(pathId);
     setActiveNode(node);
     setActiveModule(node.modules?.[0] || null);
     setActiveTopic(null);
@@ -428,6 +432,7 @@ function MainApp() {
         showBlog={showBlog} setShowBlog={setShowBlog}
         showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
         showSimulator={showSimulator} setShowSimulator={setShowSimulator}
+        showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
         activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
         theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut}
       />
@@ -451,6 +456,26 @@ function MainApp() {
         />
       ) :
        showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} /> :
+       showGalaxy ? (
+         <KnowledgeGalaxy 
+           nodes={pathsData} 
+           activePath={activePath} 
+           onNodeClick={handleNodeClick} 
+           onModuleClick={(node, mod, pathId) => { 
+             if (pathId) setActivePath(pathId); 
+             setActiveNode(node); 
+             setActiveModule(mod); 
+             setActiveTopic(null); 
+           }} 
+           onSubtopicClick={(node, mod, topic, pathId) => {
+             if (pathId) setActivePath(pathId);
+             setActiveNode(node);
+             setActiveModule(mod);
+             setActiveTopic(topic);
+           }}
+           onClose={() => setShowGalaxy(false)} 
+         />
+       ) :
        showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
        showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
        showPlayground ? <SystemDesignPlayground theme={theme} onClose={() => setShowPlayground(false)} /> :
@@ -480,14 +505,15 @@ function MainApp() {
            />
          )}
          {freshActiveModule && freshActiveNode && !activeTopic && (
-           <DetailPanel
-             node={freshActiveNode} module={freshActiveModule} pathColor={pathData.color}
-             onMarkDone={() => handleMarkState(freshActiveNode.id, "done")}
-             onMarkProgress={() => handleMarkState(freshActiveNode.id, "progress")}
-             onMarkModuleStatus={status => handleMarkModuleStatus(freshActiveModule.id, status)}
-             onToggleSubtopicStatus={title => handleToggleSubtopicStatus(freshActiveModule.id, title)}
-             nodeState={getNodeState(freshActiveNode.id)} onModuleSelect={setActiveModule} onTopicSelect={setActiveTopic} isEditMode={isEditMode}
-           />
+            <DetailPanel
+              node={freshActiveNode} module={freshActiveModule} pathColor={pathData.color}
+              onMarkDone={() => handleMarkState(freshActiveNode.id, "done")}
+              onMarkProgress={() => handleMarkState(freshActiveNode.id, "progress")}
+              onMarkModuleStatus={status => handleMarkModuleStatus(freshActiveModule.id, status)}
+              onToggleSubtopicStatus={title => handleToggleSubtopicStatus(freshActiveModule.id, title)}
+              nodeState={getNodeState(freshActiveNode.id)} onModuleSelect={setActiveModule} onTopicSelect={setActiveTopic} isEditMode={isEditMode}
+              onBackToGalaxy={() => setShowGalaxy(true)}
+            />
          )}
          {freshActiveModule && freshActiveNode && !activeTopic && (
            <ResourcePanel

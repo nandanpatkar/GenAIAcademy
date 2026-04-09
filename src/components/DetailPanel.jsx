@@ -471,7 +471,7 @@ function AIStudyPanel({ module, pathColor }) {
 export default function DetailPanel({
   node, module, pathColor,
   onMarkDone, onMarkProgress, onMarkModuleStatus, onToggleSubtopicStatus,
-  nodeState, onModuleSelect, onTopicSelect, isEditMode,
+  nodeState, onModuleSelect, onTopicSelect, isEditMode, onBackToGalaxy
 }) {
   if (!node || !module) return (
     <div className="no-select">
@@ -525,7 +525,12 @@ export default function DetailPanel({
               </span>
             </div>
           </div>
-          <button className="dp-share-btn">↑ SHARE</button>
+          <div style={{ display: "flex", gap: 8 }}>
+            {onBackToGalaxy && (
+              <button className="dp-back-galaxy-btn" onClick={onBackToGalaxy}>🌌 GALAXY</button>
+            )}
+            <button className="dp-share-btn">↑ SHARE</button>
+          </div>
         </div>
         <div className="dp-progress-bar">
           <div className="dp-progress-fill" style={{ width: `${pct}%`, background: pathColor }} />

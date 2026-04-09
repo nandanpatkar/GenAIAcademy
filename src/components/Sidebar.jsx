@@ -1,4 +1,4 @@
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -14,6 +14,7 @@ export default function Sidebar({
   showBlog, setShowBlog,
   showAdminManagement, setShowAdminManagement,
   showSimulator, setShowSimulator,
+  showGalaxy, setShowGalaxy,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
   onSignOut
@@ -23,6 +24,7 @@ export default function Sidebar({
 
   const navItems = [
     { icon: <LayoutDashboard size={16} />,  label: "Overview",      id: "overview" },
+    { icon: <Orbit size={16} />,            label: "Knowledge Galaxy", id: "galaxy" },
     { icon: <Network size={16} />,          label: "Curriculum Map", id: "curriculum_map" },
     { icon: <Terminal size={16} />,         label: "Practice IDE",   id: "ide" },
     { icon: <CheckSquare size={16} />,      label: "Tasks",          id: "tasks" },
@@ -42,6 +44,7 @@ export default function Sidebar({
     if (showAdminManagement) return "admin_management";
     if (showBlog)          return "blog";
     if (showSimulator)     return "simulator";
+    if (showGalaxy)        return "galaxy";
     if (showDSAAnimator)   return "dsa_animator";
     if (showPlayground)    return "playground";
     if (showProgress)      return "progress";
@@ -69,6 +72,7 @@ export default function Sidebar({
     if (setShowBlog)          setShowBlog(false);
     if (setShowAdminManagement) setShowAdminManagement(false);
     if (setShowSimulator)     setShowSimulator(false);
+    if (setShowGalaxy)        setShowGalaxy(false);
 
     // Open selected
     switch (id) {
@@ -79,6 +83,7 @@ export default function Sidebar({
       case "playground":     if (setShowPlayground)   setShowPlayground(true);   break;
       case "dsa_animator":   if (setShowDSAAnimator)  setShowDSAAnimator(true);  break;
       case "simulator":      if (setShowSimulator)    setShowSimulator(true);    break;
+      case "galaxy":         if (setShowGalaxy)       setShowGalaxy(true);       break;
       case "blog":           if (setShowBlog)         setShowBlog(true);         break;
       case "admin_management": 
         if (setShowAdminManagement) setShowAdminManagement(true);
