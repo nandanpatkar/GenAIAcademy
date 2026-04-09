@@ -1,10 +1,21 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { 
   Folder, File, Download, Upload, Video, Search, Globe, BookOpen, Trash2, 
   ArrowLeft, Play, FolderOpen, FileText, Link, ChevronRight, ChevronDown, 
   FolderPlus, X, Plus, Info, Database, Layers, Activity, Clapperboard, Monitor,
-  FileCode, FileArchive, MousePointer2, ExternalLink
+  FileCode, FileArchive, MousePointer2, ExternalLink, Brain, Sparkles,
+  ChevronLeft, Library, CheckSquare, Network, AlignLeft, Clock
 } from "lucide-react";
+import { getSavedSets, deleteSavedSet, MODE_LABELS } from "../store/savedStudyStore";
+import { AIResult } from "./AIStudyContent";
+
+const MODE_ICONS = { quiz: CheckSquare, flashcards: Library, mindmap: Network, summary: AlignLeft };
+
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" })
+    + " · " + d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+}
 
 const getFileIcon = (type) => {
   const t = (type || "").toLowerCase();
@@ -34,6 +45,17 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
   const [searchQuery, setSearchQuery] = useState("");
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+  
+  const [savedSets, setSavedSets] = useState(() => getSavedSets());
+  const [viewingSet, setViewingSet] = useState(null);
+  const [flip, setFlip] = useState({});
+
+  // Re-sync saved sets
+  useEffect(() => {
+    if (tab === "knowledge") {
+      setSavedSets(getSavedSets());
+    }
+  }, [tab]);
 
   // ── Breadcrumb Logic ──
   const breadcrumbs = useMemo(() => {
@@ -112,13 +134,32 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
 
   const filtered = useMemo(() => {
     const q = searchQuery.toLowerCase();
-    if (!q) return resources;
+    
+    // Aggregate Relevant Saved Sets
+    let knowledge = [];
+    if (!selected || selected.type === 'root') {
+      knowledge = savedSets; // Global view
+    } else if (selected.type === 'path') {
+      const p = pathsData[selected.pathKey];
+      knowledge = savedSets.filter(s => {
+        // Find if this saved set belongs to any module in this path
+        return p.nodes?.some(n => n.modules?.some(m => m.title === s.moduleTitle));
+      });
+    } else if (selected.type === 'node') {
+      knowledge = savedSets.filter(s => selected.node.modules?.some(m => m.title === s.moduleTitle));
+    } else if (selected.type === 'module') {
+      knowledge = savedSets.filter(s => s.moduleTitle === selected.module.title);
+    }
+
+    if (!q) return { ...resources, knowledge };
+    
     return {
       videos: resources.videos.filter(v => (v.title||"").toLowerCase().includes(q) || (v.source||"").toLowerCase().includes(q)),
       files: resources.files.filter(f => (f.name||"").toLowerCase().includes(q) || (f.source||"").toLowerCase().includes(q)),
-      links: resources.links.filter(l => (l.title||"").toLowerCase().includes(q) || (l.source||"").toLowerCase().includes(q))
+      links: resources.links.filter(l => (l.title||"").toLowerCase().includes(q) || (l.source||"").toLowerCase().includes(q)),
+      knowledge: knowledge.filter(k => (k.moduleTitle || "").toLowerCase().includes(q) || (MODE_LABELS[k.mode] || "").toLowerCase().includes(q))
     };
-  }, [resources, searchQuery]);
+  }, [resources, searchQuery, savedSets, selected, pathsData]);
 
   // ── Actions ──
   const extractYTId = (url) => url?.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1];
@@ -256,9 +297,10 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
         <section className="vault-dashboard" style={{ borderRadius: 20 }}>
           <div className="dashboard-toolbar" style={{ padding: '12px 20px' }}>
             <div className="pill-switcher" style={{ '--active-color': activeColor }}>
-               <button className={`pill-btn ${tab === 'videos' ? 'active' : ''}`} onClick={() => setTab('videos')}><Clapperboard size={14}/> Videos</button>
-               <button className={`pill-btn ${tab === 'files' ? 'active' : ''}`} onClick={() => setTab('files')}><FileText size={14}/> Files</button>
-               <button className={`pill-btn ${tab === 'links' ? 'active' : ''}`} onClick={() => setTab('links')}><Link size={14}/> Links</button>
+               <button className={`pill-btn ${tab === 'videos' ? 'active' : ''}`} onClick={() => { setTab('videos'); setViewingSet(null); }}><Clapperboard size={14}/> Videos</button>
+               <button className={`pill-btn ${tab === 'files' ? 'active' : ''}`} onClick={() => { setTab('files'); setViewingSet(null); }}><FileText size={14}/> Files</button>
+               <button className={`pill-btn ${tab === 'links' ? 'active' : ''}`} onClick={() => { setTab('links'); setViewingSet(null); }}><Link size={14}/> Links</button>
+               <button className={`pill-btn ${tab === 'knowledge' ? 'active' : ''}`} onClick={() => { setTab('knowledge'); setViewingSet(null); }}><Brain size={14}/> Knowledge</button>
             </div>
             <div className="admin-search-wrapper" style={{ width: 300 }}>
                <Search size={14} />
@@ -350,6 +392,115 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                     )}
                   </div>
                 )}
+
+                {tab === 'knowledge' && (
+                  <div style={{ animation: "fadeIn 0.3s ease", width: '100%' }}>
+                    {viewingSet ? (
+                      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                        <button 
+                          onClick={() => setViewingSet(null)}
+                          style={{
+                            display: "flex", alignItems: "center", gap: 8,
+                            background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)",
+                            borderRadius: 10, padding: "8px 14px", color: "var(--text2)",
+                            fontSize: 12, fontWeight: 700, cursor: "pointer", alignSelf: "flex-start",
+                          }}
+                          className="hover-node"
+                        >
+                          <ChevronLeft size={14} /> BACK TO DISCOVERY LIB
+                        </button>
+                        
+                        <div style={{
+                          padding: "16px", borderRadius: 16, background: `${activeColor}10`,
+                          border: `1px solid ${activeColor}30`,
+                        }}>
+                          <div style={{ fontSize: 10, fontWeight: 900, color: activeColor, letterSpacing: "1px", marginBottom: 6 }}>
+                            {MODE_LABELS[viewingSet.mode]?.toUpperCase()} · {fmtDate(viewingSet.savedAt)}
+                          </div>
+                          <div style={{ fontSize: 14, color: "var(--text)", fontWeight: 700, marginBottom: 4 }}>
+                            {viewingSet.moduleTitle}
+                          </div>
+                          <div style={{ fontSize: 12, color: "var(--text2)", fontStyle: "italic", opacity: 0.8 }}>
+                            Contextual knowledge artifacts stored in your workspace.
+                          </div>
+                        </div>
+
+                        <AIResult 
+                          result={viewingSet.data}
+                          mode={viewingSet.mode}
+                          pathColor={activeColor}
+                          flip={flip}
+                          setFlip={setFlip}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <div style={{ 
+                          fontSize: 10, fontWeight: 800, color: "var(--text3)", 
+                          marginBottom: 20, letterSpacing: "1px", textTransform: 'uppercase'
+                        }}>
+                          ARCHIVED KNOWLEDGE PILLARS ({filtered.knowledge.length})
+                        </div>
+                        
+                        <div className="file-list">
+                          {filtered.knowledge.length ? filtered.knowledge.map((s) => {
+                            const MIcon = MODE_ICONS[s.mode] || Sparkles;
+                            return (
+                              <div 
+                                key={s.id} 
+                                className="file-premium-row" 
+                                onClick={() => { setViewingSet(s); setFlip({}); }}
+                                style={{ cursor: "pointer" }}
+                              >
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                                  <div className="file-icon-shell" style={{ background: `${activeColor}15`, border: `1px solid ${activeColor}30` }}>
+                                    <MIcon size={16} color={activeColor} />
+                                  </div>
+                                  <div>
+                                    <div style={{ fontSize: 13, fontWeight: 700 }}>{MODE_LABELS[s.mode]} - {s.moduleTitle}</div>
+                                    <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
+                                      <Clock size={10} /> {fmtDate(s.savedAt)}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                                   <button 
+                                      onClick={(e) => { 
+                                        e.stopPropagation(); 
+                                        deleteSavedSet(s.id); 
+                                        setSavedSets(getSavedSets()); 
+                                      }}
+                                      style={{
+                                        background: "rgba(239,68,68,0.1)", border: "none",
+                                        borderRadius: 8, padding: "6px 10px", cursor: "pointer",
+                                        color: "#ef4444", fontSize: 10, fontWeight: 700
+                                      }}
+                                    >
+                                      DELETE
+                                    </button>
+                                   <ExternalLink size={14} color="var(--text3)" opacity={0.5} />
+                                </div>
+                              </div>
+                            );
+                          }) : (
+                            <div style={{ 
+                              textAlign: "center", padding: "60px 40px", 
+                              background: "rgba(255,255,255,0.01)", borderRadius: 16, 
+                              border: "1px dashed var(--border)", width: '100%', opacity: 0.6
+                            }}>
+                              <Brain size={48} strokeWidth={1} style={{ opacity: 0.2, marginBottom: 20 }} />
+                              <div style={{ fontSize: 13, color: "var(--text3)", fontWeight: 500 }}>
+                                No knowledge artifacts preserved in this scope.<br/>
+                                <span style={{ fontSize: 11, opacity: 0.7 }}>Generate study sets in learning modules to see them archived here.</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+
               </>
             )}
           </div>

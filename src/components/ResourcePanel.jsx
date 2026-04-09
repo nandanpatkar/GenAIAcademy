@@ -7,7 +7,8 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
   const [tab, setTab] = useState("videos");
   const [urlInput, setUrlInput] = useState("");
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(""); // ← NEW: S3 progress state
+  const [uploadProgress, setUploadProgress] = useState(""); 
+
   const tabs = ["videos", "files", "links"];
 
   const extractYTId = (url) => {
@@ -36,7 +37,6 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
     setUrlInput("");
   };
 
-  // ← NEW: Full S3 upload with progress + proper error handling
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -65,7 +65,7 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
         name: file.name,
         size: (file.size / 1024 / 1024).toFixed(2) + " MB",
         type: ext,
-        url: data.url, // S3 public URL
+        url: data.url, 
       };
       onEditModule({ ...module, files: [...(module.files || []), newFile] });
       setUploadProgress("Uploaded!");
@@ -94,7 +94,6 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
           <button className="rp-close" onClick={onClose}>✕</button>
         </div>
         <div className="rp-sub">{module.subtitle}</div>
-        {/* OLD DESIGN: emoji tabs */}
         <div className="rp-tabs">
           {tabs.map((t) => (
             <button
@@ -110,8 +109,6 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
       </div>
 
       <div className="rp-body">
-
-        {/* VIDEOS — OLD DESIGN */}
         {tab === "videos" && (
           <>
             {module.videos?.length ? module.videos.map((v, i) => (
@@ -168,7 +165,6 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
           </>
         )}
 
-        {/* FILES — OLD DESIGN + NEW S3 upload */}
         {tab === "files" && (
           <>
             {module.files?.length ? module.files.map((f, i) => (
@@ -195,7 +191,6 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
                 onMouseEnter={(e) => { if (!uploading) { e.currentTarget.style.borderColor = pathColor; e.currentTarget.style.color = pathColor; } }}
                 onMouseLeave={(e) => { if (!uploading) { e.currentTarget.style.borderColor = "var(--border2)"; e.currentTarget.style.color = "var(--text3)"; } }}
               >
-                {/* ← NEW: S3 progress messages replace old generic text */}
                 {uploadProgress || (uploading ? "Uploading..." : "+ Attach file (PDF, DOC, PNG...)")}
                 <input type="file" style={{ display: "none" }} onChange={handleFileUpload} disabled={uploading} />
               </label>
@@ -203,7 +198,6 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
           </>
         )}
 
-        {/* LINKS — OLD DESIGN */}
         {tab === "links" && (
           <>
             {module.links?.length ? module.links.map((l, i) => (
@@ -233,7 +227,6 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
             )}
           </>
         )}
-
       </div>
     </div>
   );
