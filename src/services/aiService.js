@@ -249,19 +249,27 @@ MODULE CONTEXT:
 ${context}`,
 
   mindmap: (context) => `
-You are an expert GenAI instructor.
-Create a structured mind map for the module context below.
+You are an expert GenAI instructor creating a richly detailed, multi-level mind map.
 
-RULES:
-- root = module title.
-- 3-5 main branches from subtopics.
-- Each branch has 2-5 leaf nodes.
-- IMPORTANT: Provide a "desc" (description) for the root, each branch, and each leaf node.
-- Descriptions should be 10-15 words max.
-- Return ONLY valid JSON, no markdown fences, no extra text.
+Given the module context below, produce a COMPREHENSIVE mind map with MAXIMUM DETAIL.
+
+STRUCTURE RULES:
+- root: the module title (1 node).
+- branches: 6 to 8 main branches covering every major subtopic.
+- children: each branch must have 4 to 6 leaf nodes — specific concepts, techniques, or examples.
+- subchildren: each leaf node must have 2 to 4 sub-leaf nodes — granular details, edge cases, or related terms.
+- Every node (root, branch, leaf, sub-leaf) MUST have a "desc" field: a crisp 8-12 word description.
+
+NAMING RULES:
+- branch labels: 2-4 words.
+- children labels: 2-5 words.
+- subchildren labels: 1-4 words.
+- Make labels highly specific and educational, not generic (e.g. "Big-O notation" not just "Complexity").
+
+IMPORTANT: Return ONLY valid JSON, no markdown fences, no extra text.
 
 FORMAT:
-{"mindmap":{"root":"Title","desc":"Root description","branches":[{"label":"Branch","desc":"Branch description","children":[{"label":"Leaf","desc":"Leaf description"}]}]}}
+{"mindmap":{"root":"Title","desc":"Root description","branches":[{"label":"Branch","desc":"Branch description","children":[{"label":"Leaf","desc":"Leaf description","subchildren":[{"label":"SubLeaf","desc":"SubLeaf description"}]}]}]}}
 
 MODULE CONTEXT:
 ${context}`,
@@ -271,7 +279,7 @@ You are an expert GenAI instructor.
 Write a concise study summary for the module context below.
 
 RULES:
-- 150-200 words, plain flowing text, no bullet points.
+- 150-200 words, plain flowing text, in  bullet points.
 - Return ONLY valid JSON, no markdown fences, no extra text.
 
 FORMAT:
@@ -300,7 +308,7 @@ export const generateStudyContent = async (mode, moduleData, onStatus = null) =>
 
   const messages = [{ role: "user", content: prompt }];
   // Pass onStatus so callers get live retry countdown messages
-  const raw = await callOpenRouter(messages, 3500, 0.3, true, onStatus);
+  const raw = await callOpenRouter(messages, 4500, 0.3, true, onStatus);
 
   // Aggressive JSON cleanup (some models wrap in markdown fences)
   let clean = raw.trim();

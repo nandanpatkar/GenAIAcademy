@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { generateStudyContent } from "../services/aiService";
 import {
   getSavedSets, saveStudySet, deleteSavedSet, MODE_LABELS,
@@ -7,7 +7,8 @@ import {
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
   Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2, AlertCircle,
-  BookmarkCheck, Trash2, FolderOpen, Save, RotateCcw, Clock
+  BookmarkCheck, Trash2, FolderOpen, Save, RotateCcw, Clock,
+  Maximize2, Minimize2
 } from "lucide-react";
 import ReactFlow, { Background, Controls } from "reactflow";
 import "reactflow/dist/style.css";
@@ -717,23 +718,54 @@ function QuizCard({ q, i, pathColor }) {
 }
 
 function MindMapView({ data, pathColor }) {
+  const containerRef = useRef(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const rootLabel = typeof data.root === "object" ? JSON.stringify(data.root) : data.root;
   const rootDesc = data.desc || "Master concept";
+
+  // Sync state with native fullscreen (for Esc key support)
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullScreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFsChange);
+    return () => document.removeEventListener("fullscreenchange", handleFsChange);
+  }, []);
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  };
   
   // Vibrant palette for branches
   const BRANCH_COLORS = ["#4285F4", "#34A853", "#FBBC05", "#EA4335", "#A142F4", "#24C1E0", "#FF6D00"];
 
-  // Calculate Layout (Radial)
-  const nodes = [];
-  const edges = [];
-
   // Helper to render node content
-  const renderNode = (label, desc, color) => (
-    <div style={{ display: "flex", flexDirection: "column", gap: 3, padding: "8px 4px" }}>
-      <div style={{ fontSize: "11px", fontWeight: "900", color: color || "var(--text)" }}>{label}</div>
-      {desc && <div style={{ fontSize: "8px", fontWeight: "600", color: "var(--text3)", lineHeight: 1.3 }}>{desc}</div>}
+  const renderNode = (label, desc, color, level = 3) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: level === 4 ? 1 : 3, padding: level === 4 ? "4px 2px" : "8px 4px" }}>
+      <div style={{ 
+        fontSize: level === 4 ? "9px" : "11px", 
+        fontWeight: "900", 
+        color: color || "var(--text)",
+        lineHeight: 1.2
+      }}>
+        {label}
+      </div>
+      {desc && level < 4 && (
+        <div style={{ fontSize: "8px", fontWeight: "600", color: "var(--text3)", lineHeight: 1.3 }}>
+          {desc}
+        </div>
+      )}
     </div>
   );
+
+  const nodes = [];
+  const edges = [];
 
   // 1. Root Node
   nodes.push({
@@ -762,8 +794,9 @@ function MindMapView({ data, pathColor }) {
   });
 
   const branches = data.branches || [];
-  const branchRadius = 320;
-  const leafRadius = 600;
+  const branchRadius = 350;
+  const leafRadius = 650;
+  const subLeafRadius = 950;
 
   branches.forEach((branch, bi) => {
     const bColor = BRANCH_COLORS[bi % BRANCH_COLORS.length];
@@ -775,7 +808,7 @@ function MindMapView({ data, pathColor }) {
     // 2. Branch Node
     nodes.push({
       id: bid,
-      data: { label: renderNode(branch.label, branch.desc, bColor) },
+      data: { label: renderNode(branch.label, branch.desc, bColor, 2) },
       position: { x: bx, y: by },
       style: {
         background: `${bColor}12`,
@@ -800,19 +833,18 @@ function MindMapView({ data, pathColor }) {
     // 3. Leaf Nodes
     const children = branch.children || [];
     children.forEach((child, ci) => {
-      // Determine if child is object (new format) or string (old format)
       const cLabel = typeof child === "object" ? child.label : child;
       const cDesc = typeof child === "object" ? child.desc : "";
-
-      const subAngle = angle + (ci - (children.length - 1) / 2) * 0.25;
-      const lx = Math.cos(subAngle) * leafRadius;
-      const ly = Math.sin(subAngle) * leafRadius;
       const lid = `leaf-${bi}-${ci}`;
+
+      // Spread children around branch angle
+      const childAngle = angle + (ci - (children.length - 1) / 2) * 0.35;
+      const lx = Math.cos(childAngle) * leafRadius;
+      const ly = Math.sin(childAngle) * leafRadius;
 
       nodes.push({
         id: lid,
-        type: "output",
-        data: { label: renderNode(cLabel, cDesc) },
+        data: { label: renderNode(cLabel, cDesc, null, 3) },
         position: { x: lx, y: ly },
         style: {
           background: "rgba(255,255,255,0.02)",
@@ -829,31 +861,91 @@ function MindMapView({ data, pathColor }) {
         id: `e-${bid}-${lid}`,
         source: bid,
         target: lid,
-        style: { stroke: `${bColor}20`, strokeWidth: 1 },
+        style: { stroke: `${bColor}20`, strokeWidth: 1.5, strokeDasharray: "4 2" },
       });
+
+      // 4. Sub-Leaf Nodes
+      if (child.subchildren && Array.isArray(child.subchildren)) {
+        child.subchildren.forEach((sub, si) => {
+          const sLabel = typeof sub === "object" ? sub.label : sub;
+          const sid = `sub-${bi}-${ci}-${si}`;
+
+          const subAngle = childAngle + (si - (child.subchildren.length - 1) / 2) * 0.15;
+          const sx = Math.cos(subAngle) * subLeafRadius;
+          const sy = Math.sin(subAngle) * subLeafRadius;
+
+          nodes.push({
+            id: sid,
+            type: "output",
+            data: { label: renderNode(sLabel, "", null, 4) },
+            position: { x: sx, y: sy },
+            style: {
+              background: "rgba(255,255,255,0.01)",
+              border: `1px solid ${bColor}15`,
+              borderRadius: "8px",
+              width: 110,
+              padding: "2px 6px",
+              opacity: 0.9,
+            },
+          });
+
+          edges.push({
+            id: `e-${lid}-${sid}`,
+            source: lid,
+            target: sid,
+            style: { stroke: `${bColor}10`, strokeWidth: 1, strokeDasharray: "2 2" },
+          });
+        });
+      }
     });
   });
 
+  const containerStyle = {
+    height: isFullScreen ? "100vh" : (window.innerWidth < 768 ? 400 : 560),
+    borderRadius: isFullScreen ? 0 : 24,
+    border: isFullScreen ? "none" : "1px solid var(--border)",
+    background: "radial-gradient(circle at center, #0a0a0f, #000)",
+    overflow: "hidden",
+    position: "relative",
+    width: "100%",
+  };
+
   return (
-    <div style={{ 
-      height: window.innerWidth < 768 ? 400 : 520, 
-      borderRadius: 24, 
-      border: "1px solid var(--border)", 
-      background: "radial-gradient(circle at center, rgba(10,10,15,0.8), rgba(0,0,0,0.95))",
-      overflow: "hidden",
-      position: "relative",
-    }}>
+    <div ref={containerRef} style={containerStyle}>
+      {/* Fullscreen Toggle Button */}
+      <button
+        onClick={toggleFullScreen}
+        style={{
+          position: "absolute",
+          top: 20, right: 20,
+          zIndex: 10,
+          width: 36, height: 36,
+          borderRadius: 10,
+          border: "1px solid var(--border)",
+          background: "rgba(0,0,0,0.6)",
+          color: "var(--text)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          cursor: "pointer",
+          backdropFilter: "blur(10px)",
+          transition: "all 0.2s ease",
+        }}
+        className="hover-node"
+        title={isFullScreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+      >
+        {isFullScreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+      </button>
+
       <ReactFlow
         nodes={nodes}
         edges={edges}
         fitView
-        fitViewOptions={{ padding: 0.1 }}
-        minZoom={0.1}
+        fitViewOptions={{ padding: 0.2 }}
+        minZoom={0.05}
         maxZoom={3}
         proOptions={{ hideAttribution: true }}
         style={{ width: "100%", height: "100%" }}
       >
-        <Background color="#1a1a1a" gap={25} size={1} />
+        <Background color="#1a1a1a" gap={30} size={1} />
         <Controls style={{ 
           background: "rgba(0,0,0,0.6)", 
           borderRadius: 10, 
