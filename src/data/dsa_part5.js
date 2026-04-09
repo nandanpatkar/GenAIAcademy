@@ -97,7 +97,7 @@ export const dsaPart5 = [
         "overview": "Mastering Divide & Conquer (0/4) optimally natively."
       },
       {
-        "id": "sub-recursive-",
+        "id": "sub-recursive-str",
         "title": "Recursive String Processing",
         "subtitle": "Apply recursion to strings (reversal, palindromes, decoding) by processing one character at a time.",
         "status": "locked",
@@ -142,7 +142,7 @@ export const dsaPart5 = [
         "overview": "Mastering Recursive String Processing (0/4) optimally natively."
       },
       {
-        "id": "sub-recursive-",
+        "id": "sub-recursive-ll",
         "title": "Recursive Stack / Linked List",
         "subtitle": "Use recursion to navigate or modify pointer-based structures without explicit loops.",
         "status": "locked",

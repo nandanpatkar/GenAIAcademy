@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { generateStudyContent } from "../services/aiService";
+import {
+  getSavedSets, saveStudySet, deleteSavedSet, MODE_LABELS,
+} from "../store/savedStudyStore";
 import { 
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
-  Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2
+  Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2, AlertCircle,
+  BookmarkCheck, Trash2, FolderOpen, Save, RotateCcw, Clock
 } from "lucide-react";
 import ReactFlow, { Background, Controls } from "reactflow";
 import "reactflow/dist/style.css";
@@ -61,38 +65,93 @@ const AI_MODES = [
   { id: "summary",    label: "Summary",    icon: AlignLeft,   desc: "Concise module summary" },
 ];
 
+const MODE_ICONS = { quiz: CheckSquare, flashcards: Library, mindmap: Network, summary: AlignLeft };
+
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
+    + " · " + d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+}
+
 function AIStudyPanel({ module, pathColor }) {
-  const [mode, setMode]       = useState("quiz");
-  const [loading, setLoading] = useState(false);
-  const [result, setResult]   = useState(null);
-  const [error, setError]     = useState(null);
-  const [flip, setFlip]       = useState({});         // for flashcard flip state
-  const [expanded, setExpanded] = useState(true);
+  const [mode, setMode]           = useState("quiz");
+  const [loading, setLoading]     = useState(false);
+  const [statusMsg, setStatusMsg] = useState("");     // live retry countdown
+  const [result, setResult]       = useState(null);
+  const [error, setError]         = useState(null);
+  const [flip, setFlip]           = useState({});     // flashcard flip state
+  const [expanded, setExpanded]   = useState(true);
+  const [savedSets, setSavedSets] = useState(() => getSavedSets());
+  const [savedMsg, setSavedMsg]   = useState("");     // brief "Saved!" flash
+  const [showSaved, setShowSaved] = useState(false);  // saved-sets browser
+  const [browsing, setBrowsing]   = useState(null);   // currently viewed saved set
+
+  // Re-read store (called after save/delete)
+  const refreshSaved = useCallback(() => setSavedSets(getSavedSets()), []);
 
   const generate = async () => {
     setLoading(true);
     setResult(null);
     setError(null);
     setFlip({});
+    setStatusMsg("");
+    setBrowsing(null);
     try {
-      const data = await generateStudyContent(mode, {
-        title: module.title,
-        subtitle: module.subtitle,
-        subtopics: module.subtopics || [],
-        overview: module.overview || "",
-        links: (module.links || []).map((l) => toAbsoluteUrl(l.url)).filter(Boolean),
-        videos: (module.videos || [])
-          .map((v) => toAbsoluteUrl(v.url))
-          .filter((u) => u && (u.includes("youtube") || u.includes("youtu.be"))),
-      });
+      const data = await generateStudyContent(
+        mode,
+        {
+          title: module.title,
+          subtitle: module.subtitle,
+          subtopics: module.subtopics || [],
+          overview: module.overview || "",
+          links: (module.links || []).map((l) => toAbsoluteUrl(l.url)).filter(Boolean),
+          videos: (module.videos || [])
+            .map((v) => toAbsoluteUrl(v.url))
+            .filter((u) => u && (u.includes("youtube") || u.includes("youtu.be"))),
+        },
+        (msg) => setStatusMsg(msg),
+      );
       setResult(data);
     } catch (e) {
       console.error("AI Generation Error:", e);
       setError(e instanceof Error ? e.message : String(e));
     } finally {
       setLoading(false);
+      setStatusMsg("");
     }
   };
+
+  const handleSave = () => {
+    const activeResult = browsing ? browsing.data : result;
+    const activeMode   = browsing ? browsing.mode : mode;
+    if (!activeResult) return;
+    saveStudySet(activeMode, module.title, activeResult);
+    refreshSaved();
+    setSavedMsg("Saved!");
+    setTimeout(() => setSavedMsg(""), 2000);
+  };
+
+  const handleDelete = (id, e) => {
+    e.stopPropagation();
+    deleteSavedSet(id);
+    refreshSaved();
+    if (browsing?.id === id) setBrowsing(null);
+  };
+
+  const handleLoadSaved = (set) => {
+    setBrowsing(set);
+    setResult(null);
+    setError(null);
+    setMode(set.mode);
+    setFlip({});
+    setShowSaved(false);
+  };
+
+  // Counts for the header badge
+  const moduleSavedCount = savedSets.filter((s) => s.moduleTitle === module.title).length;
+  const activeResult = browsing ? browsing.data : result;
+  const activeMode   = browsing ? browsing.mode : mode;
+
 
   return (
     <div style={{
@@ -132,6 +191,20 @@ function AIStudyPanel({ module, pathColor }) {
           }}>
             FLASH 2.5
           </span>
+          {moduleSavedCount > 0 && (
+            <span
+              onClick={(e) => { e.stopPropagation(); setShowSaved((v) => !v); }}
+              style={{
+                fontSize: 8, background: `${pathColor}20`, color: pathColor,
+                padding: "3px 8px", borderRadius: 20, fontWeight: 900, letterSpacing: "0.5px",
+                border: `1px solid ${pathColor}40`, cursor: "pointer",
+                display: "flex", alignItems: "center", gap: 4,
+              }}
+            >
+              <BookmarkCheck size={9} />
+              {moduleSavedCount} SAVED
+            </span>
+          )}
         </div>
         {expanded ? <ChevronUp size={14} color="var(--text3)" /> : <ChevronDown size={14} color="var(--text3)" />}
       </div>
@@ -190,17 +263,35 @@ function AIStudyPanel({ module, pathColor }) {
               color: pathColor,
               fontSize: 11, fontWeight: 800,
               cursor: loading ? "not-allowed" : "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4,
               transition: "all .3s ease",
               marginBottom: 12,
               letterSpacing: "0.5px",
               boxShadow: `0 0 20px ${pathColor}10`,
+              minHeight: 44,
             }}
           >
             {loading ? (
               <>
-                <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
-                ORCHESTRATING {AI_MODES.find((m) => m.id === mode)?.label.toUpperCase()}...
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
+                  {statusMsg
+                    ? statusMsg.toUpperCase()
+                    : `ORCHESTRATING ${AI_MODES.find((m) => m.id === mode)?.label.toUpperCase()}…`}
+                </div>
+                {statusMsg && (
+                  <div style={{
+                    fontSize: 9, opacity: 0.7, fontWeight: 600,
+                    letterSpacing: "0.3px", color: "#f59e0b",
+                    display: "flex", alignItems: "center", gap: 4,
+                  }}>
+                    <span style={{
+                      display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+                      background: "#f59e0b", animation: "pulse 1s ease-in-out infinite",
+                    }} />
+                    Auto-retrying — this may take up to 30s
+                  </div>
+                )}
               </>
             ) : (
               <>
@@ -237,8 +328,137 @@ function AIStudyPanel({ module, pathColor }) {
             </div>
           )}
 
-          {/* Results */}
-          {result && <AIResult result={result} mode={mode} pathColor={pathColor} flip={flip} setFlip={setFlip} />}
+          {/* ── Browsing a saved set ── */}
+          {browsing && (
+            <div style={{
+              marginBottom: 12, padding: "10px 14px", borderRadius: 10,
+              background: `${pathColor}08`, border: `1px dashed ${pathColor}40`,
+              display: "flex", alignItems: "center", justifyContent: "space-between",
+              fontSize: 10, color: pathColor, fontWeight: 700,
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <FolderOpen size={12} />
+                VIEWING SAVED · {MODE_LABELS[browsing.mode]?.toUpperCase()} · {fmtDate(browsing.savedAt)}
+              </div>
+              <button
+                onClick={() => { setBrowsing(null); setMode(browsing.mode); }}
+                style={{ background: "none", border: "none", color: pathColor, cursor: "pointer", fontSize: 9, fontWeight: 800, display: "flex", alignItems: "center", gap: 4 }}
+              >
+                <RotateCcw size={10} /> CLOSE
+              </button>
+            </div>
+          )}
+
+          {/* ── Save button (shown after result or while browsing) ── */}
+          {activeResult && (
+            <button
+              onClick={handleSave}
+              style={{
+                width: "100%", padding: "10px 12px", borderRadius: 10, marginBottom: 14,
+                border: `1px solid ${savedMsg ? "#00ff88" : pathColor}60`,
+                background: savedMsg ? "rgba(0,255,136,0.08)" : "rgba(255,255,255,0.02)",
+                color: savedMsg ? "#00ff88" : "var(--text3)",
+                fontSize: 10, fontWeight: 800, letterSpacing: "0.5px",
+                cursor: "pointer",
+                display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                transition: "all 0.3s ease",
+              }}
+            >
+              {savedMsg
+                ? (<><BookmarkCheck size={13} /> SAVED TO LIBRARY!</>)
+                : (<><Save size={13} /> SAVE {MODE_LABELS[activeMode]?.toUpperCase()} TO LIBRARY</>)}
+            </button>
+          )}
+
+          {/* ── Saved Sets Browser ── */}
+          {showSaved && (
+            <div style={{
+              marginBottom: 14, border: "1px solid var(--border)", borderRadius: 12,
+              overflow: "hidden", animation: "fadeIn 0.2s ease",
+            }}>
+              <div style={{
+                padding: "10px 14px", background: "rgba(255,255,255,0.03)",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                borderBottom: "1px solid var(--border)",
+              }}>
+                <div style={{ fontSize: 10, fontWeight: 900, color: pathColor, letterSpacing: "1px", display: "flex", alignItems: "center", gap: 6 }}>
+                  <FolderOpen size={12} /> SAVED SETS — {module.title.substring(0, 20)}
+                </div>
+                <button
+                  onClick={() => setShowSaved(false)}
+                  style={{ background: "none", border: "none", color: "var(--text3)", cursor: "pointer" }}
+                >
+                  <X size={12} />
+                </button>
+              </div>
+              {moduleSavedCount === 0 ? (
+                <div style={{ padding: "20px", textAlign: "center", fontSize: 11, color: "var(--text3)", opacity: 0.6 }}>
+                  No saved sets for this module yet.
+                </div>
+              ) : (
+                <div style={{ maxHeight: 280, overflowY: "auto" }}>
+                  {savedSets
+                    .filter((s) => s.moduleTitle === module.title)
+                    .map((s) => {
+                      const MIcon = MODE_ICONS[s.mode] || Sparkles;
+                      return (
+                        <div
+                          key={s.id}
+                          onClick={() => handleLoadSaved(s)}
+                          style={{
+                            padding: "10px 14px", borderBottom: "1px solid var(--border)",
+                            display: "flex", alignItems: "center", justifyContent: "space-between",
+                            cursor: "pointer", background: browsing?.id === s.id ? `${pathColor}08` : "transparent",
+                            transition: "background 0.2s",
+                          }}
+                          className="hover-node"
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                            <div style={{
+                              width: 28, height: 28, borderRadius: 8,
+                              background: `${pathColor}15`,
+                              display: "flex", alignItems: "center", justifyContent: "center",
+                              flexShrink: 0,
+                            }}>
+                              <MIcon size={13} color={pathColor} />
+                            </div>
+                            <div>
+                              <div style={{ fontSize: 11, fontWeight: 700, color: "var(--text)", marginBottom: 3 }}>
+                                {MODE_LABELS[s.mode]}
+                              </div>
+                              <div style={{ fontSize: 9, color: "var(--text3)", display: "flex", alignItems: "center", gap: 4 }}>
+                                <Clock size={8} /> {fmtDate(s.savedAt)}
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            onClick={(e) => handleDelete(s.id, e)}
+                            style={{
+                              background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)",
+                              borderRadius: 6, padding: "4px 7px", cursor: "pointer",
+                              color: "#ef4444", display: "flex", alignItems: "center",
+                            }}
+                          >
+                            <Trash2 size={11} />
+                          </button>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Results (live or from saved) ── */}
+          {activeResult && (
+            <AIResult
+              result={activeResult}
+              mode={activeMode}
+              pathColor={pathColor}
+              flip={flip}
+              setFlip={setFlip}
+            />
+          )}
         </div>
       )}
     </div>
@@ -1037,9 +1257,11 @@ export default function DetailPanel({
         </button>
       </div>
 
-      {/* Spin animation for loader */}
+      {/* Animations for loader and retry indicator */}
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
     </div>
   );

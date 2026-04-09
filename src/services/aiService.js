@@ -1,41 +1,102 @@
 const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
-const MODEL_ID = "minimax/minimax-m2.5:free";
 
-// ─── Internal: call OpenRouter with a system prompt + history ────────────────────
-async function callOpenRouter(messages, maxTokens = 1024, temperature = 0.7, jsonMode = false) {
+// Model priority list — tried in order until one succeeds.
+// Fall back to openrouter/auto which always routes to a live free model.
+const MODELS = [
+  "meta-llama/llama-3.3-70b-instruct:free",  // stable, high-quality free model
+  "openrouter/auto",                           // OpenRouter's free-model router (always live)
+];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
+// ─── Internal: call OpenRouter — model fallback + 429 retry ──────────────────
+// onStatus(msg: string) — optional callback for UI status updates during retry
+async function callOpenRouter(messages, maxTokens = 1024, temperature = 0.7, jsonMode = false, onStatus = null) {
   if (!API_KEY || API_KEY.includes("your-api-key")) {
     throw new Error("Missing OpenRouter API Key. Please add VITE_OPENROUTER_API_KEY to your .env file.");
   }
 
-  try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${API_KEY}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": window.location.origin,
-        "X-Title": "GenAI Academy",
-      },
-      body: JSON.stringify({
-        model: MODEL_ID,
-        messages,
-        max_tokens: maxTokens,
-        temperature,
-        response_format: jsonMode ? { type: "json_object" } : undefined,
-      }),
-    });
+  const MAX_RATE_RETRIES = 2;  // per-model 429 retries: 6s then 12s
+  const BASE_DELAY_MS    = 6000;
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error?.message || `API error: ${response.status}`);
+  // Try each model in priority order; fall through on 404
+  for (let mi = 0; mi < MODELS.length; mi++) {
+    const modelId = MODELS[mi];
+
+    for (let attempt = 1; attempt <= MAX_RATE_RETRIES + 1; attempt++) {
+      let response;
+      try {
+        response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`,
+            "Content-Type": "application/json",
+            "HTTP-Referer": window.location.origin,
+            "X-Title": "GenAI Academy",
+          },
+          body: JSON.stringify({
+            model: modelId,
+            messages,
+            max_tokens: maxTokens,
+            temperature,
+            response_format: jsonMode ? { type: "json_object" } : undefined,
+          }),
+        });
+      } catch (networkError) {
+        console.error("OpenRouter Network Error:", networkError);
+        throw networkError;
+      }
+
+      // ── 404: model not found / deprecated → try next model immediately ──────
+      if (response.status === 404) {
+        console.warn(`Model "${modelId}" not found (404). Trying next model…`);
+        break; // break inner attempt loop, advance to next model
+      }
+
+      // ── 429: rate limited → exponential backoff with live countdown ──────────
+      if (response.status === 429) {
+        if (attempt <= MAX_RATE_RETRIES) {
+          const delaySec = (BASE_DELAY_MS / 1000) * Math.pow(2, attempt - 1); // 6s → 12s
+          console.warn(`429 rate limit on "${modelId}". Retrying in ${delaySec}s (${attempt}/${MAX_RATE_RETRIES})…`);
+
+          if (onStatus) {
+            for (let rem = delaySec; rem > 0; rem--) {
+              onStatus(`Rate limited — retrying in ${rem}s… (${attempt}/${MAX_RATE_RETRIES})`);
+              await sleep(1000);
+            }
+            onStatus("Retrying now…");
+          } else {
+            await sleep(delaySec * 1000);
+          }
+          continue; // retry same model
+        }
+        // Rate retries exhausted for this model — try next model
+        console.warn(`Rate limit retries exhausted for "${modelId}". Trying next model…`);
+        break;
+      }
+
+      // ── Other HTTP error ─────────────────────────────────────────────────────
+      if (!response.ok) {
+        let errMsg = `API error: ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errMsg = errorData.error?.message || errMsg;
+        } catch (_) { /* ignore */ }
+        console.error(`OpenRouter Error (${modelId}):`, errMsg);
+        throw new Error(errMsg);
+      }
+
+      // ── Success ──────────────────────────────────────────────────────────────
+      const data = await response.json();
+      return data.choices[0].message.content;
     }
-
-    const data = await response.json();
-    return data.choices[0].message.content;
-  } catch (error) {
-    console.error("OpenRouter Error:", error);
-    throw error;
   }
+
+  // All models exhausted
+  throw new Error(
+    "All AI models are currently unavailable or rate-limited. Please wait ~30 seconds and try again."
+  );
 }
 
 // ─── Public: AI Tutor ────────────────────────────────────────────────────────
@@ -158,7 +219,7 @@ Return 5-7 sentences max. Use markdown formatting.`;
 const STUDY_PROMPTS = {
   quiz: (context) => `
 You are an expert GenAI instructor.
-Given the module context below, generate exactly 5 multiple-choice questions.
+Given the module context below, generate exactly 10 multiple-choice questions.
 
 RULES:
 - Each question has exactly 4 options.
@@ -221,40 +282,36 @@ ${context}`,
 };
 
 // ─── Public: Study Content Generation ───────────────────────────────────────
-export const generateStudyContent = async (mode, moduleData) => {
+// onStatus(msg) — optional callback to surface retry progress in the UI
+export const generateStudyContent = async (mode, moduleData, onStatus = null) => {
   const { title, subtitle, subtopics, overview, links, videos } = moduleData;
-  
+
   const contextLines = [
     `Module: ${title || "Unknown"}`,
     `Subtitle: ${subtitle || ""}`,
     `Overview: ${overview || ""}`,
-    `Subtopics: ${(subtopics || []).join(", ")}`,
+    `Subtopics: ${(subtopics || []).map((s) => (typeof s === "object" ? s.title : s)).join(", ")}`,
   ];
   if (links?.length) contextLines.push(`Reference Links: ${links.slice(0, 5).join(", ")}`);
   if (videos?.length) contextLines.push(`YouTube Videos: ${videos.slice(0, 3).join(", ")}`);
-  
+
   const context = contextLines.join("\n");
   const prompt = (STUDY_PROMPTS[mode] || STUDY_PROMPTS.summary)(context);
 
-  try {
-    const messages = [{ role: "user", content: prompt }];
-    const raw = await callOpenRouter(messages, 2048, 0.3, true);
-    
-    // Aggressive cleanup for JSON
-    let clean = raw.trim();
-    if (clean.includes("```")) {
-      clean = clean.split("```")[1];
-      if (clean.startsWith("json")) clean = clean.substring(4);
-      clean = clean.split("```")[0];
-    }
-    
-    const json = JSON.parse(clean.trim());
-    json._source = "qwen3.6-plus-frontend";
-    return json;
-  } catch (error) {
-    console.error("Study Content Generation Error:", error);
-    throw new Error("Failed to generate study materials.");
+  const messages = [{ role: "user", content: prompt }];
+  // Pass onStatus so callers get live retry countdown messages
+  const raw = await callOpenRouter(messages, 3500, 0.3, true, onStatus);
+
+  // Aggressive JSON cleanup (some models wrap in markdown fences)
+  let clean = raw.trim();
+  if (clean.includes("```")) {
+    clean = clean.split("```")[1];
+    if (clean.startsWith("json")) clean = clean.substring(4);
+    clean = clean.split("```")[0];
   }
+
+  const json = JSON.parse(clean.trim());
+  return json;
 };
 
 // ─── Public: Architecture Diagram Generation ─────────────────────────────────

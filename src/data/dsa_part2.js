@@ -544,7 +544,7 @@ export const dsaPart2 = [
         "overview": "Mastering Stack-Based Design (0/5) optimally natively."
       },
       {
-        "id": "sub-recursive-",
+        "id": "sub-recursive-stk",
         "title": "Recursive Stack",
         "subtitle": "Use recursion to reverse or manipulate stack elements without extra data structures.",
         "status": "locked",
