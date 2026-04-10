@@ -1,10 +1,12 @@
 const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
+const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
+const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
 
 // Model priority list — tried in order until one succeeds.
 // Fall back to openrouter/auto which always routes to a live free model.
 const MODELS = [
-  "meta-llama/llama-3.3-70b-instruct:free",  // stable, high-quality free model
-  "openrouter/auto",                           // OpenRouter's free-model router (always live)
+  "openrouter/auto",
+  "google/gemma-4-26b-a4b-it:free"
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -44,7 +46,7 @@ const normalizeStudyData = (json) => {
 
 // ─── Internal: call OpenRouter — model fallback + 429 retry ──────────────────
 // onStatus(msg: string) — optional callback for UI status updates during retry
-async function callOpenRouter(messages, maxTokens = 1024, temperature = 0.7, jsonMode = false, onStatus = null) {
+async function callOpenRouter(messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) {
   if (!API_KEY || API_KEY.includes("your-api-key")) {
     throw new Error("Missing OpenRouter API Key. Please add VITE_OPENROUTER_API_KEY to your .env file.");
   }
@@ -154,7 +156,7 @@ export const askAITutor = async (userMessage, contextData, chatHistory = []) => 
       { role: "user", content: userMessage }
     ];
 
-    return await callOpenRouter(messages, 1024);
+    return await callOpenRouter(messages, 800);
   } catch (error) {
     console.error("AI Tutor Error:", error);
     throw new Error("I hit a temporary snag. Please try again.");
@@ -221,7 +223,7 @@ Schema:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Target description: ${description}` }
     ];
-    const raw = await callOpenRouter(messages, 4096, 0.2, true);
+      const raw = await callOpenRouter(messages, 900, 0.2, true);
     return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Flow Architecture Error:", error);
@@ -342,7 +344,7 @@ export const generateStudyContent = async (mode, moduleData, onStatus = null) =>
 
   const messages = [{ role: "user", content: prompt }];
   // Pass onStatus so callers get live retry countdown messages
-  const raw = await callOpenRouter(messages, 4500, 0.3, true, onStatus);
+  const raw = await callOpenRouter(messages, 900, 0.3, true, onStatus);
 
   // Aggressive JSON extraction (some models wrap in markdown fences or prefix with text)
   const clean = extractJSON(raw);
@@ -386,7 +388,7 @@ Rules:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Generate an architecture for: "${prompt}"` }
     ];
-    const raw = await callOpenRouter(messages, 2048, 0.2, true);
+    const raw = await callOpenRouter(messages, 900, 0.2, true);
     
     // Aggressive cleanup for JSON
     let clean = raw.trim();
@@ -432,7 +434,7 @@ Schema:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Module Context: ${context}` }
     ];
-    const raw = await callOpenRouter(messages, 1024, 0.4, true);
+    const raw = await callOpenRouter(messages, 800, 0.4, true);
     
     // Cleanup
     let clean = raw.trim();
@@ -493,7 +495,7 @@ Use sensible spacing for nodes. Nodes should have a modern look.`;
       { role: "user", content: `Generate a deep-dive interview guide for the core concept in: "${videoTitle}" (Module: "${title}").` }
     ];
     
-    const raw = await callOpenRouter(messages, 4500, 0.3, true, onStatus);
+    const raw = await callOpenRouter(messages, 900, 0.3, true, onStatus);
     const clean = extractJSON(raw);
     const json = JSON.parse(clean);
     return json;
@@ -557,11 +559,132 @@ Schema:
       { role: "user", content: `Generate detailed, interview-ready study notes for: "${videoTitle}" in the context of "${title}".` }
     ];
     
-    const raw = await callOpenRouter(messages, 4500, 0.3, true, onStatus);
+    const raw = await callOpenRouter(messages, 900, 0.3, true, onStatus);
     const clean = extractJSON(raw);
     return JSON.parse(clean);
   } catch (error) {
     console.error("Detailed Notes Error:", error);
     throw new Error("Failed to generate detailed study notes.");
+  }
+};
+// ─── Public: Retell AI Integration ──────────────────────────────────────────
+export const createRetellWebCall = async (config) => {
+  const { role, seniority, jobDescription, language, resumeText } = config;
+  
+  // Use specialized agent for Hindi if requested
+  const agentId = language === "Hindi" 
+    ? "agent_c27a4f05202a89e0f0897e24d5" 
+    : import.meta.env.VITE_RETELL_AGENT_ID || "agent_0a638e3bf56262b6ba02e51555";
+
+  console.log(`Creating ${language || "English"} session with agent: ${agentId}`);
+
+  try {
+    const response = await fetch("https://api.retellai.com/v2/create-web-call", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${import.meta.env.VITE_RETELL_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        agent_id: agentId,
+        retell_llm_dynamic_variables: {
+          user_role: role,
+          seniority: seniority,
+          resume_text: resumeText || "Not provided.",
+          shared_code: "No code shared yet.",
+          shared_output: "No output shared yet.",
+          job_description: `Role context: You are Amit, a technical lead. YOU MUST INTRODUCE YOURSELF AS Amit. 
+          If the session is in English: Speak in a frank, direct, and conversational manner. 
+          If the session is in Hindi: USE COLLOQUIAL HINGLISH (Romanized Hindi). NEVER use formal "Shuddh" Hindi. Speak like a local tech lead.
+          Technical terms should remain in English. 
+          
+          CRITICAL: A resume is provided in 'resume_text'. 
+          
+          CODE MONITORING:
+          The user operates a live Python IDE. Their CURRENT code is always available in the dynamic variable '{{shared_code}}' and its execution result in '{{shared_output}}'.
+          WHENEVER the user says they shared code, or you notice '{{shared_code}}' has changed:
+          1. Actively READ and CRITIQUE the logic in '{{shared_code}}'.
+          2. Acknowledge the specific technical implementation.
+          3. Provide immediate feedback or ask follow-up questions.
+          
+          Context info: ${jobDescription || "General technical interview."}`,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Retell API Error Response:", errorData);
+      throw new Error(errorData.error?.message || "Failed to create Retell web call");
+    }
+
+    const data = await response.json();
+    console.log("Retell Session Data:", data);
+    return data; // contains access_token
+  } catch (error) {
+    console.error("Retell Create Call Error:", error);
+    throw error;
+  }
+};
+
+export const updateRetellCallVariables = async (callId, variables) => {
+  try {
+    const response = await fetch(`https://api.retellai.com/v2/update-call/${callId}`, {
+      method: "PATCH",
+      headers: {
+        "Authorization": `Bearer ${import.meta.env.VITE_RETELL_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        override_dynamic_variables: variables // Expects key-value strings
+      }),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Retell Update Call Variables Error:", error);
+    throw error;
+  }
+};
+
+export const generateInterviewAnalysis = async (transcriptText, config) => {
+  const { role, seniority, language } = config;
+
+  const systemPrompt = `You are a world-class Technical Interview Coach.
+Analyze the provided interview transcript and generate a high-fidelity performance report.
+Role: ${role} (${seniority})
+Interview Conducted In: ${language || "English"} (May contain Hindi/Hinglish)
+
+Analyze the candidate's thinking process, technical depth, and communication.
+The transcript may wrap English technical terms within Hindi sentences.
+
+Return ONLY a valid JSON object. No explanation.
+
+Schema:
+{
+  "score": number (Overall 0-100),
+  "detailedScores": {
+    "technical": number (0-100),
+    "communication": number (0-100),
+    "confidence": number (0-100)
+  },
+  "verdict": "string (Short summary of hire/no-hire decision)",
+  "strengths": ["string"],
+  "weaknesses": ["string"],
+  "technicalFeedback": "string (Deep dive into technical precision)",
+  "communicationFeedback": "string (Tone, clarity, confidence)",
+  "suggestedLearning": ["string (Topic names from roadmap)"]
+}`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Please analyze this interview transcript:\n\n${transcriptText}` }
+    ];
+    // Use OpenRouter for analysis
+    const raw = await callOpenRouter(messages, 900, 0.3, true);
+    return JSON.parse(extractJSON(raw));
+  } catch (error) {
+    console.error("Interview Analysis Error:", error);
+    throw new Error("Failed to generate interview analysis.");
   }
 };

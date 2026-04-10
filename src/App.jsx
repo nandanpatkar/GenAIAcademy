@@ -15,11 +15,12 @@ import SystemDesignSimulator from "./pages/simulator/SystemDesignSimulator";
 import DSAAnimator from "./components/DSAAnimator";
 import BlogPage from "./pages/blog/BlogPage";
 import AdminManagement from "./components/AdminManagement";
+import InterviewerPage from "./pages/interviewer/InterviewerPage.jsx";
 import { 
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
   Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2,
-  Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit
+  Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit, Mic
 } from "lucide-react";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
@@ -308,6 +309,7 @@ function MainApp() {
   const [showAdminManagement, setShowAdminManagement] = useState(false);
   const [showSimulator, setShowSimulator] = useState(false);
   const [showGalaxy, setShowGalaxy] = useState(false);
+  const [showAIInterviewer, setShowAIInterviewer] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const closeAllPanels = () => {
@@ -321,6 +323,7 @@ function MainApp() {
     setShowAdminManagement(false);
     setShowSimulator(false);
     setShowGalaxy(false);
+    setShowAIInterviewer(false);
     setIsMobileMenuOpen(false);
   };
 
@@ -532,6 +535,7 @@ function MainApp() {
         showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
         showSimulator={showSimulator} setShowSimulator={setShowSimulator}
         showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
+        showAIInterviewer={showAIInterviewer} setShowAIInterviewer={setShowAIInterviewer}
         isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
         activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
         theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut}
@@ -543,6 +547,7 @@ function MainApp() {
           closeAllPanels();
           if (v === "admin") setShowAdminManagement(true);
           else if (v === "blog") setShowBlog(true);
+          else if (v === "interviewer") setShowAIInterviewer(true);
           else if (v === "playground") setShowPlayground(true);
           else if (v === "progress") setShowProgress(true);
         }}
@@ -577,6 +582,7 @@ function MainApp() {
          />
        ) :
        showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
+       showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
        showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
        showPlayground ? <SystemDesignPlayground theme={theme} onClose={() => setShowPlayground(false)} /> :
        showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
@@ -717,6 +723,7 @@ function MobileBottomNav({ activeView, setView }) {
     { id: "progress", icon: PieChart, label: "Progress" },
     { id: "playground", icon: FlaskConical, label: "Lab" },
     { id: "blog", icon: PenTool, label: "Blog" },
+    { id: "interviewer", icon: Mic, label: "Interview" },
     { id: "admin", icon: Settings, label: "Admin" },
   ];
   return (

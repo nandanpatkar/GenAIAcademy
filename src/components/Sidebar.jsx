@@ -16,6 +16,7 @@ export default function Sidebar({
   showAdminManagement, setShowAdminManagement,
   showSimulator, setShowSimulator,
   showGalaxy, setShowGalaxy,
+  showAIInterviewer, setShowAIInterviewer,
   isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
@@ -36,6 +37,7 @@ export default function Sidebar({
     { icon: <Clapperboard size={16} />, label: "DSA Animator", id: "dsa_animator" },
     { icon: <Cpu size={16} />, label: "System Design Sim", id: "simulator" },
     { icon: <BookMarked size={16} />, label: "Blog", id: "blog" },
+    { icon: <Users size={16} />, label: "AI Interviewer", id: "interviewer" },
     ...(isAdmin ? [
       { icon: <Shield size={16} />, label: "System Admin", id: "admin_management" }
     ] : []),
@@ -53,6 +55,7 @@ export default function Sidebar({
     if (showIDE) return "ide";
     if (showResources) return "resources";
     if (showCurriculumMap) return "curriculum_map";
+    if (showAIInterviewer) return "interviewer";
     if (!activeNode) return "overview";
     return null;
   };
@@ -75,6 +78,7 @@ export default function Sidebar({
     if (setShowAdminManagement) setShowAdminManagement(false);
     if (setShowSimulator) setShowSimulator(false);
     if (setShowGalaxy) setShowGalaxy(false);
+    if (setShowAIInterviewer) setShowAIInterviewer(false);
 
     // Open selected
     switch (id) {
@@ -89,6 +93,9 @@ export default function Sidebar({
       case "blog": if (setShowBlog) setShowBlog(true); break;
       case "admin_management":
         if (setShowAdminManagement) setShowAdminManagement(true);
+        break;
+      case "interviewer":
+        if (setShowAIInterviewer) setShowAIInterviewer(true);
         break;
       default: break;
     }
