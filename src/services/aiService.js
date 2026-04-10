@@ -576,13 +576,18 @@ export const createRetellWebCall = async (config) => {
     ? "agent_c27a4f05202a89e0f0897e24d5" 
     : import.meta.env.VITE_RETELL_AGENT_ID || "agent_0a638e3bf56262b6ba02e51555";
 
+  const apiKey = import.meta.env.VITE_RETELL_API_KEY;
+  if (!apiKey || apiKey.includes("your-api-key")) {
+    throw new Error("Missing Retell API Key. Please add VITE_RETELL_API_KEY to your Vercel/Environment variables.");
+  }
+
   console.log(`Creating ${language || "English"} session with agent: ${agentId}`);
 
   try {
     const response = await fetch("https://api.retellai.com/v2/create-web-call", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${import.meta.env.VITE_RETELL_API_KEY}`,
+        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
