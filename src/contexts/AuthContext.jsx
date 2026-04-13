@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminsList, setAdminsList] = useState(['nandanpatkar14114@gmail.com']);
   const [lockedUsers, setLockedUsers] = useState([]);
+  const [allowAimlForAll, setAllowAimlForAll] = useState(false);
+  const [geminiKey, setGeminiKey] = useState("");
   const [isLocked, setIsLocked] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -30,6 +32,8 @@ export const AuthProvider = ({ children }) => {
         if (data && data.paths_data) {
           if (data.paths_data.admins) setAdminsList(data.paths_data.admins);
           if (data.paths_data.locked) setLockedUsers(data.paths_data.locked);
+          if (data.paths_data.allowAimlForAll !== undefined) setAllowAimlForAll(data.paths_data.allowAimlForAll);
+          if (data.paths_data.geminiKey) setGeminiKey(data.paths_data.geminiKey);
         }
       } catch (e) {
         console.warn("Global config not found, using defaults");
@@ -125,6 +129,10 @@ export const AuthProvider = ({ children }) => {
     setAdminsList,
     lockedUsers,
     setLockedUsers,
+    allowAimlForAll,
+    setAllowAimlForAll,
+    geminiKey,
+    setGeminiKey,
     isLocked,
     adminSignInMock,
     signUp,

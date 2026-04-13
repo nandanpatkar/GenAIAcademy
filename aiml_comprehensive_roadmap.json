@@ -1,0 +1,3184 @@
+{
+  "id": "aiml-companion-comprehensive",
+  "title": "AIML Companion: The Complete Roadmap",
+  "description": "A comprehensive, high-fidelity curriculum covering the entire AI/ML ecosystem\u2014from mathematical foundations to advanced LLM agents and MLOps.",
+  "color": "#00ff88",
+  "nodes": [
+    {
+      "id": "foundations",
+      "title": "Foundations",
+      "color": "#a78bfa",
+      "modules": [
+        {
+          "id": "basicArith",
+          "title": "Basic Arithmetic",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Basic Arithmetic",
+              "id": "st-basicArith-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "fractions",
+          "title": "Fractions",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Fractions",
+              "id": "st-fractions-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "exponents",
+          "title": "Exponents",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Exponents",
+              "id": "st-exponents-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "algebra",
+          "title": "Algebra",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Algebra",
+              "id": "st-algebra-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "functions",
+          "title": "Functions",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Functions",
+              "id": "st-functions-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "notation",
+          "title": "Notation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Notation",
+              "id": "st-notation-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jupyterNotebook",
+      "title": "Jupyter Notebook",
+      "color": "#f97316",
+      "modules": [
+        {
+          "id": "jupyterIntro",
+          "title": "Jupyter Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Jupyter Intro",
+              "id": "st-jupyterIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "jupyterLocalSetup",
+          "title": "Local Setup",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Local Setup",
+              "id": "st-jupyterLocalSetup-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "jupyterInterface",
+          "title": "Jupyter Interface",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Jupyter Interface",
+              "id": "st-jupyterInterface-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "googleColab",
+          "title": "Google Colab",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Google Colab",
+              "id": "st-googleColab-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "vsCodeJupyter",
+          "title": "VS Code Jupyter",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: VS Code Jupyter",
+              "id": "st-vsCodeJupyter-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "jupyterBestPractices",
+          "title": "Best Practices",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Best Practices",
+              "id": "st-jupyterBestPractices-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "jupyterMagics",
+          "title": "Jupyter Magics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Jupyter Magics",
+              "id": "st-jupyterMagics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "jupyterVisualization",
+          "title": "Visualization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Visualization",
+              "id": "st-jupyterVisualization-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "kaggleNotebooks",
+          "title": "Kaggle Notebooks",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Kaggle Notebooks",
+              "id": "st-kaggleNotebooks-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pythonML",
+      "title": "Python for ML",
+      "color": "#3b82f6",
+      "modules": [
+        {
+          "id": "pythonBasics",
+          "title": "Python Basics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Python Basics",
+              "id": "st-pythonBasics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "pythonFunctions",
+          "title": "Functions",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Functions",
+              "id": "st-pythonFunctions-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "numpyIntro",
+          "title": "NumPy Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: NumPy Intro",
+              "id": "st-numpyIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "numpyAdvanced",
+          "title": "NumPy Advanced",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: NumPy Advanced",
+              "id": "st-numpyAdvanced-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "pandasIntro",
+          "title": "Pandas Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Pandas Intro",
+              "id": "st-pandasIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "pandasAdvanced",
+          "title": "Pandas Advanced",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Pandas Advanced",
+              "id": "st-pandasAdvanced-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "matplotlib",
+          "title": "Matplotlib",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Matplotlib",
+              "id": "st-matplotlib-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sklearnIntro",
+          "title": "Scikit-learn Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Scikit-learn Intro",
+              "id": "st-sklearnIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sklearnPipelines",
+          "title": "Scikit-learn Pipelines",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Scikit-learn Pipelines",
+              "id": "st-sklearnPipelines-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sql",
+      "title": "SQL",
+      "color": "#06b6d4",
+      "modules": [
+        {
+          "id": "sqlIntro",
+          "title": "SQL Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: SQL Intro",
+              "id": "st-sqlIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlSelect",
+          "title": "SELECT",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: SELECT",
+              "id": "st-sqlSelect-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlSorting",
+          "title": "Sorting",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Sorting",
+              "id": "st-sqlSorting-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlJoins",
+          "title": "JOINs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: JOINs",
+              "id": "st-sqlJoins-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlAggregation",
+          "title": "Aggregation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Aggregation",
+              "id": "st-sqlAggregation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlSubqueries",
+          "title": "Subqueries",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Subqueries",
+              "id": "st-sqlSubqueries-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlWindowFunctions",
+          "title": "Window Functions",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Window Functions",
+              "id": "st-sqlWindowFunctions-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlCtes",
+          "title": "CTEs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: CTEs",
+              "id": "st-sqlCtes-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlDdl",
+          "title": "DDL",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: DDL",
+              "id": "st-sqlDdl-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlIndexing",
+          "title": "Indexing",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Indexing",
+              "id": "st-sqlIndexing-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sqlForMl",
+          "title": "SQL for ML",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: SQL for ML",
+              "id": "st-sqlForMl-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "linearAlgebra",
+      "title": "Linear Algebra",
+      "color": "#10b981",
+      "modules": [
+        {
+          "id": "vectors",
+          "title": "Vectors",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Vectors",
+              "id": "st-vectors-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "matrices",
+          "title": "Matrices",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Matrices",
+              "id": "st-matrices-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dotProduct",
+          "title": "Dot Product",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Dot Product",
+              "id": "st-dotProduct-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "matrixMult",
+          "title": "Matrix Multiplication",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Matrix Multiplication",
+              "id": "st-matrixMult-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "transpose",
+          "title": "Transpose",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Transpose",
+              "id": "st-transpose-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "eigenvalues",
+          "title": "Eigenvalues",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Eigenvalues",
+              "id": "st-eigenvalues-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "svd",
+          "title": "SVD",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: SVD",
+              "id": "st-svd-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "probability",
+      "title": "Probability",
+      "color": "#f59e0b",
+      "modules": [
+        {
+          "id": "basicProb",
+          "title": "Basic Probability",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Basic Probability",
+              "id": "st-basicProb-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "conditionalProb",
+          "title": "Conditional Probability",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Conditional Probability",
+              "id": "st-conditionalProb-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "bayes",
+          "title": "Bayes Theorem",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Bayes Theorem",
+              "id": "st-bayes-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "distributions",
+          "title": "Distributions",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Distributions",
+              "id": "st-distributions-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "expectation",
+          "title": "Expectation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Expectation",
+              "id": "st-expectation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "variance",
+          "title": "Variance",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Variance",
+              "id": "st-variance-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "lln",
+          "title": "Law of Large Numbers",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Law of Large Numbers",
+              "id": "st-lln-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "clt",
+          "title": "Central Limit Theorem",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Central Limit Theorem",
+              "id": "st-clt-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "calculus",
+      "title": "Calculus",
+      "color": "#ec4899",
+      "modules": [
+        {
+          "id": "limits",
+          "title": "Limits",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Limits",
+              "id": "st-limits-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "derivatives",
+          "title": "Derivatives",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Derivatives",
+              "id": "st-derivatives-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "partials",
+          "title": "Partial Derivatives",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Partial Derivatives",
+              "id": "st-partials-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gradients",
+          "title": "Gradients",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Gradients",
+              "id": "st-gradients-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "chainRule",
+          "title": "Chain Rule",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Chain Rule",
+              "id": "st-chainRule-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "integrals",
+          "title": "Integrals",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Integrals",
+              "id": "st-integrals-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optimization",
+      "title": "Optimization",
+      "color": "#8b5cf6",
+      "modules": [
+        {
+          "id": "gradientDescent",
+          "title": "Gradient Descent",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Gradient Descent",
+              "id": "st-gradientDescent-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "learningRate",
+          "title": "Learning Rate",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Learning Rate",
+              "id": "st-learningRate-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "momentum",
+          "title": "Momentum",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Momentum",
+              "id": "st-momentum-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "sgd",
+          "title": "SGD",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: SGD",
+              "id": "st-sgd-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "adam",
+          "title": "Adam",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Adam",
+              "id": "st-adam-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "lossFunctions",
+          "title": "Loss Functions",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Loss Functions",
+              "id": "st-lossFunctions-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "convexity",
+          "title": "Convexity",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Convexity",
+              "id": "st-convexity-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "statistics",
+      "title": "Statistics",
+      "color": "#14b8a6",
+      "modules": [
+        {
+          "id": "descriptive",
+          "title": "Descriptive Stats",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Descriptive Stats",
+              "id": "st-descriptive-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "stdDev",
+          "title": "Std Deviation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Std Deviation",
+              "id": "st-stdDev-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "correlation",
+          "title": "Correlation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Correlation",
+              "id": "st-correlation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "regression",
+          "title": "Regression",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Regression",
+              "id": "st-regression-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "hypothesis",
+          "title": "Hypothesis Testing",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Hypothesis Testing",
+              "id": "st-hypothesis-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "confidence",
+          "title": "Confidence Intervals",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Confidence Intervals",
+              "id": "st-confidence-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "biasVariance",
+          "title": "Bias-Variance Tradeoff",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Bias-Variance Tradeoff",
+              "id": "st-biasVariance-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "infoTheory",
+      "title": "Information Theory",
+      "color": "#64748b",
+      "modules": [
+        {
+          "id": "entropy",
+          "title": "Entropy",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Entropy",
+              "id": "st-entropy-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "crossEntropy",
+          "title": "Cross Entropy",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Cross Entropy",
+              "id": "st-crossEntropy-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "kl",
+          "title": "KL Divergence",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: KL Divergence",
+              "id": "st-kl-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mutualInfo",
+          "title": "Mutual Information",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Mutual Information",
+              "id": "st-mutualInfo-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlAlgorithms",
+      "title": "ML Algorithms",
+      "color": "#ef4444",
+      "modules": [
+        {
+          "id": "mlIntro",
+          "title": "ML Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: ML Intro",
+              "id": "st-mlIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "linReg",
+          "title": "Linear Regression",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Linear Regression",
+              "id": "st-linReg-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "logReg",
+          "title": "Logistic Regression",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Logistic Regression",
+              "id": "st-logReg-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "regularization",
+          "title": "Regularization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Regularization",
+              "id": "st-regularization-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "featureScaling",
+          "title": "Feature Scaling",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Feature Scaling",
+              "id": "st-featureScaling-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "naiveBayes",
+          "title": "Naive Bayes",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Naive Bayes",
+              "id": "st-naiveBayes-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "knn",
+          "title": "KNN",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: KNN",
+              "id": "st-knn-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "decisionTrees",
+          "title": "Decision Trees",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Decision Trees",
+              "id": "st-decisionTrees-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "svm",
+          "title": "SVM",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: SVM",
+              "id": "st-svm-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "multiclassClassification",
+          "title": "Multiclass Classification",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Multiclass Classification",
+              "id": "st-multiclassClassification-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "neuralNets",
+          "title": "Neural Networks",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Neural Networks",
+              "id": "st-neuralNets-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "kmeans",
+          "title": "K-Means",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: K-Means",
+              "id": "st-kmeans-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "hierarchicalClustering",
+          "title": "Hierarchical Clustering",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Hierarchical Clustering",
+              "id": "st-hierarchicalClustering-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dbscan",
+          "title": "DBSCAN",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: DBSCAN",
+              "id": "st-dbscan-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "pca",
+          "title": "PCA",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: PCA",
+              "id": "st-pca-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ensembles",
+          "title": "Ensembles",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Ensembles",
+              "id": "st-ensembles-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gradientBoosting",
+          "title": "Gradient Boosting",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Gradient Boosting",
+              "id": "st-gradientBoosting-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "modelEval",
+          "title": "Model Evaluation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Model Evaluation",
+              "id": "st-modelEval-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "crossVal",
+          "title": "Cross Validation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Cross Validation",
+              "id": "st-crossVal-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "featureImportance",
+          "title": "Feature Importance",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Feature Importance",
+              "id": "st-featureImportance-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "imbalancedData",
+          "title": "Imbalanced Data",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Imbalanced Data",
+              "id": "st-imbalancedData-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mlAlgorithmsCapstone",
+          "title": "Capstone",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Capstone",
+              "id": "st-mlAlgorithmsCapstone-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "iplProject",
+          "title": "IPL Project",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: IPL Project",
+              "id": "st-iplProject-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlPipeline",
+      "title": "ML Pipeline",
+      "color": "#f97316",
+      "modules": [
+        {
+          "id": "dataCollection",
+          "title": "Data Collection",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Data Collection",
+              "id": "st-dataCollection-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "edaBasics",
+          "title": "EDA Basics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: EDA Basics",
+              "id": "st-edaBasics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "edaVisualization",
+          "title": "EDA Visualization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: EDA Visualization",
+              "id": "st-edaVisualization-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dataPreprocessing",
+          "title": "Data Preprocessing",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Data Preprocessing",
+              "id": "st-dataPreprocessing-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "featureEngineering",
+          "title": "Feature Engineering",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Feature Engineering",
+              "id": "st-featureEngineering-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "featureSelection",
+          "title": "Feature Selection",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Feature Selection",
+              "id": "st-featureSelection-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dataSplitting",
+          "title": "Data Splitting",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Data Splitting",
+              "id": "st-dataSplitting-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "modelSelection",
+          "title": "Model Selection",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Model Selection",
+              "id": "st-modelSelection-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "modelTraining",
+          "title": "Model Training",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Model Training",
+              "id": "st-modelTraining-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "hyperparameterTuning",
+          "title": "Hyperparameter Tuning",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Hyperparameter Tuning",
+              "id": "st-hyperparameterTuning-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "modelEvaluation",
+          "title": "Model Evaluation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Model Evaluation",
+              "id": "st-modelEvaluation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "modelInterpretation",
+          "title": "Model Interpretation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Model Interpretation",
+              "id": "st-modelInterpretation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "modelDeployment",
+          "title": "Model Deployment",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Model Deployment",
+              "id": "st-modelDeployment-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mlMonitoring",
+          "title": "ML Monitoring",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: ML Monitoring",
+              "id": "st-mlMonitoring-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mlPipelineCapstone",
+          "title": "Capstone",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Capstone",
+              "id": "st-mlPipelineCapstone-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deepLearning",
+      "title": "Deep Learning",
+      "color": "#6366f1",
+      "modules": [
+        {
+          "id": "dlIntro",
+          "title": "DL Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: DL Intro",
+              "id": "st-dlIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlNeurons",
+          "title": "Neurons",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Neurons",
+              "id": "st-dlNeurons-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlActivations",
+          "title": "Activations",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Activations",
+              "id": "st-dlActivations-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlForward",
+          "title": "Forward Pass",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Forward Pass",
+              "id": "st-dlForward-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlPytorch",
+          "title": "PyTorch",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: PyTorch",
+              "id": "st-dlPytorch-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlLoss",
+          "title": "Loss Functions",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Loss Functions",
+              "id": "st-dlLoss-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlBackprop",
+          "title": "Backpropagation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Backpropagation",
+              "id": "st-dlBackprop-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlOptimizers",
+          "title": "Optimizers",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Optimizers",
+              "id": "st-dlOptimizers-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlRegularization",
+          "title": "Regularization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Regularization",
+              "id": "st-dlRegularization-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlBatchNorm",
+          "title": "Batch Normalization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Batch Normalization",
+              "id": "st-dlBatchNorm-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlCnnIntro",
+          "title": "CNNs Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: CNNs Intro",
+              "id": "st-dlCnnIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlCnnPooling",
+          "title": "CNN Pooling",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: CNN Pooling",
+              "id": "st-dlCnnPooling-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlEmbeddings",
+          "title": "Embeddings",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Embeddings",
+              "id": "st-dlEmbeddings-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlRnnIntro",
+          "title": "RNNs Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: RNNs Intro",
+              "id": "st-dlRnnIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlLstmGru",
+          "title": "LSTM & GRU",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: LSTM & GRU",
+              "id": "st-dlLstmGru-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlAttention",
+          "title": "Attention",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Attention",
+              "id": "st-dlAttention-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlTransformers",
+          "title": "Transformers",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Transformers",
+              "id": "st-dlTransformers-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlTraining",
+          "title": "Training Techniques",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Training Techniques",
+              "id": "st-dlTraining-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlGpuFundamentals",
+          "title": "GPU Fundamentals",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: GPU Fundamentals",
+              "id": "st-dlGpuFundamentals-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlDistributed",
+          "title": "Distributed Training",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Distributed Training",
+              "id": "st-dlDistributed-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlTransferLearning",
+          "title": "Transfer Learning",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Transfer Learning",
+              "id": "st-dlTransferLearning-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlModernArchs",
+          "title": "Modern Architectures",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Modern Architectures",
+              "id": "st-dlModernArchs-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dlCapstone",
+          "title": "Capstone",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Capstone",
+              "id": "st-dlCapstone-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "llm",
+      "title": "LLMs",
+      "color": "#00ff88",
+      "modules": [
+        {
+          "id": "llmIntro",
+          "title": "LLM Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: LLM Intro",
+              "id": "st-llmIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmGenAI",
+          "title": "GenAI Overview",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: GenAI Overview",
+              "id": "st-llmGenAI-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmTokenization",
+          "title": "Tokenization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Tokenization",
+              "id": "st-llmTokenization-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmEmbeddings",
+          "title": "Embeddings",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Embeddings",
+              "id": "st-llmEmbeddings-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmArchitecture",
+          "title": "Architecture",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Architecture",
+              "id": "st-llmArchitecture-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmPositionalEncoding",
+          "title": "Positional Encoding",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Positional Encoding",
+              "id": "st-llmPositionalEncoding-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmMoE",
+          "title": "Mixture of Experts",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Mixture of Experts",
+              "id": "st-llmMoE-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmAttentionVariants",
+          "title": "Attention Variants",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Attention Variants",
+              "id": "st-llmAttentionVariants-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmPretraining",
+          "title": "Pretraining",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Pretraining",
+              "id": "st-llmPretraining-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmLogits",
+          "title": "Logits",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Logits",
+              "id": "st-llmLogits-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmSampling",
+          "title": "Sampling",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Sampling",
+              "id": "st-llmSampling-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmMultiTurn",
+          "title": "Multi-Turn",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Multi-Turn",
+              "id": "st-llmMultiTurn-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmPromptEng",
+          "title": "Prompt Engineering",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Prompt Engineering",
+              "id": "st-llmPromptEng-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmAdvancedPrompting",
+          "title": "Advanced Prompting",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Advanced Prompting",
+              "id": "st-llmAdvancedPrompting-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmPromptOptimization",
+          "title": "Prompt Optimization",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Prompt Optimization",
+              "id": "st-llmPromptOptimization-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmICL",
+          "title": "In-Context Learning",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: In-Context Learning",
+              "id": "st-llmICL-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmFineTuning",
+          "title": "Fine-Tuning",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Fine-Tuning",
+              "id": "st-llmFineTuning-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmRLHF",
+          "title": "RLHF",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: RLHF",
+              "id": "st-llmRLHF-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmHallucinations",
+          "title": "Hallucinations",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Hallucinations",
+              "id": "st-llmHallucinations-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmSecurity",
+          "title": "Security",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Security",
+              "id": "st-llmSecurity-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmEvaluation",
+          "title": "Evaluation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Evaluation",
+              "id": "st-llmEvaluation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmInference",
+          "title": "Inference",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Inference",
+              "id": "st-llmInference-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmScaling",
+          "title": "Scaling Laws",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Scaling Laws",
+              "id": "st-llmScaling-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmOpenSource",
+          "title": "Open Source LLMs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Open Source LLMs",
+              "id": "st-llmOpenSource-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmAPIs",
+          "title": "LLM APIs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: LLM APIs",
+              "id": "st-llmAPIs-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmRAG",
+          "title": "RAG",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: RAG",
+              "id": "st-llmRAG-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmCRAG",
+          "title": "Corrective RAG",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Corrective RAG",
+              "id": "st-llmCRAG-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmGraphRAG",
+          "title": "Graph RAG",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Graph RAG",
+              "id": "st-llmGraphRAG-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmAdaptiveRAG",
+          "title": "Adaptive RAG",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Adaptive RAG",
+              "id": "st-llmAdaptiveRAG-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmMultimodalRAG",
+          "title": "Multimodal RAG",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Multimodal RAG",
+              "id": "st-llmMultimodalRAG-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmAgents",
+          "title": "Agents",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agents",
+              "id": "st-llmAgents-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmMultimodal",
+          "title": "Multimodal LLMs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Multimodal LLMs",
+              "id": "st-llmMultimodal-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmDistillation",
+          "title": "Distillation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Distillation",
+              "id": "st-llmDistillation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ragExpertAssistant",
+          "title": "RAG Expert Assistant",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: RAG Expert Assistant",
+              "id": "st-ragExpertAssistant-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gitVersionControl",
+      "title": "Git & Version Control",
+      "color": "#f87171",
+      "modules": [
+        {
+          "id": "gitIntro",
+          "title": "Git Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Git Intro",
+              "id": "st-gitIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitSetup",
+          "title": "Git Setup",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Git Setup",
+              "id": "st-gitSetup-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitBasics",
+          "title": "Git Basics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Git Basics",
+              "id": "st-gitBasics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitignorePatterns",
+          "title": ".gitignore Patterns",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: .gitignore Patterns",
+              "id": "st-gitignorePatterns-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "commitBestPractices",
+          "title": "Commit Best Practices",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Commit Best Practices",
+              "id": "st-commitBestPractices-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitBranching",
+          "title": "Branching",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Branching",
+              "id": "st-gitBranching-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitConflicts",
+          "title": "Merge Conflicts",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Merge Conflicts",
+              "id": "st-gitConflicts-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitUndoing",
+          "title": "Undoing Changes",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Undoing Changes",
+              "id": "st-gitUndoing-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitHistory",
+          "title": "Git History",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Git History",
+              "id": "st-gitHistory-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitRemotes",
+          "title": "Remotes",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Remotes",
+              "id": "st-gitRemotes-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "githubIntro",
+          "title": "GitHub Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: GitHub Intro",
+              "id": "st-githubIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "githubPRs",
+          "title": "Pull Requests",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Pull Requests",
+              "id": "st-githubPRs-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitWorkflows",
+          "title": "Git Workflows",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Git Workflows",
+              "id": "st-gitWorkflows-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitAdvanced",
+          "title": "Advanced Git",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Advanced Git",
+              "id": "st-gitAdvanced-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "gitLFS",
+          "title": "Git LFS",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Git LFS",
+              "id": "st-gitLFS-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mlOps",
+      "title": "MLOps",
+      "color": "#fb923c",
+      "modules": [
+        {
+          "id": "mlopsIntro",
+          "title": "MLOps Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: MLOps Intro",
+              "id": "st-mlopsIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dockerBasics",
+          "title": "Docker Basics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Docker Basics",
+              "id": "st-dockerBasics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dockerML",
+          "title": "Docker for ML",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Docker for ML",
+              "id": "st-dockerML-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mlAPIs",
+          "title": "ML APIs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: ML APIs",
+              "id": "st-mlAPIs-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "cicdBasics",
+          "title": "CI/CD Basics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: CI/CD Basics",
+              "id": "st-cicdBasics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "cicdML",
+          "title": "CI/CD for ML",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: CI/CD for ML",
+              "id": "st-cicdML-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "experimentTracking",
+          "title": "Experiment Tracking",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Experiment Tracking",
+              "id": "st-experimentTracking-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "modelVersioning",
+          "title": "Model Versioning",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Model Versioning",
+              "id": "st-modelVersioning-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "cloudDeploy",
+          "title": "Cloud Deployment",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Cloud Deployment",
+              "id": "st-cloudDeploy-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "cloudGpuSelection",
+          "title": "Cloud GPU Selection",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Cloud GPU Selection",
+              "id": "st-cloudGpuSelection-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "serverlessML",
+          "title": "Serverless ML",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Serverless ML",
+              "id": "st-serverlessML-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mlMonitoringOps",
+          "title": "ML Monitoring",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: ML Monitoring",
+              "id": "st-mlMonitoringOps-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "kubernetesML",
+          "title": "Kubernetes for ML",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Kubernetes for ML",
+              "id": "st-kubernetesML-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mlopsCapstone",
+          "title": "Capstone",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Capstone",
+              "id": "st-mlopsCapstone-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "softwareEngAI",
+      "title": "Software Eng for AI",
+      "color": "#22d3ee",
+      "modules": [
+        {
+          "id": "cleanCode",
+          "title": "Clean Code",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Clean Code",
+              "id": "st-cleanCode-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "pythonBestPractices",
+          "title": "Python Best Practices",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Python Best Practices",
+              "id": "st-pythonBestPractices-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "projectStructure",
+          "title": "Project Structure",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Project Structure",
+              "id": "st-projectStructure-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "codeDocumentation",
+          "title": "Code Documentation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Code Documentation",
+              "id": "st-codeDocumentation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "pytestBasics",
+          "title": "Pytest Basics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Pytest Basics",
+              "id": "st-pytestBasics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "testingML",
+          "title": "Testing ML",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Testing ML",
+              "id": "st-testingML-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mockingTesting",
+          "title": "Mocking & Testing",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Mocking & Testing",
+              "id": "st-mockingTesting-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "apiDesign",
+          "title": "API Design",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: API Design",
+              "id": "st-apiDesign-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "designPatterns",
+          "title": "Design Patterns",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Design Patterns",
+              "id": "st-designPatterns-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "codeReview",
+          "title": "Code Review",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Code Review",
+              "id": "st-codeReview-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aiAgents",
+      "title": "AI Agents",
+      "color": "#00ff88",
+      "modules": [
+        {
+          "id": "agentsIntro",
+          "title": "Agents Intro",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agents Intro",
+              "id": "st-agentsIntro-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentLifecycle",
+          "title": "Agent Lifecycle",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agent Lifecycle",
+              "id": "st-agentLifecycle-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "functionCalling",
+          "title": "Function Calling",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Function Calling",
+              "id": "st-functionCalling-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "structuredOutputs",
+          "title": "Structured Outputs",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Structured Outputs",
+              "id": "st-structuredOutputs-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "toolDesign",
+          "title": "Tool Design",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Tool Design",
+              "id": "st-toolDesign-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentToolEcosystem",
+          "title": "Tool Ecosystem",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Tool Ecosystem",
+              "id": "st-agentToolEcosystem-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "reactPattern",
+          "title": "ReAct Pattern",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: ReAct Pattern",
+              "id": "st-reactPattern-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentPlanning",
+          "title": "Agent Planning",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agent Planning",
+              "id": "st-agentPlanning-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "reasoningPatterns",
+          "title": "Reasoning Patterns",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Reasoning Patterns",
+              "id": "st-reasoningPatterns-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "treeOfThought",
+          "title": "Tree of Thought",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Tree of Thought",
+              "id": "st-treeOfThought-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "langchainBasics",
+          "title": "LangChain Basics",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: LangChain Basics",
+              "id": "st-langchainBasics-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentFrameworks",
+          "title": "Agent Frameworks",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agent Frameworks",
+              "id": "st-agentFrameworks-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "vectorDatabases",
+          "title": "Vector Databases",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Vector Databases",
+              "id": "st-vectorDatabases-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ragAdvanced",
+          "title": "Advanced RAG",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Advanced RAG",
+              "id": "st-ragAdvanced-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentEvaluation",
+          "title": "Agent Evaluation",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agent Evaluation",
+              "id": "st-agentEvaluation-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "mcpProtocol",
+          "title": "MCP Protocol",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: MCP Protocol",
+              "id": "st-mcpProtocol-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentMemory",
+          "title": "Agent Memory",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agent Memory",
+              "id": "st-agentMemory-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "langgraphAgents",
+          "title": "LangGraph Agents",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: LangGraph Agents",
+              "id": "st-langgraphAgents-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "multiAgentPatterns",
+          "title": "Multi-Agent Patterns",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Multi-Agent Patterns",
+              "id": "st-multiAgentPatterns-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "crewaiAgents",
+          "title": "CrewAI",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: CrewAI",
+              "id": "st-crewaiAgents-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "openaiAgentsSDK",
+          "title": "OpenAI Agents SDK",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: OpenAI Agents SDK",
+              "id": "st-openaiAgentsSDK-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "a2aProtocol",
+          "title": "A2A Protocol",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: A2A Protocol",
+              "id": "st-a2aProtocol-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentGuardrails",
+          "title": "Guardrails",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Guardrails",
+              "id": "st-agentGuardrails-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentObservability",
+          "title": "Observability",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Observability",
+              "id": "st-agentObservability-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agenticWorkflows",
+          "title": "Agentic Workflows",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agentic Workflows",
+              "id": "st-agenticWorkflows-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentDeployment",
+          "title": "Deployment",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Deployment",
+              "id": "st-agentDeployment-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentFullStack",
+          "title": "Full-Stack Agents",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Full-Stack Agents",
+              "id": "st-agentFullStack-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "autonomousResearch",
+          "title": "Autonomous Research",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Autonomous Research",
+              "id": "st-autonomousResearch-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentsCapstone",
+          "title": "Capstone",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Capstone",
+              "id": "st-agentsCapstone-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "contentModerationProject",
+          "title": "Content Moderation Project",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Content Moderation Project",
+              "id": "st-contentModerationProject-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "dueDiligenceProject",
+          "title": "Due Diligence Project",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Due Diligence Project",
+              "id": "st-dueDiligenceProject-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "interviewScenarios",
+      "title": "Interview Scenarios",
+      "color": "#fbbf24",
+      "modules": [
+        {
+          "id": "ivMathStats",
+          "title": "Math & Stats",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Math & Stats",
+              "id": "st-ivMathStats-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivClassicalML",
+          "title": "Classical ML",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Classical ML",
+              "id": "st-ivClassicalML-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivMLCoding",
+          "title": "ML Coding",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: ML Coding",
+              "id": "st-ivMLCoding-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivDLFundamentals",
+          "title": "DL Fundamentals",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: DL Fundamentals",
+              "id": "st-ivDLFundamentals-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivGenAICore",
+          "title": "GenAI Core",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: GenAI Core",
+              "id": "st-ivGenAICore-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivRAGPromptEng",
+          "title": "RAG & Prompt Eng",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: RAG & Prompt Eng",
+              "id": "st-ivRAGPromptEng-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "llmInterviewPrep",
+          "title": "LLM Interview Prep",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: LLM Interview Prep",
+              "id": "st-llmInterviewPrep-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivLLMCore",
+          "title": "LLM Core",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: LLM Core",
+              "id": "st-ivLLMCore-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "agentInterviewPrep",
+          "title": "Agent Interview Prep",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agent Interview Prep",
+              "id": "st-agentInterviewPrep-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivAgenticAI",
+          "title": "Agentic AI",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Agentic AI",
+              "id": "st-ivAgenticAI-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivMLSystemDesign",
+          "title": "ML System Design",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: ML System Design",
+              "id": "st-ivMLSystemDesign-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "ivMLOps",
+          "title": "MLOps",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: MLOps",
+              "id": "st-ivMLOps-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aiTools",
+      "title": "AI Tools",
+      "color": "#c084fc",
+      "modules": [
+        {
+          "id": "openclawSetup",
+          "title": "OpenClaw Setup",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: OpenClaw Setup",
+              "id": "st-openclawSetup-1",
+              "status": "pending"
+            }
+          ]
+        },
+        {
+          "id": "claudeCodeSetup",
+          "title": "Claude Code Setup",
+          "status": "pending",
+          "subtopics": [
+            {
+              "title": "In-depth: Claude Code Setup",
+              "id": "st-claudeCodeSetup-1",
+              "status": "pending"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,28 +1,73 @@
 const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
 const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
 
-// Model priority list — tried in order until one succeeds.
-// Fall back to openrouter/auto which always routes to a live free model.
+// Model priority list
 const MODELS = [
   "openrouter/auto",
   "google/gemma-4-26b-a4b-it:free"
 ];
+const GEMINI_MODEL = "gemini-flash-latest";
+let dynamicGeminiKey = "";
+
+// ─── External Controls ──────────────────────────────────────────────────────────
+export const setDynamicGeminiKey = (key) => {
+  if (key) {
+    console.log("AI Service: Dynamic Gemini Key injected.");
+    dynamicGeminiKey = key;
+  }
+};
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const extractJSON = (raw) => {
+  if (!raw) return "";
   let clean = raw.trim();
-  // Find the first occurrence of { or [
+  
+  // Remove markdown blocks if present
+  if (clean.includes("```")) {
+    const parts = clean.split("```");
+    for (const p of parts) {
+      const inner = p.trim();
+      if (inner.startsWith("{") || inner.startsWith("[")) {
+        clean = inner;
+        if (clean.startsWith("json")) clean = clean.substring(4).trim();
+        break;
+      }
+    }
+  }
+
   const startIdx = clean.search(/[{\[]/);
-  // Find the last occurrence of } or ]
   const endIdx = clean.lastIndexOf("}") > clean.lastIndexOf("]") 
     ? clean.lastIndexOf("}") 
     : clean.lastIndexOf("]");
     
   if (startIdx === -1 || endIdx === -1) return clean;
   return clean.substring(startIdx, endIdx + 1);
+};
+
+/**
+ * Ensures the result is a valid JSON structure or throws a clear error.
+ */
+const parseSafety = (clean, raw) => {
+  try {
+    return JSON.parse(clean);
+  } catch (err) {
+    console.error("JSON Parsing Error. Raw Content:", raw);
+    console.error("Cleaned Content:", clean);
+    
+    // Attempt one last-ditch repair for common truncation issues
+    if (clean.trim().endsWith("]")) { 
+       try { return JSON.parse(clean + "}"); } catch(e) {}
+    }
+    if (clean.trim().endsWith("}")) {
+       try { return JSON.parse(clean + "]"); } catch(e) {}
+    }
+    
+    throw new Error("The AI returned a malformed data format. Please try generating again.");
+  }
 };
 
 // Normalize AI variations (choices vs options, etc)
@@ -133,6 +178,93 @@ async function callOpenRouter(messages, maxTokens = 800, temperature = 0.7, json
   );
 }
 
+// ─── Internal: call Gemini ──────────────────────────────────────────────────
+const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
+  const apiKey = dynamicGeminiKey || GEMINI_API_KEY;
+  if (!apiKey || apiKey.includes("your-api-key")) {
+    throw new Error("Missing Gemini API Key. Please add VITE_GEMINI_API_KEY to .env or update in Admin portal.");
+  }
+
+  const systemMessage = messages.find(m => m.role === 'system')?.content || "";
+  const chatMessages = messages.filter(m => m.role !== 'system');
+
+  try {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system_instruction: { parts: [{ text: systemMessage + (jsonMode ? "\nIMPORTANT: Return ONLY valid JSON. No markdown." : "") }] },
+        contents: chatMessages.map(m => ({
+          role: m.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: m.content }]
+        })),
+        generationConfig: {
+          temperature: temperature,
+          maxOutputTokens: maxTokens,
+          responseMimeType: jsonMode ? "application/json" : "text/plain"
+        }
+      })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `Gemini Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!text) {
+      if (data.candidates?.[0]?.finishReason === "SAFETY") {
+        throw new Error("Gemini safety filters blocked the response. Try a less sensitive prompt.");
+      }
+      throw new Error("Gemini returned an empty response. Check API key or quota.");
+    }
+    
+    return text;
+  } catch (error) {
+    console.error("Gemini call failed:", error);
+    throw error;
+  }
+};
+
+// ─── Unified AI Caller: Fallback logic ──────────────────────────────────────
+export const callAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) => {
+  try {
+    return await callOpenRouter(messages, maxTokens, temperature, jsonMode, onStatus);
+  } catch (error) {
+    const errorMsg = error.message || "";
+    
+    // ── Pattern 1: OpenRouter Credit Exhaustion ─────────────────────────────
+    // Example: "requires more credits, or fewer max_tokens. You requested 900 but afford 313"
+    if (errorMsg.includes("credits") || errorMsg.includes("max_tokens")) {
+      console.warn("OpenRouter Credit/Token Limit hit. Attempting fallback recovery...");
+      
+      // Extract "afford X" if possible to try an optimized retry
+      const affordMatch = errorMsg.match(/afford (\d+)/);
+      const affordable = affordMatch ? parseInt(affordMatch[1]) : 0;
+
+      if (affordable > 300) {
+        if (onStatus) onStatus(`Optimizing token budget to ${affordable}...`);
+        try {
+          return await callOpenRouter(messages, affordable - 10, temperature, jsonMode);
+        } catch (retryErr) {
+          console.error("OpenRouter Affordable retry failed, moving to Gemini.");
+        }
+      }
+
+      // fallback to Gemini with HIGH capacity if it's a credit issue
+      if (onStatus) onStatus("Switching to High-Capacity Gemini Engine...");
+      return await callGemini(messages, Math.max(maxTokens, 2048), temperature, jsonMode);
+    }
+
+    console.warn("Primary AI failed, falling back to Gemini:", error.message);
+    if (onStatus) onStatus("Engagement error. Activating Backup Engine...");
+    return await callGemini(messages, maxTokens, temperature, jsonMode);
+  }
+};
+
 // ─── Public: AI Tutor ────────────────────────────────────────────────────────
 export const askAITutor = async (userMessage, contextData, chatHistory = []) => {
   try {
@@ -156,7 +288,7 @@ export const askAITutor = async (userMessage, contextData, chatHistory = []) => 
       { role: "user", content: userMessage }
     ];
 
-    return await callOpenRouter(messages, 800);
+    return await callAI(messages, 800);
   } catch (error) {
     console.error("AI Tutor Error:", error);
     throw new Error("I hit a temporary snag. Please try again.");
@@ -180,7 +312,7 @@ export const generateProjectIdeas = async (moduleTitle, subtopics) => {
       { role: "system", content: systemPrompt },
       { role: "user", content: userMessage }
     ];
-    const raw = await callOpenRouter(messages, 1024, 0.4, true);
+    const raw = await callAI(messages, 1024, 0.4, true);
     return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Project Ideas Error:", error);
@@ -223,7 +355,7 @@ Schema:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Target description: ${description}` }
     ];
-      const raw = await callOpenRouter(messages, 900, 0.2, true);
+      const raw = await callAI(messages, 900, 0.2, true);
     return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Flow Architecture Error:", error);
@@ -242,7 +374,7 @@ Return 5-7 sentences max. Use markdown formatting.`;
       { role: "system", content: systemPrompt },
       { role: "user", content: `Content:\n${htmlContent}` }
     ];
-    return await callOpenRouter(messages, 512, 0.3);
+    return await callAI(messages, 512, 0.3);
   } catch (error) {
     console.error("TL;DR Generation Error:", error);
     throw new Error("Failed to generate article summary.");
@@ -343,20 +475,15 @@ export const generateStudyContent = async (mode, moduleData, onStatus = null) =>
   const prompt = promptOverride || (STUDY_PROMPTS[mode] || STUDY_PROMPTS.summary)(context);
 
   const messages = [{ role: "user", content: prompt }];
-  // Pass onStatus so callers get live retry countdown messages
-  const raw = await callOpenRouter(messages, 900, 0.3, true, onStatus);
+  // Mind maps and detailed quizzes need high token counts to avoid truncation
+  const tokenBudget = mode === 'mindmap' ? 4000 : 900;
+  
+  const raw = await callAI(messages, tokenBudget, 0.3, true, onStatus);
 
   // Aggressive JSON extraction (some models wrap in markdown fences or prefix with text)
   const clean = extractJSON(raw);
-  
-  try {
-    const json = JSON.parse(clean);
-    return normalizeStudyData(json);
-  } catch (parseError) {
-    console.error("JSON Parsing Error. Raw Content:", raw);
-    console.error("Cleaned Content:", clean);
-    throw new Error("The AI returned an invalid data format.");
-  }
+  const json = parseSafety(clean, raw);
+  return normalizeStudyData(json);
 };
 
 // ─── Public: Architecture Diagram Generation ─────────────────────────────────
@@ -388,7 +515,7 @@ Rules:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Generate an architecture for: "${prompt}"` }
     ];
-    const raw = await callOpenRouter(messages, 900, 0.2, true);
+    const raw = await callAI(messages, 900, 0.2, true);
     
     // Aggressive cleanup for JSON
     let clean = raw.trim();
@@ -434,7 +561,7 @@ Schema:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Module Context: ${context}` }
     ];
-    const raw = await callOpenRouter(messages, 800, 0.4, true);
+    const raw = await callAI(messages, 800, 0.4, true);
     
     // Cleanup
     let clean = raw.trim();
@@ -495,7 +622,7 @@ Use sensible spacing for nodes. Nodes should have a modern look.`;
       { role: "user", content: `Generate a deep-dive interview guide for the core concept in: "${videoTitle}" (Module: "${title}").` }
     ];
     
-    const raw = await callOpenRouter(messages, 900, 0.3, true, onStatus);
+    const raw = await callAI(messages, 1500, 0.3, true, onStatus);
     const clean = extractJSON(raw);
     const json = JSON.parse(clean);
     return json;
@@ -559,7 +686,7 @@ Schema:
       { role: "user", content: `Generate detailed, interview-ready study notes for: "${videoTitle}" in the context of "${title}".` }
     ];
     
-    const raw = await callOpenRouter(messages, 900, 0.3, true, onStatus);
+    const raw = await callAI(messages, 1500, 0.3, true, onStatus);
     const clean = extractJSON(raw);
     return JSON.parse(clean);
   } catch (error) {
@@ -686,10 +813,52 @@ Schema:
       { role: "user", content: `Please analyze this interview transcript:\n\n${transcriptText}` }
     ];
     // Use OpenRouter for analysis
-    const raw = await callOpenRouter(messages, 900, 0.3, true);
+    const raw = await callAI(messages, 900, 0.3, true);
     return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Interview Analysis Error:", error);
     throw new Error("Failed to generate interview analysis.");
+  }
+};
+
+// ─── Public: Algorithm Template Discovery ──────────────────────────────
+export const findAlgorithmTemplates = async (query) => {
+  const systemPrompt = `You are a world-class algorithm repository. 
+Return exactly 1 high-quality Python algorithm template that matches the user's search query.
+Return ONLY a valid JSON object. No explanation or markdown fences.
+
+Schema:
+{
+  "results": [
+    {
+      "id": "unique-slug",
+      "title": "Algorithm Title",
+      "description": "Short 1-sentence logic overview.",
+      "category": "Sorting|Searching|Graphs|DP|etc",
+      "difficulty": "Easy|Medium|Hard",
+      "code": "def algo(arr):\n    # implementation\n    pass"
+    }
+  ]
+}
+
+Rules:
+1. Ensure the code is self-contained and visualizable (use standard Python).
+2. Use clear variable names (i, j, mid, etc).
+3. The code should be clean, concise, and educational.
+4. Return exactly 1 result in the list.
+5. IMPORTANT: Include a short, visualizable test case at the end of the code (e.g. result = my_func([1, 2, 3])).`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Find/Generate high-quality Python algorithm templates for: "${query}"` }
+    ];
+    
+    const raw = await callAI(messages, 2500, 0.5, true);
+    const clean = extractJSON(raw);
+    return JSON.parse(clean);
+  } catch (error) {
+    console.error("Algorithm Template Error:", error);
+    throw new Error("Failed to discover algorithm templates.");
   }
 };

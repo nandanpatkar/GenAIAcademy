@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Play } from "lucide-react";
 import YouTubeThumbnail from './YouTubeThumbnail';
 
@@ -9,8 +9,16 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
   const [urlInput, setUrlInput] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(""); 
+  const scrollRef = useRef(null);
 
   const tabs = ["videos", "files", "links"];
+
+  // Auto-scroll to bottom when new items are added
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [module.videos?.length, module.files?.length, module.links?.length]);
 
   const extractYTId = (url) => {
     if (!url) return null;
@@ -110,48 +118,88 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
       </div>
 
       <div className="rp-body">
-        {tab === "videos" && (
-          <>
-            {module.videos?.length ? module.videos.map((v, i) => (
-              <div key={i} className="vid-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v) : window.open(getSafeUrl(v.url), '_blank')}>
-                <div className="vid-thumb">
-                  {v.url && extractYTId(v.url) ? (
-                    <>
-                      <img src={`https://img.youtube.com/vi/${extractYTId(v.url)}/maxresdefault.jpg`} alt="thumbnail" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      <div className="vid-play" style={{ position: "absolute", zIndex: 2, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Play size={16} fill="currentColor" strokeWidth={0} />
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="vid-thumb-bg" style={{ color: pathColor }} />
-                      <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${pathColor}15 0%, transparent 60%)` }} />
-                      <div className="vid-play" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Play size={16} fill="currentColor" strokeWidth={0} />
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div className="vid-info">
-                  <div className="vid-title">{v.title}</div>
-                  <div className="vid-meta">
-                    <span>{v.channel}</span>
-                    <span className="dot">·</span>
-                    <span>{v.duration}</span>
-                    {v.views !== "0" && (
+        <div className="rp-scroll-area mini-scrollbar" ref={scrollRef}>
+          {tab === "videos" && (
+            <>
+              {module.videos?.length ? module.videos.map((v, i) => (
+                <div key={i} className="vid-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v) : window.open(getSafeUrl(v.url), '_blank')}>
+                  <div className="vid-thumb">
+                    {v.url && extractYTId(v.url) ? (
                       <>
-                        <span className="dot">·</span>
-                        <span>{v.views} views</span>
+                        <img src={`https://img.youtube.com/vi/${extractYTId(v.url)}/maxresdefault.jpg`} alt="thumbnail" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        <div className="vid-play" style={{ position: "absolute", zIndex: 2, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Play size={16} fill="currentColor" strokeWidth={0} />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="vid-thumb-bg" style={{ color: pathColor }} />
+                        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${pathColor}15 0%, transparent 60%)` }} />
+                        <div className="vid-play" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Play size={16} fill="currentColor" strokeWidth={0} />
+                        </div>
                       </>
                     )}
                   </div>
+                  <div className="vid-info">
+                    <div className="vid-title">{v.title}</div>
+                    <div className="vid-meta">
+                      <span>{v.channel}</span>
+                      <span className="dot">·</span>
+                      <span>{v.duration}</span>
+                      {v.views !== "0" && (
+                        <>
+                          <span className="dot">·</span>
+                          <span>{v.views} views</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )) : (
-              <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No videos added yet</div>
-            )}
+              )) : (
+                <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No videos added yet</div>
+              )}
+            </>
+          )}
 
-            {isEditMode && (
+          {tab === "files" && (
+            <>
+              {module.files?.length ? module.files.map((f, i) => (
+                <div key={i} className="file-card" onClick={() => f.url && window.open(getSafeUrl(f.url), '_blank')}>
+                  <div className="file-icon">{FILE_ICONS[f.type] || FILE_ICONS.default}</div>
+                  <div className="file-info">
+                    <div className="file-name">{f.name}</div>
+                    <div className="file-size">{f.size}</div>
+                  </div>
+                  <div className="file-dl">↓</div>
+                </div>
+              )) : (
+                <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No files attached</div>
+              )}
+            </>
+          )}
+
+          {tab === "links" && (
+            <>
+              {module.links?.length ? module.links.map((l, i) => (
+                <div key={i} className="link-card" onClick={() => l.url && window.open(getSafeUrl(l.url), '_blank')}>
+                  <div className="link-favicon">🔗</div>
+                  <div className="link-info">
+                    <div className="link-title">{l.title}</div>
+                    <div className="link-url">{l.url}</div>
+                  </div>
+                  <div style={{ fontSize: 11, color: "var(--text3)" }}>↗</div>
+                </div>
+              )) : (
+                <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No links added</div>
+              )}
+            </>
+          )}
+        </div>
+
+        {isEditMode && (
+          <div className="rp-footer">
+            {tab === "videos" && (
               <div className="rp-add-row">
                 <input
                   className="rp-input"
@@ -163,31 +211,15 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
                 <button className="rp-add-btn" onClick={handleAddVideo}>+ Add</button>
               </div>
             )}
-          </>
-        )}
-
-        {tab === "files" && (
-          <>
-            {module.files?.length ? module.files.map((f, i) => (
-              <div key={i} className="file-card" onClick={() => f.url && window.open(getSafeUrl(f.url), '_blank')}>
-                <div className="file-icon">{FILE_ICONS[f.type] || FILE_ICONS.default}</div>
-                <div className="file-info">
-                  <div className="file-name">{f.name}</div>
-                  <div className="file-size">{f.size}</div>
-                </div>
-                <div className="file-dl">↓</div>
-              </div>
-            )) : (
-              <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No files attached</div>
-            )}
-
-            {isEditMode && (
+            
+            {tab === "files" && (
               <label
+                className="rp-upload-label"
                 style={{
                   display: "block", border: "1.5px dashed var(--border2)", borderRadius: 9,
-                  padding: "16px", textAlign: "center", color: "var(--text3)",
-                  fontSize: 11, cursor: uploading ? "not-allowed" : "pointer",
-                  marginTop: 8, transition: "all .15s",
+                  padding: "12px", textAlign: "center", color: "var(--text3)",
+                  fontSize: 10, cursor: uploading ? "not-allowed" : "pointer",
+                  transition: "all .15s",
                 }}
                 onMouseEnter={(e) => { if (!uploading) { e.currentTarget.style.borderColor = pathColor; e.currentTarget.style.color = pathColor; } }}
                 onMouseLeave={(e) => { if (!uploading) { e.currentTarget.style.borderColor = "var(--border2)"; e.currentTarget.style.color = "var(--text3)"; } }}
@@ -196,25 +228,8 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
                 <input type="file" style={{ display: "none" }} onChange={handleFileUpload} disabled={uploading} />
               </label>
             )}
-          </>
-        )}
 
-        {tab === "links" && (
-          <>
-            {module.links?.length ? module.links.map((l, i) => (
-              <div key={i} className="link-card" onClick={() => l.url && window.open(getSafeUrl(l.url), '_blank')}>
-                <div className="link-favicon">🔗</div>
-                <div className="link-info">
-                  <div className="link-title">{l.title}</div>
-                  <div className="link-url">{l.url}</div>
-                </div>
-                <div style={{ fontSize: 11, color: "var(--text3)" }}>↗</div>
-              </div>
-            )) : (
-              <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No links added</div>
-            )}
-
-            {isEditMode && (
+            {tab === "links" && (
               <div className="rp-add-row">
                 <input
                   className="rp-input"
@@ -226,7 +241,7 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
                 <button className="rp-add-btn" onClick={handleAddLink}>+ Add</button>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

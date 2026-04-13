@@ -168,7 +168,7 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
 
       <div className="tp-body" style={{ flex: 1, overflow: "hidden", display: "flex" }}>
         
-        <div style={{ width: showIDE ? (isEditMode ? "50%" : "40%") : "100%", padding: 24, overflowY: "auto", borderRight: showIDE ? "1px solid var(--border)" : "none", display: "flex", flexDirection: "column", gap: 24, margin: showIDE ? 0 : "0 auto", maxWidth: showIDE ? "none" : 960 }}>
+        <div style={{ flex: 1, minHeight: 0, width: showIDE ? (isEditMode ? "50%" : "40%") : "100%", padding: 24, overflowY: "auto", borderRight: showIDE ? "1px solid var(--border)" : "none", display: "flex", flexDirection: "column", gap: 24, margin: showIDE ? 0 : "0 auto", maxWidth: showIDE ? "none" : 960 }}>
           {isEditMode ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 16, height: "100%" }}>
               <div style={{ fontSize: 10, fontWeight: 800, color: "var(--text3)", letterSpacing: "1px" }}>EDIT PROBLEM STATEMENT</div>

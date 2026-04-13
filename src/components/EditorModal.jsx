@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 export default function EditorModal({ type, data, onClose, onSave, onDelete, pathColor }) {
   const isModule = type === "module";
   const isPath = type === "path";
+  const isTopic = type === "topic";
   const [formData, setFormData] = useState({});
 
   // Initialize form
@@ -30,6 +31,12 @@ export default function EditorModal({ type, data, onClose, onSave, onDelete, pat
             files: [],
             links: [],
             overview: ""
+          });
+        } else if (isTopic) {
+          setFormData({
+            id: `topic-${Date.now()}`,
+            title: "",
+            status: "pending"
           });
         } else {
           setFormData({
@@ -78,7 +85,7 @@ export default function EditorModal({ type, data, onClose, onSave, onDelete, pat
     <div className="editor-overlay">
       <div className="editor-modal">
         <div className="em-header">
-          <h3>{data ? "Edit" : "Add"} {isPath ? "Path" : isModule ? "Module" : "Node"}</h3>
+          <h3>{data ? "Edit" : "Add"} {isPath ? "Path" : isModule ? "Module" : isTopic ? "Topic" : "Node"}</h3>
           <button className="em-close" onClick={onClose} type="button">✕</button>
         </div>
         <form onSubmit={handleSubmit} className="em-form">
@@ -88,13 +95,13 @@ export default function EditorModal({ type, data, onClose, onSave, onDelete, pat
           </div>
           
           <div className="em-field">
-            <label>{isPath ? "Subtitle" : "Description"}</label>
+            <label>{isPath ? "Subtitle" : isTopic ? "Topic Details" : "Description"}</label>
             <textarea 
               name="subtitle" 
               value={formData.subtitle || ""} 
               onChange={handleChange} 
               rows={2} 
-              placeholder={isPath ? "Curriculum subtitle..." : "Brief overview of this node..."}
+              placeholder={isPath ? "Curriculum subtitle..." : isTopic ? "Additional context for this topic..." : "Brief overview of this node..."}
             />
           </div>
 

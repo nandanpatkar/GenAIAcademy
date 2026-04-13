@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Hexagon, Star, CheckCircle, Navigation, ArrowLeft } from "lucide-react";
+import { Box, Hexagon, Star, CheckCircle, Navigation, ArrowLeft, Trash2, Plus } from "lucide-react";
 
 const SECTION_ICONS = {
   Overview: <Box size={14} />,
@@ -10,7 +10,7 @@ const SECTION_ICONS = {
 };
 
 export default function ModulePanel({ 
-  node, activeModule, setActiveModule, pathColor, onClose, onBack, onAddModule, onEditModule, isEditMode, activePath
+  node, activeModule, setActiveModule, pathColor, onClose, onBack, onAddModule, onEditModule, onDeleteModule, isEditMode, activePath
 }) {
   const sections = ["Overview", "Fundamentals", "Advanced", "Mastery", "Certification"];
 
@@ -80,42 +80,60 @@ export default function ModulePanel({
           </div>
         </div>
 
-        {filteredModules.map((mod) => {
+        {isEditMode && filteredModules.length > 0 && (
+          <div className="mp-insert-divider first" onClick={() => onAddModule(0)}>
+            <Plus size={10} /> Insert at beginning
+          </div>
+        )}
+
+        {filteredModules.map((mod, i) => {
           return (
-
-            <div
-              key={mod.id}
-              className={`mp-module-item ${activeModule?.id === mod.id ? "active" : ""}`}
-              onClick={() => setActiveModule(mod)}
-            >
-              <div className={`mp-module-status ${mod.status}`}>
-                {mod.status === "complete" ? "✓" : mod.status === "in_progress" ? "⟳" : mod.status === "locked" ? "🔒" : "◌"}
-              </div>
-              <div className="mp-module-body" style={{ position: "relative" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div className="mp-module-title">{mod.title}</div>
+            <React.Fragment key={mod.id}>
+              <div
+                className={`mp-module-item ${activeModule?.id === mod.id ? "active" : ""}`}
+                onClick={() => setActiveModule(mod)}
+              >
+                <div className={`mp-module-status ${mod.status}`}>
+                  {mod.status === "complete" ? "✓" : mod.status === "in_progress" ? "⟳" : mod.status === "locked" ? "🔒" : "◌"}
                 </div>
+                <div className="mp-module-body" style={{ position: "relative" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                    <div className="mp-module-title">{mod.title}</div>
+                  </div>
 
-                {isEditMode && (
-                  <button 
-                    className="edit-btn" 
-                    onClick={(e) => { e.stopPropagation(); onEditModule(mod); }}
-                    title="Edit Module"
-                    style={{ width: 22, height: 22, fontSize: 10, position: "absolute", right: 12, top: 12 }}
-                  >✎</button>
-                )}
-                <div className="mp-module-sub" style={{ paddingRight: 24, marginBottom: 8 }}>{mod.subtitle}</div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div className="mp-module-dur">{mod.duration} · {mod.subtopics?.length || 0} topics</div>
+                  {isEditMode && (
+                    <div className="mp-module-actions" onClick={e => e.stopPropagation()} style={{ position: "absolute", right: 0, top: 0, display: "flex", gap: 6 }}>
+                      <button 
+                        className="edit-btn" 
+                        onClick={(e) => { e.stopPropagation(); onEditModule(mod); }}
+                        title="Edit Module"
+                      >✎</button>
+                      <button 
+                        className="edit-btn" 
+                        style={{ color: "#ff4444", borderColor: "rgba(255,68,68,0.3)" }}
+                        onClick={(e) => { e.stopPropagation(); onDeleteModule && onDeleteModule(mod.id); }}
+                        title="Delete Module"
+                      ><Trash2 size={10} /></button>
+                    </div>
+                  )}
+                  <div className="mp-module-sub" style={{ paddingRight: 48, marginBottom: 8 }}>{mod.subtitle}</div>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div className="mp-module-dur">{mod.duration} · {mod.subtopics?.length || 0} topics</div>
+                  </div>
+
                 </div>
-
               </div>
-            </div>
+              {isEditMode && (
+                <div className="mp-insert-divider" onClick={() => onAddModule(i + 1)}>
+                  <Plus size={10} /> Insert after {mod.title}
+                </div>
+              )}
+            </React.Fragment>
           );
         })}
         
-        {isEditMode && (
-          <button className="add-module-btn" onClick={onAddModule}>
+        {isEditMode && filteredModules.length === 0 && (
+          <button className="add-module-btn" onClick={() => onAddModule(-1)}>
             + Add Module
           </button>
         )}

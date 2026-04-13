@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Box, Edit2, Folder, Eye, ArrowRight, Plus, Layers } from "lucide-react";
+import { Box, Edit2, Folder, Eye, ArrowRight, Plus, Layers, Trash2 } from "lucide-react";
 
 export default function RoadmapGraph({
   path, activePath, setActivePath, pathsData,
   activeNode, onNodeClick,
   getNodeState, completedCount, onMarkState,
-  onAddNode, onEditNode, isEditMode,
+  onAddNode, onEditNode, onDeleteNode, isEditMode,
   lastCompletedNodeId, onAnimationTriggered
 }) {
   const containerRef = useRef(null);
@@ -177,6 +177,17 @@ export default function RoadmapGraph({
             )}
           </AnimatePresence>
 
+          {/* Insertion button BEFORE the first node */}
+          {isEditMode && nodes.length > 0 && (
+            <div 
+              className="rg-line-plus-btn top"
+              onClick={() => onAddNode(0)}
+              title="Insert Node at Beginning"
+            >
+              <Plus size={12} />
+            </div>
+          )}
+
           {nodes.map((node, i) => {
             const state = getNodeState(node.id);
             const statusConfig = getStatusConfig(state);
@@ -184,82 +195,104 @@ export default function RoadmapGraph({
             const isLeft = i % 2 === 0;
 
             return (
-              <div 
-                key={node.id} 
-                className={`rg-node-item ${isLeft ? 'left' : 'right'}`}
-              >
-                {/* Glowing Point on Line */}
+              <React.Fragment key={node.id}>
                 <div 
-                  ref={el => nodeRefs.current[node.id] = el}
-                  className="rg-line-point" 
-                  style={{ "--status-color": statusConfig.color }}
-                />
-
-                {/* The Card */}
-                <div 
-                  className={`rg-node-card ${isActive ? 'active' : ''}`}
-                  onClick={() => onNodeClick(node)}
-                  style={{ "--node-color": color }}
+                  className={`rg-node-item ${isLeft ? 'left' : 'right'}`}
                 >
-                  <div className="rg-node-card-header">
-                    <div className="rg-node-idx-pill">
-                      <div className="rg-node-num">{String(i + 1).padStart(2, "0")}</div>
-                      <div className="rg-node-subnodes-tag">
-                        <Layers size={10} />
-                        {node.modules?.length || 0} SUBNODES
-                      </div>
-                    </div>
-                    <div className="rg-node-actions">
-                      <Folder size={14} className="rg-node-action-icon" />
-                      <Eye size={14} className="rg-node-action-icon" />
-                      {isEditMode && (
-                        <div 
-                          className="rg-node-action-icon"
-                          onClick={(e) => { e.stopPropagation(); onEditNode(node); }}
-                        >
-                          <Edit2 size={14} />
+                  {/* Glowing Point on Line */}
+                  <div 
+                    ref={el => nodeRefs.current[node.id] = el}
+                    className="rg-line-point" 
+                    style={{ "--status-color": statusConfig.color }}
+                  />
+
+                  {/* The Card */}
+                  <div 
+                    className={`rg-node-card ${isActive ? 'active' : ''}`}
+                    onClick={() => onNodeClick(node)}
+                    style={{ "--node-color": color }}
+                  >
+                    <div className="rg-node-card-header">
+                      <div className="rg-node-idx-pill">
+                        <div className="rg-node-num">{String(i + 1).padStart(2, "0")}</div>
+                        <div className="rg-node-subnodes-tag">
+                          <Layers size={10} />
+                          {node.modules?.length || 0} SUBNODES
                         </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Floating Module Waves */}
-                  <div className="rg-module-waves">
-                    {(node.modules || []).slice(0, 5).map((mod, idx) => (
-                      <div 
-                        key={mod.id} 
-                        className="rg-module-wave"
-                        style={{ "--idx": idx, "--count": Math.min(node.modules.length, 5) }}
-                      >
-                        <div className="rg-module-string" />
-                        {mod.title}
                       </div>
-                    ))}
+                      <div className="rg-node-actions">
+                        <Folder size={14} className="rg-node-action-icon" />
+                        <Eye size={14} className="rg-node-action-icon" />
+                        {isEditMode && (
+                          <>
+                            <div 
+                              className="rg-node-action-icon"
+                              onClick={(e) => { e.stopPropagation(); onEditNode(node); }}
+                              title="Edit Node"
+                            >
+                              <Edit2 size={14} />
+                            </div>
+                            <div 
+                              className="rg-node-action-icon delete"
+                              onClick={(e) => { e.stopPropagation(); onDeleteNode && onDeleteNode(node.id); }}
+                              title="Delete Node"
+                            >
+                              <Trash2 size={14} />
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Floating Module Waves */}
+                    <div className="rg-module-waves">
+                      {(node.modules || []).slice(0, 5).map((mod, idx) => (
+                        <div 
+                          key={mod.id} 
+                          className="rg-module-wave"
+                          style={{ "--idx": idx, "--count": Math.min(node.modules.length, 5) }}
+                        >
+                          <div className="rg-module-string" />
+                          {mod.title}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="rg-node-title">{node.title}</div>
+                    <div className="rg-node-desc">{node.subtitle || node.description}</div>
+
+                    <div className="rg-node-card-footer">
+                      <div 
+                        className="rg-node-status-label"
+                        style={{ "--status-color": statusConfig.color }}
+                      >
+                        <div className="rg-node-status-dot" />
+                        {statusConfig.label}
+                      </div>
+                      <div className="rg-node-explore">
+                        EXPLORE <ArrowRight size={14} />
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="rg-node-title">{node.title}</div>
-                  <div className="rg-node-desc">{node.subtitle || node.description}</div>
-
-                  <div className="rg-node-card-footer">
+                  {/* Insertion button AFTER this node (centered in the gap) */}
+                  {isEditMode && i < nodes.length - 1 && (
                     <div 
-                      className="rg-node-status-label"
-                      style={{ "--status-color": statusConfig.color }}
+                      className="rg-line-plus-btn"
+                      onClick={() => onAddNode(i + 1)}
+                      title="Insert Node Here"
                     >
-                      <div className="rg-node-status-dot" />
-                      {statusConfig.label}
+                      <Plus size={12} />
                     </div>
-                    <div className="rg-node-explore">
-                      EXPLORE <ArrowRight size={14} />
-                    </div>
-                  </div>
+                  )}
                 </div>
-              </div>
+              </React.Fragment>
             );
           })}
 
           {/* Add Node Button */}
           {isEditMode && (
-            <div className="rg-add-node-btn-container" onClick={onAddNode}>
+            <div className="rg-add-node-btn-container" onClick={() => onAddNode(-1)}>
               <div className="rg-add-icon-circle">
                 <Plus size={24} />
               </div>

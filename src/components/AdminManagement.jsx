@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import { Users, Shield, Lock, Unlock, BarChart3, Search, UserPlus, X, Trash2, ShieldCheck, Activity, Globe, Map, TrendingUp, Clock, CheckCircle2, ChevronRight, UploadCloud, FileJson, FileText, Download, Database, AlertCircle, Copy, Cpu, Layout, Server } from "lucide-react";
+import { Users, Shield, Lock, Unlock, BarChart3, Search, UserPlus, X, Trash2, ShieldCheck, Activity, Globe, Map, TrendingUp, Clock, CheckCircle2, ChevronRight, UploadCloud, FileJson, FileText, Download, Database, AlertCircle, Copy, Cpu, Layout, Server, Sparkles, ExternalLink } from "lucide-react";
 import { supabase } from "../config/supabaseClient";
 import { useAuth } from "../contexts/AuthContext";
 import "../styles/global.css";
@@ -46,11 +46,17 @@ const SimpleDoughnut = ({ percent, color, label }) => {
 };
 
 export default function AdminManagement({ onClose, pathsData, setPathsData }) {
-  const { adminsList, setAdminsList, lockedUsers, setLockedUsers } = useAuth();
+  const { adminsList, setAdminsList, lockedUsers, setLockedUsers, allowAimlForAll, setAllowAimlForAll, geminiKey, setGeminiKey } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [newAdminEmail, setNewAdminEmail] = useState("");
+  const [newGeminiKey, setNewGeminiKey] = useState(geminiKey || "");
+  const [showKey, setShowKey] = useState(false);
+
+  useEffect(() => {
+    if (geminiKey) setNewGeminiKey(geminiKey);
+  }, [geminiKey]);
 
   // Content Studio State
   const [dragActive, setDragActive] = useState(false);
@@ -79,13 +85,19 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     setLoading(false);
   };
 
-  const updateGlobalConfig = async (newAdmins, newLocked) => {
+  const updateGlobalConfig = async (newAdmins, newLocked, newAllowAiml, newKey) => {
     try {
       await supabase
         .from('user_curriculum')
         .upsert({
           id: '00000000-0000-0000-0000-000000000000',
-          paths_data: { admins: newAdmins, locked: newLocked, updated_at: new Date().toISOString() }
+          paths_data: { 
+            admins: newAdmins, 
+            locked: newLocked, 
+            allowAimlForAll: newAllowAiml,
+            geminiKey: newKey || geminiKey,
+            updated_at: new Date().toISOString() 
+          }
         });
     } catch (err) { console.error(err); }
   };
@@ -112,19 +124,31 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
 
   const handleToggleLock = async (userId) => {
     let newLocked = lockedUsers.includes(userId) ? lockedUsers.filter(id => id !== userId) : [...lockedUsers, userId];
-    setLockedUsers(newLocked); await updateGlobalConfig(adminsList, newLocked);
+    setLockedUsers(newLocked); await updateGlobalConfig(adminsList, newLocked, allowAimlForAll, geminiKey);
   };
 
   const handleAddAdmin = async () => {
     if (!newAdminEmail || adminsList.includes(newAdminEmail)) return;
     const newAdmins = [...adminsList, newAdminEmail];
-    setAdminsList(newAdmins); setNewAdminEmail(""); await updateGlobalConfig(newAdmins, lockedUsers);
+    setAdminsList(newAdmins); setNewAdminEmail(""); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey);
   };
 
   const handleRemoveAdmin = async (email) => {
     if (adminsList.length <= 1) return;
     const newAdmins = adminsList.filter(e => e !== email);
-    setAdminsList(newAdmins); await updateGlobalConfig(newAdmins, lockedUsers);
+    setAdminsList(newAdmins); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey);
+  };
+
+  const handleToggleAimlAccess = async () => {
+    const newVal = !allowAimlForAll;
+    setAllowAimlForAll(newVal);
+    await updateGlobalConfig(adminsList, lockedUsers, newVal, geminiKey);
+  };
+
+  const handleUpdateGeminiKey = async () => {
+    setGeminiKey(newGeminiKey);
+    await updateGlobalConfig(adminsList, lockedUsers, allowAimlForAll, newGeminiKey);
+    setSuccessInfo("Gemini Infrastructure Synchronized.");
   };
 
   /* --- Content Studio Logic --- */
@@ -318,6 +342,27 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
                     <h3>Authority Registry</h3>
                     <p>Manage system operators.</p>
                  </div>
+
+                 <div style={{ padding: "0 20px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)", marginBottom: 16 }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                      <div>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>AIML Companion Access</div>
+                        <div style={{ fontSize: 11, color: "var(--text3)", marginTop: 2 }}>Unlock for all students globally.</div>
+                      </div>
+                      <button 
+                        onClick={handleToggleAimlAccess}
+                        style={{
+                          width: 44, height: 22, borderRadius: 11, background: allowAimlForAll ? "var(--neon)" : "rgba(255,255,255,0.1)",
+                          position: "relative", cursor: "pointer", border: "none", transition: "all .3s"
+                        }}
+                      >
+                        <div style={{
+                          width: 16, height: 16, borderRadius: "50%", background: allowAimlForAll ? "#000" : "#fff",
+                          position: "absolute", top: 3, left: allowAimlForAll ? 25 : 3, transition: "all .3s"
+                        }} />
+                      </button>
+                    </div>
+                  </div>
                  <div className="invite-form-minimal">
                     <input type="email" placeholder="new.operator@genai.com" value={newAdminEmail} onChange={e => setNewAdminEmail(e.target.value)} />
                     <button onClick={handleAddAdmin} className="mini-action-btn"><UserPlus size={14} /></button>
@@ -335,6 +380,53 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
                       </div>
                     ))}
                  </div>
+
+                  {/* Gemini Configuration Section */}
+                  <div style={{ marginTop: 24, padding: 20, borderTop: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                      <div style={{ width: 28, height: 28, borderRadius: 8, background: "rgba(66,133,244,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Sparkles size={14} color="#4285F4" />
+                      </div>
+                      <div>
+                        <h4 style={{ fontSize: 13, fontWeight: 700, color: "var(--text)" }}>AI Infrastructure</h4>
+                        <p style={{ fontSize: 10, color: "var(--text3)" }}>Dynamic Gemini API Credential</p>
+                      </div>
+                    </div>
+                    
+                    <div className="invite-form-minimal" style={{ marginBottom: 12 }}>
+                      <input 
+                        type={showKey ? "text" : "password"} 
+                        placeholder="Paste Gemini API Key..." 
+                        value={newGeminiKey} 
+                        onChange={e => setNewGeminiKey(e.target.value)}
+                        style={{ fontFamily: showKey ? "monospace" : "inherit" }}
+                      />
+                      <button 
+                         onClick={() => setShowKey(!showKey)} 
+                         className="mini-action-btn"
+                         style={{ marginRight: 4 }}
+                      >
+                        {showKey ? <Unlock size={12} /> : <Lock size={12} />}
+                      </button>
+                      <button onClick={handleUpdateGeminiKey} className="mini-action-btn" style={{ background: "var(--neon)", color: "#000" }}><CheckCircle2 size={12} /></button>
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <a 
+                        href="https://aistudio.google.com/app/api-keys?project=gen-lang-client-0401997559" 
+                        target="_blank" 
+                        rel="noreferrer"
+                        style={{ fontSize: 9, color: "#4285F4", textDecoration: "none", display: "flex", alignItems: "center", gap: 4, fontWeight: 600 }}
+                      >
+                        <ExternalLink size={10} /> GET GEMINI API KEY
+                      </a>
+                      {geminiKey && (
+                        <div style={{ fontSize: 8, color: "var(--neon)", fontWeight: 800, display: "flex", alignItems: "center", gap: 4 }}>
+                          <ShieldCheck size={10} /> DYNAMIC CONFIG ACTIVE
+                        </div>
+                      )}
+                    </div>
+                  </div>
               </div>
            </div>
         </section>

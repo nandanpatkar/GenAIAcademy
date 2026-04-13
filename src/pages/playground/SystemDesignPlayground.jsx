@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useMemo } from "react";
+import { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import ReactFlow, {
   addEdge, MiniMap, Controls, Background, useNodesState, useEdgesState,
   Handle, Position, NodeResizer, BackgroundVariant, MarkerType, Panel,
@@ -176,7 +176,7 @@ const TBtn = ({ icon: Icon, label, onClick, active, accent, danger, disabled }) 
 );
 
 // ═══ MAIN COMPONENT ═══════════════════════════════════════════════════════════
-export default function SystemDesignPlayground({ onClose }) {
+export default function SystemDesignPlayground({ onClose, initialTab = "system" }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
@@ -201,8 +201,15 @@ export default function SystemDesignPlayground({ onClose }) {
   const [flowDesc,      setFlowDesc]      = useState("");
   const [flowTags,      setFlowTags]      = useState([]);
   const [activeFlowId,  setActiveFlowId]  = useState(null);
-  const [mainTab,       setMainTab]       = useState("system"); // "system" | "arch"
+  const [mainTab,       setMainTab]       = useState(initialTab || "system"); // "system" | "arch"
   const [showSidebar,   setShowSidebar]   = useState(true);
+
+  // Sync tab if initialTab changes from external prop
+  useEffect(() => {
+    if (initialTab) {
+      setMainTab(initialTab);
+    }
+  }, [initialTab]);
 
   const rfWrapper = useRef(null);
   const [rfi, setRfi] = useState(null);

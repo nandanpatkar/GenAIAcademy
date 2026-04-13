@@ -10,8 +10,14 @@ import { dsaPart9 } from "./dsa_part9";
 
 export const DSA_PATH = {
   id: "pattern-wise-dsa",
+  label: "DSA Mastery",
   title: "Pattern Wise DSA",
   subtitle: "Comprehensive algorithmic mastery mapping 450+ foundational patterns optimally.",
+  description: "Master foundational to advanced data structures and algorithms via pattern-wise learning.",
+  color: "#a855f7",
+  dimColor: "#7c3aed",
+  bgColor: "rgba(168,85,247,0.08)",
+  borderColor: "rgba(168,85,247,0.3)",
   nodes: [
     ...dsaPart1,
     ...dsaPart2,

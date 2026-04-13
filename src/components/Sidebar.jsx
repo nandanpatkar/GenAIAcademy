@@ -1,5 +1,6 @@
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit } from "lucide-react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles } from "lucide-react";
+import { Bookmark } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import BentoCard from "./BentoCard";
 
@@ -16,31 +17,42 @@ export default function Sidebar({
   showAdminManagement, setShowAdminManagement,
   showSimulator, setShowSimulator,
   showGalaxy, setShowGalaxy,
+  showAimlCompanion, setShowAimlCompanion,
   showAIInterviewer, setShowAIInterviewer,
+  showAlgoStudio, setShowAlgoStudio,
+  showIntelligenceHub, setShowIntelligenceHub,
+  showWorkplaceLab, setShowWorkplaceLab,
   isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
-  onSignOut
+  onSignOut,
+  onHubNav
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { isAdmin } = useAuth();
+  const [isBlogExpanded, setIsBlogExpanded] = useState(false);
+  const { isAdmin, allowAimlForAll } = useAuth();
 
   const navItems = [
     { icon: <LayoutDashboard size={16} />, label: "Overview", id: "overview" },
     { icon: <Orbit size={16} />, label: "Knowledge Galaxy", id: "galaxy" },
     { icon: <Network size={16} />, label: "Curriculum Map", id: "curriculum_map" },
     { icon: <Terminal size={16} />, label: "Practice IDE", id: "ide" },
-    { icon: <CheckSquare size={16} />, label: "Tasks", id: "tasks" },
+    { icon: <Bookmark size={16} />, label: "Quick Notes", id: "tasks" },
     { icon: <CircleDashed size={16} />, label: "Progress", id: "progress" },
     { icon: <BookOpen size={16} />, label: "Resources", id: "resources" },
     { icon: <Boxes size={16} />, label: "Playground", id: "playground" },
+    { icon: <Layers size={16} />, label: "System Simulator", id: "simulator" },
     { icon: <Clapperboard size={16} />, label: "DSA Animator", id: "dsa_animator" },
-    { icon: <Cpu size={16} />, label: "System Design Sim", id: "simulator" },
     { icon: <BookMarked size={16} />, label: "Blog", id: "blog" },
+    ...((isAdmin || allowAimlForAll) ? [
+      { icon: <GraduationCap size={16} />, label: "AIML Companion", id: "aiml_companion" }
+    ] : []),
     { icon: <Users size={16} />, label: "AI Interviewer", id: "interviewer" },
     ...(isAdmin ? [
       { icon: <Shield size={16} />, label: "System Admin", id: "admin_management" }
     ] : []),
+    { icon: <Cpu size={16} />, label: "Algo Studio", id: "algo_studio" },
+    { icon: <BoxSelect size={16} />, label: "Intelligence Hub", id: "hub" },
     { icon: <Users size={16} />, label: "Community", id: "community" },
   ];
 
@@ -50,12 +62,15 @@ export default function Sidebar({
     if (showSimulator) return "simulator";
     if (showGalaxy) return "galaxy";
     if (showDSAAnimator) return "dsa_animator";
+    if (showAimlCompanion) return "aiml_companion";
     if (showPlayground) return "playground";
     if (showProgress) return "progress";
     if (showIDE) return "ide";
     if (showResources) return "resources";
     if (showCurriculumMap) return "curriculum_map";
     if (showAIInterviewer) return "interviewer";
+    if (showAlgoStudio) return "algo_studio";
+    if (showWorkplaceLab) return "tasks";
     if (!activeNode) return "overview";
     return null;
   };
@@ -74,11 +89,14 @@ export default function Sidebar({
     if (setShowProgress) setShowProgress(false);
     if (setShowPlayground) setShowPlayground(false);
     if (setShowDSAAnimator) setShowDSAAnimator(false);
+    if (setShowAimlCompanion) setShowAimlCompanion(false);
     if (setShowBlog) setShowBlog(false);
     if (setShowAdminManagement) setShowAdminManagement(false);
     if (setShowSimulator) setShowSimulator(false);
     if (setShowGalaxy) setShowGalaxy(false);
     if (setShowAIInterviewer) setShowAIInterviewer(false);
+    if (setShowAlgoStudio) setShowAlgoStudio(false);
+    if (setShowWorkplaceLab) setShowWorkplaceLab(false);
 
     // Open selected
     switch (id) {
@@ -88,14 +106,27 @@ export default function Sidebar({
       case "progress": if (setShowProgress) setShowProgress(true); break;
       case "playground": if (setShowPlayground) setShowPlayground(true); break;
       case "dsa_animator": if (setShowDSAAnimator) setShowDSAAnimator(true); break;
+      case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
       case "simulator": if (setShowSimulator) setShowSimulator(true); break;
       case "galaxy": if (setShowGalaxy) setShowGalaxy(true); break;
-      case "blog": if (setShowBlog) setShowBlog(true); break;
+      case "blog": 
+        setIsBlogExpanded(!isBlogExpanded);
+        if (onHubNav) onHubNav({ view: 'blog', year: null, isAI: false }); 
+        break;
       case "admin_management":
         if (setShowAdminManagement) setShowAdminManagement(true);
         break;
       case "interviewer":
         if (setShowAIInterviewer) setShowAIInterviewer(true);
+        break;
+      case "algo_studio":
+        if (setShowAlgoStudio) setShowAlgoStudio(true);
+        break;
+      case "tasks":
+        if (setShowWorkplaceLab) setShowWorkplaceLab(true);
+        break;
+      case "hub":
+        if (setShowIntelligenceHub) setShowIntelligenceHub(true);
         break;
       default: break;
     }
@@ -168,19 +199,22 @@ export default function Sidebar({
 
         <div className="logo-morph-wrapper">
           <div className="brand-layer">
-            <span className="brand pixar-brand">
-              {"GenAI".split("").map((char, i) => (
-                <span key={i} className={`pixar-char ${char === 'I' ? 'char-i' : ''}`} style={{ "--idx": i }}>
-                  {char}
-                </span>
-              ))}
-              <span className="pixar-space">&nbsp;</span>
-              {"Academy".split("").map((char, i) => (
-                <span key={i + 5} className="pixar-char academy-char" style={{ "--idx": i + 6 }}>
-                  {char}
-                </span>
-              ))}
-            </span>
+            <div className="brand-stack">
+              <span className="brand pixar-brand line-1">
+                {"GenAI".split("").map((char, i) => (
+                  <span key={i} className={`pixar-char ${char === 'I' ? 'char-i' : ''}`} style={{ "--idx": i }}>
+                    {char}
+                  </span>
+                ))}
+              </span>
+              <span className="brand pixar-brand line-2">
+                {"Academy".split("").map((char, i) => (
+                  <span key={i + 6} className="pixar-char academy-char" style={{ "--idx": i + 6 }}>
+                    {char}
+                  </span>
+                ))}
+              </span>
+            </div>
           </div>
 
           <div className="controls-layer">
@@ -236,8 +270,8 @@ export default function Sidebar({
         <div className="sidebar-nav">
           <div className="sidebar-section">
             {navItems.map((item) => (
+              <React.Fragment key={item.id}>
               <div
-                key={item.id}
                 className={`sidebar-item ${activeNavId === item.id ? "active" : ""}`}
                 onClick={() => handleNavClick(item.id)}
                 data-label={item.label}
@@ -246,7 +280,29 @@ export default function Sidebar({
                   {item.icon}
                 </span>
                 {!isCollapsed && <span>{item.label}</span>}
+                {!isCollapsed && item.id === 'blog' && (
+                  <ChevronRight size={12} style={{ marginLeft: 'auto', transition: '0.3s', transform: isBlogExpanded ? 'rotate(90deg)' : 'none' }} />
+                )}
               </div>
+
+              {/* --- Blog Sub-menu --- */}
+              {!isCollapsed && item.id === 'blog' && isBlogExpanded && (
+                <div className="sidebar-sub-menu">
+                  <div className="sub-item ai-sub" onClick={() => onHubNav({ view: 'blog', year: null, isAI: true })}>
+                    <Sparkles size={12} />
+                    <span>Neural Pilot</span>
+                  </div>
+                  <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2025', isAI: false })}>
+                    <div className="sub-dot" />
+                    <span>2025 Repository</span>
+                  </div>
+                  <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2024', isAI: false })}>
+                    <div className="sub-dot" />
+                    <span>2024 Repository</span>
+                  </div>
+                </div>
+              )}
+              </React.Fragment>
             ))}
           </div>
         </div>

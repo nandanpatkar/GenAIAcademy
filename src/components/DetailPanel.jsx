@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { generateStudyContent } from "../services/aiService";
 import { 
   getSavedSets, saveStudySet, deleteSavedSet, MODE_LABELS,
@@ -8,7 +8,7 @@ import {
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
   Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2, AlertCircle,
   BookmarkCheck, Trash2, FolderOpen, Save, RotateCcw, Clock,
-  Maximize2, Minimize2, Orbit
+  Maximize2, Minimize2, Orbit, Plus, Layers, ArrowRight
 } from "lucide-react";
 import { AIResult } from "./AIStudyContent";
 
@@ -472,7 +472,8 @@ export default function DetailPanel({
   node, module, pathColor,
   onMarkDone, onMarkProgress, onMarkModuleStatus, onToggleSubtopicStatus,
   nodeState, onModuleSelect, onTopicSelect, isEditMode, onBackToGalaxy,
-  onEnterFocusMode, onVideoSelect
+  onAddTopic, onDeleteTopic,
+  onEnterFocusMode, onVideoSelect, onClose
 }) {
   if (!node || !module) return (
     <div className="no-select">
@@ -505,8 +506,9 @@ export default function DetailPanel({
     <div className="detail-panel" style={{ "--dp-color": pathColor }}>
       {/* ── Header ── */}
       <div className="dp-header">
-        <div className="dp-breadcrumb" style={{ fontSize: "8px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          DS <span>·</span> {node.title.substring(0, 15).toUpperCase()} <span>·</span> {module.title.toUpperCase()}
+        <div className="dp-breadcrumb" style={{ fontSize: "8px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div>DS <span>·</span> {node.title.substring(0, 15).toUpperCase()} <span>·</span> {module.title.toUpperCase()}</div>
+          {onClose && <button onClick={onClose} style={{ background: "none", border: "none", color: "var(--text3)", cursor: "pointer", fontSize: "14px", padding: "0 4px" }}>✕</button>}
         </div>
         <div className="dp-title-row">
           <div>
@@ -616,49 +618,96 @@ export default function DetailPanel({
                     display: "flex", flexDirection: "column", gap: 4,
                     marginBottom: 12, marginTop: 4,
                   }}>
+                    {isEditMode && (
+                      <div className="dp-insert-divider first" onClick={() => onAddTopic && onAddTopic(0)}>
+                        <Plus size={10} /> Insert at beginning
+                      </div>
+                    )}
                     {m.subtopics.map((s, sidx) => {
                       const st = typeof s === "object" ? s : { title: s, status: "pending" };
                       const isComplete = st.status === "complete";
+                      const topicId = st.id || st.title;
                       return (
-                        <div
-                          key={sidx}
-                          onClick={(e) => { e.stopPropagation(); onTopicSelect && onTopicSelect(st); }}
-                          style={{
-                            fontSize: 12, fontWeight: 600,
-                            color: isComplete ? "var(--text)" : "var(--text2)",
-                            cursor: "pointer",
-                            padding: "8px 12px", borderRadius: 6,
-                            background: isComplete ? "rgba(0,255,136,0.05)" : "rgba(255,255,255,0.02)",
-                            display: "flex", justifyContent: "space-between", alignItems: "center",
-                            transition: "all .15s",
-                          }}
-                          className="hover-node"
-                        >
-                          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                            <div
-                              onClick={(e) => { e.stopPropagation(); onToggleSubtopicStatus && onToggleSubtopicStatus(st.title); }}
-                              style={{
-                                width: 12, height: 12, borderRadius: "50%",
-                                border: `1.5px solid ${isComplete ? "#00ff88" : "var(--text3)"}`,
-                                display: "flex", alignItems: "center", justifyContent: "center",
-                                fontSize: 8, color: "#00ff88", cursor: "pointer",
-                                background: isComplete ? "rgba(0,255,136,0.1)" : "transparent",
-                              }}
-                            >
-                              {isComplete && "✓"}
+                        <React.Fragment key={sidx}>
+                          <div
+                            onClick={(e) => { e.stopPropagation(); onTopicSelect && onTopicSelect(st); }}
+                            style={{
+                              fontSize: 12, fontWeight: 600,
+                              color: isComplete ? "var(--text)" : "var(--text2)",
+                              cursor: "pointer",
+                              padding: "8px 12px", borderRadius: 6,
+                              background: isComplete ? "rgba(0,255,136,0.05)" : "rgba(255,255,255,0.02)",
+                              display: "flex", justifyContent: "space-between", alignItems: "center",
+                              transition: "all .15s",
+                              position: "relative"
+                            }}
+                            className="hover-node"
+                          >
+                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                              <div
+                                onClick={(e) => { e.stopPropagation(); onToggleSubtopicStatus && onToggleSubtopicStatus(st.title); }}
+                                style={{
+                                  width: 12, height: 12, borderRadius: "50%",
+                                  border: `1.5px solid ${isComplete ? "#00ff88" : "var(--text3)"}`,
+                                  display: "flex", alignItems: "center", justifyContent: "center",
+                                  fontSize: 8, color: "#00ff88", cursor: "pointer",
+                                  background: isComplete ? "rgba(0,255,136,0.1)" : "transparent",
+                                }}
+                              >
+                                {isComplete && "✓"}
+                              </div>
+                              <span>{st.title}</span>
                             </div>
-                            <span>{st.title}</span>
+                            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                              {st.companies && st.companies.length > 0 && (
+                                <span style={{ fontSize: 8, color: "var(--text3)", background: "var(--bg3)", padding: "2px 6px", borderRadius: 4 }}>
+                                  {st.companies[0]}
+                                </span>
+                              )}
+                              {isEditMode && (
+                                <button 
+                                  onClick={(e) => { e.stopPropagation(); onDeleteTopic && onDeleteTopic(topicId); }}
+                                  style={{ background: "transparent", border: "none", color: "var(--text3)", cursor: "pointer", display: "flex", alignItems: "center", padding: "4px" }}
+                                  onMouseEnter={(e) => e.currentTarget.style.color = "#ff4444"}
+                                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--text3)"}
+                                  title="Delete Topic"
+                                >
+                                  <Trash2 size={12} />
+                                </button>
+                              )}
+                            </div>
                           </div>
-                          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                            {st.companies && st.companies.length > 0 && (
-                              <span style={{ fontSize: 8, color: "var(--text3)", background: "var(--bg3)", padding: "2px 6px", borderRadius: 4 }}>
-                                {st.companies[0]}
-                              </span>
-                            )}
-                          </div>
-                        </div>
+                          {isEditMode && (
+                            <div className="dp-insert-divider" onClick={() => onAddTopic && onAddTopic(sidx + 1)}>
+                              <Plus size={10} /> Insert after {st.title}
+                            </div>
+                          )}
+                        </React.Fragment>
                       );
                     })}
+                    {isEditMode && (
+                      <button 
+                        className="add-subtopic-btn" 
+                        onClick={() => onAddTopic && onAddTopic(-1)}
+                        style={{ 
+                          width: "100%",
+                          marginTop: 8,
+                          background: "rgba(255,255,255,0.03)", 
+                          border: "1px dashed var(--border)", 
+                          color: "var(--text3)", 
+                          padding: "10px", 
+                          borderRadius: 8, 
+                          fontSize: 10, 
+                          fontWeight: 700,
+                          cursor: "pointer",
+                          transition: "all .2s"
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--text2)"; e.currentTarget.style.color = "var(--text)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text3)"; }}
+                      >
+                        + ADD NEW TOPIC
+                      </button>
+                    )}
                   </div>
                 )}
               </div>
@@ -798,78 +847,64 @@ export default function DetailPanel({
                 <Bookmark size={22} color="white" strokeWidth={2.5} />
               </div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 900, color: "var(--text)", marginBottom: 4, letterSpacing: "0.2px" }}>
-                  Deep Study in NotebookLM
-                </div>
-                <div style={{ fontSize: 10, color: "var(--text3)", lineHeight: 1.5, opacity: 0.8, maxWidth: 300 }}>
-                  {hasNoSources
-                    ? "Open NotebookLM for a contextual research session."
-                    : `Analyzing ${links} link${links !== 1 ? "s" : ""} and ${vids} module video${vids !== 1 ? "s" : ""} via AI.`
-                  }
-                </div>
+                <div style={{ fontSize: 14, fontWeight: 900, color: "var(--text)", letterSpacing: "0.5px" }}>NotebookLM</div>
+                <div style={{ fontSize: 10, color: "var(--text3)", marginTop: 2, fontWeight: 600 }}>Deep-dive into sources with Google's AI</div>
               </div>
             </div>
+            
             <button
               onClick={openNotebookLM}
               style={{
-                padding: "12px 22px",
-                borderRadius: 12,
-                background: "rgba(66,133,244,0.12)",
-                border: "1px solid rgba(66,133,244,0.3)",
-                color: "#4285F4",
-                fontSize: 11,
-                fontWeight: 900,
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "var(--text2)",
+                padding: "8px 16px",
+                borderRadius: 10,
+                fontSize: "10px",
+                fontWeight: 800,
                 cursor: "pointer",
-                display: "flex", alignItems: "center", gap: 8,
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-                transition: "all .4s cubic-bezier(0.19, 1, 0.22, 1)",
-                letterSpacing: "1px",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                transition: "all 0.3s cubic-bezier(0.19, 1, 0.22, 1)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(66,133,244,0.2)";
-                e.currentTarget.style.transform = "scale(1.05)";
-                e.currentTarget.style.boxShadow = "0 0 20px rgba(66,133,244,0.2)";
+                e.currentTarget.style.background = "#fff";
+                e.currentTarget.style.color = "#000";
+                e.currentTarget.style.transform = "translateX(5px)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(66,133,244,0.12)";
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                e.currentTarget.style.color = "var(--text2)";
+                e.currentTarget.style.transform = "translateX(0)";
               }}
             >
               LAUNCH
-              <ExternalLink size={12} />
+              <ArrowRight size={14} />
             </button>
           </div>
 
-          {/* ── AI Study Panel ── */}
           <AIStudyPanel module={module} pathColor={pathColor} />
         </div>
-
-        {/* Stats */}
-        <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
-          {[
-            { label: "Videos", val: module.videos?.length || 0, icon: Video },
-            { label: "Files",  val: module.files?.length  || 0, icon: FileText },
-            { label: "Links",  val: module.links?.length  || 0, icon: Link2 },
-          ].map((s) => {
-            const Icon = s.icon;
-            return (
-              <div key={s.label} style={{
-                flex: 1, background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)",
-                borderRadius: 12, padding: "14px 12px", textAlign: "center",
-                transition: "all 0.3s ease",
-              }}>
-                <div style={{ marginBottom: 6, opacity: 0.6 }}><Icon size={20} color={pathColor} /></div>
-                <div style={{ fontSize: 16, fontWeight: 900, color: "var(--text)", letterSpacing: "-0.5px" }}>{s.val}</div>
-                <div style={{ fontSize: 8, color: "var(--text3)", fontWeight: 800, letterSpacing: "1px", textTransform: "uppercase", marginTop: 2 }}>
-                  {s.label}
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </div>
+
+      <style>{`
+        .dp-progress-bar { height: 2px; background: var(--bg4); border-radius: 2px; overflow: hidden; margin-top: 12px; }
+        .dp-progress-fill { height: 100%; transition: width .6s ease; }
+        .dp-module-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; transition: all .2s; }
+        .dp-module-row:hover { background: var(--bg3); }
+        .dp-module-row.active { background: var(--bg3); border: 1px solid var(--border); }
+        .dp-module-circle { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 8px; flex-shrink: 0; }
+        .dp-module-circle.complete { border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.1); }
+        .dp-module-circle.in_progress { border-color: #f59e0b; color: #f59e0b; background: rgba(245,158,11,0.1); }
+        .dp-module-circle.locked { border-color: var(--text3); color: var(--text3); }
+        .dp-module-name { font-size: 11px; fontWeight: 700; color: var(--text); }
+        .dp-module-desc { font-size: 9px; color: var(--text3); margin-top: 1px; }
+        .dp-module-status-pill { font-size: 7px; font-weight: 900; padding: 2px 6px; border-radius: 4px; letter-spacing: .5px; }
+        .dp-module-status-pill.complete { background: rgba(0,255,136,0.1); color: #00ff88; }
+        .dp-module-status-pill.in_progress { background: rgba(245,158,11,0.1); color: #f59e0b; }
+        .hover-node:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--border2); }
+      `}</style>
 
       {/* ── Actions ── */}
       <div className="dp-actions">
