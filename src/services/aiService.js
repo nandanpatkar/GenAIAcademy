@@ -700,8 +700,8 @@ export const createRetellWebCall = async (config) => {
   
   // Use specialized agent for Hindi if requested
   const agentId = language === "Hindi" 
-    ? "agent_c27a4f05202a89e0f0897e24d5" 
-    : import.meta.env.VITE_RETELL_AGENT_ID || "agent_0a638e3bf56262b6ba02e51555";
+    ? (import.meta.env.VITE_RETELL_HINDI_AGENT_ID || "agent_c3b45b8978dd12ea7400171947")
+    : (import.meta.env.VITE_RETELL_AGENT_ID || "agent_f530318a167b9cdefc0de07c24");
 
   const apiKey = import.meta.env.VITE_RETELL_API_KEY;
   if (!apiKey || apiKey.includes("your-api-key")) {
