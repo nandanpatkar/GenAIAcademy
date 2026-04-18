@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./genai_academy_banner_1775722153914.png" width="100%" alt="GenAI Academy Hero" />
-</p>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/PHASE-MISSION_CONTROL-emerald?style=for-the-badge&logo=opsgenie" alt="Status" />
