@@ -618,12 +618,8 @@ export default function AimlCompanion({ onClose }) {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     }}>
 
-      {/* Header */}
-      <div style={{
-        display: "flex", alignItems: "center", gap: 12,
-        padding: "12px 20px", borderBottom: "1px solid var(--border)",
-        background: "var(--bg2)", flexShrink: 0,
-      }}>
+      <header className="aiml-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0 }}>
+        
         <button
           onClick={() => setShowSidebar(v => !v)}
           title="Toggle Sidebar"
@@ -631,33 +627,39 @@ export default function AimlCompanion({ onClose }) {
             background: showSidebar ? "var(--bg3)" : "transparent",
             border: "1px solid " + (showSidebar ? "var(--border)" : "transparent"),
             color: showSidebar ? "var(--text)" : "var(--text3)",
-            cursor: "pointer", borderRadius: 6, width: 28, height: 28,
-            display: "flex", alignItems: "center", justifyContent: "center", transition: "all .15s",
+            cursor: "pointer", borderRadius: 7, width: 30, height: 30,
+            display: "flex", alignItems: "center", justifyContent: "center", transition: "all .15s", flexShrink: 0
           }}
-          onMouseEnter={e => { e.currentTarget.style.color = "var(--text)"; }}
-          onMouseLeave={e => { e.currentTarget.style.color = showSidebar ? "var(--text)" : "var(--text3)"; }}
         >
           <PanelLeft size={16} />
         </button>
 
-        <div style={{
-          width: 32, height: 32, borderRadius: 9,
-          background: "rgba(0,255,136,0.12)", border: "1px solid rgba(0,255,136,0.3)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          color: "#00ff88", flexShrink: 0,
-        }}>
-          <GraduationCap size={18} strokeWidth={2.5} />
+        {/* Logo + Title Stack */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, #00ff88, #00cc66)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 18px rgba(0, 255, 136, 0.35)' }}>
+            <GraduationCap size={19} color="#000" />
+          </div>
+          <div>
+            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>Aiml Companion</h1>
+            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{totalModules} modules · {CURRICULA.length} curricula · Interactive Learning</p>
+          </div>
         </div>
 
-        <div>
-          <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: "-.3px", fontFamily: "var(--font)", color: "var(--text)" }}>
-            AIML Companion
+        <div style={{ flex: 1 }} />
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ padding: "4px 10px", background: "var(--bg3)", border: "1px solid var(--border)", borderRadius: 6, display: "flex", alignItems: "center", gap: 6 }}>
+             <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#00ff88", boxShadow: "0 0 10px #00ff88" }} />
+             <span style={{ fontSize: 10, fontWeight: 700, color: "var(--text2)" }}>SYSTEM_ONLINE</span>
           </div>
-          <div style={{ fontSize: 10, color: "var(--text3)" }}>
-            {totalModules} modules · {CURRICULA.length} curricula
-          </div>
+
+          <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: '4px 8px' }}>
+            <X size={20} />
+          </button>
         </div>
-      </div>
+      </header>
 
       {/* Body */}
       <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>

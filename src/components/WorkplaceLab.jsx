@@ -147,42 +147,59 @@ export default function WorkplaceLab({
         className="workplace-container"
       >
         {/* --- Sidebar / Header --- */}
-        <div className="workplace-header">
-          <div className="workplace-brand">
-            <div className="brand-dot" />
-            <span>Quick Notes</span>
-          </div>
+        <header className="workplace-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0 }}>
           
-          <div className="workplace-nav">
-            <motion.button 
-              className={`nav-btn ${activeTab === 'notes' ? 'active' : ''}`}
-              onClick={() => setActiveTab('notes')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <FileText size={16} />
-              <span>KNOWLEDGE_BASE</span>
-            </motion.button>
-            <motion.button 
-              className={`nav-btn ${activeTab === 'history' ? 'active' : ''}`}
-              onClick={() => setActiveTab('history')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Clock size={16} />
-              <span>TEMPORAL_HISTORY</span>
-            </motion.button>
+          {/* Placeholder for sidebar toggle alignment */}
+          <div style={{ width: 30, height: 30, flexShrink: 0 }} />
+
+          {/* Logo + Title Stack */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, #f59e0b, #d97706)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 18px rgba(245, 158, 11, 0.35)' }}>
+              <FileText size={19} color="#000" />
+            </div>
+            <div>
+              <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>Quick Notes</h1>
+              <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>Personal Intelligence Vault · Research Snippets</p>
+            </div>
           </div>
 
-          <motion.button 
-            className="close-btn" 
-            onClick={onClose}
-            whileHover={{ scale: 1.1, rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
-          >
+          <div style={{ flex: 1 }} />
+
+          <div className="workplace-nav" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <button 
+              className={`nav-btn ${activeTab === 'notes' ? 'active' : ''}`}
+              onClick={() => setActiveTab('notes')}
+              style={{
+                background: activeTab === 'notes' ? 'var(--bg3)' : 'transparent',
+                border: `1px solid ${activeTab === 'notes' ? 'var(--border)' : 'transparent'}`,
+                color: activeTab === 'notes' ? 'var(--text)' : 'var(--text3)',
+                padding: '6px 12px', borderRadius: 7, fontSize: 10, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, transition: 'all 0.15s'
+              }}
+            >
+              <FileText size={14} />
+              <span>KNOWLEDGE_BASE</span>
+            </button>
+            <button 
+              className={`nav-btn ${activeTab === 'history' ? 'active' : ''}`}
+              onClick={() => setActiveTab('history')}
+              style={{
+                background: activeTab === 'history' ? 'var(--bg3)' : 'transparent',
+                border: `1px solid ${activeTab === 'history' ? 'var(--border)' : 'transparent'}`,
+                color: activeTab === 'history' ? 'var(--text)' : 'var(--text3)',
+                padding: '6px 12px', borderRadius: 7, fontSize: 10, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, transition: 'all 0.15s'
+              }}
+            >
+              <Clock size={14} />
+              <span>TEMPORAL_HISTORY</span>
+            </button>
+          </div>
+
+          <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+
+          <button className="close-btn" onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: '4px 8px' }}>
             <X size={20} />
-          </motion.button>
-        </div>
+          </button>
+        </header>
 
         <div className="workplace-layout">
           {/* --- Main Content --- */}

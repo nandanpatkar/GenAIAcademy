@@ -50,23 +50,45 @@ export default function BlogPage({ theme, isEditMode, onClose }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", overflow: "hidden", background: "var(--bg)" }}>
       {/* ══ TOP TAB BAR ══════════════════════════════════════════════════════ */}
-      <div style={{
-        display: "flex", alignItems: "center",
-        background: "var(--bg)", borderBottom: "1px solid var(--border)",
-        padding: "0 16px", height: 42, flexShrink: 0,
-      }}>
-        <div style={{
-          display: "flex", alignItems: "center", gap: 8,
-          fontSize: 12, fontWeight: 700, color: "var(--text)", textTransform: "uppercase", letterSpacing: "0.05em"
-        }}>
-          <BookOpen size={14} color="var(--primary)" /> GenAI Blog
+      <header className="blog-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0 }}>
+        
+        {/* Placeholder for sidebar toggle alignment */}
+        <div style={{ width: 30, height: 30, flexShrink: 0 }} />
+
+        {/* Logo + Title Stack */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, #6366f1, #4f46e5)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 18px rgba(99, 102, 241, 0.35)' }}>
+            <BookOpen size={19} color="#fff" />
+          </div>
+          <div>
+            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>GenAI Blog</h1>
+            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>Intelligence Hub · Latest Insights · Research Papers</p>
+          </div>
         </div>
+
         <div style={{ flex: 1 }} />
-        <button onClick={onClose}
-          style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text3)", fontSize: 18, padding: "4px 8px", borderRadius: 5, lineHeight: 1 }}>
-          ✕
-        </button>
-      </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {isAdmin && !showEditor && !selectedBlog && (
+            <button 
+              onClick={() => { setEditingBlog(null); setShowEditor(true); }}
+              style={{
+                background: 'var(--primary)', color: '#000', border: 'none', borderRadius: 8, padding: '8px 16px',
+                fontSize: 11, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
+                boxShadow: '0 0 18px rgba(0, 255, 136, 0.35)'
+              }}
+            >
+              <Edit3 size={14} /> WRITE ARTICLE
+            </button>
+          )}
+          
+          <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: '4px 8px' }}>
+            <X size={20} />
+          </button>
+        </div>
+      </header>
 
       {/* ══ CONTENT AREA ══════════════════════════════════════════════════════ */}
       <div id="blog-scroll-container" style={{ flex: 1, overflowY: "auto", position: "relative" }}>

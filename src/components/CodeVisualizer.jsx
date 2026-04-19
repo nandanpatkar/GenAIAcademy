@@ -33,24 +33,38 @@ export default function CodeVisualizer({ onClose }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <header className="cv-iframe-header">
-        <div className="cv-iframe-brand">
-          <Monitor size={18} className="neon-text" />
-          <span className="brand-text">ALGO_SIMULATOR_PRO</span>
-        </div>
+      <header className="cv-iframe-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0, position: 'relative' }}>
         
-        <div className="cv-iframe-hint">
-          <div className="status-dot-pulse" />
-          <span>Active Simulation Engine</span>
+        {/* Placeholder for sidebar toggle alignment */}
+        <div style={{ width: 30, height: 30, flexShrink: 0 }} />
+
+        {/* Logo + Title Stack */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, #3b82f6, #2563eb)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 18px rgba(59, 130, 246, 0.35)' }}>
+            <Monitor size={19} color="#fff" />
+          </div>
+          <div>
+            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>Algo Visualizer</h1>
+            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>Active Simulation Engine · Real-time Execution</p>
+          </div>
         </div>
 
-        <div className="cv-header-actions">
-          <button className="cv-icon-btn" title="Reload Engine" onClick={handleManualRetry}>
+        <div style={{ flex: 1 }} />
+
+        <div className="cv-header-actions" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button 
+            className="cv-icon-btn" 
+            title="Reload Engine" 
+            onClick={handleManualRetry}
+            style={{ background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 7, color: 'var(--text2)', padding: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+          >
             <RefreshCcw size={18} />
           </button>
-          <div className="cv-v-divider" />
-          <button className="cv-close-btn" onClick={onClose}>
-            <X size={18} />
+          
+          <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+          
+          <button className="cv-close-btn" onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: '4px 8px' }}>
+            <X size={20} />
           </button>
         </div>
       </header>

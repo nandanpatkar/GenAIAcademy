@@ -6,7 +6,7 @@ import {
   Terminal, Code, Layout, Settings, BookOpen, 
   ChevronRight, Search, Activity, Cpu, Sparkles, X,
   Monitor, Info, Zap, Layers, Share2, Download,
-  Compass, Grid, Eye, PanelLeftClose, PanelLeftOpen, Plus, Cloud,
+  Compass, Grid, Eye, PanelLeftClose, PanelLeftOpen, PanelLeft, Plus, Cloud,
   Minimize2, Maximize2, Columns, Grid3X3
 } from 'lucide-react';
 import { ALGO_EXAMPLES } from '../data/algoExamples';
@@ -474,39 +474,75 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
       className="algo-studio-overlay"
     >
       <div className="studio-pro-shell">
-      <header className="studio-header">
-        <div className="window-dots">
-          <div className="dot red" />
-          <div className="dot yellow" />
-          <div className="dot green" />
-        </div>
-        <div className="studio-title">
-          <Cpu size={14} className="emerald-pulse" />
-          <span>ALGO_STUDIO_PRO</span>
-          <span className="v-tag">v2.6</span>
-        </div>
+      <header className="studio-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0 }}>
         
-        <div className="header-nav">
-          <div className="pro-pill-btn" onClick={() => setExploreModalOpen(true)}>
-            <Compass size={16} />
-            <span>EXPLORE</span>
+        {/* Sidebar Toggle — consistent with simulator */}
+        <button 
+          onClick={() => setIsVizMaximized(!isVizMaximized)}
+          title="Toggle Sidebar"
+          style={{
+            background: !isVizMaximized ? 'var(--bg3)' : 'transparent',
+            border: `1px solid ${!isVizMaximized ? 'var(--border)' : 'transparent'}`,
+            color: !isVizMaximized ? 'var(--text)' : 'var(--text3)',
+            cursor: 'pointer', borderRadius: 7, width: 30, height: 30,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'all .15s', flexShrink: 0,
+          }}
+        >
+          <PanelLeft size={15} />
+        </button>
+
+        {/* Logo + Title Stack */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, #00ff88, #00cc66)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 18px rgba(0, 255, 136, 0.35)' }}>
+            <Cpu size={19} color="#000" />
           </div>
-          <div className="pro-pill-btn secondary" onClick={handleNewProblem}>
-            <Plus size={16} />
-            <span>NEW</span>
+          <div>
+            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>Algo Studio</h1>
+            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{currentAlgo ? `⚡ ${currentAlgo.title}` : 'Develop · Simulate · Optimize Algorithms'}</p>
           </div>
         </div>
 
-        <div className="header-actions">
-           <button 
-             className={`run-btn ${isExecuting ? 'executing' : ''}`} 
-             onClick={runTrace}
-             disabled={isLoading || isExecuting}
-           >
-             {isExecuting ? <Activity size={14} className="spin" /> : <Play size={14} fill="currentColor" />}
-             <span>{isExecuting ? 'RUN' : 'RUN'}</span>
-           </button>
-           <button className="pro-btn close" onClick={onClose}><X size={18} /></button>
+        <div style={{ flex: 1 }} />
+
+        {/* Action Buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button 
+            className="pro-pill-btn" 
+            onClick={() => setExploreModalOpen(true)}
+            style={{ fontSize: 10, height: 32, padding: '0 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 7, color: 'var(--text2)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            <Compass size={13} /> EXPLORE
+          </button>
+          
+          <button 
+            className="pro-pill-btn secondary" 
+            onClick={handleNewProblem}
+            style={{ fontSize: 10, height: 32, padding: '0 12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 7, color: 'var(--text2)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            <Plus size={13} /> NEW
+          </button>
+
+          <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+
+          <button 
+            className={`run-btn ${isExecuting ? 'executing' : ''}`} 
+            onClick={runTrace}
+            disabled={isLoading || isExecuting}
+            style={{ 
+              background: `linear-gradient(135deg, #00ff88, #00cc66)`, 
+              border: 'none', borderRadius: 8, color: '#000', 
+              fontSize: 11, fontWeight: 800, padding: '8px 18px', 
+              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
+              boxShadow: '0 0 18px rgba(0, 255, 136, 0.35)',
+              opacity: (isLoading || isExecuting) ? 0.7 : 1
+            }}
+          >
+            {isExecuting ? <Activity size={14} className="spin" /> : <Play size={14} fill="currentColor" />}
+            {isExecuting ? 'RUNNING...' : 'RUN'}
+          </button>
+
+          <button className="pro-btn close" onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: '4px 8px' }}><X size={18} /></button>
         </div>
       </header>
 
