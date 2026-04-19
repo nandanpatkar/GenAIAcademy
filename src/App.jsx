@@ -18,6 +18,7 @@ import BlogPage from "./pages/blog/BlogPage";
 import AdminManagement from "./components/AdminManagement";
 import InterviewerPage from "./pages/interviewer/InterviewerPage.jsx";
 import AlgoVisualizer from "./components/AlgoVisualizer";
+import CodeVisualizer from "./components/CodeVisualizer";
 import { 
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
@@ -348,6 +349,7 @@ function MainApp() {
   const [showGalaxy, setShowGalaxy] = useState(false);
   const [showAIInterviewer, setShowAIInterviewer] = useState(false);
   const [showAlgoStudio, setShowAlgoStudio] = useState(false);
+  const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showModuleDetails, setShowModuleDetails] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useState(true);
@@ -371,6 +373,7 @@ function MainApp() {
       if (id === 'galaxy') { setShowGalaxy(true); setShowIntelligenceHub(false); }
       else if (id === 'resources') { setShowResources(true); setShowIntelligenceHub(false); }
       else if (id === 'algo_studio') { setShowAlgoStudio(true); setShowIntelligenceHub(false); }
+      else if (id === 'algo_visualizer') { setShowAlgoVisualizer(true); setShowIntelligenceHub(false); }
       else if (id === 'aiml_companion') { setShowAimlCompanion(true); setShowIntelligenceHub(false); }
       else if (id === 'blog') handleHubNav({ view: 'blog', year: null, isAI: false });
       else if (id === 'progress') { setShowProgress(true); setShowIntelligenceHub(false); }
@@ -414,6 +417,7 @@ function MainApp() {
     setShowGalaxy(false);
     setShowAIInterviewer(false);
     setShowAlgoStudio(false);
+    setShowAlgoVisualizer(false);
     setIsMobileMenuOpen(false);
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
     setShowIntelligenceHub(false); 
@@ -807,6 +811,7 @@ function MainApp() {
           showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
           showAIInterviewer={showAIInterviewer} setShowAIInterviewer={setShowAIInterviewer}
           showAlgoStudio={showAlgoStudio} setShowAlgoStudio={setShowAlgoStudio}
+          showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
           onHubNav={handleHubNav}
@@ -856,6 +861,11 @@ function MainApp() {
               savedAlgos={pathsData.saved_algos || []}
               onSaveAlgo={handleSaveUserAlgo}
               onClose={() => setShowAlgoStudio(false)} 
+            /> :
+          showAlgoVisualizer ? <CodeVisualizer 
+              savedAlgos={pathsData.saved_algos || []}
+              onSaveAlgo={handleSaveUserAlgo}
+              onClose={() => setShowAlgoVisualizer(false)}
             /> :
           showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
           showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :

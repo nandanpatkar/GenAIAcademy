@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles } from "lucide-react";
 import { Bookmark } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import BentoCard from "./BentoCard";
@@ -20,6 +20,7 @@ export default function Sidebar({
   showAimlCompanion, setShowAimlCompanion,
   showAIInterviewer, setShowAIInterviewer,
   showAlgoStudio, setShowAlgoStudio,
+  showAlgoVisualizer, setShowAlgoVisualizer,
   showIntelligenceHub, setShowIntelligenceHub,
   showWorkplaceLab, setShowWorkplaceLab,
   isMobileMenuOpen, setIsMobileMenuOpen,
@@ -51,6 +52,7 @@ export default function Sidebar({
         { icon: <Layers size={14} />, label: "System Simulator", id: "simulator" },
         { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator" },
         { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
+        { icon: <Box size={14} />, label: "Algo Visualizer", id: "algo_visualizer" },
       ]
     },
     {
@@ -99,6 +101,7 @@ export default function Sidebar({
     if (showCurriculumMap) return "curriculum_map";
     if (showAIInterviewer) return "interviewer";
     if (showAlgoStudio) return "algo_studio";
+    if (showAlgoVisualizer) return "algo_visualizer";
     if (showWorkplaceLab) return "tasks";
     if (!activeNode) return "overview";
     return null;
@@ -124,6 +127,7 @@ export default function Sidebar({
     if (setShowGalaxy) setShowGalaxy(false);
     if (setShowAIInterviewer) setShowAIInterviewer(false);
     if (setShowAlgoStudio) setShowAlgoStudio(false);
+    if (setShowAlgoVisualizer) setShowAlgoVisualizer(false);
     if (setShowWorkplaceLab) setShowWorkplaceLab(false);
 
     switch (id) {
@@ -148,6 +152,9 @@ export default function Sidebar({
         break;
       case "algo_studio":
         if (setShowAlgoStudio) setShowAlgoStudio(true);
+        break;
+      case "algo_visualizer":
+        if (setShowAlgoVisualizer) setShowAlgoVisualizer(true);
         break;
       case "tasks":
         if (setShowWorkplaceLab) setShowWorkplaceLab(true);

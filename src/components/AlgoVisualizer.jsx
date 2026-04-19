@@ -12,7 +12,31 @@ import {
 import { ALGO_EXAMPLES } from '../data/algoExamples';
 import { findAlgorithmTemplates } from '../services/aiService';
 
-// --- Python Tracer Script (Internal) ---
+// --- Pyodide Singleton (Prevents Race Conditions) ---
+let pyodideInstance = null;
+let pyodideLoading = null;
+
+async function getPyodide() {
+  if (pyodideInstance) return pyodideInstance;
+  if (pyodideLoading) return pyodideLoading;
+  
+  pyodideLoading = (async () => {
+    try {
+      if (!window.loadPyodide) {
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js";
+        await new Promise((resolve) => { script.onload = resolve; document.body.appendChild(script); });
+      }
+      pyodideInstance = await window.loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" });
+      return pyodideInstance;
+    } catch (err) {
+      pyodideLoading = null;
+      throw err;
+    }
+  })();
+  return pyodideLoading;
+}
+
 const TRACER_TEMPLATE = `
 import sys
 import json
@@ -20,7 +44,7 @@ import math
 import functools
 import collections
 import heapq
-import bisect
+import io
 from typing import List, Dict, Any, Tuple, Optional, Union, Set
 
 # LeetCode-friendly environment
@@ -29,95 +53,70 @@ nan = float('nan')
 Counter = collections.Counter
 deque = collections.deque
 defaultdict = collections.defaultdict
-cache = functools.cache if hasattr(functools, 'cache') else functools.lru_cache(None)
-lru_cache = functools.lru_cache
 
 class AlgoTracer:
-    def __init__(self, limit=1000):
+    def __init__(self, limit=2000):
         self.limit = limit
         self.frames = []
         self.step_count = 0
-        self.exclude_vars = {'sys', 'json', 'AlgoTracer', 'tracer', '__name__', '__doc__', '__package__', '__loader__', '__spec__', '__builtins__'}
+        self.stdout_buf = io.StringIO()
+        self._orig_stdout = sys.stdout
+        sys.stdout = self.stdout_buf
+        self.exclude_vars = {'sys', 'json', 'AlgoTracer', 'tracer', '__name__', '__doc__', '__package__', '__loader__', '__spec__', '__builtins__', 'io', 'inf', 'nan', 'Counter', 'deque', 'defaultdict'}
 
     def trace_hook(self, frame, event, arg):
-        if self.step_count >= self.limit:
-            return None
+        if self.step_count >= self.limit or frame.f_code.co_filename != '<exec>':
+            return self.trace_hook
         
-        if event == 'line':
+        if event in ('line', 'call', 'return'):
             self.step_count += 1
-            # Capture state
+            curr_locals = self.serialize_locals(frame.f_locals)
+            
             snapshot = {
                 'line': frame.f_lineno,
-                'locals': self.serialize_locals(frame.f_locals)
+                'event': event,
+                'func': frame.f_code.co_name,
+                'locals': curr_locals,
+                'stdout': self.stdout_buf.getvalue(),
+                'changed_vars': []
             }
+            
+            if self.frames:
+                prev_vars = self.frames[-1]['locals'].get('vars', {})
+                new_vars = curr_locals.get('vars', {})
+                snapshot['changed_vars'] = [k for k in new_vars if k not in prev_vars or new_vars[k] != prev_vars[k]]
+            else:
+                snapshot['changed_vars'] = list(curr_locals.get('vars', {}).keys())
+
             self.frames.append(snapshot)
         return self.trace_hook
 
     def serialize_locals(self, locals_dict):
-        serializable = {}
-        identity_map = {}
+        serializable = {'vars': {}, 'objects': {}}
         for k, v in locals_dict.items():
-            if k in self.exclude_vars: continue
-            if hasattr(v, '__dict__') or isinstance(v, (list, dict)):
-                self.extract_graph(v, identity_map)
-        
-        serializable['vars'] = {}
-        for k, v in locals_dict.items():
-            if k in self.exclude_vars or k.startswith('__'): continue
+            if k in self.exclude_vars or k.startswith('_') or k == 'tracer': continue
             obj_type = type(v).__name__
-            if obj_type in ('module', 'function', 'builtin_function_or_method', 'method', 'type', 'wrapper_descriptor', 'method_descriptor', 'member_descriptor', 'module_flags'):
-                continue
-                
-            if id(v) in identity_map:
-                serializable['vars'][k] = {"ref": id(v), "type": type(v).__name__}
+            if obj_type in ('module', 'function', 'type', 'builtin_function_or_method'): continue
+            
+            # Simple value serialization
+            if isinstance(v, (int, str, bool, type(None))):
+                serializable['vars'][k] = v
             elif isinstance(v, float):
-                if math.isinf(v):
-                    serializable['vars'][k] = "inf" if v > 0 else "-inf"
-                    continue
-                if math.isnan(v):
-                    serializable['vars'][k] = "nan"
-                    continue
-            elif isinstance(v, (int, float, str, bool, type(None))):
-                serializable['vars'][k] = v
-            elif isinstance(v, list) and len(v) < 100:
-                serializable['vars'][k] = v
+                if math.isinf(v): serializable['vars'][k] = "inf" if v > 0 else "-inf"
+                elif math.isnan(v): serializable['vars'][k] = "nan"
+                else: serializable['vars'][k] = v
+            elif isinstance(v, (list, dict, set, tuple)):
+                # For basic visualization we send the full object if small
+                if len(str(v)) < 1000:
+                    serializable['vars'][k] = list(v) if isinstance(v, (set, tuple)) else v
+                else:
+                    serializable['vars'][k] = str(v)[:100] + "..."
             else:
                 serializable['vars'][k] = str(v)[:50]
-        serializable['objects'] = identity_map
         return serializable
 
-    def extract_graph(self, obj, id_map, depth=0):
-        if depth > 50 or id(obj) in id_map or len(id_map) > 100: return
-        obj_id = id(obj)
-        obj_type = type(obj).__name__
-        
-        # FILTER: Ignore modules, functions, and internal descriptors
-        if obj_type in ('module', 'function', 'builtin_function_or_method', 'method', 'type', 'wrapper_descriptor', 'method_descriptor', 'member_descriptor'):
-            return
-
-        id_map[obj_id] = {
-            "id": obj_id,
-            "type": obj_type,
-            "label": str(getattr(obj, 'val', getattr(obj, 'value', str(obj)[:12]))),
-            "edges": []
-        }
-        if hasattr(obj, '__dict__'):
-            for k, v in obj.__dict__.items():
-                if id(v) in id_map or hasattr(v, '__dict__') or isinstance(v, (list, dict)):
-                   id_map[obj_id]["edges"].append({"label": k, "to": id(v)})
-                   self.extract_graph(v, id_map, depth + 1)
-        elif isinstance(obj, list):
-            for i, v in enumerate(obj):
-                if id(v) in id_map or hasattr(v, '__dict__') or isinstance(v, (list, dict)):
-                    id_map[obj_id]["edges"].append({"label": f"[{i}]", "to": id(v)})
-                    self.extract_graph(v, id_map, depth + 1)
-        elif isinstance(obj, dict):
-            for k, v in obj.items():
-                if isinstance(k, (str, int, float)) and (id(v) in id_map or hasattr(v, '__dict__') or isinstance(v, (list, dict))):
-                    id_map[obj_id]["edges"].append({"label": str(k), "to": id(v)})
-                    self.extract_graph(v, id_map, depth + 1)
-
     def get_trace(self):
+        sys.stdout = self._orig_stdout
         return json.dumps(self.frames)
 
 tracer = AlgoTracer()
@@ -130,6 +129,8 @@ finally:
     trace_output = tracer.get_trace()
 `;
 
+const TRACE_OFFSET = TRACER_TEMPLATE.split('{{USER_CODE}}')[0].split('\n').length - 1;
+
 export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onClose }) {
   // State
   const [code, setCode] = useState(ALGO_EXAMPLES[0].code);
@@ -139,11 +140,12 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
   const [isExecuting, setIsExecuting] = useState(false);
   const [trace, setTrace] = useState([]);
   const [currentFrameIdx, setCurrentFrameIdx] = useState(-1);
-  const [playbackSpeed, setPlaybackSpeed] = useState(500); // ms
+  const [playbackSpeedDivisor, setPlaybackSpeedDivisor] = useState(1); // 0.25, 0.5, 1, 2
+  const playbackSpeed = useMemo(() => 500 / playbackSpeedDivisor, [playbackSpeedDivisor]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAlgoId, setSelectedAlgoId] = useState(ALGO_EXAMPLES[0].id);
-  const [activeTab, setActiveTab] = useState('question'); // 'question' | 'code' | 'solution'
+  const [activeTab, setActiveTab] = useState('theory'); // 'theory' | 'code' | 'solution'
 
   // Global Explorer State
   const [exploreModalOpen, setExploreModalOpen] = useState(false);
@@ -156,11 +158,15 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
 
+  // Resizable Panes State
+  const [paneWidth, setPaneWidth] = useState(450); // Default width
+  const [isResizing, setIsResizing] = useState(false);
+
   const playbackTimerRef = useRef(null);
   const editorRef = useRef(null);
   const monacoRef = useRef(null);
   const decorationsRef = useRef(null);
-  const TRACE_OFFSET = 45; // Fixed Offset: Account for preamble newline and starting line
+  const codeHighlightRef = useRef(null); // Reference for the floating highlight bar
 
   const combinedAlgos = useMemo(() => {
     return [...ALGO_EXAMPLES, ...savedAlgos];
@@ -168,30 +174,54 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
   const currentAlgo = useMemo(() => combinedAlgos.find(a => a.id === selectedAlgoId), [selectedAlgoId, combinedAlgos]);
 
+  // Resize Logic
+  useEffect(() => {
+    if (!isResizing) return;
+
+    const handleMouseMove = (e) => {
+      // Constraints: 300px to 800px
+      const newWidth = Math.min(Math.max(300, e.clientX), 850);
+      setPaneWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      document.body.style.cursor = 'default';
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    document.body.style.cursor = 'col-resize';
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      document.body.style.cursor = 'default';
+    };
+  }, [isResizing]);
+
+  const startResizing = (e) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
   // Initialize Pyodide
   useEffect(() => {
-    const initPyodide = async () => {
+    let mounted = true;
+    const init = async () => {
       try {
-        if (!window.loadPyodide) {
-           const script = document.createElement("script");
-           script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js";
-           script.onload = async () => {
-             const py = await window.loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" });
-             setPyodide(py);
-             setIsLoading(false);
-           };
-           document.body.appendChild(script);
-        } else {
-           const py = await window.loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/" });
-           setPyodide(py);
-           setIsLoading(false);
+        const py = await getPyodide();
+        if (mounted) {
+          setPyodide(py);
+          setIsLoading(false);
         }
       } catch (err) {
         console.error("Pyodide Init Error:", err);
-        setIsLoading(false);
+        if (mounted) setIsLoading(false);
       }
     };
-    initPyodide();
+    init();
+    return () => { mounted = false; };
   }, []);
 
   // Execution Logic
@@ -406,41 +436,30 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
   // Sync Monaco Highlight with Execution
   useEffect(() => {
-    // Reset view whenever layout changes significantly to avoid "shifting"
-    setPan({ x: 0, y: 0 });
-    setZoom(1);
-  }, [isVizMaximized]);
-
-  useEffect(() => {
-    if (editorRef.current && monacoRef.current && currentFrame.line > 0) {
+    if (editorRef.current && currentFrame.line > 0) {
       const line = currentFrame.line - TRACE_OFFSET;
-      
-      // Initialize decorations collection if not already
-      if (!decorationsRef.current) {
-        decorationsRef.current = editorRef.current.createDecorationsCollection([]);
-      }
-
-      if (line > 0 && line <= (code || '').split('\n').length) {
-        decorationsRef.current.set([
-          {
-            range: new monacoRef.current.Range(line, 1, line, 1),
-            options: { 
-              isWholeLine: true, 
-              className: 'current-execution-line',
-              marginClassName: 'current-execution-margin'
-            }
-          }
-        ]);
-        // Scroll to line if it's out of view
+      if (line > 0) {
+        // We still use revealLine to keep the code in view
         editorRef.current.revealLineInCenterIfOutsideViewport(line);
-      } else {
-        decorationsRef.current.set([]);
       }
-    } else if (decorationsRef.current) {
-      // Clear highlight if no frame/line
-      decorationsRef.current.set([]);
     }
-  }, [currentFrameIdx, currentFrame.line, code]);
+  }, [currentFrameIdx, currentFrame.line]);
+
+  const classification = useMemo(() => {
+    const vars = currentFrame.locals.vars || {};
+    const changed = currentFrame.changed_vars || [];
+    
+    return {
+      arrays: Object.entries(vars).filter(([_, v]) => Array.isArray(v) && !Array.isArray(v[0])),
+      matrices: Object.entries(vars).filter(([_, v]) => Array.isArray(v) && Array.isArray(v[0])),
+      scalars: Object.entries(vars).filter(([_, v]) => !Array.isArray(v) && typeof v !== 'object'),
+      pointers: Object.entries(vars).filter(([k, v]) => 
+        ['i', 'j', 'k', 'low', 'high', 'mid', 'left', 'right', 'p', 'q', 'idx'].includes(k.toLowerCase()) && 
+        typeof v === 'number'
+      ),
+      changedSet: new Set(changed)
+    };
+  }, [currentFrame]);
 
 
   const filteredAlgos = ALGO_EXAMPLES.filter(a => 
@@ -449,7 +468,11 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
   );
 
   return (
-    <>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="algo-studio-overlay"
+    >
       <div className="studio-pro-shell">
       <header className="studio-header">
         <div className="window-dots">
@@ -475,12 +498,14 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         </div>
 
         <div className="header-actions">
-           {currentAlgo && (
-             <button className="pro-btn" onClick={handleSaveCurrent} title="Save to Intelligence Library">
-               <Cloud size={16} />
-             </button>
-           )}
-           <button className="pro-btn"><Settings size={16} /></button>
+           <button 
+             className={`run-btn ${isExecuting ? 'executing' : ''}`} 
+             onClick={runTrace}
+             disabled={isLoading || isExecuting}
+           >
+             {isExecuting ? <Activity size={14} className="spin" /> : <Play size={14} fill="currentColor" />}
+             <span>{isExecuting ? 'RUN' : 'RUN'}</span>
+           </button>
            <button className="pro-btn close" onClick={onClose}><X size={18} /></button>
         </div>
       </header>
@@ -488,16 +513,17 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
       <div className="studio-body">
 
         <main className="studio-main">
-          <div className="workspace">
+          <div className={`workspace ${isVizMaximized ? 'sidebar-collapsed' : ''}`}>
             
             {/* --- Editor & Theory Section (30%) --- */}
             <section 
               className={`editor-pane ${isVizMaximized ? 'collapsed' : ''}`}
+              style={{ width: isVizMaximized ? 0 : paneWidth }}
             >
               <div className="pane-header">
                 <div className="tabs-pill">
-                  <button className={`tab ${activeTab === 'question' ? 'active' : ''}`} onClick={() => setActiveTab('question')}>
-                    <Info size={14} />
+                  <button className={`tab ${activeTab === 'theory' ? 'active' : ''}`} onClick={() => setActiveTab('theory')}>
+                    <BookOpen size={14} />
                     <span>Theory</span>
                   </button>
                   <button className={`tab ${activeTab === 'code' ? 'active' : ''}`} onClick={() => setActiveTab('code')}>
@@ -505,18 +531,10 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                     <span>source.py</span>
                   </button>
                 </div>
-                <button 
-                  className={`run-btn ${isExecuting ? 'executing' : ''}`} 
-                  onClick={runTrace}
-                  disabled={isLoading || isExecuting}
-                >
-                  {isExecuting ? <Activity size={14} className="spin" /> : <Play size={14} fill="currentColor" />}
-                  <span>{isExecuting ? 'Tracing...' : 'Run Trace'}</span>
-                </button>
               </div>
               
               <div className="editor-container" style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
-                {activeTab === 'question' ? (
+                {activeTab === 'theory' ? (
                    // ... (reduced for brevity in instruction, keeping same logic)
                   <div className="question-content mini-scrollbar">
                     <div className="q-card">
@@ -540,9 +558,39 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                     </div>
                   </div>
                 ) : (
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#000' }}>
-                    <div style={{ flex: 1, minHeight: '300px', position: 'relative' }}>
-                      <Editor height="100%" defaultLanguage="python" theme="vs-dark" value={code} onChange={setCode} options={{ minimap: { enabled: false }, fontSize: 13, fontFamily: "'Fira Code', monospace", lineNumbers: "on", padding: { top: 20 }, cursorBlinking: "smooth", automaticLayout: true }} onMount={(editor, monaco) => { editorRef.current = editor; monacoRef.current = monaco; }} />
+                  <div className="editor-tab-content">
+                    <div className="monaco-wrapper">
+                      {currentFrame.line > 0 && (
+                        <motion.div 
+                          className="code-highlight-bar"
+                          animate={{ 
+                            y: (currentFrame.line - TRACE_OFFSET - 1) * 19 + 20, // 19px line height, 20px padding
+                            opacity: 1 
+                          }}
+                          initial={{ opacity: 0 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        />
+                      )}
+                      <Editor 
+                        height="100%" 
+                        defaultLanguage="python" 
+                        theme="vs-dark" 
+                        value={code} 
+                        onChange={setCode} 
+                        options={{ 
+                          minimap: { enabled: false }, 
+                          fontSize: 13, 
+                          fontFamily: "'Fira Code', monospace", 
+                          lineNumbers: "on", 
+                          padding: { top: 20 }, 
+                          cursorBlinking: "smooth", 
+                          automaticLayout: true 
+                        }} 
+                        onMount={(editor, monaco) => { 
+                          editorRef.current = editor; 
+                          monacoRef.current = monaco; 
+                        }} 
+                      />
                     </div>
                     {/* --- Pro Output Terminal --- */}
                     <div className="studio-terminal">
@@ -565,6 +613,14 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                 )}
               </div>
             </section>
+
+            {/* --- Resizer (Splitter) --- */}
+            {!isVizMaximized && (
+              <div 
+                className={`studio-resizer ${isResizing ? 'active' : ''}`}
+                onMouseDown={startResizing}
+              />
+            )}
 
             {/* --- Visualization Section (70%) --- */}
             <section className={`viz-section ${isVizMaximized ? 'maximized' : ''}`}>
@@ -608,214 +664,211 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                        <div className="pulse-ring" />
                        <Cpu size={64} className="splash-icon emerald-pulse" />
                     </div>
-                    <h3>READY FOR INTELLIGENCE</h3>
-                    <p>Compile your source and step into the logic engine to begin visualization.</p>
+                    {isLoading ? (
+                      <div className="boot-loader">
+                        <h3>INITIALIZING_PYTHON_RUNTIME</h3>
+                        <div className="skeleton-bar-container">
+                          <motion.div 
+                            className="skeleton-progress"
+                            animate={{ width: ["0%", "80%", "90%"] }}
+                            transition={{ duration: 3 }}
+                          />
+                        </div>
+                        <p>Loading Pyodide environment... (first load ~3s)</p>
+                      </div>
+                    ) : (
+                      <>
+                        <h3>READY_FOR_INTELLIGENCE</h3>
+                        <p>Compile your source and step into the logic engine to begin visualization.</p>
+                      </>
+                    )}
+                  </div>
+                ) : executionError ? (
+                  <div className="error-card-pro">
+                    <div className="e-header">
+                      <Zap size={16} />
+                      <span>RUNTIME_EXCEPTION</span>
+                      <button onClick={() => { navigator.clipboard.writeText(executionError); }} className="copy-e">COPY ERROR</button>
+                    </div>
+                    <div className="e-body mini-scrollbar">
+                      <pre>{executionError}</pre>
+                    </div>
                   </div>
                 ) : (
-                  <div className="canvas-content">
-                    {/* Visualizing Graphs (Nodes & Edges) */}
-                    {graphNodes.length > 0 && (
-                      <div 
-                        className="viz-graph-container"
-                        onWheel={(e) => {
-                          if (e.ctrlKey || e.metaKey) {
-                            e.preventDefault();
-                            setZoom(prev => Math.min(Math.max(0.2, prev - e.deltaY * 0.001), 3));
-                          }
-                        }}
-                      >
-                        <svg 
-                          className="graph-svg" 
-                          viewBox="0 0 800 600"
-                          style={{ cursor: 'grab' }}
-                          onMouseDown={(e) => {
-                            const startX = e.clientX - pan.x;
-                            const startY = e.clientY - pan.y;
-                            const handleMouseMove = (moveEvent) => {
-                              setPan({ x: moveEvent.clientX - startX, y: moveEvent.clientY - startY });
-                            };
-                            const handleMouseUp = () => {
-                              window.removeEventListener('mousemove', handleMouseMove);
-                              window.removeEventListener('mouseup', handleMouseUp);
-                            };
-                            window.addEventListener('mousemove', handleMouseMove);
-                            window.addEventListener('mouseup', handleMouseUp);
-                          }}
-                        >
-                          <defs>
-                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="30" refY="5" orient="auto">
-                              <path d="M0,0 L0,10 L10,5 Z" fill="rgba(0,255,136,0.4)" />
-                            </marker>
-                            <filter id="nodeGlow">
-                               <feGaussianBlur stdDeviation="3" result="blur" />
-                               <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                            </filter>
-                          </defs>
-                          
-                          <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
-                          {/* Render Edges */}
-                          {graphNodes.map(node => (
-                             node.edges.map(edge => {
-                               const target = graphNodes.find(n => n.id === edge.to);
-                               if (!target) return null;
-                               const dx = target.x - node.x;
-                               const dy = target.y - node.y;
-                               const dr = Math.sqrt(dx*dx + dy*dy);
-                               const path = `M${node.x},${node.y}A${dr},${dr} 0 0,1 ${target.x},${target.y}`;
-                               return (
-                                 <motion.path
-                                   key={`${node.id}-${target.id}`}
-                                   d={path} fill="none" stroke="rgba(0, 255, 136, 0.15)" strokeWidth="2"
-                                   markerEnd="url(#arrow)"
-                                 />
-                               );
-                             })
-                          ))}
+                  <div className="canvas-content mini-scrollbar">
+                    {/* Render Arrays */}
+                    {classification.arrays.map(([name, arr]) => (
+                      <div key={name} className="viz-group-container secondary">
+                        <div className="viz-group-header">
+                           <Layers size={14} />
+                           <span>{name.toUpperCase()} (ARRAY)</span>
+                           <span className="v-count">{arr.length} ITEMS</span>
+                        </div>
+                        <div className="array-viz-wrapper">
+                          <AnimatePresence>
+                            {/* Pointers for this array */}
+                            <div className="pointer-row">
+                              {classification.pointers
+                                .filter(([_, val]) => val >= 0 && val < arr.length)
+                                .map(([pName, pVal]) => {
+                                    const getPointerColor = (name) => {
+                                      const n = name.toLowerCase();
+                                      if (n === 'i') return '#00ff88';
+                                      if (n === 'j') return '#fbbf24';
+                                      if (n === 'k') return '#8b5cf6';
+                                      return '#3b82f6';
+                                    };
+                                    const pColor = getPointerColor(pName);
 
-                          {/* Render Nodes */}
-                          {graphNodes.map(node => (
-                            <motion.g key={node.id} animate={{ x: node.x, y: node.y }}>
-                              <circle r="24" fill="#0a0a0a" stroke={node.color} strokeWidth="3" filter="url(#nodeGlow)" />
-                              <text textAnchor="middle" dy=".3em" fill="#fff" fontSize="13" fontWeight="900" style={{ pointerEvents: 'none' }}>{node.label}</text>
-                              {floatingPointers[node.id] && (
-                                <g transform="translate(0, -45)">
-                                  {floatingPointers[node.id].map((vName, idx) => (
-                                    <motion.g key={vName} animate={{ y: -idx * 22 }}>
-                                      <rect x="-30" y="-10" width="60" height="20" rx="4" fill={node.color} opacity="0.9" />
-                                      <text textAnchor="middle" dy=".35em" fill="#000" fontSize="10" fontWeight="900">{vName.toUpperCase()}</text>
-                                    </motion.g>
-                                  ))}
-                                </g>
-                              )}
-                            </motion.g>
-                          ))}
-                          </g>
-                        </svg>
-                      </div>
-                    )}
-
-                    {/* Visualizing Matrices (2D Arrays) */}
-                    {visualizableData.matrices.map(matrix => (
-                       <div key={matrix.name} className="viz-graph-container">
-                          <div className="row-header">
-                             <div className="icon-group">
-                                <Grid3X3 size={14} />
-                                <span>{matrix.name.toUpperCase()} (MATRIX)</span>
-                             </div>
+                                    return (
+                                      <motion.div
+                                        key={`pointer-${pName}`}
+                                        className="ptr-indicator"
+                                        style={{ color: pColor }}
+                                        animate={{ x: pVal * 45 + 22.5 }} // Based on cell width
+                                        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                                      >
+                                        <div className="ptr-label" style={{ background: pColor }}>{pName}</div>
+                                        <ChevronRight className="rotate-90" size={14} />
+                                      </motion.div>
+                                    );
+                                  })}
+                            </div>
+                          </AnimatePresence>
+                          <div className="array-cells-row">
+                            {arr.map((val, idx) => {
+                              const isChanged = classification.changedSet.has(name);
+                              return (
+                                <motion.div
+                                  layoutId={`cell-${name}-${val}-${idx}`} // Use idx to keep it stable if values repeat
+                                  key={`${name}-${idx}`}
+                                  layout
+                                  className="array-cell-pro"
+                                  animate={{
+                                    backgroundColor: classification.changedSet.has(name) ? 'rgba(0, 255, 136, 0.15)' : 'rgba(255,255,255,0.03)',
+                                    borderColor: classification.changedSet.has(name) ? '#00ff88' : 'rgba(255,255,255,0.1)'
+                                  }}
+                                >
+                                  <span className="c-val">{val}</span>
+                                  <span className="c-idx">{idx}</span>
+                                </motion.div>
+                              );
+                            })}
                           </div>
-                          <div className="matrix-grid-scroll mini-scrollbar" style={{ overflow: 'auto', maxHeight: '400px', padding: '20px', background: 'rgba(0,0,0,0.2)', borderRadius: '12px' }}>
-                            <table className="matrix-table" style={{ borderCollapse: 'separate', borderSpacing: '4px', margin: '0 auto' }}>
-                              <tbody>
-                                {matrix.val.map((row, rIdx) => (
-                                  <tr key={rIdx}>
-                                    {row.map((cell, cIdx) => (
-                                      <td key={cIdx} className="matrix-cell" style={{ width: '44px', height: '44px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(0, 255, 136, 0.1)', borderRadius: '6px', textAlign: 'center', verticalAlign: 'middle' }}>
-                                        <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }}>{cell}</motion.div>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Render Matrices */}
+                    {classification.matrices.map(([name, matrix]) => (
+                      <div key={name} className="viz-group-container">
+                        <div className="viz-group-header">
+                           <Grid size={14} />
+                           <span>{name.toUpperCase()} (MATRIX)</span>
+                        </div>
+                        <div className="matrix-viz-wrapper mini-scrollbar">
+                           <table className="pro-matrix">
+                             <tbody>
+                               {matrix.map((row, rIdx) => (
+                                 <tr key={rIdx}>
+                                   {row.map((cell, cIdx) => (
+                                      <td key={cIdx}>
+                                        <motion.div 
+                                          className="matrix-cell-pro"
+                                          animate={{ 
+                                            backgroundColor: classification.changedSet.has(name) ? 'rgba(0,255,136,0.1)' : 'transparent'
+                                          }}
+                                        >
+                                          {cell}
+                                        </motion.div>
                                       </td>
-                                    ))}
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                       </div>
-                    ))}
-
-                    {/* Visualizing Lists (Arrays) */}
-                    {visualizableData.lists.map(list => (
-                      <div key={list.name} className="viz-row">
-                        <div className="row-header">
-                          <div className="icon-group">
-                             <Layers size={14} />
-                             <span>{list.name}</span>
-                          </div>
-                          <div className="stats-group">
-                             <span>LEN: {list.val.length}</span>
-                          </div>
-                        </div>
-                        <div className="array-container">
-                          {list.val.map((item, idx) => {
-                            const activePointers = (pointers[list.name] || []).filter(p => p.val === idx);
-                            const isBeingPointed = activePointers.length > 0;
-                            const isComparing = activePointers.some(p => ['j', 'idx', 'mid'].includes(p.name.toLowerCase()));
-                            return (
-                              <motion.div 
-                                key={`${list.name}-${idx}`}
-                                layout className={`array-node ${isBeingPointed ? 'pointed' : ''}`}
-                                style={{ height: typeof item === 'number' ? Math.max(30, Math.min(180, (item/Math.max(...list.val.filter(v => typeof v === 'number'), 1)) * 150)) : 100 }}
-                                animate={{
-                                  backgroundColor: isComparing ? 'rgba(255, 191, 36, 0.4)' : isBeingPointed ? 'rgba(0, 255, 136, 0.3)' : 'rgba(0, 255, 136, 0.1)',
-                                  borderColor: isComparing ? '#fbbf24' : isBeingPointed ? '#00ff88' : 'rgba(0, 255, 136, 0.2)',
-                                  scale: isBeingPointed ? 1.05 : 1
-                                }}
-                              >
-                                <AnimatePresence>
-                                  {activePointers.map((p, pIdx) => (
-                                    <motion.div 
-                                      key={p.name} 
-                                      initial={{ y: 20, opacity: 0 }} 
-                                      animate={{ y: -50, opacity: 1 }} 
-                                      className="pointer-flag" 
-                                      style={{ zIndex: 100 - pIdx }}
-                                    >
-                                      <div className="p-tag">{p.name}</div>
-                                      <div className="p-arrow">▼</div>
-                                    </motion.div>
-                                  ))}
-                                </AnimatePresence>
-                                <span className="val">{typeof item === 'object' ? JSON.stringify(item) : item}</span>
-                                <span className="idx">{idx}</span>
-                              </motion.div>
-                            );
-                          })}
+                                   ))}
+                                 </tr>
+                               ))}
+                             </tbody>
+                           </table>
                         </div>
                       </div>
                     ))}
 
-                    {/* Visualizing Other Variables */}
-                    {visualizableData.vars.length > 0 && (
-                      <div className="vars-grid">
-                        {visualizableData.vars.map(v => (
-                          <div key={v.name} className="var-card">
-                            <span className="v-name">{v.name}</span>
-                            <span className="v-val">{typeof v.val === 'object' && v.val !== null ? JSON.stringify(v.val) : String(v.val)}</span>
-                          </div>
-                        ))}
+                    {/* Render Scalars (Variable Cards) */}
+                    <div className="scalars-viz-grid">
+                      {classification.scalars.map(([name, val]) => (
+                        <motion.div 
+                          key={name} 
+                          className={`scalar-card-pro ${classification.changedSet.has(name) ? 'hl' : ''}`}
+                          layout
+                        >
+                           <div className="s-label">{name}</div>
+                           <motion.div 
+                             key={val}
+                             initial={{ backgroundColor: 'rgba(251, 191, 36, 0.2)' }}
+                             animate={{ backgroundColor: 'transparent' }}
+                             className="s-value"
+                           >
+                             {String(val)}
+                           </motion.div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Stdout Terminal */}
+                    {currentFrame.stdout && (
+                      <div className="viz-stdout-panel">
+                        <div className="vh-header"><Terminal size={12} /><span>STDOUT</span></div>
+                        <pre className="stdout-content">{currentFrame.stdout}</pre>
                       </div>
                     )}
                   </div>
                 )}
               </div>
-
-              {/* --- Floating Glass Dock --- */}
-              <div className="glass-dock">
-                <div className="dock-content">
-                  <div className="playback-controls">
-                    <button onClick={handleReset} className="dock-btn secondary"><RotateCcw size={18} /></button>
-                    <button onClick={handleStepBack} disabled={currentFrameIdx <= 0} className="dock-btn secondary"><SkipBack size={18} /></button>
-                    <button className="play-ring" onClick={handleTogglePlay}>
-                       <div className="ring-pulse" />
-                       {isPlaying ? <Pause size={24} fill="currentColor" /> : <Play size={24} fill="currentColor" />}
-                    </button>
-                    <button onClick={handleStepForward} disabled={currentFrameIdx >= trace.length - 1} className="dock-btn secondary"><SkipForward size={18} /></button>
+              {/* --- Improved Cinematic Playback Bar --- */}
+              <div className="studio-playback-bar">
+                <div className="pb-glass-content">
+                  <div className="pb-left">
+                    <div className="pb-controls">
+                      <button onClick={handleReset} className="pb-btn"><RotateCcw size={14} /></button>
+                      <button onClick={handleStepBack} disabled={currentFrameIdx <= 0} className="pb-btn"><SkipBack size={14} /></button>
+                      <button className="pb-play-main" onClick={handleTogglePlay}>
+                        {isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" />}
+                      </button>
+                      <button onClick={handleStepForward} disabled={currentFrameIdx >= trace.length - 1} className="pb-btn"><SkipForward size={14} /></button>
+                    </div>
+                    <div className="pb-status">
+                      <span className="pb-step">STEP {currentFrameIdx + 1} / {trace.length}</span>
+                      <span className="pb-desc">
+                        {currentFrame.func !== '<module>' ? `· ${currentFrame.func}` : '· entry'}
+                      </span>
+                    </div>
                   </div>
-                  <div className="dock-separator" />
-                  <div className="dock-telemetry">
-                    <div className="telemetry-item wide">
-                       <div className="t-header">
-                         <span className="t-label">TIMELINE</span>
-                         <span className="t-val">STEP {currentFrameIdx + 1} / {trace.length}</span>
-                       </div>
-                       <input 
-                         className="pro-scrub"
-                         type="range" min="0" max={Math.max(0, trace.length - 1)}
-                         value={currentFrameIdx} 
-                         onChange={e => setCurrentFrameIdx(Number(e.target.value))}
-                       />
+
+                  <div className="pb-center">
+                    <div className="scrubber-track">
+                      <input 
+                        className="pb-scrubber-pro"
+                        type="range" min="0" max={Math.max(0, trace.length - 1)}
+                        value={currentFrameIdx} 
+                        onChange={e => setCurrentFrameIdx(Number(e.target.value))}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pb-right">
+                    <div className="speed-pills-pro">
+                      {[0.25, 0.5, 1, 2].map(speed => (
+                        <button 
+                          key={speed}
+                          className={`speed-pill-pro ${playbackSpeedDivisor === speed ? 'active' : ''}`}
+                          onClick={() => setPlaybackSpeedDivisor(speed)}
+                        >
+                          {speed}x
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
+
             </section>
           </div>
         </main>
@@ -874,10 +927,12 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
       <style>{`
         .algo-studio-overlay {
           position: fixed;
-          inset: 0;
+          top: 0; left: 0; right: 0; bottom: 0;
           z-index: 9999;
           background: #000;
-          display: flex;
+          width: 100vw;
+          height: 100vh;
+          overflow: hidden;
           color: #fff;
           font-family: 'Inter', system-ui, sans-serif;
         }
@@ -885,11 +940,12 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         /* --- STUDIO PRO REDESIGN --- */
         .studio-pro-shell {
           height: 100vh;
+          width: 100%;
           background: #000;
           display: flex;
           flex-direction: column;
-          padding: 12px;
-          gap: 12px;
+          padding: 0;
+          gap: 0;
           font-family: 'Syne', sans-serif;
         }
         .studio-header {
@@ -903,6 +959,128 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           height: 64px;
           z-index: 100;
         }
+
+        .studio-playback-bar {
+          position: absolute;
+          bottom: 24px;
+          left: 0;
+          right: 0;
+          height: 64px;
+          display: flex;
+          justify-content: center;
+          padding: 0 24px;
+          z-index: 1000;
+          pointer-events: none;
+        }
+
+        .pb-glass-content {
+          width: 100%;
+          max-width: 900px;
+          background: rgba(10, 10, 10, 0.85);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 16px;
+          display: grid;
+          grid-template-columns: 240px 1fr 180px;
+          align-items: center;
+          padding: 0 20px;
+          gap: 20px;
+          pointer-events: auto;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .pb-left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+        .pb-controls { display: flex; align-items: center; gap: 8px; }
+        
+        .pb-btn {
+          width: 28px;
+          height: 28px;
+          border-radius: 6px;
+          border: 1px solid rgba(255,255,255,0.05);
+          background: rgba(255,255,255,0.02);
+          color: #666;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: 0.2s;
+        }
+
+        .pb-btn:hover:not(:disabled) { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.2); }
+        .pb-btn:disabled { opacity: 0.1; cursor: not-allowed; }
+
+        .pb-play-main {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+          background: #fff;
+          color: #000;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: 0.2s;
+          box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+        }
+        .pb-play-main:hover { transform: scale(1.05); }
+
+        .pb-status { display: flex; flex-direction: row; align-items: center; gap: 6px; min-width: 0; overflow: hidden; }
+        .pb-step { font-size: 10px; font-weight: 900; color: #00ff88; letter-spacing: 1px; white-space: nowrap; }
+        .pb-desc { font-size: 10px; font-weight: 600; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.6; }
+
+        .scrubber-track {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          padding: 0 10px;
+        }
+
+        .pb-scrubber-pro {
+          -webkit-appearance: none;
+          width: 100%;
+          height: 4px;
+          background: rgba(255,255,255,0.05);
+          border-radius: 2px;
+          outline: none;
+          cursor: pointer;
+        }
+
+        .pb-scrubber-pro::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #00ff88;
+          cursor: pointer;
+          box-shadow: 0 0 10px rgba(0,255,136,0.5);
+          border: 2px solid #000;
+        }
+
+        .pb-right { display: flex; justify-content: flex-end; }
+        .speed-pills-pro {
+          display: flex;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.05);
+          padding: 2px;
+          border-radius: 8px;
+          gap: 2px;
+        }
+
+        .speed-pill-pro {
+          background: transparent;
+          border: none;
+          color: #444;
+          padding: 4px 8px;
+          border-radius: 6px;
+          font-size: 9px;
+          font-weight: 900;
+          cursor: pointer;
+          transition: 0.2s;
+        }
+
+        .speed-pill-pro.active { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
+        .speed-pill-pro:hover:not(.active) { color: #888; }
 
         .studio-title {
           display: flex;
@@ -923,6 +1101,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         .header-actions {
           display: flex;
           justify-content: flex-end;
+          align-items: center;
           gap: 12px;
         }
 
@@ -1028,10 +1207,27 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
         .workspace {
           flex: 1;
-          display: flex;
-          gap: 1px;
-          background: rgba(255,255,255,0.05);
+          display: grid;
+          grid-template-columns: ${paneWidth}px 1px 1fr;
           overflow: hidden;
+          transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          background: #000;
+          width: 100%;
+        }
+
+        .studio-resizer {
+          width: 4px;
+          margin: 0 -2px;
+          background: transparent;
+          cursor: col-resize;
+          position: relative;
+          z-index: 1000;
+          transition: 0.2s;
+        }
+
+        .studio-resizer:hover, .studio-resizer.active {
+          background: rgba(0, 255, 136, 0.5);
+          box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
         }
 
         /* --- GLASS DOCK --- */
@@ -1214,34 +1410,60 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         }
         .close-btn:hover { opacity: 1; transform: scale(1.05); }
 
+        .studio-body {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+          width: 100%;
+        }
+
+        .workspace.sidebar-collapsed {
+          grid-template-columns: 0px 1fr;
+        }
+
         .editor-pane {
-          flex: 0.3;
+          min-width: 0;
+          height: 100%;
           border-right: 1px solid rgba(255,255,255,0.08);
           display: flex;
           flex-direction: column;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           overflow: hidden;
-          min-width: 0;
+          background: #0a0a0a;
         }
 
-        .editor-pane.collapsed {
-          flex: 0 !important;
-          width: 0 !important;
-          border: none !important;
+        .sidebar-collapsed .editor-pane {
+          width: 0;
           opacity: 0;
           pointer-events: none;
         }
 
         .viz-section {
-          flex: 0.7;
+          min-width: 0;
           display: flex;
           flex-direction: column;
           background: #020202;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          overflow: hidden;
         }
 
-        .viz-section.maximized {
-          flex: 1 !important;
+        .editor-container {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+        }
+
+        .editor-tab-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+        }
+
+        .monaco-wrapper {
+          flex: 1;
+          min-height: 0;
+          position: relative;
         }
 
         .tabs-group {
@@ -1290,6 +1512,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           text-transform: uppercase;
           letter-spacing: 0.5px;
           box-shadow: 0 4px 15px rgba(0,255,136,0.3);
+          height: 32px;
         }
         .run-btn:hover:not(:disabled) { 
           transform: translateY(-2px); 
@@ -1299,7 +1522,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
         /* --- Intelligence Terminal --- */
         .studio-terminal {
-          height: 180px;
+          height: 220px;
           background: #050505;
           border-top: 1px solid rgba(255,255,255,0.05);
           display: flex;
@@ -1467,14 +1690,18 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
         .array-container {
           display: flex;
+          justify-content: center;
           align-items: flex-end;
           gap: 12px;
           min-height: 220px;
-          padding: 60px 20px 20px;
+          padding: 60px 40px 40px;
           background: rgba(255, 255, 255, 0.02);
-          border-radius: 16px;
+          border-radius: 20px;
           overflow-x: auto;
           position: relative;
+          margin: 0 auto;
+          width: fit-content;
+          max-width: 100%;
         }
 
         .array-node {
@@ -1544,8 +1771,11 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
         .vars-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-          gap: 12px;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 20px;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
         }
 
         .var-card {
@@ -1574,30 +1804,205 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           overflow: hidden;
         }
 
-        .controls-panel {
-          height: 120px;
-          background: rgba(255,255,255,0.02);
-          border-top: 1px solid rgba(255,255,255,0.08);
-          padding: 0 40px;
+        .code-highlight-bar {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 19px;
+          background: rgba(0, 255, 136, 0.1);
+          border-left: 3px solid #00ff88;
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        .viz-group-container {
+          background: rgba(10, 10, 10, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 16px;
+          padding: 24px;
+          margin-bottom: 24px;
+        }
+
+        .viz-group-container.secondary {
+          background: rgba(0, 255, 136, 0.02);
+          border-color: rgba(0, 255, 136, 0.1);
+        }
+
+        .viz-group-header {
           display: flex;
           align-items: center;
-          gap: 40px;
+          gap: 12px;
+          margin-bottom: 32px;
+          font-weight: 800;
+          font-size: 11px;
+          color: #666;
+          letter-spacing: 1px;
+        }
+
+        .viz-group-header .v-count {
+          margin-left: auto;
+          color: #444;
+        }
+
+        /* --- Array Visualization --- */
+        .array-viz-wrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding-top: 20px;
+        }
+
+        .pointer-row {
+          height: 40px;
+          position: relative;
+          margin-bottom: 4px;
+        }
+
+        .ptr-indicator {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          transform: translateX(-50%);
+          z-index: 20;
+        }
+
+        .ptr-label {
+          color: #000;
+          font-size: 10px;
+          font-weight: 900;
+          padding: 2px 6px;
+          border-radius: 4px;
+          margin-bottom: 2px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .array-cells-row {
+          display: flex;
+          gap: 5px;
+          flex-wrap: wrap;
+        }
+
+        .array-cell-pro {
+          width: 40px;
+          height: 50px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
           position: relative;
         }
 
-        .playback-group {
-          display: flex;
-          align-items: center;
-          gap: 20px;
+        .array-cell-pro .c-val {
+          font-size: 14px;
+          font-weight: 800;
+          color: #fff;
+          font-family: 'Fira Code', monospace;
         }
 
-        .playback-group button {
-          background: transparent;
-          border: none;
-          color: #666;
-          cursor: pointer;
-          transition: 0.2s;
+        .array-cell-pro .c-idx {
+          position: absolute;
+          bottom: -18px;
+          font-size: 9px;
+          font-weight: 700;
+          color: #444;
         }
+
+        /* --- Matrix Visualization --- */
+        .pro-matrix {
+          border-collapse: separate;
+          border-spacing: 4px;
+        }
+
+        .matrix-cell-pro {
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 6px;
+          font-size: 12px;
+          font-weight: 700;
+          color: #ddd;
+        }
+
+        /* --- Scalars / Variable Cards --- */
+        .scalars-viz-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+          gap: 12px;
+          margin-top: 24px;
+        }
+
+        .scalar-card-pro {
+          background: rgba(10, 10, 10, 0.6);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          padding: 12px;
+          border-radius: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .scalar-card-pro.hl {
+          border-color: #fbbf24;
+          background: rgba(251, 191, 36, 0.05);
+        }
+
+        .scalar-card-pro .s-label {
+          font-size: 9px;
+          font-weight: 800;
+          color: #555;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        .scalar-card-pro .s-value {
+          font-size: 15px;
+          font-weight: 900;
+          color: #fff;
+          font-family: 'Fira Code', monospace;
+        }
+
+        /* --- Stdout Terminal --- */
+        .viz-stdout-panel {
+          margin-top: 40px;
+          background: #000;
+          border: 1px solid rgba(255,255,255,0.05);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+
+        .viz-stdout-panel .vh-header {
+          background: rgba(255,255,255,0.02);
+          padding: 8px 16px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 9px;
+          font-weight: 800;
+          color: #444;
+          border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .stdout-content {
+          padding: 16px;
+          font-family: 'Fira Code', monospace;
+          font-size: 12px;
+          color: #00ff88;
+          white-space: pre-wrap;
+          margin: 0;
+        }
+
+        .rotate-90 { transform: rotate(90deg); }
+
+        .viz-canvas::-webkit-scrollbar { width: 4px; height: 4px; }
+        .viz-canvas::-webkit-scrollbar-thumb { background: rgba(0, 255, 136, 0.1); border-radius: 2px; }
 
         .playback-group button:hover:not(:disabled) { color: #fff; transform: scale(1.1); }
         .playback-group button:disabled { opacity: 0.3; cursor: not-allowed; }
@@ -2130,6 +2535,6 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           margin: 12px 0;
         }
       `}</style>
-    </>
+    </motion.div>
   );
 }
