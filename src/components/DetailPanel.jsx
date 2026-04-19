@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { AIResult } from "./AIStudyContent";
 
-const STATUS_LABELS = { complete: "COMPLETE", in_progress: "IN PROGRESS", locked: "LOCKED", default: "NOT STARTED" };
+const STATUS_LABELS = { complete: "Complete", in_progress: "In progress", locked: "Locked", default: "Not started" };
 const STATUS_COLORS = { complete: "#00ff88", in_progress: "#f59e0b", locked: "#555570", default: "#555570" };
 
 // ── NotebookLM helpers ────────────────────────────────────────────────────────
@@ -506,7 +506,7 @@ export default function DetailPanel({
     <div className="detail-panel" style={{ "--dp-color": pathColor }}>
       {/* ── Header ── */}
       <div className="dp-header">
-        <div className="dp-breadcrumb" style={{ fontSize: "8px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className="dp-breadcrumb" style={{ fontSize: "11px", fontWeight: 700, opacity: 0.6, letterSpacing: '0.5px', overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>DS <span>·</span> {node.title.substring(0, 15).toUpperCase()} <span>·</span> {module.title.toUpperCase()}</div>
           {onClose && <button onClick={onClose} style={{ background: "none", border: "none", color: "var(--text3)", cursor: "pointer", fontSize: "14px", padding: "0 4px" }}>✕</button>}
         </div>
@@ -605,7 +605,7 @@ export default function DetailPanel({
                   <div>
                     {(m.status === "complete" || m.status === "in_progress") && (
                       <span className={`dp-module-status-pill ${m.status}`}>
-                        {m.status === "complete" ? "COMPLETE" : "IN PROGRESS"}
+                        {m.status === "complete" ? "Complete" : "In progress"}
                       </span>
                     )}
                   </div>
@@ -911,24 +911,30 @@ export default function DetailPanel({
         <button
           className={`dp-btn dp-btn-done ${module.status === "complete" ? "active" : ""}`}
           onClick={() => onMarkModuleStatus("complete")}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
         >
-          {module.status === "complete" ? "✓ MODULE COMPLETED" : "MARK MODULE COMPLETE ✓"}
+          {module.status === "complete" ? <CheckCircle2 size={14} /> : null}
+          <span>{module.status === "complete" ? "Module complete" : "Mark complete"}</span>
         </button>
         <button
           className={`dp-btn dp-btn-progress ${module.status === "in_progress" ? "active" : ""}`}
           onClick={() => onMarkModuleStatus("in_progress")}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
         >
-          {module.status === "in_progress" ? "⟳ MODULE IN PROGRESS" : "MARK MODULE IN PROGRESS"}
+          {module.status === "in_progress" ? <RotateCcw size={14} /> : null}
+          <span>{module.status === "in_progress" ? "In progress" : "Mark in progress"}</span>
         </button>
         <button
           className={`dp-btn dp-btn-done ${nodeState === "done" ? "active" : ""}`}
           style={{
             background: nodeState === "done" ? pathColor : "transparent",
             borderColor: pathColor, borderStyle: "dashed", opacity: 0.8,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8
           }}
           onClick={onMarkDone}
         >
-          {nodeState === "done" ? "NODE COMPLETED 🏆" : "MARK ENTIRE NODE DONE"}
+          {nodeState === "done" ? <CheckCircle2 size={14} /> : null}
+          <span>{nodeState === "done" ? "Node complete" : "Mark node done"}</span>
         </button>
       </div>
 

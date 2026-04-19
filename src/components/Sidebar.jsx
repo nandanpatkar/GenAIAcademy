@@ -30,31 +30,60 @@ export default function Sidebar({
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
+  const [resetConfirm, setResetConfirm] = useState(false);
   const { isAdmin, allowAimlForAll } = useAuth();
 
-  const navItems = [
-    { icon: <LayoutDashboard size={16} />, label: "Overview", id: "overview" },
-    { icon: <Orbit size={16} />, label: "Knowledge Galaxy", id: "galaxy" },
-    { icon: <Network size={16} />, label: "Curriculum Map", id: "curriculum_map" },
-    { icon: <Terminal size={16} />, label: "Practice IDE", id: "ide" },
-    { icon: <Bookmark size={16} />, label: "Quick Notes", id: "tasks" },
-    { icon: <CircleDashed size={16} />, label: "Progress", id: "progress" },
-    { icon: <BookOpen size={16} />, label: "Resources", id: "resources" },
-    { icon: <Boxes size={16} />, label: "Playground", id: "playground" },
-    { icon: <Layers size={16} />, label: "System Simulator", id: "simulator" },
-    { icon: <Clapperboard size={16} />, label: "DSA Animator", id: "dsa_animator" },
-    { icon: <BookMarked size={16} />, label: "Blog", id: "blog" },
-    ...((isAdmin || allowAimlForAll) ? [
-      { icon: <GraduationCap size={16} />, label: "AIML Companion", id: "aiml_companion" }
-    ] : []),
-    { icon: <Users size={16} />, label: "AI Interviewer", id: "interviewer" },
-    ...(isAdmin ? [
-      { icon: <Shield size={16} />, label: "System Admin", id: "admin_management" }
-    ] : []),
-    { icon: <Cpu size={16} />, label: "Algo Studio", id: "algo_studio" },
-    { icon: <BoxSelect size={16} />, label: "Intelligence Hub", id: "hub" },
-    { icon: <Users size={16} />, label: "Community", id: "community" },
+  const sidebarGroups = [
+    {
+      label: "Learn",
+      items: [
+        { icon: <LayoutDashboard size={14} />, label: "Overview", id: "overview" },
+        { icon: <Orbit size={14} />, label: "Knowledge Galaxy", id: "galaxy" },
+        { icon: <Network size={14} />, label: "Curriculum Map", id: "curriculum_map" },
+        { icon: <CircleDashed size={14} />, label: "Progress", id: "progress" },
+      ]
+    },
+    {
+      label: "Tools",
+      items: [
+        { icon: <Terminal size={14} />, label: "Practice IDE", id: "ide" },
+        { icon: <Boxes size={14} />, label: "Playground", id: "playground" },
+        { icon: <Layers size={14} />, label: "System Simulator", id: "simulator" },
+        { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator" },
+        { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
+      ]
+    },
+    {
+      label: "Content",
+      items: [
+        { icon: <BookMarked size={14} />, label: "Blog", id: "blog" },
+        { icon: <Bookmark size={14} />, label: "Workplace Lab", id: "tasks" },
+        { icon: <BookOpen size={14} />, label: "Resources", id: "resources" },
+        ...((isAdmin || allowAimlForAll) ? [
+          { icon: <GraduationCap size={14} />, label: "AIML Companion", id: "aiml_companion" }
+        ] : []),
+        { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer" },
+        { icon: <Users size={14} />, label: "Community", id: "community" },
+      ]
+    },
+    ...(isAdmin ? [{
+      label: "Admin",
+      items: [
+        { icon: <Shield size={14} />, label: "System Admin", id: "admin_management" },
+        { icon: <BoxSelect size={14} />, label: "Intelligence Hub", id: "hub" },
+      ]
+    }] : [])
   ];
+
+  const handleResetClick = () => {
+    if (!resetConfirm) {
+      setResetConfirm(true);
+      setTimeout(() => setResetConfirm(false), 3000);
+    } else {
+      onReset();
+      setResetConfirm(false);
+    }
+  };
 
   const getActiveId = () => {
     if (showAdminManagement) return "admin_management";
@@ -82,7 +111,6 @@ export default function Sidebar({
     if (setActiveModule) setActiveModule(null);
     if (setActiveTopic) setActiveTopic(null);
 
-    // Close all panels
     setShowCurriculumMap(false);
     if (setShowIDE) setShowIDE(false);
     if (setShowResources) setShowResources(false);
@@ -98,7 +126,6 @@ export default function Sidebar({
     if (setShowAlgoStudio) setShowAlgoStudio(false);
     if (setShowWorkplaceLab) setShowWorkplaceLab(false);
 
-    // Open selected
     switch (id) {
       case "curriculum_map": setShowCurriculumMap(true); break;
       case "ide": if (setShowIDE) setShowIDE(true); break;
@@ -169,35 +196,24 @@ export default function Sidebar({
     return { key: k, label, color: p.color || "#00ff88", bg, badge: `${nodeCount} nodes`, progressPercent };
   });
 
-  /* Active path color for the collapsed path dot */
-  const activePColor = pathList.find(p => p?.key === activePath)?.color || "#00ff88";
-
   return (
     <aside className={`sidebar${isCollapsed ? " sidebar-collapsed" : ""}${isMobileMenuOpen ? " sidebar-mobile-open" : ""}`}>
-      {/* ── Morphing Header ── */}
       <div className="sidebar-logo morphing-header">
         <div className="logo-orb">
           <svg className="quantum-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Outer Orbit 1 */}
             <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(-30 50 50)" className="logo-orbit" />
-            {/* Outer Orbit 2 */}
             <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(30 50 50)" className="logo-orbit" />
-            {/* Outer Orbit 3 */}
             <ellipse cx="50" cy="50" rx="45" ry="18" transform="rotate(90 50 50)" className="logo-orbit" />
-
-            {/* Orbiting Nodes */}
             <circle r="3" className="logo-node node-1" />
             <circle r="3" className="logo-node node-2" />
             <circle r="3" className="logo-node node-3" />
-
-            {/* Central Nucleus */}
             <path d="M50 35L63 42.5V57.5L50 65L37 57.5V42.5L50 35Z" className="logo-nucleus" />
             <circle cx="50" cy="50" r="4" className="logo-core" />
           </svg>
           <div className="logo-pulse" />
         </div>
 
-        <div className="logo-morph-wrapper">
+        {!isCollapsed && (
           <div className="brand-layer">
             <div className="brand-stack">
               <span className="brand pixar-brand line-1">
@@ -216,110 +232,88 @@ export default function Sidebar({
               </span>
             </div>
           </div>
-
-          <div className="controls-layer">
-            <button
-              className={`morph-icon ${isEditMode ? "active" : ""}`}
-              onClick={() => setIsEditMode(!isEditMode)}
-              title={isEditMode ? "Edit Mode: ON" : "View Mode"}
-              style={{ "--idx": 1 }}
-            >
-              {isEditMode ? <Edit3 size={14} /> : <Eye size={14} />}
-            </button>
-            <div
-              className={`theme-switch ${theme === "dark" ? "active" : ""}`}
-              onClick={toggleTheme}
-              title={theme === "dark" ? "Light Mode" : "Dark Mode"}
-              style={{ "--idx": 2 }}
-            >
-              <div className="theme-switch-icon left"><Sun size={12} /></div>
-              <div className="theme-switch-icon right"><Moon size={12} /></div>
-              <div className="theme-switch-thumb"></div>
-            </div>
-            <button
-              className="morph-icon warning"
-              onClick={onReset}
-              title="Reset Defaults"
-              style={{ "--idx": 3 }}
-            >
-              <RotateCcw size={14} />
-            </button>
-            <div className="morph-divider" />
-            <button
-              className="morph-icon danger"
-              onClick={onSignOut}
-              title="Sign Out"
-              style={{ "--idx": 4 }}
-            >
-              <LogOut size={14} />
-            </button>
-          </div>
-        </div>
-
-        <button
-          className="sidebar-collapse-btn"
-          onClick={() => setIsCollapsed(c => !c)}
-          title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {isCollapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
-        </button>
+        )}
       </div>
 
-      {/* ── Independent Navigation Scroll ── */}
+      <button
+        className="sidebar-collapse-btn"
+        onClick={() => setIsCollapsed(c => !c)}
+        title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+      >
+        {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+      </button>
+
       <div className="sidebar-nav-container">
         <div className="sidebar-nav">
-          <div className="sidebar-section">
-            {navItems.map((item) => (
-              <React.Fragment key={item.id}>
-              <div
-                className={`sidebar-item ${activeNavId === item.id ? "active" : ""}`}
-                onClick={() => handleNavClick(item.id)}
-                data-label={item.label}
-              >
-                <span className="sidebar-item-icon">
-                  {item.icon}
-                </span>
-                {!isCollapsed && <span>{item.label}</span>}
-                {!isCollapsed && item.id === 'blog' && (
-                  <ChevronRight size={12} style={{ marginLeft: 'auto', transition: '0.3s', transform: isBlogExpanded ? 'rotate(90deg)' : 'none' }} />
-                )}
-              </div>
-
-              {/* --- Blog Sub-menu --- */}
-              {!isCollapsed && item.id === 'blog' && isBlogExpanded && (
-                <div className="sidebar-sub-menu">
-                  <div className="sub-item ai-sub" onClick={() => onHubNav({ view: 'blog', year: null, isAI: true })}>
-                    <Sparkles size={12} />
-                    <span>Neural Pilot</span>
-                  </div>
-                  <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2025', isAI: false })}>
-                    <div className="sub-dot" />
-                    <span>2025 Repository</span>
-                  </div>
-                  <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2024', isAI: false })}>
-                    <div className="sub-dot" />
-                    <span>2024 Repository</span>
-                  </div>
+          {sidebarGroups.map((group) => (
+            <div key={group.label} className="sidebar-group">
+              {!isCollapsed && (
+                <div className="sidebar-section-header">
+                  <span className="sidebar-section-label">{group.label}</span>
                 </div>
               )}
-              </React.Fragment>
-            ))}
-          </div>
+              <div className="sidebar-section">
+                {group.items.map((item) => (
+                  <React.Fragment key={item.id}>
+                    <div
+                      className={`sidebar-item ${activeNavId === item.id ? "active" : ""}`}
+                      onClick={() => handleNavClick(item.id)}
+                      data-label={item.label}
+                    >
+                      <span className="sidebar-item-icon">
+                        {item.icon}
+                      </span>
+                      {!isCollapsed && <span>{item.label}</span>}
+                      {!isCollapsed && item.id === 'blog' && (
+                        <ChevronRight size={12} style={{ marginLeft: 'auto', transition: '0.3s', transform: isBlogExpanded ? 'rotate(90deg)' : 'none' }} />
+                      )}
+                    </div>
+
+                    {!isCollapsed && item.id === 'blog' && isBlogExpanded && (
+                      <div className="sidebar-sub-menu">
+                        <div className="sub-item ai-sub" onClick={() => onHubNav({ view: 'blog', year: null, isAI: true })}>
+                          <Sparkles size={12} />
+                          <span>Neural Pilot</span>
+                        </div>
+                        <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2025', isAI: false })}>
+                          <div className="sub-dot" />
+                          <span>2025 Repository</span>
+                        </div>
+                        <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2024', isAI: false })}>
+                          <div className="sub-dot" />
+                          <span>2024 Repository</span>
+                        </div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+              {!isCollapsed && <div className="group-divider" />}
+            </div>
+          ))}
         </div>
       </div>
 
       <div className="sidebar-divider" />
 
-      {/* ── Independent Paths Scroll ── */}
       <div className="sidebar-paths-container">
-        {/* Collapsed: active path dot indicator */}
         {isCollapsed && (
           <div className="sidebar-path-dot-strip">
-            <div
-              className="sidebar-path-dot-btn"
-              style={{ background: activePColor, boxShadow: `0 0 8px ${activePColor}80` }}
-              title={pathList.find(p => p?.key === activePath)?.label || "Active Path"}
-            />
+            {pathList.filter(Boolean).map(p => (
+              <div
+                key={p.key}
+                className={`sidebar-path-dot-btn ${activePath === p.key ? "active" : ""}`}
+                style={{ 
+                  background: activePath === p.key ? p.color : 'transparent',
+                  border: `1.5px solid ${p.color}`,
+                  boxShadow: activePath === p.key ? `0 0 10px ${p.color}80` : 'none'
+                }}
+                onClick={() => setActivePath(p.key)}
+                data-label={`${p.label} (${p.progressPercent}%)`}
+              >
+                <span>{p.label.charAt(0)}</span>
+              </div>
+            ))}
           </div>
         )}
 
@@ -375,17 +369,138 @@ export default function Sidebar({
             </button>
           )}
 
-          <div style={{ marginTop: "24px" }}>
-            <BentoCard
-              title="Unlock Agentic Pro"
-              description="Get infinite AI mentorship, automated portfolio generation, and prioritized generation queues."
-              glowColor="var(--neon)"
-            />
-          </div>
         </div>}
       </div>
 
+      <div className="sidebar-footer">
+        <div className="footer-super-button-container">
+          <div className="footer-popout-menu">
+            <button 
+              className={`popout-item ${isEditMode ? 'active edit' : ''}`}
+              onClick={() => setIsEditMode(!isEditMode)}
+              title={isEditMode ? "Exit Edit Mode" : "Enter Edit Mode"}
+            >
+              {isEditMode ? <Edit3 size={14} /> : <Eye size={14} />}
+              <span>{isEditMode ? "Edit Mode" : "View Mode"}</span>
+            </button>
 
+            <button 
+              className={`popout-item theme-toggle overlay-item ${theme === 'dark' ? 'dark' : 'light'}`}
+              onClick={toggleTheme}
+            >
+              {theme === 'dark' ? <Moon size={14} /> : <Sun size={14} />}
+              <span>{theme === 'dark' ? "Dark Mode" : "Light Mode"}</span>
+            </button>
+
+            <button 
+              className={`popout-item reset overlay-item ${resetConfirm ? 'danger confirmed' : ''}`}
+              onClick={handleResetClick}
+            >
+              <RotateCcw size={14} className={resetConfirm ? "spin-warning" : ""} />
+              <span>{resetConfirm ? "Confirm Reset" : "Reset Data"}</span>
+            </button>
+
+            <div className="popout-divider" />
+
+            <button className="popout-item logout overlay-item" onClick={onSignOut}>
+              <LogOut size={14} />
+              <span>Sign Out</span>
+            </button>
+          </div>
+
+          <button className="super-control-btn">
+            <div className={`control-orb ${isEditMode ? 'editing' : ''}`}>
+              <Orbit size={18} />
+            </div>
+            {!isCollapsed && <span className="control-label">Settings</span>}
+          </button>
+        </div>
+      </div>
     </aside>
   );
+}
+
+const styles = `
+  .sidebar-group {
+    margin-bottom: 12px;
+  }
+  .group-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 8px 20px;
+    opacity: 0.3;
+  }
+  .edit-pill {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text3);
+    font-size: 9px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .edit-pill.active {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: #f59e0b;
+    color: #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+  }
+  .sidebar-path-dot-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+  }
+  .sidebar-path-dot-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 900;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .sidebar-path-dot-btn:hover {
+    transform: scale(1.1);
+  }
+  .sidebar-path-dot-btn.active {
+    color: #000;
+  }
+  .sidebar-path-dot-btn[data-label]:hover::after {
+    content: attr(data-label);
+    position: absolute;
+    left: calc(100% + 10px);
+    background: var(--bg5);
+    border: 1px solid var(--border2);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 1000;
+  }
+  .spin-warning {
+    animation: spin 3s linear infinite;
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+`;
+
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet);
 }

@@ -13,7 +13,8 @@ const FlickeringGrid = ({
   flickerChance = 0.3, 
   color = "#00ff88", 
   maxOpacity = 0.3,
-  className = "" 
+  className = "",
+  transitionColor = true
 }) => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -77,8 +78,20 @@ const FlickeringGrid = ({
   }, [squareSize, gridGap, flickerChance, color, maxOpacity]);
 
   return (
-    <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none', background: '#020202' }} className={className}>
-      <canvas ref={canvasRef} />
+    <div ref={containerRef} style={{ 
+      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, 
+      pointerEvents: 'none', background: '#020202',
+      transition: transitionColor ? 'background 1s ease' : 'none'
+    }} className={className}>
+      <div style={{
+        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+        background: color, opacity: 0.05,
+        transition: transitionColor ? 'background 0.8s ease' : 'none'
+      }} />
+      <canvas ref={canvasRef} style={{ 
+        mixBlendMode: 'screen',
+        transition: transitionColor ? 'filter 0.8s ease' : 'none'
+      }} />
     </div>
   );
 };
@@ -104,11 +117,27 @@ export default function IntelligenceHub({
   onDesignAction, 
   onInterview, 
   onShowAll,
+  pathsData = {},
   initialView = 'main',
   initialYear = null,
   initialAI = false
 }) {
-  const [view, setView] = useState(initialView); // 'main' | 'design' | 'study' | 'curricula' | 'roadmap' | 'blog'
+  const [viewStack, setViewStack] = useState(['main']);
+  const view = viewStack[viewStack.length - 1]; // Current view is top of stack
+
+  // Breadcrumb helper
+  const navigateTo = (newView) => {
+    setViewStack(prev => [...prev, newView]);
+  };
+
+  const goBack = () => {
+    if (viewStack.length > 1) {
+      setViewStack(prev => prev.slice(0, -1));
+    } else {
+      onShowAll();
+    }
+  };
+
   const [blogYear, setBlogYear] = useState(initialYear);
   const [blogSearch, setBlogSearch] = useState('');
   const [blogLimit, setBlogLimit] = useState(100);
@@ -116,9 +145,18 @@ export default function IntelligenceHub({
   const [aiQuery, setAiQuery] = useState('');
   const [isScanning, setIsScanning] = useState(false);
 
+  // Escape key listener for Issue 01
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') onShowAll();
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [onShowAll]);
+
   // Sync with external navigation (e.g. Sidebar clicks)
   useEffect(() => {
-    if (initialView) setView(initialView);
+    if (initialView && initialView !== view) setViewStack(['main', initialView]);
     if (initialYear !== undefined) setBlogYear(initialYear);
     if (initialAI !== undefined) setShowAI(initialAI);
     // Reset limit on external jump
@@ -131,36 +169,65 @@ export default function IntelligenceHub({
     );
   }, []);
 
+  const getOverallProgress = () => {
+    let total = 0;
+    let complete = 0;
+    Object.values(pathsData).forEach(p => {
+      if (!p.nodes) return;
+      p.nodes.forEach(n => {
+        if (n.modules) {
+          n.modules.forEach(m => {
+            total++;
+            if (m.status === 'complete') complete++;
+          });
+        }
+      });
+    });
+    return total > 0 ? Math.round((complete / total) * 100) : 0;
+  };
+
+  const activePathTitle = pathsData[Object.keys(pathsData)[0]]?.title || "Active Roadmap";
+
   const mainCards = [
     {
       id: 'roadmap',
       title: 'Map',
+      subtitle: 'Knowledge Galaxy',
       icon: <Globe className="hub-icon" size={32} />,
-      description: 'Global intelligence topology.',
+      description: 'Explore the 3D topology of global intelligence.',
+      footerLabel: 'OPEN GALAXY →',
       color: '#00ccff',
-      action: () => setView('roadmap')
+      action: () => navigateTo('roadmap'),
+      progress: getOverallProgress() // Map shows overall across all paths
     },
     {
       id: 'study',
       title: 'Study',
+      subtitle: 'Curriculum Hub',
       icon: <BookOpen className="hub-icon" size={32} />,
-      description: 'AI roadmap & concepts.',
+      description: 'Master AI concepts through structured pathways.',
+      footerLabel: 'START LEARNING →',
       color: '#00ff88',
-      action: () => setView('study')
+      action: () => navigateTo('study'),
+      progress: getOverallProgress() // Study shows overall completion
     },
     {
       id: 'design',
       title: 'Design',
+      subtitle: 'System Playground',
       icon: <Layers className="hub-icon" size={32} />,
-      description: 'Architect complex systems.',
+      description: 'Architect complex intelligence systems in a lab.',
+      footerLabel: 'INITIALIZE LAB →',
       color: '#60a5fa',
-      action: () => setView('design')
+      action: () => navigateTo('design')
     },
     {
       id: 'interview',
       title: 'Interview',
+      subtitle: 'Training Agent',
       icon: <Users className="hub-icon" size={32} />,
-      description: 'Elite training sessions.',
+      description: 'Prepare for elite AI engineering roles.',
+      footerLabel: 'START SESSION →',
       color: '#fbbf24',
       action: onInterview
     }
@@ -188,10 +255,11 @@ export default function IntelligenceHub({
   const studyCards = [
     {
       id: 'curricula',
-      title: 'Curriculum Hub',
+      title: 'Curricula',
+      subtitle: 'Learning Paths',
       icon: <BookOpen size={20} />,
-      description: 'Specialized learning paths for all AI disciplines.',
-      action: () => setView('curricula'),
+      description: 'Specialized learning tracks for AI disciplines.',
+      action: () => navigateTo('curricula'),
       accent: '#00ff88'
     },
     {
@@ -212,10 +280,11 @@ export default function IntelligenceHub({
     },
     {
       id: 'blog',
-      title: 'Research Blog',
+      title: 'Research',
+      subtitle: 'Blog Archive',
       icon: <Layout size={20} />,
-      description: 'Latest deep-dives from Research Repository.',
-      action: () => setView('blog'),
+      description: 'Deep-dives from the global research repository.',
+      action: () => navigateTo('blog'),
       accent: '#3b82f6'
     },
     {
@@ -278,10 +347,10 @@ export default function IntelligenceHub({
   ];
 
   const getSubMenuTitle = () => {
-    if (view === 'roadmap') return 'Navigation Ecosystem';
-    if (view === 'study') return 'Intelligence Pathways';
-    if (view === 'design') return 'System Design Matrix';
-    if (view === 'curricula') return 'Curriculum Selection';
+    if (view === 'roadmap') return 'Navigation Galaxy';
+    if (view === 'study') return 'Study Modules';
+    if (view === 'design') return 'Architectural Labs';
+    if (view === 'curricula') return 'Select Specialization';
     if (view === 'blog') return 'Research Repository';
     return '';
   };
@@ -319,10 +388,27 @@ export default function IntelligenceHub({
           <div className="hub-logo-dot" />
           <span>INTELLIGENCE_HUB</span>
         </div>
-        <button className="show-all-btn" onClick={onShowAll}>
-          <span>SHOW ALL SECTIONS</span>
-          <ChevronRight size={16} />
-        </button>
+        
+        <div className="hub-breadcrumbs">
+          {viewStack.map((v, i) => (
+            <React.Fragment key={v}>
+              <span 
+                className={`breadcrumb-pill ${i === viewStack.length - 1 ? 'active' : ''}`}
+                onClick={() => setViewStack(viewStack.slice(0, i + 1))}
+              >
+                {v.toUpperCase()}
+              </span>
+              {i < viewStack.length - 1 && <ChevronRight size={10} className="breadcrumb-sep" />}
+            </React.Fragment>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: 12 }}>
+          <button className="show-all-btn exit-btn" onClick={onShowAll}>
+            <span>EXIT HUB</span>
+            <X size={16} />
+          </button>
+        </div>
       </div>
 
       <div className="hub-container">
@@ -338,9 +424,9 @@ export default function IntelligenceHub({
               {showAI ? (
                 <div className="hub-sub-layout ai-search-layout">
                   <div className="hub-sub-header">
-                    <button className="hub-back-btn" onClick={() => setShowAI(false)}>
-                      <X size={20} />
-                      <span>EXIT PILOT</span>
+                    <button className="hub-back-btn" onClick={goBack}>
+                      <ChevronRight size={14} style={{ transform: 'rotate(180deg)' }} />
+                      <span>BACK</span>
                     </button>
                     <h2>Neural Research Pilot</h2>
                     <p className="sub-tagline">Global intelligence scan across 11,000+ blueprints.</p>
@@ -406,9 +492,9 @@ export default function IntelligenceHub({
               ) : !blogYear ? (
                 <div className="hub-sub-layout">
                   <div className="hub-sub-header">
-                    <button className="hub-back-btn" onClick={() => setView('study')}>
-                      <X size={20} />
-                      <span>BACK TO STUDY</span>
+                    <button className="hub-back-btn" onClick={goBack}>
+                      <ChevronRight size={14} style={{ transform: 'rotate(180deg)' }} />
+                      <span>BACK</span>
                     </button>
                     <h2>Research Chronology</h2>
                     <p className="sub-tagline">Select a year to explore the intelligence blueprints.</p>
@@ -553,9 +639,23 @@ export default function IntelligenceHub({
                       {card.icon}
                     </div>
                     <h2>{card.title}</h2>
-                    <p>{card.description}</p>
+                    <p className="card-subtitle">{card.subtitle}</p>
+                    <p className="card-description">{card.description}</p>
+                    
+                    {card.progress !== undefined && (
+                      <div className="card-progress-container">
+                        <div className="progress-label">
+                          <span>Progress</span>
+                          <span>{card.progress}%</span>
+                        </div>
+                        <div className="progress-bar-bg">
+                          <div className="progress-bar-fill" style={{ width: `${card.progress}%` }} />
+                        </div>
+                      </div>
+                    )}
+
                     <div className="hub-card-foot">
-                      <span>INITIALIZE</span>
+                      <span>{card.footerLabel || 'INITIALIZE'}</span>
                       <ChevronRight size={14} />
                     </div>
                   </div>
@@ -573,10 +673,10 @@ export default function IntelligenceHub({
               <div className="hub-sub-header">
                 <button 
                   className="hub-back-btn" 
-                  onClick={getBackAction()}
+                  onClick={goBack}
                 >
-                  <X size={20} />
-                  <span>{view === 'curricula' ? 'BACK TO STUDY' : 'BACK TO MODELS'}</span>
+                  <ChevronRight size={14} style={{ transform: 'rotate(180deg)' }} />
+                  <span>BACK</span>
                 </button>
                 <h2>{getSubMenuTitle()}</h2>
               </div>
@@ -682,7 +782,77 @@ export default function IntelligenceHub({
           max-width: 1600px;
           padding: 120px 40px 40px;
           z-index: 5;
-          margin-top: 20px;
+          margin-top: 50px;
+        }
+
+        .hub-breadcrumbs {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-left: 40px;
+        }
+
+        .breadcrumb-pill {
+          font-size: 9px;
+          font-weight: 800;
+          color: #666;
+          cursor: pointer;
+          transition: 0.3s;
+          letter-spacing: 1px;
+        }
+
+        .breadcrumb-pill:hover { color: #fff; }
+        .breadcrumb-pill.active { color: #00ff88; }
+        .breadcrumb-sep { color: #333; }
+
+        .exit-btn { border-radius: 12px; border-color: rgba(255,255,255,0.15); }
+        .exit-btn:hover { background: #ff4444; border-color: #ff4444; }
+
+        .card-subtitle {
+          font-size: 10px;
+          font-weight: 900;
+          color: var(--card-accent);
+          letter-spacing: 2px;
+          margin: 0 0 8px;
+          text-transform: uppercase;
+          opacity: 0.7;
+        }
+
+        .card-description {
+          font-size: 13px;
+          color: #888;
+          line-height: 1.5;
+          margin-bottom: 24px;
+        }
+
+        .card-progress-container {
+          margin-top: auto;
+          margin-bottom: 24px;
+        }
+
+        .progress-label {
+          display: flex;
+          justify-content: space-between;
+          font-size: 8px;
+          font-weight: 900;
+          color: #888;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 6px;
+        }
+
+        .progress-bar-bg {
+          width: 100%; height: 2px;
+          background: rgba(255,255,255,0.05);
+          border-radius: 2px;
+          overflow: hidden;
+        }
+
+        .progress-bar-fill {
+          height: 100%;
+          background: var(--card-accent);
+          box-shadow: 0 0 10px var(--card-accent);
+          transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hub-grid {

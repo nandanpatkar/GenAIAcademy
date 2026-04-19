@@ -36,6 +36,7 @@ import FocusPulse from "./components/FocusPulse";
 import VideoModal from "./components/VideoModal";
 import LandingPage from "./pages/LandingPage";
 import { AnimatePresence } from "framer-motion";
+import useWindowWidth from "./hooks/useWindowWidth";
 import "./styles/global.css";
 
 class ErrorBoundary extends Component {
@@ -81,6 +82,8 @@ const injectDefaultIcons = (paths) => {
 
 function MainApp() {
   const { user, isAdmin, isLocked, signOut, allowAimlForAll, geminiKey } = useAuth();
+  const width = useWindowWidth();
+  const isMobile = width <= 768;
 
   // Sync Global Gemini Config to AI Service
   useEffect(() => {
@@ -747,6 +750,7 @@ function MainApp() {
     return (
       <IntelligenceHub 
         paths={PATHS}
+        pathsData={pathsData}
         onStudyAction={handleHubStudyAction}
         onDesignAction={handleHubDesignAction}
         onInterview={handleHubInterview}
@@ -769,7 +773,13 @@ function MainApp() {
   }
 
   return (
-    <div className="app">
+    <div className={`app ${isEditMode ? "edit-mode-active" : ""}`}>
+      {isEditMode && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100%', height: '2px',
+          background: '#f59e0b', zIndex: 9999, boxShadow: '0 0 10px #f59e0b'
+        }} />
+      )}
       <MobileHeader 
         theme={theme} 
         toggleTheme={toggleTheme} 
@@ -864,12 +874,12 @@ function MainApp() {
                 onAnimationTriggered={() => setLastCompletedNodeId(null)}
               />
             )}
-            {freshActiveNode && !activeTopic && (!showModuleDetails || window.innerWidth > 768) && (
+            {freshActiveNode && !activeTopic && (!showModuleDetails || !isMobile) && (
               <ModulePanel
                 node={freshActiveNode} activeModule={freshActiveModule} 
                 setActiveModule={(mod) => {
                   setActiveModule(mod);
-                  if (window.innerWidth <= 768) setShowModuleDetails(true);
+                  if (isMobile) setShowModuleDetails(true);
                 }}
                 pathColor={pathData.color} onClose={() => { setActiveNode(null); setActiveModule(null); setActiveTopic(null); }}
                 onBack={() => { setActiveNode(null); setActiveModule(null); setActiveTopic(null); }}
@@ -879,7 +889,7 @@ function MainApp() {
                 isEditMode={isEditMode} activePath={activePath}
               />
             )}
-            {freshActiveModule && freshActiveNode && !activeTopic && (showModuleDetails || window.innerWidth > 768) && (
+            {freshActiveModule && freshActiveNode && !activeTopic && (showModuleDetails || !isMobile) && (
                 <DetailPanel
                   node={freshActiveNode} module={freshActiveModule} pathColor={pathData.color}
                   onMarkDone={() => { handleMarkState(freshActiveNode.id, "done"); setActiveNode(null); }}
@@ -893,12 +903,12 @@ function MainApp() {
                   onEnterFocusMode={() => setFocusNodeId(freshActiveNode.id)}
                   onVideoSelect={handleVideoSelect}
                   onClose={() => {
-                    if (window.innerWidth <= 768) setShowModuleDetails(false);
+                    if (isMobile) setShowModuleDetails(false);
                     else setActiveModule(null);
                   }}
                 />
             )}
-            {freshActiveModule && freshActiveNode && !activeTopic && window.innerWidth > 768 && (
+            {freshActiveModule && freshActiveNode && !activeTopic && !isMobile && (
               <ResourcePanel
                 module={freshActiveModule}
                 pathColor={pathData.color}
