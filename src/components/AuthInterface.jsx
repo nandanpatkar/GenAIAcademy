@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Hexagon, Mail, Lock, LogIn, UserPlus } from 'lucide-react';
+import { Hexagon, Mail, Lock, LogIn, UserPlus, ArrowLeft } from 'lucide-react';
 
-export default function AuthInterface() {
+export default function AuthInterface({ onBackToLanding }) {
   const { signIn, signUp, signInWithGoogle, adminSignInMock } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [loginMode, setLoginMode] = useState('user'); // 'user' | 'admin'
@@ -58,6 +58,26 @@ export default function AuthInterface() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg)', color: 'var(--text)', overflow: 'hidden', position: 'relative' }}>
+      
+      {/* Back Button */}
+      {onBackToLanding && (
+        <button 
+          onClick={onBackToLanding}
+          style={{ 
+            position: 'absolute', top: 32, left: 32, zIndex: 100,
+            display: 'flex', alignItems: 'center', gap: 8,
+            padding: '10px 18px', background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12,
+            color: 'var(--text2)', fontSize: 13, fontWeight: 700,
+            cursor: 'pointer', transition: 'all 0.2s',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+          }}
+          onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = '#fff'; }}
+          onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'var(--text2)'; }}
+        >
+          <ArrowLeft size={16} /> Back to Home
+        </button>
+      )}
       
       {/* Background Decorators */}
       <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(0,255,136,0.15) 0%, transparent 60%)', filter: 'blur(40px)' }} />

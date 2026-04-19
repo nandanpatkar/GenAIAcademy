@@ -694,16 +694,18 @@ export default function IntelligenceHub({
         .hub-card {
           position: relative;
           aspect-ratio: 1;
-          background: rgba(255,255,255,0.02);
+          background: rgba(255,255,255,0.015);
+          backdrop-filter: blur(14px) saturate(160%);
+          -webkit-backdrop-filter: blur(14px) saturate(160%);
           border: 1px solid rgba(255,255,255,0.05);
-          border-radius: 24px;
+          border-radius: 28px;
           cursor: pointer;
           overflow: hidden;
           padding: 40px;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
-          transition: border-color 0.3s;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hub-card:hover {
@@ -829,15 +831,17 @@ export default function IntelligenceHub({
           flex: 0 1 210px;
           aspect-ratio: 0.85;
           background: rgba(255,255,255,0.02);
+          backdrop-filter: blur(10px) saturate(140%);
+          -webkit-backdrop-filter: blur(10px) saturate(140%);
           border: 1px solid rgba(255,255,255,0.05);
-          border-radius: 16px;
+          border-radius: 20px;
           padding: 24px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
           justify-content: flex-end;
           cursor: pointer;
-          transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           overflow: hidden;
         }
 
@@ -869,7 +873,9 @@ export default function IntelligenceHub({
         /* --- Blog Viewer & Gallery --- */
         .year-node {
           border-left: 2px solid var(--year-accent);
-          background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
+          background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.15));
+          backdrop-filter: blur(12px) saturate(150%);
+          -webkit-backdrop-filter: blur(12px) saturate(150%);
         }
 
         .year-val {
@@ -935,6 +941,8 @@ export default function IntelligenceHub({
 
         .article-node {
           background: rgba(255,255,255,0.02);
+          backdrop-filter: blur(8px) saturate(130%);
+          -webkit-backdrop-filter: blur(8px) saturate(130%);
           border: 1px solid rgba(255,255,255,0.05);
           aspect-ratio: auto !important;
           min-height: 160px;

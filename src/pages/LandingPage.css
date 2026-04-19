@@ -1,0 +1,395 @@
+.apple-style {
+  background: #000;
+  color: #fff;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  font-family: 'Syne', sans-serif;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+.apple-style::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.scroll-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Background Visuals */
+.hero-visual-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ambient-glow {
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, rgba(59, 130, 246, 0.05) 50%, transparent 70%);
+  filter: blur(120px);
+  animation: float-glow 25s ease-in-out infinite;
+}
+
+@keyframes float-glow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-3%, 3%) scale(1.05); }
+}
+
+.vignette-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 30%, #000 100%);
+  opacity: 0.9;
+}
+
+/* Stunning Grain Overlay */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+}
+
+/* Technical Background Art */
+.tech-art-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-tech-element {
+  position: absolute;
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+/* Hero Content - Forced Centering and Visibility */
+.hero-content {
+  text-align: center;
+  width: 100%;
+  padding: 0 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  z-index: 20;
+}
+
+.apple-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  font-weight: 800;
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+.title-top, .title-bottom {
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: #e8e8f0;
+  letter-spacing: -0.05em;
+  display: block;
+}
+
+.title-main {
+  font-size: clamp(3.5rem, 8.5vw, 8rem);
+  letter-spacing: -0.06em;
+  margin: 15px 0;
+  width: 100%;
+  display: block;
+  white-space: normal;
+}
+
+.generative-text {
+  background: linear-gradient(90deg, #00ff88, #3b82f6, #00ff88);
+  background-size: 200% auto;
+  color: #00ff88;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glow-fade 10s ease-in-out infinite;
+  padding: 0 10px;
+  display: inline-block;
+}
+
+@keyframes glow-fade {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.dynamic-description-wrapper {
+  height: 48px;
+  margin-bottom: 80px;
+  width: 100%;
+}
+
+.apple-description {
+  font-size: clamp(16px, 2.2vw, 22px);
+  color: #8888a0;
+  font-weight: 500;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Mission Section - The Final Destination */
+.mission-section {
+  padding: 0 80px;
+  z-index: 20;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 100px;
+  align-items: center;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.mission-content-glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(50px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 40px;
+  padding: 80px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+  text-align: left;
+}
+
+.mission-content-glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.4), transparent);
+}
+
+.mission-accent {
+  font-size: 11px;
+  color: #00ff88;
+  font-weight: 800;
+  letter-spacing: 0.8em;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.mission-main {
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  margin-bottom: 40px;
+  display: block;
+}
+
+.mission-body {
+  margin-bottom: 64px;
+}
+
+.mission-body p {
+  font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.mission-body strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.mission-highlight {
+  font-weight: 800;
+  color: #00ff88 !important;
+  opacity: 1;
+}
+
+/* Stunning Neural Visual */
+.mission-visual-wrapper {
+  position: relative;
+  width: 100%;
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neural-architecture-viz {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.neural-svg {
+  width: 120%;
+  height: 120%;
+  filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.1));
+}
+
+.core-label {
+  position: absolute;
+  bottom: 10px;
+  font-family: monospace;
+  font-size: 11px;
+  color: #00ff88;
+  letter-spacing: 5px;
+  font-weight: 800;
+  opacity: 0.8;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+/* Signal Trails */
+.signal-trails {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.signal-trail {
+  position: absolute;
+  left: 0;
+  width: 250px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.5), transparent);
+  filter: blur(2px);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  z-index: 100;
+}
+
+.mouse-wheel {
+  width: 24px;
+  height: 40px;
+  border: 2.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  position: relative;
+}
+
+.mouse-wheel::before {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 2px;
+  left: 50%;
+  top: 8px;
+  margin-left: -2px;
+}
+
+/* Stunning Entry Button */
+.stunning-btn {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 20px 48px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  box-shadow: 0 30px 60px rgba(0, 255, 136, 0.25);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stunning-btn:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 40px 80px rgba(0, 255, 136, 0.35);
+}
+
+/* Landing Grid Overlay */
+.landing-grid-overlay.minimalist {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Response Fixes */
+@media (max-width: 1100px) {
+  .mission-grid { gap: 60px; }
+  .mission-content-glass { padding: 60px; }
+}
+
+@media (max-width: 968px) {
+  .mission-section { padding: 0 32px; }
+  .mission-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 80px;
+  }
+  .mission-content-glass { padding: 50px; border-radius: 32px; text-align: center; }
+  .title-main { font-size: 3rem; }
+  .mission-main { font-size: 3.5rem; }
+  .stunning-btn { margin: 0 auto; }
+  .mission-visual-wrapper { height: 400px; order: -1; }
+}
+
+@media (max-width: 768px) {
+  .title-main { font-size: 2.8rem; }
+  .mission-main { font-size: 2.5rem; }
+  .apple-description { font-size: 16px; }
+  .hero-content { padding: 0 20px; }
+}

@@ -34,6 +34,7 @@ import AuthInterface from "./components/AuthInterface";
 import KnowledgeGalaxy from "./components/KnowledgeGalaxy";
 import FocusPulse from "./components/FocusPulse";
 import VideoModal from "./components/VideoModal";
+import LandingPage from "./pages/LandingPage";
 import { AnimatePresence } from "framer-motion";
 import "./styles/global.css";
 
@@ -97,6 +98,10 @@ function MainApp() {
   const [focusNodeId, setFocusNodeId] = useState(null);
   const [activeVideo, setActiveVideo] = useState(null);
   const [lastCompletedNodeId, setLastCompletedNodeId] = useState(null);
+  const [showLanding, setShowLanding] = useState(() => {
+    // Only show landing if user hasn't seen it in this session and is not logged in
+    return !localStorage.getItem("genai_landing_dismissed");
+  });
 
   const handleVideoSelect = (video) => {
     if (video.pathKey) setActivePath(video.pathKey);
@@ -724,7 +729,19 @@ function MainApp() {
     });
   };
 
-  if (!user) return <AuthInterface />;
+  if (!user && showLanding) return <LandingPage onEnter={() => {
+    setShowLanding(false);
+    localStorage.setItem("genai_landing_dismissed", "true");
+  }} />;
+
+  if (!user) return (
+    <AuthInterface 
+      onBackToLanding={() => {
+        setShowLanding(true);
+        localStorage.removeItem("genai_landing_dismissed");
+      }} 
+    />
+  );
   
   if (showIntelligenceHub) {
     return (
@@ -898,11 +915,11 @@ function MainApp() {
                 onVideoSelect={handleVideoSelect}
               />
             )}
-          </>
+            </>
           }
         </main>
       </div>
-      
+
       <MobileBottomNav 
         activeView={showAdminManagement ? "admin" : showBlog ? "blog" : showPlayground ? "playground" : showProgress ? "progress" : "roadmap"}
         setView={v => {
@@ -914,7 +931,6 @@ function MainApp() {
           else if (v === "progress") setShowProgress(true);
         }}
       />
-      }
 
       <AnimatePresence>
         {focusNodeId && freshActiveNode && freshActiveModule && (
