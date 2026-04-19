@@ -867,6 +867,20 @@ function MainApp() {
               onSaveAlgo={handleSaveUserAlgo}
               onClose={() => setShowAlgoVisualizer(false)}
             /> :
+          showWorkplaceLab ? <WorkplaceLab 
+            history={pathsData.workspace?.history || []}
+            notes={pathsData.workspace?.notes || []}
+            onSaveNote={handleSaveWorkspaceNote}
+            onUpdateNote={handleUpdateWorkspaceNote}
+            onDeleteNote={handleDeleteWorkspaceNote}
+            onJumpToNode={(nodeId, pathId) => {
+              const path = pathsData[pathId];
+              const node = path?.nodes?.find(n => n.id === nodeId);
+              if (node) handleNodeClick(node, pathId);
+              setShowWorkplaceLab(false);
+            }}
+            onClose={() => setShowWorkplaceLab(false)}
+          /> :
           showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
           showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
           <>
@@ -988,24 +1002,7 @@ function MainApp() {
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {showWorkplaceLab && (
-          <WorkplaceLab 
-            history={pathsData.workspace?.history || []}
-            notes={pathsData.workspace?.notes || []}
-            onSaveNote={handleSaveWorkspaceNote}
-            onUpdateNote={handleUpdateWorkspaceNote}
-            onDeleteNote={handleDeleteWorkspaceNote}
-            onJumpToNode={(nodeId, pathId) => {
-              const path = pathsData[pathId];
-              const node = path?.nodes?.find(n => n.id === nodeId);
-              if (node) handleNodeClick(node, pathId);
-              setShowWorkplaceLab(false);
-            }}
-            onClose={() => setShowWorkplaceLab(false)}
-          />
-        )}
-      </AnimatePresence>
+
 
       {editingPath && <EditorModal type="path" data={editData} pathColor={editData?.color || "#3b82f6"} onClose={() => setEditingPath(false)} onSave={handleSavePath} onDelete={handleDeletePath} />}
       {editingNode && <EditorModal type="node" data={editData} pathColor={pathData.color} onClose={() => setEditingNode(false)} onSave={handleSaveNode} onDelete={handleDeleteNode} />}

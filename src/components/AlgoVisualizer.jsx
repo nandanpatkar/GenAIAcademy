@@ -926,20 +926,21 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
       <style>{`
         .algo-studio-overlay {
-          position: fixed;
-          top: 0; left: 0; right: 0; bottom: 0;
-          z-index: 9999;
+          position: relative;
+          flex: 1;
+          height: 100%;
           background: #000;
-          width: 100vw;
-          height: 100vh;
           overflow: hidden;
+          display: flex;
+          flex-direction: column;
           color: #fff;
           font-family: 'Inter', system-ui, sans-serif;
         }
 
         /* --- STUDIO PRO REDESIGN --- */
         .studio-pro-shell {
-          height: 100vh;
+          flex: 1;
+          height: 100%;
           width: 100%;
           background: #000;
           display: flex;

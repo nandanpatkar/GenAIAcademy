@@ -506,9 +506,11 @@ export default function DetailPanel({
     <div className="detail-panel" style={{ "--dp-color": pathColor }}>
       {/* ── Header ── */}
       <div className="dp-header">
-        <div className="dp-breadcrumb" style={{ fontSize: "11px", fontWeight: 700, opacity: 0.6, letterSpacing: '0.5px', overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div>DS <span>·</span> {node.title.substring(0, 15).toUpperCase()} <span>·</span> {module.title.toUpperCase()}</div>
-          {onClose && <button onClick={onClose} style={{ background: "none", border: "none", color: "var(--text3)", cursor: "pointer", fontSize: "14px", padding: "0 4px" }}>✕</button>}
+        <div className="dp-breadcrumb" style={{ fontSize: "11px", fontWeight: 700, opacity: 0.6, letterSpacing: '0.5px', display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", width: "100%", overflow: "hidden" }}>
+          <div style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            DS <span>·</span> {node.title.substring(0, 15).toUpperCase()} <span>·</span> {module.title.toUpperCase()}
+          </div>
+          {onClose && <button onClick={onClose} style={{ background: "none", border: "none", color: "var(--text3)", cursor: "pointer", fontSize: "14px", padding: "0 4px", flexShrink: 0 }}>✕</button>}
         </div>
         <div className="dp-title-row">
           <div>

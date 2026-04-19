@@ -48,7 +48,7 @@ export default function Sidebar({
       label: "Tools",
       items: [
         { icon: <Terminal size={14} />, label: "Practice IDE", id: "ide" },
-        { icon: <Boxes size={14} />, label: "Playground", id: "playground" },
+        { icon: <Boxes size={14} />, label: "GenAI Simulator", id: "playground" },
         { icon: <Layers size={14} />, label: "System Simulator", id: "simulator" },
         { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator" },
         { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
@@ -59,7 +59,7 @@ export default function Sidebar({
       label: "Content",
       items: [
         { icon: <BookMarked size={14} />, label: "Blog", id: "blog" },
-        { icon: <Bookmark size={14} />, label: "Workplace Lab", id: "tasks" },
+        { icon: <Bookmark size={14} />, label: "Quick Notes", id: "tasks" },
         { icon: <BookOpen size={14} />, label: "Resources", id: "resources" },
         ...((isAdmin || allowAimlForAll) ? [
           { icon: <GraduationCap size={14} />, label: "AIML Companion", id: "aiml_companion" }

@@ -101,10 +101,10 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
 
   return (
     <div className="topic-panel" style={{ flex: 1, background: "var(--bg2)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-      <div className="tp-header" style={{ padding: "16px 24px", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
+      <div className="tp-header" style={{ padding: "12px 24px", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px", flexShrink: 0 }}>
         <button 
           onClick={onClose}
-          style={{ background: "transparent", border: "none", color: "var(--text2)", cursor: "pointer", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", gap: 6, fontFamily: "var(--mono)" }}
+          style={{ background: "transparent", border: "none", color: "var(--text2)", cursor: "pointer", fontSize: 11, fontWeight: 700, display: "flex", alignItems: "center", gap: 6, fontFamily: "var(--mono)", whiteSpace: "nowrap" }}
         >
           <ArrowLeft size={14} /> BACK TO MODULE
         </button>
@@ -193,11 +193,10 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
             </div>
           ) : (
             <div className="markdown-body" style={{ color: "var(--text)", fontSize: 15, lineHeight: 1.7, fontFamily: "var(--font)", paddingRight: 10 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                <h1 style={{ fontSize: 32, fontWeight: 800, color: "var(--text)", marginBottom: 0, letterSpacing: "-1px" }}>{title || "Untitled Topic"}</h1>
-                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8, gap: 20, minWidth: 0 }}>
+                <h1 style={{ fontSize: 32, fontWeight: 800, color: "var(--text)", marginBottom: 0, letterSpacing: "-1px", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>{title || "Untitled Topic"}</h1>
+                <div style={{ display: "flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
                 </div>
-
               </div>
               
               {topic.companies && topic.companies.length > 0 && (

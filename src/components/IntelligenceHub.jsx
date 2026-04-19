@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, Layers, Users, Sparkles, X, 
-  ChevronRight, Boxes, Layout, Globe, Activity, Zap, Search
+  ChevronRight, Boxes, Layout, Globe, Activity, Zap, Search, Monitor
 } from 'lucide-react';
 import { CHRONOLOGICAL_DB } from '../data/blogData';
 import { ALGO_EXAMPLES } from '../data/algoExamples';
@@ -255,7 +255,7 @@ export default function IntelligenceHub({
   const studyCards = [
     {
       id: 'curricula',
-      title: 'Curricula',
+      title: 'Curriculum',
       subtitle: 'Learning Paths',
       icon: <BookOpen size={20} />,
       description: 'Specialized learning tracks for AI disciplines.',
@@ -269,6 +269,15 @@ export default function IntelligenceHub({
       description: 'Advanced algorithm visualization and lab.',
       action: () => onStudyAction('algo_studio'),
       accent: '#a855f7'
+    },
+    {
+      id: 'algo_visualizer',
+      title: 'Algo Visualizer',
+      subtitle: 'PRO Engine',
+      icon: <Monitor size={20} />,
+      description: 'Embedded professional code simulation engine.',
+      action: () => onStudyAction('algo_visualizer'),
+      accent: '#ef4444'
     },
     {
       id: 'aiml_companion',
@@ -325,7 +334,7 @@ export default function IntelligenceHub({
   const designCards = [
     {
       id: 'playground',
-      title: 'Lab Playground',
+      title: 'GenAI Simulator',
       icon: <Boxes size={24} />,
       description: 'Open sandbox for rapid prototyping.',
       action: () => onDesignAction('playground')
