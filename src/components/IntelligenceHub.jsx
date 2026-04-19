@@ -4,6 +4,7 @@ import {
   BookOpen, Layers, Users, Sparkles, X, 
   ChevronRight, Boxes, Layout, Globe, Activity, Zap, Search, Monitor
 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import { CHRONOLOGICAL_DB } from '../data/blogData';
 import { ALGO_EXAMPLES } from '../data/algoExamples';
 
@@ -138,6 +139,7 @@ export default function IntelligenceHub({
     }
   };
 
+  const { isAdmin } = useAuth();
   const [blogYear, setBlogYear] = useState(initialYear);
   const [blogSearch, setBlogSearch] = useState('');
   const [blogLimit, setBlogLimit] = useState(100);
@@ -262,14 +264,14 @@ export default function IntelligenceHub({
       action: () => navigateTo('curricula'),
       accent: '#00ff88'
     },
-    {
+    ...(isAdmin ? [{
       id: 'algo_studio',
       title: 'Algo Studio',
       icon: <Activity size={20} />,
       description: 'Advanced algorithm visualization and lab.',
       action: () => onStudyAction('algo_studio'),
       accent: '#a855f7'
-    },
+    }] : []),
     {
       id: 'algo_visualizer',
       title: 'Algo Visualizer',

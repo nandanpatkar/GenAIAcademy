@@ -695,25 +695,55 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                     <pre className="error-body">{executionError}</pre>
                   </div>
                 ) : trace.length === 0 ? (
-                  <div className="aero-splash">
-                    <div className="splash-core">
-                       <div className="pulse-ring" />
-                       <Cpu size={64} className="splash-icon emerald-pulse" />
-                    </div>
+                  <div className="aero-splash" style={{ background: '#121212', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                     {isLoading ? (
-                      <div className="boot-loader">
-                        <h3>INITIALIZING_PYTHON_RUNTIME</h3>
-                        <div className="skeleton-bar-container">
-                          <motion.div 
-                            className="skeleton-progress"
-                            animate={{ width: ["0%", "80%", "90%"] }}
-                            transition={{ duration: 3 }}
-                          />
-                        </div>
-                        <p>Loading Pyodide environment... (first load ~3s)</p>
+                      <div style={{ display: 'flex', gap: '30px' }}>
+                        <motion.span
+                          animate={{ 
+                            scale: [0.8, 1.1, 0.8],
+                            opacity: [0.3, 1, 0.3]
+                          }}
+                          transition={{ 
+                            duration: 0.8,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                          style={{
+                            fontSize: '84px',
+                            fontWeight: 300,
+                            color: '#00ccff',
+                            fontFamily: 'monospace'
+                          }}
+                        >
+                          &#123;
+                        </motion.span>
+                        <motion.span
+                          animate={{ 
+                            scale: [0.8, 1.1, 0.8],
+                            opacity: [0.3, 1, 0.3]
+                          }}
+                          transition={{ 
+                            duration: 0.8,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: 0.4
+                          }}
+                          style={{
+                            fontSize: '84px',
+                            fontWeight: 300,
+                            color: '#00ccff',
+                            fontFamily: 'monospace'
+                          }}
+                        >
+                          &#125;
+                        </motion.span>
                       </div>
                     ) : (
                       <>
+                        <div className="splash-core">
+                           <div className="pulse-ring" />
+                           <Cpu size={64} className="splash-icon emerald-pulse" />
+                        </div>
                         <h3>READY_FOR_INTELLIGENCE</h3>
                         <p>Compile your source and step into the logic engine to begin visualization.</p>
                       </>

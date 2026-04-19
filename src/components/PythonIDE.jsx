@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, Square, Loader, Terminal as TerminalIcon, Save, FolderOpen, 
   Trash2, Code2, Folder, ChevronRight, ChevronDown, FolderPlus, 
@@ -165,7 +166,57 @@ export default function PythonIDE({ onClose }) {
         </div>
       </header>
 
-      <main className="studio-main">
+      <main className="studio-main" style={{ position: 'relative' }}>
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div 
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: '#121212',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1000
+              }}
+            >
+              <div style={{ display: 'flex', gap: '30px' }}>
+                <motion.span
+                  animate={{ 
+                    scale: [0.8, 1.1, 0.8],
+                    opacity: [0.3, 1, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 0.8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  style={{ fontSize: '84px', fontWeight: 300, color: '#00ccff', fontFamily: 'monospace' }}
+                >
+                  &#123;
+                </motion.span>
+                <motion.span
+                  animate={{ 
+                    scale: [0.8, 1.1, 0.8],
+                    opacity: [0.3, 1, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 0.8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.4
+                  }}
+                  style={{ fontSize: '84px', fontWeight: 300, color: '#00ccff', fontFamily: 'monospace' }}
+                >
+                  &#125;
+                </motion.span>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Structured Sidebar */}
         {showWorkspace && (
           <aside className="studio-sidebar">

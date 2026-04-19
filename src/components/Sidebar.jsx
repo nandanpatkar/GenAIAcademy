@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink } from "lucide-react";
 import { Bookmark } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import { motion } from "framer-motion";
 import BentoCard from "./BentoCard";
 
 export default function Sidebar({
@@ -32,7 +33,12 @@ export default function Sidebar({
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
-  const { isAdmin, allowAimlForAll } = useAuth();
+  const { isAdmin, allowAimlForAll, geminiKey, updateGeminiKey } = useAuth();
+  const [localKey, setLocalKey] = useState(geminiKey || "");
+
+  useEffect(() => {
+    if (geminiKey) setLocalKey(geminiKey);
+  }, [geminiKey]);
 
   const sidebarGroups = [
     {
@@ -51,7 +57,6 @@ export default function Sidebar({
         { icon: <Boxes size={14} />, label: "GenAI Simulator", id: "playground" },
         { icon: <Layers size={14} />, label: "System Simulator", id: "simulator" },
         { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator" },
-        { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
         { icon: <Box size={14} />, label: "Algo Visualizer", id: "algo_visualizer" },
       ]
     },
@@ -72,6 +77,7 @@ export default function Sidebar({
       label: "Admin",
       items: [
         { icon: <Shield size={14} />, label: "System Admin", id: "admin_management" },
+        { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
         { icon: <BoxSelect size={14} />, label: "Intelligence Hub", id: "hub" },
       ]
     }] : [])
@@ -382,6 +388,7 @@ export default function Sidebar({
       <div className="sidebar-footer">
         <div className="footer-super-button-container">
           <div className="footer-popout-menu">
+            <div className="popout-section-label" style={{ fontSize: 9, fontWeight: 900, color: 'var(--text3)', padding: '8px 16px 4px', letterSpacing: 1 }}>SYSTEM_CONFIG</div>
             <button 
               className={`popout-item ${isEditMode ? 'active edit' : ''}`}
               onClick={() => setIsEditMode(!isEditMode)}
@@ -406,6 +413,78 @@ export default function Sidebar({
               <RotateCcw size={14} className={resetConfirm ? "spin-warning" : ""} />
               <span>{resetConfirm ? "Confirm Reset" : "Reset Data"}</span>
             </button>
+
+            <div className="popout-divider" />
+            <div className="popout-section-label" style={{ fontSize: 9, fontWeight: 900, color: 'var(--text3)', padding: '12px 16px 4px', letterSpacing: 1 }}>INTELLIGENCE_KEY</div>
+            
+            <div style={{ padding: '4px 12px 12px' }}>
+              <div style={{ position: 'relative', display: 'flex', gap: 6 }}>
+                <input 
+                  type="password"
+                  placeholder="Paste Gemini Key..."
+                  value={localKey}
+                  onChange={(e) => setLocalKey(e.target.value)}
+                  style={{
+                    flex: 1,
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 6,
+                    padding: '8px 10px',
+                    fontSize: 11,
+                    color: 'var(--text)',
+                    fontFamily: 'monospace',
+                    outline: 'none',
+                    transition: 'all 0.2s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
+                  onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
+                />
+                <motion.button 
+                  onClick={() => updateGeminiKey(localKey)}
+                  whileHover={{ scale: 1.05, background: 'var(--neon)', color: '#000', boxShadow: '0 0 12px var(--neon)' }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    background: 'var(--neon)',
+                    border: 'none',
+                    borderRadius: 8,
+                    padding: '0 16px',
+                    color: '#000',
+                    fontSize: 10,
+                    fontWeight: 950,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    height: 34,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  SAVE
+                </motion.button>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
+                <p style={{ margin: 0, fontSize: 9, color: 'var(--text3)', opacity: 0.6 }}>Keys are stored locally.</p>
+                <a 
+                  href="https://aistudio.google.com/app/apikey" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ 
+                    fontSize: 9, 
+                    color: 'var(--neon)', 
+                    textDecoration: 'none', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 4,
+                    fontWeight: 700,
+                    opacity: 0.8
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = '1'}
+                  onMouseLeave={(e) => e.target.style.opacity = '0.8'}
+                >
+                  GET KEY <ExternalLink size={10} />
+                </a>
+              </div>
+            </div>
 
             <div className="popout-divider" />
 

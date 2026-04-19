@@ -372,7 +372,12 @@ function MainApp() {
     } else {
       if (id === 'galaxy') { setShowGalaxy(true); setShowIntelligenceHub(false); }
       else if (id === 'resources') { setShowResources(true); setShowIntelligenceHub(false); }
-      else if (id === 'algo_studio') { setShowAlgoStudio(true); setShowIntelligenceHub(false); }
+      else if (id === 'algo_studio') { 
+        if (isAdmin) {
+          setShowAlgoStudio(true); 
+          setShowIntelligenceHub(false); 
+        }
+      }
       else if (id === 'algo_visualizer') { setShowAlgoVisualizer(true); setShowIntelligenceHub(false); }
       else if (id === 'aiml_companion') { setShowAimlCompanion(true); setShowIntelligenceHub(false); }
       else if (id === 'blog') handleHubNav({ view: 'blog', year: null, isAI: false });

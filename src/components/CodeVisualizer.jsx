@@ -4,18 +4,12 @@ import { X, Sparkles, Monitor, Info, RefreshCcw, WifiOff, AlertTriangle } from '
 
 export default function CodeVisualizer({ onClose }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [isTakingTooLong, setIsTakingTooLong] = useState(false);
   const [key, setKey] = useState(0); // For forcing iframe reload
-  const timeoutRef = useRef(null);
 
   useEffect(() => {
-    // Auto-reveal the engine after a short delay for an "instant" feel, 
-    // rather than waiting for every background tracking script to finish.
-    const autoReveal = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => clearTimeout(autoReveal);
+    // Re-enable auto-reveal to show the professional pulsing animation
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
   }, [key]);
 
   const handleManualRetry = () => {
@@ -24,6 +18,7 @@ export default function CodeVisualizer({ onClose }) {
   };
 
   const handleIframeLoad = () => {
+    // Backup finish for the loader
     setIsLoading(false);
   };
 
@@ -69,20 +64,67 @@ export default function CodeVisualizer({ onClose }) {
         </div>
       </header>
 
-      <main className="cv-iframe-viewport">
+      <main className="cv-iframe-viewport" style={{ position: 'relative', flex: 1, background: '#121212' }}>
         <AnimatePresence>
           {isLoading && (
             <motion.div 
-              className="cv-iframe-loader"
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: '#121212',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 100
+              }}
             >
-              <Sparkles className="spin neon-text" size={40} />
-              <p className="loading-txt">INITIALIZING_ENGINE...</p>
+              <div style={{ display: 'flex', gap: '30px' }}>
+                <motion.span
+                  animate={{ 
+                    scale: [0.8, 1.1, 0.8],
+                    opacity: [0.3, 1, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 0.8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  style={{
+                    fontSize: '84px',
+                    fontWeight: 300,
+                    color: '#00ccff',
+                    fontFamily: 'monospace'
+                  }}
+                >
+                  &#123;
+                </motion.span>
+                <motion.span
+                  animate={{ 
+                    scale: [0.8, 1.1, 0.8],
+                    opacity: [0.3, 1, 0.3]
+                  }}
+                  transition={{ 
+                    duration: 0.8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.4
+                  }}
+                  style={{
+                    fontSize: '84px',
+                    fontWeight: 300,
+                    color: '#00ccff',
+                    fontFamily: 'monospace'
+                  }}
+                >
+                  &#125;
+                </motion.span>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-        
+
         <div className="iframe-mask">
           <iframe 
             key={key}

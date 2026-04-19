@@ -12,9 +12,14 @@ export const AuthProvider = ({ children }) => {
   const [adminsList, setAdminsList] = useState(['nandanpatkar14114@gmail.com']);
   const [lockedUsers, setLockedUsers] = useState([]);
   const [allowAimlForAll, setAllowAimlForAll] = useState(false);
-  const [geminiKey, setGeminiKey] = useState("");
+  const [geminiKey, setGeminiKey] = useState(() => localStorage.getItem('genai_gemini_key') || "");
   const [isLocked, setIsLocked] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const updateGeminiKey = (key) => {
+    setGeminiKey(key);
+    localStorage.setItem('genai_gemini_key', key);
+  };
 
   useEffect(() => {
     const fetchGlobalConfig = async () => {
@@ -33,7 +38,11 @@ export const AuthProvider = ({ children }) => {
           if (data.paths_data.admins) setAdminsList(data.paths_data.admins);
           if (data.paths_data.locked) setLockedUsers(data.paths_data.locked);
           if (data.paths_data.allowAimlForAll !== undefined) setAllowAimlForAll(data.paths_data.allowAimlForAll);
-          if (data.paths_data.geminiKey) setGeminiKey(data.paths_data.geminiKey);
+          // Only use global key if local key is empty
+          const localKey = localStorage.getItem('genai_gemini_key');
+          if (data.paths_data.geminiKey && !localKey) {
+            setGeminiKey(data.paths_data.geminiKey);
+          }
         }
       } catch (e) {
         console.warn("Global config not found, using defaults");
@@ -132,7 +141,7 @@ export const AuthProvider = ({ children }) => {
     allowAimlForAll,
     setAllowAimlForAll,
     geminiKey,
-    setGeminiKey,
+    updateGeminiKey,
     isLocked,
     adminSignInMock,
     signUp,

@@ -1895,23 +1895,23 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 /* --- Right-Side Flyout Menu (Vertical Mode) --- */
 .footer-popout-menu {
   position: absolute;
-  left: calc(100% + 12px);
+  left: calc(100% + 15px);
   bottom: -8px;
-  width: 200px;
+  width: 260px;
   background: color-mix(in srgb, var(--bg2) 90%, transparent);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid var(--white-10);
   border-radius: 20px;
-  padding: 10px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   box-shadow: 0 15px 40px var(--black-75);
   opacity: 0;
   transform: translateX(-15px) scale(0.95);
   pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   z-index: 5000;
 }
 
