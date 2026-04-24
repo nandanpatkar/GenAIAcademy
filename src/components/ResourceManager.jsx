@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Folder, File, Download, Upload, Video, Search, Globe, BookOpen, Trash2, 
   ArrowLeft, Play, FolderOpen, FileText, Link, ChevronRight, ChevronDown, 
@@ -11,6 +12,13 @@ import { AIResult } from "./AIStudyContent";
 import YouTubeThumbnail from './YouTubeThumbnail';
 
 const MODE_ICONS = { quiz: CheckSquare, flashcards: Library, mindmap: Network, summary: AlignLeft };
+
+const RESOURCE_TABS = [
+  { id: 'videos', label: 'Videos', icon: Clapperboard, color: '#f59e0b' },
+  { id: 'files', label: 'Files', icon: FileText, color: '#3b82f6' },
+  { id: 'links', label: 'Links', icon: Link, color: '#34d399' },
+  { id: 'knowledge', label: 'Knowledge', icon: Brain, color: '#a78bfa' }
+];
 
 function fmtDate(iso) {
   const d = new Date(iso);
@@ -42,6 +50,7 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
 
   const [selected, setSelected] = useState(null);
   const [tab, setTab] = useState("videos");
+  const [hoveredTab, setHoveredTab] = useState(null);
   const [urlInput, setUrlInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -305,12 +314,87 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
         {/* Dashboard Content */}
         <section className="vault-dashboard" style={{ borderRadius: 20 }}>
           <div className="dashboard-toolbar" style={{ padding: '12px 20px' }}>
-            <div className="pill-switcher" style={{ '--active-color': activeColor }}>
-               <button className={`pill-btn ${tab === 'videos' ? 'active' : ''}`} onClick={() => { setTab('videos'); setViewingSet(null); }}><Clapperboard size={14}/> Videos</button>
-               <button className={`pill-btn ${tab === 'files' ? 'active' : ''}`} onClick={() => { setTab('files'); setViewingSet(null); }}><FileText size={14}/> Files</button>
-               <button className={`pill-btn ${tab === 'links' ? 'active' : ''}`} onClick={() => { setTab('links'); setViewingSet(null); }}><Link size={14}/> Links</button>
-               <button className={`pill-btn ${tab === 'knowledge' ? 'active' : ''}`} onClick={() => { setTab('knowledge'); setViewingSet(null); }}><Brain size={14}/> Knowledge</button>
-            </div>
+            <div 
+               style={{ 
+                 display: 'flex', 
+                 background: 'rgba(255, 255, 255, 0.03)',
+                 padding: '4px',
+                 borderRadius: '12px',
+                 gap: '4px',
+                 border: '1px solid rgba(255, 255, 255, 0.08)',
+                 position: 'relative',
+                 backdropFilter: 'blur(10px)',
+                 flexShrink: 0
+               }}
+               onMouseLeave={() => setHoveredTab(null)}
+             >
+               <AnimatePresence>
+                 {hoveredTab && (
+                   <motion.div
+                     layoutId="hoverIndicator_res"
+                     initial={{ opacity: 0, scale: 0.95 }}
+                     animate={{ opacity: 1, scale: 1 }}
+                     exit={{ opacity: 0, scale: 0.95 }}
+                     style={{
+                       position: 'absolute',
+                       top: 4,
+                       left: 4,
+                       bottom: 4,
+                       width: `calc((100% - ${8 + (RESOURCE_TABS.length - 1) * 4}px) / ${RESOURCE_TABS.length})`,
+                       background: 'rgba(255, 255, 255, 0.05)',
+                       borderRadius: '8px',
+                       zIndex: 0,
+                       pointerEvents: 'none',
+                       x: RESOURCE_TABS.findIndex(t => t.id === hoveredTab) * (100 + (400 / (RESOURCE_TABS.length * 10))) + '%'
+                     }}
+                   />
+                 )}
+               </AnimatePresence>
+
+               {RESOURCE_TABS.map(t => {
+                 const isActive = tab === t.id;
+                 const Icon = t.icon;
+                 return (
+                   <button 
+                     key={t.id}
+                     onMouseEnter={() => setHoveredTab(t.id)}
+                     onClick={() => { setTab(t.id); setViewingSet(null); }}
+                     style={{
+                       position: 'relative',
+                       zIndex: 1,
+                       padding: '6px 14px',
+                       borderRadius: 8,
+                       fontSize: 11,
+                       fontWeight: 700,
+                       color: isActive ? t.color : 'var(--text3)',
+                       border: 'none',
+                       cursor: 'pointer',
+                       transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                       background: 'transparent',
+                       display: 'flex',
+                       alignItems: 'center',
+                       gap: 6
+                     }}
+                   >
+                     <Icon size={14} style={{ opacity: isActive ? 1 : 0.6 }} />
+                     {t.label}
+                     {isActive && (
+                       <motion.div
+                         layoutId="activePill_res"
+                         style={{
+                           position: 'absolute',
+                           inset: 0,
+                           background: `${t.color}15`,
+                           border: `1px solid ${t.color}33`,
+                           borderRadius: 8,
+                           zIndex: -1
+                         }}
+                       />
+                     )}
+                   </button>
+                 );
+               })}
+             </div>
             <div className="admin-search-wrapper" style={{ width: 300 }}>
                <Search size={14} />
                <input placeholder="Search curriculum blocks..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={{ padding: '8px 12px 8px 40px', borderRadius: 10, fontSize: 13 }} />

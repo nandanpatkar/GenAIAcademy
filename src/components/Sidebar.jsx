@@ -19,6 +19,7 @@ export default function Sidebar({
   showSimulator, setShowSimulator,
   showGalaxy, setShowGalaxy,
   showAimlCompanion, setShowAimlCompanion,
+  showLinks, setShowLinks,
   showAIInterviewer, setShowAIInterviewer,
   showAlgoStudio, setShowAlgoStudio,
   showAlgoVisualizer, setShowAlgoVisualizer,
@@ -64,7 +65,8 @@ export default function Sidebar({
       label: "Content",
       items: [
         { icon: <BookMarked size={14} />, label: "Blog", id: "blog" },
-        { icon: <Bookmark size={14} />, label: "Quick Notes", id: "tasks" },
+        { icon: <Bookmark size={14} />, label: "Links", id: "links" },
+        { icon: <CheckSquare size={14} />, label: "Quick Notes", id: "tasks" },
         { icon: <BookOpen size={14} />, label: "Resources", id: "resources" },
         ...((isAdmin || allowAimlForAll) ? [
           { icon: <GraduationCap size={14} />, label: "AIML Companion", id: "aiml_companion" }
@@ -100,6 +102,7 @@ export default function Sidebar({
     if (showGalaxy) return "galaxy";
     if (showDSAAnimator) return "dsa_animator";
     if (showAimlCompanion) return "aiml_companion";
+    if (showLinks) return "links";
     if (showPlayground) return "playground";
     if (showProgress) return "progress";
     if (showIDE) return "ide";
@@ -127,6 +130,7 @@ export default function Sidebar({
     if (setShowPlayground) setShowPlayground(false);
     if (setShowDSAAnimator) setShowDSAAnimator(false);
     if (setShowAimlCompanion) setShowAimlCompanion(false);
+    if (setShowLinks) setShowLinks(false);
     if (setShowBlog) setShowBlog(false);
     if (setShowAdminManagement) setShowAdminManagement(false);
     if (setShowSimulator) setShowSimulator(false);
@@ -144,6 +148,7 @@ export default function Sidebar({
       case "playground": if (setShowPlayground) setShowPlayground(true); break;
       case "dsa_animator": if (setShowDSAAnimator) setShowDSAAnimator(true); break;
       case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
+      case "links": if (setShowLinks) setShowLinks(true); break;
       case "simulator": if (setShowSimulator) setShowSimulator(true); break;
       case "galaxy": if (setShowGalaxy) setShowGalaxy(true); break;
       case "blog": 

@@ -41,7 +41,7 @@ export default function CurriculumTreePanel({
   };
 
   const handleSelect = (e, node, mod, topic) => {
-    if(e) e.stopPropagation();
+    if (e) e.stopPropagation();
     if (setActiveNode) setActiveNode(node);
     if (setActiveModule) setActiveModule(mod);
     if (setActiveTopic) setActiveTopic(topic);
@@ -99,15 +99,15 @@ export default function CurriculumTreePanel({
         <div className="cm-controls-bar">
           {/* View Mode Switching */}
           <div className="cm-control-group">
-            <button 
+            <button
               className={`cm-view-btn ${viewMode === "list" ? "active" : ""}`}
-              onClick={() => setViewMode("list")} 
+              onClick={() => setViewMode("list")}
             >
               Directory List
             </button>
-            <button 
+            <button
               className={`cm-view-btn ${viewMode === "flowchart" ? "active" : ""}`}
-              onClick={() => setViewMode("flowchart")} 
+              onClick={() => setViewMode("flowchart")}
             >
               Hybrid Flowchart
             </button>
@@ -137,59 +137,59 @@ export default function CurriculumTreePanel({
           {nodes.map((node) => {
             const isNodeExpanded = expandedNodes[node.id];
             const hasModules = node.modules && node.modules.length > 0;
-            
+
             return (
               <div key={node.id} className="tree-node-group" style={{ background: "var(--bg2)", borderRadius: 12, padding: 20, border: `1px solid ${pathData.color}33`, transition: "all 0.2s" }}>
-                <div 
+                <div
                   className="tree-item node"
                   onClick={(e) => hasModules ? toggleNode(e, node.id) : handleSelect(e, node, null, null)}
                   style={{ fontSize: 18, fontWeight: 700, color: "var(--text)", display: "flex", alignItems: "center", gap: 12, cursor: "pointer", userSelect: "none" }}
                 >
-                  <div 
+                  <div
                     onClick={(e) => hasModules && toggleNode(e, node.id)}
                     style={{ width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--text3)", transition: "transform 0.2s", transform: isNodeExpanded ? "rotate(90deg)" : "rotate(0deg)" }}
                   >
                     {hasModules ? <ChevronRight size={16} /> : ""}
                   </div>
                   <span className="tree-icon" style={{ background: pathData.color, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, color: "#fff" }}><Box size={18} /></span>
-                  <span className="tree-label" style={{ transition: "color 0.2s", flex: 1 }} onMouseOver={e=>e.target.style.color=pathData.color} onMouseOut={e=>e.target.style.color="var(--text)"}>{node.title}</span>
-                  
-                  <button 
-                    onClick={(e) => handleSelect(e, node, null, null)} 
-                    className="rg-btn view-btn" 
+                  <span className="tree-label" style={{ transition: "color 0.2s", flex: 1 }} onMouseOver={e => e.target.style.color = pathData.color} onMouseOut={e => e.target.style.color = "var(--text)"}>{node.title}</span>
+
+                  <button
+                    onClick={(e) => handleSelect(e, node, null, null)}
+                    className="rg-btn view-btn"
                     style={{ fontSize: 11, padding: "4px 10px", background: "transparent", border: "1px solid var(--border)", color: "var(--text2)", borderRadius: 4 }}
                   >
                     View Details ↗
                   </button>
                 </div>
-                
+
                 {isNodeExpanded && (
                   <div className="tree-children" style={{ paddingLeft: 46, borderLeft: "2px solid var(--border)", marginLeft: 34, display: "flex", flexDirection: "column", gap: 16, marginTop: 16 }}>
                     {(node.modules || []).map((mod) => {
                       const isModExpanded = expandedModules[mod.id];
                       const hasTopics = mod.subtopics && mod.subtopics.length > 0;
-                      
+
                       return (
                         <div key={mod.id} className="tree-module-group">
-                          <div 
+                          <div
                             className="tree-item module"
                             onClick={(e) => hasTopics ? toggleModule(e, mod.id) : handleSelect(e, node, mod, null)}
                             style={{ fontSize: 15, fontWeight: 600, color: "var(--text2)", display: "flex", alignItems: "center", gap: 8, cursor: "pointer", userSelect: "none" }}
                           >
-                            <div 
+                            <div
                               onClick={(e) => hasTopics && toggleModule(e, mod.id)}
                               style={{ width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--border2)", transition: "transform 0.2s", transform: isModExpanded ? "rotate(90deg)" : "rotate(0deg)" }}
                             >
                               {hasTopics ? <ChevronRight size={14} /> : ""}
                             </div>
                             <span style={{ color: pathData.color, display: "flex", alignItems: "center" }}>{isModExpanded ? <Hexagon size={14} fill="currentColor" /> : <Hexagon size={14} />}</span>
-                            <span className="tree-label" style={{ transition: "color 0.2s", flex: 1 }} onMouseOver={e=>e.target.style.color="var(--text)"} onMouseOut={e=>e.target.style.color="var(--text2)"}>{mod.title}</span>
-                            
-                            <button 
-                              onClick={(e) => handleSelect(e, node, mod, null)} 
-                              className="rg-btn view-btn" 
+                            <span className="tree-label" style={{ transition: "color 0.2s", flex: 1 }} onMouseOver={e => e.target.style.color = "var(--text)"} onMouseOut={e => e.target.style.color = "var(--text2)"}>{mod.title}</span>
+
+                            <button
+                              onClick={(e) => handleSelect(e, node, mod, null)}
+                              className="rg-btn view-btn"
                               style={{ fontSize: 10, padding: "2px 8px", background: "transparent", border: "1px solid transparent", color: "var(--text3)", borderRadius: 4 }}
-                              onMouseOver={e=>e.target.style.border="1px solid var(--border)"} onMouseOut={e=>e.target.style.border="1px solid transparent"}
+                              onMouseOver={e => e.target.style.border = "1px solid var(--border)"} onMouseOut={e => e.target.style.border = "1px solid transparent"}
                             >
                               Open ↗
                             </button>
@@ -200,14 +200,14 @@ export default function CurriculumTreePanel({
                               {(mod.subtopics || []).map((topic) => {
                                 const topicId = typeof topic === "object" ? topic.id : topic;
                                 const topicTitle = typeof topic === "object" ? topic.title : topic;
-                                
+
                                 return (
-                                  <div 
-                                    key={topicId} 
+                                  <div
+                                    key={topicId}
                                     className="tree-item topic"
                                     onClick={(e) => handleSelect(e, node, mod, typeof topic === "object" ? topic : { id: topic, title: topic, content: "" })}
                                     style={{ fontSize: 13, color: "var(--text3)", display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: "4px 0" }}
-                                    onMouseOver={e=>e.target.style.color="var(--text)"} onMouseOut={e=>e.target.style.color="var(--text3)"}
+                                    onMouseOver={e => e.target.style.color = "var(--text)"} onMouseOut={e => e.target.style.color = "var(--text3)"}
                                   >
                                     <span style={{ color: "var(--border2)", display: "flex" }}><Minus size={12} /></span>
                                     <span className="tree-label" style={{ flex: 1 }}>{topicTitle}</span>
@@ -226,38 +226,38 @@ export default function CurriculumTreePanel({
           })}
         </div>
       ) : (
-        <div className="hybrid-tree-wrapper" style={{ 
-          "--connector-color": `${pathData.color}CC`, 
-          paddingBottom: 80, paddingLeft: 40, paddingTop: 40, 
+        <div className="hybrid-tree-wrapper" style={{
+          "--connector-color": `${pathData.color}CC`,
+          paddingBottom: 80, paddingLeft: 40, paddingTop: 40,
           overflowX: "auto", display: "flex", flexDirection: "column", alignItems: "flex-start",
-          zoom: zoomLevel, transition: "zoom 0.2s ease-in-out" 
+          zoom: zoomLevel, transition: "zoom 0.2s ease-in-out"
         }}>
-          
+
           <div className="org-node root-node" style={{ marginBottom: 40 }}>{pathData.title || "Curriculum"}</div>
-          
+
           {nodes.length > 0 && (
             <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 40, paddingLeft: 60 }}>
               {/* PRIMARY VERTICAL TRUNK */}
               <div style={{ position: "absolute", left: -40 + 34, top: -40, bottom: 20, borderLeft: "2px solid var(--connector-color)" }}></div>
-              
+
               {nodes.map(node => {
                 const isNodeExpanded = expandedNodes[node.id];
                 const hasModules = node.modules && node.modules.length > 0;
-                
+
                 return (
                   <div key={node.id} style={{ position: "relative" }}>
                     {/* BRANCH STUB TO NODE */}
                     <div style={{ position: "absolute", left: -60 + 34, top: 32, width: 26, borderTop: "2px solid var(--connector-color)" }}></div>
-                    
+
                     <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                       <div className="org-node level-1" onClick={(e) => handleSelect(e, node, null, null)} style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
                         <span style={{ display: "flex", alignItems: "center" }}><Box size={20} /></span>
                         <span>{node.title}</span>
                       </div>
-                      
+
                       {hasModules && (
-                        <button 
-                          onClick={(e) => toggleNode(e, node.id)} 
+                        <button
+                          onClick={(e) => toggleNode(e, node.id)}
                           className="rg-btn"
                           style={{ background: "var(--bg3)", color: "var(--text3)", border: "1px solid var(--border)", width: 28, height: 28, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s" }}
                         >
@@ -270,24 +270,24 @@ export default function CurriculumTreePanel({
                       <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 32, marginTop: 32, paddingLeft: 60 }}>
                         {/* MODULE TRUNK */}
                         <div style={{ position: "absolute", left: -60 + 34, top: -32, bottom: 32, borderLeft: "2px dashed var(--connector-color)" }}></div>
-                        
+
                         {node.modules.map(mod => {
                           const isModExpanded = expandedModules[mod.id];
                           const hasTopics = mod.subtopics && mod.subtopics.length > 0;
-                          
+
                           return (
                             <div key={mod.id} style={{ position: "relative" }}>
                               {/* BRANCH STUB TO MODULE */}
                               <div style={{ position: "absolute", left: -60 + 34, top: 24, width: 26, borderTop: "2px dashed var(--connector-color)" }}></div>
-                              
+
                               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                                 <div className="org-node level-2" onClick={(e) => handleSelect(e, node, mod, null)}>
                                   {mod.title}
                                 </div>
-                                
+
                                 {hasTopics && (
-                                  <button 
-                                    onClick={(e) => toggleModule(e, mod.id)} 
+                                  <button
+                                    onClick={(e) => toggleModule(e, mod.id)}
                                     className="rg-btn"
                                     style={{ background: "transparent", color: "var(--text3)", border: "1px solid var(--border)", width: 24, height: 24, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s" }}
                                   >
@@ -299,20 +299,20 @@ export default function CurriculumTreePanel({
                               {/* LEAF FLOWCHART - Renders Horizontally side-by-side! */}
                               {isModExpanded && hasTopics && (
                                 <div style={{ position: "relative", marginTop: 12, paddingLeft: 0 }}>
-                                    <ul className="leaf-flowchart">
-                                      {mod.subtopics.map(topic => {
-                                        const topicId = typeof topic === "object" ? topic.id : topic;
-                                        const topicTitle = typeof topic === "object" ? topic.title : topic;
-                                        
-                                        return (
-                                          <li key={topicId}>
-                                            <div className="org-node level-3" onClick={(e) => handleSelect(e, node, mod, typeof topic === "object" ? topic : { id: topic, title: topic, content: "" })}>
-                                              {topicTitle}
-                                            </div>
-                                          </li>
-                                        )
-                                      })}
-                                    </ul>
+                                  <ul className="leaf-flowchart">
+                                    {mod.subtopics.map(topic => {
+                                      const topicId = typeof topic === "object" ? topic.id : topic;
+                                      const topicTitle = typeof topic === "object" ? topic.title : topic;
+
+                                      return (
+                                        <li key={topicId}>
+                                          <div className="org-node level-3" onClick={(e) => handleSelect(e, node, mod, typeof topic === "object" ? topic : { id: topic, title: topic, content: "" })}>
+                                            {topicTitle}
+                                          </div>
+                                        </li>
+                                      )
+                                    })}
+                                  </ul>
                                 </div>
                               )}
                             </div>

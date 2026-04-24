@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useMemo, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import ReactFlow, {
   addEdge, MiniMap, Controls, Background, useNodesState, useEdgesState,
   Handle, Position, BackgroundVariant, MarkerType,
@@ -22,6 +23,20 @@ import { PROBLEMS } from "./data/sdsProblems";
 import { SYSTEM_COMPONENTS, COMPONENT_CATEGORIES, getComponentById } from "./data/sdsComponents";
 import { runSimulation, scoreDesign } from "./engine/sdsSimulator";
 import { Maximize2, ExternalLink, Book, GraduationCap, ArrowRight } from "lucide-react";
+
+const LEFT_TABS = [
+  {id:"problems",icon:BookOpen,label:"Problems", color: "#818cf8"},
+  {id:"components",icon:Layers,label:"Components", color: "#34d399"},
+  {id:"concepts",icon:Lightbulb,label:"Concepts", color: "#fbbf24"}
+];
+
+const RIGHT_TABS = [
+  {id:"inspector",icon:Settings,label:"Props", color: "#818cf8"},
+  {id:"sim",icon:Activity,label:"Simulate", color: "#34d399"},
+  {id:"score",icon:Target,label:"Score", color: "#fbbf24"},
+  {id:"capacity",icon:HardDrive,label:"Capacity", color: "#60a5fa"},
+  {id:"tradeoffs",icon:Layers,label:"Trade-offs", color: "#a78bfa"}
+];
 
 // ── Theme (premium indigo/violet) ────────────────────────────────────────────
 const G = "#818cf8";          // primary indigo
@@ -247,6 +262,9 @@ export default function SystemDesignSimulator({ onClose }) {
   const [rightTab, setRightTab]           = useState("sim");
   const [selectedNodeId, setSelectedNodeId] = useState(null);
 
+  const [hoveredLeftTab, setHoveredLeftTab] = useState(null);
+  const [hoveredRightTab, setHoveredRightTab] = useState(null);
+
   // Simulation
   const [simQPS, setSimQPS]               = useState(10000);
   const [simResult, setSimResult]         = useState(null);
@@ -425,12 +443,87 @@ export default function SystemDesignSimulator({ onClose }) {
         {/* ══ LEFT PANEL ═══════════════════════════════════════════════════════════ */}
         {showLeftPanel && (
         <div style={{ width:260, minWidth:240, background:BG2, borderRight:`1px solid ${BORDER}`, display:"flex", flexDirection:"column", overflow:"hidden", flexShrink:0 }}>
-          <div style={{ display:"flex", borderBottom:`1px solid ${BORDER}`, flexShrink:0 }}>
-            {[{id:"problems",icon:BookOpen,label:"Problems"},{id:"components",icon:Layers,label:"Components"},{id:"concepts",icon:Lightbulb,label:"Concepts"}].map(tab=>(
-              <button key={tab.id} onClick={()=>setLeftTab(tab.id)} style={{ flex:1, background:"none", border:"none", borderBottom:`2px solid ${leftTab===tab.id?G:"transparent"}`, padding:"9px 4px", cursor:"pointer", fontSize:9.5, fontWeight:700, letterSpacing:".06em", textTransform:"uppercase", color:leftTab===tab.id?G:TEXT3, display:"flex", alignItems:"center", justifyContent:"center", gap:4, transition:"all .15s" }}>
-                <tab.icon size={10} />{tab.label}
-              </button>
-            ))}
+          <div 
+            style={{ 
+              display:"flex", 
+              background: "rgba(255, 255, 255, 0.03)",
+              padding: "4px",
+              borderRadius: "0",
+              gap: "4px",
+              borderBottom: `1px solid ${BORDER}`,
+              position: "relative",
+              backdropFilter: "blur(10px)"
+            }}
+            onMouseLeave={() => setHoveredLeftTab(null)}
+          >
+            <AnimatePresence>
+              {hoveredLeftTab && (
+                <motion.div
+                  layoutId="hoverIndicator_left"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  style={{
+                    position: 'absolute',
+                    top: 4,
+                    left: 4,
+                    bottom: 4,
+                    width: `calc((100% - ${8 + (LEFT_TABS.length - 1) * 4}px) / ${LEFT_TABS.length})`,
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderRadius: '8px',
+                    zIndex: 0,
+                    pointerEvents: 'none',
+                    x: LEFT_TABS.findIndex(t => t.id === hoveredLeftTab) * (100 + (400 / (LEFT_TABS.length * 10))) + '%'
+                  }}
+                />
+              )}
+            </AnimatePresence>
+
+            {LEFT_TABS.map(tab => {
+              const isActive = leftTab === tab.id;
+              const Icon = tab.icon;
+              return (
+                <button 
+                  key={tab.id} 
+                  onMouseEnter={() => setHoveredLeftTab(tab.id)}
+                  onClick={() => setLeftTab(tab.id)} 
+                  style={{ 
+                    flex:1, 
+                    background:"none", 
+                    border:"none", 
+                    padding:"8px 4px", 
+                    cursor:"pointer", 
+                    fontSize:10, 
+                    fontWeight:700, 
+                    letterSpacing:".05em", 
+                    textTransform:"uppercase", 
+                    color: isActive ? tab.color : TEXT3, 
+                    display:"flex", 
+                    alignItems:"center", 
+                    justifyContent:"center", 
+                    gap:6, 
+                    transition:"all .2s",
+                    position: "relative",
+                    zIndex: 1
+                  }}
+                >
+                  <Icon size={12} style={{ opacity: isActive ? 1 : 0.6 }} />
+                  {tab.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activePill_left"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: `${tab.color}15`,
+                        borderBottom: `2px solid ${tab.color}`,
+                        zIndex: -1
+                      }}
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           {/* ── Problems tab ── */}
@@ -735,18 +828,88 @@ export default function SystemDesignSimulator({ onClose }) {
 
         {/* ══ RIGHT PANEL ══════════════════════════════════════════════════════════ */}
         <div style={{ width:280, minWidth:260, background:BG2, borderLeft:`1px solid ${BORDER}`, display:"flex", flexDirection:"column", overflow:"hidden" }}>
-          <div style={{ display:"flex", borderBottom:`1px solid ${BORDER}`, flexShrink:0, overflowX:"auto" }}>
-            {[
-              {id:"inspector",icon:Settings,label:"Props"},
-              {id:"sim",icon:Activity,label:"Simulate"},
-              {id:"score",icon:Target,label:"Score"},
-              {id:"capacity",icon:HardDrive,label:"Capacity"},
-              {id:"tradeoffs",icon:Layers,label:"Trade-offs"}
-            ].map(tab=>(
-              <button key={tab.id} onClick={()=>setRightTab(tab.id)} style={{ flex:"0 0 auto", minWidth:60, background:"none", border:"none", borderBottom:`2px solid ${rightTab===tab.id?G:"transparent"}`, padding:"9px 8px", cursor:"pointer", fontSize:9.5, fontWeight:700, letterSpacing:".02em", color:rightTab===tab.id?G:TEXT3, display:"flex", alignItems:"center", justifyContent:"center", transition:"all .15s" }}>
-                {tab.label}
-              </button>
-            ))}
+          <div 
+            style={{ 
+              display:"flex", 
+              borderBottom:`1px solid ${BORDER}`, 
+              flexShrink:0, 
+              overflowX:"auto",
+              background: 'rgba(255, 255, 255, 0.02)',
+              padding: '4px',
+              gap: '4px',
+              position: "relative"
+            }}
+            onMouseLeave={() => setHoveredRightTab(null)}
+            className="mini-scrollbar"
+          >
+            <AnimatePresence>
+              {hoveredRightTab && (
+                <motion.div
+                  layoutId="hoverIndicator_right"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  style={{
+                    position: 'absolute',
+                    top: 4,
+                    left: 4,
+                    bottom: 4,
+                    width: 60, // Fixed width for scrollable tabs
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderRadius: '8px',
+                    zIndex: 0,
+                    pointerEvents: 'none',
+                    x: RIGHT_TABS.findIndex(t => t.id === hoveredRightTab) * (60 + 4)
+                  }}
+                />
+              )}
+            </AnimatePresence>
+
+            {RIGHT_TABS.map(tab => {
+              const isActive = rightTab === tab.id;
+              const Icon = tab.icon;
+              return (
+                <button 
+                  key={tab.id} 
+                  onMouseEnter={() => setHoveredRightTab(tab.id)}
+                  onClick={() => setRightTab(tab.id)} 
+                  style={{ 
+                    flex:"0 0 auto", 
+                    minWidth:60, 
+                    background:"none", 
+                    border:"none", 
+                    padding:"8px 12px", 
+                    cursor:"pointer", 
+                    fontSize:10, 
+                    fontWeight:700, 
+                    letterSpacing:".02em", 
+                    color: isActive ? tab.color : TEXT3, 
+                    display:"flex", 
+                    alignItems:"center", 
+                    justifyContent:"center", 
+                    transition:"all .2s",
+                    position: "relative",
+                    zIndex: 1,
+                    gap: 6
+                  }}
+                >
+                  <Icon size={12} style={{ opacity: isActive ? 1 : 0.6 }} />
+                  {tab.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activePill_right"
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: `${tab.color}15`,
+                        borderBottom: `2px solid ${tab.color}`,
+                        zIndex: -1
+                      }}
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
 
           <div style={{ flex:1, overflowY:"auto", padding:12 }}>

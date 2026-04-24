@@ -12,6 +12,11 @@ import {
 import { ALGO_EXAMPLES } from '../data/algoExamples';
 import { findAlgorithmTemplates } from '../services/aiService';
 
+const ALGO_TABS = [
+  { id: 'theory', label: 'Theory', icon: BookOpen, color: '#fbbf24' },
+  { id: 'code', label: 'source.py', icon: Code, color: '#34d399' }
+];
+
 // --- Pyodide Singleton (Prevents Race Conditions) ---
 let pyodideInstance = null;
 let pyodideLoading = null;
@@ -146,6 +151,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedAlgoId, setSelectedAlgoId] = useState(ALGO_EXAMPLES[0].id);
   const [activeTab, setActiveTab] = useState('theory'); // 'theory' | 'code' | 'solution'
+  const [hoveredTab, setHoveredTab] = useState(null);
 
   // Global Explorer State
   const [exploreModalOpen, setExploreModalOpen] = useState(false);
@@ -557,15 +563,89 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
               style={{ width: isVizMaximized ? 0 : paneWidth }}
             >
               <div className="pane-header">
-                <div className="tabs-pill">
-                  <button className={`tab ${activeTab === 'theory' ? 'active' : ''}`} onClick={() => setActiveTab('theory')}>
-                    <BookOpen size={14} />
-                    <span>Theory</span>
-                  </button>
-                  <button className={`tab ${activeTab === 'code' ? 'active' : ''}`} onClick={() => setActiveTab('code')}>
-                    <Code size={14} />
-                    <span>source.py</span>
-                  </button>
+                <div 
+                  className="premium-tab-switcher"
+                  onMouseLeave={() => setHoveredTab(null)}
+                  style={{
+                    display: 'flex',
+                    background: 'rgba(255, 255, 255, 0.03)',
+                    padding: '4px',
+                    borderRadius: '12px',
+                    gap: '4px',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    position: 'relative',
+                    backdropFilter: 'blur(10px)'
+                  }}
+                >
+                  <AnimatePresence>
+                    {hoveredTab && (
+                      <motion.div
+                        layoutId="hoverIndicator_algo"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="hover-pill"
+                        style={{
+                          position: 'absolute',
+                          top: 4,
+                          left: 4,
+                          bottom: 4,
+                          width: `calc((100% - ${8 + (ALGO_TABS.length - 1) * 4}px) / ${ALGO_TABS.length})`,
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          borderRadius: '8px',
+                          zIndex: 0,
+                          pointerEvents: 'none',
+                          x: ALGO_TABS.findIndex(t => t.id === hoveredTab) * (100 + (400 / (ALGO_TABS.length * 10))) + '%'
+                        }}
+                      />
+                    )}
+                  </AnimatePresence>
+
+                  {ALGO_TABS.map((t) => {
+                    const isActive = activeTab === t.id;
+                    const Icon = t.icon;
+                    return (
+                      <button
+                        key={t.id}
+                        onMouseEnter={() => setHoveredTab(t.id)}
+                        onClick={() => setActiveTab(t.id)}
+                        className={`premium-tab ${isActive ? 'active' : ''}`}
+                        style={{
+                          position: 'relative',
+                          zIndex: 1,
+                          padding: '6px 12px',
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          color: isActive ? t.color : 'rgba(255, 255, 255, 0.5)',
+                          transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                          background: 'transparent',
+                          border: 'none',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <Icon size={14} style={{ opacity: isActive ? 1 : 0.7 }} />
+                        <span>{t.label}</span>
+                        {isActive && (
+                          <motion.div
+                            layoutId="activePill_algo"
+                            className="active-pill"
+                            style={{
+                              position: 'absolute',
+                              inset: 0,
+                              background: `${t.color}15`,
+                              border: `1px solid ${t.color}33`,
+                              borderRadius: '8px',
+                              zIndex: -1
+                            }}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               

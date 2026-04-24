@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect, useCallback, Component } from "react";
 import Sidebar from "./components/Sidebar";
 import RoadmapGraph from "./components/RoadmapGraph";
 import ModulePanel from "./components/ModulePanel";
@@ -14,6 +14,7 @@ import SystemDesignPlayground from "./pages/playground/SystemDesignPlayground";
 import SystemDesignSimulator from "./pages/simulator/SystemDesignSimulator";
 import DSAAnimator from "./components/DSAAnimator";
 import AimlCompanion from "./components/AimlCompanion";
+import LinksCompanion from "./components/LinksCompanion";
 import BlogPage from "./pages/blog/BlogPage";
 import AdminManagement from "./components/AdminManagement";
 import InterviewerPage from "./pages/interviewer/InterviewerPage.jsx";
@@ -343,6 +344,7 @@ function MainApp() {
   const [showPlayground, setShowPlayground] = useState(false);
   const [showDSAAnimator, setShowDSAAnimator] = useState(false);
   const [showAimlCompanion, setShowAimlCompanion] = useState(false);
+  const [showLinks, setShowLinks] = useState(false);
   const [showBlog, setShowBlog] = useState(false);
   const [showAdminManagement, setShowAdminManagement] = useState(false);
   const [showSimulator, setShowSimulator] = useState(false);
@@ -380,6 +382,7 @@ function MainApp() {
       }
       else if (id === 'algo_visualizer') { setShowAlgoVisualizer(true); setShowIntelligenceHub(false); }
       else if (id === 'aiml_companion') { setShowAimlCompanion(true); setShowIntelligenceHub(false); }
+      else if (id === 'links') { setShowLinks(true); setShowIntelligenceHub(false); }
       else if (id === 'blog') handleHubNav({ view: 'blog', year: null, isAI: false });
       else if (id === 'progress') { setShowProgress(true); setShowIntelligenceHub(false); }
       else if (id === 'dsa_animator') { setShowDSAAnimator(true); setShowIntelligenceHub(false); }
@@ -416,6 +419,7 @@ function MainApp() {
     setShowPlayground(false);
     setShowDSAAnimator(false);
     setShowAimlCompanion(false);
+    setShowLinks(false);
     setShowBlog(false);
     setShowAdminManagement(false);
     setShowSimulator(false);
@@ -624,7 +628,7 @@ function MainApp() {
     setInsertionIndex(-1);
   };
 
-  const handleSaveWorkspaceNote = (note) => {
+  const handleSaveWorkspaceNote = useCallback((note) => {
     setPathsData(prev => {
       const workspace = prev.workspace || {};
       const notes = workspace.notes || [];
@@ -636,9 +640,9 @@ function MainApp() {
         }
       };
     });
-  };
+  }, []);
 
-  const handleDeleteWorkspaceNote = (noteId) => {
+  const handleDeleteWorkspaceNote = useCallback((noteId) => {
     setPathsData(prev => {
       const workspace = prev.workspace || {};
       const notes = (workspace.notes || []).filter(n => n.id !== noteId);
@@ -650,9 +654,9 @@ function MainApp() {
         }
       };
     });
-  };
+  }, []);
 
-  const handleUpdateWorkspaceNote = (updatedNote) => {
+  const handleUpdateWorkspaceNote = useCallback((updatedNote) => {
     setPathsData(prev => {
       const workspace = prev.workspace || {};
       const notes = (workspace.notes || []).map(n => n.id === updatedNote.id ? { ...n, ...updatedNote } : n);
@@ -664,7 +668,20 @@ function MainApp() {
         }
       };
     });
-  };
+  }, []);
+
+  const handleUpdateWorkspaceMaps = useCallback((maps) => {
+    setPathsData(prev => {
+      const workspace = prev.workspace || {};
+      return {
+        ...prev,
+        workspace: {
+          ...workspace,
+          maps
+        }
+      };
+    });
+  }, []);
 
   const handleSaveUserAlgo = (algo) => {
     setPathsData(prev => ({
@@ -810,6 +827,7 @@ function MainApp() {
           showPlayground={showPlayground} setShowPlayground={setShowPlayground}
           showDSAAnimator={showDSAAnimator} setShowDSAAnimator={setShowDSAAnimator}
           showAimlCompanion={showAimlCompanion} setShowAimlCompanion={setShowAimlCompanion}
+          showLinks={showLinks} setShowLinks={setShowLinks}
           showBlog={showBlog} setShowBlog={setShowBlog}
           showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
           showSimulator={showSimulator} setShowSimulator={setShowSimulator}
@@ -858,6 +876,7 @@ function MainApp() {
           showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
           showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
           (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
+          showLinks ? <LinksCompanion isEditMode={isEditMode} onClose={() => setShowLinks(false)} /> :
           showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
           showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
           showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
@@ -873,11 +892,14 @@ function MainApp() {
               onClose={() => setShowAlgoVisualizer(false)}
             /> :
           showWorkplaceLab ? <WorkplaceLab 
+            pathsData={pathsData}
             history={pathsData.workspace?.history || []}
             notes={pathsData.workspace?.notes || []}
+            maps={pathsData.workspace?.maps || []}
             onSaveNote={handleSaveWorkspaceNote}
             onUpdateNote={handleUpdateWorkspaceNote}
             onDeleteNote={handleDeleteWorkspaceNote}
+            onUpdateMaps={handleUpdateWorkspaceMaps}
             onJumpToNode={(nodeId, pathId) => {
               const path = pathsData[pathId];
               const node = path?.nodes?.find(n => n.id === nodeId);

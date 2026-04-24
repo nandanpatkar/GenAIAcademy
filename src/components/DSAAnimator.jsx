@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { X, Search, ChevronDown, ChevronUp, PanelLeft, Clapperboard, PlaySquare, Lightbulb, AlertTriangle, BookMarked, Terminal } from "lucide-react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -34,6 +35,7 @@ export default function DSAAnimator({ onClose }) {
   const [activeCat, setActiveCat]     = useState(null);   // null = all
   const [activeProblem, setActiveProblem] = useState(null);
   const [activeTab, setActiveTab] = useState("problems"); // "problems", "tricks", "edge_cases"
+  const [hoveredTab, setHoveredTab] = useState(null);
   const [expanded, setExpanded]       = useState({});
   const [showSidebar, setShowSidebar] = useState(true);
   const iframeRef = useRef(null);
@@ -126,23 +128,95 @@ export default function DSAAnimator({ onClose }) {
         </div>
 
         {/* Navigation Tabs */}
-        <div style={{ marginLeft: "auto", display: "flex", background: "var(--bg3)", padding: 4, borderRadius: 8, gap: 4, border: "1px solid var(--border)" }}>
+        <div 
+          style={{ 
+            marginLeft: "auto", 
+            display: "flex", 
+            background: "rgba(255, 255, 255, 0.03)", 
+            padding: "4px", 
+            borderRadius: "12px", 
+            gap: "4px", 
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+            position: "relative",
+            backdropFilter: "blur(10px)"
+          }}
+          onMouseLeave={() => setHoveredTab(null)}
+        >
+          {/* Ghost Hover Indicator */}
+          <AnimatePresence>
+            {hoveredTab && (
+              <motion.div
+                layoutId="hoverIndicator_dsa"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                style={{
+                  position: "absolute",
+                  background: "rgba(255, 255, 255, 0.05)",
+                  borderRadius: "8px",
+                  zIndex: 0,
+                  pointerEvents: "none"
+                }}
+                transition={{ type: "spring", bounce: 0, duration: 0.3 }}
+              />
+            )}
+          </AnimatePresence>
+
           {[
-            { id: "problems", label: "Problems", icon: <PlaySquare size={14} /> },
-            { id: "tricks", label: "Code Tricks", icon: <Lightbulb size={14} /> },
-            { id: "edge_cases", label: "Edge Cases", icon: <AlertTriangle size={14} /> }
-          ].map(t => (
-            <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
-              background: activeTab === t.id ? "var(--bg)" : "transparent",
-              color: activeTab === t.id ? "var(--text)" : "var(--text3)",
-              border: "1px solid " + (activeTab === t.id ? "var(--border)" : "transparent"),
-              boxShadow: activeTab === t.id ? "0 2px 4px rgba(0,0,0,0.05)" : "none",
-              padding: "4px 12px", borderRadius: 6, fontSize: 12, fontWeight: 700,
-              cursor: "pointer", transition: "all .15s", display: "flex", alignItems: "center", gap: 6
-            }}>
-              <span style={{ display: "flex", alignItems: "center" }}>{t.icon}</span> {t.label}
-            </button>
-          ))}
+            { id: "problems", label: "Problems", icon: <PlaySquare size={14} />, color: "#fbbf24" },
+            { id: "tricks", label: "Code Tricks", icon: <Lightbulb size={14} />, color: "#34d399" },
+            { id: "edge_cases", label: "Edge Cases", icon: <AlertTriangle size={14} />, color: "#f87171" }
+          ].map(t => {
+            const active = activeTab === t.id;
+            return (
+              <motion.button 
+                key={t.id} 
+                onClick={() => setActiveTab(t.id)}
+                onMouseEnter={() => setHoveredTab(t.id)}
+                style={{
+                  background: "transparent",
+                  color: active ? "#fff" : "rgba(255, 255, 255, 0.4)",
+                  border: "none",
+                  padding: "6px 16px", 
+                  borderRadius: "8px", 
+                  fontSize: 12, 
+                  fontWeight: 700,
+                  cursor: "pointer", 
+                  transition: "color .3s ease", 
+                  display: "flex", 
+                  alignItems: "center", 
+                  gap: 6,
+                  position: "relative",
+                  zIndex: 1
+                }}
+              >
+                {active && (
+                  <motion.div
+                    layoutId="activeTabPill_dsa"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: `linear-gradient(135deg, ${t.color}, ${t.color}cc)`,
+                      borderRadius: "8px",
+                      boxShadow: `0 4px 12px ${t.color}33`,
+                      zIndex: -1
+                    }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <motion.span 
+                  animate={{ 
+                    scale: active ? 1.1 : 1,
+                    color: active ? "#fff" : "rgba(255, 255, 255, 0.4)"
+                  }}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  {t.icon}
+                </motion.span> 
+                {t.label}
+              </motion.button>
+            );
+          })}
         </div>
 
         <div style={{ marginLeft: 16, display: "flex", gap: 8, alignItems: "center" }}>
