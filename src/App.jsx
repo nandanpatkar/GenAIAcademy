@@ -37,6 +37,7 @@ import KnowledgeGalaxy from "./components/KnowledgeGalaxy";
 import FocusPulse from "./components/FocusPulse";
 import VideoModal from "./components/VideoModal";
 import LandingPage from "./pages/LandingPage";
+import KnowledgeGraph from "./pages/KnowledgeGraph";
 import { AnimatePresence } from "framer-motion";
 import useWindowWidth from "./hooks/useWindowWidth";
 import "./styles/global.css";
@@ -356,6 +357,7 @@ function MainApp() {
   const [showModuleDetails, setShowModuleDetails] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useState(true);
   const [showWorkplaceLab, setShowWorkplaceLab] = useState(false);
+  const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(false);
   const [hubConfig, setHubConfig] = useState({ view: 'main', year: null, isAI: false });
 
   const handleHubNav = (config) => {
@@ -373,6 +375,7 @@ function MainApp() {
       setShowIntelligenceHub(false);
     } else {
       if (id === 'galaxy') { setShowGalaxy(true); setShowIntelligenceHub(false); }
+      else if (id === 'knowledge_graph') { setShowKnowledgeGraph(true); setShowIntelligenceHub(false); }
       else if (id === 'resources') { setShowResources(true); setShowIntelligenceHub(false); }
       else if (id === 'algo_studio') { 
         if (isAdmin) {
@@ -385,6 +388,7 @@ function MainApp() {
       else if (id === 'links') { setShowLinks(true); setShowIntelligenceHub(false); }
       else if (id === 'blog') handleHubNav({ view: 'blog', year: null, isAI: false });
       else if (id === 'progress') { setShowProgress(true); setShowIntelligenceHub(false); }
+      else if (id === 'tasks') { setShowWorkplaceLab(true); setShowIntelligenceHub(false); }
       else if (id === 'dsa_animator') { setShowDSAAnimator(true); setShowIntelligenceHub(false); }
       else if (id === 'ide') { setShowIDE(true); setShowIntelligenceHub(false); }
       else if (id === 'knowledge_tree') { setShowCurriculumMap(true); setShowIntelligenceHub(false); }
@@ -411,6 +415,20 @@ function MainApp() {
     setShowIntelligenceHub(false);
   };
 
+  const handleKnowledgeGraphNavigate = (pathKey, nodeId, moduleId) => {
+    setShowKnowledgeGraph(false);
+    setActivePath(pathKey);
+    const path = pathsData[pathKey];
+    if (path) {
+      const node = path.nodes?.find(n => n.id === nodeId);
+      if (node) {
+        setActiveNode(node);
+        const mod = node.modules?.find(m => m.id === moduleId);
+        if (mod) setActiveModule(mod);
+      }
+    }
+  };
+
   const closeAllPanels = () => {
     setShowCurriculumMap(false);
     setShowIDE(false);
@@ -431,6 +449,7 @@ function MainApp() {
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
     setShowIntelligenceHub(false); 
     setShowWorkplaceLab(false);
+    setShowKnowledgeGraph(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
@@ -837,6 +856,7 @@ function MainApp() {
           showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
+          showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
           onHubNav={handleHubNav}
           isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
           activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
@@ -852,6 +872,14 @@ function MainApp() {
             />
           ) :
           showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} /> :
+          showKnowledgeGraph ? (
+            <KnowledgeGraph
+              pathsData={pathsData}
+              userId={user?.id}
+              onClose={() => setShowKnowledgeGraph(false)}
+              onNavigate={handleKnowledgeGraphNavigate}
+            />
+          ) :
           showGalaxy ? (
             <KnowledgeGalaxy 
               nodes={pathsData} 

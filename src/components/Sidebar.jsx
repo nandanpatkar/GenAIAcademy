@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2 } from "lucide-react";
 import { Bookmark } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion } from "framer-motion";
@@ -25,6 +25,7 @@ export default function Sidebar({
   showAlgoVisualizer, setShowAlgoVisualizer,
   showIntelligenceHub, setShowIntelligenceHub,
   showWorkplaceLab, setShowWorkplaceLab,
+  showKnowledgeGraph, setShowKnowledgeGraph,
   isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
@@ -47,6 +48,7 @@ export default function Sidebar({
       items: [
         { icon: <LayoutDashboard size={14} />, label: "Overview", id: "overview" },
         { icon: <Orbit size={14} />, label: "Knowledge Galaxy", id: "galaxy" },
+        { icon: <Share2 size={14} />, label: "Knowledge Graph", id: "knowledge_graph" },
         { icon: <Network size={14} />, label: "Curriculum Map", id: "curriculum_map" },
         { icon: <CircleDashed size={14} />, label: "Progress", id: "progress" },
       ]
@@ -96,6 +98,7 @@ export default function Sidebar({
   };
 
   const getActiveId = () => {
+    if (showKnowledgeGraph) return "knowledge_graph";
     if (showAdminManagement) return "admin_management";
     if (showBlog) return "blog";
     if (showSimulator) return "simulator";
@@ -139,8 +142,10 @@ export default function Sidebar({
     if (setShowAlgoStudio) setShowAlgoStudio(false);
     if (setShowAlgoVisualizer) setShowAlgoVisualizer(false);
     if (setShowWorkplaceLab) setShowWorkplaceLab(false);
+    if (setShowKnowledgeGraph) setShowKnowledgeGraph(false);
 
     switch (id) {
+      case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
       case "ide": if (setShowIDE) setShowIDE(true); break;
       case "resources": if (setShowResources) setShowResources(true); break;

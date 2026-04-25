@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Box, Edit2, Folder, Eye, ArrowRight, Plus, Layers, Trash2 } from "lucide-react";
+import { Box, Edit2, Folder, Eye, ArrowRight, Plus, Layers, Trash2, Target } from "lucide-react";
 
 export default function RoadmapGraph({
   path, activePath, setActivePath, pathsData,
@@ -12,6 +12,24 @@ export default function RoadmapGraph({
   const containerRef = useRef(null);
   const nodeRefs = useRef({});
   const [traveler, setTraveler] = useState(null);
+
+  const handleJumpToCurrent = () => {
+    const nodes = path?.nodes || [];
+    // Find first node that is in progress
+    let targetNode = nodes.find(n => getNodeState(n.id) === "progress");
+    
+    // Fallback: first node that is ready
+    if (!targetNode) {
+      targetNode = nodes.find(n => getNodeState(n.id) === "ready");
+    }
+
+    if (targetNode) {
+      const el = nodeRefs.current[targetNode.id];
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  };
 
   useEffect(() => {
     if (!path?.nodes || !lastCompletedNodeId) return;
@@ -117,6 +135,12 @@ export default function RoadmapGraph({
               <span className="rg-pill-title">{completedCount} / {total} COMPLETED</span>
               <span className="rg-pill-pct">{pct}%</span>
             </div>
+
+            <button className="rg-jump-btn" onClick={handleJumpToCurrent}>
+              <Target size={14} />
+              JUMP TO CURRENT
+            </button>
+
             <div className="rg-pill-estimate">
               ESTIMATED TIME: {path.estimatedHours || "400+ HOURS"}
             </div>

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, Layers, Users, Sparkles, X, 
-  ChevronRight, Boxes, Layout, Globe, Activity, Zap, Search, Monitor
+  ChevronRight, Boxes, Layout, Globe, Activity, Zap, Search, Monitor,
+  Share2, CheckSquare, Bookmark
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { CHRONOLOGICAL_DB } from '../data/blogData';
@@ -251,6 +252,14 @@ export default function IntelligenceHub({
       description: 'High-level hierarchical curriculum overview.',
       action: () => onStudyAction('knowledge_tree'),
       accent: '#00ccff'
+    },
+    {
+      id: 'knowledge_graph',
+      title: 'Knowledge Graph',
+      icon: <Share2 size={24} />,
+      description: 'Dynamic interactive node-link visualization.',
+      action: () => onStudyAction('knowledge_graph'),
+      accent: '#00ccff'
     }
   ];
 
@@ -321,6 +330,30 @@ export default function IntelligenceHub({
       description: 'Track your expertise across the ecosystem.',
       action: () => onStudyAction('progress'),
       accent: '#00ff88'
+    },
+    {
+      id: 'tasks',
+      title: 'Quick Notes',
+      icon: <CheckSquare size={20} />,
+      description: 'Manage your learning tasks and session notes.',
+      action: () => onStudyAction('tasks'),
+      accent: '#fbbf24'
+    },
+    {
+      id: 'links',
+      title: 'Links',
+      icon: <Bookmark size={20} />,
+      description: 'Curated learning resources and bookmarks.',
+      action: () => onStudyAction('links'),
+      accent: '#10b981'
+    },
+    {
+      id: 'resources',
+      title: 'Resources',
+      icon: <BookOpen size={20} />,
+      description: 'Central repository for learning materials.',
+      action: () => onStudyAction('resources'),
+      accent: '#3b82f6'
     }
   ];
 
@@ -791,9 +824,9 @@ export default function IntelligenceHub({
         .hub-container {
           width: 100%;
           max-width: 1600px;
-          padding: 120px 40px 40px;
+          padding: 30px 40px 40px;
           z-index: 5;
-          margin-top: 50px;
+          margin-top: 10px;
         }
 
         .hub-breadcrumbs {
@@ -964,7 +997,7 @@ export default function IntelligenceHub({
         }
 
         .hub-sub-header {
-          margin-bottom: 40px;
+          margin-bottom: 16px;
           text-align: center;
         }
 
@@ -980,7 +1013,7 @@ export default function IntelligenceHub({
           font-size: 11px;
           font-weight: 800;
           cursor: pointer;
-          margin: 0 auto 20px;
+          margin: 0 auto 8px;
           transition: 0.3s;
         }
 
@@ -989,7 +1022,7 @@ export default function IntelligenceHub({
         .hub-sub-header h2 { font-size: 48px; font-weight: 800; color: #fff; letter-spacing: -1px; }
 
         .hub-scroll-area {
-          max-height: 400px;
+          max-height: 650px;
           overflow-y: auto;
           overflow-x: hidden;
           padding: 10px 20px 10px 0;

@@ -11,6 +11,9 @@ import {
   Maximize2, Minimize2, Orbit, Plus, Layers, ArrowRight
 } from "lucide-react";
 import { AIResult } from "./AIStudyContent";
+import ModuleNotes from "./ModuleNotes";
+import { useAuth } from "../contexts/AuthContext";
+
 
 const STATUS_LABELS = { complete: "Complete", in_progress: "In progress", locked: "Locked", default: "Not started" };
 const STATUS_COLORS = { complete: "#00ff88", in_progress: "#f59e0b", locked: "#555570", default: "#555570" };
@@ -494,6 +497,19 @@ export default function DetailPanel({
   const notebookUrl = buildNotebookLMUrl(module);
   const hasNoSources = total === 0;
 
+  const { user } = useAuth();
+  const [activeTab, setActiveTab] = React.useState("overview"); // "overview" | "notes"
+
+  // Reset tab when module changes
+  React.useEffect(() => {
+    setActiveTab("overview");
+  }, [module?.id]);
+
+  // Build a stable module_id for Supabase keying
+  const noteModuleId = module?.id
+    ? `${module.id}`
+    : `${node?.id ?? "unknown"}__${(module?.title ?? "").replace(/\s+/g, "_").toLowerCase()}`;
+
   const openNotebookLM = () => {
     if (hasNoSources) {
       window.open("https://notebooklm.google.com/", "_blank");
@@ -579,335 +595,6 @@ export default function DetailPanel({
         </div>
       </div>
 
-      {/* ── Body ── */}
-      <div className="dp-body">
-        {/* Overview */}
-        <div className="dp-overview">{module.overview}</div>
-
-
-        {/* All modules in this node */}
-        <div className="dp-section-label">All modules in this node</div>
-        <div className="dp-module-list">
-          {node.modules?.map((m) => {
-            const isActive = m.id === module.id;
-            return (
-              <div key={m.id} style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                <div
-                  className={`dp-module-row ${isActive ? "active" : ""}`}
-                  onClick={() => onModuleSelect && onModuleSelect(m)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div className={`dp-module-circle ${m.status}`}>
-                    {m.status === "complete" ? "✓" : m.status === "in_progress" ? "⟳" : m.status === "locked" ? "🔒" : "◌"}
-                  </div>
-                  <div className="dp-module-info">
-                    <div className="dp-module-name">{m.title}</div>
-                    <div className="dp-module-desc">{m.subtitle}</div>
-                  </div>
-                  <div>
-                    {(m.status === "complete" || m.status === "in_progress") && (
-                      <span className={`dp-module-status-pill ${m.status}`}>
-                        {m.status === "complete" ? "Complete" : "In progress"}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {isActive && m.subtopics && m.subtopics.length > 0 && (
-                  <div style={{
-                    marginLeft: 36, paddingLeft: 16,
-                    borderLeft: "2px solid var(--border)",
-                    display: "flex", flexDirection: "column", gap: 4,
-                    marginBottom: 12, marginTop: 4,
-                  }}>
-                    {isEditMode && (
-                      <div className="dp-insert-divider first" onClick={() => onAddTopic && onAddTopic(0)}>
-                        <Plus size={10} /> Insert at beginning
-                      </div>
-                    )}
-                    {m.subtopics.map((s, sidx) => {
-                      const st = typeof s === "object" ? s : { title: s, status: "pending" };
-                      const isComplete = st.status === "complete";
-                      const topicId = st.id || st.title;
-                      return (
-                        <React.Fragment key={sidx}>
-                          <div
-                            onClick={(e) => { e.stopPropagation(); onTopicSelect && onTopicSelect(st); }}
-                            style={{
-                              fontSize: 12, fontWeight: 600,
-                              color: isComplete ? "var(--text)" : "var(--text2)",
-                              cursor: "pointer",
-                              padding: "8px 12px", borderRadius: 6,
-                              background: isComplete ? "rgba(0,255,136,0.05)" : "rgba(255,255,255,0.02)",
-                              display: "flex", justifyContent: "space-between", alignItems: "center",
-                              transition: "all .15s",
-                              position: "relative"
-                            }}
-                            className="hover-node"
-                          >
-                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                              <div
-                                onClick={(e) => { e.stopPropagation(); onToggleSubtopicStatus && onToggleSubtopicStatus(st.title); }}
-                                style={{
-                                  width: 12, height: 12, borderRadius: "50%",
-                                  border: `1.5px solid ${isComplete ? "#00ff88" : "var(--text3)"}`,
-                                  display: "flex", alignItems: "center", justifyContent: "center",
-                                  fontSize: 8, color: "#00ff88", cursor: "pointer",
-                                  background: isComplete ? "rgba(0,255,136,0.1)" : "transparent",
-                                }}
-                              >
-                                {isComplete && "✓"}
-                              </div>
-                              <span>{st.title}</span>
-                            </div>
-                            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                              {st.companies && st.companies.length > 0 && (
-                                <span style={{ fontSize: 8, color: "var(--text3)", background: "var(--bg3)", padding: "2px 6px", borderRadius: 4 }}>
-                                  {st.companies[0]}
-                                </span>
-                              )}
-                              {isEditMode && (
-                                <button 
-                                  onClick={(e) => { e.stopPropagation(); onDeleteTopic && onDeleteTopic(topicId); }}
-                                  style={{ background: "transparent", border: "none", color: "var(--text3)", cursor: "pointer", display: "flex", alignItems: "center", padding: "4px" }}
-                                  onMouseEnter={(e) => e.currentTarget.style.color = "#ff4444"}
-                                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--text3)"}
-                                  title="Delete Topic"
-                                >
-                                  <Trash2 size={12} />
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                          {isEditMode && (
-                            <div className="dp-insert-divider" onClick={() => onAddTopic && onAddTopic(sidx + 1)}>
-                              <Plus size={10} /> Insert after {st.title}
-                            </div>
-                          )}
-                        </React.Fragment>
-                      );
-                    })}
-                    {isEditMode && (
-                      <button 
-                        className="add-subtopic-btn" 
-                        onClick={() => onAddTopic && onAddTopic(-1)}
-                        style={{ 
-                          width: "100%",
-                          marginTop: 8,
-                          background: "rgba(255,255,255,0.03)", 
-                          border: "1px dashed var(--border)", 
-                          color: "var(--text3)", 
-                          padding: "10px", 
-                          borderRadius: 8, 
-                          fontSize: 10, 
-                          fontWeight: 700,
-                          cursor: "pointer",
-                          transition: "all .2s"
-                        }}
-                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--text2)"; e.currentTarget.style.color = "var(--text)"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text3)"; }}
-                      >
-                        + ADD NEW TOPIC
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* ── Curriculum Resources ── */}
-        {(module.links?.length > 0 || module.videos?.length > 0 || module.files?.length > 0) && (
-          <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
-            <div className="dp-section-label" style={{ marginBottom: 4 }}>Curated Resources</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8 }}>
-              {/* Videos */}
-              {module.videos?.map((v, i) => (
-                <a
-                  key={`vid-${i}`}
-                  href={toAbsoluteUrl(v.url)}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={(e) => {
-                    if (onVideoSelect) {
-                      e.preventDefault();
-                      onVideoSelect(v);
-                    }
-                  }}
-                  style={{
-                    display: "flex", alignItems: "center", gap: 12,
-                    padding: "12px 16px", borderRadius: 12,
-                    background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
-                    color: "var(--text)", textDecoration: "none", transition: "all .2s",
-                  }}
-                  className="hover-node"
-                >
-                  <div style={{
-                    width: 32, height: 32, borderRadius: 8,
-                    background: "rgba(239,68,68,0.1)", display: "flex",
-                    alignItems: "center", justifyContent: "center"
-                  }}>
-                    <Video size={16} color="#ef4444" />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700 }}>{v.title || "Module Video"}</div>
-                    <div style={{ fontSize: 10, color: "var(--text3)" }}>Watch on YouTube</div>
-                  </div>
-                  <ExternalLink size={14} color="var(--text3)" style={{ opacity: 0.5 }} />
-                </a>
-              ))}
-
-              {/* Links */}
-              {module.links?.map((l, i) => (
-                <a
-                  key={`link-${i}`}
-                  href={toAbsoluteUrl(l.url)}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    display: "flex", alignItems: "center", gap: 12,
-                    padding: "12px 16px", borderRadius: 12,
-                    background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
-                    color: "var(--text)", textDecoration: "none", transition: "all .2s",
-                  }}
-                  className="hover-node"
-                >
-                  <div style={{
-                    width: 32, height: 32, borderRadius: 8,
-                    background: `${pathColor}15`, display: "flex",
-                    alignItems: "center", justifyContent: "center"
-                  }}>
-                    <Link2 size={16} color={pathColor} />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700 }}>{l.title || "Reference Link"}</div>
-                    <div style={{ fontSize: 10, color: "var(--text3)" }}>External Resource</div>
-                  </div>
-                  <ExternalLink size={14} color="var(--text3)" style={{ opacity: 0.5 }} />
-                </a>
-              ))}
-
-              {/* Files */}
-              {module.files?.map((f, i) => (
-                <a
-                  key={`file-${i}`}
-                  href={toAbsoluteUrl(f.url)}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    display: "flex", alignItems: "center", gap: 12,
-                    padding: "12px 16px", borderRadius: 12,
-                    background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
-                    color: "var(--text)", textDecoration: "none", transition: "all .2s",
-                  }}
-                  className="hover-node"
-                >
-                  <div style={{
-                    width: 32, height: 32, borderRadius: 8,
-                    background: "rgba(59,130,246,0.1)", display: "flex",
-                    alignItems: "center", justifyContent: "center"
-                  }}>
-                    <FileText size={16} color="#3b82f6" />
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700 }}>{f.title || f.name || "Module Document"}</div>
-                    <div style={{ fontSize: 10, color: "var(--text3)" }}>Download Resource</div>
-                  </div>
-                  <ExternalLink size={14} color="var(--text3)" style={{ opacity: 0.5 }} />
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── Deep Learning Suite ── */}
-        <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 16 }}>
-          <div className="dp-section-label" style={{ marginBottom: 0 }}>Advanced AI Study Tools</div>
-          
-          {/* NotebookLM Banner */}
-          <div style={{
-            padding: "20px 24px",
-            borderRadius: 20,
-            background: "linear-gradient(135deg, rgba(66,133,244,0.08) 0%, rgba(15,157,88,0.06) 100%)",
-            border: "1px solid rgba(66,133,244,0.15)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 16,
-            boxShadow: "0 10px 40px rgba(0,0,0,0.15)",
-            backdropFilter: "blur(12px)",
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: 12, flexShrink: 0,
-                background: "linear-gradient(135deg, #4285F4, #34A853)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: "0 4px 15px rgba(66,133,244,0.3), inset 0 0 10px rgba(255,255,255,0.2)",
-                border: "1px solid rgba(255,255,255,0.1)",
-              }}>
-                <Bookmark size={22} color="white" strokeWidth={2.5} />
-              </div>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 900, color: "var(--text)", letterSpacing: "0.5px" }}>NotebookLM</div>
-                <div style={{ fontSize: 10, color: "var(--text3)", marginTop: 2, fontWeight: 600 }}>Deep-dive into sources with Google's AI</div>
-              </div>
-            </div>
-            
-            <button
-              onClick={openNotebookLM}
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "var(--text2)",
-                padding: "8px 16px",
-                borderRadius: 10,
-                fontSize: "10px",
-                fontWeight: 800,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                transition: "all 0.3s cubic-bezier(0.19, 1, 0.22, 1)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#fff";
-                e.currentTarget.style.color = "#000";
-                e.currentTarget.style.transform = "translateX(5px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                e.currentTarget.style.color = "var(--text2)";
-                e.currentTarget.style.transform = "translateX(0)";
-              }}
-            >
-              LAUNCH
-              <ArrowRight size={14} />
-            </button>
-          </div>
-
-          <AIStudyPanel module={module} pathColor={pathColor} />
-        </div>
-      </div>
-
-      <style>{`
-        .dp-progress-bar { height: 2px; background: var(--bg4); border-radius: 2px; overflow: hidden; margin-top: 12px; }
-        .dp-progress-fill { height: 100%; transition: width .6s ease; }
-        .dp-module-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; transition: all .2s; }
-        .dp-module-row:hover { background: var(--bg3); }
-        .dp-module-row.active { background: var(--bg3); border: 1px solid var(--border); }
-        .dp-module-circle { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 8px; flex-shrink: 0; }
-        .dp-module-circle.complete { border-color: #00ff88; color: #00ff88; background: rgba(0,255,136,0.1); }
-        .dp-module-circle.in_progress { border-color: #f59e0b; color: #f59e0b; background: rgba(245,158,11,0.1); }
-        .dp-module-circle.locked { border-color: var(--text3); color: var(--text3); }
-        .dp-module-name { font-size: 11px; fontWeight: 700; color: var(--text); }
-        .dp-module-desc { font-size: 9px; color: var(--text3); margin-top: 1px; }
-        .dp-module-status-pill { font-size: 7px; font-weight: 900; padding: 2px 6px; border-radius: 4px; letter-spacing: .5px; }
-        .dp-module-status-pill.complete { background: rgba(0,255,136,0.1); color: #00ff88; }
-        .dp-module-status-pill.in_progress { background: rgba(245,158,11,0.1); color: #f59e0b; }
-        .hover-node:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-color: var(--border2); }
-      `}</style>
-
       {/* ── Actions ── */}
       <div className="dp-actions">
         <button
@@ -939,6 +626,365 @@ export default function DetailPanel({
           <span>{nodeState === "done" ? "Node complete" : "Mark node done"}</span>
         </button>
       </div>
+
+      {/* ── Tab Bar ── */}
+      <div style={{
+        display: "flex", gap: 2,
+        padding: "0 16px",
+        borderBottom: "1px solid var(--border)",
+        marginTop: 2,
+        flexShrink: 0,
+      }}>
+        {[
+          { id: "overview", label: "OVERVIEW" },
+          { id: "notes",    label: "MY NOTES" },
+        ].map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            style={{
+              padding: "9px 14px",
+              fontSize: 10,
+              fontWeight: 800,
+              letterSpacing: "0.6px",
+              border: "none",
+              background: "transparent",
+              cursor: "pointer",
+              color: activeTab === tab.id ? "var(--dp-color, var(--primary))" : "var(--text3)",
+              borderBottom: activeTab === tab.id
+                ? "2px solid var(--dp-color, var(--primary))"
+                : "2px solid transparent",
+              marginBottom: -1,
+              transition: "all .15s",
+            }}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* ── Overview Tab ── */}
+      {activeTab === "overview" && (
+        <div className="dp-body">
+          {/* Overview */}
+          <div className="dp-overview">{module.overview}</div>
+
+
+          {/* All modules in this node */}
+          <div className="dp-section-label">All modules in this node</div>
+          <div className="dp-module-list">
+            {node.modules?.map((m) => {
+              const isActive = m.id === module.id;
+              return (
+                <div key={m.id} style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                  <div
+                    className={`dp-module-row ${isActive ? "active" : ""}`}
+                    onClick={() => onModuleSelect && onModuleSelect(m)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className={`dp-module-circle ${m.status}`}>
+                      {m.status === "complete" ? "✓" : m.status === "in_progress" ? "⟳" : m.status === "locked" ? "🔒" : "◌"}
+                    </div>
+                    <div className="dp-module-info">
+                      <div className="dp-module-name">{m.title}</div>
+                      <div className="dp-module-desc">{m.subtitle}</div>
+                    </div>
+                    <div>
+                      {(m.status === "complete" || m.status === "in_progress") && (
+                        <span className={`dp-module-status-pill ${m.status}`}>
+                          {m.status === "complete" ? "Complete" : "In progress"}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {isActive && m.subtopics && m.subtopics.length > 0 && (
+                    <div style={{
+                      marginLeft: 36, paddingLeft: 16,
+                      borderLeft: "2px solid var(--border)",
+                      display: "flex", flexDirection: "column", gap: 4,
+                      marginBottom: 12, marginTop: 4,
+                    }}>
+                      {isEditMode && (
+                        <div className="dp-insert-divider first" onClick={() => onAddTopic && onAddTopic(0)}>
+                          <Plus size={10} /> Insert at beginning
+                        </div>
+                      )}
+                      {m.subtopics.map((s, sidx) => {
+                        const st = typeof s === "object" ? s : { title: s, status: "pending" };
+                        const isComplete = st.status === "complete";
+                        const topicId = st.id || st.title;
+                        return (
+                          <React.Fragment key={sidx}>
+                            <div
+                              onClick={(e) => { e.stopPropagation(); onTopicSelect && onTopicSelect(st); }}
+                              style={{
+                                fontSize: 12, fontWeight: 600,
+                                color: isComplete ? "var(--text)" : "var(--text2)",
+                                cursor: "pointer",
+                                padding: "8px 12px", borderRadius: 6,
+                                background: isComplete ? "rgba(0,255,136,0.05)" : "rgba(255,255,255,0.02)",
+                                display: "flex", justifyContent: "space-between", alignItems: "center",
+                                transition: "all .15s",
+                                position: "relative"
+                              }}
+                              className="hover-node"
+                            >
+                              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                <div
+                                  onClick={(e) => { e.stopPropagation(); onToggleSubtopicStatus && onToggleSubtopicStatus(st.title); }}
+                                  style={{
+                                    width: 12, height: 12, borderRadius: "50%",
+                                    border: `1.5px solid ${isComplete ? "#00ff88" : "var(--text3)"}`,
+                                    display: "flex", alignItems: "center", justifyContent: "center",
+                                    fontSize: 8, color: "#00ff88", cursor: "pointer",
+                                    background: isComplete ? "rgba(0,255,136,0.1)" : "transparent",
+                                  }}
+                                >
+                                  {isComplete && "✓"}
+                                </div>
+                                <span>{st.title}</span>
+                              </div>
+                              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                                {st.companies && st.companies.length > 0 && (
+                                  <span style={{ fontSize: 8, color: "var(--text3)", background: "var(--bg3)", padding: "2px 6px", borderRadius: 4 }}>
+                                    {st.companies[0]}
+                                  </span>
+                                )}
+                                {isEditMode && (
+                                  <button 
+                                    onClick={(e) => { e.stopPropagation(); onDeleteTopic && onDeleteTopic(topicId); }}
+                                    style={{ background: "transparent", border: "none", color: "var(--text3)", cursor: "pointer", display: "flex", alignItems: "center", padding: "4px" }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = "#ff4444"}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = "var(--text3)"}
+                                    title="Delete Topic"
+                                  >
+                                    <Trash2 size={12} />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                            {isEditMode && (
+                              <div className="dp-insert-divider" onClick={() => onAddTopic && onAddTopic(sidx + 1)}>
+                                <Plus size={10} /> Insert after {st.title}
+                              </div>
+                            )}
+                          </React.Fragment>
+                        );
+                      })}
+                      {isEditMode && (
+                        <button 
+                          className="add-subtopic-btn" 
+                          onClick={() => onAddTopic && onAddTopic(-1)}
+                          style={{ 
+                            width: "100%",
+                            marginTop: 8,
+                            background: "rgba(255,255,255,0.03)", 
+                            border: "1px dashed var(--border)", 
+                            color: "var(--text3)", 
+                            padding: "10px", 
+                            borderRadius: 8, 
+                            fontSize: 10, 
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            transition: "all .2s"
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.borderColor = "var(--text2)"; e.currentTarget.style.color = "var(--text)"; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text3)"; }}
+                        >
+                          + ADD NEW TOPIC
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* ── Curriculum Resources ── */}
+          {(module.links?.length > 0 || module.videos?.length > 0 || module.files?.length > 0) && (
+            <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
+              <div className="dp-section-label" style={{ marginBottom: 4 }}>Curated Resources</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 8 }}>
+                {/* Videos */}
+                {module.videos?.map((v, i) => (
+                  <a
+                    key={`vid-${i}`}
+                    href={toAbsoluteUrl(v.url)}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(e) => {
+                      if (onVideoSelect) {
+                        e.preventDefault();
+                        onVideoSelect(v);
+                      }
+                    }}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 12,
+                      padding: "12px 16px", borderRadius: 12,
+                      background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
+                      color: "var(--text)", textDecoration: "none", transition: "all .2s",
+                    }}
+                    className="hover-node"
+                  >
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 8,
+                      background: "rgba(239,68,68,0.1)", display: "flex",
+                      alignItems: "center", justifyContent: "center"
+                    }}>
+                      <Video size={16} color="#ef4444" />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 12, fontWeight: 700 }}>{v.title || "Module Video"}</div>
+                      <div style={{ fontSize: 10, color: "var(--text3)" }}>Watch on YouTube</div>
+                    </div>
+                    <ExternalLink size={14} color="var(--text3)" style={{ opacity: 0.5 }} />
+                  </a>
+                ))}
+
+                {/* Links */}
+                {module.links?.map((l, i) => (
+                  <a
+                    key={`link-${i}`}
+                    href={toAbsoluteUrl(l.url)}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: "flex", alignItems: "center", gap: 12,
+                      padding: "12px 16px", borderRadius: 12,
+                      background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
+                      color: "var(--text)", textDecoration: "none", transition: "all .2s",
+                    }}
+                    className="hover-node"
+                  >
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 8,
+                      background: `${pathColor}15`, display: "flex",
+                      alignItems: "center", justifyContent: "center"
+                    }}>
+                      <Link2 size={16} color={pathColor} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 12, fontWeight: 700 }}>{l.title || "Reference Link"}</div>
+                      <div style={{ fontSize: 10, color: "var(--text3)" }}>External Resource</div>
+                    </div>
+                    <ExternalLink size={14} color="var(--text3)" style={{ opacity: 0.5 }} />
+                  </a>
+                ))}
+
+                {/* Files */}
+                {module.files?.map((f, i) => (
+                  <a
+                    key={`file-${i}`}
+                    href={toAbsoluteUrl(f.url)}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      padding: "12px 16px", borderRadius: 12,
+                      background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
+                      color: "var(--text)", textDecoration: "none", transition: "all .2s",
+                    }}
+                    className="hover-node"
+                  >
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 8,
+                      background: "rgba(59,130,246,0.1)", display: "flex",
+                      alignItems: "center", justifyContent: "center"
+                    }}>
+                      <FileText size={16} color="#3b82f6" />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 12, fontWeight: 700 }}>{f.title || f.name || "Module Document"}</div>
+                      <div style={{ fontSize: 10, color: "var(--text3)" }}>Download Resource</div>
+                    </div>
+                    <ExternalLink size={14} color="var(--text3)" style={{ opacity: 0.5 }} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Deep Learning Suite ── */}
+          <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 16 }}>
+            <div className="dp-section-label" style={{ marginBottom: 0 }}>Advanced AI Study Tools</div>
+
+            {/* NotebookLM Banner */}
+            <div style={{
+              padding: "20px 24px",
+              borderRadius: 20,
+              background: "linear-gradient(135deg, rgba(66,133,244,0.08) 0%, rgba(15,157,88,0.06) 100%)",
+              border: "1px solid rgba(66,133,244,0.15)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16,
+              boxShadow: "0 10px 40px rgba(0,0,0,0.15)",
+              backdropFilter: "blur(12px)",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                <div style={{
+                  width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+                  background: "linear-gradient(135deg, #4285F4, #34A853)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  boxShadow: "0 4px 15px rgba(66,133,244,0.3), inset 0 0 10px rgba(255,255,255,0.2)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                }}>
+                  <Bookmark size={22} color="white" strokeWidth={2.5} />
+                </div>
+                <div>
+                  <div style={{ fontSize: 14, fontWeight: 900, color: "var(--text)", letterSpacing: "0.5px" }}>NotebookLM</div>
+                  <div style={{ fontSize: 10, color: "var(--text3)", marginTop: 2, fontWeight: 600 }}>Deep-dive into sources with Google's AI</div>
+                </div>
+              </div>
+
+              <button
+                onClick={openNotebookLM}
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "var(--text2)",
+                  padding: "8px 16px",
+                  borderRadius: 10,
+                  fontSize: "10px",
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  transition: "all 0.3s cubic-bezier(0.19, 1, 0.22, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#fff";
+                  e.currentTarget.style.color = "#000";
+                  e.currentTarget.style.transform = "translateX(5px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                  e.currentTarget.style.color = "var(--text2)";
+                  e.currentTarget.style.transform = "translateX(0)";
+                }}
+              >
+                LAUNCH
+                <ArrowRight size={14} />
+              </button>
+            </div>
+
+            <AIStudyPanel module={module} pathColor={pathColor} />
+          </div>
+        </div>
+      )}
+
+      {/* ── Notes Tab ── */}
+      {activeTab === "notes" && (
+        <div style={{ flex: 1, padding: "16px", overflow: "auto", display: "flex", flexDirection: "column" }}>
+          <ModuleNotes
+            moduleId={noteModuleId}
+            userId={user?.id}
+            pathColor={pathColor}
+          />
+        </div>
+      )}
 
       {/* Animations for loader and retry indicator */}
       <style>{`
