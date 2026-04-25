@@ -71,7 +71,7 @@ export default function CurriculumTreePanel({
       <header className="cm-header">
         <div className="cm-header-top">
           <div className="cm-title-group">
-            <h1>Curriculum Map</h1>
+            <h1>Study Map</h1>
             <p>Architectural visualization of the current learning path.</p>
           </div>
 
@@ -233,7 +233,7 @@ export default function CurriculumTreePanel({
           zoom: zoomLevel, transition: "zoom 0.2s ease-in-out"
         }}>
 
-          <div className="org-node root-node" style={{ marginBottom: 40 }}>{pathData.title || "Curriculum"}</div>
+          <div className="org-node root-node" style={{ marginBottom: 40 }}>{pathData.title || "Study Path"}</div>
 
           {nodes.length > 0 && (
             <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 40, paddingLeft: 60 }}>

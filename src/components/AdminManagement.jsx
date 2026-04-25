@@ -287,7 +287,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
               <div className="admin-card chart-card glass-panel">
                  <div className="card-header">
                     <div className="header-icon-mini"><Globe size={14} /></div>
-                    <div><h3>Path Distribution</h3><p>Curriculum engagement metrics.</p></div>
+                    <div><h3>Path Distribution</h3><p>Study path engagement metrics.</p></div>
                  </div>
                  <div className="doughnut-grid">
                     {pathCounts.map(p => <SimpleDoughnut key={p.path} percent={Math.round(p.percent)} color={p.path === 'ds' ? '#3b82f6' : 'var(--neon)'} label={p.path.toUpperCase()} />)}
@@ -439,7 +439,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
                     <div className="studio-icon-bg"><Server size={20} /></div>
                     <div>
                        <h3>Architecture Forge</h3>
-                       <p>Mass curriculum synchronization & injection engine.</p>
+                       <p>Mass study path synchronization & injection engine.</p>
                     </div>
                  </div>
                  <div className="studio-tabs-row">
@@ -454,7 +454,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
                       <Activity size={24} className="well-icon" />
                       <div>
                          <h4>Inject Architectural Payload</h4>
-                         <p>Directly drop curriculum files (.json / .md)</p>
+                         <p>Directly drop study path files (.json / .md)</p>
                       </div>
                    </div>
                  ) : (

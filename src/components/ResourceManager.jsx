@@ -397,7 +397,7 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
              </div>
             <div className="admin-search-wrapper" style={{ width: 300 }}>
                <Search size={14} />
-               <input placeholder="Search curriculum blocks..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={{ padding: '8px 12px 8px 40px', borderRadius: 10, fontSize: 13 }} />
+               <input placeholder="Search study blocks..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={{ padding: '8px 12px 8px 40px', borderRadius: 10, fontSize: 13 }} />
             </div>
           </div>
 

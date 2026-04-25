@@ -6,7 +6,7 @@ const BASE = "https://aimlcompanion.ai";
 
 const SITE_PAGES = [
   { id: "home",             label: "Home",             url: `${BASE}/` },
-  { id: "curriculum",       label: "Curriculum",       url: `${BASE}/curriculum` },
+  { id: "curriculum",       label: "Study Paths",       url: `${BASE}/curriculum` },
   { id: "roadmap",          label: "Roadmap",          url: `${BASE}/roadmap` },
   { id: "about",            label: "About",            url: `${BASE}/about` },
   { id: "community",        label: "Community",        url: `${BASE}/community` },
@@ -15,7 +15,7 @@ const SITE_PAGES = [
   { id: "founding-members", label: "Founding Members", url: `${BASE}/founding-members` },
 ];
 
-const CURRICULA = [
+const STUDY_PATHS = [
   {
     id: "foundations", label: "Foundations", color: "#a78bfa",
     url: `${BASE}/curriculum/foundations`,
@@ -400,7 +400,7 @@ function moduleUrl(curriculumId, moduleId) {
   return `${BASE}/module/${curriculumId}/${moduleId}`;
 }
 
-const totalModules = CURRICULA.reduce(
+const totalModules = STUDY_PATHS.reduce(
   (sum, c) => sum + c.modules.length + (c.extras?.length || 0), 0
 );
 
@@ -598,7 +598,7 @@ export default function AimlCompanion({ onClose }) {
   const toggleExpand = (id) => setExpanded(p => ({ ...p, [id]: !p[id] }));
 
   const query = search.toLowerCase();
-  const filteredCurricula = CURRICULA.map(c => ({
+  const filteredStudyPaths = STUDY_PATHS.map(c => ({
     ...c,
     modules: c.modules.filter(m => m.label.toLowerCase().includes(query)),
     extras: (c.extras || []).filter(e => e.label.toLowerCase().includes(query)),
@@ -641,7 +641,7 @@ export default function AimlCompanion({ onClose }) {
           </div>
           <div>
             <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>Aiml Companion</h1>
-            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{totalModules} modules · {CURRICULA.length} curricula · Interactive Learning</p>
+            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{totalModules} modules · {STUDY_PATHS.length} study paths · Interactive Learning</p>
           </div>
         </div>
 
@@ -679,7 +679,7 @@ export default function AimlCompanion({ onClose }) {
               <Search size={13} style={{ color: "var(--text3)", flexShrink: 0 }} />
               <input
                 value={search} onChange={e => setSearch(e.target.value)}
-                placeholder="Search modules…"
+                placeholder="Search study blocks..."
                 style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "var(--text)", fontSize: 12 }}
               />
               {search && (
@@ -692,7 +692,7 @@ export default function AimlCompanion({ onClose }) {
 
             {/* Section tabs */}
             <div style={{ display: "flex", gap: 4, padding: "0 10px 8px" }}>
-              {[{ id: "curriculum", label: "Curriculum" }, { id: "site", label: "Site Pages" }].map(s => (
+              {[{ id: "curriculum", label: "Study Paths" }, { id: "site", label: "Site Pages" }].map(s => (
                 <button key={s.id} onClick={() => setActiveSection(s.id)} style={{
                   flex: 1, padding: "5px 0", fontSize: 11, fontWeight: 700,
                   borderRadius: 6, border: "1px solid var(--border)", cursor: "pointer", transition: "all .15s",
@@ -728,11 +728,11 @@ export default function AimlCompanion({ onClose }) {
                 );
               })}
 
-              {/* Curriculum */}
+              {/* Study Paths */}
               {activeSection === "curriculum" && (
-                filteredCurricula.length === 0
+                filteredStudyPaths.length === 0
                   ? <div style={{ padding: 24, textAlign: "center", color: "var(--text3)", fontSize: 12 }}>No modules match "{search}"</div>
-                  : filteredCurricula.map(curr => {
+                  : filteredStudyPaths.map(curr => {
                     const isOpen = expanded[curr.id] ?? false;
                     const isCurrActive = activeItem?.url === curr.url;
                     return (
@@ -837,7 +837,7 @@ export default function AimlCompanion({ onClose }) {
                 Select a Module to Preview
               </div>
               <div style={{ fontSize: 12, maxWidth: 320, lineHeight: 1.6 }}>
-                Browse <strong style={{ color: "var(--text)" }}>{CURRICULA.length} curricula</strong> and{" "}
+                Browse <strong style={{ color: "var(--text)" }}>{STUDY_PATHS.length} study paths</strong> and{" "}
                 <strong style={{ color: "var(--text)" }}>{totalModules} modules</strong> from the left panel.
               </div>
             </div>

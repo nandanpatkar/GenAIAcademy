@@ -15,7 +15,7 @@ export default function EditorModal({ type, data, onClose, onSave, onDelete, pat
           setFormData({
             id: `path-${Date.now()}`,
             title: "",
-            subtitle: "Create your new curriculum",
+            subtitle: "Create your new study path",
             color: "#3b82f6",
             nodes: []
           });
@@ -101,7 +101,7 @@ export default function EditorModal({ type, data, onClose, onSave, onDelete, pat
               value={formData.subtitle || ""} 
               onChange={handleChange} 
               rows={2} 
-              placeholder={isPath ? "Curriculum subtitle..." : isTopic ? "Additional context for this topic..." : "Brief overview of this node..."}
+              placeholder={isPath ? "Study path subtitle..." : isTopic ? "Additional context for this topic..." : "Brief overview of this node..."}
             />
           </div>
 

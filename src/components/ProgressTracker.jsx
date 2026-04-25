@@ -86,7 +86,7 @@ export default function ProgressTracker({ pathsData, onClose }) {
           </div>
           <div>
             <h2 style={{ margin: 0, fontSize: 24, fontWeight: 800, color: "var(--text)", letterSpacing: "-.5px" }}>Global Analytics Dashboard</h2>
-            <div style={{ fontSize: 12, color: "var(--text3)", marginTop: 4, fontWeight: 500 }}>Track your curriculum progress, completion metrics, and deep hierarchy state.</div>
+            <div style={{ fontSize: 12, color: "var(--text3)", marginTop: 4, fontWeight: 500 }}>Track your study path progress, completion metrics, and deep hierarchy state.</div>
           </div>
         </div>
         <button onClick={onClose} className="rg-btn" style={{ padding: "8px 16px", background: "var(--bg3)", color: "var(--text)", border: "1px solid var(--border)", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>Close Dashboard</button>

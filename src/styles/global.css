@@ -289,6 +289,26 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   flex: 1;
 }
 
+.section-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  opacity: 0.4;
+  transition: all 0.2s;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.section-toggle-btn:hover {
+  opacity: 1;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+}
+
 /* Nav item */
 .sidebar-item {
   display: flex;
@@ -1097,11 +1117,18 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   z-index: 100;
   background: color-mix(in srgb, var(--bg) 40%, transparent);
   backdrop-filter: blur(15px);
-  padding: 6px;
+  padding: 8px 12px;
   border-radius: 16px;
   border: 1px solid var(--white-3);
   box-shadow: 0 10px 30px var(--black-30);
-  width: fit-content;
+  max-width: min(1000px, calc(100% - 48px));
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rg-tabs-overlay::-webkit-scrollbar {
+  display: none;
 }
 
 .rg-tab {
@@ -1117,6 +1144,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   background: transparent;
   text-transform: uppercase;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .rg-tab:hover {
@@ -2040,16 +2068,57 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 }
 
 .sidebar-nav-container {
-  flex: 0 0 auto;
-  max-height: 45%;
+  flex: 1;
   overflow-y: auto;
-  padding: 10px 0;
+  overflow-x: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-paths-visible .sidebar-nav-container {
+  max-height: 50%;
+  flex: 0 0 auto;
 }
 
 .sidebar-paths-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  border-top: none;
+}
+
+.sidebar-paths-visible .sidebar-paths-container {
   flex: 1;
-  overflow-y: auto;
-  padding: 10px 0 30px 0;
+  max-height: 50%;
+  opacity: 1;
+  border-top: 1px solid var(--white-3);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ── SCROLLABLE TABS ── */
+.mp-sections {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mp-sections::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.mp-section-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Custom Scrollbar Polish */
@@ -2057,6 +2126,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 .sidebar-paths-container::-webkit-scrollbar {
   width: 4px;
 }
+
 
 .sidebar-nav-container::-webkit-scrollbar-thumb,
 .sidebar-paths-container::-webkit-scrollbar-thumb {

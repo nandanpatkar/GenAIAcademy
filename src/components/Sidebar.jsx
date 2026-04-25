@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2 } from "lucide-react";
-import { Bookmark } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
 
 export default function Sidebar({
@@ -35,6 +34,7 @@ export default function Sidebar({
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
+  const [isPathsVisible, setIsPathsVisible] = useState(true);
   const { isAdmin, allowAimlForAll, geminiKey, updateGeminiKey } = useAuth();
   const [localKey, setLocalKey] = useState(geminiKey || "");
 
@@ -46,10 +46,10 @@ export default function Sidebar({
     {
       label: "Learn",
       items: [
-        { icon: <LayoutDashboard size={14} />, label: "Overview", id: "overview" },
+        { icon: <LayoutDashboard size={14} />, label: "Home", id: "overview" },
         { icon: <Orbit size={14} />, label: "Knowledge Galaxy", id: "galaxy" },
         { icon: <Share2 size={14} />, label: "Knowledge Graph", id: "knowledge_graph" },
-        { icon: <Network size={14} />, label: "Curriculum Map", id: "curriculum_map" },
+        { icon: <Network size={14} />, label: "Study Map", id: "curriculum_map" },
         { icon: <CircleDashed size={14} />, label: "Progress", id: "progress" },
       ]
     },
@@ -74,13 +74,11 @@ export default function Sidebar({
           { icon: <GraduationCap size={14} />, label: "AIML Companion", id: "aiml_companion" }
         ] : []),
         { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer" },
-        { icon: <Users size={14} />, label: "Community", id: "community" },
       ]
     },
     ...(isAdmin ? [{
       label: "Admin",
       items: [
-        { icon: <Shield size={14} />, label: "System Admin", id: "admin_management" },
         { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
         { icon: <BoxSelect size={14} />, label: "Intelligence Hub", id: "hub" },
       ]
@@ -220,7 +218,7 @@ export default function Sidebar({
   });
 
   return (
-    <aside className={`sidebar${isCollapsed ? " sidebar-collapsed" : ""}${isMobileMenuOpen ? " sidebar-mobile-open" : ""}`}>
+    <aside className={`sidebar${isCollapsed ? " sidebar-collapsed" : ""}${isMobileMenuOpen ? " sidebar-mobile-open" : ""}${isPathsVisible ? " sidebar-paths-visible" : ""}`}>
       <div className="sidebar-logo morphing-header">
         <div className="logo-orb">
           <svg className="quantum-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -317,7 +315,18 @@ export default function Sidebar({
         </div>
       </div>
 
-      <div className="sidebar-divider" />
+      <div className="sidebar-divider-wrapper">
+        <div className="sidebar-divider" />
+        {!isCollapsed && (
+          <button 
+            className="sidebar-paths-toggle"
+            onClick={() => setIsPathsVisible(!isPathsVisible)}
+            title={isPathsVisible ? "Hide Learning Paths" : "Show Learning Paths"}
+          >
+            {isPathsVisible ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
+          </button>
+        )}
+      </div>
 
       <div className="sidebar-paths-container">
         {isCollapsed && (
@@ -342,55 +351,67 @@ export default function Sidebar({
 
         {!isCollapsed && <div className="sidebar-path-pills">
           <div className="sidebar-section-header">
-            <span className="sidebar-section-label">Learning Paths</span>
+            <span className="sidebar-section-label">Study Paths</span>
           </div>
-          {pathList.filter(Boolean).map((p) => (
-            <div
-              key={p.key}
-              className={`path-pill-container ${activePath === p.key ? "active" : ""}`}
-              style={{ "--pill-color": p.color, "--pill-bg": p.bg }}
-            >
-              <button
-                className="path-pill"
-                onClick={() => {
-                  setActivePath(p.key);
-                  if (setActiveNode) setActiveNode(null);
-                  if (setActiveModule) setActiveModule(null);
-                  if (setActiveTopic) setActiveTopic(null);
-                  if (setIsMobileMenuOpen) setIsMobileMenuOpen(false);
-                }}
+          <AnimatePresence>
+            {isPathsVisible && (
+              <motion.div
+                initial={{ height: 0, opacity: 0, overflow: 'hidden' }}
+                animate={{ height: 'auto', opacity: 1, overflow: 'visible' }}
+                exit={{ height: 0, opacity: 0, overflow: 'hidden' }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="sidebar-paths-list"
               >
-                <div className="path-pill-main">
-                  <span className="pill-dot" />
-                  <span className="pill-label">{p.label}</span>
-                  <span className="pill-percentage">{p.progressPercent}%</span>
-                </div>
-                <div className="path-pill-progress">
-                  <div className="path-pill-progress-fill" style={{ width: `${p.progressPercent}%`, background: p.color }} />
-                </div>
-              </button>
+                {pathList.filter(Boolean).map((p) => (
+                  <div
+                    key={p.key}
+                    className={`path-pill-container ${activePath === p.key ? "active" : ""}`}
+                    style={{ "--pill-color": p.color, "--pill-bg": p.bg }}
+                  >
+                    <button
+                      className="path-pill"
+                      onClick={() => {
+                        setActivePath(p.key);
+                        if (setActiveNode) setActiveNode(null);
+                        if (setActiveModule) setActiveModule(null);
+                        if (setActiveTopic) setActiveTopic(null);
+                        if (setIsMobileMenuOpen) setIsMobileMenuOpen(false);
+                      }}
+                    >
+                      <div className="path-pill-main">
+                        <span className="pill-dot" />
+                        <span className="pill-label">{p.label}</span>
+                        <span className="pill-percentage">{p.progressPercent}%</span>
+                      </div>
+                      <div className="path-pill-progress">
+                        <div className="path-pill-progress-fill" style={{ width: `${p.progressPercent}%`, background: p.color }} />
+                      </div>
+                    </button>
 
-              {isEditMode && activePath === p.key && onEditPath && (
-                <button
-                  onClick={() => onEditPath(paths[p.key])}
-                  className="path-edit-btn"
-                  title="Path Settings"
-                >
-                  <Edit2 size={11} />
-                </button>
-              )}
-            </div>
-          ))}
+                    {isEditMode && activePath === p.key && onEditPath && (
+                      <button
+                        onClick={() => onEditPath(paths[p.key])}
+                        className="path-edit-btn"
+                        title="Path Settings"
+                      >
+                        <Edit2 size={11} />
+                      </button>
+                    )}
+                  </div>
+                ))}
 
-          {isEditMode && onAddPath && (
-            <button
-              className="path-pill-add"
-              onClick={onAddPath}
-            >
-              <Edit3 size={12} style={{ opacity: 0.6 }} />
-              <span>Create New Path</span>
-            </button>
-          )}
+                {isEditMode && onAddPath && (
+                  <button
+                    className="path-pill-add"
+                    onClick={onAddPath}
+                  >
+                    <Edit3 size={12} style={{ opacity: 0.6 }} />
+                    <span>Create New Path</span>
+                  </button>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
         </div>}
       </div>
@@ -517,6 +538,41 @@ export default function Sidebar({
 }
 
 const styles = `
+  .sidebar-divider-wrapper {
+    position: relative;
+    height: 1px;
+    margin: 4px 0;
+  }
+  .sidebar-paths-toggle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text3);
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s;
+  }
+  .sidebar-paths-toggle:hover {
+    background: var(--bg3);
+    color: var(--neon);
+    border-color: var(--neon);
+    box-shadow: 0 0 10px var(--neon-dim);
+  }
+  .sidebar-paths-toggle svg {
+    transition: transform 0.3s ease;
+  }
+  .sidebar-paths-visible .sidebar-paths-toggle svg {
+    /* transform: rotate(180deg); */
+  }
   .sidebar-group {
     margin-bottom: 12px;
   }

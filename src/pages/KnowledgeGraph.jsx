@@ -614,7 +614,7 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
         {/* Tab switcher */}
         <div style={{ display: "flex", gap: 2, padding: 3, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9 }}>
           {[
-            { id: "curriculum", label: "CURRICULUM", icon: <BookOpen size={11}/> },
+            { id: "curriculum", label: "STUDY PATH", icon: <BookOpen size={11}/> },
             { id: "notes",      label: "MY NOTES",   icon: <FileText size={11}/> },
           ].map(tab => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{

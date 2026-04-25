@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, Layers, Users, Sparkles, X, 
   ChevronRight, Boxes, Layout, Globe, Activity, Zap, Search, Monitor,
-  Share2, CheckSquare, Bookmark
+  Share2, CheckSquare, Bookmark, Network
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { CHRONOLOGICAL_DB } from '../data/blogData';
@@ -120,6 +120,7 @@ export default function IntelligenceHub({
   onInterview, 
   onShowAll,
   pathsData = {},
+  activePath = 'ds',
   initialView = 'main',
   initialYear = null,
   initialAI = false
@@ -166,6 +167,8 @@ export default function IntelligenceHub({
     setBlogLimit(100);
   }, [initialView, initialYear, initialAI]);
 
+
+
   const flatBlueprints = useMemo(() => {
     return Object.entries(CHRONOLOGICAL_DB).flatMap(([year, articles]) => 
       articles.map(article => ({ ...article, year }))
@@ -206,7 +209,7 @@ export default function IntelligenceHub({
     {
       id: 'study',
       title: 'Study',
-      subtitle: 'Curriculum Hub',
+      subtitle: 'Study Hub',
       icon: <BookOpen className="hub-icon" size={32} />,
       description: 'Master AI concepts through structured pathways.',
       footerLabel: 'START LEARNING →',
@@ -249,7 +252,7 @@ export default function IntelligenceHub({
       id: 'knowledge_tree',
       title: 'Knowledge Tree',
       icon: <Layers size={24} />,
-      description: 'High-level hierarchical curriculum overview.',
+      description: 'High-level hierarchical study path overview.',
       action: () => onStudyAction('knowledge_tree'),
       accent: '#00ccff'
     },
@@ -265,13 +268,22 @@ export default function IntelligenceHub({
 
   const studyCards = [
     {
-      id: 'curricula',
-      title: 'Curriculum',
-      subtitle: 'Learning Paths',
-      icon: <BookOpen size={20} />,
-      description: 'Specialized learning tracks for AI disciplines.',
-      action: () => navigateTo('curricula'),
-      accent: '#00ff88'
+      id: 'curriculum_map',
+      title: 'Study Map',
+      subtitle: 'Visual Blueprint',
+      icon: <Network size={20} />,
+      description: 'Interactive map of all learning pathways.',
+      action: () => onStudyAction('curriculum_map'),
+      accent: '#00ccff'
+    },
+    {
+      id: 'study_paths',
+      title: 'Study Paths',
+      subtitle: 'Path Library',
+      icon: <Layers size={20} />,
+      description: 'Explore specialized learning pathways.',
+      action: () => navigateTo('study_paths'),
+      accent: '#00ccff'
     },
     ...(isAdmin ? [{
       id: 'algo_studio',
@@ -357,7 +369,7 @@ export default function IntelligenceHub({
     }
   ];
 
-  const curriculaCards = Object.entries(paths || {}).map(([id, path]) => ({
+  const studyPathCards = Object.entries(paths || {}).map(([id, path]) => ({
     id,
     title: path.label || id,
     description: path.description || `Master ${path.label}`,
@@ -392,9 +404,9 @@ export default function IntelligenceHub({
 
   const getSubMenuTitle = () => {
     if (view === 'roadmap') return 'Navigation Galaxy';
-    if (view === 'study') return 'Study Modules';
+    if (view === 'study') return 'Study Paths';
     if (view === 'design') return 'Architectural Labs';
-    if (view === 'curricula') return 'Select Specialization';
+    if (view === 'study_paths') return 'Select Study Path';
     if (view === 'blog') return 'Research Repository';
     return '';
   };
@@ -403,20 +415,20 @@ export default function IntelligenceHub({
     if (view === 'roadmap') return roadmapCards;
     if (view === 'study') return studyCards;
     if (view === 'design') return designCards;
-    if (view === 'curricula') return curriculaCards;
+    if (view === 'study_paths') return studyPathCards;
     return [];
   };
 
   const getBackAction = () => {
-    if (view === 'curricula') return () => setView('study');
+    if (view === 'study_paths') return () => setViewStack(['main', 'study']);
     if (view === 'blog') return () => { 
       if (showAI) setShowAI(false);
       else if (blogYear) {
         setBlogYear(null);
         setBlogLimit(100);
-      } else setView('study');
+      } else setViewStack(['main', 'study']);
     };
-    return () => setView('main');
+    return () => setViewStack(['main']);
   };
 
   return (
@@ -454,6 +466,7 @@ export default function IntelligenceHub({
           </button>
         </div>
       </div>
+
 
       <div className="hub-container">
         <AnimatePresence mode="wait">
@@ -768,13 +781,14 @@ export default function IntelligenceHub({
         .hub-header {
           position: absolute;
           top: 0; left: 0; width: 100%;
-          padding: 30px 60px;
+          padding: 10px 40px;
           display: flex;
           justify-content: space-between;
           align-items: center;
           z-index: 100;
           background: linear-gradient(to bottom, #020202 50%, transparent);
         }
+
 
         .hub-logo {
           display: flex;
@@ -824,9 +838,9 @@ export default function IntelligenceHub({
         .hub-container {
           width: 100%;
           max-width: 1600px;
-          padding: 30px 40px 40px;
+          padding: 10px 40px 40px;
           z-index: 5;
-          margin-top: 10px;
+          margin-top: 0;
         }
 
         .hub-breadcrumbs {
@@ -997,7 +1011,7 @@ export default function IntelligenceHub({
         }
 
         .hub-sub-header {
-          margin-bottom: 16px;
+          margin-bottom: 8px;
           text-align: center;
         }
 
@@ -1019,10 +1033,10 @@ export default function IntelligenceHub({
 
         .hub-back-btn:hover { color: #fff; background: rgba(255,255,255,0.1); border-color: #fff; }
 
-        .hub-sub-header h2 { font-size: 48px; font-weight: 800; color: #fff; letter-spacing: -1px; }
+        .hub-sub-header h2 { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -1px; margin: 4px 0; }
 
         .hub-scroll-area {
-          max-height: 650px;
+          max-height: 75vh;
           overflow-y: auto;
           overflow-x: hidden;
           padding: 10px 20px 10px 0;

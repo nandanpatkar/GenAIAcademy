@@ -391,7 +391,7 @@ function MainApp() {
       else if (id === 'tasks') { setShowWorkplaceLab(true); setShowIntelligenceHub(false); }
       else if (id === 'dsa_animator') { setShowDSAAnimator(true); setShowIntelligenceHub(false); }
       else if (id === 'ide') { setShowIDE(true); setShowIntelligenceHub(false); }
-      else if (id === 'knowledge_tree') { setShowCurriculumMap(true); setShowIntelligenceHub(false); }
+      else if (id === 'knowledge_tree' || id === 'curriculum_map') { setShowCurriculumMap(true); setShowIntelligenceHub(false); }
     }
   };
 
@@ -790,22 +790,7 @@ function MainApp() {
       }} 
     />
   );
-  
-  if (showIntelligenceHub) {
-    return (
-      <IntelligenceHub 
-        paths={PATHS}
-        pathsData={pathsData}
-        onStudyAction={handleHubStudyAction}
-        onDesignAction={handleHubDesignAction}
-        onInterview={handleHubInterview}
-        onShowAll={() => setShowIntelligenceHub(false)}
-        initialView={hubConfig.view}
-        initialYear={hubConfig.year}
-        initialAI={hubConfig.isAI}
-      />
-    );
-  }
+
 
   if (isLocked) {
     return (
@@ -937,6 +922,20 @@ function MainApp() {
             onClose={() => setShowWorkplaceLab(false)}
           /> :
           showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
+          showIntelligenceHub ? (
+            <IntelligenceHub 
+              paths={pathsData}
+              pathsData={pathsData}
+              activePath={activePath}
+              onStudyAction={handleHubStudyAction}
+              onDesignAction={handleHubDesignAction}
+              onInterview={handleHubInterview}
+              onShowAll={() => setShowIntelligenceHub(false)}
+              initialView={hubConfig.view}
+              initialYear={hubConfig.year}
+              initialAI={hubConfig.isAI}
+            />
+          ) :
           showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
           <>
             {!freshActiveNode && (
