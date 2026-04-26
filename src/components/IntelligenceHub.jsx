@@ -141,7 +141,7 @@ export default function IntelligenceHub({
     }
   };
 
-  const { isAdmin } = useAuth();
+  const { isAdmin, isAdminView } = useAuth();
   const [blogYear, setBlogYear] = useState(initialYear);
   const [blogSearch, setBlogSearch] = useState('');
   const [blogLimit, setBlogLimit] = useState(100);
@@ -285,7 +285,7 @@ export default function IntelligenceHub({
       action: () => navigateTo('study_paths'),
       accent: '#00ccff'
     },
-    ...(isAdmin ? [{
+    ...(isAdmin && isAdminView ? [{
       id: 'algo_studio',
       title: 'Algo Studio',
       icon: <Activity size={20} />,

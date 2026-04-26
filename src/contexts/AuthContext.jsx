@@ -15,6 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [geminiKey, setGeminiKey] = useState(() => localStorage.getItem('genai_gemini_key') || "");
   const [isLocked, setIsLocked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isAdminView, setIsAdminView] = useState(() => localStorage.getItem('genai_isAdminView') !== 'false'); // Default to true if not set
+
 
   const updateGeminiKey = (key) => {
     setGeminiKey(key);
@@ -148,6 +150,8 @@ export const AuthProvider = ({ children }) => {
     signIn,
     signInWithGoogle,
     signOut,
+    isAdminView,
+    setIsAdminView,
   };
 
   return (

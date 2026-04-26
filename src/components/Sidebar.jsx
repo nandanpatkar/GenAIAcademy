@@ -35,7 +35,7 @@ export default function Sidebar({
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [isPathsVisible, setIsPathsVisible] = useState(true);
-  const { isAdmin, allowAimlForAll, geminiKey, updateGeminiKey } = useAuth();
+  const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, geminiKey, updateGeminiKey } = useAuth();
   const [localKey, setLocalKey] = useState(geminiKey || "");
 
   useEffect(() => {
@@ -76,9 +76,10 @@ export default function Sidebar({
         { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer" },
       ]
     },
-    ...(isAdmin ? [{
+    ...(isAdmin && isAdminView ? [{
       label: "Admin",
       items: [
+        { icon: <Shield size={14} />, label: "Admin Panel", id: "admin_management" },
         { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
         { icon: <BoxSelect size={14} />, label: "Intelligence Hub", id: "hub" },
       ]
@@ -420,6 +421,46 @@ export default function Sidebar({
         <div className="footer-super-button-container">
           <div className="footer-popout-menu">
             <div className="popout-section-label" style={{ fontSize: 9, fontWeight: 900, color: 'var(--text3)', padding: '8px 16px 4px', letterSpacing: 1 }}>SYSTEM_CONFIG</div>
+            
+            {isAdmin && (
+              <div className="popout-item" style={{ cursor: 'default', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <Shield size={14} color={isAdminView ? "var(--neon)" : "var(--text3)"} />
+                  <span>Admin View</span>
+                </div>
+                <div 
+                  className={`admin-view-toggle ${isAdminView ? 'active' : ''}`}
+                  onClick={() => {
+                    const nextState = !isAdminView;
+                    setIsAdminView(nextState);
+                    localStorage.setItem('genai_isAdminView', nextState.toString());
+                  }}
+                  style={{
+                    width: 32,
+                    height: 18,
+                    borderRadius: 20,
+                    background: isAdminView ? 'var(--neon)' : 'rgba(255,255,255,0.1)',
+                    position: 'relative',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  <motion.div 
+                    animate={{ x: isAdminView ? 16 : 2 }}
+                    style={{
+                      width: 14,
+                      height: 14,
+                      borderRadius: '50%',
+                      background: isAdminView ? '#000' : '#fff',
+                      position: 'absolute',
+                      top: 2,
+                      left: 0
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             <button 
               className={`popout-item ${isEditMode ? 'active edit' : ''}`}
               onClick={() => setIsEditMode(!isEditMode)}
