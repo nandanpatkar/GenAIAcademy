@@ -1,0 +1,133 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "~/components/ui/dialog";
+import { Textarea } from "~/components/ui/textarea";
+import { Button } from "~/components/ui/button";
+import { useGameContext } from "~/contexts/GameContext";
+import { useLanguage } from "~/contexts/LanguageContext";
+import { Save } from "lucide-react";
+
+interface FileEditorProps {
+    isOpen: boolean;
+    onClose: () => void;
+    fileName: string;
+    initialContent?: string;
+}
+
+export function FileEditor({ isOpen, onClose, fileName, initialContent = "" }: FileEditorProps) {
+    const { handleFileEdit } = useGameContext();
+    const { t } = useLanguage();
+    const [content, setContent] = useState(initialContent);
+    const [isDirty, setIsDirty] = useState(false);
+
+    // Reset content when the file or mode changes - with useCallback for performance
+    useEffect(() => {
+        setContent(initialContent);
+        setIsDirty(false);
+    }, [initialContent, fileName]);
+
+    // Memoize handlers for better performance
+    const handleSave = useCallback(() => {
+        if (isDirty) {
+            handleFileEdit(fileName, content);
+        }
+        onClose();
+    }, [isDirty, fileName, content, handleFileEdit, onClose]);
+
+    const handleContentChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContent(e.target.value);
+        setIsDirty(true);
+    }, []);
+
+    const handleCancel = useCallback(() => {
+        if (isDirty && !window.confirm(t("editor.unsavedChanges"))) {
+            return;
+        }
+        onClose();
+    }, [isDirty, onClose, t]);
+
+    // Check if device is likely mobile - memoized for performance
+    const isMobileDevice = useCallback(() => {
+        if (typeof window !== "undefined") {
+            return (
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                window.innerWidth <= 768
+            );
+        }
+        return false;
+    }, []);
+
+    // Handle keyboard shortcuts - memoized for performance
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent) => {
+            // Support Ctrl+Enter or Cmd+Enter to save
+            if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+                e.preventDefault();
+                handleSave();
+            }
+
+            // Use Escape to cancel
+            if (e.key === "Escape") {
+                e.preventDefault();
+                handleCancel();
+            }
+        },
+        [handleSave, handleCancel],
+    );
+
+    return (
+        <Dialog open={isOpen} onOpenChange={handleCancel}>
+            <DialogContent
+                className="flex h-[92vh] max-h-[92vh] w-[95vw] max-w-[95vw] flex-col border-white/10 bg-[#0a0a0c] p-3 text-zinc-100 sm:h-[85vh] sm:max-h-[85vh] sm:w-[90vw] sm:max-w-[90vw] sm:p-6 md:h-[80vh] md:max-h-[80vh] md:max-w-5xl"
+                onKeyDown={handleKeyDown}
+                // Remove the built-in X button by overriding its CSS
+                style={
+                    {
+                        "--close-button-display": "none",
+                    } as React.CSSProperties
+                }>
+                <DialogHeader className="mb-2 flex flex-shrink-0 flex-row items-center justify-between">
+                    <DialogTitle className="mr-2 flex items-center text-sm text-white sm:text-base">
+                        <span className="max-w-[120px] truncate sm:max-w-[200px] md:max-w-md">{fileName}</span>
+                        <span className="ml-2 text-xs text-[#00ff88]">
+                            {isDirty ? `(${t("editor.unsaved")})` : ""}
+                        </span>
+                    </DialogTitle>
+                </DialogHeader>
+
+                <div className="relative min-h-0 flex-grow overflow-hidden rounded border border-emerald-800/30">
+                    <div className="absolute left-0 top-0 z-10 w-full bg-zinc-900/50 px-2 py-1 text-xs text-zinc-300 sm:px-3">
+                        {t("editor.fileContent")}
+                    </div>
+                    <Textarea
+                        value={content}
+                        onChange={handleContentChange}
+                        className="h-full w-full resize-none bg-zinc-900/10 pt-7 font-mono text-xs text-zinc-200 focus-visible:ring-[#00ff88] sm:text-sm"
+                        autoFocus={!isMobileDevice()}
+                        onKeyDown={handleKeyDown}
+                        style={{ minHeight: 0 }}
+                    />
+                </div>
+
+                <DialogFooter className="mt-2 flex flex-shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-between">
+                    <div className="hidden text-xs text-[#00ff88] md:block">{t("editor.escToCancel")}</div>
+                    <div className="flex w-full gap-2 sm:w-auto">
+                        <Button
+                            variant="outline"
+                            onClick={handleCancel}
+                            className="flex-1 border-emerald-700 text-[#00ff88] hover:bg-zinc-900/30 sm:flex-auto">
+                            {t("editor.cancel")}
+                        </Button>
+                        <Button
+                            onClick={handleSave}
+                            className="flex-1 bg-[#00cc66] text-white hover:bg-emerald-700 sm:flex-auto">
+                            <Save className="mr-1 h-4 w-4 sm:mr-2" />
+                            <span className="text-sm sm:text-base">{t("editor.save")}</span>
+                        </Button>
+                    </div>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+}

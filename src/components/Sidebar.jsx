@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
@@ -22,6 +22,8 @@ export default function Sidebar({
   showAIInterviewer, setShowAIInterviewer,
   showAlgoStudio, setShowAlgoStudio,
   showAlgoVisualizer, setShowAlgoVisualizer,
+  showK8sGames, setShowK8sGames,
+  showGitVisualizer, setShowGitVisualizer,
   showIntelligenceHub, setShowIntelligenceHub,
   showWorkplaceLab, setShowWorkplaceLab,
   showKnowledgeGraph, setShowKnowledgeGraph,
@@ -61,6 +63,8 @@ export default function Sidebar({
         { icon: <Layers size={14} />, label: "System Simulator", id: "simulator" },
         { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator" },
         { icon: <Box size={14} />, label: "Algo Visualizer", id: "algo_visualizer" },
+        { icon: <Boxes size={14} />, label: "K8s Games", id: "k8s_games" },
+        { icon: <GitCommit size={14} />, label: "Git Visualizer", id: "git_visualizer" },
       ]
     },
     {
@@ -113,6 +117,8 @@ export default function Sidebar({
     if (showAIInterviewer) return "interviewer";
     if (showAlgoStudio) return "algo_studio";
     if (showAlgoVisualizer) return "algo_visualizer";
+    if (showK8sGames) return "k8s_games";
+    if (showGitVisualizer) return "git_visualizer";
     if (showWorkplaceLab) return "tasks";
     if (!activeNode) return "overview";
     return null;
@@ -140,6 +146,8 @@ export default function Sidebar({
     if (setShowAIInterviewer) setShowAIInterviewer(false);
     if (setShowAlgoStudio) setShowAlgoStudio(false);
     if (setShowAlgoVisualizer) setShowAlgoVisualizer(false);
+    if (setShowK8sGames) setShowK8sGames(false);
+    if (setShowGitVisualizer) setShowGitVisualizer(false);
     if (setShowWorkplaceLab) setShowWorkplaceLab(false);
     if (setShowKnowledgeGraph) setShowKnowledgeGraph(false);
 
@@ -170,6 +178,12 @@ export default function Sidebar({
         break;
       case "algo_visualizer":
         if (setShowAlgoVisualizer) setShowAlgoVisualizer(true);
+        break;
+      case "k8s_games":
+        if (setShowK8sGames) setShowK8sGames(true);
+        break;
+      case "git_visualizer":
+        if (setShowGitVisualizer) setShowGitVisualizer(true);
         break;
       case "tasks":
         if (setShowWorkplaceLab) setShowWorkplaceLab(true);

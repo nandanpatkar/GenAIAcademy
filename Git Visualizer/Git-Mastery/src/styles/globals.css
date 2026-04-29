@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-sans: 'Syne', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-mono: 'DM Mono', monospace;
+
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+}
+
+@keyframes accordion-down {
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--radix-accordion-content-height);
+    }
+}
+
+@keyframes accordion-up {
+    from {
+        height: var(--radix-accordion-content-height);
+    }
+    to {
+        height: 0;
+    }
+}
+
+:root {
+    scroll-behavior: smooth;
+}
+
+/* Force Syne on all UI elements to match GenAI Academy theme */
+button, input, select, label,
+span, div, p, li, td, th,
+h1, h2, h3, h4, h5, h6, a {
+  font-family: 'Syne', sans-serif !important;
+}
+
+/* Keep DM Mono ONLY for actual code surfaces */
+textarea.nodrag,
+pre, code,
+.terminal-output,
+.terminal-output *,
+.cm-editor,
+.cm-editor * {
+  font-family: 'DM Mono', monospace !important;
+}
+

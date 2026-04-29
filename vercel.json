@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/draw", "destination": "/k8sgames/draw.html", "permanent": true }
+  ]
+}

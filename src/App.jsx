@@ -20,6 +20,8 @@ import AdminManagement from "./components/AdminManagement";
 import InterviewerPage from "./pages/interviewer/InterviewerPage.jsx";
 import AlgoVisualizer from "./components/AlgoVisualizer";
 import CodeVisualizer from "./components/CodeVisualizer";
+import K8sGames from "./components/K8sGames";
+import GitVisualizer from "./components/GitVisualizer";
 import { 
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
@@ -353,6 +355,8 @@ function MainApp() {
   const [showAIInterviewer, setShowAIInterviewer] = useState(false);
   const [showAlgoStudio, setShowAlgoStudio] = useState(false);
   const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(false);
+  const [showK8sGames, setShowK8sGames] = useState(false);
+  const [showGitVisualizer, setShowGitVisualizer] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showModuleDetails, setShowModuleDetails] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useState(true);
@@ -384,6 +388,8 @@ function MainApp() {
         }
       }
       else if (id === 'algo_visualizer') { setShowAlgoVisualizer(true); setShowIntelligenceHub(false); }
+      else if (id === 'k8s_games') { setShowK8sGames(true); setShowIntelligenceHub(false); }
+      else if (id === 'git_visualizer') { setShowGitVisualizer(true); setShowIntelligenceHub(false); }
       else if (id === 'aiml_companion') { setShowAimlCompanion(true); setShowIntelligenceHub(false); }
       else if (id === 'links') { setShowLinks(true); setShowIntelligenceHub(false); }
       else if (id === 'blog') handleHubNav({ view: 'blog', year: null, isAI: false });
@@ -445,6 +451,8 @@ function MainApp() {
     setShowAIInterviewer(false);
     setShowAlgoStudio(false);
     setShowAlgoVisualizer(false);
+    setShowK8sGames(false);
+    setShowGitVisualizer(false);
     setIsMobileMenuOpen(false);
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
     setShowIntelligenceHub(false); 
@@ -839,6 +847,8 @@ function MainApp() {
           showAIInterviewer={showAIInterviewer} setShowAIInterviewer={setShowAIInterviewer}
           showAlgoStudio={showAlgoStudio} setShowAlgoStudio={setShowAlgoStudio}
           showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
+          showK8sGames={showK8sGames} setShowK8sGames={setShowK8sGames}
+          showGitVisualizer={showGitVisualizer} setShowGitVisualizer={setShowGitVisualizer}
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
           showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
@@ -904,6 +914,8 @@ function MainApp() {
               onSaveAlgo={handleSaveUserAlgo}
               onClose={() => setShowAlgoVisualizer(false)}
             /> :
+          showK8sGames ? <K8sGames onClose={() => setShowK8sGames(false)} /> :
+          showGitVisualizer ? <GitVisualizer onClose={() => setShowGitVisualizer(false)} /> :
           showWorkplaceLab ? <WorkplaceLab 
             pathsData={pathsData}
             history={pathsData.workspace?.history || []}
