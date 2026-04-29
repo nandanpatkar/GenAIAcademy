@@ -366,6 +366,24 @@ export default function IntelligenceHub({
       description: 'Central repository for learning materials.',
       action: () => onStudyAction('resources'),
       accent: '#3b82f6'
+    },
+    {
+      id: 'k8s_games',
+      title: 'K8s Games',
+      subtitle: 'Chaos Engine',
+      icon: <Boxes size={20} />,
+      description: 'Master Kubernetes clusters through gamified chaos.',
+      action: () => onStudyAction('k8s_games'),
+      accent: '#10b981'
+    },
+    {
+      id: 'git_visualizer',
+      title: 'Git Visualizer',
+      subtitle: 'Version Control',
+      icon: <Monitor size={20} />,
+      description: 'Visualize Git branching and commit history.',
+      action: () => onStudyAction('git_visualizer'),
+      accent: '#a855f7'
     }
   ];
 
