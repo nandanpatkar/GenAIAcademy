@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }) => {
   const adminSignInMock = () => {
     setIsAdmin(true);
     localStorage.setItem('genai_isAdmin', 'true');
-    setUser({ email: 'nandanpatkar14114@gmail.com', id: 'admin-mock-id' }); // Mock user so app loads
+    setUser({ email: 'nandanpatkar14114@gmail.com', id: '00000000-0000-0000-0000-000000000000' }); // Use valid UUID
   };
 
   const value = {

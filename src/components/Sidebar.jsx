@@ -27,15 +27,16 @@ export default function Sidebar({
   showIntelligenceHub, setShowIntelligenceHub,
   showWorkplaceLab, setShowWorkplaceLab,
   showKnowledgeGraph, setShowKnowledgeGraph,
+  showCommunity, setShowCommunity,
   isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
   onSignOut,
   onHubNav,
   setLinksInitialTab,
-  showGitHubHub, setShowGitHubHub
+  showGitHubHub, setShowGitHubHub,
+  isCollapsed, setIsCollapsed
 }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [isPathsVisible, setIsPathsVisible] = useState(true);
@@ -81,6 +82,7 @@ export default function Sidebar({
           { icon: <GraduationCap size={14} />, label: "AIML Companion", id: "aiml_companion" }
         ] : []),
         { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer" },
+        { icon: <Users size={14} />, label: "Community", id: "community" },
       ]
     },
     ...(isAdmin && isAdminView ? [{
@@ -122,6 +124,7 @@ export default function Sidebar({
     if (showAlgoVisualizer) return "algo_visualizer";
     if (showK8sGames) return "k8s_games";
     if (showGitVisualizer) return "git_visualizer";
+    if (showCommunity) return "community";
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
     if (showIntelligenceHub) return "hub";
@@ -156,6 +159,7 @@ export default function Sidebar({
     if (setShowWorkplaceLab) setShowWorkplaceLab(false);
     if (setShowKnowledgeGraph) setShowKnowledgeGraph(false);
     if (setShowGitHubHub) setShowGitHubHub(false);
+    if (setShowCommunity) setShowCommunity(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
 
     switch (id) {
@@ -203,6 +207,9 @@ export default function Sidebar({
         break;
       case "hub":
         if (setShowIntelligenceHub) setShowIntelligenceHub(true);
+        break;
+      case "community":
+        if (setShowCommunity) setShowCommunity(true);
         break;
       default: break;
     }

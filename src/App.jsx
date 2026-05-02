@@ -41,6 +41,7 @@ import FocusPulse from "./components/FocusPulse";
 import VideoModal from "./components/VideoModal";
 import LandingPage from "./pages/LandingPage";
 import KnowledgeGraph from "./pages/KnowledgeGraph";
+import Community from "./components/Community/Community";
 import { AnimatePresence } from "framer-motion";
 import useWindowWidth from "./hooks/useWindowWidth";
 import "./styles/global.css";
@@ -111,6 +112,7 @@ function MainApp() {
     // Only show landing if user hasn't seen it in this session and is not logged in
     return !localStorage.getItem("genai_landing_dismissed");
   });
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const handleVideoSelect = (video) => {
     if (video.pathKey) setActivePath(video.pathKey);
@@ -337,6 +339,7 @@ function MainApp() {
   const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(false);
   const [showK8sGames, setShowK8sGames] = useState(false);
   const [showGitVisualizer, setShowGitVisualizer] = useState(false);
+  const [showCommunity, setShowCommunity] = useState(false);
 
   const [showGitHubHub, setShowGitHubHub] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -375,6 +378,7 @@ function MainApp() {
       else if (id === 'git_visualizer') { setShowGitVisualizer(true); setShowIntelligenceHub(false); }
       else if (id === 'aiml_companion') { setShowAimlCompanion(true); setShowIntelligenceHub(false); }
       else if (id === 'links') { setShowLinks(true); setShowIntelligenceHub(false); }
+      else if (id === 'community') { setShowCommunity(true); setShowIntelligenceHub(false); }
       else if (id === 'blog') handleHubNav({ view: 'blog', year: null, isAI: false });
       else if (id === 'progress') { setShowProgress(true); setShowIntelligenceHub(false); }
       else if (id === 'tasks') { setShowWorkplaceLab(true); setShowIntelligenceHub(false); }
@@ -442,6 +446,7 @@ function MainApp() {
     setShowIntelligenceHub(false); 
     setShowWorkplaceLab(false);
     setShowKnowledgeGraph(false);
+    setShowCommunity(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
@@ -837,11 +842,13 @@ function MainApp() {
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
           showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
+          showCommunity={showCommunity} setShowCommunity={setShowCommunity}
           setLinksInitialTab={setLinksInitialTab}
           onHubNav={handleHubNav}
           isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
           activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
           theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut}
+          isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed}
         />
 
         <main className="app-primary-content">
@@ -853,6 +860,9 @@ function MainApp() {
             />
           ) :
           showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} /> :
+          showCommunity ? (
+            <Community isSidebarCollapsed={isSidebarCollapsed} />
+          ) :
           showKnowledgeGraph ? (
             <KnowledgeGraph
               pathsData={pathsData}
