@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
@@ -31,7 +31,9 @@ export default function Sidebar({
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
   onSignOut,
-  onHubNav
+  onHubNav,
+  setLinksInitialTab,
+  showGitHubHub, setShowGitHubHub
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
@@ -72,6 +74,7 @@ export default function Sidebar({
       items: [
         { icon: <BookMarked size={14} />, label: "Blog", id: "blog" },
         { icon: <Bookmark size={14} />, label: "Links", id: "links" },
+        { icon: <GitBranch size={14} />, label: "Github", id: "github" },
         { icon: <CheckSquare size={14} />, label: "Quick Notes", id: "tasks" },
         { icon: <BookOpen size={14} />, label: "Resources", id: "resources" },
         ...((isAdmin || allowAimlForAll) ? [
@@ -120,6 +123,8 @@ export default function Sidebar({
     if (showK8sGames) return "k8s_games";
     if (showGitVisualizer) return "git_visualizer";
     if (showWorkplaceLab) return "tasks";
+    if (showGitHubHub) return "github";
+    if (showIntelligenceHub) return "hub";
     if (!activeNode) return "overview";
     return null;
   };
@@ -150,6 +155,8 @@ export default function Sidebar({
     if (setShowGitVisualizer) setShowGitVisualizer(false);
     if (setShowWorkplaceLab) setShowWorkplaceLab(false);
     if (setShowKnowledgeGraph) setShowKnowledgeGraph(false);
+    if (setShowGitHubHub) setShowGitHubHub(false);
+    if (setShowIntelligenceHub) setShowIntelligenceHub(false);
 
     switch (id) {
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
@@ -160,7 +167,13 @@ export default function Sidebar({
       case "playground": if (setShowPlayground) setShowPlayground(true); break;
       case "dsa_animator": if (setShowDSAAnimator) setShowDSAAnimator(true); break;
       case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
-      case "links": if (setShowLinks) setShowLinks(true); break;
+      case "links": 
+        if (setLinksInitialTab) setLinksInitialTab("links");
+        if (setShowLinks) setShowLinks(true); 
+        break;
+      case "github":
+        if (setShowGitHubHub) setShowGitHubHub(true);
+        break;
       case "simulator": if (setShowSimulator) setShowSimulator(true); break;
       case "galaxy": if (setShowGalaxy) setShowGalaxy(true); break;
       case "blog": 

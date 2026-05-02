@@ -20,7 +20,6 @@ except ImportError:
     _HAS_NLM = False
 
 MODEL_ID = "minimax/minimax-m2.5:free"
-API_KEY = "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"
 
 def build_context(body):
     lines = [
@@ -125,7 +124,9 @@ PROMPTS = {
 }
 
 def generate_via_openrouter(mode, body):
-    api_key = os.environ.get("OPENROUTER_API_KEY") or API_KEY
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENROUTER_API_KEY not configured")
     context = build_context(body)
     prompt  = PROMPTS.get(mode, PROMPTS["summary"]).format(context=context)
 
@@ -158,6 +159,61 @@ def generate_via_openrouter(mode, body):
             if raw.startswith("json"):
                 raw = raw[4:]
         return json.loads(raw.strip())
+
+def generate_via_gemini(mode, body):
+    api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("VITE_GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError("GEMINI_API_KEY not configured")
+    
+    context = build_context(body)
+    prompt  = PROMPTS.get(mode, PROMPTS["summary"]).format(context=context)
+    
+    # Gemini 1.5 Flash endpoint
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    
+    req_data = {
+        "contents": [{
+            "parts": [{"text": prompt}]
+        }],
+        "generationConfig": {
+            "temperature": 0.2,
+            "topP": 0.8,
+            "topK": 40,
+            "maxOutputTokens": 2048,
+        }
+    }
+    
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(req_data).encode(),
+        headers={"Content-Type": "application/json"},
+        method="POST"
+    )
+    
+    with urllib.request.urlopen(req) as response:
+        data = json.loads(response.read().decode())
+        if "candidates" not in data or not data["candidates"]:
+            raise RuntimeError(f"Gemini error: {data}")
+            
+        raw = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+        
+        # Strip markdown fences if present
+        if "```" in raw:
+            parts = raw.split("```")
+            for p in parts:
+                inner = p.strip()
+                if inner.startswith("{") or inner.startswith("["):
+                    raw = inner
+                    if raw.startswith("json"): raw = raw[4:].strip()
+                    break
+        
+        # Final safety strip
+        start = raw.find("{") if raw.find("{") < raw.find("[") or raw.find("[") == -1 else raw.find("[")
+        end = max(raw.rfind("}"), raw.rfind("]"))
+        if start != -1 and end != -1:
+            raw = raw[start:end+1]
+            
+        return json.loads(raw)
 
 # ── Vercel handler ────────────────────────────────────────────────────────
 
@@ -197,7 +253,15 @@ class handler(BaseHTTPRequestHandler):
             except Exception as e:
                 print(f"[notebooklm-py] {e}", file=sys.stderr)
 
-        # Fallback to Qwen 3.6 Plus
+        # Fallback to Gemini
+        if result is None:
+            try:
+                result = generate_via_gemini(mode, body)
+                used   = "gemini-1.5-flash-py"
+            except Exception as e:
+                print(f"[gemini-py] {e}", file=sys.stderr)
+
+        # Fallback to OpenRouter (Qwen)
         if result is None:
             try:
                 result = generate_via_openrouter(mode, body)

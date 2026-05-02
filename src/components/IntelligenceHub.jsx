@@ -857,7 +857,9 @@ export default function IntelligenceHub({
           width: 100%;
           max-width: 1600px;
           padding: 10px 40px 40px;
-          z-index: 5;
+          z-index: 10;
+          position: relative;
+          pointer-events: auto;
           margin-top: 0;
         }
 
@@ -1026,6 +1028,9 @@ export default function IntelligenceHub({
           width: 100%;
           max-width: 1540px;
           margin: 0 auto;
+          position: relative;
+          z-index: 10;
+          pointer-events: auto;
         }
 
         .hub-sub-header {

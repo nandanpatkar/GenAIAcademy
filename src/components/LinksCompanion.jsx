@@ -1,11 +1,42 @@
-import { useState, useEffect } from "react";
-import { X, Search, ChevronDown, ChevronUp, PanelLeft, Link2 as LinkIcon, Globe, BookOpen, ArrowUpRight, Loader2, Plus, Trash2, Edit2 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { X, Search, ChevronDown, ChevronUp, PanelLeft, Link2 as LinkIcon, Globe, BookOpen, ArrowUpRight, Loader2, Plus, Trash2, Edit2, Star, GitFork, GitBranch } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
+import { supabase } from "../config/supabaseClient";
 
 // ── In-memory preview cache ───────────────────────────────────────────────────
 const previewCache = {};
 
 async function fetchPreview(url) {
   if (previewCache[url]) return previewCache[url];
+  
+  // Special handling for Github URLs
+  if (url.includes("github.com")) {
+    try {
+      const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
+      if (match) {
+        const [, owner, repo] = match;
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+        if (res.ok) {
+          const data = await res.json();
+          const result = {
+            title: data.full_name,
+            description: data.description,
+            stars: data.stargazers_count,
+            forks: data.forks_count,
+            language: data.language,
+            image: data.owner?.avatar_url,
+            isGithub: true,
+            repoUrl: data.html_url
+          };
+          previewCache[url] = result;
+          return result;
+        }
+      }
+    } catch (e) {
+      console.error("Github fetch failed", e);
+    }
+  }
+
   try {
     const res = await fetch(
       `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=true`
@@ -153,31 +184,49 @@ function PreviewCard({ item }) {
           </div>
 
           {/* CTA */}
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              padding: "11px 22px",
-              background: accent, color: "#000",
-              fontWeight: 800, fontSize: 13,
-              borderRadius: 10, textDecoration: "none",
-              transition: "all .2s", fontFamily: "var(--font)",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.opacity = "0.88";
-              e.currentTarget.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.opacity = "1";
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
-          >
-            <BookOpen size={14} />
-            Open Link
-            <ArrowUpRight size={14} />
-          </a>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                padding: "11px 22px",
+                background: accent, color: "#000",
+                fontWeight: 800, fontSize: 13,
+                borderRadius: 10, textDecoration: "none",
+                transition: "all .2s", fontFamily: "var(--font)",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.opacity = "0.88";
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.opacity = "1";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              {preview?.isGithub ? <GitBranch size={14} /> : <BookOpen size={14} />}
+              {preview?.isGithub ? "View on Github" : "Open Link"}
+              <ArrowUpRight size={14} />
+            </a>
+
+            {preview?.isGithub && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--text2)', fontSize: 13, fontWeight: 600 }}>
+                  <Star size={14} color="#eab308" /> {preview.stars?.toLocaleString()}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: 'var(--text2)', fontSize: 13, fontWeight: 600 }}>
+                  <GitFork size={14} color="var(--text3)" /> {preview.forks?.toLocaleString()}
+                </div>
+                {preview.language && (
+                  <div style={{ fontSize: 11, color: 'var(--text3)', background: 'var(--bg3)', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--border)' }}>
+                    {preview.language}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -187,36 +236,100 @@ function PreviewCard({ item }) {
 }
 
 // ── Main Component ────────────────────────────────────────────────────────────
-export default function LinksCompanion({ isEditMode, onClose }) {
+export default function LinksCompanion({ isEditMode, onClose, initialTab = "links" }) {
+  const { user } = useAuth();
+  const [activeTab, setActiveTab]       = useState(initialTab); // 'links' or 'github'
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
   const [search, setSearch]               = useState("");
   const [showSidebar, setShowSidebar]     = useState(true);
   const [activeItem, setActiveItem]       = useState(null);
   const [links, setLinks]                 = useState([]);
+  const [githubRepos, setGithubRepos]     = useState([]);
   const [editingId, setEditingId]         = useState(null); // 'new' or link.id
   const [newUrl, setNewUrl]               = useState("");
   const [newLabel, setNewLabel]           = useState("");
   const [newDescription, setNewDescription] = useState("");
+  const [isLoading, setIsLoading]         = useState(true);
 
-  // Load links from local storage
+  const isInitialSync = useRef(true);
+
+  // Load from Supabase
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("genai_custom_links");
-      if (saved) {
-        setLinks(JSON.parse(saved));
+    const fetchData = async () => {
+      if (!user) {
+        setLinks([]);
+        setGithubRepos([]);
+        setIsLoading(false);
+        return;
       }
-    } catch (e) {
-      console.error("Failed to load links", e);
-    }
-  }, []);
 
-  // Save links to local storage
-  const saveLinks = (updatedLinks) => {
-    setLinks(updatedLinks);
-    try {
-      localStorage.setItem("genai_custom_links", JSON.stringify(updatedLinks));
-    } catch (e) {
-      console.error("Failed to save links", e);
-    }
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from('user_links')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+
+        if (data) {
+          setLinks(data.links || []);
+          setGithubRepos(data.github_repos || []);
+        } else if (error && error.code === 'PGRST116') {
+          // No record yet, create one with empty arrays to ensure isolation
+          setLinks([]);
+          setGithubRepos([]);
+          await supabase.from('user_links').insert({
+            id: user.id,
+            links: [],
+            github_repos: []
+          });
+        }
+      } catch (e) {
+        console.error("Supabase fetch failed", e);
+        setLinks([]);
+        setGithubRepos([]);
+      }
+      
+      setIsLoading(false);
+      isInitialSync.current = false;
+    };
+
+    fetchData();
+  }, [user]);
+
+  // Save to Supabase (debounced)
+  useEffect(() => {
+    if (isInitialSync.current || !user) return;
+
+    const saveToSupabase = async () => {
+      try {
+        await supabase
+          .from('user_links')
+          .upsert({
+            id: user.id,
+            links: links,
+            github_repos: githubRepos,
+            updated_at: new Date().toISOString()
+          });
+          
+        // Also keep local storage for offline/quick access
+        // Removed shared localStorage to prevent user leakage
+
+      } catch (e) {
+        console.error("Supabase save failed", e);
+      }
+    };
+
+    const timer = setTimeout(saveToSupabase, 1000);
+    return () => clearTimeout(timer);
+  }, [links, githubRepos, user]);
+
+  const saveLinks = (updated) => {
+    if (activeTab === 'links') setLinks(updated);
+    else setGithubRepos(updated);
   };
 
   const handleAddNew = () => {
@@ -242,47 +355,56 @@ export default function LinksCompanion({ isEditMode, onClose }) {
     e.preventDefault();
     if (!newUrl) return;
     
-    // Ensure URL has protocol
     let urlToSave = newUrl;
     if (!urlToSave.startsWith('http://') && !urlToSave.startsWith('https://')) {
       urlToSave = 'https://' + urlToSave;
     }
 
+    const currentList = activeTab === 'links' ? links : githubRepos;
+    const isGithub = activeTab === 'github' || urlToSave.includes("github.com");
+
     if (editingId === 'new') {
-      const newLink = {
-        id: `link-${Date.now()}`,
+      const newItem = {
+        id: `${activeTab}-${Date.now()}`,
         url: urlToSave,
         label: newLabel || newUrl,
         description: newDescription,
-        color: "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0') // Random color
+        type: activeTab,
+        color: "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')
       };
-      saveLinks([newLink, ...links]);
+      
+      const updatedList = [newItem, ...currentList];
+      if (activeTab === 'links') setLinks(updatedList);
+      else setGithubRepos(updatedList);
+
       setActiveItem({
-        id: newLink.id,
-        url: newLink.url,
-        label: newLink.label,
-        currLabel: "My Links",
-        currColor: newLink.color,
-        description: newLink.description
+        id: newItem.id,
+        url: newItem.url,
+        label: newItem.label,
+        currLabel: activeTab === 'links' ? "My Links" : "Github Repos",
+        currColor: newItem.color,
+        description: newItem.description
       });
     } else {
-      const updatedLinks = links.map(l => {
+      const updatedList = currentList.map(l => {
         if (l.id === editingId) {
           return { ...l, url: urlToSave, label: newLabel || newUrl, description: newDescription };
         }
         return l;
       });
-      saveLinks(updatedLinks);
+      
+      if (activeTab === 'links') setLinks(updatedList);
+      else setGithubRepos(updatedList);
       
       if (activeItem && activeItem.id === editingId) {
-        const editedLink = updatedLinks.find(l => l.id === editingId);
+        const editedItem = updatedList.find(l => l.id === editingId);
         setActiveItem({
-          id: editedLink.id,
-          url: editedLink.url,
-          label: editedLink.label,
-          currLabel: "My Links",
-          currColor: editedLink.color || "#00ff88",
-          description: editedLink.description
+          id: editedItem.id,
+          url: editedItem.url,
+          label: editedItem.label,
+          currLabel: activeTab === 'links' ? "My Links" : "Github Repos",
+          currColor: editedItem.color || "#00ff88",
+          description: editedItem.description
         });
       }
     }
@@ -295,9 +417,10 @@ export default function LinksCompanion({ isEditMode, onClose }) {
 
   const handleDeleteLink = (e, id) => {
     e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this link?")) {
-      const updatedLinks = links.filter(l => l.id !== id);
-      saveLinks(updatedLinks);
+    if (window.confirm(`Are you sure you want to delete this ${activeTab === 'links' ? 'link' : 'repo'}?`)) {
+      if (activeTab === 'links') setLinks(links.filter(l => l.id !== id));
+      else setGithubRepos(githubRepos.filter(l => l.id !== id));
+      
       if (activeItem && activeItem.id === id) {
         setActiveItem(null);
       }
@@ -305,20 +428,20 @@ export default function LinksCompanion({ isEditMode, onClose }) {
   };
 
   const query = search.toLowerCase();
-  const filteredLinks = links.filter(l => 
-    l.label.toLowerCase().includes(query) || 
-    l.url.toLowerCase().includes(query) || 
+  const activeList = activeTab === 'links' ? links : githubRepos;
+  const filteredItems = activeList.filter(l => 
+    (l.label || "").toLowerCase().includes(query) || 
+    (l.url || "").toLowerCase().includes(query) || 
     (l.description && l.description.toLowerCase().includes(query))
   );
 
-  const handleSelect = (link) => {
+  const handleSelect = (item) => {
     setActiveItem({
-      id: link.id,
-      url: link.url,
-      label: link.label,
-      currLabel: "My Links",
-      currColor: link.color || "#00ff88",
-      description: link.description
+      id: item.id,
+      url: item.url,
+      label: item.label,
+      currColor: item.color || (activeTab === 'github' ? "#0088ff" : "#00ff88"),
+      description: item.description
     });
   };
 
@@ -347,12 +470,16 @@ export default function LinksCompanion({ isEditMode, onClose }) {
 
         {/* Logo + Title Stack */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, #00ff88, #00cc66)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 18px rgba(0, 255, 136, 0.35)' }}>
-            <LinkIcon size={19} color="#000" />
+          <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, ${activeTab === 'links' ? '#00ff88, #00cc66' : '#0088ff, #004488'} )`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: `0 0 18px ${activeTab === 'links' ? 'rgba(0, 255, 136, 0.35)' : 'rgba(0, 136, 255, 0.35)'}` }}>
+            {activeTab === 'links' ? <LinkIcon size={19} color="#000" /> : <GitBranch size={19} color="#fff" />}
           </div>
           <div>
-            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>Links</h1>
-            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{links.length} saved links · Personal Collection</p>
+            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>
+              {activeTab === 'links' ? 'Links' : 'Github'}
+            </h1>
+            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>
+              {activeList.length} saved {activeTab} · Personal Collection
+            </p>
           </div>
         </div>
 
@@ -374,16 +501,49 @@ export default function LinksCompanion({ isEditMode, onClose }) {
             width: 280, minWidth: 280, borderRight: "1px solid var(--border)",
             background: "var(--bg2)", display: "flex", flexDirection: "column", overflow: "hidden",
           }}>
+            {/* Tab Switcher */}
+            <div style={{ 
+              display: 'flex', padding: '14px 14px 0', gap: 4
+            }}>
+              <button 
+                onClick={() => { setActiveTab('links'); setActiveItem(null); }}
+                style={{
+                  flex: 1, padding: '8px', fontSize: 11, fontWeight: 700, borderRadius: '6px 6px 0 0',
+                  background: activeTab === 'links' ? 'var(--bg3)' : 'transparent',
+                  color: activeTab === 'links' ? 'var(--neon)' : 'var(--text3)',
+                  border: '1px solid ' + (activeTab === 'links' ? 'var(--border)' : 'transparent'),
+                  borderBottom: activeTab === 'links' ? 'none' : '1px solid var(--border)',
+                  cursor: 'pointer', transition: '0.2s'
+                }}
+              >
+                Links
+              </button>
+              <button 
+                onClick={() => { setActiveTab('github'); setActiveItem(null); }}
+                style={{
+                  flex: 1, padding: '8px', fontSize: 11, fontWeight: 700, borderRadius: '6px 6px 0 0',
+                  background: activeTab === 'github' ? 'var(--bg3)' : 'transparent',
+                  color: activeTab === 'github' ? '#0088ff' : 'var(--text3)',
+                  border: '1px solid ' + (activeTab === 'github' ? 'var(--border)' : 'transparent'),
+                  borderBottom: activeTab === 'github' ? 'none' : '1px solid var(--border)',
+                  cursor: 'pointer', transition: '0.2s'
+                }}
+              >
+                Github
+              </button>
+            </div>
+
             {/* Search */}
             <div style={{
               display: "flex", alignItems: "center", gap: 8,
-              margin: "14px 14px 10px", padding: "8px 12px",
-              background: "var(--bg3)", borderRadius: 8, border: "1px solid var(--border)",
+              margin: "0 14px 10px", padding: "8px 12px",
+              background: "var(--bg3)", borderRadius: "0 0 8px 8px", border: "1px solid var(--border)",
+              borderTop: 'none'
             }}>
               <Search size={14} style={{ color: "var(--text3)", flexShrink: 0 }} />
               <input
                 value={search} onChange={e => setSearch(e.target.value)}
-                placeholder="Search links…"
+                placeholder={`Search ${activeTab === 'links' ? 'links' : 'repos'}…`}
                 style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "var(--text)", fontSize: 13 }}
               />
               {search && (
@@ -407,8 +567,8 @@ export default function LinksCompanion({ isEditMode, onClose }) {
                     fontWeight: 700, fontSize: 12, transition: "all .15s"
                   }}
                 >
-                  {editingId === 'new' ? <X size={14} /> : <Plus size={14} />}
-                  {editingId === 'new' ? "Cancel" : "Add New Link"}
+                  {editingId === 'new' ? <X size={14} /> : (activeTab === 'links' ? <Plus size={14} /> : <GitBranch size={14} />)}
+                  {editingId === 'new' ? "Cancel" : (activeTab === 'links' ? "Add New Link" : "Add Github Repo")}
                 </button>
               </div>
             )}
@@ -421,7 +581,7 @@ export default function LinksCompanion({ isEditMode, onClose }) {
               }}>
                 {editingId !== 'new' && (
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>Edit Link</span>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>Edit {activeTab === 'links' ? 'Link' : 'Repo'}</span>
                     <button type="button" onClick={() => setEditingId(null)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: 0 }}>
                       <X size={14} />
                     </button>
@@ -429,7 +589,7 @@ export default function LinksCompanion({ isEditMode, onClose }) {
                 )}
                 <input
                   required
-                  placeholder="URL (e.g. https://example.com)"
+                  placeholder={activeTab === 'links' ? "URL (e.g. https://example.com)" : "Github URL (e.g. github.com/user/repo)"}
                   value={newUrl}
                   onChange={e => setNewUrl(e.target.value)}
                   style={{ padding: "8px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg3)", color: "var(--text)", fontSize: 12, outline: "none" }}
@@ -448,32 +608,37 @@ export default function LinksCompanion({ isEditMode, onClose }) {
                   style={{ padding: "8px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg3)", color: "var(--text)", fontSize: 12, outline: "none", resize: "none" }}
                 />
                 <button type="submit" style={{
-                  padding: "8px", borderRadius: 6, background: "var(--neon)", color: "#000", border: "none", cursor: "pointer", fontWeight: 700, fontSize: 12
+                  padding: "8px", borderRadius: 6, background: activeTab === 'links' ? "var(--neon)" : "#0088ff", color: activeTab === 'links' ? "#000" : "#fff", border: "none", cursor: "pointer", fontWeight: 700, fontSize: 12
                 }}>
-                  Save Link
+                  Save {activeTab === 'links' ? 'Link' : 'Repository'}
                 </button>
               </form>
             )}
 
             {/* List */}
             <div style={{ flex: 1, overflowY: "auto", padding: "4px 0" }}>
-              {filteredLinks.length === 0 ? (
+              {isLoading ? (
+                <div style={{ padding: 40, textAlign: 'center', color: 'var(--text3)' }}>
+                  <Loader2 size={24} style={{ animation: "aiml-spin 1s linear infinite", marginBottom: 12 }} />
+                  <div style={{ fontSize: 12 }}>Syncing with database…</div>
+                </div>
+              ) : filteredItems.length === 0 ? (
                 <div style={{ padding: 30, textAlign: "center", color: "var(--text3)", fontSize: 13, display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-                  <LinkIcon size={32} style={{ opacity: 0.5 }} />
-                  {search ? `No links match "${search}"` : "No links saved yet. Add one above!"}
+                  {activeTab === 'links' ? <LinkIcon size={32} style={{ opacity: 0.5 }} /> : <GitBranch size={32} style={{ opacity: 0.5 }} />}
+                  {search ? `No items match "${search}"` : `No ${activeTab} saved yet. Add one above!`}
                 </div>
               ) : (
-                filteredLinks.map(link => {
-                  const isActive = activeItem?.id === link.id;
-                  const accent = link.color || "#00ff88";
+                filteredItems.map(item => {
+                  const isActive = activeItem?.id === item.id;
+                  const accent = item.color || (activeTab === 'github' ? "#0088ff" : "#00ff88");
                   return (
-                    <div key={link.id} style={{ display: "flex", alignItems: "center", paddingRight: 8 }}>
+                    <div key={item.id} style={{ display: "flex", alignItems: "center", paddingRight: 8 }}>
                       <button
-                        onClick={() => handleSelect(link)}
+                        onClick={() => handleSelect(item)}
                         style={{
                           flex: 1, display: "flex", flexDirection: "column", gap: 4,
                           padding: "10px 14px", margin: "2px 8px", borderRadius: 8,
-                          background: isActive ? "rgba(0,255,136,0.07)" : "transparent",
+                          background: isActive ? (activeTab === 'links' ? "rgba(0,255,136,0.07)" : "rgba(110,84,148,0.1)") : "transparent",
                           border: "1px solid " + (isActive ? `${accent}30` : "transparent"),
                           cursor: "pointer", textAlign: "left", transition: "all .12s",
                         }}
@@ -481,32 +646,35 @@ export default function LinksCompanion({ isEditMode, onClose }) {
                         onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = "transparent"; }}
                       >
                         <div style={{ display: "flex", alignItems: "center", gap: 8, width: "100%" }}>
-                          <span style={{ width: 8, height: 8, borderRadius: "50%", background: accent, flexShrink: 0 }} />
+                          {activeTab === 'links' 
+                            ? <span style={{ width: 8, height: 8, borderRadius: "50%", background: accent, flexShrink: 0 }} />
+                            : <GitBranch size={12} style={{ color: accent, flexShrink: 0 }} />
+                          }
                           <span style={{ flex: 1, fontSize: 13, fontWeight: isActive ? 700 : 500, color: isActive ? "var(--text)" : "var(--text2)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                            {link.label}
+                            {item.label}
                           </span>
                         </div>
                         <div style={{ fontSize: 10, color: "var(--text3)", paddingLeft: 16, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
-                          {link.url}
+                          {item.url.replace('https://', '').replace('http://', '')}
                         </div>
                       </button>
                       {isEditMode && (
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <button 
-                            onClick={(e) => handleEditLink(e, link)}
+                            onClick={(e) => handleEditLink(e, item)}
                             style={{ background: "none", border: "none", color: "var(--text3)", cursor: "pointer", padding: "6px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 4, transition: "0.2s" }}
                             onMouseEnter={e => { e.currentTarget.style.color = "var(--text)"; e.currentTarget.style.background = "var(--bg3)"; }}
                             onMouseLeave={e => { e.currentTarget.style.color = "var(--text3)"; e.currentTarget.style.background = "transparent"; }}
-                            title="Edit Link"
+                            title="Edit"
                           >
                             <Edit2 size={13} />
                           </button>
                           <button 
-                            onClick={(e) => handleDeleteLink(e, link.id)}
+                            onClick={(e) => handleDeleteLink(e, item.id)}
                             style={{ background: "none", border: "none", color: "var(--text3)", cursor: "pointer", padding: "6px", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 4, transition: "0.2s" }}
                             onMouseEnter={e => { e.currentTarget.style.color = "#ef4444"; e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)"; }}
                             onMouseLeave={e => { e.currentTarget.style.color = "var(--text3)"; e.currentTarget.style.background = "transparent"; }}
-                            title="Delete Link"
+                            title="Delete"
                           >
                             <Trash2 size={13} />
                           </button>
@@ -527,11 +695,11 @@ export default function LinksCompanion({ isEditMode, onClose }) {
           ) : (
             <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16, color: "var(--text3)", padding: 40, textAlign: "center" }}>
               <div style={{ width: 80, height: 80, borderRadius: 24, background: "var(--bg3)", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid var(--border)" }}>
-                <LinkIcon size={32} style={{ color: "var(--text3)" }} />
+                {activeTab === 'links' ? <LinkIcon size={32} style={{ color: "var(--text3)" }} /> : <GitBranch size={32} style={{ color: "var(--text3)" }} />}
               </div>
               <div>
-                <h3 style={{ margin: "0 0 8px 0", fontSize: 18, color: "var(--text2)", fontWeight: 700 }}>No Link Selected</h3>
-                <p style={{ margin: 0, fontSize: 13, maxWidth: 300, lineHeight: 1.5 }}>Select a link from the sidebar or add a new one to preview it here.</p>
+                <h3 style={{ margin: "0 0 8px 0", fontSize: 18, color: "var(--text2)", fontWeight: 700 }}>No {activeTab === 'links' ? 'Link' : 'Repo'} Selected</h3>
+                <p style={{ margin: 0, fontSize: 13, maxWidth: 300, lineHeight: 1.5 }}>Select a {activeTab === 'links' ? 'link' : 'repository'} from the sidebar or add a new one to preview it here.</p>
               </div>
             </div>
           )}

@@ -324,7 +324,7 @@ function AIStudyPanel({ module, pathColor }) {
                     borderRadius: 8, fontSize: 10, border: "1px solid rgba(239,68,68,0.15)",
                     color: "rgba(239,68,68,0.9)", lineHeight: 1.4
                   }}>
-                    <strong>Tip:</strong> Ensure your <code>VITE_OPENROUTER_API_KEY</code> is correctly set in <code>.env.local</code>. Refer to <code>.env.example</code> for guidance.
+                    <strong>Tip:</strong> Ensure your <code>VITE_GEMINI_API_KEY</code> is correctly set in <code>.env.local</code>. Refer to <code>.env.example</code> for guidance.
                   </div>
                 )}
               </div>

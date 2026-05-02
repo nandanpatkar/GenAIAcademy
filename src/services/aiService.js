@@ -1,13 +1,7 @@
-const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
 const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
 
-// Model priority list
-const MODELS = [
-  "openrouter/auto",
-  "google/gemma-4-26b-a4b-it:free"
-];
 const GEMINI_MODEL = "gemini-flash-latest";
 let dynamicGeminiKey = "";
 
@@ -59,11 +53,27 @@ const parseSafety = (clean, raw) => {
     console.error("Cleaned Content:", clean);
     
     // Attempt one last-ditch repair for common truncation issues
-    if (clean.trim().endsWith("]")) { 
-       try { return JSON.parse(clean + "}"); } catch(e) {}
+    let repaired = clean.trim();
+    
+    // 1. If it ends inside a string, close the quote
+    const quoteCount = (repaired.match(/"/g) || []).length;
+    if (quoteCount % 2 !== 0) {
+      repaired += '"';
     }
-    if (clean.trim().endsWith("}")) {
-       try { return JSON.parse(clean + "]"); } catch(e) {}
+
+    const openBraces = (repaired.match(/\{/g) || []).length;
+    const closeBraces = (repaired.match(/\}/g) || []).length;
+    const openBrackets = (repaired.match(/\[/g) || []).length;
+    const closeBrackets = (repaired.match(/\]/g) || []).length;
+    
+    // 2. Add missing closers
+    if (openBrackets > closeBrackets) repaired += "]".repeat(openBrackets - closeBrackets);
+    if (openBraces > closeBraces) repaired += "}".repeat(openBraces - closeBraces);
+    
+    try {
+      return JSON.parse(repaired);
+    } catch (e) {
+      console.error("JSON repair failed:", repaired);
     }
     
     throw new Error("The AI returned a malformed data format. Please try generating again.");
@@ -88,95 +98,6 @@ const normalizeStudyData = (json) => {
   }
   return json;
 };
-
-// ─── Internal: call OpenRouter — model fallback + 429 retry ──────────────────
-// onStatus(msg: string) — optional callback for UI status updates during retry
-async function callOpenRouter(messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) {
-  if (!API_KEY || API_KEY.includes("your-api-key")) {
-    throw new Error("Missing OpenRouter API Key. Please add VITE_OPENROUTER_API_KEY to your .env file.");
-  }
-
-  const MAX_RATE_RETRIES = 2;  // per-model 429 retries: 6s then 12s
-  const BASE_DELAY_MS    = 6000;
-
-  // Try each model in priority order; fall through on 404
-  for (let mi = 0; mi < MODELS.length; mi++) {
-    const modelId = MODELS[mi];
-
-    for (let attempt = 1; attempt <= MAX_RATE_RETRIES + 1; attempt++) {
-      let response;
-      try {
-        response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${API_KEY}`,
-            "Content-Type": "application/json",
-            "HTTP-Referer": window.location.origin,
-            "X-Title": "GenAI Academy",
-          },
-          body: JSON.stringify({
-            model: modelId,
-            messages,
-            max_tokens: maxTokens,
-            temperature,
-            response_format: jsonMode ? { type: "json_object" } : undefined,
-          }),
-        });
-      } catch (networkError) {
-        console.error("OpenRouter Network Error:", networkError);
-        throw networkError;
-      }
-
-      // ── 404: model not found / deprecated → try next model immediately ──────
-      if (response.status === 404) {
-        console.warn(`Model "${modelId}" not found (404). Trying next model…`);
-        break; // break inner attempt loop, advance to next model
-      }
-
-      // ── 429: rate limited → exponential backoff with live countdown ──────────
-      if (response.status === 429) {
-        if (attempt <= MAX_RATE_RETRIES) {
-          const delaySec = (BASE_DELAY_MS / 1000) * Math.pow(2, attempt - 1); // 6s → 12s
-          console.warn(`429 rate limit on "${modelId}". Retrying in ${delaySec}s (${attempt}/${MAX_RATE_RETRIES})…`);
-
-          if (onStatus) {
-            for (let rem = delaySec; rem > 0; rem--) {
-              onStatus(`Rate limited — retrying in ${rem}s… (${attempt}/${MAX_RATE_RETRIES})`);
-              await sleep(1000);
-            }
-            onStatus("Retrying now…");
-          } else {
-            await sleep(delaySec * 1000);
-          }
-          continue; // retry same model
-        }
-        // Rate retries exhausted for this model — try next model
-        console.warn(`Rate limit retries exhausted for "${modelId}". Trying next model…`);
-        break;
-      }
-
-      // ── Other HTTP error ─────────────────────────────────────────────────────
-      if (!response.ok) {
-        let errMsg = `API error: ${response.status}`;
-        try {
-          const errorData = await response.json();
-          errMsg = errorData.error?.message || errMsg;
-        } catch (_) { /* ignore */ }
-        console.error(`OpenRouter Error (${modelId}):`, errMsg);
-        throw new Error(errMsg);
-      }
-
-      // ── Success ──────────────────────────────────────────────────────────────
-      const data = await response.json();
-      return data.choices[0].message.content;
-    }
-  }
-
-  // All models exhausted
-  throw new Error(
-    "All AI models are currently unavailable or rate-limited. Please wait ~30 seconds and try again."
-  );
-}
 
 // ─── Internal: call Gemini ──────────────────────────────────────────────────
 const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
@@ -231,38 +152,7 @@ const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode
 
 // ─── Unified AI Caller: Fallback logic ──────────────────────────────────────
 export const callAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) => {
-  try {
-    return await callOpenRouter(messages, maxTokens, temperature, jsonMode, onStatus);
-  } catch (error) {
-    const errorMsg = error.message || "";
-    
-    // ── Pattern 1: OpenRouter Credit Exhaustion ─────────────────────────────
-    // Example: "requires more credits, or fewer max_tokens. You requested 900 but afford 313"
-    if (errorMsg.includes("credits") || errorMsg.includes("max_tokens")) {
-      console.warn("OpenRouter Credit/Token Limit hit. Attempting fallback recovery...");
-      
-      // Extract "afford X" if possible to try an optimized retry
-      const affordMatch = errorMsg.match(/afford (\d+)/);
-      const affordable = affordMatch ? parseInt(affordMatch[1]) : 0;
-
-      if (affordable > 300) {
-        if (onStatus) onStatus(`Optimizing token budget to ${affordable}...`);
-        try {
-          return await callOpenRouter(messages, affordable - 10, temperature, jsonMode);
-        } catch (retryErr) {
-          console.error("OpenRouter Affordable retry failed, moving to Gemini.");
-        }
-      }
-
-      // fallback to Gemini with HIGH capacity if it's a credit issue
-      if (onStatus) onStatus("Switching to High-Capacity Gemini Engine...");
-      return await callGemini(messages, Math.max(maxTokens, 2048), temperature, jsonMode);
-    }
-
-    console.warn("Primary AI failed, falling back to Gemini:", error.message);
-    if (onStatus) onStatus("Engagement error. Activating Backup Engine...");
-    return await callGemini(messages, maxTokens, temperature, jsonMode);
-  }
+  return await callGemini(messages, maxTokens, temperature, jsonMode);
 };
 
 // ─── Public: AI Tutor ────────────────────────────────────────────────────────
@@ -476,7 +366,7 @@ export const generateStudyContent = async (mode, moduleData, onStatus = null) =>
 
   const messages = [{ role: "user", content: prompt }];
   // Mind maps and detailed quizzes need high token counts to avoid truncation
-  const tokenBudget = mode === 'mindmap' ? 4000 : 900;
+  const tokenBudget = mode === 'mindmap' ? 4000 : 2000;
   
   const raw = await callAI(messages, tokenBudget, 0.3, true, onStatus);
 
@@ -596,8 +486,8 @@ CORE RESPONSE RULES:
 1. INTERVIEW-FIRST THINKING: Answer as if an interviewer is sitting in front of the user. Focus on follow-up questions and practical understanding.
 2. STRUCTURED ANSWERS: For the concept, use: What is it? Why needed? How it works (step-by-step)? Mathematical intuition? Real-world example? Where is it used? Pros/Cons?
 3. SIMPLE -> DEEP FLOW: Start simple (5-year-old level) then go deep (PhD/Researcher level).
-4. 🎤 INTERVIEW PREPARATION: Mention Interview traps, "What NOT to say" (Red Flags), and 3-4 deep follow-up questions.
-5. 🧩 NEGATIVE LEARNING: Mention common misconceptions and what the concept is NOT.
+4. INTERVIEW PREPARATION: Mention Interview traps, "What NOT to say" (Red Flags), and 3-4 deep follow-up questions.
+5. NEGATIVE LEARNING: Mention common misconceptions and what the concept is NOT.
 6. VISUAL LOGIC: You must also provide a flowchart representing the logic of the concept.
 
 RETURN FORMAT (Return ONLY a valid JSON object):
@@ -812,7 +702,7 @@ Schema:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Please analyze this interview transcript:\n\n${transcriptText}` }
     ];
-    // Use OpenRouter for analysis
+    // Generate analysis using Gemini
     const raw = await callAI(messages, 900, 0.3, true);
     return JSON.parse(extractJSON(raw));
   } catch (error) {

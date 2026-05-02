@@ -15,6 +15,7 @@ import SystemDesignSimulator from "./pages/simulator/SystemDesignSimulator";
 import DSAAnimator from "./components/DSAAnimator";
 import AimlCompanion from "./components/AimlCompanion";
 import LinksCompanion from "./components/LinksCompanion";
+import GitHubHub from "./components/GitHubHub";
 import BlogPage from "./pages/blog/BlogPage";
 import AdminManagement from "./components/AdminManagement";
 import InterviewerPage from "./pages/interviewer/InterviewerPage.jsx";
@@ -218,19 +219,8 @@ function MainApp() {
         const keys = Object.keys(mergedData);
         if (keys.length > 0) setActivePath(keys[0]);
       } else {
-        let initialData = null;
-        try {
-          const saved = localStorage.getItem("genai_paths_v3");
-          if (saved) initialData = JSON.parse(saved);
-        } catch(e) {}
-
-        if (!initialData || Object.keys(initialData).length === 0) {
-          initialData = injectDefaultIcons(PATHS);
-        } else {
-          const defaultPaths = injectDefaultIcons(PATHS);
-          initialData = { ...defaultPaths, ...injectDefaultIcons(initialData) };
-        }
-
+        // New user: Use default paths strictly, do NOT pull from localStorage
+        const initialData = injectDefaultIcons(PATHS);
         setPathsData(initialData);
         const keys = Object.keys(initialData);
         if (keys.length > 0) setActivePath(keys[0]);
@@ -244,18 +234,8 @@ function MainApp() {
   useEffect(() => {
     if (!user || !isDataLoaded) return;
     if (Object.keys(pathsData).length === 0) return;
-    const saveToLocal = (data) => {
-      try {
-        localStorage.setItem("genai_paths_v3", JSON.stringify(data));
-      } catch (e) {
-        if (e.name === 'QuotaExceededError') {
-          console.warn("Local storage full. Trimming non-essential state...");
-          // Attempt to trim data if needed (e.g. oldest video intelligence records)
-        }
-      }
-    };
+    // Removed shared localStorage to prevent user leakage
 
-    saveToLocal(pathsData);
 
     const timeoutId = setTimeout(async () => {
       // Ensure videoIntelligence structure exists in paths_data for legacy updates
@@ -357,6 +337,8 @@ function MainApp() {
   const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(false);
   const [showK8sGames, setShowK8sGames] = useState(false);
   const [showGitVisualizer, setShowGitVisualizer] = useState(false);
+
+  const [showGitHubHub, setShowGitHubHub] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showModuleDetails, setShowModuleDetails] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useState(true);
@@ -371,6 +353,7 @@ function MainApp() {
   };
 
   const [playgroundInitialTab, setPlaygroundInitialTab] = useState("system");
+  const [linksInitialTab, setLinksInitialTab] = useState("links");
 
   const handleHubStudyAction = (id, type) => {
     closeAllPanels();
@@ -453,6 +436,7 @@ function MainApp() {
     setShowAlgoVisualizer(false);
     setShowK8sGames(false);
     setShowGitVisualizer(false);
+    setShowGitHubHub(false);
     setIsMobileMenuOpen(false);
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
     setShowIntelligenceHub(false); 
@@ -849,9 +833,11 @@ function MainApp() {
           showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
           showK8sGames={showK8sGames} setShowK8sGames={setShowK8sGames}
           showGitVisualizer={showGitVisualizer} setShowGitVisualizer={setShowGitVisualizer}
+          showGitHubHub={showGitHubHub} setShowGitHubHub={setShowGitHubHub}
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
           showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
+          setLinksInitialTab={setLinksInitialTab}
           onHubNav={handleHubNav}
           isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
           activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
@@ -899,7 +885,8 @@ function MainApp() {
           showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
           showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
           (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
-          showLinks ? <LinksCompanion isEditMode={isEditMode} onClose={() => setShowLinks(false)} /> :
+          showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
+          showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
           showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
           showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
           showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :

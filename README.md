@@ -3,7 +3,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/PHASE-MISSION_CONTROL-emerald?style=for-the-badge&logo=opsgenie" alt="Status" />
   <img src="https://img.shields.io/badge/ENGINE-VITE_REACT-blue?style=for-the-badge&logo=react" alt="Engine" />
-  <img src="https://img.shields.io/badge/BRAIN-OPEN_ROUTER-indigo?style=for-the-badge&logo=openai" alt="AI" />
+  <img src="https://img.shields.io/badge/BRAIN-GEMINI_AI-indigo?style=for-the-badge&logo=google" alt="AI" />
   <img src="https://img.shields.io/badge/VAULT-SUPABASE-teal?style=for-the-badge&logo=supabase" alt="DB" />
 </p>
 
@@ -24,8 +24,8 @@ Our architecture is designed as a self-reinforcing learning loop.
 graph TD
     User((User)) -->|Prompt/Interaction| UI[React Command Center]
     UI -->|Context Injection| AI[AI Services Layer]
-    AI -->|Orchestration| OR[OpenRouter Gateway]
-    OR -->|Llama-3.3/GPT-4o| LLM[Large Language Models]
+    AI -->|Orchestration| GEM[Gemini AI Studio]
+    GEM -->|Gemini 1.5 Flash/Pro| LLM[Large Language Models]
     LLM -->|Tactical Response| UI
     UI -->|Progress Sync| DB[(Supabase Vault)]
     DB -->|State Hydration| UI
@@ -69,10 +69,10 @@ Generate massive mind maps, tactical flashcards, and instant quizzes from any re
 
 To initialize the Command Center, populate your `.env.local` with the following pulses:
 
-### 🤖 OpenRouter Gateway
-Primary gateway for LLM orchestration. Supports 100+ models with automatic failover.
-- **Key**: `VITE_OPENROUTER_API_KEY`
-- **Source**: [OpenRouter API Keys](https://openrouter.ai/keys)
+### 🤖 Gemini AI Studio
+Primary gateway for LLM orchestration using Google's state-of-the-art Gemini models.
+- **Key**: `VITE_GEMINI_API_KEY`
+- **Source**: [Google AI Studio](https://aistudio.google.com/app/apikey)
 
 ### ⚡ Supabase Vault
 The persistent memory of the platform. Handles Auth and Knowledge State.
