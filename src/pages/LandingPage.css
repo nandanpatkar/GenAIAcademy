@@ -152,8 +152,14 @@
 
 .dynamic-description-wrapper {
   height: 48px;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
   width: 100%;
+}
+
+.primary-cta {
+  margin-bottom: 120px;
+  position: relative;
+  z-index: 21;
 }
 
 .apple-description {
@@ -354,6 +360,11 @@
 .stunning-btn:hover {
   transform: translateY(-5px) scale(1.02);
   box-shadow: 0 40px 80px rgba(0, 255, 136, 0.35);
+}
+
+.primary-cta:hover {
+  background: #00ff88;
+  color: #000;
 }
 
 /* Landing Grid Overlay */

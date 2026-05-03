@@ -172,17 +172,29 @@ export default function LandingPage({ onEnter }) {
             <div className="dynamic-description-wrapper">
               <AnimatePresence mode="wait">
                 <motion.p 
-                  key={descIndex}
-                  className="apple-description"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.8 }}
+                   key={descIndex}
+                   className="apple-description"
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   exit={{ opacity: 0, y: -10 }}
+                   transition={{ duration: 0.8 }}
                 >
                   {DESCRIPTIONS[descIndex]}
                 </motion.p>
               </AnimatePresence>
             </div>
+
+            <motion.button 
+              className="stunning-btn primary-cta"
+              onClick={onEnter}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 255, 136, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get Started <ArrowRight size={22} />
+            </motion.button>
             
             <motion.div 
               className="scroll-indicator"

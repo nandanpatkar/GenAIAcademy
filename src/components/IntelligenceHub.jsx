@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, Layers, Users, Sparkles, X, 
   ChevronRight, Boxes, Layout, Globe, Activity, Zap, Search, Monitor,
-  Share2, CheckSquare, Bookmark, Network
+  Share2, CheckSquare, Bookmark, Network, GitBranch
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { CHRONOLOGICAL_DB } from '../data/blogData';
@@ -199,7 +199,7 @@ export default function IntelligenceHub({
       id: 'roadmap',
       title: 'Map',
       subtitle: 'Knowledge Galaxy',
-      icon: <Globe className="hub-icon" size={32} />,
+      icon: <Globe className="hub-icon" size={24} />,
       description: 'Explore the 3D topology of global intelligence.',
       footerLabel: 'OPEN GALAXY →',
       color: '#00ccff',
@@ -210,7 +210,7 @@ export default function IntelligenceHub({
       id: 'study',
       title: 'Study',
       subtitle: 'Study Hub',
-      icon: <BookOpen className="hub-icon" size={32} />,
+      icon: <BookOpen className="hub-icon" size={24} />,
       description: 'Master AI concepts through structured pathways.',
       footerLabel: 'START LEARNING →',
       color: '#00ff88',
@@ -221,7 +221,7 @@ export default function IntelligenceHub({
       id: 'design',
       title: 'Design',
       subtitle: 'System Playground',
-      icon: <Layers className="hub-icon" size={32} />,
+      icon: <Layers className="hub-icon" size={24} />,
       description: 'Architect complex intelligence systems in a lab.',
       footerLabel: 'INITIALIZE LAB →',
       color: '#60a5fa',
@@ -231,11 +231,21 @@ export default function IntelligenceHub({
       id: 'interview',
       title: 'Interview',
       subtitle: 'Training Agent',
-      icon: <Users className="hub-icon" size={32} />,
+      icon: <Users className="hub-icon" size={24} />,
       description: 'Prepare for elite AI engineering roles.',
       footerLabel: 'START SESSION →',
       color: '#fbbf24',
       action: onInterview
+    },
+    {
+      id: 'community',
+      title: 'Community',
+      subtitle: 'Global Network',
+      icon: <Users className="hub-icon" size={24} />,
+      description: 'Connect with elite AI engineers and researchers.',
+      footerLabel: 'JOIN NETWORK →',
+      color: '#a855f7',
+      action: () => onStudyAction('community')
     }
   ];
 
@@ -274,7 +284,8 @@ export default function IntelligenceHub({
       icon: <Network size={20} />,
       description: 'Interactive map of all learning pathways.',
       action: () => onStudyAction('curriculum_map'),
-      accent: '#00ccff'
+      accent: '#00ccff',
+      category: 'Intelligence Paths'
     },
     {
       id: 'study_paths',
@@ -283,7 +294,8 @@ export default function IntelligenceHub({
       icon: <Layers size={20} />,
       description: 'Explore specialized learning pathways.',
       action: () => navigateTo('study_paths'),
-      accent: '#00ccff'
+      accent: '#00ccff',
+      category: 'Intelligence Paths'
     },
     ...(isAdmin && isAdminView ? [{
       id: 'algo_studio',
@@ -291,7 +303,8 @@ export default function IntelligenceHub({
       icon: <Activity size={20} />,
       description: 'Advanced algorithm visualization and lab.',
       action: () => onStudyAction('algo_studio'),
-      accent: '#a855f7'
+      accent: '#a855f7',
+      category: 'Operational Labs'
     }] : []),
     {
       id: 'algo_visualizer',
@@ -300,7 +313,8 @@ export default function IntelligenceHub({
       icon: <Monitor size={20} />,
       description: 'Embedded professional code simulation engine.',
       action: () => onStudyAction('algo_visualizer'),
-      accent: '#ef4444'
+      accent: '#ef4444',
+      category: 'Operational Labs'
     },
     {
       id: 'aiml_companion',
@@ -308,7 +322,8 @@ export default function IntelligenceHub({
       icon: <Boxes size={20} />,
       description: 'Interactive AI pairing and research node.',
       action: () => onStudyAction('aiml_companion'),
-      accent: '#ec4899'
+      accent: '#ec4899',
+      category: 'Operational Labs'
     },
     {
       id: 'blog',
@@ -317,7 +332,8 @@ export default function IntelligenceHub({
       icon: <Layout size={20} />,
       description: 'Deep-dives from the global research repository.',
       action: () => navigateTo('blog'),
-      accent: '#3b82f6'
+      accent: '#3b82f6',
+      category: 'Intelligence Paths'
     },
     {
       id: 'ide',
@@ -325,7 +341,8 @@ export default function IntelligenceHub({
       icon: <Layout size={20} />,
       description: 'Embedded code sandbox and testing lab.',
       action: () => onStudyAction('ide'),
-      accent: '#60a5fa'
+      accent: '#60a5fa',
+      category: 'Operational Labs'
     },
     {
       id: 'dsa_animator',
@@ -333,7 +350,8 @@ export default function IntelligenceHub({
       icon: <Activity size={20} />,
       description: 'Interactive Data Structures & Algos visualizer.',
       action: () => onStudyAction('dsa_animator'),
-      accent: '#f59e0b'
+      accent: '#f59e0b',
+      category: 'Operational Labs'
     },
     {
       id: 'progress',
@@ -341,7 +359,8 @@ export default function IntelligenceHub({
       icon: <Activity size={20} />,
       description: 'Track your expertise across the ecosystem.',
       action: () => onStudyAction('progress'),
-      accent: '#00ff88'
+      accent: '#00ff88',
+      category: 'Intelligence Paths'
     },
     {
       id: 'tasks',
@@ -349,7 +368,18 @@ export default function IntelligenceHub({
       icon: <CheckSquare size={20} />,
       description: 'Manage your learning tasks and session notes.',
       action: () => onStudyAction('tasks'),
-      accent: '#fbbf24'
+      accent: '#fbbf24',
+      category: 'Operational Labs'
+    },
+    {
+      id: 'github_hub',
+      title: 'GitHub Hub',
+      subtitle: 'Version Control',
+      icon: <GitBranch size={20} />,
+      description: 'Manage your GitHub repositories and projects.',
+      action: () => onStudyAction('github'),
+      accent: '#60a5fa',
+      category: 'Operational Labs'
     },
     {
       id: 'links',
@@ -357,7 +387,8 @@ export default function IntelligenceHub({
       icon: <Bookmark size={20} />,
       description: 'Curated learning resources and bookmarks.',
       action: () => onStudyAction('links'),
-      accent: '#10b981'
+      accent: '#10b981',
+      category: 'Intelligence Paths'
     },
     {
       id: 'resources',
@@ -365,7 +396,8 @@ export default function IntelligenceHub({
       icon: <BookOpen size={20} />,
       description: 'Central repository for learning materials.',
       action: () => onStudyAction('resources'),
-      accent: '#3b82f6'
+      accent: '#3b82f6',
+      category: 'Intelligence Paths'
     },
     {
       id: 'k8s_games',
@@ -374,7 +406,8 @@ export default function IntelligenceHub({
       icon: <Boxes size={20} />,
       description: 'Master Kubernetes clusters through gamified chaos.',
       action: () => onStudyAction('k8s_games'),
-      accent: '#10b981'
+      accent: '#10b981',
+      category: 'Operational Labs'
     },
     {
       id: 'git_visualizer',
@@ -383,7 +416,8 @@ export default function IntelligenceHub({
       icon: <Monitor size={20} />,
       description: 'Visualize Git branching and commit history.',
       action: () => onStudyAction('git_visualizer'),
-      accent: '#a855f7'
+      accent: '#a855f7',
+      category: 'Operational Labs'
     }
   ];
 
@@ -756,27 +790,60 @@ export default function IntelligenceHub({
                 <h2>{getSubMenuTitle()}</h2>
               </div>
               <div className="hub-scroll-area">
-                <div className="hub-sub-grid">
-                  {getActiveCards().map((card, i) => (
-                    <motion.div
-                      key={card.id}
-                      className="hub-sub-card"
-                      whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.05)' }}
-                      onClick={card.action}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0, transition: { delay: i * 0.05 } }}
-                      style={{ '--sub-accent': card.accent || card.color || 
-                                             (view === 'design' ? '#60a5fa' : 
-                                              view === 'roadmap' ? '#00ccff' : '#00ff88') }}
-                    >
-                      <div className="sub-icon" style={{ color: 'var(--sub-accent)' }}>{card.icon}</div>
-                      <div className="sub-info">
-                        <h3>{card.title}</h3>
-                        <p>{card.description}</p>
+                {view === 'study' ? (
+                  ['Intelligence Paths', 'Operational Labs'].map(category => (
+                    <div key={category} className="category-section">
+                      <div className="category-header">
+                        <div className="category-line" />
+                        <span className="category-title">{category.toUpperCase()}</span>
+                        <div className="category-line" />
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
+                      <div className="hub-sub-grid">
+                        {studyCards
+                          .filter(card => card.category === category)
+                          .map((card, i) => (
+                            <motion.div
+                              key={card.id}
+                              className="hub-sub-card"
+                              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.05)' }}
+                              onClick={card.action}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0, transition: { delay: i * 0.05 } }}
+                              style={{ '--sub-accent': card.accent || card.color || '#00ff88' }}
+                            >
+                              <div className="sub-icon" style={{ color: 'var(--sub-accent)' }}>{card.icon}</div>
+                              <div className="sub-info">
+                                <h3>{card.title}</h3>
+                                <p>{card.description}</p>
+                              </div>
+                            </motion.div>
+                          ))}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="hub-sub-grid">
+                    {getActiveCards().map((card, i) => (
+                      <motion.div
+                        key={card.id}
+                        className="hub-sub-card"
+                        whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.05)' }}
+                        onClick={card.action}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0, transition: { delay: i * 0.05 } }}
+                        style={{ '--sub-accent': card.accent || card.color || 
+                                               (view === 'design' ? '#60a5fa' : 
+                                                view === 'roadmap' ? '#00ccff' : '#00ff88') }}
+                      >
+                        <div className="sub-icon" style={{ color: 'var(--sub-accent)' }}>{card.icon}</div>
+                        <div className="sub-info">
+                          <h3>{card.title}</h3>
+                          <p>{card.description}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
@@ -935,21 +1002,22 @@ export default function IntelligenceHub({
 
         .hub-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 32px;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 20px;
+          width: 100%;
         }
 
         .hub-card {
           position: relative;
-          aspect-ratio: 1;
+          aspect-ratio: 0.85;
           background: rgba(255,255,255,0.015);
           backdrop-filter: blur(14px) saturate(160%);
           -webkit-backdrop-filter: blur(14px) saturate(160%);
           border: 1px solid rgba(255,255,255,0.05);
-          border-radius: 28px;
+          border-radius: 20px;
           cursor: pointer;
           overflow: hidden;
-          padding: 40px;
+          padding: 20px;
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
@@ -974,13 +1042,13 @@ export default function IntelligenceHub({
         }
 
         .hub-icon-wrapper {
-          width: 64px; height: 64px;
+          width: 44px; height: 44px;
           background: rgba(255,255,255,0.03);
-          border-radius: 16px;
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 24px;
+          margin-bottom: 12px;
           color: var(--card-accent);
           transition: 0.3s;
         }
@@ -988,21 +1056,21 @@ export default function IntelligenceHub({
         .hub-card:hover .hub-icon-wrapper {
           background: var(--card-accent);
           color: #000;
-          transform: translateY(-5px);
+          transform: translateY(-3px);
         }
 
         .hub-card h2 {
-          font-size: 32px;
+          font-size: 18px;
           font-weight: 800;
-          margin: 0 0 12px;
+          margin: 0 0 6px;
           color: #fff;
         }
 
         .hub-card p {
-          font-size: 14px;
+          font-size: 11px;
           color: #888;
-          line-height: 1.6;
-          margin-bottom: 24px;
+          line-height: 1.4;
+          margin-bottom: 12px;
         }
 
         .hub-card-foot {
@@ -1069,9 +1137,8 @@ export default function IntelligenceHub({
         .hub-scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
         .hub-sub-grid {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
           gap: 20px;
           max-width: 1400px;
           margin: 0 auto;
@@ -1079,14 +1146,13 @@ export default function IntelligenceHub({
 
         .hub-sub-card {
           position: relative;
-          flex: 0 1 210px;
           aspect-ratio: 0.85;
           background: rgba(255,255,255,0.02);
           backdrop-filter: blur(10px) saturate(140%);
           -webkit-backdrop-filter: blur(10px) saturate(140%);
           border: 1px solid rgba(255,255,255,0.05);
           border-radius: 20px;
-          padding: 24px;
+          padding: 20px;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -1423,6 +1489,41 @@ export default function IntelligenceHub({
         @media (max-width: 768px) {
           .hub-landing-search { margin-top: 24px; height: 48px; font-size: 12px; }
           .search-shortcut { display: none; }
+        }
+
+        /* --- Category Sections --- */
+        .category-section {
+          margin-bottom: 40px;
+          width: 100%;
+        }
+
+        .category-header {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          margin-bottom: 24px;
+          padding: 0 40px;
+        }
+
+        .category-line {
+          flex: 1;
+          height: 1px;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+        }
+
+        .category-title {
+          font-size: 11px;
+          font-weight: 900;
+          color: #444;
+          letter-spacing: 4px;
+          white-space: nowrap;
+          text-shadow: 0 0 10px rgba(255,255,255,0.05);
+        }
+
+        .category-section:hover .category-title {
+          color: #00ff88;
+          text-shadow: 0 0 15px rgba(0,255,136,0.3);
+          transition: 0.3s;
         }
 
         /* --- Background & Utilities --- */

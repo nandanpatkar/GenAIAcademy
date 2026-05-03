@@ -379,6 +379,7 @@ function MainApp() {
       else if (id === 'aiml_companion') { setShowAimlCompanion(true); setShowIntelligenceHub(false); }
       else if (id === 'links') { setShowLinks(true); setShowIntelligenceHub(false); }
       else if (id === 'community') { setShowCommunity(true); setShowIntelligenceHub(false); }
+      else if (id === 'github') { setShowGitHubHub(true); setShowIntelligenceHub(false); }
       else if (id === 'blog') handleHubNav({ view: 'blog', year: null, isAI: false });
       else if (id === 'progress') { setShowProgress(true); setShowIntelligenceHub(false); }
       else if (id === 'tasks') { setShowWorkplaceLab(true); setShowIntelligenceHub(false); }
