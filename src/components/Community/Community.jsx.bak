@@ -402,22 +402,15 @@ const Community = ({ isSidebarCollapsed }) => {
     <div className={`community-root ${isSidebarCollapsed ? 'full-width' : ''}`}>
       <div className="community-container">
         <header className="community-main-header">
-          <div className="header-content">
-            <div className="title-area">
-              <span className="header-prefix">NETWORK INTERFACE</span>
-              <h1>{activeGroup ? activeGroup.name : 'COMMUNITY'} <span className="glow-text">CHAT</span></h1>
-            </div>
-            
-            <div className="header-status-area">
-              <div className="header-actions">
-                <Users 
-                  size={20} 
-                  onClick={() => setShowMemberSidebar(!showMemberSidebar)} 
-                  className={`action-icon ${showMemberSidebar ? 'active' : ''}`} 
-                />
-                <Bell size={20} className="action-icon" />
-                <Settings size={20} className="action-icon" />
-              </div>
+          <div className="header-info-group">
+            <h1>{activeGroup ? activeGroup.name : 'COMMUNITY'} <span className="glow-text">CHAT</span></h1>
+          </div>
+          
+          <div className="header-status-area">
+            <div className="header-actions">
+              <Users size={18} onClick={() => setShowMemberSidebar(!showMemberSidebar)} className="action-icon" />
+              <Bell size={18} className="action-icon" />
+              <Settings size={18} className="action-icon" />
             </div>
           </div>
         </header>

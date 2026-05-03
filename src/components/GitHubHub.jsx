@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../config/supabaseClient";
 import TrendingFeed from "./github/TrendingFeed";
-import FileTreeExplorer from "./github/FileTreeExplorer";
+import CodeFlowViewer from "./github/CodeFlowViewer";
 import ContributionTracker from "./github/ContributionTracker";
 import RepoManager from "./github/RepoManager";
 import ReadmeViewer from "./github/ReadmeViewer";
@@ -13,7 +13,7 @@ import ReadmeViewer from "./github/ReadmeViewer";
 const TABS = [
   { id: "repos", icon: GitBranch, label: "My Repos" },
   { id: "trending", icon: TrendingUp, label: "Trending" },
-  { id: "explorer", icon: FolderTree, label: "Explorer" },
+  { id: "explorer", icon: FolderTree, label: "CodeFlow" },
   { id: "profile", icon: User, label: "Profile" },
   { id: "readme", icon: FileText, label: "README" },
 ];
@@ -109,7 +109,7 @@ export default function GitHubHub({ onClose }) {
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <GitBranch size={22} color="#00ff88" />
+            <GitBranch size={18} color="#00ff88" />
           </motion.div>
           
           <div className="gh-hub-title-stack">
@@ -206,7 +206,7 @@ export default function GitHubHub({ onClose }) {
             >
               {activeTab === "repos" && <RepoManager repos={repos} onUpdateRepos={setRepos} onSelectRepo={handleViewReadme} onExploreRepo={handleExploreRepo} />}
               {activeTab === "trending" && <TrendingFeed onSaveRepo={handleSaveRepo} />}
-              {activeTab === "explorer" && <FileTreeExplorer key={explorerUrl} initialUrl={explorerUrl} />}
+              {activeTab === "explorer" && <CodeFlowViewer key={explorerUrl} initialUrl={explorerUrl} onClose={() => setActiveTab("repos")} />}
               {activeTab === "profile" && <ContributionTracker githubUsername={githubUsername} onSetUsername={handleSetUsername} />}
               {activeTab === "readme" && <ReadmeViewer initialUrl={readmeUrl} />}
             </motion.div>

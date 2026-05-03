@@ -6,7 +6,7 @@
  */
 
 // ─── Config ──────────────────────────────────────────────────────────────────
-let githubToken = "";
+let githubToken = import.meta.env.VITE_GITHUB_TOKEN || "";
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 const cache = new Map();
 

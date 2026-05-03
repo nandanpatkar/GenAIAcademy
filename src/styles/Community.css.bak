@@ -404,26 +404,14 @@
   color: var(--text-tertiary);
 }
 
-.action-icon {
+.header-actions svg {
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 8px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid transparent;
 }
 
-.action-icon:hover {
+.header-actions svg:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-2px);
-}
-
-.action-icon.active {
-  color: var(--accent-cyan);
-  background: rgba(34, 211, 238, 0.1);
-  border-color: rgba(34, 211, 238, 0.2);
-  box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
 }
 
 /* Message List */
