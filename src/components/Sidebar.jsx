@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
@@ -24,6 +24,7 @@ export default function Sidebar({
   showAlgoVisualizer, setShowAlgoVisualizer,
   showK8sGames, setShowK8sGames,
   showGitVisualizer, setShowGitVisualizer,
+  showFlowDesign, setShowFlowDesign,
   showIntelligenceHub, setShowIntelligenceHub,
   showWorkplaceLab, setShowWorkplaceLab,
   showKnowledgeGraph, setShowKnowledgeGraph,
@@ -35,7 +36,8 @@ export default function Sidebar({
   onHubNav,
   setLinksInitialTab,
   showGitHubHub, setShowGitHubHub,
-  isCollapsed, setIsCollapsed
+  isCollapsed, setIsCollapsed,
+  onSectionWalkthrough
 }) {
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
@@ -68,6 +70,7 @@ export default function Sidebar({
         { icon: <Box size={14} />, label: "Algo Visualizer", id: "algo_visualizer" },
         { icon: <Boxes size={14} />, label: "K8s Games", id: "k8s_games" },
         { icon: <GitCommit size={14} />, label: "Git Visualizer", id: "git_visualizer" },
+        { icon: <Network size={14} />, label: "Flow design", id: "flow_design" },
       ]
     },
     {
@@ -124,6 +127,7 @@ export default function Sidebar({
     if (showAlgoVisualizer) return "algo_visualizer";
     if (showK8sGames) return "k8s_games";
     if (showGitVisualizer) return "git_visualizer";
+    if (showFlowDesign) return "flow_design";
     if (showCommunity) return "community";
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
@@ -156,6 +160,7 @@ export default function Sidebar({
     if (setShowAlgoVisualizer) setShowAlgoVisualizer(false);
     if (setShowK8sGames) setShowK8sGames(false);
     if (setShowGitVisualizer) setShowGitVisualizer(false);
+    if (setShowFlowDesign) setShowFlowDesign(false);
     if (setShowWorkplaceLab) setShowWorkplaceLab(false);
     if (setShowKnowledgeGraph) setShowKnowledgeGraph(false);
     if (setShowGitHubHub) setShowGitHubHub(false);
@@ -201,6 +206,9 @@ export default function Sidebar({
         break;
       case "git_visualizer":
         if (setShowGitVisualizer) setShowGitVisualizer(true);
+        break;
+      case "flow_design":
+        if (setShowFlowDesign) setShowFlowDesign(true);
         break;
       case "tasks":
         if (setShowWorkplaceLab) setShowWorkplaceLab(true);
@@ -312,6 +320,7 @@ export default function Sidebar({
                 {group.items.map((item) => (
                   <React.Fragment key={item.id}>
                     <div
+                      id={`sidebar-item-${item.id}`}
                       className={`sidebar-item ${activeNavId === item.id ? "active" : ""}`}
                       onClick={() => handleNavClick(item.id)}
                       data-label={item.label}
@@ -320,6 +329,18 @@ export default function Sidebar({
                         {item.icon}
                       </span>
                       {!isCollapsed && <span>{item.label}</span>}
+                      {!isCollapsed && item.id !== 'blog' && onSectionWalkthrough && (
+                        <button
+                          className="sidebar-section-info-btn"
+                          title={`Guide: ${item.label}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSectionWalkthrough(item.id);
+                          }}
+                        >
+                          <HelpCircle size={12} />
+                        </button>
+                      )}
                       {!isCollapsed && item.id === 'blog' && (
                         <ChevronRight size={12} style={{ marginLeft: 'auto', transition: '0.3s', transform: isBlogExpanded ? 'rotate(90deg)' : 'none' }} />
                       )}
@@ -399,6 +420,7 @@ export default function Sidebar({
               >
                 {pathList.filter(Boolean).map((p) => (
                   <div
+                    id={`sidebar-path-${p.key}`}
                     key={p.key}
                     className={`path-pill-container ${activePath === p.key ? "active" : ""}`}
                     style={{ "--pill-color": p.color, "--pill-bg": p.bg }}
@@ -457,7 +479,7 @@ export default function Sidebar({
             <div className="popout-section-label" style={{ fontSize: 9, fontWeight: 900, color: 'var(--text3)', padding: '8px 16px 4px', letterSpacing: 1 }}>SYSTEM_CONFIG</div>
             
             {isAdmin && (
-              <div className="popout-item" style={{ cursor: 'default', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div id="sidebar-admin-toggle" className="popout-item" style={{ cursor: 'default', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <Shield size={14} color={isAdminView ? "var(--neon)" : "var(--text3)"} />
                   <span>Admin View</span>
@@ -496,6 +518,7 @@ export default function Sidebar({
             )}
 
             <button 
+              id="sidebar-edit-mode"
               className={`popout-item ${isEditMode ? 'active edit' : ''}`}
               onClick={() => setIsEditMode(!isEditMode)}
               title={isEditMode ? "Exit Edit Mode" : "Enter Edit Mode"}
@@ -505,6 +528,7 @@ export default function Sidebar({
             </button>
 
             <button 
+              id="sidebar-theme-toggle"
               className={`popout-item theme-toggle overlay-item ${theme === 'dark' ? 'dark' : 'light'}`}
               onClick={toggleTheme}
             >
@@ -513,6 +537,7 @@ export default function Sidebar({
             </button>
 
             <button 
+              id="sidebar-reset-data"
               className={`popout-item reset overlay-item ${resetConfirm ? 'danger confirmed' : ''}`}
               onClick={handleResetClick}
             >
@@ -523,7 +548,7 @@ export default function Sidebar({
             <div className="popout-divider" />
             <div className="popout-section-label" style={{ fontSize: 9, fontWeight: 900, color: 'var(--text3)', padding: '12px 16px 4px', letterSpacing: 1 }}>INTELLIGENCE_KEY</div>
             
-            <div style={{ padding: '4px 12px 12px' }}>
+            <div id="sidebar-gemini-key" style={{ padding: '4px 12px 12px' }}>
               <div style={{ position: 'relative', display: 'flex', gap: 6 }}>
                 <input 
                   type="password"
@@ -600,7 +625,7 @@ export default function Sidebar({
             </button>
           </div>
 
-          <button className="super-control-btn">
+          <button id="sidebar-settings-btn" className="super-control-btn">
             <div className={`control-orb ${isEditMode ? 'editing' : ''}`}>
               <Orbit size={18} />
             </div>

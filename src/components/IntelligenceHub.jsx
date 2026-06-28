@@ -119,6 +119,7 @@ export default function IntelligenceHub({
   onDesignAction, 
   onInterview, 
   onShowAll,
+  onTour,
   pathsData = {},
   activePath = 'ds',
   initialView = 'main',

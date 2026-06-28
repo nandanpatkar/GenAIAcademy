@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build:flow-design && vite build",
+    "build:flow-design": "cd flow-design && npm install && npm run build && mkdir -p ../public/flow-design && cp -r dist/* ../public/flow-design/",
     "build:git": "cd 'Git Visualizer/Git-Mastery' && npm run export-to-main",
     "preview": "vite preview"
   },

@@ -23,11 +23,13 @@ import AlgoVisualizer from "./components/AlgoVisualizer";
 import CodeVisualizer from "./components/CodeVisualizer";
 import K8sGames from "./components/K8sGames";
 import GitVisualizer from "./components/GitVisualizer";
-import { 
-  Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp, 
+import FlowDesign from "./components/FlowDesign";
+import {
+  Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp,
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
   Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2,
-  Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit, Mic, BoxSelect
+  Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit, Mic, BoxSelect,
+  HelpCircle
 } from "lucide-react";
 import IntelligenceHub from "./components/IntelligenceHub";
 import WorkplaceLab from "./components/WorkplaceLab";
@@ -42,6 +44,8 @@ import VideoModal from "./components/VideoModal";
 import LandingPage from "./pages/LandingPage";
 import KnowledgeGraph from "./pages/KnowledgeGraph";
 import Community from "./components/Community/Community";
+import AppWalkthrough from "./components/AppWalkthrough";
+import { MAIN_STEPS, SECTION_STEPS, SIDEBAR_OVERVIEW_STEPS } from "./data/walkthroughSteps";
 import { AnimatePresence } from "framer-motion";
 import useWindowWidth from "./hooks/useWindowWidth";
 import "./styles/global.css";
@@ -248,10 +252,10 @@ function MainApp() {
       try {
         await supabase
           .from('user_curriculum')
-          .upsert({ 
-            id: user.id, 
-            paths_data: dataToSync, 
-            updated_at: new Date().toISOString() 
+          .upsert({
+            id: user.id,
+            paths_data: dataToSync,
+            updated_at: new Date().toISOString()
           });
       } catch (e) {
         console.error("Supabase sync failed:", e);
@@ -339,6 +343,7 @@ function MainApp() {
   const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(false);
   const [showK8sGames, setShowK8sGames] = useState(false);
   const [showGitVisualizer, setShowGitVisualizer] = useState(false);
+  const [showFlowDesign, setShowFlowDesign] = useState(false);
   const [showCommunity, setShowCommunity] = useState(false);
 
   const [showGitHubHub, setShowGitHubHub] = useState(false);
@@ -348,6 +353,28 @@ function MainApp() {
   const [showWorkplaceLab, setShowWorkplaceLab] = useState(false);
   const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(false);
   const [hubConfig, setHubConfig] = useState({ view: 'main', year: null, isAI: false });
+
+  // Walkthrough: auto-show for first-time users
+  const [showWalkthrough, setShowWalkthrough] = useState(() => {
+    return !localStorage.getItem('genai_walkthrough_done');
+  });
+  const [showSidebarWalkthrough, setShowSidebarWalkthrough] = useState(false);
+
+  // Section walkthrough: per-section guided tours
+  const [sectionWalkthroughId, setSectionWalkthroughId] = useState(null);
+
+  const handleSectionWalkthrough = useCallback((sectionId) => {
+    if (SECTION_STEPS[sectionId]) {
+      setSectionWalkthroughId(sectionId);
+    }
+  }, []);
+
+  const handleSectionWalkthroughComplete = useCallback(() => {
+    if (sectionWalkthroughId) {
+      localStorage.setItem(`genai_section_done_${sectionWalkthroughId}`, 'true');
+    }
+    setSectionWalkthroughId(null);
+  }, [sectionWalkthroughId]);
 
   const handleHubNav = (config) => {
     closeAllPanels();
@@ -367,10 +394,10 @@ function MainApp() {
       if (id === 'galaxy') { setShowGalaxy(true); setShowIntelligenceHub(false); }
       else if (id === 'knowledge_graph') { setShowKnowledgeGraph(true); setShowIntelligenceHub(false); }
       else if (id === 'resources') { setShowResources(true); setShowIntelligenceHub(false); }
-      else if (id === 'algo_studio') { 
+      else if (id === 'algo_studio') {
         if (isAdmin) {
-          setShowAlgoStudio(true); 
-          setShowIntelligenceHub(false); 
+          setShowAlgoStudio(true);
+          setShowIntelligenceHub(false);
         }
       }
       else if (id === 'algo_visualizer') { setShowAlgoVisualizer(true); setShowIntelligenceHub(false); }
@@ -444,7 +471,7 @@ function MainApp() {
     setShowGitHubHub(false);
     setIsMobileMenuOpen(false);
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
-    setShowIntelligenceHub(false); 
+    setShowIntelligenceHub(false);
     setShowWorkplaceLab(false);
     setShowKnowledgeGraph(false);
     setShowCommunity(false);
@@ -465,18 +492,18 @@ function MainApp() {
       setPathsData(prev => {
         const history = prev.workspace?.history || [];
         const currentPath = prev[pathId || activePath];
-        const newEntry = { 
-          id: node.id, 
-          title: node.title, 
+        const newEntry = {
+          id: node.id,
+          title: node.title,
           pathId: pathId || activePath,
           pathTitle: currentPath?.title || activePath,
           pathColor: currentPath?.color || "#00ff88"
         };
-        
+
         // Remove duplicate and keep last 3
         const filteredHistory = history.filter(h => h.id !== node.id);
         const updatedHistory = [newEntry, ...filteredHistory].slice(0, 3);
-        
+
         return {
           ...prev,
           workspace: {
@@ -558,13 +585,13 @@ function MainApp() {
           const newSubtopics = (m.subtopics || []).map(s => {
             const sObj = typeof s === "object" ? s : { title: s, status: "pending" };
             const isMatch = (updatedTopic.id && sObj.id && sObj.id === updatedTopic.id) || (sObj.title === updatedTopic.title);
-            if (isMatch) { 
-              found = true; 
-              return { ...sObj, ...updatedTopic, id: sObj.id || updatedTopic.id || `topic-${Date.now()}` }; 
+            if (isMatch) {
+              found = true;
+              return { ...sObj, ...updatedTopic, id: sObj.id || updatedTopic.id || `topic-${Date.now()}` };
             }
             return sObj.id ? sObj : { ...sObj, id: `topic-${sObj.title.replace(/\s+/g, '-').toLowerCase()}` };
           });
-          
+
           if (!found) {
             const newTopicObj = { ...updatedTopic, id: updatedTopic.id || `topic-${Date.now()}`, status: updatedTopic.status || "pending" };
             if (insertionIndex >= 0 && insertionIndex <= newSubtopics.length) {
@@ -703,10 +730,10 @@ function MainApp() {
   const handleSaveUserAlgo = (algo) => {
     setPathsData(prev => ({
       ...prev,
-      saved_algos: prev.saved_algos ? 
-        (prev.saved_algos.some(a => a.id === algo.id) ? 
-          prev.saved_algos.map(a => a.id === algo.id ? { ...a, ...algo } : a) : 
-          [...prev.saved_algos, algo]) : 
+      saved_algos: prev.saved_algos ?
+        (prev.saved_algos.some(a => a.id === algo.id) ?
+          prev.saved_algos.map(a => a.id === algo.id ? { ...a, ...algo } : a) :
+          [...prev.saved_algos, algo]) :
         [algo]
     }));
   };
@@ -781,11 +808,11 @@ function MainApp() {
   }} />;
 
   if (!user) return (
-    <AuthInterface 
+    <AuthInterface
       onBackToLanding={() => {
         setShowLanding(true);
         localStorage.removeItem("genai_landing_dismissed");
-      }} 
+      }}
     />
   );
 
@@ -808,11 +835,11 @@ function MainApp() {
           background: '#f59e0b', zIndex: 9999, boxShadow: '0 0 10px #f59e0b'
         }} />
       )}
-      <MobileHeader 
-        theme={theme} 
-        toggleTheme={toggleTheme} 
-        user={user} 
-        onSignOut={handleSignOut} 
+      <MobileHeader
+        theme={theme}
+        toggleTheme={toggleTheme}
+        user={user}
+        onSignOut={handleSignOut}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
@@ -839,6 +866,7 @@ function MainApp() {
           showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
           showK8sGames={showK8sGames} setShowK8sGames={setShowK8sGames}
           showGitVisualizer={showGitVisualizer} setShowGitVisualizer={setShowGitVisualizer}
+          showFlowDesign={showFlowDesign} setShowFlowDesign={setShowFlowDesign}
           showGitHubHub={showGitHubHub} setShowGitHubHub={setShowGitHubHub}
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
@@ -850,175 +878,180 @@ function MainApp() {
           activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
           theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut}
           isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed}
+          onSectionWalkthrough={handleSectionWalkthrough}
         />
 
         <main className="app-primary-content">
           {showAdminManagement && isAdmin ? (
-            <AdminManagement 
-              onClose={() => setShowAdminManagement(false)} 
+            <AdminManagement
+              onClose={() => setShowAdminManagement(false)}
               pathsData={pathsData}
               setPathsData={setPathsData}
             />
           ) :
-          showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} /> :
-          showCommunity ? (
-            <Community isSidebarCollapsed={isSidebarCollapsed} />
-          ) :
-          showKnowledgeGraph ? (
-            <KnowledgeGraph
-              pathsData={pathsData}
-              userId={user?.id}
-              onClose={() => setShowKnowledgeGraph(false)}
-              onNavigate={handleKnowledgeGraphNavigate}
-            />
-          ) :
-          showGalaxy ? (
-            <KnowledgeGalaxy 
-              nodes={pathsData} 
-              activePath={activePath} 
-              onNodeClick={handleNodeClick} 
-              onModuleClick={(node, mod, pathId) => { 
-                if (pathId) setActivePath(pathId); 
-                setActiveNode(node); 
-                setActiveModule(mod); 
-                setActiveTopic(null); 
-              }} 
-              onSubtopicClick={(node, mod, topic, pathId) => {
-                if (pathId) setActivePath(pathId);
-                setActiveNode(node);
-                setActiveModule(mod);
-                setActiveTopic(topic);
-              }}
-              onClose={() => setShowGalaxy(false)} 
-            />
-          ) :
-          showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
-          showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
-          showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
-          (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
-          showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
-          showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
-          showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
-          showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
-          showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
-          showAlgoStudio ? <AlgoVisualizer 
-              user={user}
-              savedAlgos={pathsData.saved_algos || []}
-              onSaveAlgo={handleSaveUserAlgo}
-              onClose={() => setShowAlgoStudio(false)} 
-            /> :
-          showAlgoVisualizer ? <CodeVisualizer 
-              savedAlgos={pathsData.saved_algos || []}
-              onSaveAlgo={handleSaveUserAlgo}
-              onClose={() => setShowAlgoVisualizer(false)}
-            /> :
-          showK8sGames ? <K8sGames onClose={() => setShowK8sGames(false)} /> :
-          showGitVisualizer ? <GitVisualizer onClose={() => setShowGitVisualizer(false)} /> :
-          showWorkplaceLab ? <WorkplaceLab 
-            pathsData={pathsData}
-            history={pathsData.workspace?.history || []}
-            notes={pathsData.workspace?.notes || []}
-            maps={pathsData.workspace?.maps || []}
-            onSaveNote={handleSaveWorkspaceNote}
-            onUpdateNote={handleUpdateWorkspaceNote}
-            onDeleteNote={handleDeleteWorkspaceNote}
-            onUpdateMaps={handleUpdateWorkspaceMaps}
-            onJumpToNode={(nodeId, pathId) => {
-              const path = pathsData[pathId];
-              const node = path?.nodes?.find(n => n.id === nodeId);
-              if (node) handleNodeClick(node, pathId);
-              setShowWorkplaceLab(false);
-            }}
-            onClose={() => setShowWorkplaceLab(false)}
-          /> :
-          showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
-          showIntelligenceHub ? (
-            <IntelligenceHub 
-              paths={pathsData}
-              pathsData={pathsData}
-              activePath={activePath}
-              onStudyAction={handleHubStudyAction}
-              onDesignAction={handleHubDesignAction}
-              onInterview={handleHubInterview}
-              onShowAll={() => setShowIntelligenceHub(false)}
-              initialView={hubConfig.view}
-              initialYear={hubConfig.year}
-              initialAI={hubConfig.isAI}
-            />
-          ) :
-          showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
-          <>
-            {!freshActiveNode && (
-              <RoadmapGraph
-                path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
-                activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
-                completedCount={completedCount} onMarkState={handleMarkState}
-                onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                onEditNode={n => { setEditData(n); setEditingNode(true); }}
-                onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                onDeleteNode={handleDeleteNode}
-                isEditMode={isEditMode}
-                lastCompletedNodeId={lastCompletedNodeId}
-                onAnimationTriggered={() => setLastCompletedNodeId(null)}
-              />
-            )}
+            showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} /> :
+              showCommunity ? (
+                <Community isSidebarCollapsed={isSidebarCollapsed} />
+              ) :
+                showKnowledgeGraph ? (
+                  <KnowledgeGraph
+                    pathsData={pathsData}
+                    userId={user?.id}
+                    onClose={() => setShowKnowledgeGraph(false)}
+                    onNavigate={handleKnowledgeGraphNavigate}
+                  />
+                ) :
+                  showGalaxy ? (
+                    <KnowledgeGalaxy
+                      nodes={pathsData}
+                      activePath={activePath}
+                      onNodeClick={handleNodeClick}
+                      onModuleClick={(node, mod, pathId) => {
+                        if (pathId) setActivePath(pathId);
+                        setActiveNode(node);
+                        setActiveModule(mod);
+                        setActiveTopic(null);
+                      }}
+                      onSubtopicClick={(node, mod, topic, pathId) => {
+                        if (pathId) setActivePath(pathId);
+                        setActiveNode(node);
+                        setActiveModule(mod);
+                        setActiveTopic(topic);
+                      }}
+                      onClose={() => setShowGalaxy(false)}
+                    />
+                  ) :
+                    showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
+                      showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
+                        showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
+                          (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
+                            showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
+                              showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
+                                showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
+                                  showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
+                                    showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
+                                      showAlgoStudio ? <AlgoVisualizer
+                                        user={user}
+                                        savedAlgos={pathsData.saved_algos || []}
+                                        onSaveAlgo={handleSaveUserAlgo}
+                                        onClose={() => setShowAlgoStudio(false)}
+                                      /> :
+                                        showAlgoVisualizer ? <CodeVisualizer
+                                          savedAlgos={pathsData.saved_algos || []}
+                                          onSaveAlgo={handleSaveUserAlgo}
+                                          onClose={() => setShowAlgoVisualizer(false)}
+                                        /> :
+                                          showK8sGames ? <K8sGames onClose={() => setShowK8sGames(false)} /> :
+                                            showGitVisualizer ? <GitVisualizer onClose={() => setShowGitVisualizer(false)} /> :
+                                              showFlowDesign ? <FlowDesign onClose={() => setShowFlowDesign(false)} /> :
+                                              showWorkplaceLab ? <WorkplaceLab
+                                                pathsData={pathsData}
+                                                history={pathsData.workspace?.history || []}
+                                                notes={pathsData.workspace?.notes || []}
+                                                maps={pathsData.workspace?.maps || []}
+                                                onSaveNote={handleSaveWorkspaceNote}
+                                                onUpdateNote={handleUpdateWorkspaceNote}
+                                                onDeleteNote={handleDeleteWorkspaceNote}
+                                                onUpdateMaps={handleUpdateWorkspaceMaps}
+                                                onJumpToNode={(nodeId, pathId) => {
+                                                  const path = pathsData[pathId];
+                                                  const node = path?.nodes?.find(n => n.id === nodeId);
+                                                  if (node) handleNodeClick(node, pathId);
+                                                  setShowWorkplaceLab(false);
+                                                }}
+                                                onClose={() => setShowWorkplaceLab(false)}
+                                              /> :
+                                                showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
+                                                  showIntelligenceHub ? (
+                                                    <IntelligenceHub
+                                                      paths={pathsData}
+                                                      pathsData={pathsData}
+                                                      activePath={activePath}
+                                                      onStudyAction={handleHubStudyAction}
+                                                      onDesignAction={handleHubDesignAction}
+                                                      onInterview={handleHubInterview}
+                                                      onShowAll={() => setShowIntelligenceHub(false)}
+                                                      initialView={hubConfig.view}
+                                                      initialYear={hubConfig.year}
+                                                      initialAI={hubConfig.isAI}
+                                                      onTour={() => setShowSidebarWalkthrough(true)}
+                                                    />
+                                                  ) :
+                                                    showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
+                                                      <>
+                                                        {!freshActiveNode && (
+                                                          <>
+                                                            <RoadmapGraph
+                                                              path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                              activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                              completedCount={completedCount} onMarkState={handleMarkState}
+                                                              onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                              onEditNode={n => { setEditData(n); setEditingNode(true); }}
+                                                              onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                              onDeleteNode={handleDeleteNode}
+                                                              isEditMode={isEditMode}
+                                                              lastCompletedNodeId={lastCompletedNodeId}
+                                                              onAnimationTriggered={() => setLastCompletedNodeId(null)}
+                                                            />
+                                                          </>
+                                                        )}
             {freshActiveNode && !activeTopic && (!showModuleDetails || !isMobile) && (
-              <ModulePanel
-                node={freshActiveNode} activeModule={freshActiveModule} 
-                setActiveModule={(mod) => {
-                  setActiveModule(mod);
-                  if (isMobile) setShowModuleDetails(true);
-                }}
-                pathColor={pathData.color} onClose={() => { setActiveNode(null); setActiveModule(null); setActiveTopic(null); }}
-                onBack={() => { setActiveNode(null); setActiveModule(null); setActiveTopic(null); }}
-                onAddModule={(idx = -1) => { setEditData(null); setEditingModule(true); setInsertionIndex(idx); }}
-                onEditModule={m => { setEditData(m); setEditingModule(true); }}
-                onDeleteModule={handleDeleteModule}
-                isEditMode={isEditMode} activePath={activePath}
-              />
-            )}
-            {freshActiveModule && freshActiveNode && !activeTopic && (showModuleDetails || !isMobile) && (
-                <DetailPanel
-                  node={freshActiveNode} module={freshActiveModule} pathColor={pathData.color}
-                  onMarkDone={() => { handleMarkState(freshActiveNode.id, "done"); setActiveNode(null); }}
-                  onMarkProgress={() => handleMarkState(freshActiveNode.id, "progress")}
-                  onMarkModuleStatus={status => handleMarkModuleStatus(freshActiveModule.id, status)}
-                  onToggleSubtopicStatus={title => handleToggleSubtopicStatus(freshActiveModule.id, title)}
-                  onAddTopic={(idx = -1) => { setEditData(null); setEditingModule(false); setInsertionIndex(idx); }}
-                  onDeleteTopic={(topicId) => handleDeleteTopic(freshActiveModule.id, topicId)}
-                  nodeState={getNodeState(freshActiveNode.id)} onModuleSelect={setActiveModule} onTopicSelect={setActiveTopic} isEditMode={isEditMode}
-                  onBackToGalaxy={() => setShowGalaxy(true)}
-                  onEnterFocusMode={() => setFocusNodeId(freshActiveNode.id)}
-                  onVideoSelect={handleVideoSelect}
-                  onClose={() => {
-                    if (isMobile) setShowModuleDetails(false);
-                    else setActiveModule(null);
-                  }}
-                />
-            )}
-            {freshActiveModule && freshActiveNode && !activeTopic && !isMobile && (
-              <ResourcePanel
-                module={freshActiveModule}
-                pathColor={pathData.color}
-                onClose={() => setActiveModule(null)}
-                onEditModule={handleSaveModule}
-                isEditMode={isEditMode}
-                onVideoSelect={handleVideoSelect}
-              />
-            )}
-            {activeTopic && (
-              <TopicContentPanel
-                topic={activeTopic} module={freshActiveModule} pathColor={pathData.color}
-                activePath={activePath} onClose={() => setActiveTopic(null)} isEditMode={isEditMode} onSaveTopic={handleSaveTopic}
-                onVideoSelect={handleVideoSelect}
-              />
-            )}
-            </>
+                                                          <ModulePanel
+                                                            node={freshActiveNode} activeModule={freshActiveModule}
+                                                            setActiveModule={(mod) => {
+                                                              setActiveModule(mod);
+                                                              if (isMobile) setShowModuleDetails(true);
+                                                            }}
+                                                            pathColor={pathData.color} onClose={() => { setActiveNode(null); setActiveModule(null); setActiveTopic(null); }}
+                                                            onBack={() => { setActiveNode(null); setActiveModule(null); setActiveTopic(null); }}
+                                                            onAddModule={(idx = -1) => { setEditData(null); setEditingModule(true); setInsertionIndex(idx); }}
+                                                            onEditModule={m => { setEditData(m); setEditingModule(true); }}
+                                                            onDeleteModule={handleDeleteModule}
+                                                            isEditMode={isEditMode} activePath={activePath}
+                                                          />
+                                                        )}
+                                                        {freshActiveModule && freshActiveNode && !activeTopic && (showModuleDetails || !isMobile) && (
+                                                          <DetailPanel
+                                                            node={freshActiveNode} module={freshActiveModule} pathColor={pathData.color}
+                                                            onMarkDone={() => { handleMarkState(freshActiveNode.id, "done"); setActiveNode(null); }}
+                                                            onMarkProgress={() => handleMarkState(freshActiveNode.id, "progress")}
+                                                            onMarkModuleStatus={status => handleMarkModuleStatus(freshActiveModule.id, status)}
+                                                            onToggleSubtopicStatus={title => handleToggleSubtopicStatus(freshActiveModule.id, title)}
+                                                            onAddTopic={(idx = -1) => { setEditData(null); setEditingModule(false); setInsertionIndex(idx); }}
+                                                            onDeleteTopic={(topicId) => handleDeleteTopic(freshActiveModule.id, topicId)}
+                                                            nodeState={getNodeState(freshActiveNode.id)} onModuleSelect={setActiveModule} onTopicSelect={setActiveTopic} isEditMode={isEditMode}
+                                                            onBackToGalaxy={() => setShowGalaxy(true)}
+                                                            onEnterFocusMode={() => setFocusNodeId(freshActiveNode.id)}
+                                                            onVideoSelect={handleVideoSelect}
+                                                            onClose={() => {
+                                                              if (isMobile) setShowModuleDetails(false);
+                                                              else setActiveModule(null);
+                                                            }}
+                                                          />
+                                                        )}
+                                                        {freshActiveModule && freshActiveNode && !activeTopic && !isMobile && (
+                                                          <ResourcePanel
+                                                            module={freshActiveModule}
+                                                            pathColor={pathData.color}
+                                                            onClose={() => setActiveModule(null)}
+                                                            onEditModule={handleSaveModule}
+                                                            isEditMode={isEditMode}
+                                                            onVideoSelect={handleVideoSelect}
+                                                          />
+                                                        )}
+                                                        {activeTopic && (
+                                                          <TopicContentPanel
+                                                            topic={activeTopic} module={freshActiveModule} pathColor={pathData.color}
+                                                            activePath={activePath} onClose={() => setActiveTopic(null)} isEditMode={isEditMode} onSaveTopic={handleSaveTopic}
+                                                            onVideoSelect={handleVideoSelect}
+                                                          />
+                                                        )}
+                                                      </>
           }
         </main>
       </div>
 
-      <MobileBottomNav 
+      <MobileBottomNav
         activeView={showAdminManagement ? "admin" : showBlog ? "blog" : showPlayground ? "playground" : showProgress ? "progress" : "roadmap"}
         setView={v => {
           closeAllPanels();
@@ -1032,7 +1065,7 @@ function MainApp() {
 
       <AnimatePresence>
         {focusNodeId && freshActiveNode && freshActiveModule && (
-          <FocusPulse 
+          <FocusPulse
             node={freshActiveNode}
             module={freshActiveModule}
             onClose={() => setFocusNodeId(null)}
@@ -1044,9 +1077,9 @@ function MainApp() {
 
       <AnimatePresence>
         {activeVideo && (
-          <VideoModal 
-            video={activeVideo} 
-            onClose={handleCloseVideo} 
+          <VideoModal
+            video={activeVideo}
+            onClose={handleCloseVideo}
             videoIntelligence={pathsData.videoIntelligence?.[activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1]] || {}}
             onUpdateProgress={(time) => handleUpdateVideoProgress(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], time)}
             onSaveNote={(note) => handleSaveVideoNote(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], note)}
@@ -1072,6 +1105,58 @@ function MainApp() {
       {editingNode && <EditorModal type="node" data={editData} pathColor={pathData.color} onClose={() => setEditingNode(false)} onSave={handleSaveNode} onDelete={handleDeleteNode} />}
       {editingModule && <EditorModal type="module" data={editData} pathColor={pathData.color} onClose={() => setEditingModule(false)} onSave={handleSaveModule} onDelete={handleDeleteModule} />}
       {editingTopic && <EditorModal type="topic" data={editData} pathColor={pathData.color} onClose={() => setEditingTopic(false)} onSave={handleSaveTopic} />}
+
+      {/* Re-trigger Walkthrough Button (top-right, hidden until hover) — only on home/roadmap */}
+      {!showWalkthrough && !sectionWalkthroughId &&
+        !showCurriculumMap && !showIDE && !showResources && !showProgress &&
+        !showPlayground && !showDSAAnimator && !showAimlCompanion && !showLinks &&
+        !showBlog && !showAdminManagement && !showSimulator && !showGalaxy &&
+        !showAIInterviewer && !showAlgoStudio && !showAlgoVisualizer &&
+        !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
+        !showIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&
+        !showCommunity && (
+          null
+        )}
+
+      {/* Main Walkthrough Overlay */}
+      <AnimatePresence>
+        {showWalkthrough && (
+          <AppWalkthrough
+            steps={MAIN_STEPS}
+            mode="main"
+            onComplete={() => {
+              localStorage.setItem('genai_walkthrough_done', 'true');
+              setShowWalkthrough(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Section Walkthrough Overlay */}
+      <AnimatePresence>
+        {sectionWalkthroughId && SECTION_STEPS[sectionWalkthroughId] && (
+          <AppWalkthrough
+            steps={SECTION_STEPS[sectionWalkthroughId].steps}
+            mode="section"
+            sectionTitle={SECTION_STEPS[sectionWalkthroughId].title}
+            sectionColor={SECTION_STEPS[sectionWalkthroughId].color}
+            onComplete={handleSectionWalkthroughComplete}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar Overview Walkthrough Overlay */}
+      <AnimatePresence>
+        {showSidebarWalkthrough && (
+          <AppWalkthrough
+            steps={SIDEBAR_OVERVIEW_STEPS}
+            mode="floating"
+            sectionTitle="SIDEBAR NAVIGATION"
+            sectionColor="#00ff88"
+            onComplete={() => setShowSidebarWalkthrough(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -1080,7 +1165,7 @@ function MobileHeader({ theme, toggleTheme, user, onSignOut, isMobileMenuOpen, s
   return (
     <div className="mobile-header mobile-only">
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <button 
+        <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           style={{ background: "none", border: "none", color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center", padding: 4 }}
         >

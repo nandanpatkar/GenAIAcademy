@@ -1,0 +1,684 @@
+/* ═══════════════════════════════════════════════════════════
+   APP WALKTHROUGH — Obsidian/Neon Onboarding Overlay
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Backdrop ── */
+.walkthrough-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ── Main Card ── */
+.walkthrough-card {
+  position: relative;
+  width: 90vw;
+  max-width: 640px;
+  max-height: 85vh;
+  background: linear-gradient(145deg, rgba(18, 18, 24, 0.95), rgba(10, 10, 14, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  box-shadow:
+    0 0 80px rgba(0, 255, 136, 0.04),
+    0 32px 64px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Header strip ── */
+.walkthrough-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 12px;
+  flex-shrink: 0;
+}
+
+.walkthrough-step-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--neon);
+  opacity: 0.7;
+}
+
+.walkthrough-skip-btn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+}
+
+.walkthrough-skip-btn:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ── Step Content Area ── */
+.walkthrough-body {
+  flex: 1;
+  padding: 8px 32px 24px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.walkthrough-step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+/* Icon wrapper */
+.walkthrough-icon-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.walkthrough-icon-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid;
+  border-color: var(--step-color, var(--neon));
+  opacity: 0.25;
+  animation: walkthrough-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes walkthrough-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.25;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 0.45;
+  }
+}
+
+.walkthrough-icon-ring svg {
+  color: var(--step-color, var(--neon));
+  filter: drop-shadow(0 0 12px var(--step-color, var(--neon)));
+}
+
+/* Title */
+.walkthrough-title {
+  font-family: var(--font);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.walkthrough-title span {
+  color: var(--step-color, var(--neon));
+}
+
+/* Subtitle */
+.walkthrough-subtitle {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+/* Feature chips */
+.walkthrough-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+  max-width: 520px;
+}
+
+.walkthrough-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  transition: all 0.2s ease;
+}
+
+.walkthrough-chip:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--step-color, var(--neon));
+  color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.walkthrough-chip svg {
+  color: var(--step-color, var(--neon));
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* ── Footer: dots + nav buttons ── */
+.walkthrough-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 28px 24px;
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Progress dots */
+.walkthrough-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.walkthrough-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.walkthrough-dot:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.2);
+}
+
+.walkthrough-dot.active {
+  width: 24px;
+  border-radius: 4px;
+  background: var(--step-color, var(--neon));
+  box-shadow: 0 0 10px var(--step-color, var(--neon));
+}
+
+/* Nav buttons container */
+.walkthrough-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.walkthrough-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+}
+
+.walkthrough-btn-prev {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text2);
+}
+
+.walkthrough-btn-prev:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.walkthrough-btn-next {
+  background: var(--step-color, var(--neon));
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+}
+
+.walkthrough-btn-next:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.25);
+}
+
+.walkthrough-btn-finish {
+  background: linear-gradient(135deg, var(--neon), #0088ff);
+  color: #000;
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.2);
+  padding: 10px 28px;
+}
+
+.walkthrough-btn-finish:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(0, 255, 136, 0.3);
+}
+
+/* ── Re-trigger Tour Button (top-right hidden) ── */
+.walkthrough-retrigger {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9990;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+}
+
+.walkthrough-retrigger:hover {
+  opacity: 1;
+  background: rgba(0, 255, 136, 0.06);
+  border-color: rgba(0, 255, 136, 0.2);
+  color: var(--neon);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+  transform: scale(1.05);
+}
+
+/* Tooltip on hover */
+.walkthrough-retrigger::after {
+  content: 'Tour';
+  position: absolute;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg5);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 7px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.walkthrough-retrigger:hover::after {
+  opacity: 1;
+}
+
+/* ── Welcome step special glow ── */
+.walkthrough-welcome-glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Final step special glow ── */
+.walkthrough-final-glow {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 136, 255, 0.06) 0%, rgba(0, 255, 136, 0.04) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION MODE — Lighter overlay, smaller card
+   ═══════════════════════════════════════════════════════════ */
+
+.walkthrough-section-mode {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.walkthrough-card-section {
+  max-width: 560px;
+  border-radius: 20px;
+  box-shadow:
+    0 0 60px rgba(0, 0, 0, 0.5),
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.walkthrough-card-section .walkthrough-icon-ring {
+  width: 64px;
+  height: 64px;
+}
+
+.walkthrough-title-sm {
+  font-size: 22px !important;
+}
+
+.walkthrough-card-section .walkthrough-subtitle {
+  font-size: 13px;
+  max-width: 440px;
+}
+
+.walkthrough-card-section .walkthrough-body {
+  padding: 4px 28px 20px;
+}
+
+.walkthrough-card-section .walkthrough-footer {
+  padding: 12px 24px 20px;
+}
+
+/* ── Sidebar Info Button ── */
+.sidebar-section-info-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.sidebar-section-info-btn:hover {
+  color: var(--neon);
+  background: rgba(0, 255, 136, 0.08);
+  opacity: 1 !important;
+}
+
+/* Show on hover of the sidebar item */
+.menu-item:hover .sidebar-section-info-btn,
+.sidebar-item:hover .sidebar-section-info-btn {
+  opacity: 0.7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .walkthrough-card {
+    width: 95vw;
+    max-width: 95vw;
+    max-height: 90vh;
+    border-radius: 18px;
+  }
+
+  .walkthrough-header {
+    padding: 16px 20px 10px;
+  }
+
+  .walkthrough-body {
+    padding: 8px 20px 20px;
+  }
+
+  .walkthrough-title {
+    font-size: 22px;
+  }
+
+  .walkthrough-subtitle {
+    font-size: 13px;
+  }
+
+  .walkthrough-features {
+    gap: 6px;
+  }
+
+  .walkthrough-chip {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .walkthrough-footer {
+    padding: 14px 20px 20px;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .walkthrough-dots {
+    order: 2;
+  }
+
+  .walkthrough-nav {
+    order: 1;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .walkthrough-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .walkthrough-icon-ring {
+    width: 64px;
+    height: 64px;
+  }
+
+  .walkthrough-retrigger {
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .walkthrough-title {
+    font-size: 20px;
+  }
+
+  .walkthrough-chip {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+}
+
+/* ── Home Dashboard Tour Button ── */
+.home-tour-container {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 100;
+}
+
+.home-tour-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 12px;
+  color: var(--neon);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+}
+
+.home-tour-btn:hover {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--neon);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+  transform: translateY(-2px);
+}
+
+.home-tour-btn svg {
+  filter: drop-shadow(0 0 8px var(--neon));
+}
+
+/* ── Hub Tour Button ── */
+.tour-btn {
+  background: rgba(0, 255, 136, 0.05) !important;
+  border: 1px solid rgba(0, 255, 136, 0.15) !important;
+  color: var(--neon) !important;
+  gap: 8px !important;
+  padding: 0 20px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.tour-btn:hover {
+  background: rgba(0, 255, 136, 0.1) !important;
+  border-color: var(--neon) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   FLOATING MODE — Targeted tooltips for sidebar tour
+   ═══════════════════════════════════════════════════════════ */
+
+.walkthrough-backdrop-transparent {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+  /* Allow interaction with underlying elements if needed, or set to all for capture */
+}
+
+.walkthrough-card-floating {
+  position: fixed;
+  z-index: 100000;
+  width: 320px;
+  max-width: 90vw;
+  background: var(--bg);
+  border: 1px solid var(--neon);
+  box-shadow:
+    0 0 30px rgba(0, 255, 136, 0.15),
+    0 10px 40px rgba(0, 0, 0, 0.8);
+  pointer-events: all;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.walkthrough-card-floating .walkthrough-header {
+  padding: 12px 16px 4px;
+}
+
+.walkthrough-card-floating .walkthrough-body {
+  padding: 8px 16px 16px;
+}
+
+.walkthrough-card-floating .walkthrough-footer {
+  padding: 10px 16px 16px;
+}
+
+.walkthrough-card-floating .walkthrough-title {
+  font-size: 18px;
+  text-align: left;
+}
+
+.walkthrough-card-floating .walkthrough-subtitle {
+  font-size: 13px;
+  text-align: left;
+  max-width: 100%;
+}
+
+.walkthrough-card-floating .walkthrough-icon-ring {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0;
+}
+
+.walkthrough-card-floating .walkthrough-step-content {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* ── Arrow ── */
+.walkthrough-arrow {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--bg);
+  border: 1px solid var(--neon);
+  transform: rotate(45deg);
+  z-index: -1;
+}
+
+.walkthrough-arrow-left {
+  left: -7px;
+  top: 20px;
+  border-right: none;
+  border-top: none;
+}
+
+.walkthrough-arrow-right {
+  right: -7px;
+  top: 20px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.walkthrough-arrow-top {
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border-right: none;
+  border-bottom: none;
+}
+
+.walkthrough-arrow-bottom {
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  border-left: none;
+  border-top: none;
+}
+
+/* Highlight effect for the target */
+.walkthrough-highlight {
+  position: relative;
+  z-index: 100001 !important;
+  box-shadow: 0 0 0 4px var(--neon), 0 0 20px var(--neon) !important;
+  transition: all 0.3s ease;
+}
