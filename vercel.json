@@ -1,4 +1,7 @@
 {
+  "rewrites": [
+    { "source": "/notion-api/(.*)", "destination": "https://api.notion.com/$1" }
+  ],
   "redirects": [
     { "source": "/draw", "destination": "/k8sgames/draw.html", "permanent": true }
   ]
