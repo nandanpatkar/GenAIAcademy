@@ -1,1 +1,0 @@
-import{j as s}from"./vendor-motion-Ds6UPYLE.js";import{M as m,r,a as n}from"./vendor-markdown-CBXDgHCh.js";import"./vendor-lucide-YCXXi_N9.js";function f({content:a,enableBreaks:e=!1}){const o=e?[r,n]:[r];return s.jsx(m,{remarkPlugins:o,children:a})}export{f as MarkdownRenderer};

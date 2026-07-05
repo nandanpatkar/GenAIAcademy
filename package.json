@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run build:flow-design && vite build",
-    "build:flow-design": "cd flow-design && npm install && npm run build && mkdir -p ../public/flow-design && cp -r dist/* ../public/flow-design/",
+    "build:flow-design": "cd flow-design && npm install && npm run build && rm -rf ../public/flow-design/* && mkdir -p ../public/flow-design && cp -r dist/* ../public/flow-design/",
     "build:git": "cd 'Git Visualizer/Git-Mastery' && npm run export-to-main",
     "preview": "vite preview"
   },

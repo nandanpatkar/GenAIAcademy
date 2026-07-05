@@ -42,12 +42,18 @@ export default function Sidebar({
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [isPathsVisible, setIsPathsVisible] = useState(true);
-  const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, geminiKey, updateGeminiKey } = useAuth();
+  const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, geminiKey, updateGeminiKey, aiProvider, updateAiProvider, azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey } = useAuth();
   const [localKey, setLocalKey] = useState(geminiKey || "");
+  const [localProvider, setLocalProvider] = useState(aiProvider || "gemini");
+  const [localAzureEndpoint, setLocalAzureEndpoint] = useState(azureEndpoint || "");
+  const [localAzureKey, setLocalAzureKey] = useState(azureKey || "");
 
   useEffect(() => {
     if (geminiKey) setLocalKey(geminiKey);
-  }, [geminiKey]);
+    if (aiProvider) setLocalProvider(aiProvider);
+    if (azureEndpoint) setLocalAzureEndpoint(azureEndpoint);
+    if (azureKey) setLocalAzureKey(azureKey);
+  }, [geminiKey, aiProvider, azureEndpoint, azureKey]);
 
   const sidebarGroups = [
     {
@@ -549,48 +555,121 @@ export default function Sidebar({
             <div className="popout-section-label" style={{ fontSize: 9, fontWeight: 900, color: 'var(--text3)', padding: '12px 16px 4px', letterSpacing: 1 }}>INTELLIGENCE_KEY</div>
             
             <div id="sidebar-gemini-key" style={{ padding: '4px 12px 12px' }}>
-              <div style={{ position: 'relative', display: 'flex', gap: 6 }}>
-                <input 
-                  type="password"
-                  placeholder="Paste Gemini Key..."
-                  value={localKey}
-                  onChange={(e) => setLocalKey(e.target.value)}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <select
+                  value={localProvider}
+                  onChange={(e) => setLocalProvider(e.target.value)}
                   style={{
-                    flex: 1,
+                    width: '100%',
                     background: 'rgba(255,255,255,0.03)',
                     border: '1px solid var(--border)',
                     borderRadius: 6,
                     padding: '8px 10px',
                     fontSize: 11,
                     color: 'var(--text)',
-                    fontFamily: 'monospace',
                     outline: 'none',
-                    transition: 'all 0.2s'
+                    transition: 'all 0.2s',
+                    appearance: 'none',
+                    cursor: 'pointer'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
-                  onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
-                />
+                >
+                  <option value="gemini">Google Gemini</option>
+                  <option value="azure-openai">Azure OpenAI</option>
+                </select>
+
+                {localProvider === 'gemini' && (
+                  <input 
+                    type="password"
+                    placeholder="Paste Gemini Key..."
+                    value={localKey}
+                    onChange={(e) => setLocalKey(e.target.value)}
+                    style={{
+                      width: '100%',
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 6,
+                      padding: '8px 10px',
+                      fontSize: 11,
+                      color: 'var(--text)',
+                      fontFamily: 'monospace',
+                      outline: 'none',
+                      transition: 'all 0.2s'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
+                    onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
+                  />
+                )}
+                {localProvider === 'azure-openai' && (
+                  <>
+                    <input 
+                      type="text"
+                      placeholder="Azure OpenAI Endpoint"
+                      value={localAzureEndpoint}
+                      onChange={(e) => setLocalAzureEndpoint(e.target.value)}
+                      style={{
+                        width: '100%',
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid var(--border)',
+                        borderRadius: 6,
+                        padding: '8px 10px',
+                        fontSize: 11,
+                        color: 'var(--text)',
+                        fontFamily: 'monospace',
+                        outline: 'none',
+                        transition: 'all 0.2s'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
+                      onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
+                    />
+                    <input 
+                      type="password"
+                      placeholder="Azure OpenAI Key"
+                      value={localAzureKey}
+                      onChange={(e) => setLocalAzureKey(e.target.value)}
+                      style={{
+                        width: '100%',
+                        background: 'rgba(255,255,255,0.03)',
+                        border: '1px solid var(--border)',
+                        borderRadius: 6,
+                        padding: '8px 10px',
+                        fontSize: 11,
+                        color: 'var(--text)',
+                        fontFamily: 'monospace',
+                        outline: 'none',
+                        transition: 'all 0.2s'
+                      }}
+                      onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
+                      onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
+                    />
+                  </>
+                )}
+
                 <motion.button 
-                  onClick={() => updateGeminiKey(localKey)}
-                  whileHover={{ scale: 1.05, background: 'var(--neon)', color: '#000', boxShadow: '0 0 12px var(--neon)' }}
-                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    updateGeminiKey(localKey);
+                    updateAiProvider(localProvider);
+                    updateAzureEndpoint(localAzureEndpoint);
+                    updateAzureKey(localAzureKey);
+                  }}
+                  whileHover={{ scale: 1.02, background: 'var(--neon)', color: '#000', boxShadow: '0 0 12px var(--neon)' }}
+                  whileTap={{ scale: 0.98 }}
                   style={{
                     background: 'var(--neon)',
                     border: 'none',
-                    borderRadius: 8,
-                    padding: '0 16px',
+                    borderRadius: 6,
+                    width: '100%',
+                    padding: '8px 0',
                     color: '#000',
                     fontSize: 10,
                     fontWeight: 950,
                     cursor: 'pointer',
                     transition: 'all 0.2s',
-                    height: 34,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}
                 >
-                  SAVE
+                  SAVE CONFIG
                 </motion.button>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>

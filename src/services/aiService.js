@@ -4,12 +4,34 @@ const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
 
 const GEMINI_MODEL = "gemini-flash-latest";
 let dynamicGeminiKey = "";
+let currentAiProvider = "gemini";
+let dynamicAzureEndpoint = "";
+let dynamicAzureKey = "";
 
 // ─── External Controls ──────────────────────────────────────────────────────────
 export const setDynamicGeminiKey = (key) => {
   if (key) {
     console.log("AI Service: Dynamic Gemini Key injected.");
     dynamicGeminiKey = key;
+  }
+};
+
+export const setAiProvider = (provider) => {
+  if (provider) {
+    console.log("AI Service: AI Provider set to " + provider);
+    currentAiProvider = provider;
+  }
+};
+
+export const setAzureEndpoint = (endpoint) => {
+  if (endpoint) {
+    dynamicAzureEndpoint = endpoint;
+  }
+};
+
+export const setAzureKey = (key) => {
+  if (key) {
+    dynamicAzureKey = key;
   }
 };
 
@@ -150,8 +172,60 @@ const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode
   }
 };
 
+const callAzureOpenAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
+  const apiKey = dynamicAzureKey;
+  const endpoint = dynamicAzureEndpoint;
+  if (!apiKey || !endpoint) {
+    throw new Error("Missing Azure OpenAI Key or Endpoint. Update in Admin portal.");
+  }
+
+  // Ensure JSON instructions exist in system prompt if jsonMode is true
+  let chatMessages = messages.map(m => ({ role: m.role, content: m.content }));
+  if (jsonMode) {
+    const sysMsg = chatMessages.find(m => m.role === 'system');
+    if (sysMsg) {
+      if (!sysMsg.content.toLowerCase().includes("json")) {
+        sysMsg.content += "\nIMPORTANT: Return ONLY valid JSON.";
+      }
+    } else {
+      chatMessages.unshift({ role: 'system', content: 'IMPORTANT: Return ONLY valid JSON.' });
+    }
+  }
+
+  try {
+    const url = `${endpoint.replace(/\/+$/, '')}/openai/deployments/gpt-4o/chat/completions?api-version=2024-02-15-preview`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": apiKey
+      },
+      body: JSON.stringify({
+        messages: chatMessages,
+        max_tokens: maxTokens,
+        temperature: temperature,
+        response_format: jsonMode ? { type: "json_object" } : { type: "text" }
+      })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `Azure OpenAI Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (error) {
+    console.error("Azure OpenAI call failed:", error);
+    throw error;
+  }
+};
+
 // ─── Unified AI Caller: Fallback logic ──────────────────────────────────────
 export const callAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) => {
+  if (currentAiProvider === "azure-openai") {
+    return await callAzureOpenAI(messages, maxTokens, temperature, jsonMode);
+  }
   return await callGemini(messages, maxTokens, temperature, jsonMode);
 };
 

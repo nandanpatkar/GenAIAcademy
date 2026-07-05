@@ -89,12 +89,15 @@ const SimpleDoughnut = ({ percent, color, label }) => {
 };
 
 export default function AdminManagement({ onClose, pathsData, setPathsData }) {
-  const { adminsList, setAdminsList, lockedUsers, setLockedUsers, allowAimlForAll, setAllowAimlForAll, geminiKey, setGeminiKey } = useAuth();
+  const { adminsList, setAdminsList, lockedUsers, setLockedUsers, allowAimlForAll, setAllowAimlForAll, geminiKey, setGeminiKey, aiProvider, updateAiProvider, azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [newAdminEmail, setNewAdminEmail] = useState("");
   const [newGeminiKey, setNewGeminiKey] = useState(geminiKey || "");
+  const [newAiProvider, setNewAiProvider] = useState(aiProvider || "gemini");
+  const [newAzureEndpoint, setNewAzureEndpoint] = useState(azureEndpoint || "");
+  const [newAzureKey, setNewAzureKey] = useState(azureKey || "");
   const [showKey, setShowKey] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -126,7 +129,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     setLoading(false);
   };
 
-  const updateGlobalConfig = async (newAdmins, newLocked, newAllowAiml, newKey) => {
+  const updateGlobalConfig = async (newAdmins, newLocked, newAllowAiml, newKey, newProv, newAzEnd, newAzKey) => {
     try {
       await supabase
         .from('user_curriculum')
@@ -136,7 +139,10 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
             admins: newAdmins, 
             locked: newLocked, 
             allowAimlForAll: newAllowAiml,
-            geminiKey: newKey || geminiKey,
+            geminiKey: newKey !== undefined ? newKey : geminiKey,
+            aiProvider: newProv !== undefined ? newProv : aiProvider,
+            azureEndpoint: newAzEnd !== undefined ? newAzEnd : azureEndpoint,
+            azureKey: newAzKey !== undefined ? newAzKey : azureKey,
             updated_at: new Date().toISOString() 
           }
         });
@@ -175,31 +181,34 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
 
   const handleToggleLock = async (userId) => {
     let newLocked = lockedUsers.includes(userId) ? lockedUsers.filter(id => id !== userId) : [...lockedUsers, userId];
-    setLockedUsers(newLocked); await updateGlobalConfig(adminsList, newLocked, allowAimlForAll, geminiKey);
+    setLockedUsers(newLocked); await updateGlobalConfig(adminsList, newLocked, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
 
   const handleAddAdmin = async () => {
     if (!newAdminEmail || adminsList.includes(newAdminEmail)) return;
     const newAdmins = [...adminsList, newAdminEmail];
-    setAdminsList(newAdmins); setNewAdminEmail(""); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey);
+    setAdminsList(newAdmins); setNewAdminEmail(""); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
 
   const handleRemoveAdmin = async (email) => {
     if (adminsList.length <= 1) return;
     const newAdmins = adminsList.filter(e => e !== email);
-    setAdminsList(newAdmins); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey);
+    setAdminsList(newAdmins); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
 
   const handleToggleAimlAccess = async () => {
     const newVal = !allowAimlForAll;
     setAllowAimlForAll(newVal);
-    await updateGlobalConfig(adminsList, lockedUsers, newVal, geminiKey);
+    await updateGlobalConfig(adminsList, lockedUsers, newVal, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
 
   const handleUpdateGeminiKey = async () => {
     setGeminiKey(newGeminiKey);
-    await updateGlobalConfig(adminsList, lockedUsers, allowAimlForAll, newGeminiKey);
-    setSuccessInfo("Infrastructure: Gemini dynamic key updated.");
+    updateAiProvider(newAiProvider);
+    updateAzureEndpoint(newAzureEndpoint);
+    updateAzureKey(newAzureKey);
+    await updateGlobalConfig(adminsList, lockedUsers, allowAimlForAll, newGeminiKey, newAiProvider, newAzureEndpoint, newAzureKey);
+    setSuccessInfo("Infrastructure: AI Configuration updated.");
   };
 
   const handleExportRegistry = () => {
@@ -574,19 +583,56 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
                       </div>
                       
                       <div className="invite-form-minimal">
-                        <div className="input-with-icon">
-                          <Lock size={14} />
-                          <input 
-                            type={showKey ? "text" : "password"} 
-                            placeholder="Paste API Key..." 
-                            value={newGeminiKey} 
-                            onChange={e => setNewGeminiKey(e.target.value)}
-                          />
+                        <select 
+                          className="modern-select" 
+                          value={newAiProvider} 
+                          onChange={(e) => setNewAiProvider(e.target.value)}
+                          style={{ marginBottom: '10px', width: '100%' }}
+                        >
+                          <option value="gemini">Google Gemini (Default)</option>
+                          <option value="azure-openai">Azure OpenAI</option>
+                        </select>
+                        {newAiProvider === 'gemini' && (
+                          <div className="input-with-icon" style={{ marginBottom: '10px', width: '100%' }}>
+                            <Lock size={14} />
+                            <input 
+                              type={showKey ? "text" : "password"} 
+                              placeholder="Paste Gemini API Key..." 
+                              value={newGeminiKey} 
+                              onChange={e => setNewGeminiKey(e.target.value)}
+                            />
+                          </div>
+                        )}
+                        {newAiProvider === 'azure-openai' && (
+                          <>
+                            <div className="input-with-icon" style={{ marginBottom: '10px', width: '100%' }}>
+                              <Globe size={14} />
+                              <input 
+                                type="text" 
+                                placeholder="Azure OpenAI Endpoint (e.g. https://...)" 
+                                value={newAzureEndpoint} 
+                                onChange={e => setNewAzureEndpoint(e.target.value)}
+                              />
+                            </div>
+                            <div className="input-with-icon" style={{ marginBottom: '10px', width: '100%' }}>
+                              <Lock size={14} />
+                              <input 
+                                type={showKey ? "text" : "password"} 
+                                placeholder="Azure OpenAI Key..." 
+                                value={newAzureKey} 
+                                onChange={e => setNewAzureKey(e.target.value)}
+                              />
+                            </div>
+                          </>
+                        )}
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button onClick={() => setShowKey(!showKey)} className="mini-action-btn">
+                            {showKey ? <EyeOff size={14} /> : <Eye size={14} />}
+                          </button>
+                          <button onClick={handleUpdateGeminiKey} className="mini-action-btn highlight">
+                            <CheckCircle2 size={14} />
+                          </button>
                         </div>
-                        <button onClick={() => setShowKey(!showKey)} className="mini-action-btn">
-                          {showKey ? <EyeOff size={14} /> : <Eye size={14} />}
-                        </button>
-                        <button onClick={handleUpdateGeminiKey} className="mini-action-btn highlight"><CheckCircle2 size={14} /></button>
                       </div>
 
                       <div className="config-footer">

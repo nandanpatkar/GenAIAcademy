@@ -288,12 +288,11 @@ export default function CodeVisualizer({ onClose }) {
 
         .simulation-viewport {
           position: absolute;
-          /* Precise negative offset to hide external branding and banners perfectly */
-          top: -105px; 
+          /* Adjusted offset to keep Run button visible while hiding some branding */
+          top: -60px; 
           left: 0;
           width: 100%;
-          /* Scaled height to eliminate bottom gaps and maintain alignment */
-          height: calc(100% + 105px);
+          height: calc(100% + 60px);
           border: none;
           background: #000;
         }
@@ -302,8 +301,8 @@ export default function CodeVisualizer({ onClose }) {
           position: absolute;
           bottom: 0;
           right: 0;
-          width: 90px;
-          height: 90px;
+          width: 150px;
+          height: 100px;
           background: #1f2023;
           z-index: 10;
         }

@@ -13,6 +13,9 @@ export const AuthProvider = ({ children }) => {
   const [lockedUsers, setLockedUsers] = useState([]);
   const [allowAimlForAll, setAllowAimlForAll] = useState(false);
   const [geminiKey, setGeminiKey] = useState(() => localStorage.getItem('genai_gemini_key') || "");
+  const [aiProvider, setAiProvider] = useState(() => localStorage.getItem('genai_ai_provider') || "gemini");
+  const [azureEndpoint, setAzureEndpoint] = useState(() => localStorage.getItem('genai_azure_endpoint') || "");
+  const [azureKey, setAzureKey] = useState(() => localStorage.getItem('genai_azure_key') || "");
   const [isLocked, setIsLocked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isAdminView, setIsAdminView] = useState(() => localStorage.getItem('genai_isAdminView') !== 'false'); // Default to true if not set
@@ -21,6 +24,21 @@ export const AuthProvider = ({ children }) => {
   const updateGeminiKey = (key) => {
     setGeminiKey(key);
     localStorage.setItem('genai_gemini_key', key);
+  };
+
+  const updateAiProvider = (provider) => {
+    setAiProvider(provider);
+    localStorage.setItem('genai_ai_provider', provider);
+  };
+
+  const updateAzureEndpoint = (endpoint) => {
+    setAzureEndpoint(endpoint);
+    localStorage.setItem('genai_azure_endpoint', endpoint);
+  };
+
+  const updateAzureKey = (key) => {
+    setAzureKey(key);
+    localStorage.setItem('genai_azure_key', key);
   };
 
   useEffect(() => {
@@ -45,6 +63,12 @@ export const AuthProvider = ({ children }) => {
           if (data.paths_data.geminiKey && !localKey) {
             setGeminiKey(data.paths_data.geminiKey);
           }
+          const localProvider = localStorage.getItem('genai_ai_provider');
+          if (data.paths_data.aiProvider && !localProvider) setAiProvider(data.paths_data.aiProvider);
+          const localAzureEndpoint = localStorage.getItem('genai_azure_endpoint');
+          if (data.paths_data.azureEndpoint && !localAzureEndpoint) setAzureEndpoint(data.paths_data.azureEndpoint);
+          const localAzureKey = localStorage.getItem('genai_azure_key');
+          if (data.paths_data.azureKey && !localAzureKey) setAzureKey(data.paths_data.azureKey);
         }
       } catch (e) {
         console.warn("Global config not found, using defaults");
@@ -144,6 +168,12 @@ export const AuthProvider = ({ children }) => {
     setAllowAimlForAll,
     geminiKey,
     updateGeminiKey,
+    aiProvider,
+    updateAiProvider,
+    azureEndpoint,
+    updateAzureEndpoint,
+    azureKey,
+    updateAzureKey,
     isLocked,
     adminSignInMock,
     signUp,

@@ -92,14 +92,19 @@ const injectDefaultIcons = (paths) => {
 };
 
 function MainApp() {
-  const { user, isAdmin, isLocked, signOut, allowAimlForAll, geminiKey } = useAuth();
+  const { user, isAdmin, isLocked, signOut, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
   const width = useWindowWidth();
   const isMobile = width <= 768;
 
-  // Sync Global Gemini Config to AI Service
+  // Sync Global AI Config to AI Service
   useEffect(() => {
-    if (geminiKey) setDynamicGeminiKey(geminiKey);
-  }, [geminiKey]);
+    import('./services/aiService').then(({ setDynamicGeminiKey, setAiProvider, setAzureEndpoint, setAzureKey }) => {
+      if (geminiKey) setDynamicGeminiKey(geminiKey);
+      if (aiProvider) setAiProvider(aiProvider);
+      if (azureEndpoint) setAzureEndpoint(azureEndpoint);
+      if (azureKey) setAzureKey(azureKey);
+    });
+  }, [geminiKey, aiProvider, azureEndpoint, azureKey]);
 
   const [theme, setTheme] = useState(() => localStorage.getItem("genai_theme") || "dark");
   const [isDataLoaded, setIsDataLoaded] = useState(false);

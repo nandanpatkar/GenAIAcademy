@@ -993,6 +993,10 @@
           "hint": "GPT-5 family · Industry standard",
           "keySetupNote": "Requires a paid account and billing setup"
         },
+        "azure-openai": {
+          "hint": "Microsoft Azure · Enterprise GPT deployments",
+          "keySetupNote": "Create a GPT-5.2 deployment and copy its resource endpoint and key"
+        },
         "claude": {
           "hint": "Anthropic · Leading reasoning model",
           "keySetupNote": "Requires a paid account ($5 min credit top-up)"
@@ -1077,6 +1081,14 @@
             "hint": "Deep reasoning · Complex tasks",
             "category": "Reasoning",
             "badge": "Reasoning"
+          }
+        },
+        "azure-openai": {
+          "gpt-5.2": {
+            "label": "GPT-5.2 deployment",
+            "hint": "Azure-hosted GPT-5.2 reasoning model",
+            "category": "Azure OpenAI",
+            "badge": "Azure"
           }
         },
         "claude": {
