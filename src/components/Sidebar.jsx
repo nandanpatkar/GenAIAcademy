@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
@@ -29,6 +29,7 @@ export default function Sidebar({
   showWorkplaceLab, setShowWorkplaceLab,
   showKnowledgeGraph, setShowKnowledgeGraph,
   showCommunity, setShowCommunity,
+  showNotion, setShowNotion,
   isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
@@ -77,6 +78,7 @@ export default function Sidebar({
         { icon: <Boxes size={14} />, label: "K8s Games", id: "k8s_games" },
         { icon: <GitCommit size={14} />, label: "Git Visualizer", id: "git_visualizer" },
         { icon: <Network size={14} />, label: "Flow design", id: "flow_design" },
+        { icon: <FileText size={14} />, label: "Notion", id: "notion" },
       ]
     },
     {
@@ -135,6 +137,7 @@ export default function Sidebar({
     if (showGitVisualizer) return "git_visualizer";
     if (showFlowDesign) return "flow_design";
     if (showCommunity) return "community";
+    if (showNotion) return "notion";
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
     if (showIntelligenceHub) return "hub";
@@ -171,6 +174,7 @@ export default function Sidebar({
     if (setShowKnowledgeGraph) setShowKnowledgeGraph(false);
     if (setShowGitHubHub) setShowGitHubHub(false);
     if (setShowCommunity) setShowCommunity(false);
+    if (setShowNotion) setShowNotion(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
 
     switch (id) {
@@ -215,6 +219,9 @@ export default function Sidebar({
         break;
       case "flow_design":
         if (setShowFlowDesign) setShowFlowDesign(true);
+        break;
+      case "notion":
+        if (setShowNotion) setShowNotion(true);
         break;
       case "tasks":
         if (setShowWorkplaceLab) setShowWorkplaceLab(true);

@@ -44,7 +44,9 @@ const bestIconByProject = new Map();
 
 for (const filePath of iconFiles.sort((left, right) => left.localeCompare(right))) {
   const relativePath = path.relative(sourceRoot, filePath);
-  const [projectName] = relativePath.split(path.sep);
+  const parts = relativePath.split(path.sep);
+  if (parts.length < 2) continue;
+  const projectName = parts[1];
   if (!projectName || bestIconByProject.has(projectName)) {
     continue;
   }

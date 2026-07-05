@@ -5438,6 +5438,15 @@ pre, code,
 .studio-editor-area,
 .studio-editor-area *,
 .terminal-output,
+.terminal-output * {
+  font-family: 'DM Mono', monospace !important;
+}
+
+/* Allow Notion Renderer to control its own fonts */
+.notion-renderer-container,
+.notion-renderer-container * {
+  font-family: var(--notion-font, 'Syne', sans-serif) !important;
+}
 .terminal-output *,
 .cm-editor,
 .cm-editor * {

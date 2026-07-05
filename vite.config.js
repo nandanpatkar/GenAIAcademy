@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      "/notion-api": {
+        target: "https://api.notion.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/notion-api/, ""),
+      },
     },
   },
 });
