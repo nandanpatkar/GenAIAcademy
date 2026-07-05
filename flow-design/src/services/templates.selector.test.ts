@@ -7,7 +7,7 @@ describe('template selector', () => {
     const ids = templates.map((template) => template.id);
 
     expect(templates).toEqual(FLOW_TEMPLATES);
-    expect(ids).toHaveLength(12);
+    expect(ids).toHaveLength(14);
     expect(ids).toContain('production-release-train');
     expect(ids).toContain('c4-system-context');
     expect(ids).toContain('edge-security-zero-trust-access');
