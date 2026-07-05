@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "genai-roadmap-src",
+			"path": "../../../.."
+		},
+		{
+			"name": "flowdesigner",
+			"path": "../../../../../../Developer/Project/flowdesigner"
+		}
+	],
+	"settings": {}
+}
