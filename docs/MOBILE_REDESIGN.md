@@ -91,11 +91,54 @@ calls the same `onNodeClick(node)` callback, so the existing
 - Styles: `src/styles/roadmap-mobile.css`, using the same CSS variable
   theme system as the rest of the app.
 
+## Phase 2 — Playground tap-to-place + Mind Map touch support (wired in)
+
+**System Design Playground — simplified mobile editing**
+Drag-and-drop from the sidebar onto the ReactFlow canvas doesn't work on
+touch, so on mobile the sidebar is now collapsed by default and replaced
+with:
+- `src/pages/playground/components/MobileNodePicker.jsx` — a
+  `MobileSheet`-based picker: tap the floating `+` button
+  (`.pg-mobile-fab`, bottom-right of the canvas) to open it, tap a
+  category to expand it, tap a node to place it.
+- `addNodeFromPicker()` in `SystemDesignPlayground.jsx` mirrors the
+  existing `onDrop` node-construction logic exactly, just computing a
+  center-of-viewport position (with a small cascading offset per tap)
+  instead of a drop coordinate — so placed nodes are identical in shape
+  to drag-and-dropped ones and Inspector/validation/export all work on
+  them unchanged.
+- Desktop behavior is untouched: `isMobile` gates all of this, and the
+  sidebar still defaults open with full drag-and-drop on desktop.
+- Editing/canvas-editing tools not yet mobile-specific (multi-select,
+  precise resize/drag of existing nodes, connecting edges by dragging
+  between handles) still rely on ReactFlow's own touch support, which is
+  serviceable but not redesigned here — this pass covers node *placement*
+  specifically, per the agreed scope.
+
+**WorkplaceLab Mind Map — touch-first interactions**
+`MindMapCanvas` in `WorkplaceLab.jsx` was mouse-only (`onMouseDown` /
+`onMouseMove` / `onMouseUp` / `onWheel`, all keyed off `clientX/clientY`).
+Added, without duplicating the underlying drag/pan/zoom logic:
+- **Node drag**: `onTouchStart` on each node (`MapNode`) feeds the same
+  `onNodeDown` handler using `e.touches[0]`.
+- **Canvas pan**: single-finger drag on empty canvas reuses `setPan`
+  exactly as the mouse path does.
+- **Pinch-to-zoom**: two-finger touch computes distance and scales
+  `zoom` relative to the pinch start.
+- **Double-tap to edit**: a second tap on the same node within 320ms
+  triggers `onNodeDbl` (the double-click-to-edit behavior), since
+  double-click doesn't exist on touch.
+- `touch-action: none` is set on the root `<svg>` so the browser's native
+  scroll/pinch-zoom doesn't fight the custom pan/zoom.
+- Declaration order matters here: the new touch handlers depend on
+  `onNodeDown`/`onNodeDbl`, so they're declared after both in
+  `MindMapCanvas` (JS `const` bindings aren't hoisted — an earlier version
+  of this patch had them declared too early and would have thrown a
+  "Cannot access before initialization" error at runtime; worth knowing
+  if this file gets restructured later).
+
 ## Remaining phases
 
-- **Phase 2**: System Design Playground (view-only pan/zoom on mobile,
-  editing pushed to desktop) and WorkplaceLab mind map (touch-first
-  interactions).
 - **Phase 3**: AlgoVisualizer (tabbed Code/Visualization/Output), DSA
   Animator (fallback content when the iframe can't render usably), and
   Blog/Community built mobile-first from the start.

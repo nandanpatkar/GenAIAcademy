@@ -18,6 +18,7 @@ import {
   Play, Info, Star, Tag, CheckCircle, Minimize2, ExternalLink,
   MoreHorizontal, Upload, PanelLeft,
   Image, Mic, Volume2, Eye, Activity, Timer, Bell, FlaskConical, Key, UserCheck,
+  Plus,
 } from "lucide-react";
 
 import { CATEGORIES, COLORS, COLOR_OVERRIDES, PORT_TYPES } from "./data/nodes.js";
@@ -30,6 +31,9 @@ import FlowManager from "./components/FlowManager.jsx";
 import SaveModal from "./components/SaveModal.jsx";
 import { ValidationPanel, NodePopover } from "./components/Overlays.jsx";
 import ArchitectureDesign from "./ArchitectureDesign";
+import useIsMobile from "../../hooks/useIsMobile";
+import MobileNodePicker from "./components/MobileNodePicker.jsx";
+import "./components/mobile-node-picker.css";
 
 // ─── Icon Registry ─────────────────────────────────────────────────────────────
 const ICON_MAP = {
@@ -203,6 +207,16 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
   const [activeFlowId,  setActiveFlowId]  = useState(null);
   const [mainTab,       setMainTab]       = useState(initialTab || "system"); // "system" | "arch"
   const [showSidebar,   setShowSidebar]   = useState(true);
+  const isMobile = useIsMobile();
+  const [showMobilePicker, setShowMobilePicker] = useState(false);
+  const mobilePlaceCountRef = useRef(0);
+
+  // On mobile the desktop drag-and-drop sidebar isn't usable, so keep it
+  // collapsed by default and rely on the tap-to-place picker (FAB below)
+  // instead. Desktop behavior (sidebar open by default) is unchanged.
+  useEffect(() => {
+    if (isMobile) setShowSidebar(false);
+  }, [isMobile]);
 
   // Sync tab if initialTab changes from external prop
   useEffect(() => {
@@ -244,6 +258,27 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
     if (!raw || !rfi) return;
     const item = JSON.parse(raw);
     const pos  = rfi.screenToFlowPosition({ x: e.clientX, y: e.clientY });
+    store.snapshot(nodes, edges);
+    setNodes(nds => nds.concat({
+      id: mkId(), type: "genai", position: pos,
+      data: { label: item.label, icon: item.icon, sub: item.sub, nodeType: item.color, colorKey: item.color, status: "planned", collapsed: false, info: item.info, docsUrl: item.docsUrl, cost: item.cost || null, inputPort: item.inputPort || "any", outputPort: item.outputPort || "any" },
+    }));
+  }, [rfi, nodes, edges, setNodes, store]);
+
+  // ── Add node from mobile tap-to-place picker ───────────────────────────────
+  // Mirrors onDrop's node construction, but since there's no drop
+  // coordinate on mobile, places the new node at the center of the
+  // current viewport with a small cascading offset per tap so
+  // consecutively-added nodes don't stack exactly on top of each other.
+  const addNodeFromPicker = useCallback((item) => {
+    if (!rfi || !rfWrapper.current) return;
+    const rect = rfWrapper.current.getBoundingClientRect();
+    const cascade = (mobilePlaceCountRef.current % 6) * 24;
+    mobilePlaceCountRef.current += 1;
+    const pos = rfi.screenToFlowPosition({
+      x: rect.left + rect.width / 2 + cascade,
+      y: rect.top + rect.height / 2 + cascade,
+    });
     store.snapshot(nodes, edges);
     setNodes(nds => nds.concat({
       id: mkId(), type: "genai", position: pos,
@@ -752,6 +787,18 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
 
               {/* Validation panel */}
               {showValidation && <ValidationPanelInline issues={validationIssues} onClose={() => setShowValidation(false)} />}
+
+              {/* Mobile: tap-to-place FAB replaces the drag-and-drop sidebar */}
+              {isMobile && (
+                <button
+                  type="button"
+                  className="pg-mobile-fab"
+                  onClick={() => setShowMobilePicker(true)}
+                  aria-label="Add component"
+                >
+                  <Plus size={22} />
+                </button>
+              )}
             </div>
 
             {/* Inspector */}
@@ -774,6 +821,16 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
             onClose={() => setShowNLGen(false)}
             onApply={handleNLApply}
             hasExistingNodes={nodes.length > 0}
+          />
+        )}
+
+        {/* ── Mobile tap-to-place node picker ── */}
+        {isMobile && (
+          <MobileNodePicker
+            open={showMobilePicker}
+            onClose={() => setShowMobilePicker(false)}
+            onPick={addNodeFromPicker}
+            IC={IC}
           />
         )}
 
