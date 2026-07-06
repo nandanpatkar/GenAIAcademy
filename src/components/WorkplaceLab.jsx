@@ -756,7 +756,7 @@ function NodeFormatBar({ node, onUpdate, onDelete, onStartLink, onAddSticky, isL
 
 // ── MapNode ───────────────────────────────────────────────────
 function MapNode({ 
-  node, selected, editing, isLinking, editText, onDown, onDbl, 
+  node, selected, editing, isLinking, editText, onDown, onDbl, onTouchDown,
   onEditChange, onEditCommit, allNodes, darkMode, onAddChild, onAddSibling, onJumpToResource
 }) {
   const isRoot = !node.parentId;
@@ -784,6 +784,7 @@ function MapNode({
   return (
     <g transform={`translate(${node.x},${node.y})`}
       onMouseDown={e=>{e.stopPropagation();onDown(node.id,e);}}
+      onTouchStart={e=>{e.stopPropagation();onTouchDown && onTouchDown(node.id,e);}}
       onDoubleClick={e=>{e.stopPropagation();onDbl(node.id);}}
       style={{ cursor:'pointer' }}>
 
@@ -1227,6 +1228,69 @@ function MindMapCanvas({ mapData, onUpdate, notes, history, pathsData, onJumpToR
     setEditId(id); setEditTxt(n?.label||'');
   },[nodes]);
 
+  // ── Touch support (mobile) ─────────────────────────────────────────────
+  // Mirrors the mouse handlers above rather than duplicating the drag/pan
+  // logic: node drag and canvas pan reuse onNodeDown/onSvgDown/setPan by
+  // reading clientX/clientY off the first touch point. Two-finger pinch
+  // maps to zoom, and a quick second tap on the same node substitutes for
+  // double-click-to-edit. Declared after onNodeDbl/onNodeDown since it
+  // depends on both.
+  const touchStateRef = useRef({ pinchDist: null, pinchStartZoom: 1, lastTap: 0, lastTapId: null });
+
+  const getTouchDist = (t1, t2) => Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+
+  const onNodeTouchStart = useCallback((id, e) => {
+    if (e.touches.length > 1) return; // two-finger touch is handled at the svg level (pinch)
+    const now = Date.now();
+    const ts = touchStateRef.current;
+    if (ts.lastTapId === id && now - ts.lastTap < 320) {
+      ts.lastTap = 0; ts.lastTapId = null;
+      onNodeDbl(id);
+      return;
+    }
+    ts.lastTap = now; ts.lastTapId = id;
+    onNodeDown(id, e.touches[0]);
+  }, [onNodeDown, onNodeDbl]);
+
+  const onSvgTouchStart = useCallback((e) => {
+    if (e.touches.length === 2) {
+      touchStateRef.current.pinchDist = getTouchDist(e.touches[0], e.touches[1]);
+      touchStateRef.current.pinchStartZoom = zoom;
+      setDrag(null); setPanS(null);
+      return;
+    }
+    setCtx(null);
+    const isCanvas = e.target === svgRef.current || e.target.tagName === 'rect';
+    if (isCanvas) {
+      setSelId(null); setEditId(null);
+      setPanS({ sx: e.touches[0].clientX, sy: e.touches[0].clientY, sp: { ...pan } });
+    }
+  }, [pan, zoom]);
+
+  const onTouchMove = useCallback((e) => {
+    if (e.touches.length === 2) {
+      const dist = getTouchDist(e.touches[0], e.touches[1]);
+      const ts = touchStateRef.current;
+      if (ts.pinchDist) {
+        setZoom(Math.min(3, Math.max(0.15, ts.pinchStartZoom * (dist / ts.pinchDist))));
+      }
+      return;
+    }
+    const t = e.touches[0];
+    if (!t) return;
+    if (drag) {
+      const p = toSvg(t.clientX, t.clientY);
+      setNodes(prev => prev.map(n => n.id === drag.id ? { ...n, x: p.x - drag.ox, y: p.y - drag.oy } : n));
+    } else if (panS) {
+      setPan({ x: panS.sp.x + t.clientX - panS.sx, y: panS.sp.y + t.clientY - panS.sy });
+    }
+  }, [drag, panS, toSvg]);
+
+  const onTouchEnd = useCallback((e) => {
+    touchStateRef.current.pinchDist = null;
+    if (e.touches.length === 0) { setDrag(null); setPanS(null); }
+  }, []);
+
   const commitEdit=useCallback(()=>{
     if(!editId) return;
     saveToHistory();
@@ -1420,8 +1484,9 @@ function MindMapCanvas({ mapData, onUpdate, notes, history, pathsData, onJumpToR
         <svg ref={svgRef} width="100%" height="100%"
           onMouseDown={onSvgDown} onMouseMove={onMouseMove}
           onMouseUp={onMouseUp} onMouseLeave={onMouseUp}
+          onTouchStart={onSvgTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
           onWheel={onWheel} onContextMenu={onCtxMenu}
-          style={{ display:'block', cursor:panS?'grabbing':'default', userSelect:'none' }}>
+          style={{ display:'block', cursor:panS?'grabbing':'default', userSelect:'none', touchAction:'none' }}>
 
           <defs>
             <pattern id="mup-dots" width={22} height={22} patternUnits="userSpaceOnUse"
@@ -1440,7 +1505,8 @@ function MindMapCanvas({ mapData, onUpdate, notes, history, pathsData, onJumpToR
             </marker>
           </defs>
           <rect width="100%" height="100%" fill="url(#mup-dots)"
-            onMouseDown={e=>{if(e.target===e.currentTarget)onSvgDown(e);}}/>
+            onMouseDown={e=>{if(e.target===e.currentTarget)onSvgDown(e);}}
+            onTouchStart={e=>{if(e.target===e.currentTarget)onSvgTouchStart(e);}}/>
 
           <g transform={`translate(${pan.x},${pan.y}) scale(${zoom})`}>
             {/* Tree edges */}
@@ -1471,7 +1537,7 @@ function MindMapCanvas({ mapData, onUpdate, notes, history, pathsData, onJumpToR
                 selected={n.id===selId} editing={n.id===editId}
                 isLinking={n.id===linkingId}
                 editText={editTxt}
-                onDown={onNodeDown} onDbl={onNodeDbl}
+                onDown={onNodeDown} onDbl={onNodeDbl} onTouchDown={onNodeTouchStart}
                 onEditChange={setEditTxt} onEditCommit={commitEdit}
                 allNodes={nodes} darkMode={darkMode}
                 onAddChild={addChild} onAddSibling={addSibling}

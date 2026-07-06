@@ -1,0 +1,146 @@
+/* ─────────────────────────────────────────────────────────────
+   MobileNodePicker — tap-to-place node picker for the Playground
+   on mobile. Rendered inside MobileSheet's body.
+   ───────────────────────────────────────────────────────────── */
+
+.mnp-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pg-panel, var(--bg3));
+  border: 1px solid var(--pg-border, var(--border));
+  border-radius: 10px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+}
+
+.mnp-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--pg-text, var(--text));
+  font-size: 13px;
+  font-family: "DM Mono", monospace;
+}
+
+.mnp-cats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mnp-cat-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  padding: 10px 4px;
+  cursor: pointer;
+}
+
+.mnp-cat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--pg-text, var(--text));
+}
+
+.mnp-cat-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--pg-text3, var(--text3));
+  background: var(--pg-border2, var(--bg4));
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.mnp-cat-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 0 8px;
+}
+
+.mnp-item {
+  --item-border: var(--pg-border2, var(--border));
+  --item-bg: var(--pg-panel, var(--bg3));
+  --item-accent: var(--pg-accent, var(--neon));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1px solid var(--item-border);
+  border-radius: 10px;
+  background: var(--pg-sidebar, var(--bg2));
+  cursor: pointer;
+}
+
+.mnp-item:active {
+  background: var(--item-bg);
+  border-color: var(--item-accent);
+}
+
+.mnp-item-icon {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--item-bg);
+  border: 1px solid var(--item-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mnp-item-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mnp-item-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--pg-text, var(--text));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mnp-item-sub {
+  font-size: 10.5px;
+  color: var(--pg-text3, var(--text3));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Floating "add node" trigger button, shown on mobile in place of the
+   drag-and-drop sidebar */
+.pg-mobile-fab {
+  position: absolute;
+  right: 16px;
+  bottom: 20px;
+  z-index: 30;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--pg-accent, #818cf8);
+  border: none;
+  color: #0d1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(129, 140, 248, 0.4);
+  cursor: pointer;
+}
+
+.pg-mobile-fab:active {
+  transform: scale(0.94);
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, Component } from "react";
 import Sidebar from "./components/Sidebar";
 import RoadmapGraph from "./components/RoadmapGraph";
+import RoadmapMobile from "./pages/roadmap/RoadmapMobile";
 import ModulePanel from "./components/ModulePanel";
 import ResourcePanel from "./components/ResourcePanel";
 import DetailPanel from "./components/DetailPanel";
@@ -48,8 +49,9 @@ import Community from "./components/Community/Community";
 import AppWalkthrough from "./components/AppWalkthrough";
 import { MAIN_STEPS, SECTION_STEPS, SIDEBAR_OVERVIEW_STEPS } from "./data/walkthroughSteps";
 import { AnimatePresence } from "framer-motion";
-import useWindowWidth from "./hooks/useWindowWidth";
+import useIsMobile from "./hooks/useIsMobile";
 import "./styles/global.css";
+import "./styles/mobile-foundation.css";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -94,8 +96,9 @@ const injectDefaultIcons = (paths) => {
 
 function MainApp() {
   const { user, isAdmin, isLocked, signOut, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
-  const width = useWindowWidth();
-  const isMobile = width <= 768;
+  // isMobile now comes from the centralized useIsMobile hook (Phase 0 of
+  // the mobile redesign) instead of an inline `width <= 768` check.
+  const isMobile = useIsMobile();
 
   // Sync Global AI Config to AI Service
   useEffect(() => {
@@ -991,18 +994,26 @@ function MainApp() {
                                                       <>
                                                         {!freshActiveNode && (
                                                           <>
-                                                            <RoadmapGraph
-                                                              path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
-                                                              activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
-                                                              completedCount={completedCount} onMarkState={handleMarkState}
-                                                              onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                                                              onEditNode={n => { setEditData(n); setEditingNode(true); }}
-                                                              onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                                                              onDeleteNode={handleDeleteNode}
-                                                              isEditMode={isEditMode}
-                                                              lastCompletedNodeId={lastCompletedNodeId}
-                                                              onAnimationTriggered={() => setLastCompletedNodeId(null)}
-                                                            />
+                                                            {isMobile && !isEditMode ? (
+                                                              <RoadmapMobile
+                                                                path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                                completedCount={completedCount}
+                                                              />
+                                                            ) : (
+                                                              <RoadmapGraph
+                                                                path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                                completedCount={completedCount} onMarkState={handleMarkState}
+                                                                onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                                onEditNode={n => { setEditData(n); setEditingNode(true); }}
+                                                                onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                                onDeleteNode={handleDeleteNode}
+                                                                isEditMode={isEditMode}
+                                                                lastCompletedNodeId={lastCompletedNodeId}
+                                                                onAnimationTriggered={() => setLastCompletedNodeId(null)}
+                                                              />
+                                                            )}
                                                           </>
                                                         )}
             {freshActiveNode && !activeTopic && (!showModuleDetails || !isMobile) && (

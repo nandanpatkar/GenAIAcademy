@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { ALGO_EXAMPLES } from '../data/algoExamples';
 import { findAlgorithmTemplates } from '../services/aiService';
+import useIsMobile from '../hooks/useIsMobile';
 
 const ALGO_TABS = [
   { id: 'theory', label: 'Theory', icon: BookOpen, color: '#fbbf24' },
@@ -167,6 +168,16 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
   // Resizable Panes State
   const [paneWidth, setPaneWidth] = useState(450); // Default width
   const [isResizing, setIsResizing] = useState(false);
+
+  // Mobile layout: the desktop 30/70 split (with a drag resizer) doesn't
+  // work on a narrow touch screen, so on mobile we show one pane at a
+  // time via a top-level tab switch instead. "Code" already contains the
+  // output terminal stacked directly beneath the editor (see
+  // editor-container below), so two tabs — Code and Visualization —
+  // cover the same three regions (code / output / visualization) without
+  // needing to split the terminal out into its own screen.
+  const isMobile = useIsMobile();
+  const [mobileTab, setMobileTab] = useState('code'); // 'code' | 'viz'
 
   const playbackTimerRef = useRef(null);
   const editorRef = useRef(null);
@@ -555,12 +566,28 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
       <div className="studio-body">
 
         <main className="studio-main">
-          <div className={`workspace ${isVizMaximized ? 'sidebar-collapsed' : ''}`}>
+          {isMobile && (
+            <div className="mobile-view-tabs">
+              <button
+                className={`mobile-view-tab ${mobileTab === 'code' ? 'active' : ''}`}
+                onClick={() => setMobileTab('code')}
+              >
+                <Code size={13} /> Code
+              </button>
+              <button
+                className={`mobile-view-tab ${mobileTab === 'viz' ? 'active' : ''}`}
+                onClick={() => setMobileTab('viz')}
+              >
+                <Monitor size={13} /> Visualization
+              </button>
+            </div>
+          )}
+          <div className={`workspace ${isVizMaximized ? 'sidebar-collapsed' : ''} ${isMobile ? 'mobile-stacked' : ''}`}>
             
             {/* --- Editor & Theory Section (30%) --- */}
             <section 
-              className={`editor-pane ${isVizMaximized ? 'collapsed' : ''}`}
-              style={{ width: isVizMaximized ? 0 : paneWidth }}
+              className={`editor-pane ${isVizMaximized ? 'collapsed' : ''} ${isMobile && mobileTab !== 'code' ? 'mobile-hidden' : ''}`}
+              style={{ width: isMobile ? '100%' : (isVizMaximized ? 0 : paneWidth) }}
             >
               <div className="pane-header">
                 <div 
@@ -731,7 +758,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
             </section>
 
             {/* --- Resizer (Splitter) --- */}
-            {!isVizMaximized && (
+            {!isVizMaximized && !isMobile && (
               <div 
                 className={`studio-resizer ${isResizing ? 'active' : ''}`}
                 onMouseDown={startResizing}
@@ -739,7 +766,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
             )}
 
             {/* --- Visualization Section (70%) --- */}
-            <section className={`viz-section ${isVizMaximized ? 'maximized' : ''}`}>
+            <section className={`viz-section ${isVizMaximized ? 'maximized' : ''} ${isMobile && mobileTab !== 'viz' ? 'mobile-hidden' : ''}`}>
               <div className="pane-header">
                 <div className="tabs-pill">
                   <button className="tab active">
@@ -1375,6 +1402,47 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         .studio-resizer:hover, .studio-resizer.active {
           background: rgba(0, 255, 136, 0.5);
           box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+        }
+
+        /* --- Mobile: Code / Visualization tab switch --- */
+        .mobile-view-tabs {
+          display: flex;
+          gap: 6px;
+          padding: 8px 12px;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          background: #0a0a0a;
+          flex-shrink: 0;
+        }
+
+        .mobile-view-tab {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 9px 0;
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.03);
+          color: rgba(255,255,255,0.5);
+          font-size: 12px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+
+        .mobile-view-tab.active {
+          color: #00ff88;
+          border-color: rgba(0,255,136,0.4);
+          background: rgba(0,255,136,0.08);
+        }
+
+        .workspace.mobile-stacked {
+          display: block;
+          width: 100%;
+        }
+
+        .mobile-hidden {
+          display: none !important;
         }
 
         /* --- GLASS DOCK --- */
