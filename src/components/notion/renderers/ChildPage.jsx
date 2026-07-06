@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FileText } from 'lucide-react';
+import { supabase } from '../../../config/supabaseClient';
 
 export default function ChildPage({ block, onNavigateToPage }) {
   const [icon, setIcon] = useState(null);
@@ -9,18 +10,11 @@ export default function ChildPage({ block, onNavigateToPage }) {
   useEffect(() => {
     async function fetchPageIcon() {
       try {
-        const NOTION_API_KEY = import.meta.env.VITE_NOTION_API_KEY;
-        const res = await fetch(`/notion-api/v1/pages/${pageId}`, {
-          headers: {
-            'Authorization': `Bearer ${NOTION_API_KEY}`,
-            'Notion-Version': '2022-06-28'
-          }
+        const { data: pageResult, error } = await supabase.functions.invoke('notion-fetch', {
+          body: { pageId }
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.icon) {
-            setIcon(data.icon);
-          }
+        if (!error && pageResult?.page?.icon) {
+          setIcon(pageResult.page.icon);
         }
       } catch (err) {
         console.error("Failed to fetch child page icon", err);
