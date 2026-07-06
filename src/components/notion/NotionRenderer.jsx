@@ -21,32 +21,28 @@ export default function NotionRenderer({ passedPageId }) {
     async function fetchNotionData(pageId) {
       try {
         setLoading(true);
-        const NOTION_API_KEY = import.meta.env.VITE_NOTION_API_KEY;
-        
-        // Fetch Page Metadata
-        const pageRes = await fetch(`/notion-api/v1/pages/${pageId}`, {
-          headers: {
-            'Authorization': `Bearer ${NOTION_API_KEY}`,
-            'Notion-Version': '2022-06-28'
-          }
-        });
-        if (!pageRes.ok) throw new Error(`Failed to fetch Notion page: ${pageRes.statusText}`);
-        const pageData = await pageRes.json();
 
-        // Recursive fetch for blocks
+        // Fetch Page Metadata + top-level blocks via Supabase Edge Function
+        // (keeps NOTION_API_KEY server-side instead of shipping it to the browser)
+        const { data: pageResult, error: pageError } = await supabase.functions.invoke('notion-fetch', {
+          body: { pageId }
+        });
+        if (pageError) throw new Error(`Failed to fetch Notion page: ${pageError.message}`);
+        if (pageResult?.error) throw new Error(`Failed to fetch Notion page: ${pageResult.error}`);
+
+        const pageData = pageResult.page;
+        const topLevelBlocks = pageResult.blocks;
+
+        // Recursive fetch for nested children, using blockId (not pageId)
         async function fetchBlocks(blockId) {
-          const res = await fetch(`/notion-api/v1/blocks/${blockId}/children?page_size=100`, {
-            headers: {
-              'Authorization': `Bearer ${NOTION_API_KEY}`,
-              'Notion-Version': '2022-06-28'
-            }
+          const { data: blockResult, error: blockError } = await supabase.functions.invoke('notion-fetch', {
+            body: { blockId }
           });
-          if (!res.ok) throw new Error(`Failed to fetch Notion blocks: ${res.statusText}`);
-          const data = await res.json();
-          
-          const blocks = data.results;
-          
-          // Fetch children recursively if they exist
+          if (blockError) throw new Error(`Failed to fetch Notion blocks: ${blockError.message}`);
+          if (blockResult?.error) throw new Error(`Failed to fetch Notion blocks: ${blockResult.error}`);
+
+          const blocks = blockResult.blocks;
+
           for (let i = 0; i < blocks.length; i++) {
             const b = blocks[i];
             // Do not recursively fetch child pages or databases to avoid downloading the entire workspace
@@ -54,13 +50,18 @@ export default function NotionRenderer({ passedPageId }) {
               blocks[i].children = await fetchBlocks(b.id);
             }
           }
-          
+
           return blocks;
         }
 
-        const blocksData = await fetchBlocks(pageId);
+        for (let i = 0; i < topLevelBlocks.length; i++) {
+          const b = topLevelBlocks[i];
+          if (b.has_children && b.type !== 'child_page' && b.type !== 'child_database') {
+            topLevelBlocks[i].children = await fetchBlocks(b.id);
+          }
+        }
 
-        setData({ page: pageData, blocks: blocksData });
+        setData({ page: pageData, blocks: topLevelBlocks });
         setError(null);
       } catch (err) {
         console.error("Error fetching notion data:", err);

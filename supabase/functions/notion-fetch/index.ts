@@ -11,11 +11,34 @@ serve(async (req) => {
   }
 
   try {
-    const { pageId } = await req.json()
+    const { pageId, blockId } = await req.json()
     const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
 
-    if (!pageId) {
-      throw new Error('pageId is required')
+    if (!pageId && !blockId) {
+      throw new Error('pageId or blockId is required')
+    }
+
+    // If only blockId is provided, just return that block's children (used for recursive nesting)
+    if (blockId && !pageId) {
+      const blocksResponse = await fetch(`https://api.notion.com/v1/blocks/${blockId}/children?page_size=100`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${NOTION_API_KEY}`,
+          'Notion-Version': '2022-06-28'
+        }
+      });
+      if (!blocksResponse.ok) {
+        const err = await blocksResponse.json();
+        throw new Error(`Failed to fetch Notion blocks: ${err.message}`);
+      }
+      const blocksData = await blocksResponse.json();
+      return new Response(
+        JSON.stringify({ blocks: blocksData.results }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      )
     }
 
     // 1. Fetch Page Metadata
