@@ -48,8 +48,9 @@ import Community from "./components/Community/Community";
 import AppWalkthrough from "./components/AppWalkthrough";
 import { MAIN_STEPS, SECTION_STEPS, SIDEBAR_OVERVIEW_STEPS } from "./data/walkthroughSteps";
 import { AnimatePresence } from "framer-motion";
-import useWindowWidth from "./hooks/useWindowWidth";
+import useIsMobile from "./hooks/useIsMobile";
 import "./styles/global.css";
+import "./styles/mobile-foundation.css";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -94,8 +95,9 @@ const injectDefaultIcons = (paths) => {
 
 function MainApp() {
   const { user, isAdmin, isLocked, signOut, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
-  const width = useWindowWidth();
-  const isMobile = width <= 768;
+  // isMobile now comes from the centralized useIsMobile hook (Phase 0 of
+  // the mobile redesign) instead of an inline `width <= 768` check.
+  const isMobile = useIsMobile();
 
   // Sync Global AI Config to AI Service
   useEffect(() => {
