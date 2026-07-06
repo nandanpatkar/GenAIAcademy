@@ -137,8 +137,50 @@ Added, without duplicating the underlying drag/pan/zoom logic:
   "Cannot access before initialization" error at runtime; worth knowing
   if this file gets restructured later).
 
+## Phase 3 — AlgoVisualizer tabs + DSA Animator master-detail (wired in)
+
+Blog and Community are still planning-stage (no code exists yet), so
+per your call this pass covers AlgoVisualizer and DSA Animator only —
+those two get built mobile-first once actual implementation starts.
+
+**AlgoVisualizer — Code / Visualization mobile tabs**
+The desktop layout is a 30/70 split (`editor-pane` / `viz-section`) with
+a drag `studio-resizer` between them — unusable on a narrow screen.
+- On mobile, a new top bar (`.mobile-view-tabs`) switches between two
+  panes: **Code** and **Visualization**, each shown full-width
+  (`.mobile-hidden` / `.workspace.mobile-stacked` CSS toggles which one
+  renders).
+- This ended up as **2 tabs, not 3** — the plan's "Output" pane is
+  already stacked directly beneath the Monaco editor inside
+  `editor-container` (flex-column), so "Code" on mobile shows editor +
+  terminal together exactly as they already appear on desktop, just
+  full-width instead of squeezed into 30%. Splitting Output into its own
+  third tab would have meant extracting the terminal JSX out of the
+  code-tab block — doable, but higher risk in a 2700-line file for
+  limited added value since it's already visible right under the editor.
+  Worth revisiting if the combined Code+Output view feels cramped in
+  practice.
+- The resizer is hidden on mobile (`!isMobile` guard) since there's
+  nothing to drag between — each pane is full-width when active.
+- Desktop is untouched: same grid, same resizer, same behavior.
+
+**DSA Animator — master-detail on mobile**
+The Problems tab was a fixed 300px sidebar + iframe pane side-by-side —
+both panes were cramped on mobile. Now, on mobile:
+- No problem selected: the problem list (`Left Panel: Problem Browser`)
+  shows full-width as the primary screen.
+- Problem selected: the list hides and the iframe detail pane takes over
+  full-width, with a new back arrow button in the problem header bar
+  (`setActiveProblem(null)`) to return to the list.
+- Code Tricks / Edge Cases tabs (`CustomDataGrid`) weren't touched —
+  their `grid-template-columns: repeat(auto-fill, minmax(320px, 1fr))`
+  already collapses to a single column on a phone-width viewport.
+- The underlying dsaanimator.com iframe itself isn't touched — this
+  fixes the *navigation* around it, not the third-party page's own
+  responsiveness, which Anthropic/we don't control.
+
 ## Remaining phases
 
-- **Phase 3**: AlgoVisualizer (tabbed Code/Visualization/Output), DSA
-  Animator (fallback content when the iframe can't render usably), and
-  Blog/Community built mobile-first from the start.
+- **Blog & Community**: build mobile-first once implementation actually
+  starts (still planning-stage — Supabase schema and phased plan exist,
+  no components yet).

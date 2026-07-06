@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Search, ChevronDown, ChevronUp, PanelLeft, Clapperboard, PlaySquare, Lightbulb, AlertTriangle, BookMarked, Terminal } from "lucide-react";
+import { X, Search, ChevronDown, ChevronUp, PanelLeft, Clapperboard, PlaySquare, Lightbulb, AlertTriangle, BookMarked, Terminal, ArrowLeft } from "lucide-react";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import useIsMobile from "../hooks/useIsMobile";
 
 // ── Full sitemap mapping ──────────────────────────────────────────────────────
 import { CATEGORIES } from "./dsaData";
@@ -30,6 +31,7 @@ function DiffBadge({ diff }) {
 
 export default function DSAAnimator({ onClose }) {
   const totalProblems = CATEGORIES.reduce((s, c) => s + c.problems.length, 0);
+  const isMobile = useIsMobile();
 
   const [search, setSearch]           = useState("");
   const [activeCat, setActiveCat]     = useState(null);   // null = all
@@ -245,9 +247,9 @@ export default function DSAAnimator({ onClose }) {
         ) : (
           <>
             {/* ── Left Panel: Problem Browser ─────────────────────────────── */}
-            {showSidebar && (
+            {showSidebar && (!isMobile || !activeProblem) && (
           <div style={{
-            width: 300, minWidth: 300, background: "var(--bg2)",
+            width: isMobile ? "100%" : 300, minWidth: isMobile ? "100%" : 300, background: "var(--bg2)",
             borderRight: "1px solid var(--border)",
             display: "flex", flexDirection: "column", overflow: "hidden",
           }}>
@@ -348,6 +350,7 @@ export default function DSAAnimator({ onClose }) {
         )}
 
         {/* ── Right: iframe / placeholder ─────────────────────────────── */}
+        {(!isMobile || activeProblem) && (
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
           {activeProblem ? (
             <>
@@ -357,6 +360,20 @@ export default function DSAAnimator({ onClose }) {
                 padding: "8px 16px", borderBottom: "1px solid var(--border)",
                 background: "var(--bg2)", flexShrink: 0,
               }}>
+                {isMobile && (
+                  <button
+                    onClick={() => setActiveProblem(null)}
+                    aria-label="Back to problem list"
+                    style={{
+                      width: 28, height: 28, borderRadius: 7, flexShrink: 0,
+                      background: "var(--bg3)", border: "1px solid var(--border)",
+                      color: "var(--text)", cursor: "pointer",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                    }}
+                  >
+                    <ArrowLeft size={14} />
+                  </button>
+                )}
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 800 }}>{activeProblem.title}</div>
                   <div style={{ fontSize: 10, color: "var(--text3)" }}>{activeProblem.catLabel}</div>
@@ -440,6 +457,7 @@ export default function DSAAnimator({ onClose }) {
             </div>
           )}
         </div>
+        )}
           </>
         )}
       </div>
