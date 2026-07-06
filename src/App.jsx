@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, Component } from "react";
 import Sidebar from "./components/Sidebar";
 import RoadmapGraph from "./components/RoadmapGraph";
+import RoadmapMobile from "./pages/roadmap/RoadmapMobile";
 import ModulePanel from "./components/ModulePanel";
 import ResourcePanel from "./components/ResourcePanel";
 import DetailPanel from "./components/DetailPanel";
@@ -993,18 +994,26 @@ function MainApp() {
                                                       <>
                                                         {!freshActiveNode && (
                                                           <>
-                                                            <RoadmapGraph
-                                                              path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
-                                                              activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
-                                                              completedCount={completedCount} onMarkState={handleMarkState}
-                                                              onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                                                              onEditNode={n => { setEditData(n); setEditingNode(true); }}
-                                                              onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                                                              onDeleteNode={handleDeleteNode}
-                                                              isEditMode={isEditMode}
-                                                              lastCompletedNodeId={lastCompletedNodeId}
-                                                              onAnimationTriggered={() => setLastCompletedNodeId(null)}
-                                                            />
+                                                            {isMobile && !isEditMode ? (
+                                                              <RoadmapMobile
+                                                                path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                                completedCount={completedCount}
+                                                              />
+                                                            ) : (
+                                                              <RoadmapGraph
+                                                                path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                                completedCount={completedCount} onMarkState={handleMarkState}
+                                                                onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                                onEditNode={n => { setEditData(n); setEditingNode(true); }}
+                                                                onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                                onDeleteNode={handleDeleteNode}
+                                                                isEditMode={isEditMode}
+                                                                lastCompletedNodeId={lastCompletedNodeId}
+                                                                onAnimationTriggered={() => setLastCompletedNodeId(null)}
+                                                              />
+                                                            )}
                                                           </>
                                                         )}
             {freshActiveNode && !activeTopic && (!showModuleDetails || !isMobile) && (

@@ -72,11 +72,27 @@ This keeps each mobile view isolated and independently shippable, rather
 than growing more `isMobile` branches inside the existing desktop
 components.
 
-## Remaining phases (unchanged from the agreed plan)
+## Phase 1 — Roadmap mobile view (wired in)
 
-- **Phase 1**: Visual Roadmap mobile view (vertical list + MobileSheet
-  drill-down), replacing the graph canvas + `showModuleDetails` overlay
-  pattern.
+`src/pages/roadmap/RoadmapMobile.jsx` replaces `RoadmapGraph`'s zigzag/
+central-line layout with a vertical, scrollable card list when
+`isMobile && !isEditMode`. It mirrors `RoadmapGraph`'s data shape and
+calls the same `onNodeClick(node)` callback, so the existing
+`ModulePanel -> DetailPanel -> ResourcePanel` mobile drill-down flow in
+`App.jsx` is untouched — only the top-level node list changed.
+
+- Path-switch tabs, progress bar, and per-node status are preserved from
+  the desktop view, restyled for a single-column touch layout.
+- Edit mode intentionally still falls back to `RoadmapGraph` on mobile
+  (`isMobile && !isEditMode` gate) — node add/edit/delete flows haven't
+  been rebuilt for the mobile list yet, so editing stays on the
+  desktop-style graph for now rather than losing that functionality.
+  Revisit this once mobile add/edit/delete affordances are designed.
+- Styles: `src/styles/roadmap-mobile.css`, using the same CSS variable
+  theme system as the rest of the app.
+
+## Remaining phases
+
 - **Phase 2**: System Design Playground (view-only pan/zoom on mobile,
   editing pushed to desktop) and WorkplaceLab mind map (touch-first
   interactions).
