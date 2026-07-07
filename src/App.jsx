@@ -26,6 +26,7 @@ import K8sGames from "./components/K8sGames";
 import GitVisualizer from "./components/GitVisualizer";
 import FlowDesign from "./components/FlowDesign";
 import NotionRenderer from "./components/notion/NotionRenderer";
+import InterviewPrep from "./components/InterviewPrep";
 import {
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp,
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
@@ -355,6 +356,7 @@ function MainApp() {
   const [showFlowDesign, setShowFlowDesign] = useState(false);
   const [showCommunity, setShowCommunity] = useState(false);
   const [showNotion, setShowNotion] = useState(false);
+  const [showInterviewPrep, setShowInterviewPrep] = useState(false);
 
   const [showGitHubHub, setShowGitHubHub] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -486,6 +488,7 @@ function MainApp() {
     setShowKnowledgeGraph(false);
     setShowCommunity(false);
     setShowNotion(false);
+    setShowInterviewPrep(false);
   };
 
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
@@ -884,6 +887,7 @@ function MainApp() {
           showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
           showCommunity={showCommunity} setShowCommunity={setShowCommunity}
           showNotion={showNotion} setShowNotion={setShowNotion}
+          showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
           setLinksInitialTab={setLinksInitialTab}
           onHubNav={handleHubNav}
           isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
@@ -975,6 +979,7 @@ function MainApp() {
                                               /> :
                                                 showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
                                                   showNotion ? <NotionRenderer /> :
+                                                    showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} /> :
                                                     showIntelligenceHub ? (
                                                     <IntelligenceHub
                                                       paths={pathsData}

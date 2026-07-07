@@ -30,6 +30,7 @@ export default function Sidebar({
   showKnowledgeGraph, setShowKnowledgeGraph,
   showCommunity, setShowCommunity,
   showNotion, setShowNotion,
+  showInterviewPrep, setShowInterviewPrep,
   isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
   theme, toggleTheme,
@@ -93,6 +94,7 @@ export default function Sidebar({
           { icon: <GraduationCap size={14} />, label: "AIML Companion", id: "aiml_companion" }
         ] : []),
         { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer" },
+        { icon: <HelpCircle size={14} />, label: "Interview Prep", id: "interview_prep" },
         { icon: <Users size={14} />, label: "Community", id: "community" },
       ]
     },
@@ -138,6 +140,7 @@ export default function Sidebar({
     if (showFlowDesign) return "flow_design";
     if (showCommunity) return "community";
     if (showNotion) return "notion";
+    if (showInterviewPrep) return "interview_prep";
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
     if (showIntelligenceHub) return "hub";
@@ -175,6 +178,7 @@ export default function Sidebar({
     if (setShowGitHubHub) setShowGitHubHub(false);
     if (setShowCommunity) setShowCommunity(false);
     if (setShowNotion) setShowNotion(false);
+    if (setShowInterviewPrep) setShowInterviewPrep(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
 
     switch (id) {
@@ -222,6 +226,9 @@ export default function Sidebar({
         break;
       case "notion":
         if (setShowNotion) setShowNotion(true);
+        break;
+      case "interview_prep":
+        if (setShowInterviewPrep) setShowInterviewPrep(true);
         break;
       case "tasks":
         if (setShowWorkplaceLab) setShowWorkplaceLab(true);
