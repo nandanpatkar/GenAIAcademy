@@ -1,6 +1,9 @@
-/* Interview Prep — theme-matched using the app's global CSS variables
-   (--bg, --bg2, --bg3, --border, --text, --text2, --text3, --neon, --font, --mono) */
+/* ═══════════════════════════════════════════════════════════════════════════
+   INTERVIEW PREP — Drill-down Roadmap Theme
+   Obsidian/Neon design system. All colours via CSS variables.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ── Root ───────────────────────────────────────────────────────────────── */
 .ip-root {
   flex: 1;
   display: flex;
@@ -11,38 +14,98 @@
   font-family: var(--font);
 }
 
-/* ── Header ─────────────────────────────────────────────────────────────── */
-.ip-header {
+/* ── Topbar ──────────────────────────────────────────────────────────────── */
+.ip-topbar {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 16px;
+  padding: 0 16px;
   border-bottom: 1px solid var(--border);
   background: var(--bg2);
   flex-shrink: 0;
+  min-height: 52px;
 }
 
-.ip-icon-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text2);
-  cursor: pointer;
-  border-radius: 6px;
-  width: 30px;
-  height: 30px;
+.ip-topbar-left {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
   flex-shrink: 0;
-  transition: all .15s;
 }
-.ip-icon-btn:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
 
+.ip-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.ip-back-btn:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+
+.ip-mobile-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  background: var(--bg2);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.ip-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ip-brand-icon { color: var(--neon); }
+.ip-brand-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.ip-overall-progress { display: flex; align-items: center; gap: 8px; }
+.ip-overall-bar {
+  width: 80px; height: 3px;
+  background: var(--border);
+  border-radius: 3px; overflow: hidden;
+}
+.ip-overall-fill {
+  height: 100%;
+  background: var(--neon);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.ip-overall-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--neon);
+  white-space: nowrap;
+}
+
+/* ── Search ──────────────────────────────────────────────────────────────── */
 .ip-search-wrap {
   flex: 1;
   position: relative;
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 .ip-search-icon { position: absolute; left: 10px; color: var(--text3); pointer-events: none; }
 .ip-search-input {
@@ -53,25 +116,30 @@
   color: var(--text);
   font-family: var(--font);
   font-size: 13px;
-  padding: 8px 30px 8px 30px;
+  padding: 7px 28px 7px 30px;
   outline: none;
-  transition: border-color .15s;
+  transition: border-color 0.15s;
 }
 .ip-search-input:focus { border-color: var(--neon); }
 .ip-search-input::placeholder { color: var(--text3); }
 .ip-search-clear {
-  position: absolute;
-  right: 8px;
-  background: none;
-  border: none;
-  color: var(--text3);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+  position: absolute; right: 8px;
+  background: none; border: none;
+  color: var(--text3); cursor: pointer;
+  display: flex; align-items: center; padding: 2px;
 }
 .ip-search-clear:hover { color: var(--text); }
 
-/* ── Body / panes ───────────────────────────────────────────────────────── */
+.ip-icon-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text2); cursor: pointer; border-radius: 6px;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.15s;
+}
+.ip-icon-btn:hover { color: var(--text); border-color: var(--border2); background: var(--bg3); }
+
+/* ── Body ─────────────────────────────────────────────────────────────────── */
 .ip-body {
   flex: 1;
   display: flex;
@@ -79,303 +147,713 @@
   min-height: 0;
 }
 
+/* ── List pane ───────────────────────────────────────────────────────────── */
 .ip-list-pane {
-  width: 340px;
-  min-width: 340px;
+  width: 380px;
+  min-width: 380px;
   border-right: 1px solid var(--border);
-  background: var(--bg2);
+  background: var(--bg);
   overflow-y: auto;
-  padding: 8px;
+  overflow-x: hidden;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
+.ip-list-pane::-webkit-scrollbar { width: 4px; }
+.ip-list-pane::-webkit-scrollbar-track { background: transparent; }
+.ip-list-pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-.ip-detail-pane {
-  flex: 1;
-  overflow-y: auto;
-  padding: 28px 36px 60px;
-}
-
-.ip-state {
+/* ── Breadcrumb inside list pane ─────────────────────────────────────────── */
+.ip-breadcrumb {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: var(--text2);
-  font-size: 13px;
-  padding: 20px 12px;
+  gap: 5px;
+  padding: 8px 16px;
+  font-size: 11px;
+  color: var(--text3);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  flex-wrap: wrap;
+}
+.ip-bc-link {
+  cursor: pointer;
+  color: var(--text3);
+  transition: color 0.15s;
+}
+.ip-bc-link:hover { color: var(--neon); }
+.ip-bc-current { color: var(--text2); }
+
+/* ── State messages ──────────────────────────────────────────────────────── */
+.ip-state {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text2); font-size: 13px;
+  padding: 32px 20px; justify-content: center;
 }
 .ip-state.ip-error { color: #f87171; }
 .ip-spin { animation: ip-spin 0.9s linear infinite; }
 @keyframes ip-spin { to { transform: rotate(360deg); } }
 
-.ip-empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: var(--text3);
-  font-size: 13px;
+/* ── Search Results ──────────────────────────────────────────────────────── */
+.ip-search-results-pane { padding: 12px 14px; }
+.ip-search-count {
+  font-size: 10.5px; color: var(--text3);
+  margin-bottom: 8px; font-family: var(--mono); letter-spacing: 0.5px;
 }
-
-/* ── Course / chapter / lesson tree ────────────────────────────────────── */
-.ip-course-block { margin-bottom: 6px; }
-
-.ip-course-header {
+.ip-search-result {
   width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: var(--font);
-  font-size: 12.5px;
-  font-weight: 600;
-  padding: 9px 10px;
-  cursor: pointer;
-  text-align: left;
+  display: flex; align-items: flex-start; gap: 8px;
+  background: none; border: 1px solid transparent;
+  border-radius: 8px; padding: 8px 10px;
+  cursor: pointer; text-align: left;
+  transition: all 0.15s; margin-bottom: 3px;
 }
-.ip-course-header:hover { border-color: var(--border2); }
-.ip-course-header svg { flex-shrink: 0; color: var(--text3); }
-.ip-course-title { flex: 1; }
-.ip-course-pct {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  color: var(--neon);
-  flex-shrink: 0;
+.ip-search-result:hover, .ip-search-result.active {
+  background: var(--bg3); border-color: var(--border);
 }
-
-.ip-course-progress-track {
-  height: 2px;
-  background: var(--border);
-  border-radius: 2px;
-  margin: 3px 2px 0;
-  overflow: hidden;
-}
-.ip-course-progress-fill {
-  height: 100%;
-  background: var(--neon);
-  transition: width .3s;
-}
-
-.ip-chapter-block { margin: 4px 0 4px 14px; }
-
-.ip-chapter-header {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  border: none;
-  color: var(--text2);
-  font-family: var(--font);
-  font-size: 11.5px;
-  font-weight: 500;
-  padding: 6px 6px;
-  cursor: pointer;
-  text-align: left;
-}
-.ip-chapter-header:hover { color: var(--text); }
-.ip-chapter-header svg { flex-shrink: 0; color: var(--text3); }
-.ip-chapter-header span:first-of-type { flex: 1; }
-.ip-chapter-count {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-  background: var(--bg3);
-  border-radius: 4px;
-  padding: 1px 5px;
-}
-
-.ip-lesson-list { margin-left: 16px; display: flex; flex-direction: column; gap: 1px; }
-
-.ip-lesson-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 7px;
-  background: none;
-  border: none;
-  border-radius: 6px;
-  color: var(--text2);
-  font-family: var(--font);
-  font-size: 12px;
-  line-height: 1.4;
-  padding: 6px 8px;
-  cursor: pointer;
-  text-align: left;
-}
-.ip-lesson-item:hover { background: var(--bg3); color: var(--text); }
-.ip-lesson-item.active { background: var(--bg3); color: var(--text); border-left: 2px solid var(--neon); padding-left: 6px; }
-.ip-lesson-item svg { flex-shrink: 0; margin-top: 2px; }
+.ip-search-result.active { border-color: var(--sr-color, var(--neon)); }
+.ip-search-result svg { flex-shrink: 0; margin-top: 2px; }
+.ip-sr-title { font-size: 12px; color: var(--text); line-height: 1.4; margin-bottom: 2px; }
+.ip-sr-meta { font-size: 10px; color: var(--text3); font-family: var(--mono); }
 .ip-done-icon { color: var(--neon); }
 .ip-todo-icon { color: var(--text3); }
 
-/* ── Search results ─────────────────────────────────────────────────────── */
-.ip-search-count { font-size: 11px; color: var(--text3); padding: 6px 8px; }
-.ip-search-result {
-  width: 100%;
+/* ═══════════════════════════════════════════════════════════════════════════
+   ROADMAP — shared spine + node structure
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ip-roadmap {
+  position: relative;
+  padding: 20px 16px 60px;
+  min-height: 100%;
+}
+
+/* Central spine — uses var(--border2) so it adapts to both themes */
+.ip-spine {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--white-15);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* View header — course/chapter name at top of drill-down view */
+.ip-view-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0 10px;
+  gap: 10px;
+  z-index: 1;
+}
+.ip-vh-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--vh-color, var(--neon));
+  box-shadow: 0 0 12px var(--vh-color, var(--neon));
+  flex-shrink: 0;
+}
+.ip-vh-label {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--mono);
+  letter-spacing: 0.5px;
+  color: var(--text2);
+  text-align: center;
+  line-height: 1.4;
+  max-width: 200px;
+}
+
+/* ── Generic node wrapper ─────────────────────────────────────────────────── */
+.ip-rm-node {
+  position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  background: none;
-  border: none;
-  border-radius: 8px;
-  padding: 8px;
+  padding: 8px 0;
+  z-index: 1;
+}
+
+/* ── Spine dot ───────────────────────────────────────────────────────────── */
+.ip-rm-dot {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--node-color, var(--neon));
+  z-index: 2;
+  flex-shrink: 0;
+}
+.ip-rm-dot.glow {
+  box-shadow: 0 0 10px var(--node-color, var(--neon));
+}
+.ip-rm-dot.small { width: 8px; height: 8px; top: 20px; }
+
+/* ── Horizontal arm (connector from dot to card) ─────────────────────────── */
+/* This bridges from the spine dot to the card edge. z-index: 1 puts it behind the dot and card. */
+.ip-rm-arm {
+  position: absolute;
+  top: 26px;
+  height: 2px;
+  background: var(--white-15);
+  opacity: 1;
+  z-index: 1;
+  border-radius: 1px;
+}
+
+/* ── Horizontal string (for lesson nodes) ──────────────────────────────────── */
+.ip-rm-string-h {
+  position: absolute;
+  top: 24px;
+  height: 2px;
+  background: var(--white-15);
+  opacity: 1;
+  z-index: 1;
+  border-radius: 1px;
+}
+
+/* ── Vertical string for course nodes (dot to card) ──────────────────────── */
+.ip-rm-string {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 28px;
+  width: 2px;
+  height: 30px; /* Increased to ensure no gap above the card */
+  background: var(--white-15);
+  opacity: 1;
+  z-index: 1;
+  border-radius: 1px;
+}
+
+/* ═══ COURSE NODE (centered) ════════════════════════════════════════════════ */
+.ip-rm-node.course-node {
+  justify-content: center;
+  padding: 12px 0;
+}
+
+/* Course card */
+.ip-course-card {
+  position: relative;
+  z-index: 3;
+  margin-top: 22px; /* clears the dot */
+  width: 240px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  border-top: 2px solid var(--node-color, var(--neon));
+  padding: 14px 16px;
   cursor: pointer;
   text-align: left;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
-.ip-search-result:hover, .ip-search-result.active { background: var(--bg3); }
-.ip-search-result svg { flex-shrink: 0; margin-top: 3px; }
-.ip-sr-title { font-size: 12.5px; color: var(--text); line-height: 1.4; }
-.ip-sr-meta { font-size: 10.5px; color: var(--text3); margin-top: 2px; }
-
-/* ── Lesson detail ──────────────────────────────────────────────────────── */
-.ip-lesson-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  color: var(--text3);
-  font-family: var(--mono);
-  margin-bottom: 10px;
+.ip-course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px var(--node-color, var(--neon));
+  border-color: var(--node-color, var(--neon));
 }
 
-.ip-lesson-title {
-  font-size: 21px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 22px;
-  line-height: 1.35;
-  max-width: 780px;
+.ip-cc-top {
+  display: flex; align-items: center; gap: 7px; margin-bottom: 10px;
+}
+.ip-cc-icon {
+  width: 26px; height: 26px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ip-cc-badge {
+  font-family: var(--mono); font-size: 8.5px; letter-spacing: 1.5px;
+  font-weight: 700; padding: 2px 7px; border-radius: 100px; border: 1px solid;
+  flex-shrink: 0;
+}
+.ip-cc-pct {
+  margin-left: auto; font-family: var(--mono); font-size: 12px; font-weight: 700;
+}
+.ip-cc-chevron { color: var(--text3); flex-shrink: 0; }
+.ip-cc-title {
+  font-size: 12.5px; font-weight: 700; color: var(--text);
+  line-height: 1.4; margin-bottom: 9px;
+}
+.ip-cc-meta {
+  display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;
+}
+.ip-cc-meta span {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 10px; color: var(--text3); font-family: var(--mono);
+}
+.ip-cc-progress {
+  height: 3px; background: var(--border); border-radius: 3px; overflow: hidden;
+}
+.ip-cc-prog-fill {
+  height: 100%; border-radius: 3px; transition: width 0.4s ease;
 }
 
-.ip-lesson-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 36px;
-  padding-top: 18px;
-  border-top: 1px solid var(--border);
-  max-width: 780px;
+/* ═══ CHAPTER NODE (alternating) ════════════════════════════════════════════ */
+.ip-rm-node.chapter-node.left {
+  justify-content: flex-start;
+  padding-right: calc(50% + 12px);
+}
+.ip-rm-node.chapter-node.right {
+  justify-content: flex-end;
+  padding-left: calc(50% + 12px);
 }
 
-.ip-complete-btn {
-  display: flex;
-  align-items: center;
-  gap: 7px;
+/* Left card: arm's RIGHT edge is at 50% (spine). Gap to card is 12px. */
+.ip-rm-node.chapter-node.left .ip-rm-arm {
+  right: 50%;
+  width: 12px;
+}
+/* Right card: arm's LEFT edge is at 50% (spine). Gap to card is 12px. */
+.ip-rm-node.chapter-node.right .ip-rm-arm {
+  left: 50%;
+  width: 12px;
+}
+
+.ip-chapter-card {
+  position: relative; z-index: 3;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  width: 160px;
+  cursor: pointer; text-align: left;
+  transition: all 0.18s;
+}
+.ip-rm-node.chapter-node.left .ip-chapter-card { border-left: 2px solid var(--node-color, var(--neon)); }
+.ip-rm-node.chapter-node.right .ip-chapter-card { border-right: 2px solid var(--node-color, var(--neon)); }
+.ip-chapter-card:hover {
+  border-color: var(--node-color, var(--neon));
+  background: var(--bg3);
+  transform: translateY(-1px);
+}
+
+.ip-chc-top {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.ip-chc-num {
+  font-family: var(--mono); font-size: 18px; font-weight: 800; line-height: 1;
+}
+.ip-chc-qcount {
+  margin-left: auto; font-family: var(--mono); font-size: 9.5px;
+  color: var(--text3); background: var(--bg3); border-radius: 100px; padding: 2px 7px;
+}
+.ip-chc-title {
+  font-size: 11px; font-weight: 600; color: var(--text);
+  line-height: 1.4; margin-bottom: 10px;
+}
+.ip-chc-footer { display: flex; align-items: center; gap: 6px; }
+.ip-chc-bar { flex: 1; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.ip-chc-fill { height: 100%; border-radius: 2px; transition: width 0.4s; }
+.ip-chc-pct { font-family: var(--mono); font-size: 9px; font-weight: 700; flex-shrink: 0; }
+
+/* ═══ LESSON NODE (alternating) ═════════════════════════════════════════════ */
+.ip-rm-node.lesson-node.left {
+  justify-content: flex-start;
+  padding-right: calc(50% + 10px);
+}
+.ip-rm-node.lesson-node.right {
+  justify-content: flex-end;
+  padding-left: calc(50% + 10px);
+}
+/* Gap to lesson card is 10px */
+.ip-rm-node.lesson-node.left .ip-rm-string-h {
+  right: 50%;
+  width: 10px;
+}
+.ip-rm-node.lesson-node.right .ip-rm-string-h {
+  left: 50%;
+  width: 10px;
+}
+
+.ip-lesson-card {
+  position: relative; z-index: 3;
+  display: flex; align-items: flex-start; gap: 7px;
   background: var(--bg3);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 9px;
+  padding: 8px 10px;
+  width: 150px;
+  cursor: pointer; text-align: left;
+  transition: all 0.15s;
   color: var(--text2);
   font-family: var(--font);
-  font-size: 12.5px;
-  font-weight: 600;
-  padding: 8px 14px;
-  cursor: pointer;
-  transition: all .15s;
+  font-size: 11px;
+  line-height: 1.4;
 }
-.ip-complete-btn:hover { border-color: var(--border2); color: var(--text); }
-.ip-complete-btn.done { color: var(--neon); border-color: var(--neon); background: var(--neon-dim); }
-
-.ip-nav-buttons { display: flex; gap: 8px; }
-.ip-nav-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text2);
-  font-family: var(--font);
-  font-size: 12.5px;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-.ip-nav-btn:hover:not(:disabled) { border-color: var(--border2); color: var(--text); }
-.ip-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-
-/* ── Rendered lesson content (dangerouslySetInnerHTML) ─────────────────── */
-.ip-content {
-  max-width: 780px;
-  font-size: 14.5px;
-  line-height: 1.75;
-  color: var(--text2);
-}
-.ip-content p { margin: 0 0 14px; }
-.ip-content ul, .ip-content ol { margin: 0 0 14px; padding-left: 22px; }
-.ip-content li { margin-bottom: 6px; }
-.ip-content li p { margin: 0; }
-.ip-content strong, .ip-content b { color: var(--text); font-weight: 700; }
-.ip-content em, .ip-content i { color: var(--text); }
-.ip-content a { color: var(--neon); text-decoration: underline; text-underline-offset: 2px; }
-.ip-content h1, .ip-content h2, .ip-content h3, .ip-content h4 {
+.ip-lesson-card:hover {
+  border-color: var(--node-color, var(--neon));
+  background: var(--bg2);
   color: var(--text);
-  margin: 22px 0 10px;
-  line-height: 1.35;
+}
+.ip-rm-node.lesson-node.active .ip-lesson-card {
+  border-color: var(--node-color, var(--neon));
+  background: color-mix(in srgb, var(--node-color, var(--neon)) 10%, var(--bg3));
+  color: var(--text);
+}
+.ip-rm-node.lesson-node.done .ip-lesson-card {
+  color: var(--neon);
+}
+.ip-rm-node.lesson-node.active .ip-rm-string-h,
+.ip-rm-node.lesson-node.done .ip-rm-string-h {
+  opacity: 0.9;
+}
+
+.ip-lc-icon { flex-shrink: 0; margin-top: 1px; }
+.ip-lc-title { flex: 1; min-width: 0; }
+.ip-lc-active-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DETAIL PANE
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ip-detail-pane {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  background: var(--bg);
+}
+.ip-detail-pane::-webkit-scrollbar { width: 4px; }
+.ip-detail-pane::-webkit-scrollbar-track { background: transparent; }
+.ip-detail-pane::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.ip-empty-state {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100%; text-align: center; gap: 14px; padding: 40px;
+}
+.ip-empty-orb {
+  width: 72px; height: 72px; border-radius: 22px;
+  background: var(--bg2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); margin-bottom: 4px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+.ip-empty-title { font-size: 17px; font-weight: 700; color: var(--text2); margin: 0; }
+.ip-empty-sub {
+  font-size: 13px; color: var(--text3); margin: 0;
+  max-width: 300px; line-height: 1.6;
+}
+.ip-empty-stats {
+  display: flex; gap: 24px; margin-top: 8px;
+}
+.ip-es-stat {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.ip-es-val {
+  font-size: 22px; font-weight: 800; color: var(--neon);
+  font-family: var(--mono);
+}
+.ip-es-lbl { font-size: 10.5px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.5px; }
+
+/* ── Lesson detail ───────────────────────────────────────────────────────── */
+.ip-lesson-detail {
+  padding: 32px 40px 80px;
+  max-width: 860px;
+}
+
+/* Breadcrumb */
+.ip-lesson-breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--text3); font-family: var(--mono);
+  margin-bottom: 20px;
+}
+.ip-lesson-breadcrumb span:last-child { color: var(--bc-color, var(--neon)); }
+
+/* Question block */
+.ip-question-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--qb-color, var(--neon));
+  border-radius: 14px;
+  padding: 20px 24px 22px;
+  margin-bottom: 28px;
+}
+.ip-qb-label {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--text3); letter-spacing: 0.5px;
+  margin-bottom: 10px; text-transform: uppercase;
+}
+.ip-lesson-title {
+  font-size: 20px; font-weight: 800;
+  color: var(--text); line-height: 1.4; margin: 0;
+}
+
+/* Answer block */
+.ip-answer-block {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.ip-ab-label {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--neon); letter-spacing: 0.5px;
+  margin-bottom: 16px; text-transform: uppercase;
+}
+
+/* ── Content (rendered HTML) ─────────────────────────────────────────────── */
+.ip-content {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--text2);
+}
+
+/* Strip all inline backgrounds & colours from scraped HTML */
+.ip-content *,
+.ip-content div,
+.ip-content p,
+.ip-content li,
+.ip-content span {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: inherit !important;
+}
+
+/* Intentional colour overrides */
+.ip-content { color: var(--text2); }
+.ip-content p   { margin: 0 0 13px; color: var(--text2); }
+.ip-content ul, .ip-content ol { margin: 0 0 14px; padding-left: 22px; }
+.ip-content li  { margin-bottom: 6px; color: var(--text2); }
+.ip-content li p { margin: 0; }
+.ip-content strong, .ip-content b { color: var(--text) !important; font-weight: 700; }
+.ip-content em, .ip-content i { color: var(--text); }
+.ip-content a { color: var(--neon) !important; text-decoration: underline; text-underline-offset: 2px; }
+.ip-content h1, .ip-content h2, .ip-content h3, .ip-content h4 {
+  color: var(--text) !important;
+  margin: 22px 0 10px; line-height: 1.35;
 }
 .ip-content blockquote {
   border-left: 3px solid var(--border2);
-  margin: 0 0 14px;
-  padding: 4px 0 4px 14px;
-  color: var(--text3);
-  font-style: italic;
+  margin: 0 0 14px; padding: 4px 0 4px 14px;
+  color: var(--text3); font-style: italic;
 }
 .ip-content table { border-collapse: collapse; margin: 0 0 16px; width: 100%; font-size: 13px; }
-.ip-content th, .ip-content td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
-.ip-content th { background: var(--bg3); color: var(--text); }
+.ip-content th, .ip-content td { border: 1px solid var(--border); padding: 7px 12px; }
+.ip-content th { background: var(--bg3) !important; color: var(--text) !important; }
+.ip-content td { color: var(--text2) !important; }
+.ip-content hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
 
+/* Code blocks */
 .ip-content pre {
-  background: var(--bg3);
-  border: 1px solid var(--border);
+  background: #0d1117 !important;
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
   padding: 14px 16px;
-  margin: 0 0 16px;
+  margin: 0 0 18px;
   overflow-x: auto;
 }
 .ip-content code {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--text);
+  font-family: var(--mono) !important;
+  font-size: 12.5px !important;
+  color: #e6edf3 !important;
+  background: transparent !important;
 }
 .ip-content :not(pre) > code {
-  background: var(--bg3);
-  border: 1px solid var(--border);
+  background: rgba(99,102,241,0.12) !important;
+  color: #a5b4fc !important;
   border-radius: 4px;
-  padding: 1px 5px;
+  padding: 1px 6px;
+  font-size: 12.5px !important;
 }
 
-/* highlight.js token colors, tuned for this dark theme */
+/* hljs tokens */
 .ip-content .hljs-keyword,
 .ip-content .hljs-selector-tag,
-.ip-content .hljs-section,
-.ip-content .hljs-title { color: #c792ea; }
+.ip-content .hljs-section   { color: #c792ea !important; }
 .ip-content .hljs-string,
 .ip-content .hljs-attr,
-.ip-content .hljs-symbol,
-.ip-content .hljs-bullet,
-.ip-content .hljs-selector-attr,
-.ip-content .hljs-selector-class { color: #a3e635; }
+.ip-content .hljs-selector-class { color: #a3e635 !important; }
 .ip-content .hljs-built_in,
-.ip-content .hljs-type { color: #22d3ee; }
+.ip-content .hljs-type      { color: #22d3ee !important; }
 .ip-content .hljs-function,
-.ip-content .hljs-title.function_ { color: #7dd3fc; }
+.ip-content .hljs-title.function_ { color: #7dd3fc !important; }
 .ip-content .hljs-number,
-.ip-content .hljs-literal { color: #fbbf24; }
-.ip-content .hljs-comment { color: var(--text3); font-style: italic; }
+.ip-content .hljs-literal   { color: #fbbf24 !important; }
+.ip-content .hljs-comment   { color: #6b7280 !important; font-style: italic; }
 .ip-content .hljs-variable,
 .ip-content .hljs-params,
-.ip-content .hljs-property { color: var(--text); }
+.ip-content .hljs-property  { color: #e6edf3 !important; }
 .ip-content .hljs-operator,
-.ip-content .hljs-punctuation { color: var(--text2); }
-.ip-content .hljs-deletion { color: #f87171; }
-.ip-content .hljs-strong { font-weight: 700; }
-.ip-content .hljs-meta { color: var(--text3); }
+.ip-content .hljs-punctuation { color: #8b949e !important; }
+.ip-content .hljs-meta      { color: #8b949e !important; }
 
-/* ── Mobile ─────────────────────────────────────────────────────────────── */
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.ip-lesson-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 4px; padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.ip-complete-btn {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text2);
+  font-family: var(--font); font-size: 12.5px; font-weight: 600;
+  padding: 8px 16px; cursor: pointer; transition: all 0.15s;
+}
+.ip-complete-btn:hover { border-color: var(--btn-color, var(--neon)); color: var(--text); }
+.ip-complete-btn.done {
+  color: var(--btn-color, var(--neon));
+  border-color: var(--btn-color, var(--neon));
+  background: color-mix(in srgb, var(--btn-color, var(--neon)) 10%, var(--bg3));
+}
+
+.ip-nav-buttons { display: flex; align-items: center; gap: 6px; }
+.ip-nav-counter {
+  font-family: var(--mono); font-size: 10.5px;
+  color: var(--text3); padding: 0 4px; white-space: nowrap;
+}
+.ip-nav-btn {
+  display: flex; align-items: center; gap: 4px;
+  background: none; border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text2);
+  font-family: var(--font); font-size: 12px;
+  padding: 7px 11px; cursor: pointer; transition: all 0.15s;
+}
+.ip-nav-btn:hover:not(:disabled) { border-color: var(--border2); color: var(--text); background: var(--bg3); }
+.ip-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .ip-list-pane { width: 100%; min-width: 0; border-right: none; }
-  .ip-detail-pane { padding: 18px 16px 48px; }
-  .ip-lesson-title { font-size: 18px; }
+  .ip-detail-pane { max-height: 100%; }
+  .ip-lesson-detail { padding: 20px 16px 60px; }
+  .ip-lesson-title { font-size: 17px; }
   .ip-lesson-footer { flex-direction: column; align-items: stretch; }
   .ip-nav-buttons { justify-content: space-between; }
+  .ip-rm-node.chapter-node.left { padding-right: calc(50% + 8px); }
+  .ip-rm-node.chapter-node.right { padding-left: calc(50% + 8px); }
+  .ip-chapter-card { width: 135px; }
+  .ip-course-card { width: 200px; }
+  .ip-rm-node.lesson-node.left { padding-right: calc(50% + 6px); }
+  .ip-rm-node.lesson-node.right { padding-left: calc(50% + 6px); }
+  .ip-lesson-card { width: 130px; }
 }
+
+/* ── Admin / Edit Mode ───────────────────────────────────────────────────── */
+.ip-admin-toggle {
+  display: flex; align-items: center; gap: 5px;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text2);
+  padding: 6px 10px; font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.ip-admin-toggle:hover { background: var(--bg3); color: var(--text); }
+.ip-admin-toggle.active {
+  background: color-mix(in srgb, var(--neon) 15%, transparent);
+  border-color: var(--neon); color: var(--neon);
+}
+
+.ip-export-btn {
+  display: flex; align-items: center; gap: 5px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text);
+  padding: 6px 10px; font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.ip-export-btn:hover { border-color: var(--border2); background: var(--bg3); }
+
+/* Add Node Buttons in Roadmap */
+.ip-add-node {
+  position: relative; z-index: 2; margin: 16px auto;
+  display: flex; justify-content: center; width: 100%;
+}
+.ip-add-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--bg2); border: 1px dashed var(--border2);
+  border-radius: 20px; padding: 6px 16px; color: var(--text2);
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.ip-add-btn:hover {
+  border-color: var(--neon); color: var(--neon);
+  background: color-mix(in srgb, var(--neon) 5%, var(--bg2));
+  transform: translateY(-1px);
+}
+
+/* Edit & Delete Actions overlay on cards */
+.ip-card-actions {
+  position: absolute; top: 6px; right: 6px;
+  display: flex; gap: 4px; z-index: 10;
+  opacity: 0.5; transition: opacity 0.2s;
+}
+.ip-course-card:hover .ip-card-actions,
+.ip-chapter-card:hover .ip-card-actions,
+.ip-lesson-card:hover .ip-card-actions {
+  opacity: 1;
+}
+.ip-action-btn {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 4px; color: var(--text2);
+  width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s;
+}
+.ip-action-btn:hover { background: var(--bg); color: var(--text); border-color: var(--border2); }
+.ip-action-btn.edit:hover { color: var(--neon); border-color: var(--neon); }
+.ip-action-btn.delete:hover { color: #ff4444; border-color: #ff4444; }
+
+/* Course/Chapter Cards need position relative for absolute actions */
+.ip-course-card, .ip-chapter-card, .ip-lesson-card {
+  position: relative;
+}
+
+/* Edit Modal */
+.ip-modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  z-index: 100; display: flex; align-items: center; justify-content: center;
+}
+.ip-modal {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; width: 90%; max-width: 440px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5); overflow: hidden;
+}
+.ip-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+}
+.ip-modal-header h3 {
+  font-size: 15px; font-weight: 700; color: var(--text); margin: 0;
+}
+.ip-modal-body { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+.ip-input-group { display: flex; flex-direction: column; gap: 6px; }
+.ip-input-group label {
+  font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px;
+}
+.ip-input-group input, .ip-input-group textarea {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; color: var(--text); padding: 10px 12px;
+  font-family: var(--font); font-size: 14px; transition: border-color 0.2s;
+}
+.ip-input-group input:focus, .ip-input-group textarea:focus {
+  outline: none; border-color: var(--neon);
+}
+.ip-modal-footer {
+  display: flex; align-items: center; justify-content: flex-end; gap: 12px;
+  padding: 16px 20px; border-top: 1px solid var(--border); background: var(--bg2);
+}
+.ip-btn-cancel {
+  background: none; border: none; color: var(--text2);
+  font-size: 13px; font-weight: 600; cursor: pointer; padding: 6px 12px;
+}
+.ip-btn-cancel:hover { color: var(--text); }
+.ip-btn-save {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--neon); border: none; color: #000;
+  padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.ip-btn-save:hover:not(:disabled) { background: #00e67a; transform: translateY(-1px); }
+.ip-btn-save:disabled { opacity: 0.5; cursor: not-allowed; }

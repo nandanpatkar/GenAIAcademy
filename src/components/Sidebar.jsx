@@ -39,7 +39,8 @@ export default function Sidebar({
   setLinksInitialTab,
   showGitHubHub, setShowGitHubHub,
   isCollapsed, setIsCollapsed,
-  onSectionWalkthrough
+  onSectionWalkthrough,
+  showQuiz, setShowQuiz
 }) {
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
@@ -95,6 +96,7 @@ export default function Sidebar({
         ] : []),
         { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer" },
         { icon: <HelpCircle size={14} />, label: "Interview Prep", id: "interview_prep" },
+        { icon: <HelpCircle size={14} />, label: "Quiz", id: "quiz" },
         { icon: <Users size={14} />, label: "Community", id: "community" },
       ]
     },
@@ -144,6 +146,7 @@ export default function Sidebar({
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
     if (showIntelligenceHub) return "hub";
+    if (showQuiz) return "quiz";
     if (!activeNode) return "overview";
     return null;
   };
@@ -180,6 +183,7 @@ export default function Sidebar({
     if (setShowNotion) setShowNotion(false);
     if (setShowInterviewPrep) setShowInterviewPrep(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
+    if (setShowQuiz) setShowQuiz(false);
 
     switch (id) {
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
@@ -235,6 +239,9 @@ export default function Sidebar({
         break;
       case "hub":
         if (setShowIntelligenceHub) setShowIntelligenceHub(true);
+        break;
+      case "quiz":
+        if (setShowQuiz) setShowQuiz(true);
         break;
       case "community":
         if (setShowCommunity) setShowCommunity(true);

@@ -27,6 +27,7 @@ import GitVisualizer from "./components/GitVisualizer";
 import FlowDesign from "./components/FlowDesign";
 import NotionRenderer from "./components/notion/NotionRenderer";
 import InterviewPrep from "./components/InterviewPrep";
+import QuizApp from "./components/QuizApp";
 import {
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp,
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
@@ -127,6 +128,7 @@ function MainApp() {
     return !localStorage.getItem("genai_landing_dismissed");
   });
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
 
   const handleVideoSelect = (video) => {
     if (video.pathKey) setActivePath(video.pathKey);
@@ -888,6 +890,7 @@ function MainApp() {
           showCommunity={showCommunity} setShowCommunity={setShowCommunity}
           showNotion={showNotion} setShowNotion={setShowNotion}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
+          showQuiz={showQuiz} setShowQuiz={setShowQuiz}
           setLinksInitialTab={setLinksInitialTab}
           onHubNav={handleHubNav}
           isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
@@ -978,8 +981,9 @@ function MainApp() {
                                                 onClose={() => setShowWorkplaceLab(false)}
                                               /> :
                                                 showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
-                                                  showNotion ? <NotionRenderer /> :
+                                                  showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
                                                     showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} /> :
+                                                    showQuiz ? <QuizApp /> :
                                                     showIntelligenceHub ? (
                                                     <IntelligenceHub
                                                       paths={pathsData}

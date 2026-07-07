@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Essentials for AI Engineers — Interactive Course</title>
+    <meta name="description" content="Master Python fundamentals for AI Engineering with interactive lessons, code examples, and structured learning paths.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark Theme Variables (default) */
+            --bg-primary: #080c16;
+            --bg-secondary: #0d1220;
+            --bg-card: #13192c;
+            --bg-card-hover: #1c243f;
+            --bg-sidebar: #0a0e1b;
+            --accent: #5f5cef;
+            --accent-light: #7c79f3;
+            --accent-glow: rgba(95, 92, 239, 0.15);
+            --accent2: #8b5cf6;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.12);
+            --warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border: #1e293b;
+            --border-light: #334155;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 10px 30px -10px rgba(0,0,0,0.6);
+            --sidebar-width: 320px;
+        }
+
+        [data-theme="light"] {
+            /* Light Theme Variables */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --bg-sidebar: #ffffff;
+            --accent: #4f46e5;
+            --accent-light: #6366f1;
+            --accent-glow: rgba(79, 70, 229, 0.1);
+            --accent2: #7c3aed;
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.08);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --border-light: #cbd5e1;
+            --shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.05);
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            width: 38px; height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            margin-right: 8px;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent-light);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .theme-toggle-btn svg {
+            transition: transform 0.4s ease, opacity 0.2s ease;
+        }
+
+        .theme-toggle-btn:active svg {
+            transform: rotate(45deg) scale(0.9);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background:
+                radial-gradient(ellipse 600px 400px at 10% 10%, rgba(99,102,241,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 500px 500px at 90% 90%, rgba(16,185,129,0.05) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ─── Layout ─── */
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── Sidebar ─── */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .sidebar-header {
+            padding: 24px 20px 16px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .logo-icon {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .logo-text h2 {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .sidebar-progress {
+            margin-top: 12px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 100px;
+            transition: width 0.5s ease;
+        }
+
+        /* Sidebar Nav */
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 0;
+        }
+
+        .chapter-group {
+            margin-bottom: 4px;
+        }
+
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .chapter-header:hover {
+            background: rgba(99,102,241,0.06);
+        }
+
+        .chapter-toggle {
+            width: 20px; height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--text-muted);
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .chapter-toggle.open {
+            transform: rotate(90deg);
+        }
+
+        .chapter-icon {
+            width: 28px; height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            color: var(--accent-light);
+        }
+
+        .chapter-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .chapter-count {
+            font-size: 10px;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 2px 8px;
+            border-radius: 100px;
+            flex-shrink: 0;
+        }
+
+        .lesson-list {
+            display: none;
+            padding: 0 0 8px 0;
+        }
+
+        .lesson-list.open {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 1000px; }
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 20px 8px 54px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .lesson-item:hover {
+            background: rgba(99,102,241,0.06);
+        }
+
+        .lesson-item.active {
+            background: rgba(99,102,241,0.1);
+            border-left-color: var(--accent);
+        }
+
+        .lesson-dot-check {
+            width: 12px; height: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            flex-shrink: 0;
+            margin-right: -4px;
+        }
+
+        .lesson-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            border: 2px solid var(--border-light);
+            background: transparent;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .lesson-item.active .lesson-dot {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .lesson-name {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            transition: color 0.2s ease;
+        }
+
+        .lesson-item.active .lesson-name {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .lesson-item.completed .lesson-name {
+            color: var(--text-secondary);
+        }
+
+        /* ─── Main Content ─── */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .breadcrumb span {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lesson-counter {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 6px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+        }
+
+        /* Content Area */
+        .content-area {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 32px 80px;
+        }
+
+        .lesson-header {
+            margin-bottom: 32px;
+            animation: fadeUp 0.4s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99,102,241,0.12);
+            color: var(--accent-light);
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(99,102,241,0.25);
+        }
+
+        .lesson-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lesson-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Lesson Body */
+        .lesson-body {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            box-shadow: var(--shadow);
+            animation: fadeUp 0.5s ease;
+        }
+
+        /* Reset content styles from scraped HTML */
+        .lesson-body .reset-basic,
+        .lesson-body .ui-rte-editor-div {
+            font-family: 'Inter', sans-serif !important;
+            font-size: 15px !important;
+            line-height: 1.8 !important;
+            color: var(--text-secondary) !important;
+            background: transparent !important;
+        }
+
+        .lesson-body p {
+            margin-bottom: 12px !important;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .lesson-body h3 {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            margin-top: 28px !important;
+            margin-bottom: 12px !important;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lesson-body h2 {
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            color: var(--text-primary) !important;
+            margin-top: 28px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .lesson-body ul, .lesson-body ol {
+            padding-left: 24px !important;
+            margin-bottom: 16px !important;
+        }
+
+        .lesson-body li {
+            margin-bottom: 6px !important;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .lesson-body li::marker {
+            color: var(--accent-light);
+        }
+
+        .lesson-body pre {
+            background: #0d1117 !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 10px !important;
+            padding: 18px 22px !important;
+            margin: 14px 0 20px !important;
+            overflow-x: auto;
+            white-space: pre-wrap !important;
+        }
+
+        .lesson-body code {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+            font-size: 13.5px !important;
+            line-height: 1.7 !important;
+            color: #e6edf3 !important;
+        }
+
+        .lesson-body p > code,
+        .lesson-body li > code {
+            background: rgba(99,102,241,0.12) !important;
+            color: var(--accent-light) !important;
+            padding: 2px 8px !important;
+            border-radius: 5px !important;
+            font-size: 13px !important;
+        }
+
+        .lesson-body b, .lesson-body strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Code syntax highlighting overrides */
+        .lesson-body .hljs-keyword { color: #ff7b72 !important; }
+        .lesson-body .hljs-string { color: #a5d6ff !important; }
+        .lesson-body .hljs-number { color: #79c0ff !important; }
+        .lesson-body .hljs-built_in { color: #ffa657 !important; }
+        .lesson-body .hljs-comment { color: #8b949e !important; font-style: italic; }
+        .lesson-body .hljs-title { color: #d2a8ff !important; }
+        .lesson-body .hljs-attr { color: #79c0ff !important; }
+        .lesson-body .hljs-literal { color: #79c0ff !important; }
+        .lesson-body .hljs-function { color: #d2a8ff !important; }
+        .lesson-body .hljs-params { color: #c9d1d9 !important; }
+        .lesson-body .hljs-meta { color: #c9d1d9 !important; }
+
+        /* Nav Buttons */
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+            transform: translateX(-3px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateX(3px);
+            box-shadow: 0 6px 24px var(--accent-glow);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 4px 16px rgba(16,185,129,0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .welcome-icon {
+            width: 100px; height: 100px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 28px;
+            font-size: 48px;
+            box-shadow: 0 8px 40px var(--accent-glow);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .welcome-screen h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-screen p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto 36px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-light);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Sidebar Overlay (mobile) */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* ─── Catalog Styles ─── */
+        .catalog-container {
+            animation: fadeIn 0.4s ease;
+        }
+
+        .catalog-hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .catalog-hero h1 {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff, var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .catalog-hero p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            max-width: 600px;
+            margin: 0 auto 24px;
+            line-height: 1.6;
+        }
+
+        .search-filter-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px 12px 42px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 16px;
+            pointer-events: none;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            transition: all 0.25s ease;
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            border-color: var(--accent);
+            color: var(--accent-light);
+            background: rgba(99,102,241,0.1);
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .course-icon-bg {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover .course-icon-bg {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .course-card-tag {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .course-card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .course-card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .course-card-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 12px;
+        }
+
+        .course-card-stats span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .course-card-progress {
+            margin-top: auto;
+        }
+
+        .course-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 100px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .course-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #059669);
+            border-radius: 100px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .course-progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .back-to-catalog {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 16px;
+            margin: 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: calc(100% - 40px);
+        }
+
+        .back-to-catalog:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .sidebar-logo.clickable {
+            cursor: pointer;
+        }
+
+        .sidebar-logo.clickable:hover h2 {
+            background: linear-gradient(135deg, var(--accent-light), #fff);
+            -webkit-background-clip: text;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-overlay.open {
+                display: block;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .menu-btn {
+                display: block;
+            }
+            .content-area {
+                padding: 24px 16px 60px;
+            }
+            .lesson-body {
+                padding: 24px 20px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-layout">
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <div class="logo-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </div>
+                <div class="logo-text">
+                    <h2 id="course-title-sidebar">Loading...</h2>
+                    <p>Interactive Course</p>
+                </div>
+            </div>
+            <div class="sidebar-progress">
+                <div class="progress-info">
+                    <span id="progress-label">0 / 0 lessons</span>
+                    <span id="progress-pct">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="sidebar-nav" id="sidebar-nav"></nav>
+    </aside>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="main-content">
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+                <div class="breadcrumb" id="breadcrumb">
+                    <span>Select a lesson to begin</span>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-toggle" aria-label="Toggle Theme">
+                    <svg class="theme-icon-sun hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg class="theme-icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                <div class="lesson-counter" id="lesson-counter">—</div>
+            </div>
+        </div>
+
+        <div class="content-area" id="content-area">
+            <!-- Welcome screen - rendered by JS -->
+        </div>
+    </main>
+</div>
+
+<script src="course_data.js"></script>
+<script>
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+let courseData = window.courseData || [];
+let flatLessons = []; // [{courseIdx, chapterIdx, lessonIdx, title, chapterTitle, courseTitle, html}]
+let currentLessonFlat = -1;
+let activeCourseIdx = -1;
+let completedLessons = new Set(); // Stores strings: 'courseIdx-chapterIdx-lessonIdx'
+
+const courseCategories = {
+    0: "ml-python", // Python Essentials for AI Engineer
+    1: "ml-python", // Statistics & Math for AI/ML Interviews
+    2: "ml-python", // Machine Learning Foundations
+    3: "ml-python", // Deep Learning Essentials
+    4: "llms",      // Prompt Engineering Mastery
+    5: "llms",      // LLMs Deep Dive
+    6: "rag-agents",// LangChain Mastery
+    7: "rag-agents",// RAG Systems
+    8: "rag-agents",// LangGraph Agents
+    9: "rag-agents",// CrewAI Multi-agents
+    10: "rag-agents",// AutoGen Essentials
+    11: "rag-agents",// Agentic AI Patterns
+    12: "rag-agents",// Agents & Tools Interview Prep
+    13: "evaluation-deployment", // FastAPI Essentials
+    14: "evaluation-deployment", // Scenario Based Questions
+    15: "llms",      // FINE TUNING for LLMs
+    16: "rag-agents",// Advanced RAG
+    17: "llms",      // Transformer Architecture Q&A
+    18: "evaluation-deployment", // AI Safety & Guardrails
+    19: "evaluation-deployment", // LLM Evaluation
+    20: "evaluation-deployment", // Live coding Interview Prep
+    21: "evaluation-deployment"  // LLMOps & Deployment
+};
+
+// ═══════════════════════════════════════════
+//  MODERN SVG ICONS
+// ═══════════════════════════════════════════
+const uiIcons = {
+    code: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    book: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+    check: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+    catalog: `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`,
+    folder: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
+    file: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+    home: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+    alert: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    search: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+    chevronRight: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>`
+};
+
+const courseIcons = [
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10c-3.866 0-7 1.343-7 3s3.134 3 7 3 7-1.343 7-3-3.134-3-7-3z"/><path d="M5 13v4c0 1.657 3.134 3 7 3s7-1.343 7-3v-4"/><path d="M5 17v4c0 1.657 3.134 3 7 3s7-1.343 7-3v-4"/><path d="M12 2C8.134 2 5 3.343 5 5s3.134 3 7 3 7-1.343 7-3-3.134-3-7-3z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/><line x1="12" y1="6" x2="18" y2="6"/><line x1="12" y1="18" x2="18" y2="18"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1 0-3.12 3 3 0 0 1 0-7.88 2.5 2.5 0 0 1 0-3.12A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 0-3.12 3 3 0 0 0 0-7.88 2.5 2.5 0 0 0 0-3.12A2.5 2.5 0 0 0 14.5 2Z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M8 2v4M12 2v4M6 12h12"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.12" y1="8.12" x2="9.88" y2="9.88"/><line x1="14.12" y1="14.12" x2="15.88" y2="15.88"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 2.92-2 3.5 1 .5 2 .5 3 0 1.39-1.26 2-2.92 2-3.5H4.5z"/><path d="M12 15l-3-3m0 0l3-3m-3 3h12M4.5 16.5H7.5"/><path d="M13.5 3a9 9 0 0 1 7.42 14.1L21 18l-.9-.58A9 9 0 0 1 13.5 3Z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
+    `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`
+];
+
+// ═══════════════════════════════════════════
+//  THEME ENGINE
+// ═══════════════════════════════════════════
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcons(savedTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcons(newTheme);
+}
+
+function updateThemeIcons(theme) {
+    const sunIcon = document.querySelector('.theme-icon-sun');
+    const moonIcon = document.querySelector('.theme-icon-moon');
+    if (sunIcon && moonIcon) {
+        if (theme === 'light') {
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    }
+}
+
+// ═══════════════════════════════════════════
+//  PROGRESS STORAGE
+// ═══════════════════════════════════════════
+function loadCompletedLessons() {
+    try {
+        const saved = localStorage.getItem('ai_curriculum_completed');
+        if (saved) {
+            const arr = JSON.parse(saved);
+            completedLessons = new Set(arr);
+        }
+    } catch (e) {
+        console.error('Error loading progress', e);
+    }
+}
+
+function saveCompletedLessons() {
+    try {
+        const arr = Array.from(completedLessons);
+        localStorage.setItem('ai_curriculum_completed', JSON.stringify(arr));
+    } catch (e) {
+        console.error('Error saving progress', e);
+    }
+}
+
+// ═══════════════════════════════════════════
+//  LOAD DATA
+// ═══════════════════════════════════════════
+function loadData() {
+    try {
+        initTheme();
+        loadCompletedLessons();
+        if (courseData && courseData.length > 0) {
+            showCatalog();
+        } else {
+            fetch('scraped_data 2.json')
+                .then(resp => resp.json())
+                .then(data => {
+                    courseData = data;
+                    window.courseData = data;
+                    showCatalog();
+                })
+                .catch(showError);
+        }
+    } catch (e) {
+        showError(e);
+    }
+}
+
+function showError(e) {
+    document.getElementById('content-area').innerHTML = `
+        <div class="welcome-screen">
+            <div class="welcome-icon">${uiIcons.alert}</div>
+            <h2>Error Loading Data</h2>
+            <p>Could not load course data. Make sure <code>course_data.js</code> or <code>scraped_data 2.json</code> is in the same folder as this HTML file.</p>
+            <p style="color:var(--text-muted);font-size:13px;">${e.message}</p>
+        </div>`;
+}
+
+function buildFlatLessons(courseIdx) {
+    flatLessons = [];
+    const course = courseData[courseIdx];
+    if (!course) return;
+    course.chapters.forEach((chapter, chi) => {
+        chapter.lessons.forEach((lesson, li) => {
+            flatLessons.push({
+                courseIdx: courseIdx,
+                chapterIdx: chi,
+                lessonIdx: li,
+                title: lesson.lesson_title,
+                chapterTitle: chapter.chapter_title,
+                courseTitle: course.course_title,
+                html: lesson.content_html
+            });
+        });
+    });
+}
+
+// ═══════════════════════════════════════════
+//  CATALOG VIEW
+// ═══════════════════════════════════════════
+function getCategoryLabel(cat) {
+    if (cat === "ml-python") return "ML & Python";
+    if (cat === "llms") return "LLMs & Tuning";
+    if (cat === "rag-agents") return "RAG & Agents";
+    if (cat === "evaluation-deployment") return "Evaluation & Ops";
+    return "Core";
+}
+
+function getCourseStats(course) {
+    let totalChapters = course.chapters.length;
+    let totalLessons = 0;
+    course.chapters.forEach(ch => totalLessons += ch.lessons.length);
+    return { totalChapters, totalLessons };
+}
+
+function getCourseProgress(courseIdx) {
+    const course = courseData[courseIdx];
+    if (!course) return 0;
+    let totalLessons = 0;
+    let completedCount = 0;
+    course.chapters.forEach((chapter, chi) => {
+        chapter.lessons.forEach((lesson, li) => {
+            totalLessons++;
+            if (completedLessons.has(`${courseIdx}-${chi}-${li}`)) {
+                completedCount++;
+            }
+        });
+    });
+    return totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+}
+
+function showCatalog() {
+    activeCourseIdx = -1;
+    renderCatalog('all', '');
+}
+
+function renderCatalog(filter = 'all', searchQuery = '') {
+    activeCourseIdx = -1;
+    document.getElementById('breadcrumb').innerHTML = `<span>Course Catalog</span>`;
+    document.getElementById('lesson-counter').textContent = '—';
+    
+    const logo = document.querySelector('.sidebar-logo');
+    if (logo) {
+        logo.classList.add('clickable');
+        logo.onclick = showCatalog;
+    }
+    
+    let totalCourses = courseData.length;
+    let totalLessons = 0;
+    let totalCompleted = 0;
+    
+    courseData.forEach((course, ci) => {
+        course.chapters.forEach((chapter, chi) => {
+            chapter.lessons.forEach((lesson, li) => {
+                totalLessons++;
+                if (completedLessons.has(`${ci}-${chi}-${li}`)) {
+                    totalCompleted++;
+                }
+            });
+        });
+    });
+    
+    let overallProgress = totalLessons > 0 ? Math.round((totalCompleted / totalLessons) * 100) : 0;
+
+    let html = `
+        <div class="catalog-container">
+            <div class="catalog-hero">
+                <div class="welcome-icon" style="background: none; box-shadow: none; width: auto; height: auto;">${uiIcons.catalog}</div>
+                <h1>AI Engineer Career Path</h1>
+                <p>Welcome to the ultimate learning track. You have access to 22 structured courses covering python, mathematics, deep learning, prompt engineering, agentic AI, and production LLMOps.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">${totalCourses}</div>
+                        <div class="stat-label">Courses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${totalLessons}</div>
+                        <div class="stat-label">Lessons</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${overallProgress}%</div>
+                        <div class="stat-label">Overall Progress</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-filter-row">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">${uiIcons.search}</span>
+                    <input type="text" id="catalog-search" class="search-input" placeholder="Search courses by title..." value="${searchQuery}" oninput="handleSearch(this.value)">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab ${filter === 'all' ? 'active' : ''}" onclick="filterCatalog('all')">All</button>
+                    <button class="filter-tab ${filter === 'ml-python' ? 'active' : ''}" onclick="filterCatalog('ml-python')">ML & Python</button>
+                    <button class="filter-tab ${filter === 'llms' ? 'active' : ''}" onclick="filterCatalog('llms')">LLMs & Tuning</button>
+                    <button class="filter-tab ${filter === 'rag-agents' ? 'active' : ''}" onclick="filterCatalog('rag-agents')">RAG & Agents</button>
+                    <button class="filter-tab ${filter === 'evaluation-deployment' ? 'active' : ''}" onclick="filterCatalog('evaluation-deployment')">Evaluation & Ops</button>
+                </div>
+            </div>
+            
+            <div class="catalog-grid">
+    `;
+
+    courseData.forEach((course, ci) => {
+        const category = courseCategories[ci] || 'all';
+        if (filter !== 'all' && category !== filter) return;
+        if (searchQuery && !course.course_title.toLowerCase().includes(searchQuery.toLowerCase())) return;
+
+        const stats = getCourseStats(course);
+        const progress = getCourseProgress(ci);
+        const icon = courseIcons[ci % courseIcons.length];
+
+        html += `
+            <div class="course-card" onclick="enterCourse(${ci})">
+                <div class="course-card-tag">${getCategoryLabel(category)}</div>
+                <div class="course-card-header">
+                    <div class="course-icon-bg">${icon}</div>
+                    <div class="course-card-title">${course.course_title}</div>
+                </div>
+                <div class="course-card-desc">
+                    Master this topic with structured chapters and lessons designed for interview and job readiness.
+                </div>
+                <div class="course-card-stats">
+                    <span>${uiIcons.folder} ${stats.totalChapters} Chapters</span>
+                    <span>${uiIcons.file} ${stats.totalLessons} Lessons</span>
+                </div>
+                <div class="course-card-progress">
+                    <div class="course-progress-bar">
+                        <div class="course-progress-fill" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="course-progress-info">
+                        <span>Progress</span>
+                        <span>${progress}%</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    document.getElementById('content-area').innerHTML = html;
+    
+    document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+    renderSidebar();
+}
+
+let searchTimeout;
+function handleSearch(val) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        const activeTabEl = document.querySelector('.filter-tab.active');
+        let activeTab = 'all';
+        if (activeTabEl) {
+            const clickAttr = activeTabEl.getAttribute('onclick');
+            const match = clickAttr.match(/'([^']+)'/);
+            if (match) activeTab = match[1];
+        }
+        renderCatalog(activeTab, val);
+        const input = document.getElementById('catalog-search');
+        if (input) {
+            input.focus();
+            input.setSelectionRange(val.length, val.length);
+        }
+    }, 150);
+}
+
+function filterCatalog(category) {
+    const searchVal = document.getElementById('catalog-search')?.value || '';
+    renderCatalog(category, searchVal);
+}
+
+function enterCourse(courseIdx) {
+    activeCourseIdx = courseIdx;
+    buildFlatLessons(courseIdx);
+    renderSidebar();
+    navigateToLesson(0);
+}
+
+// ═══════════════════════════════════════════
+//  SIDEBAR
+// ═══════════════════════════════════════════
+function renderSidebar() {
+    const nav = document.getElementById('sidebar-nav');
+    nav.innerHTML = '';
+
+    if (activeCourseIdx === -1) {
+        document.getElementById('course-title-sidebar').textContent = "Course Catalog";
+        document.getElementById('progress-label').textContent = "0 / 0 lessons";
+        document.getElementById('progress-pct').textContent = "0%";
+        document.getElementById('progress-fill').style.width = "0%";
+        return;
+    }
+
+    const course = courseData[activeCourseIdx];
+    document.getElementById('course-title-sidebar').textContent = course.course_title;
+    document.title = course.course_title + ' — Interactive Course';
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-to-catalog';
+    backBtn.innerHTML = `${uiIcons.home} Back to Catalog`;
+    backBtn.onclick = showCatalog;
+    nav.appendChild(backBtn);
+
+    let lessonGlobalIdx = 0;
+
+    course.chapters.forEach((chapter, chi) => {
+        const group = document.createElement('div');
+        group.className = 'chapter-group';
+
+        const header = document.createElement('div');
+        header.className = 'chapter-header';
+        header.innerHTML = `
+            <span class="chapter-toggle" id="toggle-${chi}">${uiIcons.chevronRight}</span>
+            <span class="chapter-title" style="margin-left: 6px;">${chapter.chapter_title}</span>
+            <span class="chapter-count">${chapter.lessons.length}</span>
+        `;
+        header.onclick = () => toggleChapter(chi);
+
+        const list = document.createElement('div');
+        list.className = 'lesson-list';
+        list.id = `lessons-${chi}`;
+
+        chapter.lessons.forEach((lesson, li) => {
+            const item = document.createElement('div');
+            item.className = 'lesson-item';
+            item.id = `lesson-item-${lessonGlobalIdx}`;
+            item.dataset.flatIdx = lessonGlobalIdx;
+
+            const key = `${activeCourseIdx}-${chi}-${li}`;
+            let dotHtml = '<span class="lesson-dot"></span>';
+            if (completedLessons.has(key)) {
+                item.classList.add('completed');
+                dotHtml = `<span class="lesson-dot-check">${uiIcons.check}</span>`;
+            }
+
+            item.innerHTML = `
+                ${dotHtml}
+                <span class="lesson-name">${lesson.lesson_title}</span>
+            `;
+            item.onclick = () => navigateToLesson(parseInt(item.dataset.flatIdx));
+            list.appendChild(item);
+            lessonGlobalIdx++;
+        });
+
+        group.appendChild(header);
+        group.appendChild(list);
+        nav.appendChild(group);
+    });
+
+    updateProgress();
+}
+
+function toggleChapter(chi) {
+    const list = document.getElementById(`lessons-${chi}`);
+    const toggle = document.getElementById(`toggle-${chi}`);
+    if (list) list.classList.toggle('open');
+    if (toggle) toggle.classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+//  NAVIGATE
+// ═══════════════════════════════════════════
+function navigateToLesson(flatIdx) {
+    currentLessonFlat = flatIdx;
+    const lesson = flatLessons[flatIdx];
+    if (!lesson) return;
+
+    document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+    const activeItem = document.getElementById(`lesson-item-${flatIdx}`);
+    if (activeItem) {
+        activeItem.classList.add('active');
+        const parentList = activeItem.closest('.lesson-list');
+        if (parentList && !parentList.classList.contains('open')) {
+            parentList.classList.add('open');
+            const id = parentList.id.replace('lessons-', 'toggle-');
+            const toggle = document.getElementById(id);
+            if (toggle) toggle.classList.add('open');
+        }
+    }
+
+    document.getElementById('breadcrumb').innerHTML = `
+        <span style="cursor:pointer;" onclick="showCatalog()">Catalog</span> 
+        <span style="color:var(--border-light); margin: 0 4px;">›</span> 
+        <span style="cursor:pointer;" onclick="enterCourse(${activeCourseIdx})">${lesson.courseTitle}</span> 
+        <span style="color:var(--border-light); margin: 0 4px;">›</span> 
+        <span style="color: var(--text-primary); font-weight:600;">${lesson.title}</span>
+    `;
+
+    document.getElementById('lesson-counter').textContent = `Lesson ${flatIdx + 1} of ${flatLessons.length}`;
+
+    const area = document.getElementById('content-area');
+    area.innerHTML = `
+        <div class="lesson-header">
+            <div class="lesson-badge">${uiIcons.book} Lesson ${flatIdx + 1}</div>
+            <h1>${lesson.title}</h1>
+            <p>${lesson.chapterTitle}</p>
+        </div>
+        <div class="lesson-body" id="lesson-body">${lesson.html}</div>
+        <div class="lesson-nav">
+            <button class="btn btn-secondary" onclick="prevLesson()" ${flatIdx === 0 ? 'disabled' : ''}>
+                ← Previous
+            </button>
+            <button class="btn btn-success" onclick="markComplete(${flatIdx})">
+                ${uiIcons.check} Mark Complete
+            </button>
+            <button class="btn btn-primary" onclick="nextLesson()" ${flatIdx === flatLessons.length - 1 ? 'disabled' : ''}>
+                Next →
+            </button>
+        </div>
+    `;
+
+    if (window.innerWidth <= 900) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebar-overlay').classList.remove('open');
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevLesson() {
+    if (currentLessonFlat > 0) navigateToLesson(currentLessonFlat - 1);
+}
+
+function nextLesson() {
+    if (currentLessonFlat < flatLessons.length - 1) navigateToLesson(currentLessonFlat + 1);
+}
+
+function markComplete(flatIdx) {
+    const lesson = flatLessons[flatIdx];
+    if (!lesson) return;
+    
+    const key = `${activeCourseIdx}-${lesson.chapterIdx}-${lesson.lessonIdx}`;
+    completedLessons.add(key);
+    saveCompletedLessons();
+
+    const item = document.getElementById(`lesson-item-${flatIdx}`);
+    if (item) item.classList.add('completed');
+    updateProgress();
+
+    if (flatIdx < flatLessons.length - 1) {
+        navigateToLesson(flatIdx + 1);
+    }
+}
+
+function updateProgress() {
+    if (activeCourseIdx === -1) return;
+    const total = flatLessons.length;
+    let done = 0;
+    
+    const course = courseData[activeCourseIdx];
+    course.chapters.forEach((chapter, chi) => {
+        chapter.lessons.forEach((lesson, li) => {
+            const key = `${activeCourseIdx}-${chi}-${li}`;
+            if (completedLessons.has(key)) done++;
+        });
+    });
+    
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progress-label').textContent = `${done} / ${total} lessons`;
+    document.getElementById('progress-pct').textContent = `${pct}%`;
+    document.getElementById('progress-fill').style.width = `${pct}%`;
+}
+
+// ═══════════════════════════════════════════
+//  SIDEBAR TOGGLE (MOBILE)
+// ═══════════════════════════════════════════
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+//  KEYBOARD NAV
+// ═══════════════════════════════════════════
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        if (currentLessonFlat >= 0 && currentLessonFlat < flatLessons.length - 1) {
+            e.preventDefault();
+            nextLesson();
+        }
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        if (currentLessonFlat > 0) {
+            e.preventDefault();
+            prevLesson();
+        }
+    }
+});
+
+// ═══════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════
+loadData();
+</script>
+
+</body>
+</html>

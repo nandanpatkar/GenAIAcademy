@@ -826,3 +826,36 @@ Rules:
     throw new Error("Failed to discover algorithm templates.");
   }
 };
+
+// ─── Public: Quiz Chatbot ──────────────────────────────────────────────────
+export const askQuizBot = async (questionContext, conversationHistory, newQuery) => {
+  const systemPrompt = `You are an expert AI tutor assisting a student taking a practice quiz.
+Here is the context of the current question they are looking at:
+Question: ${questionContext.q}
+Options: ${JSON.stringify(questionContext.options)}
+Correct Answer(s): ${JSON.stringify(questionContext.answer)}
+Explanation: ${questionContext.explanation || "None provided"}
+
+Your goal is to answer the student's question clearly, concisely, and accurately based on this context. 
+If they ask for a hint, provide a subtle nudge without giving away the answer directly.
+If they ask why an answer is wrong, explain it based on the concepts involved.
+Maintain an encouraging and educational tone.`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...conversationHistory.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'assistant',
+        content: msg.text
+      })),
+      { role: "user", content: newQuery }
+    ];
+    
+    // Using callAI from the shared helper
+    return await callAI(messages, 1000, 0.6, false);
+  } catch (error) {
+    console.error("Quiz Chatbot Error:", error);
+    throw new Error("Failed to get answer from AI tutor.");
+  }
+};
+
