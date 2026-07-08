@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -7,69 +7,46 @@ import {
   X, Database, Plus, ShieldCheck, Cpu, Braces, Activity, ExternalLink,
   Layers, Command, Zap, LayoutPanelLeft, Edit3, PanelLeft, Cloud, Monitor
 } from 'lucide-react';
+import { executeCode } from '../services/jdoodleService';
 
 const IDE_MODES = [
   { id: 'local', label: 'LOCAL', icon: Monitor, color: 'var(--neon)' },
   { id: 'cloud', label: 'CLOUD', icon: Cloud, color: '#3b82f6' }
 ];
 
+// Python execution via the JDoodle serverless proxy (/api/execute).
+// Keeps the original hook signature so the rest of the component is unchanged.
 export function useSimplePyodide() {
   const [stdout, setStdout] = useState("");
   const [stderr, setStderr] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // no runtime to preload
   const [isRunning, setIsRunning] = useState(false);
-  const [pyodide, setPyodide] = useState(null);
-
-  useEffect(() => {
-    let script = document.getElementById("pyodide-script");
-    
-    if (window.pyodideInstance) {
-      setPyodide(window.pyodideInstance);
-      setIsLoading(false);
-      return;
-    }
-
-    const initPyodide = async () => {
-      try {
-        window.pyodideInstance = await window.loadPyodide({
-          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/"
-        });
-        setPyodide(window.pyodideInstance);
-      } catch (e) {
-        setStderr("CRITICAL: Python Runtime Failure.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (!script) {
-      script = document.createElement("script");
-      script.id = "pyodide-script";
-      script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js";
-      script.onload = initPyodide;
-      document.body.appendChild(script);
-    } else {
-      script.addEventListener("load", initPyodide);
-    }
-  }, []);
+  const abortRef = useRef(false);
 
   const runPython = async (code) => {
-    if (!pyodide) return;
+    if (isRunning) return;
     setIsRunning(true);
     setStdout("");
     setStderr("");
+    abortRef.current = false;
     try {
-      pyodide.setStdout({ batched: (str) => setStdout(prev => prev + str + "\n") });
-      pyodide.setStderr({ batched: (str) => setStderr(prev => prev + str + "\n") });
-      await pyodide.runPythonAsync(code);
+      const res = await executeCode({ script: code, language: 'python3' });
+      if (abortRef.current) return;
+      // JDoodle merges program stdout + runtime errors into `output`.
+      // statusCode !== 200 signals a compile/runtime error → show as stderr.
+      if (res.statusCode && res.statusCode !== 200) {
+        setStderr(res.output || 'Execution error');
+      } else {
+        setStdout(res.output || '');
+      }
     } catch (err) {
-      setStderr(err.toString());
+      if (!abortRef.current) setStderr(err.message || 'Execution failed');
     } finally {
       setIsRunning(false);
     }
   };
 
-  const interruptExecution = () => setIsRunning(false);
+  const interruptExecution = () => { abortRef.current = true; setIsRunning(false); };
 
   return { runPython, stdout, stderr, isLoading, isRunning, interruptExecution };
 }

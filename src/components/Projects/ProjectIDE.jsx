@@ -213,10 +213,14 @@ function IDEView({ onToast }) {
       {/* Main body */}
       <div className="ide-body">
         {/* File Explorer */}
-        {showExplorer && (
+        {showExplorer ? (
           <>
             <div style={{ width: explorerW, flexShrink: 0 }}>
-              <FileExplorer onFileOpen={handleFileOpen} onToast={onToast} />
+              <FileExplorer
+                onFileOpen={handleFileOpen}
+                onToast={onToast}
+                onCollapse={() => setShowExplorer(false)}
+              />
             </div>
             <div
               className="ide-resize-handle"
@@ -224,6 +228,14 @@ function IDEView({ onToast }) {
               title="Drag to resize"
             />
           </>
+        ) : (
+          <button
+            className="ide-explorer-rail"
+            onClick={() => setShowExplorer(true)}
+            title="Expand sidebar"
+          >
+            <PanelRightClose size={14} style={{ transform: 'rotate(180deg)' }} />
+          </button>
         )}
 
         {/* Editor */}

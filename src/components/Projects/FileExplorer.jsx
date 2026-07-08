@@ -8,7 +8,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   ChevronRight, File, Folder, FolderOpen, Plus, FolderPlus,
-  Trash2, Edit2, Copy, Upload, MoreHorizontal, RefreshCw
+  Trash2, Edit2, Copy, Upload, MoreHorizontal, RefreshCw, PanelLeftClose
 } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import {
@@ -167,7 +167,7 @@ function TreeNode({ node, depth, activeFileId, onFileClick, onRightClick, onDrag
 }
 
 // ─── Main Explorer ───────────────────────────────────────────────────────────
-export default function FileExplorer({ onFileOpen, onToast }) {
+export default function FileExplorer({ onFileOpen, onToast, onCollapse }) {
   const { currentProject, activeFileId, fileTree, setFileTree, setFlatFiles, flatFiles } = useProjects();
 
   const [contextMenu, setContextMenu] = useState(null);
@@ -348,6 +348,15 @@ export default function FileExplorer({ onFileOpen, onToast }) {
           >
             <RefreshCw size={13} className={loading ? 'spin' : ''} />
           </button>
+          {onCollapse && (
+            <button
+              className="ide-explorer-action-btn"
+              title="Collapse sidebar"
+              onClick={onCollapse}
+            >
+              <PanelLeftClose size={13} />
+            </button>
+          )}
         </div>
         <input
           ref={uploadInputRef}
