@@ -859,3 +859,60 @@ Maintain an encouraging and educational tone.`;
   }
 };
 
+// ─── Public: Interview Prep Chatbot ──────────────────────────────────────────
+// Mirrors askQuizBot's pattern: system prompt carries the context of
+// whichever lesson/question the learner currently has open, so follow-up
+// questions ("why is this the answer?", "give me a simpler example") stay
+// grounded in that specific interview question rather than answering blind.
+export const askInterviewPrepBot = async (lessonContext, conversationHistory, newQuery, extraContext = {}) => {
+  const { webResults = [], courseNotes = [] } = extraContext;
+
+  const webSection = webResults.length
+    ? `\n\nRECENT WEB SEARCH RESULTS (use these for anything current/factual — cite the source title inline when you use one, and note if a result seems outdated or irrelevant):\n${webResults.map((r, i) => `[${i + 1}] ${r.title} (${r.url})\n${r.content}`).join("\n\n")}`
+    : "";
+
+  const notesSection = courseNotes.length
+    ? `\n\nSTUDENT'S OWN COURSE NOTES (from their curriculum — prioritize connecting the answer back to concepts they've already written about here):\n${courseNotes.map((n) => `From "${n.moduleTitle}":\n${n.text}`).join("\n\n")}`
+    : "";
+
+  const systemPrompt = `You are an expert Senior Data Scientist / ML Engineer acting as an interview prep coach.
+Here is the interview question the student currently has open:
+
+Course: ${lessonContext.courseTitle}
+Chapter: ${lessonContext.chapterTitle}
+Question: ${lessonContext.lessonTitle}
+Reference Answer: ${lessonContext.answerText || "None provided"}
+${webSection}${notesSection}
+
+Your goal is to help the student truly understand this question, not just read the
+reference answer. Rules:
+1. Answer clearly and concisely, grounded in the reference answer above — don't contradict it.
+2. If web search results are provided above, only use them when they add real value
+   (e.g. a recent development, a current best practice, a real-world example) — don't
+   force them in if the reference answer already covers it fully.
+3. If course notes are provided above, prefer connecting your answer to the student's
+   own notes over generic explanations — it reinforces what they've already studied.
+4. If they ask for a simpler explanation, explain it at a beginner level first, then add depth.
+5. If they ask a follow-up an interviewer might realistically ask next, answer it directly.
+6. If they ask for a hint instead of the full answer, nudge them without giving everything away.
+7. If they ask something unrelated to this question or general interview strategy, gently
+   steer back to the topic at hand.
+Maintain an encouraging, senior-mentor tone.`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...conversationHistory.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'assistant',
+        content: msg.text
+      })),
+      { role: "user", content: newQuery }
+    ];
+
+    return await callAI(messages, 1200, 0.6, false);
+  } catch (error) {
+    console.error("Interview Prep Chatbot Error:", error);
+    throw new Error("Failed to get answer from AI tutor.");
+  }
+};
+

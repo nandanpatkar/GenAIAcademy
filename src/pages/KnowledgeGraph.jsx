@@ -11,17 +11,9 @@ import {
   BookOpen, Layers, GitBranch, FileText, Loader2
 } from "lucide-react";
 import { supabase } from "../config/supabaseClient";
+import { tiptapToText, extractKeywords } from "../utils/tiptapToText";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-const STOPWORDS = new Set([
-  "the","a","an","of","in","for","to","with","and","or","on","at","by",
-  "from","into","using","via","how","what","when","why","this","that",
-  "your","our","its","is","are","was","be","can","will","has","have",
-  "more","over","data","learn","basic","advanced","intro","introduction",
-  "write","python","solution","here","problem","given","return","find",
-  "array","list","output","input","example","note","approach","code",
-]);
-
 const PATH_LABELS = {
   ds: "Data Science", genai: "Gen AI", agentic: "Agentic AI",
   dsa: "DSA", aicxm_aws: "AWS", aicxm_azure: "Azure",
@@ -29,30 +21,6 @@ const PATH_LABELS = {
 };
 const STATUS_COLOR = { complete: "#00ff88", in_progress: "#f59e0b" };
 const STATUS_LABEL = { complete: "Complete", in_progress: "In Progress" };
-
-// ── TipTap JSON → plain text ──────────────────────────────────────────────────
-function tiptapToText(json) {
-  if (!json) return "";
-  if (typeof json === "string") return json;
-  const walk = (node) => {
-    if (!node) return "";
-    if (node.type === "text") return node.text || "";
-    if (node.content) return node.content.map(walk).join(" ");
-    return "";
-  };
-  return walk(json);
-}
-
-// ── Keyword extractor ─────────────────────────────────────────────────────────
-function extractKeywords(text) {
-  if (!text) return new Set();
-  return new Set(
-    text.toLowerCase()
-      .replace(/[^a-z\s]/g, " ")
-      .split(/\s+/)
-      .filter(w => w.length > 3 && !STOPWORDS.has(w))
-  );
-}
 
 // ── Keyword pool builders ─────────────────────────────────────────────────────
 function getCurriculumKeywords(module) {

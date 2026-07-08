@@ -1028,7 +1028,7 @@ function MainApp() {
                                               /> :
                                                 showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
                                                   showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
-                                                    showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} /> :
+                                                    showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                     showQuiz ? <QuizApp /> :
                                                     showIntelligenceHub ? (
                                                     <IntelligenceHub
