@@ -8,7 +8,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Terminal, GitBranch, Search, AlertCircle, X, ChevronUp, ChevronDown, Play, Square, Loader2 } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import GitPanel from './GitPanel';
-import { searchFiles } from '../../services/projectService';
+import { searchFiles, saveFile } from '../../services/projectService';
 import { callAI } from '../../services/aiService';
 import { RUN_LANGUAGES, languageForFilename, executeCode } from '../../services/jdoodleService';
 
@@ -125,13 +125,54 @@ Respond with what this command would output (simulate it realistically), or expl
 
 // ─── Search Tab ──────────────────────────────────────────────────────────────
 function SearchTab({ onToast, onFileOpen }) {
-  const { currentProject, flatFiles } = useProjects();
+  const { currentProject, flatFiles, openFiles, updateOpenFileContent } = useProjects();
   const [query, setQuery] = useState('');
   const [replaceText, setReplaceText] = useState('');
   const [results, setResults] = useState([]);
   const [isRegex, setIsRegex] = useState(false);
   const [caseSensitive, setCaseSensitive] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [replacing, setReplacing] = useState(false);
+
+  const totalMatches = results.reduce((n, f) => n + f.matches.length, 0);
+
+  const buildPattern = () => {
+    const flags = caseSensitive ? 'g' : 'gi';
+    try {
+      return isRegex
+        ? new RegExp(query, flags)
+        : new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), flags);
+    } catch {
+      return null;
+    }
+  };
+
+  const handleReplaceAll = useCallback(async () => {
+    if (!query.trim() || !currentProject || results.length === 0 || replacing) return;
+    const pattern = buildPattern();
+    if (!pattern) { onToast?.('Invalid regular expression', 'error'); return; }
+    setReplacing(true);
+    let changed = 0;
+    try {
+      for (const file of results) {
+        const original = file.content || '';
+        const updated = original.replace(pattern, replaceText);
+        if (updated !== original) {
+          await saveFile(currentProject.id, file.file_path, updated, { language: file.language });
+          // Keep any open tab for this file in sync.
+          const open = openFiles.find(f => f.path === file.file_path);
+          if (open) updateOpenFileContent(open.id, updated);
+          changed++;
+        }
+      }
+      onToast?.(`Replaced across ${changed} file${changed !== 1 ? 's' : ''}`, 'success');
+      setResults([]);
+    } catch (err) {
+      onToast?.('Replace failed', 'error');
+    } finally {
+      setReplacing(false);
+    }
+  }, [query, replaceText, results, currentProject, replacing, isRegex, caseSensitive, openFiles, updateOpenFileContent, onToast]);
 
   const handleSearch = useCallback(async () => {
     if (!query.trim() || !currentProject) return;
@@ -174,14 +215,28 @@ function SearchTab({ onToast, onFileOpen }) {
             >.*</button>
           </div>
         </div>
-        <div className="ide-search-input-wrap">
+        <div className="ide-search-input-wrap" style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
           <input
             className="ide-search-input"
             placeholder="Replace…"
             value={replaceText}
             onChange={e => setReplaceText(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleReplaceAll(); }}
           />
+          <button
+            className="ide-search-replace-btn"
+            onClick={handleReplaceAll}
+            disabled={!query.trim() || results.length === 0 || replacing}
+            title="Replace all matches across files"
+          >
+            {replacing ? 'Replacing…' : 'Replace All'}
+          </button>
         </div>
+        {results.length > 0 && (
+          <div className="ide-search-count">
+            {totalMatches} match{totalMatches !== 1 ? 'es' : ''} in {results.length} file{results.length !== 1 ? 's' : ''}
+          </div>
+        )}
       </div>
 
       {loading ? (

@@ -7,10 +7,11 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Editor, { DiffEditor } from '@monaco-editor/react';
-import { X, Save, Code2, GitCompare, Play } from 'lucide-react';
+import { X, Save, Code2, GitCompare, Play, Settings2, Columns2, RotateCcw } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { saveFile, getFile } from '../../services/projectService';
 import { languageForFilename } from '../../services/jdoodleService';
+import { useEditorSettings, applySettings } from './useEditorSettings';
 import NotebookViewer from './NotebookViewer';
 
 const MONACO_OPTIONS = {
@@ -91,6 +92,75 @@ function EditorContextMenu({ x, y, onClose, onAIAction, hasSelection }) {
   );
 }
 
+// ── Editor settings popover ────────────────────────────────────────────────
+function EditorSettingsPopover({ settings, update, reset, onClose }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
+  }, [onClose]);
+
+  return (
+    <div ref={ref} className="ide-settings-popover">
+      <div className="ide-settings-title">Editor Settings</div>
+
+      <label className="ide-settings-row">
+        <span>Font size</span>
+        <div className="ide-settings-stepper">
+          <button onClick={() => update({ fontSize: Math.max(9, settings.fontSize - 1) })}>−</button>
+          <span>{settings.fontSize}</span>
+          <button onClick={() => update({ fontSize: Math.min(28, settings.fontSize + 1) })}>+</button>
+        </div>
+      </label>
+
+      <label className="ide-settings-row">
+        <span>Tab size</span>
+        <select value={settings.tabSize} onChange={e => update({ tabSize: Number(e.target.value) })}>
+          <option value={2}>2</option>
+          <option value={4}>4</option>
+          <option value={8}>8</option>
+        </select>
+      </label>
+
+      <label className="ide-settings-row">
+        <span>Word wrap</span>
+        <select value={settings.wordWrap} onChange={e => update({ wordWrap: e.target.value })}>
+          <option value="off">Off</option>
+          <option value="on">On</option>
+        </select>
+      </label>
+
+      <label className="ide-settings-row">
+        <span>Line numbers</span>
+        <select value={settings.lineNumbers} onChange={e => update({ lineNumbers: e.target.value })}>
+          <option value="on">On</option>
+          <option value="relative">Relative</option>
+          <option value="off">Off</option>
+        </select>
+      </label>
+
+      <label className="ide-settings-row">
+        <span>Theme</span>
+        <select value={settings.theme} onChange={e => update({ theme: e.target.value })}>
+          <option value="vs-dark">Dark</option>
+          <option value="hc-black">High contrast</option>
+          <option value="vs">Light</option>
+        </select>
+      </label>
+
+      <label className="ide-settings-row toggle" onClick={() => update({ minimap: !settings.minimap })}>
+        <span>Minimap</span>
+        <span className={`ide-settings-switch ${settings.minimap ? 'on' : ''}`} />
+      </label>
+
+      <button className="ide-settings-reset" onClick={reset}>
+        <RotateCcw size={11} /> Reset to defaults
+      </button>
+    </div>
+  );
+}
+
 export default function EditorPane({ onAIAction, onToast }) {
   const {
     openFiles, activeFileId, setActiveFileId, closeFile,
@@ -102,10 +172,29 @@ export default function EditorPane({ onAIAction, onToast }) {
 
   const [contextMenu, setContextMenu] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [splitFileId, setSplitFileId] = useState(null); // second pane file
   const autoSaveTimers = useRef({});
   const monacoRef = useRef(null);
 
+  const { settings, update: updateSettings, reset: resetSettings } = useEditorSettings();
+  const editorOptions = applySettings(MONACO_OPTIONS, settings);
+
   const activeFile = openFiles.find(f => f.id === activeFileId);
+  const splitFile = splitFileId ? openFiles.find(f => f.id === splitFileId) : null;
+
+  // If the split file was closed, clear split.
+  useEffect(() => {
+    if (splitFileId && !openFiles.some(f => f.id === splitFileId)) setSplitFileId(null);
+  }, [openFiles, splitFileId]);
+
+  // Pick a sensible second file when entering split view.
+  const toggleSplit = useCallback(() => {
+    if (splitFileId) { setSplitFileId(null); return; }
+    const other = openFiles.find(f => f.id !== activeFileId);
+    if (!other) { onToast?.('Open a second file to split', 'info'); return; }
+    setSplitFileId(other.id);
+  }, [splitFileId, openFiles, activeFileId, onToast]);
 
   // ── Monaco setup ────────────────────────────────────────────────────────
   const handleEditorDidMount = (editor, monaco) => {
@@ -262,6 +351,34 @@ export default function EditorPane({ onAIAction, onToast }) {
             <Play size={12} /> Run
           </button>
         )}
+
+        {/* Split view + settings */}
+        <div className="ide-tabbar-tools" style={{ marginLeft: activeFile && languageForFilename(activeFile.filename) ? 0 : 'auto' }}>
+          <button
+            className={`ide-tabbar-tool ${splitFile ? 'active' : ''}`}
+            title={splitFile ? 'Close split view' : 'Split editor'}
+            onClick={toggleSplit}
+          >
+            <Columns2 size={13} />
+          </button>
+          <div style={{ position: 'relative' }}>
+            <button
+              className={`ide-tabbar-tool ${showSettings ? 'active' : ''}`}
+              title="Editor settings"
+              onClick={() => setShowSettings(s => !s)}
+            >
+              <Settings2 size={13} />
+            </button>
+            {showSettings && (
+              <EditorSettingsPopover
+                settings={settings}
+                update={updateSettings}
+                reset={resetSettings}
+                onClose={() => setShowSettings(false)}
+              />
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Editor / Diff area */}
@@ -293,7 +410,7 @@ export default function EditorPane({ onAIAction, onToast }) {
                   language={change.language || 'plaintext'}
                   theme="vs-dark"
                   options={{
-                    ...MONACO_OPTIONS,
+                    ...editorOptions,
                     readOnly: true,
                     renderSideBySide: true,
                     minimap: { enabled: false },
@@ -306,13 +423,56 @@ export default function EditorPane({ onAIAction, onToast }) {
           activeFile && (
             activeFile.filename.endsWith('.ipynb') ? (
               <NotebookViewer content={activeFile.content || ''} />
+            ) : splitFile ? (
+              <div className="ide-split-wrap">
+                <div className="ide-split-pane">
+                  <div className="ide-split-label">{activeFile.filename}</div>
+                  <div style={{ flex: 1, minHeight: 0 }}>
+                    <Editor
+                      key={`split-a-${activeFile.id}`}
+                      language={activeFile.language || 'plaintext'}
+                      value={activeFile.content || ''}
+                      theme={settings.theme}
+                      options={editorOptions}
+                      onMount={handleEditorDidMount}
+                      onChange={(v) => handleChange(v, activeFile.id)}
+                    />
+                  </div>
+                </div>
+                <div className="ide-split-pane">
+                  <div className="ide-split-label">
+                    <select
+                      className="ide-split-select"
+                      value={splitFile.id}
+                      onChange={(e) => setSplitFileId(e.target.value)}
+                    >
+                      {openFiles.filter(f => f.id !== activeFileId).map(f => (
+                        <option key={f.id} value={f.id}>{f.filename}</option>
+                      ))}
+                    </select>
+                    <button className="ide-split-close" onClick={() => setSplitFileId(null)} title="Close split">
+                      <X size={11} />
+                    </button>
+                  </div>
+                  <div style={{ flex: 1, minHeight: 0 }}>
+                    <Editor
+                      key={`split-b-${splitFile.id}`}
+                      language={splitFile.language || 'plaintext'}
+                      value={splitFile.content || ''}
+                      theme={settings.theme}
+                      options={editorOptions}
+                      onChange={(v) => handleChange(v, splitFile.id)}
+                    />
+                  </div>
+                </div>
+              </div>
             ) : (
               <Editor
                 key={activeFile.id}
                 language={activeFile.language || 'plaintext'}
                 value={activeFile.content || ''}
-                theme="vs-dark"
-                options={MONACO_OPTIONS}
+                theme={settings.theme}
+                options={editorOptions}
                 onMount={handleEditorDidMount}
                 onChange={(v) => handleChange(v, activeFile.id)}
               />
