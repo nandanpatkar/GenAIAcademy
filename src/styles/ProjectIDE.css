@@ -1796,3 +1796,137 @@
 .ide-toast.success { border-color: rgba(0,255,136,0.4); }
 .ide-toast.error   { border-color: rgba(255,68,68,0.4); }
 .ide-toast.info    { border-color: rgba(0,136,255,0.4); }
+
+/* ══════════════════════════════════════════════════════════════
+   RUN (JDoodle) — bottom panel tab + editor toolbar button
+   ══════════════════════════════════════════════════════════════ */
+.ide-tabbar-run {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ide-accent);
+  background: rgba(0,255,136,0.08);
+  border: 1px solid rgba(0,255,136,0.3);
+  border-radius: 6px;
+  padding: 4px 12px;
+  margin: 4px 8px 4px 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.ide-tabbar-run:hover { background: rgba(0,255,136,0.16); box-shadow: 0 0 0 3px rgba(0,255,136,0.06); }
+
+.ide-run-tab {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.ide-run-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--ide-border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.ide-run-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #041a0f;
+  background: linear-gradient(135deg, var(--ide-accent), #00c46a);
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: transform 0.14s, box-shadow 0.2s, opacity 0.2s;
+  box-shadow: 0 2px 10px rgba(0,255,136,0.22);
+}
+.ide-run-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,255,136,0.32); }
+.ide-run-btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+.ide-run-btn.ghost {
+  background: var(--ide-surface3);
+  color: var(--ide-danger);
+  box-shadow: none;
+}
+.ide-run-lang {
+  background: var(--ide-surface2);
+  color: var(--ide-text);
+  border: 1px solid var(--ide-border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-family: var(--ide-font-ui);
+  cursor: pointer;
+  outline: none;
+}
+.ide-run-lang:focus { border-color: var(--ide-border-hover); }
+.ide-run-stdin-toggle {
+  font-size: 10.5px;
+  font-weight: 600;
+  font-family: var(--ide-font-mono);
+  color: var(--ide-text-muted);
+  background: var(--ide-surface2);
+  border: 1px solid var(--ide-border);
+  border-radius: 6px;
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ide-run-stdin-toggle.active { color: var(--ide-accent); border-color: rgba(0,255,136,0.35); background: rgba(0,255,136,0.07); }
+.ide-run-file {
+  font-size: 11px;
+  font-family: var(--ide-font-mono);
+  color: var(--ide-text-dim);
+}
+.ide-run-stats {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  font-size: 10.5px;
+  color: var(--ide-text-muted);
+  font-family: var(--ide-font-mono);
+}
+.ide-run-stdin {
+  margin: 8px 10px 0;
+  background: var(--ide-bg);
+  border: 1px solid var(--ide-border);
+  border-radius: 6px;
+  color: var(--ide-text);
+  font-family: var(--ide-font-mono);
+  font-size: 11.5px;
+  padding: 7px 9px;
+  resize: vertical;
+  outline: none;
+}
+.ide-run-stdin:focus { border-color: var(--ide-border-hover); }
+.ide-run-output {
+  flex: 1;
+  overflow: auto;
+  padding: 10px 12px;
+  min-height: 0;
+}
+.ide-run-empty {
+  font-size: 11.5px;
+  color: var(--ide-text-muted);
+  padding: 8px 2px;
+}
+.ide-run-stream {
+  margin: 0;
+  font-family: var(--ide-font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ide-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.ide-run-stream.error { color: #ff8f8f; }
+.ide-spin { animation: ide-spin 0.8s linear infinite; }
+@keyframes ide-spin { to { transform: rotate(360deg); } }
