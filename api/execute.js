@@ -4,14 +4,14 @@
  * Keeps JDoodle credentials server-side. The client posts
  * { script, language, versionIndex, stdin } and gets back JDoodle's result.
  *
- * Required Vercel env vars:
+ * Required env vars (add to .env.local for `vercel dev`, and to the Vercel
+ * dashboard for production):
  *   JDOODLE_CLIENT_ID
  *   JDOODLE_CLIENT_SECRET
  */
 
 const JDOODLE_URL = "https://api.jdoodle.com/v1/execute";
 
-// Languages we expose in the IDE, with their default JDoodle version index.
 const ALLOWED = {
   python3: true,
   nodejs: true,
@@ -20,6 +20,21 @@ const ALLOWED = {
   cpp: true,
   go: true,
 };
+
+// Read and JSON-parse the request body robustly across `vercel dev` and
+// production, where req.body may be a parsed object, a string, or an
+// unconsumed stream.
+async function readBody(req) {
+  if (req.body && typeof req.body === "object") return req.body;
+  if (typeof req.body === "string") {
+    try { return JSON.parse(req.body || "{}"); } catch { return {}; }
+  }
+  // Fall back to reading the raw stream.
+  const chunks = [];
+  for await (const chunk of req) chunks.push(chunk);
+  const raw = Buffer.concat(chunks).toString("utf8");
+  try { return raw ? JSON.parse(raw) : {}; } catch { return {}; }
+}
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -32,22 +47,22 @@ export default async function handler(req, res) {
   const clientId = process.env.JDOODLE_CLIENT_ID;
   const clientSecret = process.env.JDOODLE_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
+    const missing = [
+      !clientId && "JDOODLE_CLIENT_ID",
+      !clientSecret && "JDOODLE_CLIENT_SECRET",
+    ].filter(Boolean).join(", ");
     return res.status(500).json({
       error: "Server not configured",
-      details: "JDOODLE_CLIENT_ID / JDOODLE_CLIENT_SECRET are missing in the environment.",
+      details: `Missing env var(s): ${missing}. Add them to .env.local (for \`vercel dev\`) or the Vercel dashboard, then restart.`,
     });
   }
 
   try {
-    // Vercel parses JSON bodies by default; fall back to manual parse if needed.
-    let body = req.body;
-    if (typeof body === "string") body = JSON.parse(body || "{}");
-    body = body || {};
-
+    const body = await readBody(req);
     const { script, language, versionIndex = "0", stdin = "" } = body;
 
     if (!script || typeof script !== "string") {
-      return res.status(400).json({ error: "Missing 'script'" });
+      return res.status(400).json({ error: "Missing 'script' in request body" });
     }
     if (!language || !ALLOWED[language]) {
       return res.status(400).json({ error: `Unsupported language: ${language}` });
@@ -72,14 +87,12 @@ export default async function handler(req, res) {
     const data = await jdoodleRes.json().catch(() => ({}));
 
     if (!jdoodleRes.ok) {
-      // Surface JDoodle's error (e.g. daily limit reached) without leaking creds.
       return res.status(jdoodleRes.status).json({
         error: data?.error || "Execution service error",
         statusCode: jdoodleRes.status,
       });
     }
 
-    // JDoodle returns { output, statusCode, memory, cpuTime }
     return res.status(200).json({
       output: data.output ?? "",
       statusCode: data.statusCode ?? null,
