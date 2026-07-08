@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback, Component } from "react";
+import React, { useState, useEffect, useCallback, useMemo, Component } from "react";
 import Sidebar from "./components/Sidebar";
+import GlobalSearchPalette from "./components/GlobalSearchPalette";
+import { buildSearchIndex } from "./utils/buildSearchIndex";
 import RoadmapGraph from "./components/RoadmapGraph";
 import RoadmapMobile from "./pages/roadmap/RoadmapMobile";
 import ModulePanel from "./components/ModulePanel";
@@ -493,6 +495,41 @@ function MainApp() {
     setShowInterviewPrep(false);
   };
 
+  // ── Global Search (Cmd+K) ──────────────────────────────────────────────
+  const searchItems = useMemo(
+    () => buildSearchIndex({ pathsData }),
+    [pathsData]
+  );
+
+  const handleSearchNavigate = useCallback((item) => {
+    closeAllPanels();
+
+    if (item.type === "section") {
+      switch (item.action) {
+        case "roadmap":        break; // default view — nothing else to open
+        case "progress":       setShowProgress(true); break;
+        case "playground":     setShowPlayground(true); break;
+        case "algoStudio":     setShowAlgoStudio(true); break;
+        case "workplaceLab":   setShowWorkplaceLab(true); break;
+        case "interviewPrep":  setShowInterviewPrep(true); break;
+        case "aiInterviewer":  setShowAIInterviewer(true); break;
+        case "blog":           setShowBlog(true); break;
+        case "community":      setShowCommunity(true); break;
+        case "knowledgeGraph": setShowKnowledgeGraph(true); break;
+        default: break;
+      }
+      return;
+    }
+
+    if (item.type === "module" || item.type === "subtopic") {
+      setActivePath(item.pathKey);
+      const node = pathsData[item.pathKey]?.nodes?.find(n => n.id === item.nodeId);
+      const mod = node?.modules?.find(m => m.id === item.moduleId);
+      setActiveNode(node || null);
+      setActiveModule(mod || null);
+    }
+  }, [pathsData]);
+
   const pathData = pathsData[activePath] || Object.values(pathsData)[0];
 
   const handleNodeClick = (node, pathId) => {
@@ -845,6 +882,7 @@ function MainApp() {
 
   return (
     <div className={`app ${isEditMode ? "edit-mode-active" : ""}`}>
+      <GlobalSearchPalette items={searchItems} onNavigate={handleSearchNavigate} />
       {isEditMode && (
         <div style={{
           position: 'fixed', top: 0, left: 0, width: '100%', height: '2px',
