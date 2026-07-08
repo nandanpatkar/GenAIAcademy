@@ -10,7 +10,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import {
   Sparkles, Send, File, Code2, FolderOpen, CheckSquare,
-  Copy, Check, FilePlus2, CornerDownLeft, GitCompare, Trash2, StopCircle,
+  Copy, Check, FilePlus2, CornerDownLeft, GitCompare, Trash2, StopCircle, PanelRightClose,
 } from 'lucide-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -92,7 +92,7 @@ const inferPath = ({ precedingText, code, lang }) => {
   return null;
 };
 
-export default function AIAssistant({ onToast }) {
+export default function AIAssistant({ onToast, onCollapse }) {
   const {
     aiMessages, setAiMessages, aiMode, setAiMode,
     activeFile, openFiles, selectedCode, flatFiles,
@@ -291,11 +291,18 @@ export default function AIAssistant({ onToast }) {
             <span className="ide-ai-orb"><Sparkles size={13} /></span>
             AI Assistant
           </div>
-          {aiMessages.length > 0 && (
-            <button className="ide-ai-clear" onClick={() => setAiMessages([])} title="Clear conversation">
-              <Trash2 size={12} />
-            </button>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            {aiMessages.length > 0 && (
+              <button className="ide-ai-clear" onClick={() => setAiMessages([])} title="Clear conversation">
+                <Trash2 size={12} />
+              </button>
+            )}
+            {onCollapse && (
+              <button className="ide-ai-clear" onClick={onCollapse} title="Hide AI Assistant">
+                <PanelRightClose size={13} />
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="ide-ai-mode-bar">

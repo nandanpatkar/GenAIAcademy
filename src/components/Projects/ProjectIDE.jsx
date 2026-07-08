@@ -25,7 +25,9 @@ import { getFile } from '../../services/projectService';
 import '../../styles/ProjectIDE.css';
 
 // ─── Resizable panel hook ─────────────────────────────────────────────────────
-function usePanelResize(initial, min, max) {
+// `invert` is true for panels docked on the right (like the AI panel), where the
+// resize handle is on the panel's LEFT edge: dragging left must grow the panel.
+function usePanelResize(initial, min, max, invert = false) {
   const [size, setSize] = useState(initial);
   const dragging = useRef(false);
   const startX = useRef(0);
@@ -40,7 +42,7 @@ function usePanelResize(initial, min, max) {
 
     const onMove = (e) => {
       if (!dragging.current) return;
-      const delta = e.clientX - startX.current;
+      const delta = (e.clientX - startX.current) * (invert ? -1 : 1);
       setSize(Math.max(min, Math.min(max, startSize.current + delta)));
     };
     const onUp = () => {
@@ -52,7 +54,7 @@ function usePanelResize(initial, min, max) {
     };
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
-  }, [size, min, max]);
+  }, [size, min, max, invert]);
 
   return [size, onMouseDown];
 }
@@ -92,7 +94,7 @@ function IDEView({ onToast }) {
 
   // Resizable panel widths
   const [explorerW, explorerDrag] = usePanelResize(240, 160, 400);
-  const [aiW, aiDrag] = usePanelResize(300, 200, 480);
+  const [aiW, aiDrag] = usePanelResize(300, 200, 480, true);
 
   const gitBadge = gitStatus.staged.length + gitStatus.unstaged.length;
 
@@ -245,7 +247,7 @@ function IDEView({ onToast }) {
         </div>
 
         {/* AI Panel */}
-        {showAI && (
+        {showAI ? (
           <>
             <div
               className="ide-resize-handle"
@@ -253,9 +255,17 @@ function IDEView({ onToast }) {
               title="Drag to resize"
             />
             <div style={{ width: aiW, flexShrink: 0, minWidth: 0, height: '100%', display: 'flex' }}>
-              <AIAssistant onToast={onToast} />
+              <AIAssistant onToast={onToast} onCollapse={() => setShowAI(false)} />
             </div>
           </>
+        ) : (
+          <button
+            className="ide-explorer-rail ide-ai-rail"
+            onClick={() => setShowAI(true)}
+            title="Show AI Assistant"
+          >
+            <Sparkles size={14} />
+          </button>
         )}
       </div>
 
