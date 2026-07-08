@@ -24,9 +24,10 @@ const TYPE_LABELS = {
   section: "SECTIONS",
   module: "CURRICULUM",
   subtopic: "SUBTOPICS",
-  "interview-course": "INTERVIEW PREP",
-  "interview-lesson": "INTERVIEW LESSONS",
+  "interview-lesson": "INTERVIEW PREP",
 };
+
+const INTERVIEW_DATA_URL = "/data/interview-prep.json";
 
 export default function GlobalSearchPalette({ items, onNavigate }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +35,50 @@ export default function GlobalSearchPalette({ items, onNavigate }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
 
-  const results = useMemo(() => searchIndex(items, query, 30), [items, query]);
+  // ── Lazy-load Interview Prep data on first open ─────────────────────────
+  // This file is ~14MB, so it's intentionally NOT fetched on app load —
+  // only once, the first time the palette is opened, matching the app's
+  // existing "large JSON stays in /public for lazy fetch" pattern.
+  const [interviewItems, setInterviewItems] = useState([]);
+  const [isLoadingInterview, setIsLoadingInterview] = useState(false);
+  const hasFetchedInterview = useRef(false);
+
+  useEffect(() => {
+    if (!isOpen || hasFetchedInterview.current) return;
+    hasFetchedInterview.current = true;
+    setIsLoadingInterview(true);
+    fetch(INTERVIEW_DATA_URL)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+      .then((courses) => {
+        const flat = [];
+        (courses || []).forEach((course) => {
+          (course.chapters || []).forEach((chapter) => {
+            (chapter.lessons || []).forEach((lesson) => {
+              flat.push({
+                id: `iv-lesson-${lesson.id}`,
+                type: "interview-lesson",
+                label: lesson.lesson_title,
+                subtitle: `${chapter.chapter_title} · ${course.course_title}`,
+                courseId: course.id,
+                chapterId: chapter.id,
+                lessonId: lesson.id,
+                icon: "FileText",
+              });
+            });
+          });
+        });
+        setInterviewItems(flat);
+      })
+      .catch((err) => {
+        console.error("GlobalSearchPalette: failed to load interview prep data", err);
+        hasFetchedInterview.current = false; // allow retry on next open
+      })
+      .finally(() => setIsLoadingInterview(false));
+  }, [isOpen]);
+
+  const allItems = useMemo(() => [...items, ...interviewItems], [items, interviewItems]);
+
+  const results = useMemo(() => searchIndex(allItems, query, 30), [allItems, query]);
 
   const grouped = useMemo(() => {
     const groups = {};
@@ -193,6 +237,7 @@ export default function GlobalSearchPalette({ items, onNavigate }) {
         <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "8px 16px", borderTop: "1px solid var(--bg3)", fontSize: 10, color: "var(--text2, #888)" }}>
           <span style={{ display: "flex", alignItems: "center", gap: 4 }}><ArrowUp size={10} /><ArrowDown size={10} /> navigate</span>
           <span style={{ display: "flex", alignItems: "center", gap: 4 }}><CornerDownLeft size={10} /> select</span>
+          {isLoadingInterview && <span>indexing interview prep…</span>}
           <span style={{ marginLeft: "auto" }}>esc to close</span>
         </div>
       </div>

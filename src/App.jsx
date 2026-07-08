@@ -361,6 +361,7 @@ function MainApp() {
   const [showCommunity, setShowCommunity] = useState(false);
   const [showNotion, setShowNotion] = useState(false);
   const [showInterviewPrep, setShowInterviewPrep] = useState(false);
+  const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
 
   const [showGitHubHub, setShowGitHubHub] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -493,6 +494,7 @@ function MainApp() {
     setShowCommunity(false);
     setShowNotion(false);
     setShowInterviewPrep(false);
+    setInterviewDeepLinkId(null);
   };
 
   // ── Global Search (Cmd+K) ──────────────────────────────────────────────
@@ -527,6 +529,12 @@ function MainApp() {
       const mod = node?.modules?.find(m => m.id === item.moduleId);
       setActiveNode(node || null);
       setActiveModule(mod || null);
+      return;
+    }
+
+    if (item.type === "interview-lesson") {
+      setShowInterviewPrep(true);
+      setInterviewDeepLinkId(item.lessonId);
     }
   }, [pathsData]);
 
@@ -1020,7 +1028,7 @@ function MainApp() {
                                               /> :
                                                 showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
                                                   showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
-                                                    showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} /> :
+                                                    showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} /> :
                                                     showQuiz ? <QuizApp /> :
                                                     showIntelligenceHub ? (
                                                     <IntelligenceHub

@@ -24,10 +24,15 @@ const SECTIONS = [
 /**
  * @param {Object} opts
  * @param {Object} opts.pathsData - the App.jsx pathsData state (paths -> nodes -> modules -> subtopics)
- * @param {Array}  [opts.interviewCourses] - optional flattened interview prep data: [{id, title, chapters:[{id,title,lessons:[{id,title}]}]}]
  * @returns {Array} flat, searchable item list
+ *
+ * Note: Interview Prep lesson-level data is NOT included here — it's ~14MB
+ * and lives in /public/data/interview-prep.json, lazy-fetched directly by
+ * GlobalSearchPalette.jsx the first time the palette is opened, then merged
+ * in client-side. Keeping it out of this function keeps pathsData-driven
+ * recomputation (on every curriculum edit) cheap.
  */
-export function buildSearchIndex({ pathsData = {}, interviewCourses = [] } = {}) {
+export function buildSearchIndex({ pathsData = {} } = {}) {
   const items = [...SECTIONS];
 
   // ── Curriculum: paths -> nodes -> modules -> subtopics ───────────────────
@@ -60,32 +65,6 @@ export function buildSearchIndex({ pathsData = {}, interviewCourses = [] } = {})
             moduleId: module.id,
             icon: "Layers",
           });
-        });
-      });
-    });
-  });
-
-  // ── Interview Prep: courses -> chapters -> lessons (optional) ────────────
-  (interviewCourses || []).forEach((course) => {
-    items.push({
-      id: `iv-course-${course.id}`,
-      type: "interview-course",
-      label: course.title,
-      subtitle: "Interview Prep",
-      courseId: course.id,
-      icon: "Mic",
-    });
-    (course.chapters || []).forEach((chapter) => {
-      (chapter.lessons || []).forEach((lesson) => {
-        items.push({
-          id: `iv-lesson-${lesson.id}`,
-          type: "interview-lesson",
-          label: lesson.title,
-          subtitle: `${course.title} → ${chapter.title}`,
-          courseId: course.id,
-          chapterId: chapter.id,
-          lessonId: lesson.id,
-          icon: "FileText",
         });
       });
     });

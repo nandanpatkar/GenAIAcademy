@@ -22,7 +22,7 @@ const COURSE_COLORS = [
 // View levels for the drill-down roadmap
 const VIEW = { COURSES: "courses", CHAPTERS: "chapters", LESSONS: "lessons" };
 
-export default function InterviewPrep({ onClose }) {
+export default function InterviewPrep({ onClose, initialLessonId = null }) {
   const isMobile = useIsMobile();
   const { user, isAdmin } = useAuth();
 
@@ -184,6 +184,23 @@ export default function InterviewPrep({ onClose }) {
     const next = flatLessons[activeIndex + offset];
     if (next) setActiveLessonId(next.id);
   };
+
+  // ── Deep-link from Global Search (Cmd+K) ────────────────────────────────
+  const hasAppliedDeepLink = useRef(false);
+  useEffect(() => {
+    if (!courses || !initialLessonId || hasAppliedDeepLink.current) return;
+    for (const course of courses) {
+      for (const chapter of course.chapters) {
+        const lesson = chapter.lessons.find(l => l.id === initialLessonId);
+        if (lesson) {
+          setView(VIEW.LESSONS);
+          openLesson(lesson, course, chapter);
+          hasAppliedDeepLink.current = true;
+          return;
+        }
+      }
+    }
+  }, [courses, initialLessonId]);
 
   // ── Admin Actions ─────────────────────────────────────────────────────────
   const handleExportJson = () => {
