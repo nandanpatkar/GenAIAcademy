@@ -4,11 +4,13 @@ import {
   Search, ChevronRight, ArrowLeft, CheckCircle2, Circle,
   Loader2, AlertCircle, X, BookOpen, Layers, Target,
   Zap, ArrowRight, ChevronLeft, ChevronDown, Hash,
-  BarChart2, Clock, Star, Plus, Download, Edit3, Save, Trash2, Edit2
+  BarChart2, Clock, Star, Plus, Download, Edit3, Save, Trash2, Edit2,
+  Bot, Send
 } from "lucide-react";
 import useIsMobile from "../hooks/useIsMobile";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../config/supabaseClient";
+import { askInterviewPrepBot } from "../services/aiService";
 import "../styles/InterviewPrep.css";
 
 const DATA_URL = "/data/interview-prep.json";
@@ -46,6 +48,12 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
   const [addModal, setAddModal] = useState({ open: false, mode: 'add', type: null, parentId: null, itemToEdit: null });
   const [newItemTitle, setNewItemTitle] = useState("");
   const [newItemContent, setNewItemContent] = useState("");
+
+  // AI Tutor chat state — mirrors QuizApp's aiChatOpen/aiMessages/aiInput/aiLoading pattern
+  const [aiChatOpen, setAiChatOpen] = useState(false);
+  const [aiMessages, setAiMessages] = useState([]);
+  const [aiInput, setAiInput] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
 
   // ── Load data ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -201,6 +209,39 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
       }
     }
   }, [courses, initialLessonId]);
+
+  // ── AI Tutor: reset chat whenever the active question changes ──────────
+  useEffect(() => {
+    setAiMessages([]);
+    setAiChatOpen(false);
+  }, [activeLessonId]);
+
+  const handleAiSubmit = async () => {
+    if (!aiInput.trim() || aiLoading || !activeLesson) return;
+    const query = aiInput;
+    setAiInput("");
+    const newMsg = { role: 'user', text: query };
+    setAiMessages(prev => [...prev, newMsg]);
+    setAiLoading(true);
+
+    try {
+      const lessonContext = {
+        courseTitle: activeLesson.courseTitle,
+        chapterTitle: activeLesson.chapterTitle,
+        lessonTitle: activeLesson.lesson_title,
+        answerText: activeLesson.content_text,
+      };
+
+      const response = await askInterviewPrepBot(lessonContext, aiMessages, query);
+      const botText = typeof response === 'string' ? response : (response?.answer || response?.content || JSON.stringify(response));
+
+      setAiMessages(prev => [...prev, { role: 'model', text: botText }]);
+    } catch (e) {
+      setAiMessages(prev => [...prev, { role: 'model', text: "Sorry, I encountered an error connecting to the AI." }]);
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   // ── Admin Actions ─────────────────────────────────────────────────────────
   const handleExportJson = () => {
@@ -693,15 +734,25 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
 
                   {/* Footer */}
                   <div className="ip-lesson-footer">
-                    <button
-                      className={"ip-complete-btn" + (completedLessons[activeLesson.id] ? " done" : "")}
-                      style={{ "--btn-color": activeLesson.courseColor }}
-                      onClick={() => toggleDone(activeLesson.id)}
-                    >
-                      {completedLessons[activeLesson.id]
-                        ? <><CheckCircle2 size={14} /> Completed</>
-                        : <><Circle size={14} /> Mark complete</>}
-                    </button>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      <button
+                        className={"ip-complete-btn" + (completedLessons[activeLesson.id] ? " done" : "")}
+                        style={{ "--btn-color": activeLesson.courseColor }}
+                        onClick={() => toggleDone(activeLesson.id)}
+                      >
+                        {completedLessons[activeLesson.id]
+                          ? <><CheckCircle2 size={14} /> Completed</>
+                          : <><Circle size={14} /> Mark complete</>}
+                      </button>
+
+                      <button
+                        className={"ip-ai-tutor-btn" + (aiChatOpen ? " active" : "")}
+                        style={{ "--btn-color": activeLesson.courseColor }}
+                        onClick={() => setAiChatOpen(o => !o)}
+                      >
+                        <Bot size={14} /> Ask AI Tutor
+                      </button>
+                    </div>
 
                     <div className="ip-nav-buttons">
                       <button className="ip-nav-btn" disabled={activeIndex <= 0} onClick={() => goToLesson(-1)}>
@@ -713,6 +764,43 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
                       </button>
                     </div>
                   </div>
+
+                  {/* AI Tutor Chat Panel — context-aware for THIS question */}
+                  {aiChatOpen && (
+                    <div className="ip-ai-chat-panel" style={{ "--btn-color": activeLesson.courseColor }}>
+                      <div className="ip-ai-header">
+                        <h4><Bot size={16} /> AI Tutor — {activeLesson.lesson_title}</h4>
+                        <button onClick={() => setAiChatOpen(false)}><X size={15} /></button>
+                      </div>
+                      <div className="ip-ai-messages">
+                        {aiMessages.length === 0 && (
+                          <div className="ip-ai-empty">Ask me to explain this answer differently, go deeper, or quiz you on a follow-up.</div>
+                        )}
+                        {aiMessages.map((m, idx) => (
+                          <div key={idx} className={`ip-ai-msg ${m.role}`}>
+                            {m.text}
+                          </div>
+                        ))}
+                        {aiLoading && (
+                          <div className="ip-ai-msg model loading">
+                            <Loader2 size={14} className="spin" /> Thinking...
+                          </div>
+                        )}
+                      </div>
+                      <div className="ip-ai-input-area">
+                        <input
+                          type="text"
+                          placeholder="Ask about this question..."
+                          value={aiInput}
+                          onChange={(e) => setAiInput(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && handleAiSubmit()}
+                        />
+                        <button onClick={handleAiSubmit} disabled={!aiInput.trim() || aiLoading}>
+                          <Send size={15} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

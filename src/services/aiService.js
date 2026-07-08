@@ -859,3 +859,44 @@ Maintain an encouraging and educational tone.`;
   }
 };
 
+// ─── Public: Interview Prep Chatbot ──────────────────────────────────────────
+// Mirrors askQuizBot's pattern: system prompt carries the context of
+// whichever lesson/question the learner currently has open, so follow-up
+// questions ("why is this the answer?", "give me a simpler example") stay
+// grounded in that specific interview question rather than answering blind.
+export const askInterviewPrepBot = async (lessonContext, conversationHistory, newQuery) => {
+  const systemPrompt = `You are an expert Senior Data Scientist / ML Engineer acting as an interview prep coach.
+Here is the interview question the student currently has open:
+
+Course: ${lessonContext.courseTitle}
+Chapter: ${lessonContext.chapterTitle}
+Question: ${lessonContext.lessonTitle}
+Reference Answer: ${lessonContext.answerText || "None provided"}
+
+Your goal is to help the student truly understand this question, not just read the
+reference answer. Rules:
+1. Answer clearly and concisely, grounded in the reference answer above — don't contradict it.
+2. If they ask for a simpler explanation, explain it at a beginner level first, then add depth.
+3. If they ask a follow-up an interviewer might realistically ask next, answer it directly.
+4. If they ask for a hint instead of the full answer, nudge them without giving everything away.
+5. If they ask something unrelated to this question or general interview strategy, gently
+   steer back to the topic at hand.
+Maintain an encouraging, senior-mentor tone.`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      ...conversationHistory.map(msg => ({
+        role: msg.role === 'user' ? 'user' : 'assistant',
+        content: msg.text
+      })),
+      { role: "user", content: newQuery }
+    ];
+
+    return await callAI(messages, 1000, 0.6, false);
+  } catch (error) {
+    console.error("Interview Prep Chatbot Error:", error);
+    throw new Error("Failed to get answer from AI tutor.");
+  }
+};
+
