@@ -7,11 +7,13 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Editor, { DiffEditor } from '@monaco-editor/react';
-import { X, Save, Code2, GitCompare, Play, Settings2, Columns2, RotateCcw } from 'lucide-react';
+import { X, Save, Code2, GitCompare, Play, Settings2, Columns2, RotateCcw, Eye, FileCode } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { saveFile, getFile } from '../../services/projectService';
 import { languageForFilename } from '../../services/jdoodleService';
 import { useEditorSettings, applySettings } from './useEditorSettings';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import NotebookViewer from './NotebookViewer';
 
 const MONACO_OPTIONS = {
@@ -174,8 +176,11 @@ export default function EditorPane({ onAIAction, onToast }) {
   const [saving, setSaving] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [splitFileId, setSplitFileId] = useState(null); // second pane file
+  const [mdPreview, setMdPreview] = useState(true); // .md files open in preview by default
   const autoSaveTimers = useRef({});
   const monacoRef = useRef(null);
+
+  const isMarkdown = (f) => !!f && /\.(md|markdown)$/i.test(f.filename);
 
   const { settings, update: updateSettings, reset: resetSettings } = useEditorSettings();
   const editorOptions = applySettings(MONACO_OPTIONS, settings);
@@ -354,6 +359,15 @@ export default function EditorPane({ onAIAction, onToast }) {
 
         {/* Split view + settings */}
         <div className="ide-tabbar-tools" style={{ marginLeft: activeFile && languageForFilename(activeFile.filename) ? 0 : 'auto' }}>
+          {isMarkdown(activeFile) && (
+            <button
+              className={`ide-tabbar-tool ${mdPreview ? 'active' : ''}`}
+              title={mdPreview ? 'Show source' : 'Show preview'}
+              onClick={() => setMdPreview(p => !p)}
+            >
+              {mdPreview ? <FileCode size={13} /> : <Eye size={13} />}
+            </button>
+          )}
           <button
             className={`ide-tabbar-tool ${splitFile ? 'active' : ''}`}
             title={splitFile ? 'Close split view' : 'Split editor'}
@@ -423,6 +437,12 @@ export default function EditorPane({ onAIAction, onToast }) {
           activeFile && (
             activeFile.filename.endsWith('.ipynb') ? (
               <NotebookViewer content={activeFile.content || ''} />
+            ) : (isMarkdown(activeFile) && mdPreview && !splitFile) ? (
+              <div className="ide-md-preview">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {activeFile.content || '*This markdown file is empty.*'}
+                </ReactMarkdown>
+              </div>
             ) : splitFile ? (
               <div className="ide-split-wrap">
                 <div className="ide-split-pane">
