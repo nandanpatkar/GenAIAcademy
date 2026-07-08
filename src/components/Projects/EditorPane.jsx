@@ -7,9 +7,10 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Editor, { DiffEditor } from '@monaco-editor/react';
-import { X, Save, Code2, GitCompare } from 'lucide-react';
+import { X, Save, Code2, GitCompare, Play } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { saveFile, getFile } from '../../services/projectService';
+import { languageForFilename } from '../../services/jdoodleService';
 import NotebookViewer from './NotebookViewer';
 
 const MONACO_OPTIONS = {
@@ -96,6 +97,7 @@ export default function EditorPane({ onAIAction, onToast }) {
     unsavedFiles, markUnsaved, markSaved, updateOpenFileContent,
     pendingDiff, setPendingDiff, setSelectedCode, editorRef,
     currentProject, markFileModified,
+    setBottomTab, setIsBottomOpen,
   } = useProjects();
 
   const [contextMenu, setContextMenu] = useState(null);
@@ -244,6 +246,22 @@ export default function EditorPane({ onAIAction, onToast }) {
             </div>
           );
         })}
+
+        {/* Run active file (JDoodle) */}
+        {activeFile && languageForFilename(activeFile.filename) && (
+          <button
+            className="ide-tabbar-run"
+            title={`Run ${activeFile.filename}`}
+            onClick={() => {
+              setBottomTab('run');
+              setIsBottomOpen(true);
+              // Let the Run tab mount, then trigger via the bridge.
+              setTimeout(() => window.__ideRunTrigger?.(), 60);
+            }}
+          >
+            <Play size={12} /> Run
+          </button>
+        )}
       </div>
 
       {/* Editor / Diff area */}

@@ -5,11 +5,12 @@
  */
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Terminal, GitBranch, Search, AlertCircle, X, ChevronUp, ChevronDown } from 'lucide-react';
+import { Terminal, GitBranch, Search, AlertCircle, X, ChevronUp, ChevronDown, Play, Square, Loader2 } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import GitPanel from './GitPanel';
 import { searchFiles } from '../../services/projectService';
 import { callAI } from '../../services/aiService';
+import { RUN_LANGUAGES, languageForFilename, executeCode } from '../../services/jdoodleService';
 
 // ─── Terminal ────────────────────────────────────────────────────────────────
 function TerminalTab({ onToast }) {
@@ -224,9 +225,132 @@ function ProblemsTab() {
   );
 }
 
+// ─── Run (JDoodle) ─────────────────────────────────────────────────────────────
+function RunTab({ onToast }) {
+  const { activeFile } = useProjects();
+  const [language, setLanguage] = useState('python3');
+  const [stdin, setStdin] = useState('');
+  const [showStdin, setShowStdin] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [result, setResult] = useState(null); // { output, statusCode, memory, cpuTime }
+  const [error, setError] = useState('');
+  const abortRef = useRef(false);
+
+  // Auto-pick language from the active file's extension when it changes.
+  useEffect(() => {
+    const detected = languageForFilename(activeFile?.filename);
+    if (detected) setLanguage(detected);
+  }, [activeFile?.id]);
+
+  const run = useCallback(async () => {
+    if (!activeFile) { onToast?.('Open a file to run', 'error'); return; }
+    if (running) return;
+    setRunning(true);
+    setError('');
+    setResult(null);
+    abortRef.current = false;
+    try {
+      const res = await executeCode({
+        script: activeFile.content || '',
+        language,
+        stdin,
+      });
+      if (abortRef.current) return;
+      setResult(res);
+      if (res.statusCode && res.statusCode !== 200) {
+        onToast?.('Ran with errors', 'info');
+      } else {
+        onToast?.('Executed ✓', 'success');
+      }
+    } catch (err) {
+      if (abortRef.current) return;
+      setError(err.message || 'Execution failed');
+      onToast?.(err.message || 'Execution failed', 'error');
+    } finally {
+      setRunning(false);
+    }
+  }, [activeFile, language, stdin, running, onToast]);
+
+  // Bridge so the editor's Run button (and Ctrl/Cmd+Enter) can trigger a run.
+  useEffect(() => {
+    window.__ideRunTrigger = () => run();
+    return () => { delete window.__ideRunTrigger; };
+  }, [run]);
+
+  return (
+    <div className="ide-run-tab">
+      <div className="ide-run-toolbar">
+        <button className="ide-run-btn" onClick={run} disabled={running || !activeFile}>
+          {running ? <Loader2 size={12} className="ide-spin" /> : <Play size={12} />}
+          {running ? 'Running…' : 'Run'}
+        </button>
+        {running && (
+          <button className="ide-run-btn ghost" onClick={() => { abortRef.current = true; setRunning(false); }}>
+            <Square size={11} /> Stop
+          </button>
+        )}
+
+        <select
+          className="ide-run-lang"
+          value={language}
+          onChange={e => setLanguage(e.target.value)}
+          title="Language"
+        >
+          {RUN_LANGUAGES.map(l => (
+            <option key={l.id} value={l.id}>{l.label}</option>
+          ))}
+        </select>
+
+        <button
+          className={`ide-run-stdin-toggle ${showStdin ? 'active' : ''}`}
+          onClick={() => setShowStdin(s => !s)}
+          title="Standard input"
+        >
+          stdin
+        </button>
+
+        <span className="ide-run-file">
+          {activeFile ? activeFile.filename : 'no file open'}
+        </span>
+
+        {result && (
+          <span className="ide-run-stats">
+            {result.cpuTime != null && <span>{result.cpuTime}s CPU</span>}
+            {result.memory != null && <span>{result.memory} KB</span>}
+          </span>
+        )}
+      </div>
+
+      {showStdin && (
+        <textarea
+          className="ide-run-stdin"
+          placeholder="Standard input (one value per line)…"
+          value={stdin}
+          onChange={e => setStdin(e.target.value)}
+          rows={2}
+        />
+      )}
+
+      <div className="ide-run-output">
+        {!result && !error && !running && (
+          <div className="ide-run-empty">Press Run to execute the active file. Output appears here.</div>
+        )}
+        {running && <div className="ide-run-empty">Executing on JDoodle…</div>}
+        {error && <pre className="ide-run-stream error">{error}</pre>}
+        {result && (
+          <pre className={`ide-run-stream ${result.statusCode && result.statusCode !== 200 ? 'error' : ''}`}>
+            {result.output || '(no output)'}
+          </pre>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Bottom Panel ─────────────────────────────────────────────────────────────
 const TABS = [
   { id: 'terminal', label: 'Terminal', icon: <Terminal size={11} /> },
+  { id: 'run', label: 'Run', icon: <Play size={11} /> },
   { id: 'git', label: 'Source Control', icon: <GitBranch size={11} /> },
   { id: 'search', label: 'Search', icon: <Search size={11} /> },
   { id: 'problems', label: 'Problems', icon: <AlertCircle size={11} /> },
@@ -279,6 +403,7 @@ export default function BottomPanel({ onToast, onFileOpen }) {
         {isBottomOpen && (
           <div className="ide-bottom-content">
             {bottomTab === 'terminal' && <TerminalTab onToast={onToast} />}
+            {bottomTab === 'run' && <RunTab onToast={onToast} />}
             {bottomTab === 'git' && <GitPanel onToast={onToast} />}
             {bottomTab === 'search' && <SearchTab onToast={onToast} onFileOpen={onFileOpen} />}
             {bottomTab === 'problems' && <ProblemsTab />}

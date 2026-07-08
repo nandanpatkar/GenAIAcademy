@@ -1,22 +1,30 @@
 /**
- * AIAssistant.jsx — AI coding assistant panel for the IDE
+ * AIAssistant.jsx — Modern AI coding assistant panel for the IDE
  *
- * Provides chat, code generation, explanation, and multi-file edit
- * capabilities using the existing aiService.js infrastructure.
+ * A chat-first assistant where every code block the model emits gets its own
+ * inline action bar: Copy, Insert into active file, Create new file, and
+ * Preview diff. All actions route through the existing project plumbing
+ * (saveFile / openFile / pendingDiff) so generated code is directly importable.
  */
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Sparkles, Send, ChevronDown, File, Code2, FolderOpen, CheckSquare } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import {
+  Sparkles, Send, File, Code2, FolderOpen, CheckSquare,
+  Copy, Check, FilePlus2, CornerDownLeft, GitCompare, Trash2, StopCircle,
+} from 'lucide-react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { callAI } from '../../services/aiService';
-import ReactMarkdown from 'react-markdown';
-
+import { saveFile } from '../../services/projectService';
 
 const MODES = [
-  { id: 'chat', label: 'Chat' },
-  { id: 'generate', label: 'Generate' },
-  { id: 'edit', label: 'Edit' },
-  { id: 'explain', label: 'Explain' },
+  { id: 'chat', label: 'Chat', hint: 'Ask anything about the project…' },
+  { id: 'generate', label: 'Generate', hint: 'Describe what to build…' },
+  { id: 'edit', label: 'Edit', hint: 'Describe what to change…' },
+  { id: 'explain', label: 'Explain', hint: 'What should I explain?' },
 ];
 
 const CONTEXT_OPTIONS = [
@@ -26,10 +34,34 @@ const CONTEXT_OPTIONS = [
   { id: 'project', label: 'Full Project', icon: <CheckSquare size={9} /> },
 ];
 
-// Build prompt context string based on selected context options
-const buildContext = ({ activeFile, openFiles, selectedCode, flatFiles, activeContexts, mode }) => {
-  const parts = [];
+// Map a fenced-code language token to a Monaco language + file extension.
+const LANG_META = {
+  javascript: { mono: 'javascript', ext: 'js' },
+  js: { mono: 'javascript', ext: 'js' },
+  jsx: { mono: 'javascript', ext: 'jsx' },
+  typescript: { mono: 'typescript', ext: 'ts' },
+  ts: { mono: 'typescript', ext: 'ts' },
+  tsx: { mono: 'typescript', ext: 'tsx' },
+  python: { mono: 'python', ext: 'py' },
+  py: { mono: 'python', ext: 'py' },
+  json: { mono: 'json', ext: 'json' },
+  html: { mono: 'html', ext: 'html' },
+  css: { mono: 'css', ext: 'css' },
+  bash: { mono: 'shell', ext: 'sh' },
+  sh: { mono: 'shell', ext: 'sh' },
+  sql: { mono: 'sql', ext: 'sql' },
+  markdown: { mono: 'markdown', ext: 'md' },
+  md: { mono: 'markdown', ext: 'md' },
+  yaml: { mono: 'yaml', ext: 'yml' },
+  go: { mono: 'go', ext: 'go' },
+  rust: { mono: 'rust', ext: 'rs' },
+  java: { mono: 'java', ext: 'java' },
+};
+const metaFor = (lang) => LANG_META[(lang || '').toLowerCase()] || { mono: 'plaintext', ext: 'txt' };
 
+// Build the context block appended to a user prompt.
+const buildContext = ({ activeFile, openFiles, selectedCode, flatFiles, activeContexts }) => {
+  const parts = [];
   if (activeContexts.includes('current') && activeFile) {
     parts.push(`### Current File: ${activeFile.path}\n\`\`\`${activeFile.language}\n${activeFile.content || ''}\n\`\`\``);
   }
@@ -39,165 +71,233 @@ const buildContext = ({ activeFile, openFiles, selectedCode, flatFiles, activeCo
   if (activeContexts.includes('open') && openFiles.length > 1) {
     const others = openFiles.filter(f => f.id !== activeFile?.id);
     for (const f of others.slice(0, 5)) {
-      parts.push(`### Open File: ${f.path}\n\`\`\`${f.language}\n${(f.content || '').slice(0, 2000)}${f.content?.length > 2000 ? '\n… (truncated)' : ''}\n\`\`\``);
+      const body = (f.content || '').slice(0, 2000);
+      parts.push(`### Open File: ${f.path}\n\`\`\`${f.language}\n${body}${f.content?.length > 2000 ? '\n… (truncated)' : ''}\n\`\`\``);
     }
   }
   if (activeContexts.includes('project') && flatFiles.length > 0) {
-    const tree = flatFiles.map(f => f.file_path).join('\n');
-    parts.push(`### Project File Tree\n\`\`\`\n${tree}\n\`\`\``);
+    parts.push(`### Project File Tree\n\`\`\`\n${flatFiles.map(f => f.file_path).join('\n')}\n\`\`\``);
   }
-
   return parts.join('\n\n');
 };
 
-// Extract code blocks from AI response
-const extractCodeBlocks = (text) => {
-  const blocks = [];
-  const regex = /```(\w*)\n([\s\S]*?)```/g;
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    blocks.push({ language: match[1] || 'plaintext', code: match[2].trim() });
-  }
-  return blocks;
-};
-
-// Parse multi-file edit response
-const parseMultiFileEdit = (text) => {
-  const files = [];
-  const fileRegex = /###\s*FILE:\s*(.+?)\n```(\w*)\n([\s\S]*?)```/g;
-  let match;
-  while ((match = fileRegex.exec(text)) !== null) {
-    files.push({ path: match[1].trim(), language: match[2], newContent: match[3].trim() });
-  }
-  return files;
+// Look at the code just before a fence to recover a "### FILE: path" hint,
+// or read a leading "// path/to/file.ext" comment from the code itself.
+const inferPath = ({ precedingText, code, lang }) => {
+  const headerMatch = /###\s*FILE:\s*([^\n]+?)\s*$/i.exec(precedingText || '');
+  if (headerMatch) return headerMatch[1].trim().replace(/^`|`$/g, '');
+  const firstLine = (code || '').split('\n')[0].trim();
+  const commentMatch = /^(?:\/\/|#|<!--)\s*([\w./-]+\.\w+)/.exec(firstLine);
+  if (commentMatch) return commentMatch[1];
+  return null;
 };
 
 export default function AIAssistant({ onToast }) {
   const {
     aiMessages, setAiMessages, aiMode, setAiMode,
     activeFile, openFiles, selectedCode, flatFiles,
-    setPendingDiff, currentProject,
+    setPendingDiff, currentProject, openFile,
   } = useProjects();
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [activeContexts, setActiveContexts] = useState(['current', 'selected']);
+  const [newFilePrompt, setNewFilePrompt] = useState(null); // { code, lang, suggested }
+  const [newFileName, setNewFileName] = useState('');
+  const abortRef = useRef(false);
   const textareaRef = useRef(null);
   const messagesEndRef = useRef(null);
+
+  const currentHint = MODES.find(m => m.id === aiMode)?.hint || 'Ask anything…';
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [aiMessages, loading]);
 
-  const toggleContext = (id) => {
-    setActiveContexts(prev =>
-      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
-    );
-  };
+  const toggleContext = (id) =>
+    setActiveContexts(prev => prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]);
 
   const buildSystemPrompt = () => {
-    const projectName = currentProject?.name || 'the project';
+    const name = currentProject?.name || 'the project';
     const modeInstructions = {
-      generate: `You are an expert coding assistant. Generate complete, production-ready code. When creating multiple files, use the format:\n### FILE: /path/to/file.ext\n\`\`\`language\ncode here\n\`\`\``,
-      edit: `You are an expert code editor. When modifying files, show the COMPLETE new file content. Use the format:\n### FILE: /path/to/file.ext\n\`\`\`language\ncomplete new content\n\`\`\``,
-      explain: `You are an expert code explainer. Provide clear, educational explanations. Use markdown formatting.`,
-      chat: `You are an expert AI coding assistant for ${projectName}. Answer questions about the codebase, suggest improvements, and help debug issues.`,
+      generate: `You are an expert coding assistant for ${name}. Generate complete, production-ready code. When a code block belongs in a specific file, put "### FILE: /path/to/file.ext" on its own line directly above the fenced block so it can be imported.`,
+      edit: `You are an expert code editor for ${name}. When modifying files, output the COMPLETE new file content, and put "### FILE: /path/to/file.ext" on its own line directly above each fenced block.`,
+      explain: `You are an expert code explainer. Give clear, educational explanations in markdown. Keep code snippets minimal.`,
+      chat: `You are an expert AI coding assistant for ${name}. Answer questions about the codebase, suggest improvements, and help debug. When you emit code meant for a file, prefix the fence with "### FILE: /path".`,
     };
-    return `${modeInstructions[aiMode] || modeInstructions.chat}\n\nProject: ${projectName}`;
+    return modeInstructions[aiMode] || modeInstructions.chat;
   };
 
+  // ── Code-block actions ──────────────────────────────────────────────────
+  const insertIntoActive = useCallback((code) => {
+    if (!activeFile) { onToast?.('Open a file first to insert', 'error'); return; }
+    setPendingDiff({
+      files: [{
+        path: activeFile.path,
+        language: activeFile.language || 'plaintext',
+        originalContent: activeFile.content || '',
+        newContent: code,
+      }],
+    });
+    onToast?.('Preview ready in editor — Accept to apply', 'info');
+  }, [activeFile, setPendingDiff, onToast]);
+
+  const previewDiff = useCallback((code, path, lang) => {
+    const target = openFiles.find(f => f.path === path);
+    setPendingDiff({
+      files: [{
+        path: path || activeFile?.path || `untitled.${metaFor(lang).ext}`,
+        language: metaFor(lang).mono,
+        originalContent: target?.content || activeFile?.content || '',
+        newContent: code,
+      }],
+    });
+    onToast?.('Diff opened in editor', 'info');
+  }, [openFiles, activeFile, setPendingDiff, onToast]);
+
+  const doCreateFile = useCallback(async (path, code, lang) => {
+    if (!currentProject) return;
+    try {
+      const clean = path.startsWith('/') ? path : `/${path}`;
+      await saveFile(currentProject.id, clean, code, { language: metaFor(lang).mono });
+      openFile({
+        id: `local-${Date.now()}`,
+        path: clean,
+        filename: clean.split('/').pop(),
+        content: code,
+        language: metaFor(lang).mono,
+      });
+      onToast?.(`Created ${clean.split('/').pop()} ✓`, 'success');
+    } catch (err) {
+      onToast?.(err.message || 'Could not create file', 'error');
+    }
+  }, [currentProject, openFile, onToast]);
+
+  const requestNewFile = useCallback((code, lang, suggested) => {
+    const fallback = suggested || `generated.${metaFor(lang).ext}`;
+    setNewFilePrompt({ code, lang });
+    setNewFileName(fallback.startsWith('/') ? fallback : `/${fallback}`);
+  }, []);
+
+  const confirmNewFile = useCallback(() => {
+    if (!newFilePrompt || !newFileName.trim()) return;
+    doCreateFile(newFileName.trim(), newFilePrompt.code, newFilePrompt.lang);
+    setNewFilePrompt(null);
+    setNewFileName('');
+  }, [newFilePrompt, newFileName, doCreateFile]);
+
+  // ── Send ────────────────────────────────────────────────────────────────
   const handleSend = useCallback(async () => {
     if (!input.trim() || loading) return;
-
-    const context = buildContext({ activeFile, openFiles, selectedCode, flatFiles, activeContexts, mode: aiMode });
+    const context = buildContext({ activeFile, openFiles, selectedCode, flatFiles, activeContexts });
     const userMessage = context ? `${input.trim()}\n\n---\n${context}` : input.trim();
     const displayMessage = input.trim();
 
     setAiMessages(prev => [...prev, { role: 'user', content: displayMessage }]);
     setInput('');
+    if (textareaRef.current) textareaRef.current.style.height = 'auto';
     setLoading(true);
+    abortRef.current = false;
 
     try {
-
-      const formattedMessages = [
-        { role: 'user', content: buildSystemPrompt() + '\n\n---\nPrevious messages follow.' },
+      const formatted = [
+        { role: 'user', content: buildSystemPrompt() + '\n\n---\nConversation follows.' },
         ...aiMessages.map(m => ({ role: m.role === 'assistant' ? 'model' : 'user', content: m.content })),
         { role: 'user', content: userMessage },
       ];
-      const response = await callAI(formattedMessages, 4096, 0.7);
-      const assistantContent = response || 'No response generated.';
-
-      setAiMessages(prev => [...prev, { role: 'assistant', content: assistantContent }]);
-
-      // Auto-detect multi-file edits
-      if ((aiMode === 'edit' || aiMode === 'generate') && assistantContent.includes('### FILE:')) {
-        const editedFiles = parseMultiFileEdit(assistantContent);
-        if (editedFiles.length > 0) {
-          const diffFiles = editedFiles.map(ef => {
-            const openFile = openFiles.find(f => f.path === ef.path);
-            return {
-              path: ef.path,
-              language: ef.language || openFile?.language || 'plaintext',
-              originalContent: openFile?.content || '',
-              newContent: ef.newContent,
-            };
-          });
-          setPendingDiff({ files: diffFiles });
-        }
-      }
+      const response = await callAI(formatted, 4096, 0.7);
+      if (abortRef.current) return;
+      setAiMessages(prev => [...prev, { role: 'assistant', content: response || 'No response generated.' }]);
     } catch (err) {
       setAiMessages(prev => [...prev, {
         role: 'assistant',
-        content: `⚠️ Error: ${err.message || 'Failed to get AI response. Check your API key in settings.'}`
+        content: `⚠️ Error: ${err.message || 'Failed to reach the model. Check your API key in Settings.'}`,
       }]);
     } finally {
       setLoading(false);
     }
-  }, [input, loading, aiMode, aiMessages, activeFile, openFiles, selectedCode, flatFiles, activeContexts, setAiMessages, setPendingDiff, currentProject]);
-
-  // Auto-scroll to bottom on new messages
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [aiMessages, loading]);
+  }, [input, loading, aiMode, aiMessages, activeFile, openFiles, selectedCode, flatFiles, activeContexts, setAiMessages, currentProject]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleSend();
   };
 
+  // Editor right-click bridge
   const triggerAIAction = useCallback((action, code, file) => {
-    const actionMessages = {
+    const templates = {
       explain: `Explain this code:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
-      refactor: `Refactor this code for better readability and maintainability:\n\`\`\`\n${code}\n\`\`\``,
+      refactor: `Refactor this code for readability and maintainability:\n\`\`\`\n${code}\n\`\`\``,
       fix: `Find and fix all bugs in this code:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
-      optimize: `Optimize this code for better performance:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
+      optimize: `Optimize this code for performance:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
       'generate-tests': `Generate comprehensive unit tests for this code:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
-      'add-comments': `Add detailed comments and docstrings to this code:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
-      convert: `Convert this code to a different but equivalent implementation. Suggest the best alternative:\n\`\`\`\n${code}\n\`\`\``,
-      'generate-docs': `Generate comprehensive documentation for this code:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
+      'add-comments': `Add clear comments and docstrings to this code:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
+      'generate-docs': `Generate documentation for this code:\n\`\`\`\n${code || file?.content || ''}\n\`\`\``,
     };
-
-    const modeMap = { explain: 'explain', refactor: 'edit', fix: 'edit', optimize: 'edit', 'generate-tests': 'generate', 'add-comments': 'edit', convert: 'edit', 'generate-docs': 'generate' };
+    const modeMap = { explain: 'explain', refactor: 'edit', fix: 'edit', optimize: 'edit', 'generate-tests': 'generate', 'add-comments': 'edit', 'generate-docs': 'generate' };
     setAiMode(modeMap[action] || 'chat');
-    setInput(actionMessages[action] || `${action} this code`);
+    setInput(templates[action] || `${action} this code`);
     textareaRef.current?.focus();
   }, [setAiMode]);
 
-  // Expose triggerAIAction for EditorPane
   useEffect(() => {
     window.__ideAITrigger = triggerAIAction;
     return () => { delete window.__ideAITrigger; };
   }, [triggerAIAction]);
 
+  // ── Markdown renderer with per-block action bar ─────────────────────────
+  const renderMessage = useCallback((content) => (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        code({ className, children, node, ...props }) {
+          const text = String(children).replace(/\n$/, '');
+          const langMatch = /language-(\w+)/.exec(className || '');
+          // react-markdown v10 dropped the `inline` prop: a fenced block has a
+          // language class or spans multiple lines; everything else is inline.
+          const isBlock = !!langMatch || text.includes('\n');
+          if (!isBlock) return <code className="ide-inline-code" {...props}>{children}</code>;
+
+          const lang = langMatch?.[1] || 'plaintext';
+          // Recover the "### FILE:" hint that appeared just above this fence.
+          const parentText = node?.position && content
+            ? content.slice(0, node.position.start.offset)
+            : '';
+          const suggested = inferPath({ precedingText: parentText, code: text, lang });
+
+          return (
+            <CodeBlock
+              code={text}
+              lang={lang}
+              suggested={suggested}
+              hasActiveFile={!!activeFile}
+              onInsert={() => (suggested ? previewDiff(text, suggested, lang) : insertIntoActive(text))}
+              onNewFile={() => requestNewFile(text, lang, suggested)}
+              onDiff={() => previewDiff(text, suggested, lang)}
+            />
+          );
+        },
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  ), [activeFile, insertIntoActive, previewDiff, requestNewFile]);
+
   return (
     <div className="ide-ai-panel">
       {/* Header */}
       <div className="ide-ai-header">
-        <div className="ide-ai-title">
-          <Sparkles size={14} className="ai-icon" />
-          AI Assistant
+        <div className="ide-ai-header-top">
+          <div className="ide-ai-title">
+            <span className="ide-ai-orb"><Sparkles size={13} /></span>
+            AI Assistant
+          </div>
+          {aiMessages.length > 0 && (
+            <button className="ide-ai-clear" onClick={() => setAiMessages([])} title="Clear conversation">
+              <Trash2 size={12} />
+            </button>
+          )}
         </div>
 
-        {/* Mode selector */}
         <div className="ide-ai-mode-bar">
           {MODES.map(m => (
             <button
@@ -210,7 +310,6 @@ export default function AIAssistant({ onToast }) {
           ))}
         </div>
 
-        {/* Context pills */}
         <div className="ide-ai-context-pills">
           {CONTEXT_OPTIONS.map(c => (
             <button
@@ -228,59 +327,38 @@ export default function AIAssistant({ onToast }) {
       {/* Messages */}
       <div className="ide-ai-messages">
         {aiMessages.length === 0 && (
-          <div style={{ textAlign: 'center', padding: '20px 12px' }}>
-            <Sparkles size={24} style={{ color: 'var(--ide-accent)', opacity: 0.5, margin: '0 auto 8px' }} />
-            <div style={{ fontSize: 12, color: 'var(--ide-text-muted)', lineHeight: 1.6 }}>
-              Ask me to <strong style={{ color: 'var(--ide-text)' }}>generate</strong>,{' '}
-              <strong style={{ color: 'var(--ide-text)' }}>edit</strong>, or{' '}
-              <strong style={{ color: 'var(--ide-text)' }}>explain</strong> code.
-              <br />
-              <span style={{ fontSize: 10 }}>Right-click in the editor for quick actions.</span>
+          <div className="ide-ai-empty">
+            <span className="ide-ai-empty-orb"><Sparkles size={22} /></span>
+            <div className="ide-ai-empty-title">Build with AI</div>
+            <div className="ide-ai-empty-sub">
+              Generate code, edit files, or explain what you're looking at.
+              Every code block can be imported straight into your project.
+            </div>
+            <div className="ide-ai-empty-chips">
+              {['Scaffold a component', 'Explain this file', 'Write a test'].map(s => (
+                <button key={s} className="ide-ai-empty-chip" onClick={() => { setInput(s); textareaRef.current?.focus(); }}>
+                  {s}
+                </button>
+              ))}
             </div>
           </div>
         )}
 
         {aiMessages.map((msg, i) => (
-          <div key={i} className={`ide-ai-message ${msg.role}`}>
-            <div className="ide-ai-message-role">
-              {msg.role === 'user' ? 'You' : '✦ AI'}
-            </div>
-            <div className="ide-ai-message-body">
-              <ReactMarkdown>
-                {msg.content}
-              </ReactMarkdown>
-
-              {/* Apply button if AI message has file edits */}
-              {msg.role === 'assistant' && msg.content.includes('### FILE:') && (
-                <button
-                  className="ide-ai-apply-btn"
-                  onClick={() => {
-                    const files = parseMultiFileEdit(msg.content);
-                    if (files.length > 0) {
-                      const diffFiles = files.map(ef => {
-                        const openFile = openFiles.find(f => f.path === ef.path);
-                        return {
-                          path: ef.path,
-                          language: ef.language || openFile?.language || 'plaintext',
-                          originalContent: openFile?.content || '',
-                          newContent: ef.newContent,
-                        };
-                      });
-                      setPendingDiff({ files: diffFiles });
-                    }
-                  }}
-                >
-                  <ChevronDown size={12} /> Preview & Apply Changes
-                </button>
-              )}
+          <div key={i} className={`ide-ai-msg ${msg.role}`}>
+            <div className="ide-ai-msg-avatar">{msg.role === 'user' ? 'You' : <Sparkles size={12} />}</div>
+            <div className="ide-ai-msg-body">
+              {msg.role === 'assistant' ? renderMessage(msg.content) : msg.content}
             </div>
           </div>
         ))}
 
         {loading && (
-          <div className="ide-ai-loading">
-            <div className="ide-spinner" />
-            <span>AI is thinking…</span>
+          <div className="ide-ai-msg assistant">
+            <div className="ide-ai-msg-avatar"><Sparkles size={12} /></div>
+            <div className="ide-ai-msg-body">
+              <div className="ide-ai-typing"><span /><span /><span /></div>
+            </div>
           </div>
         )}
         <div ref={messagesEndRef} />
@@ -289,39 +367,100 @@ export default function AIAssistant({ onToast }) {
       {/* Input */}
       <div className="ide-ai-input-area">
         {activeContexts.includes('selected') && selectedCode && (
-          <div style={{
-            fontSize: 10, color: 'var(--ide-accent)', marginBottom: 6, padding: '3px 8px',
-            background: 'rgba(0,255,136,0.06)', borderRadius: 4, border: '1px solid rgba(0,255,136,0.2)',
-          }}>
-            ✓ {selectedCode.split('\n').length} lines selected
-          </div>
+          <div className="ide-ai-selpill">✓ {selectedCode.split('\n').length} lines selected as context</div>
         )}
-
         <div className="ide-ai-textarea-wrap">
           <textarea
             ref={textareaRef}
             className="ide-ai-textarea"
-            placeholder={`${aiMode === 'generate' ? 'Describe what to build…' : aiMode === 'edit' ? 'Describe what to change…' : aiMode === 'explain' ? 'What do you want explained?' : 'Ask anything about the project…'} (Ctrl+Enter to send)`}
+            placeholder={`${currentHint}  ·  Ctrl+Enter to send`}
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
-              // Auto-height
               e.target.style.height = 'auto';
-              e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+              e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';
             }}
             onKeyDown={handleKeyDown}
             rows={1}
           />
-          <button
-            className="ide-ai-send-btn"
-            onClick={handleSend}
-            disabled={!input.trim() || loading}
-            title="Send (Ctrl+Enter)"
-          >
-            <Send size={12} />
+          {loading ? (
+            <button className="ide-ai-send-btn stop" onClick={() => { abortRef.current = true; setLoading(false); }} title="Stop">
+              <StopCircle size={13} />
+            </button>
+          ) : (
+            <button className="ide-ai-send-btn" onClick={handleSend} disabled={!input.trim()} title="Send (Ctrl+Enter)">
+              <Send size={13} />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* New-file modal */}
+      {newFilePrompt && (
+        <div className="ide-ai-modal-overlay" onClick={() => setNewFilePrompt(null)}>
+          <div className="ide-ai-modal" onClick={e => e.stopPropagation()}>
+            <div className="ide-ai-modal-title"><FilePlus2 size={14} /> Create new file</div>
+            <input
+              className="ide-ai-modal-input"
+              value={newFileName}
+              onChange={e => setNewFileName(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && confirmNewFile()}
+              placeholder="/src/components/Example.jsx"
+              autoFocus
+            />
+            <div className="ide-ai-modal-actions">
+              <button className="ide-ai-modal-btn ghost" onClick={() => setNewFilePrompt(null)}>Cancel</button>
+              <button className="ide-ai-modal-btn primary" onClick={confirmNewFile}>Create & open</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Single code block with header + action bar ─────────────────────────────
+function CodeBlock({ code, lang, suggested, hasActiveFile, onInsert, onNewFile, onDiff }) {
+  const [copied, setCopied] = useState(false);
+  const lines = useMemo(() => code.split('\n').length, [code]);
+
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1400); } catch {}
+  };
+
+  return (
+    <div className="ide-cb">
+      <div className="ide-cb-head">
+        <span className="ide-cb-lang">{suggested || lang}</span>
+        <span className="ide-cb-meta">{lines} line{lines !== 1 ? 's' : ''}</span>
+        <div className="ide-cb-actions">
+          <button className="ide-cb-btn" onClick={copy} title="Copy">
+            {copied ? <Check size={12} /> : <Copy size={12} />}
+          </button>
+          {hasActiveFile && (
+            <button className="ide-cb-btn" onClick={onInsert} title="Insert into active file (preview)">
+              <CornerDownLeft size={12} /> Insert
+            </button>
+          )}
+          <button className="ide-cb-btn" onClick={onDiff} title="Preview as diff">
+            <GitCompare size={12} /> Diff
+          </button>
+          <button className="ide-cb-btn primary" onClick={onNewFile} title="Create a new file from this">
+            <FilePlus2 size={12} /> New file
           </button>
         </div>
       </div>
+      <SyntaxHighlighter
+        language={metaFor(lang).mono === 'plaintext' ? 'text' : lang}
+        style={vscDarkPlus}
+        customStyle={{
+          margin: 0, borderRadius: 0, background: 'var(--ide-bg)',
+          fontSize: 11.5, padding: '10px 12px', maxHeight: 360, overflow: 'auto',
+        }}
+        wrapLongLines
+      >
+        {code}
+      </SyntaxHighlighter>
     </div>
   );
 }
