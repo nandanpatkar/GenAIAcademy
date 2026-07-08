@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Upload, X, Play, RefreshCw, CheckCircle, FileJson, Bot, MessageSquare, Send, Loader2, Settings2, Settings, Flag, Save, LogOut } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { defaultQuestions } from "../data/defaultQuizQuestions";
 import { askQuizBot } from "../services/aiService";
 import { supabase } from '../config/supabaseClient';
@@ -823,7 +827,40 @@ export default function QuizApp({ onClose }) {
                       )}
                       {aiMessages.map((m, idx) => (
                         <div key={idx} className={`quiz-ai-msg ${m.role}`}>
-                          {m.text}
+                          {m.role === 'user' ? (
+                            m.text
+                          ) : (
+                            <div className="quiz-ai-markdown">
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                  code({ node, inline, className, children, ...props }) {
+                                    const match = /language-(\w+)/.exec(className || '');
+                                    return !inline && match ? (
+                                      <SyntaxHighlighter
+                                        style={vscDarkPlus}
+                                        language={match[1]}
+                                        PreTag="div"
+                                        customStyle={{ margin: '8px 0', borderRadius: 6, fontSize: 12 }}
+                                        {...props}
+                                      >
+                                        {String(children).replace(/\n$/, '')}
+                                      </SyntaxHighlighter>
+                                    ) : (
+                                      <code className={className} style={{ background: 'rgba(0,255,136,0.1)', padding: '2px 6px', borderRadius: 4, color: 'var(--neon)', fontSize: '0.9em' }} {...props}>
+                                        {children}
+                                      </code>
+                                    );
+                                  },
+                                  a({ node, children, ...props }) {
+                                    return <a {...props} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--neon)', textDecoration: 'underline' }}>{children}</a>;
+                                  }
+                                }}
+                              >
+                                {m.text}
+                              </ReactMarkdown>
+                            </div>
+                          )}
                         </div>
                       ))}
                       {aiLoading && (

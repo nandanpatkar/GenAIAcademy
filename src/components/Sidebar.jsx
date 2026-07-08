@@ -9,6 +9,7 @@ export default function Sidebar({
   activeNode, onReset, isEditMode, setIsEditMode, onAddPath, onEditPath,
   showCurriculumMap, setShowCurriculumMap,
   showIDE, setShowIDE,
+  showProjects, setShowProjects,
   showResources, setShowResources,
   showProgress, setShowProgress,
   showPlayground, setShowPlayground,
@@ -72,6 +73,7 @@ export default function Sidebar({
     {
       label: "Tools",
       items: [
+        { icon: <Terminal size={14} />, label: "Cloud IDE", id: "projects" },
         { icon: <Terminal size={14} />, label: "Practice IDE", id: "ide" },
         { icon: <Boxes size={14} />, label: "GenAI Simulator", id: "playground" },
         { icon: <Layers size={14} />, label: "System Simulator", id: "simulator" },
@@ -131,6 +133,7 @@ export default function Sidebar({
     if (showLinks) return "links";
     if (showPlayground) return "playground";
     if (showProgress) return "progress";
+    if (showProjects) return "projects";
     if (showIDE) return "ide";
     if (showResources) return "resources";
     if (showCurriculumMap) return "curriculum_map";
@@ -160,6 +163,7 @@ export default function Sidebar({
 
     setShowCurriculumMap(false);
     if (setShowIDE) setShowIDE(false);
+    if (setShowProjects) setShowProjects(false);
     if (setShowResources) setShowResources(false);
     if (setShowProgress) setShowProgress(false);
     if (setShowPlayground) setShowPlayground(false);
@@ -188,6 +192,7 @@ export default function Sidebar({
     switch (id) {
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
+      case "projects": if (setShowProjects) setShowProjects(true); break;
       case "ide": if (setShowIDE) setShowIDE(true); break;
       case "resources": if (setShowResources) setShowResources(true); break;
       case "progress": if (setShowProgress) setShowProgress(true); break;

@@ -30,6 +30,8 @@ import FlowDesign from "./components/FlowDesign";
 import NotionRenderer from "./components/notion/NotionRenderer";
 import InterviewPrep from "./components/InterviewPrep";
 import QuizApp from "./components/QuizApp";
+import ProjectIDE from "./components/Projects/ProjectIDE";
+import { ProjectsProvider } from "./contexts/ProjectsContext";
 import {
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp,
   ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
@@ -362,6 +364,7 @@ function MainApp() {
   const [showNotion, setShowNotion] = useState(false);
   const [showInterviewPrep, setShowInterviewPrep] = useState(false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
+  const [showProjects, setShowProjects] = useState(false);
 
   const [showGitHubHub, setShowGitHubHub] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -494,6 +497,7 @@ function MainApp() {
     setShowCommunity(false);
     setShowNotion(false);
     setShowInterviewPrep(false);
+    setShowProjects(false);
     setInterviewDeepLinkId(null);
   };
 
@@ -937,6 +941,7 @@ function MainApp() {
           showNotion={showNotion} setShowNotion={setShowNotion}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
           showQuiz={showQuiz} setShowQuiz={setShowQuiz}
+          showProjects={showProjects} setShowProjects={setShowProjects}
           setLinksInitialTab={setLinksInitialTab}
           onHubNav={handleHubNav}
           isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
@@ -994,6 +999,11 @@ function MainApp() {
                               showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
                                 showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
                                   showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
+                                    showProjects ? (
+                                      <ProjectsProvider>
+                                        <ProjectIDE />
+                                      </ProjectsProvider>
+                                    ) :
                                     showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
                                       showAlgoStudio ? <AlgoVisualizer
                                         user={user}

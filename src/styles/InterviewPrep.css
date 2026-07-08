@@ -815,6 +815,59 @@
   display: flex; align-items: center; gap: 7px; color: var(--text3);
 }
 
+/* Markdown rendering inside AI Tutor chat bubbles */
+.ip-ai-markdown {
+  font-size: 13px;
+  line-height: 1.65;
+  color: inherit;
+}
+.ip-ai-markdown p { margin: 0 0 8px; }
+.ip-ai-markdown p:last-child { margin-bottom: 0; }
+.ip-ai-markdown h1, .ip-ai-markdown h2, .ip-ai-markdown h3 {
+  margin: 10px 0 6px;
+  font-weight: 700;
+  color: var(--btn-color, var(--neon));
+  line-height: 1.3;
+}
+.ip-ai-markdown h1 { font-size: 15px; }
+.ip-ai-markdown h2 { font-size: 14px; }
+.ip-ai-markdown h3 { font-size: 13px; }
+.ip-ai-markdown ul, .ip-ai-markdown ol {
+  margin: 6px 0 8px 18px;
+  padding: 0;
+}
+.ip-ai-markdown li { margin-bottom: 4px; }
+.ip-ai-markdown strong { color: var(--btn-color, var(--neon)); font-weight: 700; }
+.ip-ai-markdown em { color: var(--text3); font-style: italic; }
+.ip-ai-markdown blockquote {
+  border-left: 3px solid var(--btn-color, var(--neon));
+  padding-left: 10px;
+  margin: 8px 0;
+  color: var(--text3);
+  font-style: italic;
+}
+.ip-ai-markdown hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 10px 0;
+}
+.ip-ai-markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 12px;
+}
+.ip-ai-markdown th, .ip-ai-markdown td {
+  border: 1px solid var(--border);
+  padding: 5px 8px;
+  text-align: left;
+}
+.ip-ai-markdown th {
+  background: color-mix(in srgb, var(--btn-color, var(--neon)) 12%, transparent);
+  color: var(--btn-color, var(--neon));
+  font-weight: 600;
+}
+
 .ip-ai-input-area {
   display: flex; gap: 8px; padding: 10px;
   background: var(--bg3); border-top: 1px solid var(--border);
