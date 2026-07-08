@@ -5,12 +5,14 @@ import {
   Loader2, AlertCircle, X, BookOpen, Layers, Target,
   Zap, ArrowRight, ChevronLeft, ChevronDown, Hash,
   BarChart2, Clock, Star, Plus, Download, Edit3, Save, Trash2, Edit2,
-  Bot, Send
+  Bot, Send, Globe, NotebookText
 } from "lucide-react";
 import useIsMobile from "../hooks/useIsMobile";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../config/supabaseClient";
 import { askInterviewPrepBot } from "../services/aiService";
+import { searchWeb } from "../services/webSearchService";
+import { tiptapToText, extractKeywords, keywordOverlapScore } from "../utils/tiptapToText";
 import "../styles/InterviewPrep.css";
 
 const DATA_URL = "/data/interview-prep.json";
@@ -24,7 +26,7 @@ const COURSE_COLORS = [
 // View levels for the drill-down roadmap
 const VIEW = { COURSES: "courses", CHAPTERS: "chapters", LESSONS: "lessons" };
 
-export default function InterviewPrep({ onClose, initialLessonId = null }) {
+export default function InterviewPrep({ onClose, initialLessonId = null, pathsData = {} }) {
   const isMobile = useIsMobile();
   const { user, isAdmin } = useAuth();
 
@@ -54,6 +56,15 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
   const [aiMessages, setAiMessages] = useState([]);
   const [aiInput, setAiInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
+  const [aiLoadingLabel, setAiLoadingLabel] = useState("Thinking...");
+
+  // AI Tutor context toggles — both independently ON/OFF
+  const [useWebSearch, setUseWebSearch] = useState(false);
+  const [useCourseNotes, setUseCourseNotes] = useState(false);
+
+  // Course notes: fetched once (lazily, on first use) and cached for the session
+  const notesCache = useRef(null); // { moduleId: plainTextNote }
+  const hasFetchedNotes = useRef(false);
 
   // ── Load data ─────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -216,6 +227,56 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
     setAiChatOpen(false);
   }, [activeLessonId]);
 
+  // Flat map moduleId -> module (for resolving note labels + keyword matching)
+  const moduleIndex = useMemo(() => {
+    const map = {};
+    Object.values(pathsData || {}).forEach(pd => {
+      (pd?.nodes || []).forEach(node => {
+        (node.modules || []).forEach(module => { map[module.id] = module; });
+      });
+    });
+    return map;
+  }, [pathsData]);
+
+  // Lazily fetch all of the user's module notes once per session (only when
+  // the Course Notes toggle is actually used — not on every app load).
+  const fetchNotesIfNeeded = async () => {
+    if (hasFetchedNotes.current || !user) return;
+    hasFetchedNotes.current = true;
+    try {
+      const { data, error } = await supabase
+        .from("module_notes")
+        .select("module_id, content")
+        .eq("user_id", user.id);
+      if (error) throw error;
+      const map = {};
+      (data || []).forEach(row => {
+        const text = tiptapToText(row.content).trim();
+        if (text) map[row.module_id] = text;
+      });
+      notesCache.current = map;
+    } catch (err) {
+      console.error("Failed to load course notes for AI Tutor:", err);
+      notesCache.current = {};
+      hasFetchedNotes.current = false; // allow retry next time
+    }
+  };
+
+  // Keyword-overlap match between the current question and the user's notes
+  const findRelevantNotes = (lessonContext, maxNotes = 2) => {
+    if (!notesCache.current) return [];
+    const lessonKeywords = extractKeywords(
+      [lessonContext.lessonTitle, lessonContext.courseTitle, lessonContext.chapterTitle].join(" ")
+    );
+    const scored = Object.entries(notesCache.current).map(([moduleId, text]) => {
+      const module = moduleIndex[moduleId];
+      const moduleTitle = module?.title || "Your Notes";
+      const moduleKeywords = extractKeywords([moduleTitle, module?.subtitle || "", text].join(" "));
+      return { moduleTitle, text: text.slice(0, 500), score: keywordOverlapScore(lessonKeywords, moduleKeywords) };
+    });
+    return scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score).slice(0, maxNotes);
+  };
+
   const handleAiSubmit = async () => {
     if (!aiInput.trim() || aiLoading || !activeLesson) return;
     const query = aiInput;
@@ -223,6 +284,7 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
     const newMsg = { role: 'user', text: query };
     setAiMessages(prev => [...prev, newMsg]);
     setAiLoading(true);
+    setAiLoadingLabel("Thinking...");
 
     try {
       const lessonContext = {
@@ -232,7 +294,26 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
         answerText: activeLesson.content_text,
       };
 
-      const response = await askInterviewPrepBot(lessonContext, aiMessages, query);
+      let webResults = [];
+      let courseNotes = [];
+
+      if (useWebSearch) {
+        setAiLoadingLabel("Searching the web...");
+        try {
+          webResults = await searchWeb(`${activeLesson.lesson_title} ${query}`.slice(0, 300));
+        } catch (err) {
+          console.error("Web search failed, continuing without it:", err);
+        }
+      }
+
+      if (useCourseNotes) {
+        setAiLoadingLabel("Checking your notes...");
+        await fetchNotesIfNeeded();
+        courseNotes = findRelevantNotes(lessonContext);
+      }
+
+      setAiLoadingLabel("Thinking...");
+      const response = await askInterviewPrepBot(lessonContext, aiMessages, query, { webResults, courseNotes });
       const botText = typeof response === 'string' ? response : (response?.answer || response?.content || JSON.stringify(response));
 
       setAiMessages(prev => [...prev, { role: 'model', text: botText }]);
@@ -772,6 +853,24 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
                         <h4><Bot size={16} /> AI Tutor — {activeLesson.lesson_title}</h4>
                         <button onClick={() => setAiChatOpen(false)}><X size={15} /></button>
                       </div>
+
+                      <div className="ip-ai-toggles">
+                        <button
+                          className={"ip-ai-toggle" + (useWebSearch ? " active" : "")}
+                          onClick={() => setUseWebSearch(v => !v)}
+                          title="Include recent web search results as context"
+                        >
+                          <Globe size={12} /> Web Search
+                        </button>
+                        <button
+                          className={"ip-ai-toggle" + (useCourseNotes ? " active" : "")}
+                          onClick={() => setUseCourseNotes(v => !v)}
+                          title="Include your relevant course notes as context"
+                        >
+                          <NotebookText size={12} /> Course Notes
+                        </button>
+                      </div>
+
                       <div className="ip-ai-messages">
                         {aiMessages.length === 0 && (
                           <div className="ip-ai-empty">Ask me to explain this answer differently, go deeper, or quiz you on a follow-up.</div>
@@ -783,7 +882,7 @@ export default function InterviewPrep({ onClose, initialLessonId = null }) {
                         ))}
                         {aiLoading && (
                           <div className="ip-ai-msg model loading">
-                            <Loader2 size={14} className="spin" /> Thinking...
+                            <Loader2 size={14} className="spin" /> {aiLoadingLabel}
                           </div>
                         )}
                       </div>

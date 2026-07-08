@@ -767,6 +767,25 @@
 }
 .ip-ai-header button:hover { color: var(--text); }
 
+.ip-ai-toggles {
+  display: flex; gap: 8px; padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.ip-ai-toggle {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 999px; color: var(--text3);
+  font-family: var(--font); font-size: 11px; font-weight: 600;
+  padding: 5px 11px; cursor: pointer; transition: all 0.15s;
+}
+.ip-ai-toggle:hover { color: var(--text2); border-color: var(--border2); }
+.ip-ai-toggle.active {
+  color: var(--btn-color, var(--neon));
+  border-color: var(--btn-color, var(--neon));
+  background: color-mix(in srgb, var(--btn-color, var(--neon)) 12%, var(--bg3));
+}
+
 .ip-ai-messages {
   padding: 14px; max-height: 260px; overflow-y: auto;
   display: flex; flex-direction: column; gap: 10px;
