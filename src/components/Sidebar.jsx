@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
@@ -333,6 +333,29 @@ export default function Sidebar({
       >
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
       </button>
+
+      <div
+        className="sidebar-item sidebar-search-btn"
+        onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }))}
+        title="Search (⌘K)"
+        style={{ margin: "4px 0 8px" }}
+      >
+        <span className="sidebar-item-icon">
+          <Search size={14} />
+        </span>
+        {!isCollapsed && (
+          <>
+            <span>Search</span>
+            <span style={{
+              marginLeft: "auto", fontSize: 10, opacity: 0.5,
+              border: "1px solid var(--bg3)", borderRadius: 4, padding: "1px 5px",
+              fontFamily: "var(--mono, monospace)",
+            }}>
+              ⌘K
+            </span>
+          </>
+        )}
+      </div>
 
       <div className="sidebar-nav-container">
         <div className="sidebar-nav">
