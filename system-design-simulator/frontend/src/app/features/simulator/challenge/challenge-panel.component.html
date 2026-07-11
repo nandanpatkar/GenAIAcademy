@@ -197,56 +197,7 @@
         </button>
       </div>
 
-      <div class="feedback-vote-container">
-        <span class="vote-label">Did you enjoyed this challenge?</span>
-        <div class="vote-buttons-row">
-          <button type="button" class="completion-vote-btn up" [class.active]="votes.myVote(active.id) === 'up'"
-            (click)="onVote(active, 'up', $event)">
-            <i class="fas fa-thumbs-up"></i>
-            <span>Yes</span>
-          </button>
-          <button type="button" class="completion-vote-btn down" [class.active]="votes.myVote(active.id) === 'down'"
-            (click)="onVote(active, 'down', $event)">
-            <i class="fas fa-thumbs-down"></i>
-            <span>Could be Better</span>
-          </button>
-        </div>
-      </div>
 
-      <!-- Dynamic psychological CTAs based on rating -->
-      <div class="feedback-cta-container">
-        <!-- Upvote or No Vote: Happy Path Nudge -->
-        <div class="cta-flow happy-path" *ngIf="votes.myVote(active.id) !== 'down'">
-          <p class="cta-note">Awesome job! Help us inspire others by sharing your feedback.</p>
-          <div class="cta-buttons">
-            <a href="https://forms.gle/2Kh6TKqcwYUSnYnHA" target="_blank" rel="noopener noreferrer"
-              class="cta-btn testimonial">
-              <i class="fas fa-trophy"></i>
-              <span>Submit Testimonial</span>
-            </a>
-            <a href="https://forms.gle/RJwRybjgRPPi11jg7" target="_blank" rel="noopener noreferrer"
-              class="cta-btn bug-link">
-              <i class="fas fa-bug"></i> Report bug
-            </a>
-          </div>
-        </div>
-
-        <!-- Downvote: Empathetic Support Path Nudge -->
-        <div class="cta-flow support-path" *ngIf="votes.myVote(active.id) === 'down'">
-          <p class="cta-note">We're sorry this was frustrating! Let us know how we can improve.</p>
-          <div class="cta-buttons">
-            <a href="https://forms.gle/RJwRybjgRPPi11jg7" target="_blank" rel="noopener noreferrer"
-              class="cta-btn bug-report">
-              <i class="fas fa-triangle-exclamation"></i>
-              <span>Report Bug or Issue</span>
-            </a>
-            <a href="https://forms.gle/2Kh6TKqcwYUSnYnHA" target="_blank" rel="noopener noreferrer"
-              class="cta-btn testimonial-link">
-              <i class="fas fa-star"></i> Submit testimonial
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

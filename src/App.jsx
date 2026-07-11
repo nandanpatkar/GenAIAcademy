@@ -869,13 +869,15 @@ function MainApp() {
     });
   };
 
-  if (!user && showLanding) return <LandingPage onEnter={() => {
+  if (!user && showLanding) return <LandingPage theme={theme} toggleTheme={toggleTheme} onEnter={() => {
     setShowLanding(false);
     localStorage.setItem("genai_landing_dismissed", "true");
   }} />;
 
   if (!user) return (
     <AuthInterface
+      theme={theme}
+      toggleTheme={toggleTheme}
       onBackToLanding={() => {
         setShowLanding(true);
         localStorage.removeItem("genai_landing_dismissed");

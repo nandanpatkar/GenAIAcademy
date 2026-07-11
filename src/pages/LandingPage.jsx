@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import './LandingPage.css';
 
-const THEME_KEY = 'ga-landing-theme';
+
 
 // ── Live console log feed ────────────────────────────────────────────────────
 const LOG_POOL = [
@@ -350,17 +350,12 @@ const FEATURES = [
 ];
 
 // ── Page ─────────────────────────────────────────────────────────────────────
-export default function LandingPage({ onEnter }) {
+export default function LandingPage({ onEnter, theme, toggleTheme }) {
   const shellRef = useRef(null);
   const [navScrolled, setNavScrolled] = useState(false);
   const [showTop, setShowTop] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
-    try { return (localStorage.getItem(THEME_KEY) || 'dark') === 'dark'; } catch { return true; }
-  });
-
-  useEffect(() => {
-    try { localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light'); } catch {}
-  }, [isDark]);
+  
+  const isDark = theme === 'dark' || theme === undefined;
 
   useEffect(() => {
     const el = shellRef.current;
@@ -397,7 +392,7 @@ export default function LandingPage({ onEnter }) {
           <button
             type="button"
             className={`ga-theme-toggle ${!isDark ? 'show-moon' : ''}`}
-            onClick={() => setIsDark(d => !d)}
+            onClick={toggleTheme ? toggleTheme : () => {}}
             title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ga-sunmoon">

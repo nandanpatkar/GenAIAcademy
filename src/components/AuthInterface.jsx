@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Hexagon, Mail, Lock, LogIn, UserPlus, ArrowLeft } from 'lucide-react';
+import { Hexagon, Mail, Lock, LogIn, UserPlus, ArrowLeft, Brain, Sparkles } from 'lucide-react';
 
-export default function AuthInterface({ onBackToLanding }) {
+export default function AuthInterface({ onBackToLanding, theme, toggleTheme }) {
   const { signIn, signUp, signInWithGoogle, adminSignInMock } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [loginMode, setLoginMode] = useState('user'); // 'user' | 'admin'
@@ -66,32 +66,34 @@ export default function AuthInterface({ onBackToLanding }) {
           style={{ 
             position: 'absolute', top: 32, left: 32, zIndex: 100,
             display: 'flex', alignItems: 'center', gap: 8,
-            padding: '10px 18px', background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12,
+            padding: '10px 18px', background: 'var(--bg3)',
+            border: '1px solid var(--border)', borderRadius: 12,
             color: 'var(--text2)', fontSize: 13, fontWeight: 700,
             cursor: 'pointer', transition: 'all 0.2s',
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
           }}
-          onMouseOver={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = '#fff'; }}
-          onMouseOut={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = 'var(--text2)'; }}
+          onMouseOver={(e) => { e.currentTarget.style.background = 'var(--bg4)'; e.currentTarget.style.borderColor = 'var(--border2)'; e.currentTarget.style.color = 'var(--text)'; }}
+          onMouseOut={(e) => { e.currentTarget.style.background = 'var(--bg3)'; e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)'; }}
         >
           <ArrowLeft size={16} /> Back to Home
         </button>
       )}
+
+
       
       {/* Background Decorators */}
-      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(0,255,136,0.15) 0%, transparent 60%)', filter: 'blur(40px)' }} />
+      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, var(--neon-dim) 0%, transparent 60%)', filter: 'blur(40px)' }} />
       <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 60%)', filter: 'blur(40px)' }} />
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 32, zIndex: 10 }}>
-        <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(0,255,136,.15)", border: "1px solid rgba(0,255,136,.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "#00ff88", marginBottom: 16 }}>
+        <div style={{ width: 44, height: 44, borderRadius: 12, background: "var(--neon-dim)", border: "1px solid var(--neon)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--neon)", marginBottom: 16 }}>
           <Hexagon size={28} />
         </div>
-        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-.5px", margin: 0 }}>GenAI<span style={{ color: "#00ff88" }}>Academy</span></h1>
+        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-.5px", margin: 0 }}>GenAI<span style={{ color: "var(--neon)" }}>Academy</span></h1>
         <p style={{ color: "var(--text3)", fontSize: 13, marginTop: 8 }}>Authenticate to sync your curriculum progress to the cloud.</p>
       </div>
 
-      <div style={{ width: '100%', maxWidth: 380, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 20, padding: 32, position: 'relative', zIndex: 10, boxShadow: '0 24px 60px rgba(0,0,0,0.4)', backdropFilter: 'blur(20px)' }}>
+      <div style={{ width: '100%', maxWidth: 380, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 20, padding: 32, position: 'relative', zIndex: 10, boxShadow: theme === 'light' ? '0 24px 60px rgba(0,0,0,0.1)' : '0 24px 60px rgba(0,0,0,0.4)', backdropFilter: 'blur(20px)' }}>
         
         {/* Role Toggle */}
         <div style={{ display: 'flex', background: 'var(--bg3)', borderRadius: 12, padding: 4, marginBottom: 24 }}>
