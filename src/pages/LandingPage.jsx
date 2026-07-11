@@ -116,6 +116,10 @@ function PipelineCanvas() {
   const [spark, setSpark] = useState([12, 18, 10, 20, 14, 22, 12, 19, 15, 24, 16, 20]);
   const logIdx = useRef(4);
 
+  const wrapperRef = useRef(null);
+  const [tilt, setTilt] = useState({ x: 2.5, y: -6 });
+  const [isHovering, setIsHovering] = useState(false);
+
   useEffect(() => {
     const logTimer = setInterval(() => {
       setLogs(prev => {
@@ -140,9 +144,38 @@ function PipelineCanvas() {
     return spark.map((v, i) => `${i === 0 ? 'M' : 'L'} ${(i * step).toFixed(1)},${(30 - v).toFixed(1)}`).join(' ');
   }, [spark]);
 
+  const handleMouseMove = (e) => {
+    if (!wrapperRef.current) return;
+    const rect = wrapperRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((centerY - y) / centerY) * 8; 
+    const rotateY = ((x - centerX) / centerX) * 8;
+    setTilt({ x: rotateX, y: rotateY });
+  };
+
+  const handleMouseEnter = () => setIsHovering(true);
+  const handleMouseLeave = () => {
+    setIsHovering(false);
+    setTilt({ x: 2.5, y: -6 });
+  };
+
   return (
-    <div className="ga-sim-wrapper">
-      <div className="ga-browser-chrome">
+    <div 
+      className={`ga-sim-wrapper ${isHovering ? 'hovering' : ''}`}
+      ref={wrapperRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div 
+        className="ga-browser-chrome"
+        style={{
+          transform: `rotateY(${tilt.y}deg) rotateX(${tilt.x}deg) ${isHovering ? 'scale(1.04) translateY(-12px)' : ''}`
+        }}
+      >
         <div className="ga-titlebar">
           <div className="ga-traffic-lights">
             <span className="ga-tl red" /><span className="ga-tl yellow" /><span className="ga-tl green" />
