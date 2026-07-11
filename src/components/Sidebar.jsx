@@ -16,6 +16,7 @@ export default function Sidebar({
   showDSAAnimator, setShowDSAAnimator,
   showBlog, setShowBlog,
   showAdminManagement, setShowAdminManagement,
+  showAwsSimulator, setShowAwsSimulator,
   showSimulator, setShowSimulator,
   showGalaxy, setShowGalaxy,
   showAimlCompanion, setShowAimlCompanion,
@@ -77,6 +78,7 @@ export default function Sidebar({
         { icon: <Terminal size={14} />, label: "Practice IDE", id: "ide" },
         { icon: <Boxes size={14} />, label: "GenAI Simulator", id: "playground" },
         { icon: <Layers size={14} />, label: "System Simulator", id: "simulator" },
+        { icon: <Layers size={14} />, label: "AWS System Design Simulator", id: "aws_simulator" },
         { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator" },
         { icon: <Box size={14} />, label: "Algo Visualizer", id: "algo_visualizer" },
         { icon: <Boxes size={14} />, label: "K8s Games", id: "k8s_games" },
@@ -126,6 +128,7 @@ export default function Sidebar({
     if (showKnowledgeGraph) return "knowledge_graph";
     if (showAdminManagement) return "admin_management";
     if (showBlog) return "blog";
+    if (showAwsSimulator) return "aws_simulator";
     if (showSimulator) return "simulator";
     if (showGalaxy) return "galaxy";
     if (showDSAAnimator) return "dsa_animator";
@@ -172,6 +175,7 @@ export default function Sidebar({
     if (setShowLinks) setShowLinks(false);
     if (setShowBlog) setShowBlog(false);
     if (setShowAdminManagement) setShowAdminManagement(false);
+    if (setShowAwsSimulator) setShowAwsSimulator(false);
     if (setShowSimulator) setShowSimulator(false);
     if (setShowGalaxy) setShowGalaxy(false);
     if (setShowAIInterviewer) setShowAIInterviewer(false);
@@ -206,6 +210,7 @@ export default function Sidebar({
       case "github":
         if (setShowGitHubHub) setShowGitHubHub(true);
         break;
+      case "aws_simulator": if (setShowAwsSimulator) setShowAwsSimulator(true); break;
       case "simulator": if (setShowSimulator) setShowSimulator(true); break;
       case "galaxy": if (setShowGalaxy) setShowGalaxy(true); break;
       case "blog": 

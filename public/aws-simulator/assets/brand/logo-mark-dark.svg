@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AWS System Design Simulator">
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="#1b2330" stroke="#3a4658" stroke-width="1.5"/>
+  <path d="M32 17L17 45L47 45Z" fill="none" stroke="#fff7e7" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="32" cy="17" r="5.5" fill="#ff9900"/>
+  <circle cx="17" cy="45" r="5.5" fill="#4aa3f0"/>
+  <circle cx="47" cy="45" r="5.5" fill="#2bbf7a"/>
+</svg>

@@ -1,0 +1,163 @@
+<main class="landing-shell" #shell (scroll)="onShellScroll($event)">
+  <div class="mesh-bg" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+  </div>
+
+  <nav class="landing-nav glass-panel" [class.nav-scrolled]="navScrolled">
+    <a class="brand-mark" href="javascript:void(0)" aria-label="AWS System Design Simulator home">
+      <img class="brand-logo" src="assets/brand/logo-mark-dark.svg" alt="AWS System Design Simulator" width="32" height="32" />
+      <small>v1.3.0</small>
+    </a>
+    <div class="nav-actions">
+      <a href="/docs" (click)="openDocs($event)" (mousemove)="onButtonMouseMove($event)"
+        (mouseleave)="onButtonMouseLeave($event)">Docs</a>
+      <button type="button" class="theme-toggle-btn" [class.show-moon]="!isDarkMode" (click)="toggleTheme()"
+        [title]="isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'" (mousemove)="onButtonMouseMove($event)"
+        (mouseleave)="onButtonMouseLeave($event)">
+        <svg class="sun-moon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <mask id="moon-mask">
+            <rect x="0" y="0" width="100%" height="100%" fill="white" />
+            <circle [attr.cx]="!isDarkMode ? 6 : -10" [attr.cy]="!isDarkMode ? 18 : 34" r="7" fill="black" />
+          </mask>
+          <circle cx="12" cy="12" r="5" mask="url(#moon-mask)" fill="currentColor" />
+          <g class="sun-rays" stroke="currentColor">
+            <line x1="12" y1="1" x2="12" y2="3" />
+            <line x1="12" y1="21" x2="12" y2="23" />
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+            <line x1="1" y1="12" x2="3" y2="12" />
+            <line x1="21" y1="12" x2="23" y2="12" />
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+          </g>
+        </svg>
+      </button>
+      <button type="button" class="mini-launch" (click)="scrollToModes()" (mousemove)="onButtonMouseMove($event)"
+        (mouseleave)="onButtonMouseLeave($event)">
+        <span>Launch</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Liquid-glass distortion filter (referenced by .landing-nav.nav-scrolled backdrop-filter) -->
+  <svg class="liquid-glass-defs" aria-hidden="true" width="0" height="0" focusable="false">
+    <defs>
+      <filter id="liquid-glass" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.006" numOctaves="3" seed="7" result="turbulence" />
+        <feGaussianBlur in="turbulence" stdDeviation="3.5" result="blurredNoise" />
+        <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="40" xChannelSelector="R" yChannelSelector="B"
+          result="displaced" />
+        <feGaussianBlur in="displaced" stdDeviation="0.4" />
+      </filter>
+    </defs>
+  </svg>
+
+  <section class="hero-section">
+    <div class="hero-copy">
+      <div class="eyebrow glass-pill">
+        <i class="fas fa-circle"></i> Think like an Architect & Build like an Engineer
+      </div>
+      <h1>
+        <span class="eyebrow-pre">An interactive playground to</span><br />
+        Learn, Design,<br />Simulate and Analyze<br />AWS Cloud<br />Infrastructures
+      </h1>
+      <p>
+        AWS System Design Simulator enables developers to master system design through interactive challenges and
+        empowers cloud architects to design, validate, and analyze AWS architectures with traffic
+        simulation, cost estimation, and production-ready insights.
+      </p>
+      <div class="hero-actions">
+        <button type="button" class="cta-button primary" (click)="scrollToModes()"
+          (mousemove)="onButtonMouseMove($event)" (mouseleave)="onButtonMouseLeave($event)">
+          <span>Launch Simulator</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <app-simulation-canvas></app-simulation-canvas>
+  </section>
+
+  <section class="mode-section" aria-labelledby="mode-title">
+    <div class="mode-ambient" aria-hidden="true">
+      <span class="mode-orb mode-orb-a"></span>
+      <span class="mode-orb mode-orb-b"></span>
+      <span class="mode-link mode-link-a"></span>
+      <span class="mode-link mode-link-b"></span>
+      <span class="mode-speck speck-a"></span>
+      <span class="mode-speck speck-b"></span>
+      <span class="mode-speck speck-c"></span>
+    </div>
+    <div class="section-heading centered">
+      <span class="section-kicker">One Engine - Two Modes</span>
+      <h2 id="mode-title">Built for learners & Sharpened for architects</h2>
+      <p>
+        Pick up system design through guided challenges in Developer mode, or model production
+        systems with live cost analytics in Architect mode. Same engine, whichever path you are on.
+      </p>
+    </div>
+
+    <div class="mode-grid">
+      <article class="mode-card glass-panel" *ngFor="let mode of modes" [class]="mode.id"
+        (mousemove)="onButtonMouseMove($event)" (mouseleave)="onButtonMouseLeave($event)">
+        <div class="mode-card-top">
+          <span class="mode-badge">{{ mode.badge }}</span>
+          <span class="mode-icon"><i [class]="mode.icon"></i></span>
+        </div>
+        <div class="mode-visual" [class]="mode.visual" aria-hidden="true">
+          <span class="mini-node node-one"></span>
+          <span class="mini-node node-two"></span>
+          <span class="mini-node node-three"></span>
+          <span class="mini-line line-one"></span>
+          <span class="mini-line line-two"></span>
+          <span class="mini-packet packet-one"></span>
+          <span class="mini-packet packet-two"></span>
+          <span class="mini-metric metric-one"></span>
+          <span class="mini-metric metric-two"></span>
+        </div>
+        <h3>{{ mode.title }}</h3>
+        <p>{{ mode.description }}</p>
+        <ul>
+          <li *ngFor="let feature of mode.features"><i class="fas fa-check"></i>{{ feature }}</li>
+        </ul>
+        <button type="button" class="mode-button" (click)="launch.emit(mode.id)">
+          <span>{{ mode.button }}</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </article>
+    </div>
+    <p class="mode-microcopy">Start simple. Scale infinitely.</p>
+  </section>
+
+  <section class="trust-strip glass-panel" aria-label="Project status">
+    <span *ngFor="let pill of trustPills">{{ pill }}</span>
+  </section>
+
+  <section class="feature-section" id="features">
+    <div class="section-heading">
+      <span class="section-kicker">Know your Arsenal</span>
+      <h2>
+        Know what can you do with<br /><span class="brand-name-header">AWS System Design Simulator</span>
+      </h2>
+    </div>
+    <div class="feature-grid">
+      <article class="feature-card glass-panel" *ngFor="let feature of features" (mousemove)="onButtonMouseMove($event)"
+        (mouseleave)="onButtonMouseLeave($event)">
+        <div class="feature-icon"><i [class]="feature.icon"></i></div>
+        <div class="feature-title">
+          <h3>{{ feature.title }}</h3>
+          <small *ngIf="feature.badge">{{ feature.badge }}</small>
+        </div>
+        <p>{{ feature.description }}</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Mobile back-to-top -->
+  <button *ngIf="showBackToTop" class="back-to-top" aria-label="Back to top" (click)="scrollToTop()">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+</main>

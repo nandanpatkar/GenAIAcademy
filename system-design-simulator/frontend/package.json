@@ -1,0 +1,44 @@
+{
+  "name": "aws-system-design-simulator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AWS architecture sketchbook and deterministic simulation engine",
+  "scripts": {
+    "start": "ng serve --host 0.0.0.0 --port 4200",
+    "build": "ng build --configuration production && node scripts/generate-seo-pages.mjs",
+    "seo:generate": "node scripts/generate-seo-pages.mjs",
+    "test": "ng test",
+    "lint": "eslint src",
+    "validate:challenges": "node scripts/validate-challenges.mjs",
+    "format": "prettier --write \"src/**/*.{ts,html,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,json}\""
+  },
+  "dependencies": {
+    "@angular/animations": "^19.0.0",
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/forms": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/router": "^19.0.0",
+    "@foblex/flow": "^18.6.0",
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "rxjs": "^7.8.1",
+    "three": "^0.184.0",
+    "tslib": "^2.6.3",
+    "zone.js": "^0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.0.0",
+    "@angular/cli": "^19.0.0",
+    "@angular/compiler-cli": "^19.0.0",
+    "@types/three": "^0.184.1",
+    "angular-eslint": "^19.8.1",
+    "eslint": "^9.39.4",
+    "png-to-ico": "^3.0.1",
+    "prettier": "^3.8.4",
+    "sharp": "^0.35.2",
+    "typescript": "~5.6.3",
+    "typescript-eslint": "^8.61.1"
+  }
+}

@@ -15,6 +15,7 @@ import ResourceManager from "./components/ResourceManager";
 import ProgressTracker from "./components/ProgressTracker";
 import SystemDesignPlayground from "./pages/playground/SystemDesignPlayground";
 import SystemDesignSimulator from "./pages/simulator/SystemDesignSimulator";
+import AWSSystemDesignSimulator from "./pages/simulator/AWSSystemDesignSimulator";
 import DSAAnimator from "./components/DSAAnimator";
 import AimlCompanion from "./components/AimlCompanion";
 import LinksCompanion from "./components/LinksCompanion";
@@ -353,6 +354,7 @@ function MainApp() {
   const [showBlog, setShowBlog] = useState(false);
   const [showAdminManagement, setShowAdminManagement] = useState(false);
   const [showSimulator, setShowSimulator] = useState(false);
+  const [showAwsSimulator, setShowAwsSimulator] = useState(false);
   const [showGalaxy, setShowGalaxy] = useState(false);
   const [showAIInterviewer, setShowAIInterviewer] = useState(false);
   const [showAlgoStudio, setShowAlgoStudio] = useState(false);
@@ -925,6 +927,7 @@ function MainApp() {
           showLinks={showLinks} setShowLinks={setShowLinks}
           showBlog={showBlog} setShowBlog={setShowBlog}
           showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
+          showAwsSimulator={showAwsSimulator} setShowAwsSimulator={setShowAwsSimulator}
           showSimulator={showSimulator} setShowSimulator={setShowSimulator}
           showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
           showAIInterviewer={showAIInterviewer} setShowAIInterviewer={setShowAIInterviewer}
@@ -991,96 +994,97 @@ function MainApp() {
                       onClose={() => setShowGalaxy(false)}
                     />
                   ) :
-                    showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
-                      showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
-                        showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
-                          (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
-                            showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
-                              showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
-                                showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
-                                  showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
-                                    showProjects ? (
-                                      <ProjectsProvider>
-                                        <ProjectIDE />
-                                      </ProjectsProvider>
-                                    ) :
-                                    showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
-                                      showAlgoStudio ? <AlgoVisualizer
-                                        user={user}
-                                        savedAlgos={pathsData.saved_algos || []}
-                                        onSaveAlgo={handleSaveUserAlgo}
-                                        onClose={() => setShowAlgoStudio(false)}
-                                      /> :
-                                        showAlgoVisualizer ? <CodeVisualizer
+                    showAwsSimulator ? <AWSSystemDesignSimulator onClose={() => setShowAwsSimulator(false)} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} /> :
+                      showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
+                        showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
+                          showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
+                            (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
+                              showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
+                                showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
+                                  showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
+                                    showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
+                                      showProjects ? (
+                                        <ProjectsProvider>
+                                          <ProjectIDE />
+                                        </ProjectsProvider>
+                                      ) :
+                                      showIDE ? <PythonIDE onClose={() => setShowIDE(false)} /> :
+                                        showAlgoStudio ? <AlgoVisualizer
+                                          user={user}
                                           savedAlgos={pathsData.saved_algos || []}
                                           onSaveAlgo={handleSaveUserAlgo}
-                                          onClose={() => setShowAlgoVisualizer(false)}
+                                          onClose={() => setShowAlgoStudio(false)}
                                         /> :
-                                          showK8sGames ? <K8sGames onClose={() => setShowK8sGames(false)} /> :
-                                            showGitVisualizer ? <GitVisualizer onClose={() => setShowGitVisualizer(false)} /> :
-                                              showFlowDesign ? <FlowDesign onClose={() => setShowFlowDesign(false)} /> :
-                                              showWorkplaceLab ? <WorkplaceLab
-                                                pathsData={pathsData}
-                                                history={pathsData.workspace?.history || []}
-                                                notes={pathsData.workspace?.notes || []}
-                                                maps={pathsData.workspace?.maps || []}
-                                                onSaveNote={handleSaveWorkspaceNote}
-                                                onUpdateNote={handleUpdateWorkspaceNote}
-                                                onDeleteNote={handleDeleteWorkspaceNote}
-                                                onUpdateMaps={handleUpdateWorkspaceMaps}
-                                                onJumpToNode={(nodeId, pathId) => {
-                                                  const path = pathsData[pathId];
-                                                  const node = path?.nodes?.find(n => n.id === nodeId);
-                                                  if (node) handleNodeClick(node, pathId);
-                                                  setShowWorkplaceLab(false);
-                                                }}
-                                                onClose={() => setShowWorkplaceLab(false)}
-                                              /> :
-                                                showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
-                                                  showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
-                                                    showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
-                                                    showQuiz ? <QuizApp /> :
-                                                    showIntelligenceHub ? (
-                                                    <IntelligenceHub
-                                                      paths={pathsData}
-                                                      pathsData={pathsData}
-                                                      activePath={activePath}
-                                                      onStudyAction={handleHubStudyAction}
-                                                      onDesignAction={handleHubDesignAction}
-                                                      onInterview={handleHubInterview}
-                                                      onShowAll={() => setShowIntelligenceHub(false)}
-                                                      initialView={hubConfig.view}
-                                                      initialYear={hubConfig.year}
-                                                      initialAI={hubConfig.isAI}
-                                                      onTour={() => setShowSidebarWalkthrough(true)}
-                                                    />
-                                                  ) :
-                                                    showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
-                                                      <>
-                                                        {!freshActiveNode && (
-                                                          <>
-                                                            {isMobile && !isEditMode ? (
-                                                              <RoadmapMobile
-                                                                path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
-                                                                onNodeClick={handleNodeClick} getNodeState={getNodeState}
-                                                                completedCount={completedCount}
-                                                              />
-                                                            ) : (
-                                                              <RoadmapGraph
-                                                                path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
-                                                                activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
-                                                                completedCount={completedCount} onMarkState={handleMarkState}
-                                                                onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                                                                onEditNode={n => { setEditData(n); setEditingNode(true); }}
-                                                                onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
-                                                                onDeleteNode={handleDeleteNode}
-                                                                isEditMode={isEditMode}
-                                                                lastCompletedNodeId={lastCompletedNodeId}
-                                                                onAnimationTriggered={() => setLastCompletedNodeId(null)}
-                                                              />
-                                                            )}
-                                                          </>
-                                                        )}
+                                          showAlgoVisualizer ? <CodeVisualizer
+                                            savedAlgos={pathsData.saved_algos || []}
+                                            onSaveAlgo={handleSaveUserAlgo}
+                                            onClose={() => setShowAlgoVisualizer(false)}
+                                          /> :
+                                            showK8sGames ? <K8sGames onClose={() => setShowK8sGames(false)} /> :
+                                              showGitVisualizer ? <GitVisualizer onClose={() => setShowGitVisualizer(false)} /> :
+                                                showFlowDesign ? <FlowDesign onClose={() => setShowFlowDesign(false)} /> :
+                                                showWorkplaceLab ? <WorkplaceLab
+                                                  pathsData={pathsData}
+                                                  history={pathsData.workspace?.history || []}
+                                                  notes={pathsData.workspace?.notes || []}
+                                                  maps={pathsData.workspace?.maps || []}
+                                                  onSaveNote={handleSaveWorkspaceNote}
+                                                  onUpdateNote={handleUpdateWorkspaceNote}
+                                                  onDeleteNote={handleDeleteWorkspaceNote}
+                                                  onUpdateMaps={handleUpdateWorkspaceMaps}
+                                                  onJumpToNode={(nodeId, pathId) => {
+                                                    const path = pathsData[pathId];
+                                                    const node = path?.nodes?.find(n => n.id === nodeId);
+                                                    if (node) handleNodeClick(node, pathId);
+                                                    setShowWorkplaceLab(false);
+                                                  }}
+                                                  onClose={() => setShowWorkplaceLab(false)}
+                                                /> :
+                                                  showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
+                                                    showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
+                                                      showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
+                                                      showQuiz ? <QuizApp /> :
+                                                      showIntelligenceHub ? (
+                                                      <IntelligenceHub
+                                                        paths={pathsData}
+                                                        pathsData={pathsData}
+                                                        activePath={activePath}
+                                                        onStudyAction={handleHubStudyAction}
+                                                        onDesignAction={handleHubDesignAction}
+                                                        onInterview={handleHubInterview}
+                                                        onShowAll={() => setShowIntelligenceHub(false)}
+                                                        initialView={hubConfig.view}
+                                                        initialYear={hubConfig.year}
+                                                        initialAI={hubConfig.isAI}
+                                                        onTour={() => setShowSidebarWalkthrough(true)}
+                                                      />
+                                                    ) :
+                                                      showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
+                                                        <>
+                                                          {!freshActiveNode && (
+                                                            <>
+                                                              {isMobile && !isEditMode ? (
+                                                                <RoadmapMobile
+                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                  onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                                  completedCount={completedCount}
+                                                                />
+                                                              ) : (
+                                                                <RoadmapGraph
+                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                  activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                                  completedCount={completedCount} onMarkState={handleMarkState}
+                                                                  onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                                  onEditNode={n => { setEditData(n); setEditingNode(true); }}
+                                                                  onAddNodeAfter={(nodeId, idx) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
+                                                                  onDeleteNode={handleDeleteNode}
+                                                                  isEditMode={isEditMode}
+                                                                  lastCompletedNodeId={lastCompletedNodeId}
+                                                                  onAnimationTriggered={() => setLastCompletedNodeId(null)}
+                                                                />
+                                                              )}
+                                                            </>
+                                                          )}
             {freshActiveNode && !activeTopic && (!showModuleDetails || !isMobile) && (
                                                           <ModulePanel
                                                             node={freshActiveNode} activeModule={freshActiveModule}
@@ -1200,7 +1204,7 @@ function MainApp() {
       {!showWalkthrough && !sectionWalkthroughId &&
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
         !showPlayground && !showDSAAnimator && !showAimlCompanion && !showLinks &&
-        !showBlog && !showAdminManagement && !showSimulator && !showGalaxy &&
+        !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
         !showAIInterviewer && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
         !showIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&

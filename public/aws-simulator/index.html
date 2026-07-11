@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en" data-beasties-container>
+  <head>
+    <meta charset="utf-8">
+    <title>System Design Simulator: Model Traffic, Cost & Bottlenecks | AWS System Design Simulator</title>
+    <base href="/aws-simulator/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Free, open-source AWS system design simulator. Drag AWS services onto a canvas, run a deterministic traffic-and-cost simulation, estimate real monthly cost, and find traffic bottlenecks. Built for engineers learning system design and cloud architects sizing real workloads.">
+    <meta name="keywords" content="AWS system design simulator, system design practice, AWS architecture diagram, AWS cost estimator, traffic bottleneck analysis, cloud architecture tool, AWS Lambda cost, serverless cost calculator, system design for engineers, cloud architect tool">
+    <meta name="author" content="Sushant Kumar">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://srarchitect.qzz.io/">
+
+    <!-- Favicons: SVG adapts to light/dark, ICO and PNG are static fallbacks -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+    <link rel="manifest" href="assets/brand/site.webmanifest">
+
+    <!-- Browser UI theming -->
+    <meta name="theme-color" content="#fff7e7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1b2330" media="(prefers-color-scheme: dark)">
+
+    <!-- Open Graph / social share card -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="AWS System Design Simulator">
+    <meta property="og:url" content="https://srarchitect.qzz.io/">
+    <meta property="og:title" content="AWS System Design Simulator: Model Traffic, Cost &amp; Bottlenecks">
+    <meta property="og:description" content="Drag AWS services onto a canvas, run a deterministic traffic-and-cost simulation, estimate real monthly cost, and find traffic bottlenecks. Free and open source.">
+    <meta property="og:image" content="https://srarchitect.qzz.io/assets/brand/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AWS System Design Simulator: Traffic, Cost &amp; Bottlenecks">
+    <meta name="twitter:description" content="Sketch an AWS architecture, simulate traffic, estimate real monthly cost, and find bottlenecks. Free and open source.">
+    <meta name="twitter:image" content="https://srarchitect.qzz.io/assets/brand/og-image.png">
+
+    <!-- Structured data: tool, site, author, and persona-aligned FAQ.
+         Read by search engines and AI answer engines without running JS. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://srarchitect.qzz.io/#app",
+            "name": "AWS System Design Simulator",
+            "alternateName": "AWS System Design Simulator",
+            "applicationCategory": "DeveloperApplication",
+            "applicationSubCategory": "Cloud Architecture & Cost Estimation Tool",
+            "operatingSystem": "Web browser",
+            "url": "https://srarchitect.qzz.io/",
+            "description": "A browser-based AWS architecture sketchbook with a deterministic traffic-and-cost simulation engine. Drag AWS services onto a canvas, connect them, run a live simulation, and see per-node RPS, latency, utilization, an accurate monthly cost estimate, and the traffic bottleneck. It also helps you prepare for system design interviews through guided, hands-on challenges, and learn AWS with beginner-friendly visual documentation for 60+ services covering what each one does, when to use it, and how it integrates with others.",
+            "featureList": [
+              "Drag-and-drop AWS architecture canvas with 60+ services",
+              "Deterministic traffic simulation: per-node RPS, latency, queue, drops, utilization",
+              "Accurate monthly AWS cost estimation using real pricing formulas",
+              "Automatic traffic bottleneck detection",
+              "System design interview preparation with guided, hands-on challenges you design and then validate by simulation",
+              "Beginner-friendly visual documentation for 60+ AWS services: what each service does, its use cases, and how it integrates with other services, with animated request-and-data-flow diagrams"
+            ],
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "isAccessibleForFree": true,
+            "author": { "@id": "https://srarchitect.qzz.io/#author" }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://srarchitect.qzz.io/#website",
+            "url": "https://srarchitect.qzz.io/",
+            "name": "AWS System Design Simulator: AWS System Design Simulator",
+            "publisher": { "@id": "https://srarchitect.qzz.io/#author" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://srarchitect.qzz.io/#author",
+            "name": "Sushant Kumar",
+            "url": "https://srarchitect.qzz.io/"
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://srarchitect.qzz.io/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is the AWS System Design Simulator?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "It is a free, open-source, browser-based tool for designing AWS architectures and running a deterministic traffic-and-cost simulation. You drag AWS services onto a canvas, connect them, configure parameters, and watch live per-node RPS, latency, and utilization alongside an accurate monthly cost estimate."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I estimate real AWS costs with it?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The cost engine uses real AWS pricing formulas (for example Lambda GB-seconds and requests, S3 storage and requests, data transfer) and regional pricing data to produce an accurate monthly cost estimate that updates as your traffic and configuration change."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can it identify traffic bottlenecks?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The simulation computes per-node capacity, demand, queueing, and drops every step, then highlights the single bottleneck node that is overloaded so you can see exactly where traffic backs up before it cascades downstream."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I use it to prepare for system design interviews?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. System design interview preparation is a core feature. You work through guided, hands-on challenges that ask you to design real systems, then validate your design by simulating traffic, watching it scale, and seeing exactly where it breaks. It turns interview practice into something you build and test instead of only reading about."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does it help beginners learn AWS services?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Every one of the 60+ AWS services comes with beginner-friendly visual documentation that explains what the service does, the problems it solves, when to use or avoid it, and how it integrates with other services, using animated diagrams that show how requests and data flow between them. It is designed to make AWS approachable for people who are new to the cloud."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is it good for learning system design and AWS?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. It is built for engineers practicing system design and learning AWS hands-on, with 60+ documented services, guided challenges, and a live simulation that makes capacity, scaling, and cost trade-offs visible."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is the AWS System Design Simulator free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, it is completely free and open source, and runs entirely in your browser with no sign-up required."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  <style>:root{--fa-family-brands:"Font Awesome 7 Brands";--fa-font-brands:normal 400 1em/1 var(--fa-family-brands)}:root{--fa-font-regular:normal 400 1em/1 var(--fa-family-classic)}:root{--fa-family-classic:"Font Awesome 7 Free";--fa-font-solid:normal 900 1em/1 var(--fa-family-classic);--fa-style-family-classic:var(--fa-family-classic)}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2) format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2) format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2) format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2) format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:600;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2) format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:700;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:800;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko70yyygA.woff2) format("woff2");unicode-range:U+0460-052F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:800;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko50yyygA.woff2) format("woff2");unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+1EA0-1EF9,U+20AB}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:800;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko40yyygA.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Plus Jakarta Sans;font-style:normal;font-weight:800;font-display:swap;src:url(https://fonts.gstatic.com/s/plusjakartasans/v12/LDIoaomQNQcsA88c7O9yZ4KMCoOg4Ko20yw.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:Plus Jakarta Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;letter-spacing:-.01em}@media(max-width:900px),(hover:none)and (pointer:coarse){html,body{overflow:clip;overscroll-behavior:none}}:root{--bg-app:#f8fafc;--text-app:#0f172a;--text-muted:#64748b;--border-color:rgba(0, 0, 0, .08);--glass-bg:rgba(255, 255, 255, .72);--glass-border:rgba(255, 255, 255, .82);--card-bg:rgba(255, 255, 255, .46);--input-bg:#ffffff;--input-text:#1e293b;--button-hover:rgba(0, 0, 0, .05)}body{background:var(--bg-app);color:var(--text-app);transition:background-color .3s ease,color .3s ease}:root{--ff-white:#ffffff;--ff-black:#000000;--ff-gray-0:#ffffff;--ff-gray-25:#fcfcfc;--ff-gray-50:#f8f8f7;--ff-gray-75:#f2f2f0;--ff-gray-100:#e9e9e6;--ff-gray-150:#dcdcd7;--ff-gray-200:#c9c9c1;--ff-gray-300:#afafa5;--ff-gray-400:#8d8d81;--ff-gray-500:#69695f;--ff-gray-600:#505048;--ff-gray-700:#3c3c36;--ff-gray-800:#272722;--ff-gray-900:#1b1b18;--ff-gray-950:#141412;--ff-gray-1000:#0f0f0d;--ff-alpha-black-04:rgba(15, 15, 13, .04);--ff-alpha-black-06:rgba(15, 15, 13, .06);--ff-alpha-black-08:rgba(15, 15, 13, .08);--ff-alpha-black-10:rgba(15, 15, 13, .1);--ff-alpha-black-12:rgba(15, 15, 13, .12);--ff-alpha-black-15:rgba(15, 15, 13, .15);--ff-alpha-black-20:rgba(15, 15, 13, .2);--ff-alpha-black-30:rgba(15, 15, 13, .3);--ff-alpha-black-40:rgba(15, 15, 13, .4);--ff-alpha-black-60:rgba(15, 15, 13, .6);--ff-alpha-white-04:rgba(255, 255, 255, .04);--ff-alpha-white-06:rgba(255, 255, 255, .06);--ff-alpha-white-08:rgba(255, 255, 255, .08);--ff-alpha-white-10:rgba(255, 255, 255, .1);--ff-alpha-white-12:rgba(255, 255, 255, .12);--ff-alpha-white-15:rgba(255, 255, 255, .15);--ff-alpha-white-20:rgba(255, 255, 255, .2);--ff-alpha-white-30:rgba(255, 255, 255, .3);--ff-alpha-white-40:rgba(255, 255, 255, .4);--ff-alpha-white-60:rgba(255, 255, 255, .6);--ff-blue-100:#e8f2ff;--ff-blue-200:#bad8ff;--ff-blue-300:#7db7ff;--ff-blue-400:#4176ff;--ff-blue-500:#2759db;--ff-blue-600:#1b3f9e;--ff-green-100:#e7f7ef;--ff-green-300:#71c795;--ff-green-400:#2b9b5f;--ff-green-500:#1e7748;--ff-yellow-100:#fff5de;--ff-yellow-300:#e1b354;--ff-yellow-400:#bb8121;--ff-yellow-500:#916112;--ff-red-100:#feeceb;--ff-red-300:#e48d85;--ff-red-400:#c55245;--ff-red-500:#9e3a2f;--ff-radius-4:4px;--ff-radius-6:6px;--ff-radius-pill:999px;--ff-font-family-sans:"Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";--ff-font-family-mono:ui-monospace, "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;--ff-font-size-xs:12px;--ff-font-size-sm:14px;--ff-font-size-md:16px;--ff-font-size-lg:18px;--ff-shadow-1:0 1px 2px rgba(15, 15, 13, .05), 0 8px 20px rgba(15, 15, 13, .04);--ff-shadow-2:0 10px 28px rgba(15, 15, 13, .08), 0 3px 10px rgba(15, 15, 13, .05);--ff-shadow-3:0 18px 48px rgba(15, 15, 13, .12), 0 6px 16px rgba(15, 15, 13, .08)}:root{--ff-color-surface-page:var(--ff-gray-25);--ff-color-surface-canvas:var(--ff-gray-25);--ff-color-surface-card:var(--ff-white);--ff-color-surface-group:rgba(65, 118, 255, .14);--ff-color-surface-group-active:rgba(65, 118, 255, .2);--ff-color-surface-muted:var(--ff-gray-50);--ff-color-surface-soft:var(--ff-gray-75);--ff-color-surface-accent-soft:rgba(65, 118, 255, .1);--ff-color-border-default:var(--ff-alpha-black-12);--ff-color-border-subtle:var(--ff-alpha-black-08);--ff-color-border-strong:var(--ff-alpha-black-20);--ff-color-border-accent:var(--ff-blue-500);--ff-color-text-primary:var(--ff-gray-800);--ff-color-text-secondary:var(--ff-gray-500);--ff-color-text-tertiary:var(--ff-gray-400);--ff-color-text-inverse:var(--ff-white);--ff-color-accent:var(--ff-blue-500);--ff-color-accent-strong:var(--ff-blue-600);--ff-color-success:var(--ff-green-400);--ff-color-warning:var(--ff-yellow-400);--ff-color-danger:var(--ff-red-400);--ff-color-disabled-surface:var(--ff-gray-100);--ff-color-disabled-border:var(--ff-alpha-black-10);--ff-color-disabled-text:var(--ff-gray-300);--ff-color-selection-fill:rgba(65, 118, 255, .12);--ff-color-selection-stroke:rgba(65, 118, 255, .28);--ff-color-grid:var(--ff-alpha-black-08);--ff-color-grid-strong:var(--ff-alpha-black-15);--ff-color-connector-connected:var(--ff-blue-500);--ff-color-connection:var(--ff-gray-600);--ff-color-connection-muted:var(--ff-gray-300);--ff-color-connection-hover:var(--ff-alpha-black-12);--ff-color-grouping-drop-target-border:var(--ff-gray-800);--ff-color-grouping-drop-target-border-active:var(--ff-gray-800);--ff-color-waypoint-fill:var(--ff-white);--ff-color-waypoint-stroke:var(--ff-blue-500);--ff-color-waypoint-candidate-fill:var(--ff-white);--ff-color-waypoint-candidate-stroke:var(--ff-green-400);--ff-color-minimap-surface:var(--ff-white);--ff-color-minimap-node:var(--ff-gray-700);--ff-color-minimap-view:rgba(65, 118, 255, .14);--ff-color-magnetic-line:var(--ff-blue-500);--ff-color-magnetic-rect-fill:rgba(65, 118, 255, .08);--ff-color-magnetic-rect-border:rgba(65, 118, 255, .24);--ff-radius-node:var(--ff-radius-4);--ff-radius-group:var(--ff-radius-4);--ff-radius-control:var(--ff-radius-4);--ff-radius-socket-square:var(--ff-radius-6);--ff-radius-pill:var(--ff-radius-pill);--ff-font-sans:var(--ff-font-family-sans);--ff-font-mono:var(--ff-font-family-mono);--ff-font-size-body:var(--ff-font-size-sm);--ff-font-size-label:var(--ff-font-size-xs);--ff-shadow-surface:var(--ff-shadow-1);--ff-shadow-floating:var(--ff-shadow-2)}:root{--ff-flow-background-color:var(--ff-color-surface-page);--ff-flow-text-color:var(--ff-color-text-primary);--ff-flow-font-family:var(--ff-font-sans);--ff-flow-font-size:var(--ff-font-size-body);--ff-canvas-background-color:var(--ff-color-surface-canvas);--ff-node-background-color:var(--ff-color-surface-card);--ff-node-background-color-inverse:var(--ff-color-text-primary);--ff-node-border-color:var(--ff-color-border-default);--ff-node-border-color-selected:var(--ff-color-border-accent);--ff-node-color:var(--ff-color-text-primary);--ff-node-border-radius:var(--ff-radius-node);--ff-node-shadow:var(--ff-shadow-surface);--ff-node-shadow-selected:var(--ff-shadow-floating);--ff-node-width:120px;--ff-node-min-height:56px;--ff-node-padding:24px;--ff-group-background-color:var(--ff-color-surface-group);--ff-group-background-color-active:var(--ff-color-surface-group-active);--ff-group-border-color:var(--ff-color-border-subtle);--ff-group-border-color-selected:var(--ff-color-border-accent);--ff-group-border-color-active:var(--ff-color-border-accent);--ff-group-color:var(--ff-color-text-secondary);--ff-group-border-radius:var(--ff-radius-group);--ff-group-min-width:180px;--ff-group-min-height:120px;--ff-group-padding:24px;--ff-grouping-drop-target-border-color:var(--ff-color-grouping-drop-target-border);--ff-grouping-drop-target-border-style:dashed;--ff-grouping-drop-target-border-width:1px;--ff-grouping-drop-target-border-color-active:var( --ff-color-grouping-drop-target-border-active );--ff-grouping-drop-target-border-style-active:dashed;--ff-grouping-drop-target-border-width-active:2px;--ff-resize-handle-size:8px;--ff-resize-handle-fill:var(--ff-color-accent);--ff-resize-handle-stroke:var(--ff-color-surface-card);--ff-resize-handle-ring:var(--ff-color-accent);--ff-resize-handle-radius:1px;--ff-resize-handle-fill-active:var(--ff-color-surface-card);--ff-rotate-handle-size:16px;--ff-rotate-handle-offset:40px;--ff-rotate-handle-background-color:var(--ff-color-surface-card);--ff-rotate-handle-border-color:var(--ff-color-border-strong);--ff-rotate-handle-guide-color:var(--ff-color-border-strong);--ff-connector-background-color:var(--ff-color-surface-card);--ff-connector-border-color:var(--ff-color-text-secondary);--ff-connector-connected-color:var(--ff-color-connector-connected);--ff-connector-accent-color:var(--ff-color-accent);--ff-connector-disabled-color:var(--ff-color-disabled-surface);--ff-connector-disabled-border-color:var(--ff-color-disabled-border);--ff-connector-size:14px;--ff-connector-border-width:2px;--ff-connector-input-radius:var(--ff-radius-4);--ff-connector-node-ring-color:var(--ff-canvas-background-color);--ff-outlet-background-color:var(--ff-color-surface-muted);--ff-outlet-border-color:var(--ff-color-border-default);--ff-outlet-color:var(--ff-color-accent);--ff-outlet-disabled-background-color:var(--ff-color-disabled-surface);--ff-outlet-disabled-border-color:var(--ff-color-disabled-border);--ff-outlet-disabled-color:var(--ff-color-disabled-text);--ff-outlet-border-radius:var(--ff-radius-pill);--ff-outlet-padding-y:6px;--ff-outlet-padding-x:12px;--ff-connection-color:var(--ff-color-connection);--ff-snap-connection-color:var(--ff-color-connection-muted);--ff-connection-hover-color:var(--ff-color-connection-hover);--ff-connection-selected-color:var(--ff-color-accent);--ff-connection-label-color:var(--ff-color-text-secondary);--ff-connection-content-color:var(--ff-node-color);--ff-connection-content-background-color:var(--ff-node-background-color);--ff-connection-content-border-color:var(--ff-node-border-color);--ff-connection-content-border-color-selected:var(--ff-connection-selected-color);--ff-connection-content-border-radius:var(--ff-node-border-radius);--ff-connection-content-font-size:13px;--ff-connection-content-padding-y:2px;--ff-connection-content-padding-x:8px;--ff-connection-width:2px;--ff-connection-hit-width:14px;--ff-connection-drag-handle-fill:var(--ff-color-surface-card);--ff-connection-drag-handle-stroke:var(--ff-color-accent);--ff-marker-color:var(--ff-connection-color);--ff-waypoint-fill:var(--ff-color-waypoint-fill);--ff-waypoint-stroke:var(--ff-color-waypoint-stroke);--ff-waypoint-candidate-fill:var(--ff-color-waypoint-candidate-fill);--ff-waypoint-candidate-stroke:var(--ff-color-waypoint-candidate-stroke);--ff-background-line-color:var(--ff-color-grid);--ff-background-dot-color:var(--ff-color-grid-strong);--ff-selection-area-color:var(--ff-color-selection-fill);--ff-selection-area-border-color:var(--ff-color-selection-stroke);--ff-minimap-background-color:var(--ff-color-minimap-surface);--ff-minimap-border-color:var(--ff-color-border-default);--ff-minimap-node-color:var(--ff-color-minimap-node);--ff-minimap-node-selected-color:var(--ff-color-accent);--ff-minimap-view-color:var(--ff-color-minimap-view);--ff-minimap-view-border-color:var(--ff-color-selection-stroke);--ff-minimap-border-radius:var(--ff-radius-node);--ff-minimap-shadow:var(--ff-shadow-floating);--ff-magnetic-line-color:var(--ff-color-magnetic-line);--ff-magnetic-rect-fill:var(--ff-color-magnetic-rect-fill);--ff-magnetic-rect-border-color:var(--ff-color-magnetic-rect-border);--ff-external-item-background-color:var(--ff-color-surface-card);--ff-external-item-border-color:var(--ff-color-border-default);--ff-external-item-color:var(--ff-color-text-primary);--ff-external-item-disabled-color:var(--ff-color-disabled-text);--ff-external-item-disabled-background-color:var(--ff-color-disabled-surface);--ff-external-item-border-radius:var(--ff-radius-node);--ff-external-item-shadow:var(--ff-shadow-surface);--ff-external-item-preview-shadow:var(--ff-shadow-floating);--ff-external-item-placeholder-background-color:var(--ff-color-surface-soft);--ff-external-item-placeholder-border-color:var(--ff-color-border-subtle)}</style><link rel="stylesheet" href="styles-XUORH7L4.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-XUORH7L4.css"></noscript></head>
+  <body>
+    <app-root></app-root>
+
+    <!-- Crawlable summary for engines that do not execute JavaScript.
+         Mirrors the interactive app's purpose; replaced by the app for users. -->
+    <noscript>
+      <main>
+        <h1>AWS System Design Simulator</h1>
+        <p>
+          AWS System Design Simulator is a free, open-source AWS system design simulator. Drag AWS services onto a
+          canvas, connect them, and run a deterministic traffic-and-cost simulation that shows
+          per-node requests per second, latency, and utilization, an accurate monthly AWS cost
+          estimate, and the exact traffic bottleneck.
+        </p>
+        <h2>Who it is for</h2>
+        <ul>
+          <li>
+            <strong>Engineers preparing for system design interviews</strong>: work through guided,
+            hands-on challenges that ask you to design real systems, then validate them by
+            simulating traffic and seeing where they break.
+          </li>
+          <li>
+            <strong>Beginners learning AWS</strong>: explore 60+ AWS services with beginner-friendly
+            visual documentation covering what each service does, its use cases, and how it
+            integrates with other services.
+          </li>
+          <li>
+            <strong>Engineers learning system design</strong>: practice designing scalable
+            architectures and see how capacity, scaling, and queueing behave under load.
+          </li>
+          <li>
+            <strong>Cloud and enterprise architects</strong>: estimate real monthly cost for a
+            design and pinpoint traffic bottlenecks before building.
+          </li>
+        </ul>
+        <h2>Explore the AWS service library</h2>
+        <p>
+          Read beginner-friendly visual guides to AWS services (what each one is, how it works, when
+          to use it, how it integrates with other services, and how it is priced) in the
+          <a href="/services/">AWS service library</a>.
+        </p>
+      </main>
+    </noscript>
+  <script src="polyfills-5CFQRCPP.js" type="module"></script><script src="main-U3OPZTZD.js" type="module"></script></body>
+</html>
