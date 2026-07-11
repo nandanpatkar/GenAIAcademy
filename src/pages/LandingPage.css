@@ -465,8 +465,8 @@
   position: absolute;
   left: 3%;
   bottom: 4%;
-  width: min(300px, 42%);
-  border-radius: 13px;
+  width: min(230px, 32%);
+  border-radius: 11px;
   border: 1px solid var(--ga-panel-border);
   background: var(--ga-panel-bg);
   backdrop-filter: blur(20px) saturate(150%);
@@ -477,24 +477,24 @@
 .ga-console-header {
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 6px 11px;
+  gap: 5px;
+  padding: 4px 8px;
   border-bottom: 1px solid var(--ga-panel-border);
-  font-size: 8.5px;
+  font-size: 7px;
   font-weight: 800;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
   color: var(--ga-text-dim);
 }
 .ga-console-dot {
-  width: 6px; height: 6px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--ga-green);
-  box-shadow: 0 0 8px var(--ga-green);
+  box-shadow: 0 0 7px var(--ga-green);
   animation: ga-pulse 1.6s infinite;
 }
 .ga-console-cursor { margin-left: auto; animation: ga-pulse 1s steps(2) infinite; color: var(--ga-green); }
-.ga-console-logs { padding: 7px 11px 9px; display: flex; flex-direction: column; gap: 4px; }
-.ga-log-entry { display: flex; gap: 6px; font-size: 8.5px; line-height: 1.5; white-space: nowrap; overflow: hidden; }
+.ga-console-logs { padding: 5px 8px 7px; display: flex; flex-direction: column; gap: 2px; }
+.ga-log-entry { display: flex; gap: 5px; font-size: 7px; line-height: 1.45; white-space: nowrap; overflow: hidden; }
 .ga-log-time { color: var(--ga-text-muted); flex-shrink: 0; }
 .ga-log-tag { font-weight: 800; flex-shrink: 0; }
 .ga-log-tag.user { color: var(--ga-sky); }
@@ -856,7 +856,7 @@
   .ga-nav-link { display: none; }
   .ga-hero { padding: 34px 16px 56px; }
   .ga-mode-section, .ga-feature-section { padding-left: 16px; padding-right: 16px; }
-  .ga-console-overlay { width: 56%; }
+  .ga-console-overlay { width: 44%; }
   .ga-metrics-overlay { display: none; }
   .ga-node-label p { display: none; }
 }
