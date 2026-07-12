@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
+
 
 export default function Sidebar({
   activePath, setActivePath, paths,
@@ -42,7 +43,10 @@ export default function Sidebar({
   showGitHubHub, setShowGitHubHub,
   isCollapsed, setIsCollapsed,
   onSectionWalkthrough,
-  showQuiz, setShowQuiz
+  showQuiz, setShowQuiz,
+  showNoSignups, setShowNoSignups,
+  showManual, setShowManual,
+  activeManualPhase, setActiveManualPhase
 }) {
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
@@ -72,6 +76,13 @@ export default function Sidebar({
       ]
     },
     {
+      label: "Manual",
+      isManual: true,
+      items: [
+        { icon: <BookOpen size={14} />, label: "Manual", id: "manual" }
+      ]
+    },
+    {
       label: "Tools",
       items: [
         { icon: <Terminal size={14} />, label: "Cloud IDE", id: "projects" },
@@ -85,6 +96,7 @@ export default function Sidebar({
         { icon: <GitCommit size={14} />, label: "Git Visualizer", id: "git_visualizer" },
         { icon: <Network size={14} />, label: "Flow design", id: "flow_design" },
         { icon: <FileText size={14} />, label: "Notion", id: "notion" },
+        { icon: <Globe size={14} />, label: "NoSignups", id: "nosignups" },
       ]
     },
     {
@@ -148,11 +160,13 @@ export default function Sidebar({
     if (showFlowDesign) return "flow_design";
     if (showCommunity) return "community";
     if (showNotion) return "notion";
+    if (showNoSignups) return "nosignups";
     if (showInterviewPrep) return "interview_prep";
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
     if (showIntelligenceHub) return "hub";
     if (showQuiz) return "quiz";
+    if (showManual) return "manual";
     if (!activeNode) return "overview";
     return null;
   };
@@ -189,11 +203,18 @@ export default function Sidebar({
     if (setShowGitHubHub) setShowGitHubHub(false);
     if (setShowCommunity) setShowCommunity(false);
     if (setShowNotion) setShowNotion(false);
+    if (setShowNoSignups) setShowNoSignups(false);
     if (setShowInterviewPrep) setShowInterviewPrep(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
     if (setShowQuiz) setShowQuiz(false);
+    if (setShowManual) setShowManual(false);
 
     switch (id) {
+      case "manual": 
+        if (setActiveManualPhase) setActiveManualPhase(null);
+        if (setShowManual) setShowManual(true); 
+        break;
+      case "nosignups": if (setShowNoSignups) setShowNoSignups(true); break;
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
       case "projects": if (setShowProjects) setShowProjects(true); break;

@@ -163,6 +163,137 @@ function EditorSettingsPopover({ settings, update, reset, onClose }) {
   );
 }
 
+function JSONCrackWidget({ content, onViewSource }) {
+  const iframeRef = useRef(null);
+
+  const isTooLarge = content.length > 1024 * 1024; // 1MB limit
+
+  const updateWidget = useCallback(() => {
+    if (isTooLarge || !iframeRef.current || !iframeRef.current.contentWindow) return;
+    try {
+      const parsed = JSON.parse(content);
+      const json = JSON.stringify(parsed);
+      iframeRef.current.contentWindow.postMessage(
+        {
+          json,
+          options: {
+            theme: 'dark',
+            direction: 'RIGHT'
+          }
+        },
+        '*'
+      );
+    } catch (e) {
+      iframeRef.current.contentWindow.postMessage(
+        {
+          json: JSON.stringify({ error: "Invalid JSON format", details: e.message }),
+          options: { theme: 'dark' }
+        },
+        '*'
+      );
+    }
+  }, [content, isTooLarge]);
+
+  useEffect(() => {
+    if (isTooLarge) return;
+
+    // Retry timers to guarantee delivery
+    const t1 = setTimeout(updateWidget, 500);
+    const t2 = setTimeout(updateWidget, 1500);
+    const t3 = setTimeout(updateWidget, 3000);
+
+    const handleMessage = (event) => {
+      if (event.data === 'json-crack-embed') {
+        updateWidget();
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [updateWidget, isTooLarge]);
+
+  useEffect(() => {
+    if (!isTooLarge) {
+      updateWidget();
+    }
+  }, [content, updateWidget, isTooLarge]);
+
+  if (isTooLarge) {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        padding: 40,
+        background: '#0a0a0a',
+        color: '#fff',
+        fontFamily: 'Syne, sans-serif',
+        textAlign: 'center'
+      }}>
+        <div style={{
+          fontSize: 48,
+          marginBottom: 16,
+          filter: 'drop-shadow(0 0 10px rgba(255, 235, 59, 0.4))'
+        }}>
+          ⚠️
+        </div>
+        <h2 style={{ fontSize: 20, fontWeight: 800, margin: '0 0 8px 0', color: '#ffeb3b' }}>
+          File Too Large to Visualize
+        </h2>
+        <p style={{ fontSize: 13, color: 'rgba(255, 255, 255, 0.6)', maxWidth: 450, margin: '0 0 20px 0', lineHeight: 1.5 }}>
+          This JSON file is {(content.length / (1024 * 1024)).toFixed(2)} MB. Visualizing files larger than 1 MB in JSON Crack can cause severe browser performance lag or tab crashes.
+        </p>
+        <button
+          onClick={onViewSource}
+          style={{
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            color: '#fff',
+            padding: '10px 20px',
+            borderRadius: 8,
+            cursor: 'pointer',
+            fontSize: 12,
+            fontWeight: 600,
+            transition: 'background-color 0.2s, border-color 0.2s'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+          }}
+        >
+          View Raw Source Code
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      <iframe
+        ref={iframeRef}
+        id="json-crack-embed"
+        src="https://jsoncrack.com/widget"
+        width="100%"
+        height="100%"
+        style={{ border: 'none', background: '#020202', flex: 1 }}
+        title="JSON Crack Widget"
+        onLoad={updateWidget}
+      />
+    </div>
+  );
+}
+
 export default function EditorPane({ onAIAction, onToast }) {
   const {
     openFiles, activeFileId, setActiveFileId, closeFile,
@@ -177,10 +308,12 @@ export default function EditorPane({ onAIAction, onToast }) {
   const [showSettings, setShowSettings] = useState(false);
   const [splitFileId, setSplitFileId] = useState(null); // second pane file
   const [mdPreview, setMdPreview] = useState(true); // .md files open in preview by default
+  const [jsonPreview, setJsonPreview] = useState(true); // .json files open in JSON Crack by default
   const autoSaveTimers = useRef({});
   const monacoRef = useRef(null);
 
   const isMarkdown = (f) => !!f && /\.(md|markdown)$/i.test(f.filename);
+  const isJson = (f) => !!f && /\.json$/i.test(f.filename);
 
   const { settings, update: updateSettings, reset: resetSettings } = useEditorSettings();
   const editorOptions = applySettings(MONACO_OPTIONS, settings);
@@ -368,6 +501,15 @@ export default function EditorPane({ onAIAction, onToast }) {
               {mdPreview ? <FileCode size={13} /> : <Eye size={13} />}
             </button>
           )}
+          {isJson(activeFile) && (
+            <button
+              className={`ide-tabbar-tool ${jsonPreview ? 'active' : ''}`}
+              title={jsonPreview ? 'Show source' : 'Show JSON Crack'}
+              onClick={() => setJsonPreview(p => !p)}
+            >
+              {jsonPreview ? <FileCode size={13} /> : <Eye size={13} />}
+            </button>
+          )}
           <button
             className={`ide-tabbar-tool ${splitFile ? 'active' : ''}`}
             title={splitFile ? 'Close split view' : 'Split editor'}
@@ -437,6 +579,8 @@ export default function EditorPane({ onAIAction, onToast }) {
           activeFile && (
             activeFile.filename.endsWith('.ipynb') ? (
               <NotebookViewer content={activeFile.content || ''} />
+            ) : (isJson(activeFile) && jsonPreview && !splitFile) ? (
+              <JSONCrackWidget content={activeFile.content || ''} onViewSource={() => setJsonPreview(false)} />
             ) : (isMarkdown(activeFile) && mdPreview && !splitFile) ? (
               <div className="ide-md-preview">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>

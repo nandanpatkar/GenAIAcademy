@@ -29,6 +29,8 @@ import K8sGames from "./components/K8sGames";
 import GitVisualizer from "./components/GitVisualizer";
 import FlowDesign from "./components/FlowDesign";
 import NotionRenderer from "./components/notion/NotionRenderer";
+import NoSignups from "./components/NoSignups";
+import ManualViewer from "./components/ManualViewer";
 import InterviewPrep from "./components/InterviewPrep";
 import QuizApp from "./components/QuizApp";
 import ProjectIDE from "./components/Projects/ProjectIDE";
@@ -343,38 +345,82 @@ function MainApp() {
   const [editData, setEditData] = useState(null);
   const [insertionIndex, setInsertionIndex] = useState(-1);
 
-  const [showCurriculumMap, setShowCurriculumMap] = useState(false);
-  const [showIDE, setShowIDE] = useState(false);
-  const [showResources, setShowResources] = useState(false);
-  const [showProgress, setShowProgress] = useState(false);
-  const [showPlayground, setShowPlayground] = useState(false);
-  const [showDSAAnimator, setShowDSAAnimator] = useState(false);
-  const [showAimlCompanion, setShowAimlCompanion] = useState(false);
-  const [showLinks, setShowLinks] = useState(false);
-  const [showBlog, setShowBlog] = useState(false);
-  const [showAdminManagement, setShowAdminManagement] = useState(false);
-  const [showSimulator, setShowSimulator] = useState(false);
-  const [showAwsSimulator, setShowAwsSimulator] = useState(false);
-  const [showGalaxy, setShowGalaxy] = useState(false);
-  const [showAIInterviewer, setShowAIInterviewer] = useState(false);
-  const [showAlgoStudio, setShowAlgoStudio] = useState(false);
-  const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(false);
-  const [showK8sGames, setShowK8sGames] = useState(false);
-  const [showGitVisualizer, setShowGitVisualizer] = useState(false);
-  const [showFlowDesign, setShowFlowDesign] = useState(false);
-  const [showCommunity, setShowCommunity] = useState(false);
-  const [showNotion, setShowNotion] = useState(false);
-  const [showInterviewPrep, setShowInterviewPrep] = useState(false);
-  const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
-  const [showProjects, setShowProjects] = useState(false);
+  const savedViewsStr = typeof window !== 'undefined' ? localStorage.getItem("genai_active_views") : null;
+  let savedViews = {};
+  try { if (savedViewsStr) savedViews = JSON.parse(savedViewsStr); } catch (e) {}
 
-  const [showGitHubHub, setShowGitHubHub] = useState(false);
+  const [showCurriculumMap, setShowCurriculumMap] = useState(savedViews.showCurriculumMap ?? false);
+  const [showIDE, setShowIDE] = useState(savedViews.showIDE ?? false);
+  const [showResources, setShowResources] = useState(savedViews.showResources ?? false);
+  const [showProgress, setShowProgress] = useState(savedViews.showProgress ?? false);
+  const [showPlayground, setShowPlayground] = useState(savedViews.showPlayground ?? false);
+  const [showDSAAnimator, setShowDSAAnimator] = useState(savedViews.showDSAAnimator ?? false);
+  const [showAimlCompanion, setShowAimlCompanion] = useState(savedViews.showAimlCompanion ?? false);
+  const [showLinks, setShowLinks] = useState(savedViews.showLinks ?? false);
+  const [showBlog, setShowBlog] = useState(savedViews.showBlog ?? false);
+  const [showAdminManagement, setShowAdminManagement] = useState(savedViews.showAdminManagement ?? false);
+  const [showSimulator, setShowSimulator] = useState(savedViews.showSimulator ?? false);
+  const [showAwsSimulator, setShowAwsSimulator] = useState(savedViews.showAwsSimulator ?? false);
+  const [showGalaxy, setShowGalaxy] = useState(savedViews.showGalaxy ?? false);
+  const [showAIInterviewer, setShowAIInterviewer] = useState(savedViews.showAIInterviewer ?? false);
+  const [showAlgoStudio, setShowAlgoStudio] = useState(savedViews.showAlgoStudio ?? false);
+  const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(savedViews.showAlgoVisualizer ?? false);
+  const [showK8sGames, setShowK8sGames] = useState(savedViews.showK8sGames ?? false);
+  const [showGitVisualizer, setShowGitVisualizer] = useState(savedViews.showGitVisualizer ?? false);
+  const [showFlowDesign, setShowFlowDesign] = useState(savedViews.showFlowDesign ?? false);
+  const [showCommunity, setShowCommunity] = useState(savedViews.showCommunity ?? false);
+  const [showNotion, setShowNotion] = useState(savedViews.showNotion ?? false);
+  const [showNoSignups, setShowNoSignups] = useState(savedViews.showNoSignups ?? false);
+  const [showManual, setShowManual] = useState(savedViews.showManual ?? false);
+  const [activeManualPhase, setActiveManualPhase] = useState(null);
+  const [showInterviewPrep, setShowInterviewPrep] = useState(savedViews.showInterviewPrep ?? false);
+  const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
+  const [showProjects, setShowProjects] = useState(savedViews.showProjects ?? false);
+
+  const [showGitHubHub, setShowGitHubHub] = useState(savedViews.showGitHubHub ?? false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showModuleDetails, setShowModuleDetails] = useState(false);
-  const [showIntelligenceHub, setShowIntelligenceHub] = useState(true);
-  const [showWorkplaceLab, setShowWorkplaceLab] = useState(false);
-  const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(false);
-  const [hubConfig, setHubConfig] = useState({ view: 'main', year: null, isAI: false });
+  const [showIntelligenceHub, setShowIntelligenceHub] = useState(savedViews.showIntelligenceHub ?? true);
+  const [showWorkplaceLab, setShowWorkplaceLab] = useState(savedViews.showWorkplaceLab ?? false);
+  const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(savedViews.showKnowledgeGraph ?? false);
+  const [hubConfig, setHubConfig] = useState(() => {
+    try {
+      const saved = localStorage.getItem("genai_hub_config");
+      return saved ? JSON.parse(saved) : { view: 'main', year: null, isAI: false };
+    } catch(e) { return { view: 'main', year: null, isAI: false }; }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("genai_active_views", JSON.stringify({
+        showCurriculumMap, showIDE, showResources, showProgress, showPlayground,
+        showDSAAnimator, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+        showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
+        showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
+        showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
+        showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
+        showKnowledgeGraph
+      }));
+    } catch (e) {
+      console.warn("Failed to save genai_active_views to localStorage:", e);
+    }
+  }, [
+    showCurriculumMap, showIDE, showResources, showProgress, showPlayground,
+    showDSAAnimator, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+    showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
+    showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
+    showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
+    showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
+    showKnowledgeGraph
+  ]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("genai_hub_config", JSON.stringify(hubConfig));
+    } catch (e) {
+      console.warn("Failed to save genai_hub_config to localStorage:", e);
+    }
+  }, [hubConfig]);
 
   // Walkthrough: auto-show for first-time users
   const [showWalkthrough, setShowWalkthrough] = useState(() => {
@@ -498,8 +544,10 @@ function MainApp() {
     setShowKnowledgeGraph(false);
     setShowCommunity(false);
     setShowNotion(false);
+    setShowNoSignups(false);
     setShowInterviewPrep(false);
     setShowProjects(false);
+    setShowManual(false);
     setInterviewDeepLinkId(null);
   };
 
@@ -944,6 +992,9 @@ function MainApp() {
           showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
           showCommunity={showCommunity} setShowCommunity={setShowCommunity}
           showNotion={showNotion} setShowNotion={setShowNotion}
+          showNoSignups={showNoSignups} setShowNoSignups={setShowNoSignups}
+          showManual={showManual} setShowManual={setShowManual}
+          activeManualPhase={activeManualPhase} setActiveManualPhase={setActiveManualPhase}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
           showQuiz={showQuiz} setShowQuiz={setShowQuiz}
           showProjects={showProjects} setShowProjects={setShowProjects}
@@ -1044,7 +1095,9 @@ function MainApp() {
                                                 /> :
                                                   showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
                                                     showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
-                                                      showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
+                                                      showNoSignups ? <NoSignups onClose={() => setShowNoSignups(false)} /> :
+                                                        showManual ? <ManualViewer activePhase={activeManualPhase} onSelectPhase={setActiveManualPhase} onClose={() => setShowManual(false)} /> :
+                                                        showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showQuiz ? <QuizApp /> :
                                                       showIntelligenceHub ? (
                                                       <IntelligenceHub

@@ -180,7 +180,7 @@ const callAzureOpenAI = async (messages, maxTokens = 800, temperature = 0.7, jso
   }
 
   // Ensure JSON instructions exist in system prompt if jsonMode is true
-  let chatMessages = messages.map(m => ({ role: m.role, content: m.content }));
+  let chatMessages = messages.map(m => ({ role: m.role === 'model' ? 'assistant' : m.role, content: m.content }));
   if (jsonMode) {
     const sysMsg = chatMessages.find(m => m.role === 'system');
     if (sysMsg) {

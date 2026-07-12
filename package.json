@@ -2,6 +2,7 @@
   "name": "genai-roadmap",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build:aws-simulator": "cd system-design-simulator/frontend && npm install && npx ng build --configuration production --base-href /aws-simulator/ && cd ../../ && rm -rf public/aws-simulator && mkdir -p public/aws-simulator && cp -r system-design-simulator/frontend/dist/aws-system-design-simulator-client/browser/* public/aws-simulator/",
@@ -28,6 +29,7 @@
     "jszip": "^3.10.1",
     "lowlight": "^3.3.0",
     "lucide-react": "^1.7.0",
+    "mermaid": "^11.16.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",
