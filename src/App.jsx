@@ -53,6 +53,7 @@ import KnowledgeGalaxy from "./components/KnowledgeGalaxy";
 import FocusPulse from "./components/FocusPulse";
 import VideoModal from "./components/VideoModal";
 import LandingPage from "./pages/LandingPage";
+import LandingWrapper from "./pages/LandingWrapper";
 import KnowledgeGraph from "./pages/KnowledgeGraph";
 import Community from "./components/Community/Community";
 import AppWalkthrough from "./components/AppWalkthrough";
@@ -917,7 +918,7 @@ function MainApp() {
     });
   };
 
-  if (!user && showLanding) return <LandingPage theme={theme} toggleTheme={toggleTheme} onEnter={() => {
+  if (!user && showLanding) return <LandingWrapper theme={theme} toggleTheme={toggleTheme} onEnter={() => {
     setShowLanding(false);
     localStorage.setItem("genai_landing_dismissed", "true");
   }} />;

@@ -350,7 +350,7 @@ const FEATURES = [
 ];
 
 // ── Page ─────────────────────────────────────────────────────────────────────
-export default function LandingPage({ onEnter, theme, toggleTheme }) {
+export default function LandingPage({ onEnter, theme, toggleTheme, onSwitch }) {
   const shellRef = useRef(null);
   const [navScrolled, setNavScrolled] = useState(false);
   const [showTop, setShowTop] = useState(false);
@@ -525,6 +525,17 @@ export default function LandingPage({ onEnter, theme, toggleTheme }) {
           onClick={() => shellRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}>
           <ChevronUp size={16} />
         </button>
+      )}
+
+      {onSwitch && (
+        <div style={{ padding: '2rem 0 3rem', borderTop: '1px solid rgba(34,44,55,0.3)', textAlign: 'center' }}>
+          <button onClick={onSwitch} style={{ background: 'transparent', border: '1px solid #38bdf8', color: '#38bdf8', padding: '10px 20px', borderRadius: '4px', fontFamily: '"JetBrains Mono", monospace', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', cursor: 'pointer', transition: 'all 0.3s' }}
+            onMouseEnter={(e) => { e.target.style.background = '#38bdf8'; e.target.style.color = '#080b0e'; }}
+            onMouseLeave={(e) => { e.target.style.background = 'transparent'; e.target.style.color = '#38bdf8'; }}
+          >
+            Switch to New Landing Page
+          </button>
+        </div>
       )}
     </main>
   );
