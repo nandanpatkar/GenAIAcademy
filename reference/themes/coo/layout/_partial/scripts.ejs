@@ -1,0 +1,471 @@
+<%- js('js/main.js') %>
+
+<% if (is_post() && page.plugins != undefined && page.plugins.includes("tooltip") ){ %>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof (tippy) !== 'undefined') {
+                document.querySelectorAll("a[data-tooltip]").forEach(function (x) {
+                    let content = x.getAttribute('data-tooltip');
+                    tippy(x, {content: content});
+                });
+            }
+        });
+    </script>
+<% } %>
+
+<% if (is_post() && page.plugins != undefined && page.plugins.includes("katex") ){ %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script>
+        document.querySelectorAll('code').forEach(function (el) {
+            const text = el.textContent;
+            if (text.startsWith('KaTeX:') || el.classList.contains("language-KaTeX")) {
+                // Do stuff if text starts with `latex`
+                const renderedKatex = katex.renderToString(
+                    text.replace('KaTeX:', ''),
+                    {throwOnError: false}
+                );
+                // Populate katex and additional markup for formatting
+                el.outerHTML = `<span class="katex-wrap">${renderedKatex}</span>`;
+            }
+
+        })
+    </script>
+<% } %>
+
+
+<% if (is_post() && page.plugins != undefined && page.plugins.includes("copyCode") ){ %>
+    <script>
+        // Get all pre > code elements
+        const codeBlocks = document.querySelectorAll('pre > code');
+        const initInnerHTML = '<svg height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path> </svg>';
+        const successInnerHTML = '<svg height="1em" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg>';
+        codeBlocks.forEach(function (codeBlock) {
+            // Create a copy button element
+            const copyButton = document.createElement('button');
+            copyButton.className = 'opacity-90 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 p-2 text-white shadow-xl rounded-lg flex items-center absolute top-2 right-2 transition-all duration-200 backdrop-blur-sm';
+            copyButton.innerHTML = initInnerHTML;
+            copyButton.style.opacity = "0";
+            const parent = codeBlock.parentNode;
+
+            parent.style = "position: relative;"
+            parent.insertBefore(copyButton, codeBlock);
+
+            // Add click event listener to copy button
+            copyButton.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBlock.textContent).then(() => {
+                    copyButton.innerHTML = successInnerHTML;
+                    setTimeout(() => {
+                        copyButton.innerHTML = initInnerHTML;
+                    }, 1000);
+                });
+            });
+
+            parent.addEventListener('mouseenter', () => {
+                copyButton.style.opacity = "1";
+            });
+            parent.addEventListener('mouseleave', () => {
+                copyButton.style.opacity = "0";
+            });
+        });
+    </script>
+<% } %>
+
+
+<% if (is_post() && page.plugins != undefined && page.plugins.includes("runCode") ){ %>
+    <!-- see https://livecodes.io/docs/ and https://livecodes.io/docs/sdk -->
+    <script src="https://cdn.jsdelivr.net/npm/livecodes@0.7.2/livecodes.umd.js"></script>
+    <script>
+        // Get all pre > code elements
+        const code_Blocks = document.querySelectorAll('pre > code');
+        const runInnerHTML = '<svg height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><path d="M16.6582 9.28638C18.098 10.1862 18.8178 10.6361 19.0647 11.2122C19.2803 11.7152 19.2803 12.2847 19.0647 12.7878C18.8178 13.3638 18.098 13.8137 16.6582 14.7136L9.896 18.94C8.29805 19.9387 7.49907 20.4381 6.83973 20.385C6.26501 20.3388 5.73818 20.0469 5.3944 19.584C5 19.053 5 18.1108 5 16.2264V7.77357C5 5.88919 5 4.94701 5.3944 4.41598C5.73818 3.9531 6.26501 3.66111 6.83973 3.6149C7.49907 3.5619 8.29805 4.06126 9.896 5.05998L16.6582 9.28638Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></g></svg>';
+        const pageHeader = (document.querySelector('h1')?.textContent || '').trim();
+        code_Blocks.forEach(function (codeBlock) {
+            let content = codeBlock.textContent || '';
+            let language = [...codeBlock.classList].find(c => c.startsWith("language-"))?.replace("language-", "") || '';
+
+            if (['', 'shell', 'bash'].includes(language)) return;
+            if (language === 'c' && content.includes('FILE ')) {
+                // file operations are not supported in the online playground
+                return;
+            }
+
+            // Create a run button element
+            const runButton = document.createElement('button');
+            runButton.className = 'opacity-90 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 p-2 text-white shadow-xl rounded-lg flex items-center absolute top-12 right-2 transition-all duration-200 backdrop-blur-sm';
+            runButton.innerHTML = runInnerHTML;
+            runButton.style.opacity = "0";
+            const parent = codeBlock.parentNode;
+
+            parent.style = "position: relative;"
+            parent.insertBefore(runButton, codeBlock);
+
+            // Add click event listener to run button
+            runButton.addEventListener('click', () => {
+                if (language === 'ts') {
+                    language = 'typescript';
+                }
+                if (language === 'js') {
+                    language = 'javascript';
+                }
+                
+                const editorId = ['javascript', 'typescript', 'python', 'php', 'ruby', 'go', 'perl', 'cpp', 'c'].includes(language) 
+                                    ? 'script' 
+                                    : ['css', 'scss'].includes(language) 
+                                        ? 'style' 
+                                        : 'markup';
+                const title = codeBlock.closest('.h3-wrap')?.querySelector('h3')?.textContent.replace('#', '') || '';
+
+                // see docs for configuration object: https://livecodes.io/docs/configuration/configuration-object
+                const baseConfig = {
+                    title,
+                    activeEditor: editorId,
+                    [editorId]: {
+                        language,
+                        content,
+                    },
+                    tools: {
+                        status: 'open',
+                    }
+                }
+                let config = baseConfig;
+
+                if (language === 'markdown') {
+                    config = {
+                        ...baseConfig,
+                        style: {
+                            language: 'css',
+                            content: '@import "github-markdown-css";\n\nbody {\n  border: 1px solid #e1e4e8;\n  border-radius: 4px;\n  padding: 20px;\n  margin: 20px !important;\n}\n',
+                        },
+                        script: {
+                            language: 'javascript',
+                            content: 'document.body.classList.add("markdown-body");'
+                        },
+                        tools: {
+                            status: 'open',
+                            active: 'compiled',
+                        }
+                    }
+                }
+
+                if (['html', 'css'].includes(language)) {
+                    config = {
+                        ...baseConfig,
+                        tools: {
+                            status: 'closed',
+                        }
+                    }
+                }
+
+                if (['scss', 'typescript'].includes(language)) {
+                    config = {
+                        ...baseConfig,
+                        tools: {
+                            status: 'open',
+                            active: 'compiled',
+                        }
+                    }
+                }
+
+                if (pageHeader.startsWith('jQuery')) {
+                    config = {
+                        ...baseConfig,
+                        markup: {
+                            language: 'html',
+                            content: `<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></scr` + 'ipt>\n',
+                        },
+                        tools: {
+                            status: 'closed',
+                        }
+                    }
+                }
+
+                // see https://livecodes.io/docs/languages/ejs
+                if (language === 'html' && pageHeader.startsWith('EJS')) {
+                    config = {
+                        ...baseConfig,
+                        markup: {
+                            language: 'ejs',
+                            content,
+                        },
+                        script: {
+                            language: 'javascript',
+                            content: "window.livecodes.templateData = {\n  userLoggedIn: false,\n  user: { username: 'geddy', email: 'geddy@example.com' },\n  users: [\n    { username: 'geddy', email: 'geddy@example.com' },\n    { username: 'neil', email: 'neil@example.com' },\n    { username: 'alex', email: 'alex@example.com' },\n  ],\n};\n",
+                        },
+                        tools: {
+                            status: 'open',
+                        },
+                        customSettings: {
+                            "template": {
+                                "prerender": false,
+                            },
+                        },
+                    }
+                }
+
+                if (language === 'javascript' && pageHeader.startsWith('HTML Canvas')) {
+                    if (!content.includes('const ctx =')) {
+                        content = `const canvas = document.getElementById("myCanvas");\nconst ctx = canvas.getContext("2d");\n\n${content}`;
+                    }
+                    config = {
+                        ...baseConfig,
+                        markup: {
+                            language: 'html',
+                            content: "<canvas id=\"myCanvas\" width=\"500\" height=\"400\" style=\"border:1px solid #000000;\"></canvas>\n",
+                        },
+                        script: {
+                            language,
+                            content,
+                        },
+                        tools: {
+                            status: 'closed',
+                        },
+                    }
+                }
+
+                // see https://livecodes.io/docs/languages/jsx
+                // and https://livecodes.io/docs/languages/react
+                if (language === 'javascript' && pageHeader.startsWith('React')) {
+                    config = {
+                        ...baseConfig,
+                        script: {
+                            language: 'jsx',
+                            content,
+                        },
+                        customSettings: {
+                            imports: {
+                                'axios': 'https://cdn.skypack.dev/axios',
+                            },
+                        },
+                    }
+                }
+
+                // see https://livecodes.io/docs/languages/php-wasm
+                // and https://livecodes.io/docs/languages/php
+                if (language === 'php') {
+                    config = {
+                        ...baseConfig,
+                        style: {
+                            language: 'css',
+                            content: 'body { white-space: pre-wrap; }\n',
+                        },
+                        script: {
+                            language: 'php-wasm',
+                            content: !content.trim().startsWith('<?php') ? `<?php\n\n${content.trim()}\n\n?>` : content,
+                        },
+                        tools: {
+                            status: 'closed',
+                        }
+                    }
+                }
+
+                // see https://livecodes.io/docs/languages/python
+                // and https://livecodes.io/docs/languages/python-wasm
+                if (language === 'python') {
+                    if (content.includes('>>> ')) {
+                        content = content
+                            .trim()
+                            .split('\n')
+                            .map(line => line.startsWith('>>> ') ? line.replace('>>> ', '') : `# ${line}`)
+                            .join('\n');
+                    }
+                    if (content.includes('from typing import')) {
+                        language = 'python-wasm';
+                    }
+                    config = {
+                        ...baseConfig,
+                        script: {
+                            language,
+                            content,
+                        },
+                        tools: {
+                            status: 'full',
+                        }
+                    }
+                }
+
+                if (language === 'go') {
+                    if (!content.includes('func main() {') && !content.includes('import')) {
+                        if (content.includes('func ')) {
+                            const freeCode = content.split('\n').filter(line => !line.startsWith('func ') && !line.startsWith('  ') && !line.startsWith('}')).join('\n');
+                            content = `${content.replace(freeCode, '')}\nfunc main() {\n${freeCode.trim().split('\n').map(line => `    ${line}`).join('\n')}\n}`;
+                        } else {
+                            content = `func main() {\n${content.trim().split('\n').map(line => `    ${line}`).join('\n')}\n}`;
+                        }
+                    }
+                    if (content.includes('fmt.') && !content.includes('import')) {
+                        content = `import "fmt"\n\n${content}`
+                    }
+                    if (!content.includes('package main')) {
+                        content = `package main\n\n${content}`
+                    }
+                    config = {
+                        ...baseConfig,
+                        script: {
+                            language,
+                            content,
+                        },
+                        tools: {
+                            status: 'full',
+                        }
+                    }
+                }
+
+                if (language === 'cpp') {
+                    if (!content.includes('int main()')) {
+                        if (content.includes('class ')) {
+                            const freeCode = content.split('\n').filter(line => !line.startsWith('class ') && !line.startsWith('  ') && !line.startsWith('}')).join('\n');
+                            content = `${content.replace(freeCode, '')}\nint main()\n{\n${freeCode.trim().split('\n').map(line => `  ${line}`).join('\n')}\n}`;
+                        } else {                            
+                            content = `int main()\n{\n${content.trim().split('\n').map(line => `  ${line}`).join('\n')}\n\n  return 0;\n}\n`;
+                        }
+                    }
+                    if (content.includes('std::') && !content.includes('#include')) {
+                        content = '\n' + content;
+                        if (content.includes('std::array') && !content.includes('#include <array>')) {
+                            content = `#include <array>\n${content}`;
+                        }
+                        if (content.includes('std::string') && !content.includes('#include <string>')) {
+                            content = `#include <string>\n${content}`;
+                        }
+                        if (content.includes('std::cout') && !content.includes('#include <iostream>')) {
+                            content = `#include <iostream>\n${content}`;
+                        }
+                    } else if (content.includes('cout') && !content.includes('#include <iostream>')) {
+                        content = `#include <iostream>\nusing namespace std;\n\n${content}`;
+                    }
+                    config = {
+                        ...baseConfig,
+                        script: {
+                            language: 'cpp-wasm',
+                            content,
+                        },
+                        tools: {
+                            status: 'full',
+                        }
+                    }
+                }
+
+                if (language === 'c') {
+                    if (!content.includes('int main(') && !content.includes('void main(')) {
+                        content = `int main(void)\n{\n${content.trim().split('\n').map(line => `  ${line}`).join('\n')}\n\n  return 0;\n}\n`;
+                    }
+                    if ((content.includes('printf') || content.includes('scanf')) && !content.includes('#include <stdio.h>')) {
+                        content = `#include <stdio.h>\n\n${content}`;
+                    }
+                    if (content.includes('strcpy') && !content.includes('#include <string.h>')) {
+                        content = `#include <string.h>\n${content}`;
+                    }
+                    config = {
+                        ...baseConfig,
+                        script: {
+                            language: 'cpp-wasm',
+                            title: 'C (Wasm)',
+                            content,
+                        },
+                        tools: {
+                            status: 'full',
+                        }
+                    }
+                }
+
+                // see https://livecodes.io/docs/sdk/js-ts#getplaygroundurl
+                const plaugroundUrl = livecodes.getPlaygroundUrl({
+                    // see https://livecodes.io/docs/features/permanent-url/
+                    appUrl: 'https://v39.livecodes.io',
+                    config,
+                });
+                window.open(plaugroundUrl, '_blank');
+            });
+
+            parent.addEventListener('mouseenter', () => {
+                runButton.style.opacity = "1";
+            });
+            parent.addEventListener('mouseleave', () => {
+                runButton.style.opacity = "0";
+            });
+        });
+    </script>
+<% } %>
+
+<!-- PWA Service Worker Registration -->
+<script>
+// Register Service Worker for PWA functionality
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('Service Worker registered successfully:', registration.scope);
+
+        // Check for updates
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // New content is available, show update notification
+                showUpdateNotification();
+              }
+            });
+          }
+        });
+      })
+      .catch(error => {
+        console.log('Service Worker registration failed:', error);
+      });
+  });
+}
+
+// Show update notification
+function showUpdateNotification() {
+  // Create a simple notification banner
+  const notification = document.createElement('div');
+  notification.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+                  background: #6366f1;
+      color: white;
+      padding: 12px;
+      text-align: center;
+      z-index: 9999;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    ">
+      <span>New content is available! </span>
+      <button onclick="window.location.reload()" style="
+        background: rgba(255,255,255,0.2);
+        border: 1px solid rgba(255,255,255,0.3);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 4px;
+        margin-left: 8px;
+        cursor: pointer;
+      ">Refresh</button>
+      <button onclick="this.parentElement.parentElement.remove()" style="
+        background: transparent;
+        border: none;
+        color: white;
+        padding: 4px 8px;
+        margin-left: 8px;
+        cursor: pointer;
+        font-size: 18px;
+      ">&times;</button>
+    </div>
+  `;
+  document.body.appendChild(notification);
+}
+
+
+// Hide install button when app is installed
+window.addEventListener('appinstalled', () => {
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) {
+    installBtn.remove();
+  }
+  console.log('PWA was installed');
+});
+</script>

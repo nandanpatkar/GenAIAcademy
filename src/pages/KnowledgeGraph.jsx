@@ -17,7 +17,7 @@ import { tiptapToText, extractKeywords } from "../utils/tiptapToText";
 const PATH_LABELS = {
   ds: "Data Science", genai: "Gen AI", agentic: "Agentic AI",
   dsa: "DSA", aicxm_aws: "AWS", aicxm_azure: "Azure",
-  aicxm_databricks: "Databricks",
+  aicxm_databricks: "Databricks", manual: "Manual",
 };
 const STATUS_COLOR = { complete: "#00ff88", in_progress: "#f59e0b" };
 const STATUS_LABEL = { complete: "Complete", in_progress: "In Progress" };
@@ -490,7 +490,10 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
   const [moduleNotesMap, setModuleNotesMap] = useState({});
   const [notesLoading,   setNotesLoading]   = useState(false);
 
-  const availablePaths = useMemo(() => Object.keys(pathsData).filter(k => pathsData[k]?.nodes), [pathsData]);
+  const availablePaths = useMemo(() => {
+    const EXCLUDED = ["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"];
+    return Object.keys(pathsData).filter(k => pathsData[k]?.nodes && !EXCLUDED.includes(k));
+  }, [pathsData]);
 
   // Load Supabase module_notes once when MY NOTES tab opens
   useEffect(() => {

@@ -177,10 +177,13 @@ export default function IntelligenceHub({
   }, []);
 
   const getOverallProgress = () => {
+    const EXCLUDED = ["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"];
     let total = 0;
     let complete = 0;
-    Object.values(pathsData).forEach(p => {
-      if (!p.nodes) return;
+    Object.keys(pathsData).forEach(k => {
+      if (EXCLUDED.includes(k)) return;
+      const p = pathsData[k];
+      if (!p || !p.nodes) return;
       p.nodes.forEach(n => {
         if (n.modules) {
           n.modules.forEach(m => {
@@ -193,7 +196,7 @@ export default function IntelligenceHub({
     return total > 0 ? Math.round((complete / total) * 100) : 0;
   };
 
-  const activePathTitle = pathsData[Object.keys(pathsData)[0]]?.title || "Active Roadmap";
+  const activePathTitle = pathsData[Object.keys(pathsData).find(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k))]?.title || "Active Roadmap";
 
   const mainCards = [
     {

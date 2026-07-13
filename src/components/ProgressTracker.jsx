@@ -24,8 +24,10 @@ export default function ProgressTracker({ pathsData, onClose }) {
     
     let pathsInfo = [];
 
-    Object.keys(pathsData || {}).forEach(pk => {
-      const p = pathsData[pk];
+    Object.keys(pathsData || {})
+      .filter(pk => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(pk))
+      .forEach(pk => {
+        const p = pathsData[pk];
       if (!p) return;
       let pTotal = 0;
       let pComplete = 0;

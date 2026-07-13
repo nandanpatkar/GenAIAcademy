@@ -483,6 +483,40 @@ function PlaygroundJson() {
   );
 }
 
+const getCategoryColor = (slug) => {
+  const colors = {
+    "logic": "#e879f9",
+    "mathematics": "#0088ff",
+    "physics": "#fb923c",
+    "operating-systems": "#00ff88",
+    "hardware": "#ef4444",
+    "networking": "#06b6d4",
+    "programming-concepts": "#6366f1",
+    "programming-languages": "#10b981",
+    "web-fundamentals": "#f43f5e",
+    "frameworks": "#8b5cf6",
+    "version-control": "#f59e0b",
+    "debugging": "#ef4444",
+    "testing": "#10b981",
+    "databases": "#3b82f6",
+    "data-analytics": "#06b6d4",
+    "apis": "#8b5cf6",
+    "architecture": "#6366f1",
+    "devops": "#10b981",
+    "infrastructure": "#3b82f6",
+    "performance": "#f59e0b",
+    "security": "#ef4444",
+    "ai-ml": "#8b5cf6",
+    "working-with-ai": "#00ff88",
+    "no-code": "#6366f1",
+    "tooling": "#3b82f6",
+    "projects": "#00ff88",
+    "working-as-a-developer": "#fb923c",
+    "practice": "#00ff88"
+  };
+  return colors[slug] || "#00ff88";
+};
+
 // ── MAIN MANUAL VIEWER PANEL ───────────────────────────────
 export default function ManualViewer({ activePhase, onSelectPhase, onClose }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -662,6 +696,7 @@ export default function ManualViewer({ activePhase, onSelectPhase, onClose }) {
                   <div 
                     key={cat.slug} 
                     className="manual-topic-card"
+                    style={{ "--topic-color": getCategoryColor(cat.slug) }}
                     onClick={() => setSelectedCategory(cat)}
                   >
                     <div className="manual-card-header">

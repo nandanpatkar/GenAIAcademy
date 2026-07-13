@@ -31,6 +31,7 @@ import FlowDesign from "./components/FlowDesign";
 import NotionRenderer from "./components/notion/NotionRenderer";
 import NoSignups from "./components/NoSignups";
 import ManualViewer from "./components/ManualViewer";
+import ReferenceViewer from "./components/ReferenceViewer";
 import InterviewPrep from "./components/InterviewPrep";
 import QuizApp from "./components/QuizApp";
 import ProjectIDE from "./components/Projects/ProjectIDE";
@@ -242,13 +243,13 @@ function MainApp() {
         }
 
         setPathsData(mergedData);
-        const keys = Object.keys(mergedData);
+        const keys = Object.keys(mergedData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
       } else {
         // New user: Use default paths strictly, do NOT pull from localStorage
         const initialData = injectDefaultIcons(PATHS);
         setPathsData(initialData);
-        const keys = Object.keys(initialData);
+        const keys = Object.keys(initialData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
         await supabase.from('user_curriculum').insert({ id: user.id, paths_data: initialData });
       }
@@ -374,6 +375,8 @@ function MainApp() {
   const [showNoSignups, setShowNoSignups] = useState(savedViews.showNoSignups ?? false);
   const [showManual, setShowManual] = useState(savedViews.showManual ?? false);
   const [activeManualPhase, setActiveManualPhase] = useState(null);
+  const [showReference, setShowReference] = useState(savedViews.showReference ?? false);
+  const [activeReferenceTopic, setActiveReferenceTopic] = useState(null);
   const [showInterviewPrep, setShowInterviewPrep] = useState(savedViews.showInterviewPrep ?? false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
   const [showProjects, setShowProjects] = useState(savedViews.showProjects ?? false);
@@ -400,7 +403,7 @@ function MainApp() {
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
         showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
-        showKnowledgeGraph
+        showKnowledgeGraph, showReference
       }));
     } catch (e) {
       console.warn("Failed to save genai_active_views to localStorage:", e);
@@ -412,7 +415,7 @@ function MainApp() {
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
     showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
-    showKnowledgeGraph
+    showKnowledgeGraph, showReference
   ]);
 
   useEffect(() => {
@@ -549,6 +552,7 @@ function MainApp() {
     setShowInterviewPrep(false);
     setShowProjects(false);
     setShowManual(false);
+    setShowReference(false);
     setInterviewDeepLinkId(null);
   };
 
@@ -593,7 +597,7 @@ function MainApp() {
     }
   }, [pathsData]);
 
-  const pathData = pathsData[activePath] || Object.values(pathsData)[0];
+  const pathData = pathsData[activePath] || pathsData[Object.keys(pathsData).find(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k))] || Object.values(pathsData)[0];
 
   const handleNodeClick = (node, pathId) => {
     if (pathId) setActivePath(pathId);
@@ -628,6 +632,21 @@ function MainApp() {
           }
         };
       });
+    }
+  };
+
+  const handleTopicSelect = (topic) => {
+    if (topic && topic.categorySlug && topic.guideSlug && topic.phaseSlug) {
+      setActiveManualPhase({
+        categorySlug: topic.categorySlug,
+        guideSlug: topic.guideSlug,
+        phaseSlug: topic.phaseSlug,
+        filePath: topic.filePath,
+        title: topic.title
+      });
+      setShowManual(true);
+    } else {
+      setActiveTopic(topic);
     }
   };
 
@@ -996,6 +1015,8 @@ function MainApp() {
           showNoSignups={showNoSignups} setShowNoSignups={setShowNoSignups}
           showManual={showManual} setShowManual={setShowManual}
           activeManualPhase={activeManualPhase} setActiveManualPhase={setActiveManualPhase}
+          showReference={showReference} setShowReference={setShowReference}
+          activeReferenceTopic={activeReferenceTopic} setActiveReferenceTopic={setActiveReferenceTopic}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
           showQuiz={showQuiz} setShowQuiz={setShowQuiz}
           showProjects={showProjects} setShowProjects={setShowProjects}
@@ -1098,6 +1119,7 @@ function MainApp() {
                                                     showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
                                                       showNoSignups ? <NoSignups onClose={() => setShowNoSignups(false)} /> :
                                                         showManual ? <ManualViewer activePhase={activeManualPhase} onSelectPhase={setActiveManualPhase} onClose={() => setShowManual(false)} /> :
+                                                        showReference ? <ReferenceViewer activeTopic={activeReferenceTopic} onSelectTopic={setActiveReferenceTopic} onClose={() => setShowReference(false)} /> :
                                                         showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showQuiz ? <QuizApp /> :
                                                       showIntelligenceHub ? (
@@ -1115,7 +1137,7 @@ function MainApp() {
                                                         onTour={() => setShowSidebarWalkthrough(true)}
                                                       />
                                                     ) :
-                                                      showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={setActiveTopic} onClose={() => setShowCurriculumMap(false)} /> :
+                                                      showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={handleTopicSelect} onClose={() => setShowCurriculumMap(false)} /> :
                                                         <>
                                                           {!freshActiveNode && (
                                                             <>
@@ -1165,7 +1187,7 @@ function MainApp() {
                                                             onToggleSubtopicStatus={title => handleToggleSubtopicStatus(freshActiveModule.id, title)}
                                                             onAddTopic={(idx = -1) => { setEditData(null); setEditingModule(false); setInsertionIndex(idx); }}
                                                             onDeleteTopic={(topicId) => handleDeleteTopic(freshActiveModule.id, topicId)}
-                                                            nodeState={getNodeState(freshActiveNode.id)} onModuleSelect={setActiveModule} onTopicSelect={setActiveTopic} isEditMode={isEditMode}
+                                                            nodeState={getNodeState(freshActiveNode.id)} onModuleSelect={setActiveModule} onTopicSelect={handleTopicSelect} isEditMode={isEditMode}
                                                             onBackToGalaxy={() => setShowGalaxy(true)}
                                                             onEnterFocusMode={() => setFocusNodeId(freshActiveNode.id)}
                                                             onVideoSelect={handleVideoSelect}

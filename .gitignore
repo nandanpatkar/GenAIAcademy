@@ -21,3 +21,5 @@ __pycache__/
 # Data
 dsa_data.txt
 dsa_data_*.txt
+.angular/
+

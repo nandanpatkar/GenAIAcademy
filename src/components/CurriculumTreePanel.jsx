@@ -18,6 +18,8 @@ export default function CurriculumTreePanel({
 
   const PATH_LABELS = {
     agentic: "AGENTIC AI",
+    dsa: "DSA",
+    manual: "MANUAL",
     aicxm_aws: "AICXM AWS",
     aicxm_azure: "AICXM AZURE",
     aicxm_databricks: "AICXM DATABRICKS",
@@ -25,10 +27,12 @@ export default function CurriculumTreePanel({
     genai: "GEN AI",
   };
 
-  const tabLabels = Object.keys(paths || {}).map(key => ({
-    key,
-    label: PATH_LABELS[key] || (paths[key]?.title || key).toUpperCase(),
-  }));
+  const tabLabels = Object.keys(paths || {})
+    .filter(key => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(key))
+    .map(key => ({
+      key,
+      label: PATH_LABELS[key] || (paths[key]?.title || key).toUpperCase(),
+    }));
 
   const toggleNode = (e, nodeId) => {
     e.stopPropagation();

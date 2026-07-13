@@ -37,7 +37,7 @@ export function buildSearchIndex({ pathsData = {} } = {}) {
 
   // ── Curriculum: paths -> nodes -> modules -> subtopics ───────────────────
   Object.entries(pathsData).forEach(([pathKey, pathData]) => {
-    if (!pathData || pathKey === "videoIntelligence") return; // skip non-path blobs
+    if (!pathData || ["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(pathKey)) return; // skip non-path blobs
 
     (pathData.nodes || []).forEach((node) => {
       (node.modules || []).forEach((module) => {

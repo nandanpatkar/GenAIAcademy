@@ -46,7 +46,9 @@ export default function Sidebar({
   showQuiz, setShowQuiz,
   showNoSignups, setShowNoSignups,
   showManual, setShowManual,
-  activeManualPhase, setActiveManualPhase
+  activeManualPhase, setActiveManualPhase,
+  showReference, setShowReference,
+  activeReferenceTopic, setActiveReferenceTopic
 }) {
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
@@ -80,6 +82,12 @@ export default function Sidebar({
       isManual: true,
       items: [
         { icon: <BookOpen size={14} />, label: "Manual", id: "manual" }
+      ]
+    },
+    {
+      label: "Reference",
+      items: [
+        { icon: <BookMarked size={14} />, label: "Quick Reference", id: "reference" }
       ]
     },
     {
@@ -167,6 +175,7 @@ export default function Sidebar({
     if (showIntelligenceHub) return "hub";
     if (showQuiz) return "quiz";
     if (showManual) return "manual";
+    if (showReference) return "reference";
     if (!activeNode) return "overview";
     return null;
   };
@@ -208,8 +217,13 @@ export default function Sidebar({
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
     if (setShowQuiz) setShowQuiz(false);
     if (setShowManual) setShowManual(false);
+    if (setShowReference) setShowReference(false);
 
     switch (id) {
+      case "reference":
+        if (setActiveReferenceTopic) setActiveReferenceTopic(null);
+        if (setShowReference) setShowReference(true);
+        break;
       case "manual": 
         if (setActiveManualPhase) setActiveManualPhase(null);
         if (setShowManual) setShowManual(true); 
@@ -283,8 +297,10 @@ export default function Sidebar({
     if (setIsMobileMenuOpen) setIsMobileMenuOpen(false);
   };
 
-  const pathList = Object.keys(paths || {}).map(k => {
-    const p = paths[k];
+  const pathList = Object.keys(paths || {})
+    .filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k))
+    .map(k => {
+      const p = paths[k];
     if (!p) return null;
     const nodeCount = p.nodes ? p.nodes.length : 0;
 

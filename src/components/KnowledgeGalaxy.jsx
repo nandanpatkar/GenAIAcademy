@@ -35,8 +35,10 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
       depth: 0, size: 20, color: "#fff", status: "complete"
     });
 
-    Object.keys(pathsData).forEach((pathKey) => {
-      const pathValue = pathsData[pathKey];
+    Object.keys(pathsData)
+      .filter(pathKey => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(pathKey))
+      .forEach((pathKey) => {
+        const pathValue = pathsData[pathKey];
       const nebulaId = `path-${pathKey}`;
       
       nodes.push({
