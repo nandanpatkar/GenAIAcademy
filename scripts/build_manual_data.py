@@ -75,7 +75,8 @@ def parse_frontmatter(file_path):
     return metadata, body
 
 def main():
-    workspace_dir = "/Users/nandanpatkar/Downloads/genai-roadmap-src"
+    # Dynamically resolve workspace root relative to the script location
+    workspace_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     guides_src = os.path.join(workspace_dir, "themissingmanual", "guides")
     guides_dest = os.path.join(workspace_dir, "public", "guides")
     output_js_path = os.path.join(workspace_dir, "src", "data", "manualData.js")

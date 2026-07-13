@@ -1,0 +1,75 @@
+services:
+  api:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: platform/server/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      BIND_ADDR: 0.0.0.0:3000
+      CONTENT_ROOT: .
+      DB_PATH: /data/manual.db
+      # Max uploaded-asset size. Raised from the 5 MiB default so admins can
+      # upload full lofi tracks (audio) from the Settings → Music section.
+      ASSET_MAX_BYTES: ${ASSET_MAX_BYTES:-20971520}
+      # Enable the admin console by setting a password hash. Generate one with:
+      #   docker compose run --rm api server hash-password "your-password"
+      # then export ADMIN_PASSWORD_HASH (e.g. in a .env file beside this compose file).
+      ADMIN_PASSWORD_HASH: ${ADMIN_PASSWORD_HASH:-}
+      # Mark the session cookie Secure (HTTPS). Set COOKIE_SECURE=1 in .env behind Cloudflare/HTTPS.
+      COOKIE_SECURE: ${COOKIE_SECURE:-}
+      # Base URL for RSS item links. Set SITE_URL=https://your-domain in .env for production.
+      SITE_URL: ${SITE_URL:-http://localhost:5173}
+    volumes:
+      - manual-data:/data
+      # Live content: drop guide folders in ./guides and the periodic sync picks them up
+      # (files win on change). Read-only — the server only reads them.
+      - ./guides:/app/guides:ro
+
+  web:
+    restart: unless-stopped
+    build:
+      context: platform/web
+      dockerfile: Dockerfile
+    ports:
+      - "5173:3000"
+    environment:
+      API_BASE: http://api:3000
+      PORT: "3000"
+      # adapter-node's public origin, used by SvelteKit's CSRF check on form POSTs.
+      # Must match the URL in the browser, or logins/forms get 403. Override for
+      # production, e.g. ORIGIN=https://your-domain.
+      ORIGIN: ${ORIGIN:-http://localhost:5173}
+      # Public site URL for SEO: canonical <link> tags and JSON-LD URLs read this
+      # ($env/dynamic/public, runtime). Unset, they fall back to the request origin,
+      # which behind Cloudflare can be an internal host. Set in .env for production.
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-}
+      # adapter-node caps request bodies at 512KB by default, which 500s any
+      # audio upload (the admin asset proxy buffers the whole body). Raise it
+      # above the API's asset limit (~21 MiB) so music uploads go through.
+      BODY_SIZE_LIMIT: ${BODY_SIZE_LIMIT:-26214400}
+      # Persistent dir for the AI Search SQLite DB (aisearch.db): config (incl. the
+      # CF API token), the monthly usage counter, and the ask log. Bind-mounted to
+      # ./data/aisearch on the host so it survives image rebuilds / redeploys.
+      ASK_DATA_DIR: /data
+    volumes:
+      - ./data/aisearch:/data
+    depends_on:
+      - api
+
+  # Cloudflare Tunnel — publishes the site at your domain over HTTPS with NO open ports.
+  # Setup: create a tunnel in Cloudflare Zero Trust, set its Public Hostname to
+  # `http://web:3000`, put the token in .env as CF_TUNNEL_TOKEN, then start with:
+  #     docker compose --profile prod up -d --build
+  # The `prod` profile keeps cloudflared OUT of local dev (where there's no token).
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CF_TUNNEL_TOKEN:-}
+    depends_on:
+      - web
+    profiles: ["prod"]
+
+volumes:
+  manual-data:

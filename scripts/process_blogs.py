@@ -1,5 +1,6 @@
 import json
 import re
+import os
 
 def process_links(file_path):
     db = {}
@@ -42,8 +43,11 @@ def process_links(file_path):
     return db
 
 if __name__ == "__main__":
-    links_path = "/Users/nandanpatkar/Downloads/genai-roadmap-src/links.txt"
-    output_path = "/Users/nandanpatkar/Downloads/genai-roadmap-src/src/data/blogData.js"
+    # Dynamically resolve paths relative to the script location
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    workspace_dir = os.path.dirname(script_dir)
+    links_path = os.path.join(workspace_dir, "links.txt")
+    output_path = os.path.join(workspace_dir, "src", "data", "blogData.js")
     
     blog_db = process_links(links_path)
     

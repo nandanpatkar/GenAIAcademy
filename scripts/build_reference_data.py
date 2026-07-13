@@ -94,7 +94,8 @@ def extract_hex_color(bg_str):
     return None
 
 def main():
-    workspace_dir = "/Users/nandanpatkar/Downloads/genai-roadmap-src"
+    # Dynamically resolve workspace root relative to the script location
+    workspace_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     reference_src = os.path.join(workspace_dir, "reference", "source", "_posts")
     reference_dest = os.path.join(workspace_dir, "public", "reference")
     output_js_path = os.path.join(workspace_dir, "src", "data", "referenceData.js")

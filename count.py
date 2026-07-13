@@ -1,9 +1,10 @@
 import os, json
+workspace_dir = os.path.dirname(os.path.abspath(__file__))
 total_problems = 0
 found_cats = []
 for i in range(1, 10):
     try:
-        with open(f'/Users/nandanpatkar/Downloads/genai-roadmap-src/src/data/dsa_part{i}.js') as f:
+        with open(os.path.join(workspace_dir, 'src', 'data', f'dsa_part{i}.js')) as f:
             content = f.read().split('=', 1)[1].strip().rstrip(';')
             data = json.loads(content)
             for cat in data:

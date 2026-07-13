@@ -3,6 +3,7 @@ import json
 import re
 
 def parse_files():
+    workspace_dir = os.path.dirname(os.path.abspath(__file__))
     data = []
     current_category = None
     current_subcat = None
@@ -13,13 +14,13 @@ def parse_files():
     ]
 
     # Prefer consolidated file when present; otherwise use legacy split files.
-    preferred_file = '/Users/nandanpatkar/Downloads/genai-roadmap-src/dsa_data.txt'
+    preferred_file = os.path.join(workspace_dir, 'dsa_data.txt')
     if os.path.exists(preferred_file):
         input_files = [preferred_file]
     else:
         input_files = []
         for i in range(1, 5):
-            file_path = f'/Users/nandanpatkar/Downloads/genai-roadmap-src/dsa_data_{i}.txt'
+            file_path = os.path.join(workspace_dir, f'dsa_data_{i}.txt')
             if os.path.exists(file_path):
                 input_files.append(file_path)
 
@@ -146,7 +147,7 @@ def parse_files():
         part_name = f"dsaPart{i+1}"
         js_content = f"export const {part_name} = " + json.dumps(chunk, indent=2) + ";\n"
         
-        with open(f'/Users/nandanpatkar/Downloads/genai-roadmap-src/src/data/dsa_part{i+1}.js', 'w', encoding='utf-8') as f:
+        with open(os.path.join(workspace_dir, 'src', 'data', f'dsa_part{i+1}.js'), 'w', encoding='utf-8') as f:
             f.write(js_content)
         
         imports.append(f'import {{ {part_name} }} from "./dsa_part{i+1}";')
@@ -163,7 +164,7 @@ export const DSA_PATH = {{
   ]
 }};
 """
-    with open('/Users/nandanpatkar/Downloads/genai-roadmap-src/src/data/dsa_path.js', 'w', encoding='utf-8') as f:
+    with open(os.path.join(workspace_dir, 'src', 'data', 'dsa_path.js'), 'w', encoding='utf-8') as f:
         f.write(path_content)
         
     print(f"Generated {parts} files.")

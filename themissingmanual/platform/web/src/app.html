@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=Sora:wght@400;500;600&family=DM+Sans:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link rel="stylesheet" href="/syntax-highlight.css" media="print" onload="this.media='all'" />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=Sora:wght@400;500;600&family=DM+Sans:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet"
+      />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3/dist/tabler-icons.min.css" />
+      <link rel="stylesheet" href="/syntax-highlight.css" />
+    </noscript>
+    <link rel="alternate" type="application/rss+xml" title="The Missing Manual" href="/rss.xml" />
+    <meta property="og:site_name" content="The Missing Manual" />
+    <meta name="theme-color" content="#15171a" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
+    
+    <script nonce="%sveltekit.nonce%">
+      // Restore theme + font before first paint
+      (function () {
+        try {
+          var DARK = { dark: 1, nord: 1, dracula: 1, 'contrast-dark': 1 };
+          var VALID = { light: 1, dark: 1, sepia: 1, nord: 1, dracula: 1, contrast: 1, 'contrast-dark': 1 };
+          var t = localStorage.getItem('tmm-theme');
+          if (t === 'system') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          } else if (!VALID[t]) {
+            t = 'light'; // light is the site default for new visitors (System is opt-in)
+          }
+          document.documentElement.dataset.theme = t;
+          document.documentElement.dataset.mode = DARK[t] ? 'dark' : 'light';
+          var f = localStorage.getItem('tmm-font');
+          if (f) {
+            var stack = '"' + f + '", system-ui, -apple-system, "Segoe UI", sans-serif';
+            document.documentElement.style.setProperty('--font-display', stack);
+            document.documentElement.style.setProperty('--font-body', stack);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    %sveltekit.head%
+  </head>
+  <body>
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
