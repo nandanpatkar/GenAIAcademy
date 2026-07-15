@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { defaultQuestions } from "../data/defaultQuizQuestions";
+import ExamPractice from "./quiz/ExamPractice";
 import { askQuizBot } from "../services/aiService";
 import { supabase } from '../config/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
@@ -437,9 +438,18 @@ export default function QuizApp({ onClose }) {
             >
               My Quizzes
             </button>
+            <button 
+              className="quiz-btn"
+              style={{ background: activeTab === "examBank" ? 'var(--bg-secondary)' : 'transparent', color: 'var(--text-primary)', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: activeTab === "examBank" ? 600 : 400 }}
+              onClick={() => setActiveTab("examBank")}
+            >
+              Exam Bank
+            </button>
           </div>
 
-          {activeTab === "setup" ? (
+          {activeTab === "examBank" && <ExamPractice />}
+
+          {activeTab !== "examBank" && (activeTab === "setup" ? (
             <>
               {pausedSessions.length > 0 && (
                 <div style={{ marginBottom: 24, padding: 20, background: 'var(--bg-card)', borderRadius: 12, border: '1px solid var(--border)' }}>
@@ -657,7 +667,7 @@ export default function QuizApp({ onClose }) {
                 </div>
               )}
             </div>
-          )}
+          ))}
         </div>
       )}
 

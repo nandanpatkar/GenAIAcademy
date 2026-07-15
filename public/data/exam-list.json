@@ -1,0 +1,622 @@
+[
+  {
+    "slug": "aws-ai-practitioner",
+    "name": "AWS AI Practitioner",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-cloud-practitioner",
+    "name": "AWS Cloud Practitioner",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-cloudops-engineer-associate",
+    "name": "AWS Cloudops Engineer Associate",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-data-engineer",
+    "name": "AWS Data Engineer",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-database",
+    "name": "AWS Database",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-developer",
+    "name": "AWS Developer",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-devops-pro",
+    "name": "AWS Devops Pro",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-genai-developer-pro",
+    "name": "AWS Genai Developer Pro",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-machine-learning",
+    "name": "AWS Machine Learning",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-ml-engineer-associate",
+    "name": "AWS ML Engineer Associate",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-ml-specialty",
+    "name": "AWS ML Specialty",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-networking-specialty",
+    "name": "AWS Networking Specialty",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-sap-specialty",
+    "name": "AWS Sap Specialty",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-security-specialty",
+    "name": "AWS Security Specialty",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-security-specialty-c03",
+    "name": "AWS Security Specialty C03",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-solutions-architect",
+    "name": "AWS Solutions Architect",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-solutions-architect-pro",
+    "name": "AWS Solutions Architect Pro",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-sysops",
+    "name": "AWS Sysops",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "icsi-cs-exec-m2-economic-laws",
+    "name": "Icsi Cs Exec M2 Economic Laws",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "nutanix-ncp-ci-aws",
+    "name": "Nutanix Ncp Ci AWS",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "oci-database-aws-architect",
+    "name": "Oci Database AWS Architect",
+    "vendor": "AWS (Amazon Web Services)"
+  },
+  {
+    "slug": "aws-certified-welder",
+    "name": "AWS Certified Welder",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-craw",
+    "name": "AWS Craw",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-crwt",
+    "name": "AWS Crwt",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-9yr-recert",
+    "name": "AWS CWI 9yr Recert",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-coordination-qa",
+    "name": "AWS CWI Coordination Qa",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-endorsement-api-1104",
+    "name": "AWS CWI Endorsement Api 1104",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-endorsement-asme-ix",
+    "name": "AWS CWI Endorsement Asme Ix",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-endorsement-d1-1",
+    "name": "AWS CWI Endorsement D1 1",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-endorsement-d1-5",
+    "name": "AWS CWI Endorsement D1 5",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-endorsement-d17-1",
+    "name": "AWS CWI Endorsement D17 1",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-nde-coordination",
+    "name": "AWS CWI Nde Coordination",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-welder-performance",
+    "name": "AWS CWI Welder Performance",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-cwi-welding-procedures",
+    "name": "AWS CWI Welding Procedures",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "aws-radiographic-interpreter",
+    "name": "AWS Radiographic Interpreter",
+    "vendor": "AWS (American Welding Society)"
+  },
+  {
+    "slug": "azure-ab-730",
+    "name": "Azure Ab 730",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-ab-731",
+    "name": "Azure Ab 731",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-ai-102",
+    "name": "Azure AI 102",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-ai-900",
+    "name": "Azure AI 900",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-ai-901",
+    "name": "Azure AI 901",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-104",
+    "name": "Azure AZ 104",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-120",
+    "name": "Azure AZ 120",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-140",
+    "name": "Azure AZ 140",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-204",
+    "name": "Azure AZ 204",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-220",
+    "name": "Azure AZ 220",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-305",
+    "name": "Azure AZ 305",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-400",
+    "name": "Azure AZ 400",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-500",
+    "name": "Azure AZ 500",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-600",
+    "name": "Azure AZ 600",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-700",
+    "name": "Azure AZ 700",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-720",
+    "name": "Azure AZ 720",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-800",
+    "name": "Azure AZ 800",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-801",
+    "name": "Azure AZ 801",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-802",
+    "name": "Azure AZ 802",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-az-900",
+    "name": "Azure AZ 900",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-dp-100",
+    "name": "Azure DP 100",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-dp-203",
+    "name": "Azure DP 203",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-dp-300",
+    "name": "Azure DP 300",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-dp-420",
+    "name": "Azure DP 420",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-dp-600",
+    "name": "Azure DP 600",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-dp-700",
+    "name": "Azure DP 700",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-dp-900",
+    "name": "Azure DP 900",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-mb-220",
+    "name": "Azure MB 220",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-mb-260",
+    "name": "Azure MB 260",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-pl-200",
+    "name": "Azure PL 200",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-pl-500",
+    "name": "Azure PL 500",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-sc-100",
+    "name": "Azure SC 100",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-sc-200",
+    "name": "Azure SC 200",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-sc-300",
+    "name": "Azure SC 300",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-sc-401",
+    "name": "Azure SC 401",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-sc-500",
+    "name": "Azure SC 500",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "azure-sc-900",
+    "name": "Azure SC 900",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "databricks-associate-azure",
+    "name": "Databricks Associate Azure",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "nutanix-ncp-ci-azure",
+    "name": "Nutanix Ncp Ci Azure",
+    "vendor": "Azure"
+  },
+  {
+    "slug": "databricks-analyst",
+    "name": "Databricks Analyst",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-context-engineer",
+    "name": "Databricks Context Engineer",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-engineer",
+    "name": "Databricks Engineer",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-engineer-pro",
+    "name": "Databricks Engineer Pro",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-genai",
+    "name": "Databricks Genai",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-ml",
+    "name": "Databricks ML",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-ml-pro",
+    "name": "Databricks ML Pro",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-platform-admin",
+    "name": "Databricks Platform Admin",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "databricks-spark-developer",
+    "name": "Databricks Spark Developer",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "informatica-idmc-databricks",
+    "name": "Informatica Idmc Databricks",
+    "vendor": "Databricks"
+  },
+  {
+    "slug": "gcp-ace",
+    "name": "GCP Ace",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-chromeos-administrator",
+    "name": "GCP Chromeos Administrator",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-cloud-architect",
+    "name": "GCP Cloud Architect",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-cloud-developer",
+    "name": "GCP Cloud Developer",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-cloud-digital-leader",
+    "name": "GCP Cloud Digital Leader",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-data-engineer",
+    "name": "GCP Data Engineer",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-data-engineer-pro",
+    "name": "GCP Data Engineer Pro",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-data-practitioner",
+    "name": "GCP Data Practitioner",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-database-engineer",
+    "name": "GCP Database Engineer",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-devops-engineer",
+    "name": "GCP Devops Engineer",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-genai-leader",
+    "name": "GCP Genai Leader",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-looker-business-analyst",
+    "name": "GCP Looker Business Analyst",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-machine-learning",
+    "name": "GCP Machine Learning",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-ml",
+    "name": "GCP ML",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-network-engineer",
+    "name": "GCP Network Engineer",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-professional-cloud-genai-engineer",
+    "name": "GCP Professional Cloud Genai Engineer",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-security-engineer",
+    "name": "GCP Security Engineer",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gcp-workspace",
+    "name": "GCP Workspace",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "gh-gcps-primary",
+    "name": "Gh Gcps Primary",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ads-apps",
+    "name": "Google Ads Apps",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ads-creative",
+    "name": "Google Ads Creative",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ads-display",
+    "name": "Google Ads Display",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ads-measurement",
+    "name": "Google Ads Measurement",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ads-search",
+    "name": "Google Ads Search",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ads-shopping",
+    "name": "Google Ads Shopping",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ads-video",
+    "name": "Google Ads Video",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-advanced-data-analytics",
+    "name": "Google Advanced Data Analytics",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ai-powered-performance",
+    "name": "Google AI Powered Performance",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ai-powered-shopping",
+    "name": "Google AI Powered Shopping",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-analytics",
+    "name": "Google Analytics",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-business-intelligence",
+    "name": "Google Business Intelligence",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-certified-educator-level-1",
+    "name": "Google Certified Educator Level 1",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-certified-educator-level-2",
+    "name": "Google Certified Educator Level 2",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-cybersecurity",
+    "name": "Google Cybersecurity",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-data-analytics",
+    "name": "Google Data Analytics",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-digital-marketing-ecommerce",
+    "name": "Google Digital Marketing Ecommerce",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-it-automation-python",
+    "name": "Google IT Automation Python",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-it-support",
+    "name": "Google IT Support",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-project-management",
+    "name": "Google Project Management",
+    "vendor": "Google / GCP"
+  },
+  {
+    "slug": "google-ux-design",
+    "name": "Google UX Design",
+    "vendor": "Google / GCP"
+  }
+]
