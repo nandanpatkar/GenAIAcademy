@@ -1,0 +1,2 @@
+"use strict";(globalThis.rspackChunk_affine_monorepo=globalThis.rspackChunk_affine_monorepo||[]).push([[5817],{65728(o,s,a){var l=a(74848),r=a(32983),n=a(54677),c=a(623),e=a(25712),i=a(3749);a.d(s,{},{_:()=>(0,l.jsx)(n.$Q,{tabId:"all-docs-journal",icon:(0,l.jsx)(c.TodayIcon,{}),children:(0,l.jsxs)(r.yE.Root,{className:e.vg,children:[(0,l.jsx)(r.yE.Viewport,{children:(0,l.jsx)(i.B,{})}),(0,l.jsx)(r.yE.Scrollbar,{})]})})})}}]);
+//# sourceMappingURL=5817.aceeb3ca.js.map

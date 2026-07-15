@@ -1,0 +1,2 @@
+"use strict";(globalThis.rspackChunk_affine_monorepo=globalThis.rspackChunk_affine_monorepo||[]).push([[827],{37270(e,o,n){n.r(o);var r=n(892),t=n(54677),l=n(75373),s=n(96540),u=n(84976);n.d(o,{},{Component:()=>{let e=(0,l.h1)(t.TR),o=(0,l.h1)(r.pu),n=e.workbench,[a]=(0,u.ok)(),c=a.get("tab")??void 0,h=a.get("scrollAnchor")??void 0,i=(0,s.useRef)(!1);return(0,s.useEffect)(()=>{i.current||(i.current=!0,n.openAll(),o.open("setting",{activeTab:c,scrollAnchor:h}))},[h,c,n,o]),null}})}}]);
+//# sourceMappingURL=827.34377c72.js.map

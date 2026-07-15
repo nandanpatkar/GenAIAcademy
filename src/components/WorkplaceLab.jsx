@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../config/supabaseClient';
 import {
-  FileText, Clock, X, Plus, Search, Code, Bookmark, ExternalLink,
+  FileText, Clock, X, Plus, Search, Code, Bookmark, ExternalLink, ArrowLeft,
   Trash2, Save, Edit2, Eye, ChevronRight, Calendar,
   GitBranch, ZoomIn, ZoomOut, RotateCcw, Download,
   Trash, AlignCenter, Minus, Copy, ChevronDown, ChevronUp,
@@ -1692,7 +1694,7 @@ function MindMapTab({ notes, history, pathsData, maps: initialMaps=[], onUpdateM
 export default function WorkplaceLab({
   history=[], notes=[], maps=[], pathsData={}, onSaveNote, onUpdateNote, onDeleteNote, onUpdateMaps, onJumpToNode, onClose
 }) {
-  const [activeTab, setActiveTab]=useState('notes');
+  const [activeTab, setActiveTab]=useState('dashboard');
   const [hoveredTab, setHoveredTab]=useState(null);
   const [searchQuery, setSearchQuery]=useState('');
   const [isCreating, setIsCreating]=useState(false);
@@ -1701,6 +1703,211 @@ export default function WorkplaceLab({
   const [hubMode, setHubMode]=useState('preview');
   const [linkingNote, setLinkingNote]=useState(null); // For "Attach to Mind Map"
 
+  const { user } = useAuth();
+  const [lastSyncTime, setLastSyncTime] = useState(0);
+  const [syncStatus, setSyncStatus] = useState('Idle'); // 'Idle', 'Syncing', 'Synced', 'Error'
+
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
+
+  const base64ToUint8Array = (base64) => {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+  };
+
+  const syncToSupabase = useCallback(async () => {
+    if (!user?.id) return;
+    if (!window.indexedDB.databases) return;
+
+    try {
+      const dbs = await window.indexedDB.databases();
+      const workspaceDbs = dbs.filter(db => db.name && db.name.startsWith('local:workspace:'));
+
+      let hasChanges = false;
+      let updatesToUpsert = [];
+
+      for (const dbInfo of workspaceDbs) {
+        const dbName = dbInfo.name;
+
+        await new Promise((resolve) => {
+          const request = window.indexedDB.open(dbName, 3);
+          request.onerror = () => resolve();
+          request.onsuccess = (event) => {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains('snapshots') || !db.objectStoreNames.contains('clocks')) {
+              db.close();
+              resolve();
+              return;
+            }
+
+            const transaction = db.transaction(['snapshots', 'clocks'], 'readonly');
+            const snapshotStore = transaction.objectStore('snapshots');
+            const clockStore = transaction.objectStore('clocks');
+
+            const getAllClocks = clockStore.getAll();
+            getAllClocks.onsuccess = () => {
+              const clocks = getAllClocks.result;
+              const needsSync = clocks.some(c => new Date(c.timestamp).getTime() > lastSyncTime);
+              if (!needsSync) {
+                db.close();
+                resolve();
+                return;
+              }
+
+              hasChanges = true;
+              const getAllSnapshots = snapshotStore.getAll();
+              getAllSnapshots.onsuccess = () => {
+                const snapshots = getAllSnapshots.result;
+                db.close();
+
+                for (const snap of snapshots) {
+                  const snapTime = new Date(snap.updatedAt || snap.createdAt || Date.now()).getTime();
+                  if (snapTime > lastSyncTime) {
+                    updatesToUpsert.push({
+                      user_id: user.id,
+                      doc_id: snap.docId,
+                      bin: arrayBufferToBase64(snap.bin),
+                      updated_at: snap.updatedAt ? new Date(snap.updatedAt).toISOString() : new Date().toISOString(),
+                      created_at: snap.createdAt ? new Date(snap.createdAt).toISOString() : new Date().toISOString()
+                    });
+                  }
+                }
+                resolve();
+              };
+              getAllSnapshots.onerror = () => {
+                db.close();
+                resolve();
+              };
+            };
+            getAllClocks.onerror = () => {
+              db.close();
+              resolve();
+            };
+          };
+        });
+      }
+
+      if (hasChanges && updatesToUpsert.length > 0) {
+        setSyncStatus('Syncing');
+        for (const item of updatesToUpsert) {
+          const { error } = await supabase
+            .from('editor_snapshots')
+            .upsert(item, { onConflict: 'user_id,doc_id' });
+          if (error) throw error;
+        }
+        setLastSyncTime(Date.now());
+        setSyncStatus('Synced');
+        setTimeout(() => setSyncStatus('Idle'), 2000);
+      }
+    } catch (err) {
+      console.error('[Sync] Error syncing to Supabase:', err);
+      setSyncStatus('Error');
+    }
+  }, [user, lastSyncTime]);
+
+  const restoreFromSupabase = useCallback(async () => {
+    if (!user?.id) return;
+    if (!window.indexedDB.databases) return;
+
+    try {
+      setSyncStatus('Syncing');
+      const { data: remoteDocs, error } = await supabase
+        .from('editor_snapshots')
+        .select('*')
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+      if (!remoteDocs || remoteDocs.length === 0) {
+        setSyncStatus('Idle');
+        return;
+      }
+
+      const dbs = await window.indexedDB.databases();
+      const workspaceDbs = dbs.filter(db => db.name && db.name.startsWith('local:workspace:'));
+
+      for (const dbInfo of workspaceDbs) {
+        const dbName = dbInfo.name;
+
+        await new Promise((resolve) => {
+          const request = window.indexedDB.open(dbName, 3);
+          request.onerror = () => resolve();
+          request.onsuccess = (event) => {
+            const db = event.target.result;
+            if (!db.objectStoreNames.contains('snapshots') || !db.objectStoreNames.contains('clocks')) {
+              db.close();
+              resolve();
+              return;
+            }
+
+            const transaction = db.transaction(['snapshots', 'clocks'], 'readwrite');
+            const snapshotStore = transaction.objectStore('snapshots');
+            const clockStore = transaction.objectStore('clocks');
+
+            for (const doc of remoteDocs) {
+              const u8 = base64ToUint8Array(doc.bin);
+              const updatedAt = new Date(doc.updated_at);
+              const createdAt = new Date(doc.created_at);
+
+              snapshotStore.put({
+                docId: doc.doc_id,
+                bin: u8,
+                createdAt: createdAt,
+                updatedAt: updatedAt
+              });
+
+              clockStore.put({
+                docId: doc.doc_id,
+                timestamp: updatedAt
+              });
+            }
+
+            transaction.oncomplete = () => {
+              db.close();
+              resolve();
+            };
+            transaction.onerror = () => {
+              db.close();
+              resolve();
+            };
+          };
+        });
+      }
+      setLastSyncTime(Date.now());
+      setSyncStatus('Synced');
+      setTimeout(() => setSyncStatus('Idle'), 2000);
+    } catch (err) {
+      console.error('[Sync] Error restoring from Supabase:', err);
+      setSyncStatus('Error');
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (activeTab === 'affine' && user?.id) {
+      restoreFromSupabase();
+    }
+  }, [activeTab, user?.id]);
+
+  useEffect(() => {
+    if (activeTab !== 'affine' || !user?.id) return;
+
+    const interval = setInterval(() => {
+      syncToSupabase();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [activeTab, user?.id, syncToSupabase]);
 
   const filtered=notes.filter(n=>
     n.title.toLowerCase().includes(searchQuery.toLowerCase())||
@@ -1752,9 +1959,10 @@ export default function WorkplaceLab({
   };
 
   const TABS = [
-    { id: 'notes',   label: 'Knowledge Base', icon: <FileText size={14}/> },
-    { id: 'history', label: 'History',        icon: <Clock size={14}/> },
-    { id: 'mindmap', label: 'Mind Map',       icon: <GitBranch size={14}/> },
+    { id: 'notes',   label: 'Knowledge Base',  icon: <FileText size={14}/> },
+    { id: 'affine',  label: 'Workspace Notes', icon: <Edit2 size={14}/> },
+    { id: 'history', label: 'History',         icon: <Clock size={14}/> },
+    { id: 'mindmap', label: 'Mind Map',        icon: <GitBranch size={14}/> },
   ];
 
   return (
@@ -1764,65 +1972,42 @@ export default function WorkplaceLab({
         animate={{ opacity: 1, y: 0 }} 
         className="workplace-container"
       >
-        <header className="workplace-header" style={{ 
-          height: 80, 
-          background: 'rgba(15, 15, 15, 0.4)', 
-          backdropFilter: 'blur(30px) saturate(200%)',
-          borderBottom: `1px solid rgba(255, 255, 255, 0.08)`, 
-          display: 'flex', 
-          alignItems: 'center', 
-          padding: '0 32px', 
-          gap: 20, 
-          flexShrink: 0,
-          position: 'sticky',
-          top: 0,
-          zIndex: 100,
-          overflow: 'hidden'
-        }}>
-          {/* Dynamic Background Glow */}
-          <motion.div
-            animate={{
-              background: activeTab === 'mindmap' 
-                ? 'radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15), transparent 50%)'
-                : activeTab === 'history'
-                ? 'radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15), transparent 50%)'
-                : 'radial-gradient(circle at 20% 50%, rgba(245, 158, 11, 0.15), transparent 50%)'
-            }}
-            style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
-          />
+        {activeTab === 'dashboard' && (
+          <header className="workplace-header" style={{ 
+            height: 80, 
+            background: 'rgba(15, 15, 15, 0.2)', 
+            backdropFilter: 'blur(30px) saturate(200%)',
+            display: 'flex', 
+            alignItems: 'center', 
+            padding: '0 32px', 
+            gap: 20, 
+            flexShrink: 0,
+            position: 'sticky',
+            top: 0,
+            zIndex: 100,
+            overflow: 'hidden'
+          }}>
+            {/* Glow */}
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.08), transparent 50%)', pointerEvents: 'none' }} />
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
-            <motion.div 
-              key={activeTab}
-              initial={{ scale: 0.8, rotate: -15, filter: 'blur(10px)' }}
-              animate={{ scale: 1, rotate: 0, filter: 'blur(0px)' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              style={{
+            {/* Title / Logo */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, position: 'relative' }}>
+              <div style={{
                 width: 48,
                 height: 48,
                 borderRadius: 16,
-                background: activeTab === 'mindmap' 
-                  ? 'linear-gradient(135deg, #6366f1, #a855f7)' 
-                  : activeTab === 'history'
-                  ? 'linear-gradient(135deg, #10b981, #3b82f6)'
-                  : 'linear-gradient(135deg, #f59e0b, #ef4444)',
+                background: 'linear-gradient(135deg, #00ff88, #0088ff)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
-                boxShadow: activeTab === 'mindmap'
-                  ? '0 12px 32px rgba(99, 102, 241, 0.4)'
-                  : activeTab === 'history'
-                  ? '0 12px 32px rgba(16, 185, 129, 0.4)'
-                  : '0 12px 32px rgba(245, 158, 11, 0.35)',
+                boxShadow: '0 12px 32px rgba(0, 255, 136, 0.3)',
                 border: '1px solid rgba(255, 255, 255, 0.2)'
               }}>
-              {activeTab === 'mindmap' ? <GitBranch size={26} color="#fff"/> : activeTab === 'history' ? <Clock size={26} color="#fff"/> : <FileText size={26} color="#fff"/>}
-            </motion.div>
-            <div>
-              <motion.h1 
-                layout
-                style={{ 
+                <Edit2 size={26} color="#fff"/>
+              </div>
+              <div>
+                <h1 style={{ 
                   fontSize: 24, 
                   fontWeight: 900, 
                   color: '#fff', 
@@ -1831,142 +2016,97 @@ export default function WorkplaceLab({
                   margin: 0,
                   fontFamily: 'Syne, sans-serif'
                 }}>
-                {activeTab === 'mindmap' ? 'Mind Map Studio' : activeTab === 'history' ? 'Temporal Archive' : 'Intelligence Vault'}
-              </motion.h1>
-              <motion.p 
-                layout
-                style={{ margin: '4px 0 0 0', fontSize: 10, color: 'rgba(255, 255, 255, 0.5)', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase' }}>
-                {activeTab === 'mindmap' ? 'Visualizing Ideas' : activeTab === 'history' ? 'Tracing Evolution' : 'Managing Knowledge'}
-              </motion.p>
+                  Quick Notes
+                </h1>
+                <p style={{ margin: '4px 0 0 0', fontSize: 10, color: 'rgba(255, 255, 255, 0.5)', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase' }}>
+                  Visual, Local-First Canvas Hub
+                </p>
+              </div>
             </div>
-          </div>
-          
-          <div style={{ flex: 1 }}/>
-          
-          <div style={{
-            display: 'flex',
-            background: 'rgba(255, 255, 255, 0.03)',
-            padding: '6px',
-            borderRadius: '20px',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            position: 'relative',
-            gap: '4px',
-            backdropFilter: 'blur(10px)'
-          }}
-          onMouseLeave={() => setHoveredTab(null)}
-          >
-            {/* Ghost Hover Indicator */}
-            <AnimatePresence>
-              {hoveredTab && (
-                <motion.div
-                  layoutId="hoverIndicator"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  style={{
-                    position: 'absolute',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    borderRadius: '14px',
-                    zIndex: 0,
-                    pointerEvents: 'none'
-                  }}
-                  transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
-                />
-              )}
-            </AnimatePresence>
 
-            {TABS.map(tab => {
-              const active = activeTab === tab.id;
-              const isHovered = hoveredTab === tab.id;
-              
-              return (
-                <motion.button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  onMouseEnter={() => setHoveredTab(tab.id)}
-                  style={{
-                    position: 'relative',
-                    padding: '10px 24px',
-                    borderRadius: '14px',
-                    fontSize: '13px',
-                    fontWeight: active ? 700 : 600,
-                    color: active ? '#fff' : 'rgba(255, 255, 255, 0.4)',
-                    border: 'none',
-                    background: 'transparent',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    zIndex: 1,
-                    transition: 'color 0.3s ease',
-                    letterSpacing: '-0.2px'
-                  }}
-                >
-                  {active && (
-                    <motion.div
-                      layoutId="activeTabPill"
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: tab.id === 'mindmap' 
-                          ? 'linear-gradient(135deg, #6366f1, #818cf8)' 
-                          : tab.id === 'history'
-                          ? 'linear-gradient(135deg, #10b981, #34d399)'
-                          : 'linear-gradient(135deg, #f59e0b, #fbbf24)',
-                        borderRadius: '14px',
-                        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)',
-                        zIndex: -1
-                      }}
-                      transition={{ 
-                        type: 'spring', 
-                        stiffness: 400, 
-                        damping: 30,
-                        mass: 0.8
-                      }}
-                    />
-                  )}
-                  <motion.span 
-                    animate={{ 
-                      scale: active ? 1.2 : 1,
-                      rotate: active ? 8 : 0,
-                      color: active ? '#fff' : 'rgba(255, 255, 255, 0.4)'
-                    }}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    {React.cloneElement(tab.icon, { size: 18 })}
-                  </motion.span>
-                  <span>{tab.label}</span>
-                </motion.button>
-              );
-            })}
-          </div>
+            <div style={{ flex: 1 }}/>
 
-          <div style={{ width: 1, height: 28, background: 'rgba(255, 255, 255, 0.1)', margin: '0 8px' }}/>
-          
-          <motion.button 
-            className="close-btn" 
-            onClick={onClose}
-            whileHover={{ scale: 1.1, backgroundColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
-            whileTap={{ scale: 0.9 }}
-            style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: 'rgba(255, 255, 255, 0.5)',
-              cursor: 'pointer',
-              width: 36,
-              height: 36,
-              borderRadius: '12px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            <X size={18}/>
-          </motion.button>
-        </header>
+            <motion.button 
+              className="close-btn" 
+              onClick={onClose}
+              whileHover={{ scale: 1.1, backgroundColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
+              whileTap={{ scale: 0.9 }}
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: 'rgba(255, 255, 255, 0.5)',
+                cursor: 'pointer',
+                width: 36,
+                height: 36,
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <X size={18}/>
+            </motion.button>
+          </header>
+        )}
 
         <main style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+          {activeTab !== 'dashboard' && (
+            <div style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              zIndex: 9999
+            }}>
+              <motion.button 
+                onClick={() => setActiveTab('dashboard')}
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: 'rgba(15, 15, 15, 0.8)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  color: '#fff',
+                  padding: '8px 16px',
+                  borderRadius: '10px',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+                }}
+              >
+                <ArrowLeft size={14}/> Back to Hub
+              </motion.button>
+              <motion.button 
+                onClick={onClose}
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}
+                whileTap={{ scale: 0.95 }}
+                style={{
+                  background: 'rgba(15, 15, 15, 0.8)',
+                  backdropFilter: 'blur(20px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  cursor: 'pointer',
+                  width: 36,
+                  height: 36,
+                  borderRadius: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+                }}
+              >
+                <X size={18}/>
+              </motion.button>
+            </div>
+          )}
+
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -1979,7 +2119,124 @@ export default function WorkplaceLab({
               }}
               style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
             >
-              {activeTab === 'mindmap' ? (
+              {activeTab === 'dashboard' && (
+                <div style={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '40px',
+                  background: 'radial-gradient(circle at center, rgba(26, 26, 26, 0.2), transparent 70%)',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    gap: '30px',
+                    maxWidth: '900px',
+                    width: '100%',
+                    justifyContent: 'center',
+                    zIndex: 1
+                  }}>
+                    {[
+                      {
+                        id: 'affine',
+                        title: 'Workspace Notes',
+                        description: 'Create rich text documents, capture fleeting thoughts, or manage structured lists with a local-first canvas editor.',
+                        icon: <Edit2 size={36} color="#00ff88" />,
+                        color: '#00ff88',
+                        glow: '0 8px 32px rgba(0, 255, 136, 0.15)',
+                        gradient: 'linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 136, 255, 0.05) 100%)'
+                      },
+                      {
+                        id: 'mindmap',
+                        title: 'Mind Maps',
+                        description: 'Visualize connections, link resources, map concepts, and construct node-based diagrams in a sandbox.',
+                        icon: <GitBranch size={36} color="#0088ff" />,
+                        color: '#0088ff',
+                        glow: '0 8px 32px rgba(0, 136, 255, 0.15)',
+                        gradient: 'linear-gradient(135deg, rgba(0, 136, 255, 0.1) 0%, rgba(99, 102, 241, 0.05) 100%)'
+                      }
+                    ].map(card => (
+                      <motion.div
+                        key={card.id}
+                        whileHover={{ 
+                          scale: 1.03, 
+                          y: -8,
+                          borderColor: card.color,
+                          boxShadow: card.glow
+                        }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => setActiveTab(card.id)}
+                        style={{
+                          flex: 1,
+                          maxWidth: '400px',
+                          background: 'rgba(26, 26, 26, 0.45)',
+                          backdropFilter: 'blur(20px)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: '24px',
+                          padding: '40px 32px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                          transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+                          position: 'relative',
+                          overflow: 'hidden'
+                        }}
+                      >
+                        <div style={{
+                          position: 'absolute',
+                          inset: 0,
+                          background: card.gradient,
+                          opacity: 0.5,
+                          zIndex: 0,
+                          pointerEvents: 'none'
+                        }} />
+
+                        <div style={{
+                          width: '72px',
+                          height: '72px',
+                          borderRadius: '20px',
+                          background: 'rgba(255, 255, 255, 0.03)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginBottom: '24px',
+                          zIndex: 1
+                        }}>
+                          {card.icon}
+                        </div>
+
+                        <h3 style={{
+                          fontSize: '24px',
+                          fontWeight: 800,
+                          color: '#fff',
+                          marginBottom: '14px',
+                          fontFamily: 'Syne, sans-serif',
+                          zIndex: 1
+                        }}>
+                          {card.title}
+                        </h3>
+
+                        <p style={{
+                          fontSize: '14px',
+                          color: 'rgba(255, 255, 255, 0.6)',
+                          lineHeight: 1.6,
+                          margin: 0,
+                          zIndex: 1
+                        }}>
+                          {card.description}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'mindmap' && (
                 <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                   <MindMapTab 
                     notes={notes} 
@@ -1993,72 +2250,66 @@ export default function WorkplaceLab({
                     onClose={onClose}
                   />
                 </div>
-              ) : (
-                <div className="workplace-layout">
-                  <div className="workplace-main">
-                    {activeTab === 'notes' && (
-                      <div className="content-section">
-                        <div className="content-controls">
-                          <div className="search-wrapper">
-                            <Search size={18}/>
-                            <input type="text" placeholder="Search your intelligence base..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)}/>
-                          </div>
-                          <motion.button className="add-btn" onClick={() => setIsCreating(true)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                            <Plus size={18}/><span>New Entry</span>
-                          </motion.button>
-                        </div>
-                        <div className="notes-scroll">
-                          <AnimatePresence>
-                            {isCreating && (
-                              <motion.div className="note-editor" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                                <div className="editor-head">
-                                  <input placeholder="Entry Title..." value={newNote.title} onChange={e => setNewNote({ ...newNote, title: e.target.value })}/>
-                                  <div className="type-toggle">
-                                    <motion.button className={newNote.type === 'note' ? 'active' : ''} onClick={() => setNewNote({ ...newNote, type: 'note' })} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Note</motion.button>
-                                    <motion.button className={newNote.type === 'snippet' ? 'active' : ''} onClick={() => setNewNote({ ...newNote, type: 'snippet' })} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Snippet</motion.button>
-                                  </div>
-                                </div>
-                                <textarea className="editor-textarea" placeholder={newNote.type === 'note' ? 'Write in markdown...' : '// Code...'} value={newNote.content} onChange={e => setNewNote({ ...newNote, content: e.target.value })}/>
-                                <div className="editor-foot">
-                                  <motion.button className="cancel-btn" onClick={() => setIsCreating(false)}>Cancel</motion.button>
-                                  <motion.button className="save-btn" onClick={handleCreate} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                    <Save size={14}/><span>Save Entry</span>
-                                  </motion.button>
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                          <div className="repo-section">
-                            <div className="repo-head"><Code size={18}/><span>Snippets</span></div>
-                            <div className="notes-grid single-col">
-                              {snippets.map(note => (<NoteCard key={note.id} note={note} onDelete={() => onDeleteNote(note.id)} onLink={() => setLinkingNote(note)} onClick={() => { setSelectedNote(note); setHubMode('preview'); }} fmt={fmt}/>))}
-                              {snippets.length === 0 && <div className="empty-repo">No code snippets saved.</div>}
-                            </div>
-                          </div>
-                          <div className="repo-section">
-                            <div className="repo-head"><FileText size={18}/><span>Quick Notes</span></div>
-                            <div className="notes-grid single-col">
-                              {noteItems.map(note => (<NoteCard key={note.id} note={note} onDelete={() => onDeleteNote(note.id)} onLink={() => setLinkingNote(note)} onClick={() => { setSelectedNote(note); setHubMode('preview'); }} fmt={fmt}/>))}
-                              {noteItems.length === 0 && <div className="empty-repo">No theory notes saved.</div>}
-                            </div>
-                          </div>
-                        </div>
+              )}
+
+              {activeTab === 'affine' && (
+                <div className="workplace-layout" style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div className="affine-section" style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    {/* Sync Status Config Bar */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '10px 16px',
+                      background: 'rgba(255, 255, 255, 0.02)',
+                      borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+                      fontSize: '12px',
+                      color: 'rgba(255, 255, 255, 0.6)'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span>Cloud Sync Status:</span>
+                        <span style={{ 
+                          color: syncStatus === 'Synced' ? '#00ff88' : syncStatus === 'Syncing' ? '#0088ff' : syncStatus === 'Error' ? '#ef4444' : 'rgba(255, 255, 255, 0.6)',
+                          fontWeight: 'bold',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}>
+                          {syncStatus === 'Synced' && '✓ Synced'}
+                          {syncStatus === 'Syncing' && '⚡ Syncing...'}
+                          {syncStatus === 'Error' && '⚠️ Sync Error'}
+                          {syncStatus === 'Idle' && '✓ Up to Date'}
+                        </span>
                       </div>
-                    )}
-                    {activeTab === 'history' && (
-                      <div className="history-quick-access">
-                        <div className="section-head"><Bookmark size={14}/><span>Recently Studied Nodes</span></div>
-                        <div className="history-grid">
-                          {history.length > 0 ? history.map((item, i) => (
-                            <motion.div key={item.id + i} className="history-card" whileHover={{ scale: 1.02, y: -2 }} onClick={() => onJumpToNode(item.id, item.pathId)}>
-                              <div className="card-top"><span className="path-tag" style={{ color: item.pathColor }}>{item.pathTitle || 'PATH'}</span><ExternalLink size={12}/></div>
-                              <h3>{item.title}</h3>
-                              <div className="card-foot"><span>OPEN_NODE</span></div>
-                            </motion.div>
-                          )) : <div className="empty-history">No recent activity yet.</div>}
-                        </div>
-                      </div>
-                    )}
+                      {user?.id ? (
+                        <button onClick={syncToSupabase} style={{
+                          background: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)',
+                          color: '#fff',
+                          borderRadius: '4px',
+                          padding: '2px 8px',
+                          fontSize: '11px',
+                          cursor: 'pointer'
+                        }}>
+                          Sync Now
+                        </button>
+                      ) : (
+                        <span style={{ color: '#ef4444' }}>Sign in to enable Cloud Sync</span>
+                      )}
+                    </div>
+                    {/* Editor IFrame */}
+                    <div style={{ flex: 1, position: 'relative', background: '#000' }}>
+                      <iframe
+                        src="/editor/index.html"
+                        title="Workspace Notes Editor"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          border: 'none'
+                        }}
+                        allow="clipboard-read; clipboard-write"
+                      />
+                    </div>
                   </div>
                 </div>
               )}

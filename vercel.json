@@ -1,6 +1,8 @@
 {
   "rewrites": [
-    { "source": "/notion-api/(.*)", "destination": "https://api.notion.com/$1" }
+    { "source": "/notion-api/(.*)", "destination": "https://api.notion.com/$1" },
+    { "source": "/graphql", "destination": "/api/graphql" },
+    { "source": "/api/copilot/:path*", "destination": "/api/copilot" }
   ],
   "redirects": [
     { "source": "/draw", "destination": "/k8sgames/draw.html", "permanent": true }

@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     const fileBuffer = await getRawBody(req);
 
     const bucketName = process.env.AWS_S3_BUCKET_NAME;
-    const key = `uploads/${Date.now()}-${fileName}`;
+    const key = req.headers["x-s3-key"] || `uploads/${Date.now()}-${fileName}`;
 
     // Upload to S3
     await s3.send(

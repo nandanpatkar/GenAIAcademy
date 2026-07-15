@@ -463,7 +463,7 @@ export default function QuizApp({ onClose }) {
       )}
 
       {quizState === "start" && (
-        <div className="quiz-start-screen" style={{ maxWidth: 800, margin: '0 auto' }}>
+        <div className="quiz-start-screen" style={{ maxWidth: 1200, margin: '0 auto' }}>
           
           <div style={{ display: 'flex', gap: 10, marginBottom: 30, borderBottom: '1px solid var(--border)', paddingBottom: 16 }}>
             <button 

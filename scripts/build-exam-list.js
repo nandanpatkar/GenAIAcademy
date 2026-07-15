@@ -59,13 +59,16 @@ function main() {
     if (!url.includes("/practice/") || url.includes("/exams/")) continue;
     const slug = url.split("/").filter(Boolean).pop();
     if (!slug || seen.has(slug)) continue;
-    seen.add(slug);
 
     const urlLower = url.toLowerCase();
+    const vendor = detectVendor(urlLower);
+    if (vendor === "AWS (American Welding Society)") continue;
+
+    seen.add(slug);
     exams.push({
       slug,
       name: formatExamName(slug),
-      vendor: detectVendor(urlLower),
+      vendor,
     });
   }
 

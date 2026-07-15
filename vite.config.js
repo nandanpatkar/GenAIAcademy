@@ -8,12 +8,54 @@ const apiMiddleware = () => ({
   name: "vercel-api-middleware",
   configureServer(server) {
     server.middlewares.use(async (req, res, next) => {
-      if (req.url.startsWith("/api/")) {
-        const endpoint = req.url.split("?")[0];
+      let url = req.url.split("?")[0];
+
+      // /graphql → /api/graphql
+      if (url === "/graphql") {
+        req.url = "/api/graphql" + (req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "");
+        url = "/api/graphql";
+      }
+
+      // /api/copilot/* → /api/copilot (single handler with full URL preserved)
+      if (url.startsWith("/api/copilot/")) {
+        // Keep the original url so the handler can parse sessionId from it
+        const filePath = path.join(process.cwd(), "api/copilot.js");
+        if (fs.existsSync(filePath)) {
+          try {
+            const urlObj = new URL(req.url, "http://localhost");
+            req.query = Object.fromEntries(urlObj.searchParams.entries());
+
+            res.status = (statusCode) => {
+              res.statusCode = statusCode;
+              return res;
+            };
+            res.json = (data) => {
+              res.setHeader("Content-Type", "application/json");
+              res.end(JSON.stringify(data));
+            };
+            res.write = res.write.bind(res);
+            res.end = res.end.bind(res);
+
+            const module = await import(`${filePath}?update=${Date.now()}`);
+            await module.default(req, res);
+            return;
+          } catch (err) {
+            console.error("Copilot Middleware error:", err);
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: err.message }));
+            return;
+          }
+        }
+      }
+
+      if (url.startsWith("/api/")) {
+        const endpoint = url;
         const filePath = path.join(process.cwd(), `${endpoint}.js`);
         if (fs.existsSync(filePath)) {
           try {
-            // Polyfill Vercel/Express response methods
+            const urlObj = new URL(req.url, "http://localhost");
+            req.query = Object.fromEntries(urlObj.searchParams.entries());
+
             res.status = (statusCode) => {
               res.statusCode = statusCode;
               return res;
@@ -23,10 +65,29 @@ const apiMiddleware = () => ({
               res.end(JSON.stringify(data));
             };
 
-            // Add a cache buster so we can edit api files without restarting the server
+            // Collect body for POST — only pre-parse JSON here; leave other
+            // content types (e.g. multipart/form-data from AFFiNE's GraphQL
+            // client) as an unconsumed stream so the handler can read it itself.
+            const reqContentType = req.headers["content-type"] || "";
+            if (req.method === "POST" && !req.body && reqContentType.includes("application/json")) {
+              await new Promise((resolve, reject) => {
+                let data = "";
+                req.on("data", chunk => { data += chunk; });
+                req.on("end", () => {
+                  try {
+                    req.body = data ? JSON.parse(data) : {};
+                  } catch {
+                    req.body = {};
+                  }
+                  resolve();
+                });
+                req.on("error", reject);
+              });
+            }
+
             const module = await import(`${filePath}?update=${Date.now()}`);
             await module.default(req, res);
-            return; // Handled!
+            return;
           } catch (err) {
             console.error("API Middleware execution error:", err);
             res.statusCode = 500;
@@ -41,7 +102,6 @@ const apiMiddleware = () => ({
 });
 
 export default defineConfig(({ mode }) => {
-  // Load env variables (including .env.local where Vercel secrets might be)
   const env = loadEnv(mode, process.cwd(), "");
   process.env = { ...process.env, ...env };
 
