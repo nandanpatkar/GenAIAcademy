@@ -1,7 +1,10 @@
 {
   "functions": {
     "api/**/*.js": {
-      "excludeFiles": "public/editor/**"
+      "excludeFiles": "{public/**,reference/**,themissingmanual/**,src/**,system-design-simulator/**,course_data*,scraped_data.json}"
+    },
+    "api/**/*.py": {
+      "excludeFiles": "{public/**,reference/**,themissingmanual/**,src/**,system-design-simulator/**,course_data*,scraped_data.json}"
     }
   },
   "rewrites": [
