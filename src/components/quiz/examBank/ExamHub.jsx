@@ -3,6 +3,7 @@ import PracticeTab from "./PracticeTab";
 import StudyGuideTab from "./StudyGuideTab";
 import FlashcardsTab from "./FlashcardsTab";
 import VideosTab from "./VideosTab";
+import { safeFetchJson } from "./apiHelpers";
 
 const TABS = [
   { id: "practice", label: "Practice", key: "practice" },
@@ -32,8 +33,7 @@ export default function ExamHub({ exam, onBack, onStartExam }) {
     let cancelled = false;
     setAvailability(null);
     setActiveTab("practice");
-    fetch(`/api/exam-resources?exam=${encodeURIComponent(exam.slug)}`)
-      .then((r) => r.json())
+    safeFetchJson(`/api/exam-resources?exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => { if (!cancelled) setAvailability(data); })
       .catch(() => { /* silently ignore — tabs stay fully usable without this hint */ });
     return () => { cancelled = true; };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AlertTriangle, ChevronRight, Loader2 } from "lucide-react";
+import { safeFetchJson } from "./apiHelpers";
 
 /** Config screen (time limit / marks / AI tutor) + "Start Exam" fetch. */
 export default function PracticeTab({ exam, onStartExam }) {
@@ -16,9 +17,7 @@ export default function PracticeTab({ exam, onStartExam }) {
     setFetching(true);
     setErrorMsg("");
     try {
-      const res = await fetch(`/api/exam-scrape?exam=${encodeURIComponent(exam.slug)}&name=${encodeURIComponent(exam.name)}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      const data = await safeFetchJson(`/api/exam-scrape?exam=${encodeURIComponent(exam.slug)}&name=${encodeURIComponent(exam.name)}`);
       if (!data.questions || data.questions.length === 0) throw new Error("No questions were found for this exam.");
 
       onStartExam(exam.name, data.questions, config);

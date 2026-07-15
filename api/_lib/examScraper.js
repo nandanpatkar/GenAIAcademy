@@ -11,7 +11,11 @@
  *   SUPABASE_SERVICE_ROLE_KEY   (server-side only — bypasses RLS for cache writes)
  */
 
-import sanitizeHtml from "sanitize-html";
+// sanitize-html is imported lazily inside getStudyGuideArticleLive() rather
+// than at module top-level. This file is shared by every api/exam-*.js
+// function, so an eager top-level import here means any load/bundling
+// issue with sanitize-html would crash Practice, Flashcards, and Videos
+// too, not just the one endpoint that actually needs it.
 
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://twcsujjshudwgpihkwyz.supabase.co";
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -196,23 +200,25 @@ export async function getStudyGuideTOCLive(examSlug) {
   return orderedCats.map((k) => categories[k]);
 }
 
-const ARTICLE_SANITIZE_OPTIONS = {
-  allowedTags: [
-    "h1", "h2", "h3", "h4", "h5", "h6", "p", "br", "hr", "div", "span",
-    "ul", "ol", "li", "strong", "b", "em", "i", "u", "a", "img",
-    "table", "thead", "tbody", "tr", "td", "th", "code", "pre",
-    "blockquote", "figure", "figcaption",
-  ],
-  allowedAttributes: {
-    a: ["href", "title", "target", "rel"],
-    img: ["src", "alt", "title", "width", "height"],
-    "*": ["class"],
-  },
-  allowedSchemes: ["http", "https"],
-  transformTags: {
-    a: sanitizeHtml.simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),
-  },
-};
+function buildArticleSanitizeOptions(sanitizeHtml) {
+  return {
+    allowedTags: [
+      "h1", "h2", "h3", "h4", "h5", "h6", "p", "br", "hr", "div", "span",
+      "ul", "ol", "li", "strong", "b", "em", "i", "u", "a", "img",
+      "table", "thead", "tbody", "tr", "td", "th", "code", "pre",
+      "blockquote", "figure", "figcaption",
+    ],
+    allowedAttributes: {
+      a: ["href", "title", "target", "rel"],
+      img: ["src", "alt", "title", "width", "height"],
+      "*": ["class"],
+    },
+    allowedSchemes: ["http", "https"],
+    transformTags: {
+      a: sanitizeHtml.simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),
+    },
+  };
+}
 
 /** Scrape live study-guide article HTML for one topic, sanitized before returning. */
 export async function getStudyGuideArticleLive(examSlug, topicPath) {
@@ -227,7 +233,8 @@ export async function getStudyGuideArticleLive(examSlug, topicPath) {
   articleHtml = articleHtml.split('src="/').join('src="https://open-exam-prep.com/');
   articleHtml = articleHtml.split('href="/').join('href="https://open-exam-prep.com/');
 
-  return sanitizeHtml(articleHtml, ARTICLE_SANITIZE_OPTIONS);
+  const { default: sanitizeHtml } = await import("sanitize-html");
+  return sanitizeHtml(articleHtml, buildArticleSanitizeOptions(sanitizeHtml));
 }
 
 /**

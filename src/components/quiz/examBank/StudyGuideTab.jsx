@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RefreshCw, AlertTriangle, FileText } from "lucide-react";
+import { safeFetchJson } from "./apiHelpers";
 
 export default function StudyGuideTab({ exam }) {
   const [toc, setToc] = useState(null); // null = loading
@@ -16,8 +17,7 @@ export default function StudyGuideTab({ exam }) {
     setActivePath(null);
     setArticleHtml(null);
 
-    fetch(`/api/exam-studyguide?exam=${encodeURIComponent(exam.slug)}`)
-      .then((r) => r.json())
+    safeFetchJson(`/api/exam-studyguide?exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => {
         if (cancelled) return;
         if (!data.toc || data.toc.length === 0) throw new Error("No study guide chapters found for this exam.");
@@ -33,9 +33,7 @@ export default function StudyGuideTab({ exam }) {
     setArticleLoading(true);
     setArticleError("");
     try {
-      const res = await fetch(`/api/exam-studyguide-content?exam=${encodeURIComponent(exam.slug)}&path=${encodeURIComponent(path)}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      const data = await safeFetchJson(`/api/exam-studyguide-content?exam=${encodeURIComponent(exam.slug)}&path=${encodeURIComponent(path)}`);
       setArticleHtml(data.html);
     } catch (err) {
       console.error("Study guide article fetch failed:", err);

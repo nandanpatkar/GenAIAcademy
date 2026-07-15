@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RefreshCw, AlertTriangle, Play } from "lucide-react";
+import { safeFetchJson } from "./apiHelpers";
 
 export default function VideosTab({ exam }) {
   const [videos, setVideos] = useState(null); // null = loading
@@ -12,8 +13,7 @@ export default function VideosTab({ exam }) {
     setErrorMsg("");
     setPlayingId(null);
 
-    fetch(`/api/exam-videos?exam=${encodeURIComponent(exam.slug)}`)
-      .then((r) => r.json())
+    safeFetchJson(`/api/exam-videos?exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => { if (!cancelled) setVideos(data.videos || []); })
       .catch((err) => { if (!cancelled) setErrorMsg(err.message || "Could not load videos."); });
 

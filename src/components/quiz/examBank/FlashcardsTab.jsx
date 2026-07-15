@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RefreshCw, AlertTriangle } from "lucide-react";
+import { safeFetchJson } from "./apiHelpers";
 
 export default function FlashcardsTab({ exam }) {
   const [cards, setCards] = useState(null); // null = loading
@@ -14,8 +15,7 @@ export default function FlashcardsTab({ exam }) {
     setIdx(0);
     setFlipped(false);
 
-    fetch(`/api/exam-flashcards?exam=${encodeURIComponent(exam.slug)}`)
-      .then((r) => r.json())
+    safeFetchJson(`/api/exam-flashcards?exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => {
         if (cancelled) return;
         if (!data.flashcards || data.flashcards.length === 0) throw new Error("No flashcards found for this exam.");
