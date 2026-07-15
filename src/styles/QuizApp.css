@@ -871,3 +871,343 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
+
+/* ─── Exam Hub: Flashcards, Videos, Study Guide ─── */
+
+/* Flashcards */
+.examhub-flashcard-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.examhub-flashcard-scene {
+  width: 100%;
+  height: 320px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.examhub-flashcard-3d {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.examhub-flashcard-3d.flipped {
+  transform: rotateY(180deg);
+}
+
+.examhub-flashcard-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+
+.examhub-flashcard-front {
+  background: var(--bg-card);
+}
+
+.examhub-flashcard-back {
+  background: var(--bg-card-hover);
+  transform: rotateY(180deg);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.examhub-card-badge {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent);
+  background-color: var(--accent-glow);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.examhub-card-badge-back {
+  color: var(--violet);
+  background-color: rgba(167, 139, 250, 0.15);
+}
+
+.examhub-card-text-front {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.examhub-card-text-back {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.examhub-flip-hint {
+  position: absolute;
+  bottom: 18px;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.examhub-flashcard-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.examhub-flashcard-progress {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Videos */
+.examhub-videos-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.examhub-video-player-container {
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+.examhub-video-player-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.examhub-videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+  width: 100%;
+}
+
+.examhub-video-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.examhub-video-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.examhub-video-thumbnail-box {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  background-color: #000;
+}
+
+.examhub-video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.examhub-video-card:hover .examhub-video-thumb {
+  opacity: 1;
+}
+
+.examhub-video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.examhub-video-info {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.examhub-video-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.examhub-video-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Study Guide */
+.examhub-studyguide-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  width: 100%;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .examhub-studyguide-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.examhub-studyguide-toc {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  max-height: 70vh;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
+}
+
+.examhub-sg-cat-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-top: 16px;
+  margin-bottom: 8px;
+  padding-left: 6px;
+}
+.examhub-sg-cat-title:first-child { margin-top: 0; }
+
+.examhub-sg-topic-item {
+  display: block;
+  padding: 8px 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-bottom: 2px;
+}
+.examhub-sg-topic-item:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+.examhub-sg-topic-item.active {
+  color: var(--text-primary);
+  background: var(--accent-glow);
+  font-weight: 600;
+}
+
+.examhub-studyguide-reader {
+  min-width: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 28px;
+}
+
+/* Sanitized article HTML from the study guide source */
+.examhub-article {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.examhub-article h1, .examhub-article h2, .examhub-article h3,
+.examhub-article h4, .examhub-article h5, .examhub-article h6 {
+  color: var(--text-primary);
+  margin: 24px 0 12px;
+  line-height: 1.3;
+}
+.examhub-article h1:first-child, .examhub-article h2:first-child, .examhub-article h3:first-child {
+  margin-top: 0;
+}
+.examhub-article p { margin: 0 0 16px; }
+.examhub-article ul, .examhub-article ol { margin: 0 0 16px; padding-left: 22px; }
+.examhub-article li { margin-bottom: 6px; }
+.examhub-article a { color: var(--accent); text-decoration: underline; }
+.examhub-article img { max-width: 100%; border-radius: 8px; margin: 12px 0; }
+.examhub-article code {
+  background: var(--bg-secondary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--mono, monospace);
+  font-size: 0.9em;
+  color: var(--accent);
+}
+.examhub-article pre {
+  background: var(--bg-secondary);
+  padding: 14px 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0 0 16px;
+}
+.examhub-article pre code { background: none; padding: 0; }
+.examhub-article blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 0 0 16px;
+  padding: 4px 16px;
+  color: var(--text-muted);
+}
+.examhub-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 16px;
+}
+.examhub-article th, .examhub-article td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+}
+.examhub-article th { color: var(--text-primary); background: var(--bg-secondary); }
