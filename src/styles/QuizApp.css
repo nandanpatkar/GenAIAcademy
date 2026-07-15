@@ -1211,3 +1211,81 @@
   text-align: left;
 }
 .examhub-article th { color: var(--text-primary); background: var(--bg-secondary); }
+
+/* ─── Exam Bank: cards (design language borrowed from Manual's topic cards) ─── */
+.exambank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.exambank-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.25s, box-shadow 0.25s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+
+.exambank-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--vendor-color, var(--accent));
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), 0 0 15px color-mix(in srgb, var(--vendor-color, var(--accent)) 35%, transparent);
+}
+
+.exambank-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: var(--radius-sm);
+  background: radial-gradient(circle at top left, var(--vendor-color, var(--accent)), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.exambank-card:hover::after {
+  opacity: 0.1;
+}
+
+.exambank-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.exambank-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--vendor-color, var(--accent)) 12%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.exambank-card-title {
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--text-primary);
+  margin: 2px 0 0;
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+}
+
+.exambank-card-vendor {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

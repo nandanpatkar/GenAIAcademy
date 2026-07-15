@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { Icon } from "@iconify/react";
 import { Search, RefreshCw, ChevronRight } from "lucide-react";
 import ExamHub from "./examBank/ExamHub";
+import { getVendorMeta } from "./examBank/vendorMeta";
 
 /**
  * Exam Bank — practice, study guide, flashcards, and videos scraped from
@@ -81,27 +83,29 @@ export default function ExamPractice({ onStartExam }) {
             <div style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1.5, color: "var(--text-muted)", marginBottom: 10, paddingLeft: 4 }}>
               {vendor}
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: 14 }}>
-              {grouped[vendor].map((exam) => (
-                <button
-                  key={exam.slug}
-                  onClick={() => setSelected(exam)}
-                  style={{
-                    textAlign: "left", background: "var(--bg-card)", border: "1px solid var(--border)",
-                    borderRadius: "var(--radius-sm)", padding: "18px 18px", cursor: "pointer",
-                    color: "var(--text-primary)", display: "flex", flexDirection: "column", gap: 10,
-                    transition: "background 0.2s, border-color 0.2s",
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "var(--bg-card-hover)"; e.currentTarget.style.borderColor = "var(--accent)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-card)"; e.currentTarget.style.borderColor = "var(--border)"; }}
-                >
-                  <div style={{ fontWeight: 600, fontSize: 15, lineHeight: 1.3 }}>{exam.name}</div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 12, color: "var(--text-muted)" }}>
-                    <span>{exam.vendor}</span>
-                    <ChevronRight size={14} />
+            <div className="exambank-grid">
+              {grouped[vendor].map((exam) => {
+                const meta = getVendorMeta(vendor);
+                return (
+                  <div
+                    key={exam.slug}
+                    className="exambank-card"
+                    style={{ "--vendor-color": meta.color }}
+                    onClick={() => setSelected(exam)}
+                  >
+                    <div className="exambank-card-header">
+                      <div className="exambank-card-icon">
+                        <Icon icon={meta.icon} width={18} height={18} />
+                      </div>
+                    </div>
+                    <h3 className="exambank-card-title">{exam.name}</h3>
+                    <div className="exambank-card-vendor">
+                      <span>{vendor}</span>
+                      <ChevronRight size={14} />
+                    </div>
                   </div>
-                </button>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))

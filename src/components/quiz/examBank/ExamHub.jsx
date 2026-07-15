@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { RefreshCw } from "lucide-react";
 import PracticeTab from "./PracticeTab";
 import StudyGuideTab from "./StudyGuideTab";
 import FlashcardsTab from "./FlashcardsTab";
@@ -13,22 +12,30 @@ const TABS = [
 ];
 
 /**
- * Per-exam hub: checks resource availability once, then shows tabs for
- * whichever of Practice / Study Guide / Flashcards / Videos actually exist.
+ * Per-exam hub: Practice / Study Guide / Flashcards / Videos.
+ *
+ * All four tabs are always clickable — availability is fetched in the
+ * background purely as a hint (a small dot on tabs known to be empty), it
+ * never disables a tab. Each tab does its own fetch and shows its own
+ * empty/error state, so a wrong or slow availability signal can never
+ * hide content that's actually there — worst case the tab shows "nothing
+ * found" instead of being blocked from loading at all.
+ *
  * Practice hands off to QuizApp's shared quiz-taking UI via onStartExam;
  * the other three tabs are self-contained.
  */
 export default function ExamHub({ exam, onBack, onStartExam }) {
-  const [availability, setAvailability] = useState(null); // null while loading
+  const [availability, setAvailability] = useState(null); // null while unknown
   const [activeTab, setActiveTab] = useState("practice");
 
   useEffect(() => {
     let cancelled = false;
     setAvailability(null);
+    setActiveTab("practice");
     fetch(`/api/exam-resources?exam=${encodeURIComponent(exam.slug)}`)
       .then((r) => r.json())
-      .then((data) => { if (!cancelled) { setAvailability(data); setActiveTab("practice"); } })
-      .catch(() => { if (!cancelled) setAvailability({ practice: true, flashcards: false, studyguide: false, videos: false }); });
+      .then((data) => { if (!cancelled) setAvailability(data); })
+      .catch(() => { /* silently ignore — tabs stay fully usable without this hint */ });
     return () => { cancelled = true; };
   }, [exam.slug]);
 
@@ -47,45 +54,36 @@ export default function ExamHub({ exam, onBack, onStartExam }) {
         <p style={{ color: "var(--text-muted)", margin: 0 }}>{exam.vendor}</p>
       </div>
 
-      {availability === null ? (
-        <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-muted)" }}>
-          <RefreshCw size={24} className="spin" style={{ marginBottom: 8 }} />
-          <div>Checking available resources…</div>
-        </div>
-      ) : (
-        <>
-          <div style={{ display: "flex", gap: 8, marginBottom: 24, borderBottom: "1px solid var(--border)", paddingBottom: 12, flexWrap: "wrap" }}>
-            {TABS.map((tab) => {
-              const enabled = availability[tab.key];
-              const active = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  className="quiz-btn"
-                  disabled={!enabled}
-                  title={enabled ? undefined : "Not available for this exam"}
-                  style={{
-                    background: active ? "var(--bg-secondary)" : "transparent",
-                    color: enabled ? "var(--text-primary)" : "var(--text-muted)",
-                    border: "none", padding: "10px 18px", borderRadius: 8,
-                    fontWeight: active ? 600 : 400,
-                    opacity: enabled ? 1 : 0.45,
-                    cursor: enabled ? "pointer" : "not-allowed",
-                  }}
-                  onClick={() => enabled && setActiveTab(tab.id)}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
+      <div style={{ display: "flex", gap: 8, marginBottom: 24, borderBottom: "1px solid var(--border)", paddingBottom: 12, flexWrap: "wrap" }}>
+        {TABS.map((tab) => {
+          const active = activeTab === tab.id;
+          // Only ever used as a subtle hint once resolved false — never gates the click.
+          const knownEmpty = availability !== null && tab.key !== "practice" && availability[tab.key] === false;
+          return (
+            <button
+              key={tab.id}
+              className="quiz-btn"
+              title={knownEmpty ? "May be limited for this exam — click to check" : undefined}
+              style={{
+                background: active ? "var(--bg-secondary)" : "transparent",
+                color: "var(--text-primary)",
+                border: "none", padding: "10px 18px", borderRadius: 8,
+                fontWeight: active ? 600 : 400,
+                opacity: knownEmpty ? 0.6 : 1,
+                display: "flex", alignItems: "center", gap: 6,
+              }}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
 
-          {activeTab === "practice" && <PracticeTab exam={exam} onStartExam={onStartExam} />}
-          {activeTab === "studyguide" && availability.studyguide && <StudyGuideTab exam={exam} />}
-          {activeTab === "flashcards" && availability.flashcards && <FlashcardsTab exam={exam} />}
-          {activeTab === "videos" && availability.videos && <VideosTab exam={exam} />}
-        </>
-      )}
+      {activeTab === "practice" && <PracticeTab exam={exam} onStartExam={onStartExam} />}
+      {activeTab === "studyguide" && <StudyGuideTab exam={exam} />}
+      {activeTab === "flashcards" && <FlashcardsTab exam={exam} />}
+      {activeTab === "videos" && <VideosTab exam={exam} />}
     </div>
   );
 }

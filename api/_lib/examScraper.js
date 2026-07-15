@@ -186,29 +186,24 @@ export async function getStudyGuideArticleLive(examSlug, topicPath) {
   return sanitizeHtml(articleHtml, ARTICLE_SANITIZE_OPTIONS);
 }
 
-async function checkUrlExists(url) {
-  for (const method of ["HEAD", "GET"]) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 4000);
-    try {
-      const res = await fetch(url, { method, headers: { "User-Agent": UA }, signal: controller.signal });
-      clearTimeout(timeout);
-      if (res.ok) return true;
-    } catch {
-      clearTimeout(timeout);
-    }
+/**
+ * Whether a resource "exists" for an exam is determined by actually trying
+ * to scrape it and checking for non-empty content — not by HTTP status.
+ * open-exam-prep.com renders a shell page (HTTP 200) for most exam-shaped
+ * URLs regardless of whether that specific resource was authored for that
+ * exam, so a HEAD/GET status check was giving false negatives (and
+ * occasionally false positives), hiding tabs that actually had content.
+ * This reuses getExamFlashcards/getExamVideos/getStudyGuideTOC directly,
+ * which has the side benefit of pre-warming their cache — so opening a
+ * tab right after the availability check is instant.
+ */
+async function hasNonEmpty(promise) {
+  try {
+    const { data } = await promise;
+    return Array.isArray(data) && data.length > 0;
+  } catch {
+    return false;
   }
-  return false;
-}
-
-/** Check which of flashcards/study-guide/videos exist for an exam (practice always does). */
-export async function checkResourceAvailabilityLive(examSlug) {
-  const [flashcards, studyguide, videos] = await Promise.all([
-    checkUrlExists(`https://open-exam-prep.com/flashcards/${examSlug}`),
-    checkUrlExists(`https://open-exam-prep.com/study-guides/${examSlug}`),
-    checkUrlExists(`https://open-exam-prep.com/videos/exams/${examSlug}`),
-  ]);
-  return { practice: true, flashcards, studyguide, videos };
 }
 
 async function supabaseFetch(pathAndQuery, options = {}) {
@@ -329,6 +324,19 @@ export function getStudyGuideArticle(examSlug, topicPath) {
   return getCachedOrFetch(examSlug, "studyguide_article", topicPath, () => getStudyGuideArticleLive(examSlug, topicPath));
 }
 
-export function getResourceAvailability(examSlug) {
-  return getCachedOrFetch(examSlug, "availability", "", () => checkResourceAvailabilityLive(examSlug));
+/**
+ * Availability is a thin derived view over the real cache-first fetches
+ * above: if flashcards/videos/study-guide TOC actually resolve to
+ * non-empty content, that resource is "available". This call itself
+ * always re-derives from (and warms) the underlying resource caches
+ * rather than trusting a separately-cached boolean, so a stale/incorrect
+ * availability row can never keep hiding content that does exist.
+ */
+export async function getResourceAvailability(examSlug) {
+  const [flashcards, studyguide, videos] = await Promise.all([
+    hasNonEmpty(getExamFlashcards(examSlug)),
+    hasNonEmpty(getStudyGuideTOC(examSlug)),
+    hasNonEmpty(getExamVideos(examSlug)),
+  ]);
+  return { data: { practice: true, flashcards, studyguide, videos }, source: "live" };
 }
