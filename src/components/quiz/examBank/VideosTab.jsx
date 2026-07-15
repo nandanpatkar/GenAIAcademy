@@ -13,7 +13,7 @@ export default function VideosTab({ exam }) {
     setErrorMsg("");
     setPlayingId(null);
 
-    safeFetchJson(`/api/exam-videos?exam=${encodeURIComponent(exam.slug)}`)
+    safeFetchJson(`/api/exam?resource=videos&exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => { if (!cancelled) setVideos(data.videos || []); })
       .catch((err) => { if (!cancelled) setErrorMsg(err.message || "Could not load videos."); });
 

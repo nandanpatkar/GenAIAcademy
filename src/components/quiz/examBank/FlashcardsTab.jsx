@@ -15,7 +15,7 @@ export default function FlashcardsTab({ exam }) {
     setIdx(0);
     setFlipped(false);
 
-    safeFetchJson(`/api/exam-flashcards?exam=${encodeURIComponent(exam.slug)}`)
+    safeFetchJson(`/api/exam?resource=flashcards&exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => {
         if (cancelled) return;
         if (!data.flashcards || data.flashcards.length === 0) throw new Error("No flashcards found for this exam.");

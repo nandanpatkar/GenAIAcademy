@@ -20,7 +20,7 @@ import { getVendorMeta } from "./examBank/vendorMeta";
  *
  * Data flow:
  *   public/data/exam-list.json  → browse/search list (static, lazy-fetched)
- *   /api/exam-*                 → cache-first per-resource fetches (Supabase)
+ *   /api/exam?resource=*         → cache-first per-resource fetches (Supabase)
  */
 export default function ExamPractice({ onStartExam }) {
   const [allExams, setAllExams] = useState([]);

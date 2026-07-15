@@ -17,7 +17,7 @@ export default function StudyGuideTab({ exam }) {
     setActivePath(null);
     setArticleHtml(null);
 
-    safeFetchJson(`/api/exam-studyguide?exam=${encodeURIComponent(exam.slug)}`)
+    safeFetchJson(`/api/exam?resource=studyguide&exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => {
         if (cancelled) return;
         if (!data.toc || data.toc.length === 0) throw new Error("No study guide chapters found for this exam.");
@@ -33,7 +33,7 @@ export default function StudyGuideTab({ exam }) {
     setArticleLoading(true);
     setArticleError("");
     try {
-      const data = await safeFetchJson(`/api/exam-studyguide-content?exam=${encodeURIComponent(exam.slug)}&path=${encodeURIComponent(path)}`);
+      const data = await safeFetchJson(`/api/exam?resource=studyguide-content&exam=${encodeURIComponent(exam.slug)}&path=${encodeURIComponent(path)}`);
       setArticleHtml(data.html);
     } catch (err) {
       console.error("Study guide article fetch failed:", err);

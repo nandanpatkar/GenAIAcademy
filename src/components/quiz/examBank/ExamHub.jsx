@@ -33,7 +33,7 @@ export default function ExamHub({ exam, onBack, onStartExam }) {
     let cancelled = false;
     setAvailability(null);
     setActiveTab("practice");
-    safeFetchJson(`/api/exam-resources?exam=${encodeURIComponent(exam.slug)}`)
+    safeFetchJson(`/api/exam?resource=resources&exam=${encodeURIComponent(exam.slug)}`)
       .then((data) => { if (!cancelled) setAvailability(data); })
       .catch(() => { /* silently ignore — tabs stay fully usable without this hint */ });
     return () => { cancelled = true; };

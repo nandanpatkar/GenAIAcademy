@@ -17,7 +17,7 @@ export default function PracticeTab({ exam, onStartExam }) {
     setFetching(true);
     setErrorMsg("");
     try {
-      const data = await safeFetchJson(`/api/exam-scrape?exam=${encodeURIComponent(exam.slug)}&name=${encodeURIComponent(exam.name)}`);
+      const data = await safeFetchJson(`/api/exam?resource=scrape&exam=${encodeURIComponent(exam.slug)}&name=${encodeURIComponent(exam.name)}`);
       if (!data.questions || data.questions.length === 0) throw new Error("No questions were found for this exam.");
 
       onStartExam(exam.name, data.questions, config);
