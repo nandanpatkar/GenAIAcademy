@@ -45,6 +45,7 @@ import {
 } from "lucide-react";
 import IntelligenceHub from "./components/IntelligenceHub";
 import WorkplaceLab from "./components/WorkplaceLab";
+import OnboardingChatbot from "./components/OnboardingChatbot";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { setDynamicGeminiKey } from "./services/aiService";
@@ -138,6 +139,9 @@ function MainApp() {
   });
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingMode, setOnboardingMode] = useState("modal"); // "modal" (first login) | "panel" (sidebar reopen)
+  const hasCheckedOnboarding = React.useRef(false);
 
   const handleVideoSelect = (video) => {
     if (video.pathKey) setActivePath(video.pathKey);
@@ -243,15 +247,31 @@ function MainApp() {
         }
 
         setPathsData(mergedData);
-        const keys = Object.keys(mergedData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k));
+        const keys = Object.keys(mergedData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
+
+        // Existing user: only show the onboarding modal if they haven't completed it.
+        if (!hasCheckedOnboarding.current) {
+          hasCheckedOnboarding.current = true;
+          if (!mergedData.onboarding?.completed) {
+            setOnboardingMode("modal");
+            setShowOnboarding(true);
+          }
+        }
       } else {
         // New user: Use default paths strictly, do NOT pull from localStorage
         const initialData = injectDefaultIcons(PATHS);
         setPathsData(initialData);
-        const keys = Object.keys(initialData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k));
+        const keys = Object.keys(initialData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
         await supabase.from('user_curriculum').insert({ id: user.id, paths_data: initialData });
+
+        // Brand new user — always show the onboarding modal.
+        if (!hasCheckedOnboarding.current) {
+          hasCheckedOnboarding.current = true;
+          setOnboardingMode("modal");
+          setShowOnboarding(true);
+        }
       }
       setIsDataLoaded(true);
     };
@@ -553,7 +573,61 @@ function MainApp() {
     setShowProjects(false);
     setShowManual(false);
     setShowReference(false);
+    setShowOnboarding(false);
     setInterviewDeepLinkId(null);
+  };
+
+  // Used by OnboardingChatbot's recommendation chips to jump straight to a
+  // section. Mirrors Sidebar.jsx's handleNavClick switch, but operates on
+  // App.jsx's own state directly (the source of truth Sidebar's props point to).
+  const navigateToSection = (sectionId) => {
+    closeAllPanels();
+    switch (sectionId) {
+      case "overview": break; // closeAllPanels already returns to the dashboard
+      case "galaxy": setShowGalaxy(true); break;
+      case "knowledge_graph": setShowKnowledgeGraph(true); break;
+      case "curriculum_map": setShowCurriculumMap(true); break;
+      case "progress": setShowProgress(true); break;
+      case "manual": setShowManual(true); break;
+      case "reference": setShowReference(true); break;
+      case "projects": setShowProjects(true); break;
+      case "ide": setShowIDE(true); break;
+      case "playground": setShowPlayground(true); break;
+      case "simulator": setShowSimulator(true); break;
+      case "aws_simulator": setShowAwsSimulator(true); break;
+      case "dsa_animator": setShowDSAAnimator(true); break;
+      case "algo_visualizer": setShowAlgoVisualizer(true); break;
+      case "k8s_games": setShowK8sGames(true); break;
+      case "git_visualizer": setShowGitVisualizer(true); break;
+      case "flow_design": setShowFlowDesign(true); break;
+      case "notion": setShowNotion(true); break;
+      case "nosignups": setShowNoSignups(true); break;
+      case "blog": setShowBlog(true); break;
+      case "links": setShowLinks(true); break;
+      case "github": setShowGitHubHub(true); break;
+      case "tasks": setShowWorkplaceLab(true); break;
+      case "resources": setShowResources(true); break;
+      case "interviewer": setShowAIInterviewer(true); break;
+      case "interview_prep": setShowInterviewPrep(true); break;
+      case "quiz": setShowQuiz(true); break;
+      default: break;
+    }
+  };
+
+  // Persists the onboarding answers + recommendation into pathsData.onboarding
+  // (a special key alongside roadmap paths, same pattern as videoIntelligence/
+  // saved_algos). The existing 1500ms-debounced sync effect (below) picks this
+  // up and upserts it to Supabase's user_curriculum table — no new table needed.
+  const handleOnboardingComplete = (answers, recommendation) => {
+    setPathsData(prev => ({
+      ...prev,
+      onboarding: {
+        completed: true,
+        lastAnswers: answers,
+        lastRecommendation: recommendation,
+        completedAt: new Date().toISOString(),
+      },
+    }));
   };
 
   // ── Global Search (Cmd+K) ──────────────────────────────────────────────
@@ -597,7 +671,7 @@ function MainApp() {
     }
   }, [pathsData]);
 
-  const pathData = pathsData[activePath] || pathsData[Object.keys(pathsData).find(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k))] || Object.values(pathsData)[0];
+  const pathData = pathsData[activePath] || pathsData[Object.keys(pathsData).find(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding"].includes(k))] || Object.values(pathsData)[0];
 
   const handleNodeClick = (node, pathId) => {
     if (pathId) setActivePath(pathId);
@@ -967,6 +1041,20 @@ function MainApp() {
   return (
     <div className={`app ${isEditMode ? "edit-mode-active" : ""}`}>
       <GlobalSearchPalette items={searchItems} onNavigate={handleSearchNavigate} />
+      {showOnboarding && (
+        <OnboardingChatbot
+          mode={onboardingMode}
+          onClose={() => setShowOnboarding(false)}
+          onComplete={handleOnboardingComplete}
+          navigateToSection={navigateToSection}
+          setActivePath={setActivePath}
+          setShowCurriculumMap={setShowCurriculumMap}
+          setShowManual={setShowManual}
+          setActiveManualPhase={setActiveManualPhase}
+          setShowReference={setShowReference}
+          setActiveReferenceTopic={setActiveReferenceTopic}
+        />
+      )}
       {isEditMode && (
         <div style={{
           position: 'fixed', top: 0, left: 0, width: '100%', height: '2px',
@@ -1017,6 +1105,8 @@ function MainApp() {
           activeManualPhase={activeManualPhase} setActiveManualPhase={setActiveManualPhase}
           showReference={showReference} setShowReference={setShowReference}
           activeReferenceTopic={activeReferenceTopic} setActiveReferenceTopic={setActiveReferenceTopic}
+          showOnboarding={showOnboarding}
+          setShowOnboarding={(v) => { if (v) setOnboardingMode("panel"); setShowOnboarding(v); }}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
           showQuiz={showQuiz} setShowQuiz={setShowQuiz}
           showProjects={showProjects} setShowProjects={setShowProjects}
