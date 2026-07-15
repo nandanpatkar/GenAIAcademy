@@ -33,17 +33,9 @@ async function fetchHtml(url) {
   return res.text();
 }
 
-/** Locate and parse a `[{"id":...}, ...]` JSON array embedded in a page's HTML. */
-function extractJsonArray(html, marker, windowSize = 200) {
-  const startRe = /\[\s*\\?\{\s*\\?"id\\?":/g;
-  let startPos = -1;
-  let m;
-  while ((m = startRe.exec(html)) !== null) {
-    if (html.slice(m.index, m.index + windowSize).includes(marker)) {
-      startPos = m.index;
-      break;
-    }
-  }
+/** Locate a `[{...}, ...]` array embedded in a page's HTML, identified by a marker property name that appears inside its objects (e.g. "front" for flashcards). Returns the raw (unparsed) array substring. */
+function extractJsonArray(html, marker, windowSize = 250) {
+  const startPos = findArrayStart(html, marker, windowSize);
   if (startPos === -1) throw new Error(`Could not find the ${marker} JSON array in the HTML source.`);
 
   const chunk = html.slice(startPos);
@@ -61,51 +53,103 @@ function extractJsonArray(html, marker, windowSize = 200) {
   }
   if (endPos === -1) throw new Error("Could not find the matching closing bracket.");
 
-  const rawArrayStr = chunk.slice(0, endPos + 1);
-  let cleaned = rawArrayStr;
-  if (cleaned.startsWith('[{\\"') || cleaned.startsWith("[{\\u0022")) {
-    cleaned = unescapeChunk(cleaned);
+  return chunk.slice(0, endPos + 1);
+}
+
+/**
+ * Parse a raw array substring into JSON, trying progressively more
+ * forgiving strategies rather than guessing up front whether it's escaped:
+ *   1. Parse as-is (plain JSON, the common case)
+ *   2. Unescape common HTML-embedded-JSON escape sequences, then parse
+ *   3. Regex-recover individual `{...}` objects containing `marker`
+ * This is intentionally tolerant since the exact embedding format can
+ * vary by page/build without the underlying content being any different.
+ */
+function parseEmbeddedArray(rawArrayStr, marker) {
+  try {
+    return JSON.parse(rawArrayStr);
+  } catch { /* try next strategy */ }
+
+  try {
+    return JSON.parse(unescapeChunk(rawArrayStr));
+  } catch { /* try next strategy */ }
+
+  const recovered = recoverObjectsByMarker(rawArrayStr, marker);
+  if (recovered.length > 0) return recovered;
+
+  throw new Error(`Found a "${marker}" array in the page but couldn't parse it as JSON.`);
+}
+
+/**
+ * Find the start of a `[{...}]` array whose objects contain `marker`.
+ * Two passes: first, the fast path assuming "id" is the first key (matches
+ * the pattern server.py was built against); if that finds nothing, fall
+ * back to a generic scan that doesn't assume any particular key order —
+ * find the marker itself, then walk backward to the nearest `[{` that
+ * opens its enclosing array.
+ */
+function findArrayStart(html, marker, windowSize) {
+  const idFirstRe = /\[\s*\\?\{\s*\\?"id\\?":/g;
+  let m;
+  while ((m = idFirstRe.exec(html)) !== null) {
+    if (html.slice(m.index, m.index + windowSize).includes(marker)) {
+      return m.index;
+    }
   }
-  return { cleaned, rawArrayStr };
+
+  // Fallback: locate the marker property directly, then scan backward for
+  // the nearest `[{` (allowing for `\"` escaped quotes) within a reasonable
+  // distance, so we don't depend on key ordering at all.
+  const markerRe = new RegExp(`\\\\?"${marker}\\\\?"\\s*:`, "g");
+  let mm;
+  while ((mm = markerRe.exec(html)) !== null) {
+    const searchFrom = Math.max(0, mm.index - 4000);
+    const window = html.slice(searchFrom, mm.index);
+    const bracketRe = /\[\s*\\?\{/g;
+    let lastMatch = null;
+    let bm;
+    while ((bm = bracketRe.exec(window)) !== null) lastMatch = bm;
+    if (lastMatch) return searchFrom + lastMatch.index;
+  }
+
+  return -1;
+}
+
+/** Regex-based recovery when JSON.parse fails on a marker-delimited array — pulls out individual `{...}` objects that contain the marker key, mirroring the fallback already proven for questions. */
+function recoverObjectsByMarker(rawArrayStr, marker) {
+  const unescaped = unescapeChunk(rawArrayStr);
+  const pattern = new RegExp(`\\{[^{}]*?"${marker}"\\s*:[^{}]*?\\}`, "gs");
+  const matches = unescaped.match(pattern) || [];
+  const parsed = [];
+  for (const chunkStr of matches) {
+    try {
+      parsed.push(JSON.parse(chunkStr));
+    } catch {
+      // skip unparsable fragment
+    }
+  }
+  return parsed;
 }
 
 /** Scrape live from open-exam-prep.com and parse the embedded questions array. */
 export async function scrapeLive(examSlug) {
   const html = await fetchHtml(`https://open-exam-prep.com/practice/${examSlug}`);
-  const { cleaned, rawArrayStr } = extractJsonArray(html, "question", 150);
-
-  try {
-    return JSON.parse(cleaned);
-  } catch {
-    // Regex fallback for malformed JSON, mirroring server.py's approach
-    const unescaped = unescapeChunk(rawArrayStr);
-    const pattern = /\{\s*"id"\s*:\s*"[^"]+"\s*,\s*"question"\s*:\s*".+?"\s*,\s*"options"\s*:\s*\[.+?\]\s*,\s*"correctAnswer"\s*:\s*\d+?.+?\}/gs;
-    const matches = unescaped.match(pattern) || [];
-    const parsed = [];
-    for (const chunkStr of matches) {
-      try {
-        parsed.push(JSON.parse(chunkStr));
-      } catch {
-        // skip unparsable fragment
-      }
-    }
-    if (parsed.length === 0) throw new Error("Failed to extract questions via JSON parser or regex scanner.");
-    return parsed;
-  }
+  const rawArrayStr = extractJsonArray(html, "question", 150);
+  return parseEmbeddedArray(rawArrayStr, "question");
 }
 
 /** Scrape live flashcards for an exam. */
 export async function scrapeFlashcardsLive(examSlug) {
   const html = await fetchHtml(`https://open-exam-prep.com/flashcards/${examSlug}`);
-  const { cleaned } = extractJsonArray(html, "front");
-  return JSON.parse(cleaned);
+  const rawArrayStr = extractJsonArray(html, "front");
+  return parseEmbeddedArray(rawArrayStr, "front");
 }
 
 /** Scrape live video resources for an exam. */
 export async function scrapeVideosLive(examSlug) {
   const html = await fetchHtml(`https://open-exam-prep.com/videos/exams/${examSlug}`);
-  const { cleaned } = extractJsonArray(html, "youtubeVideoId");
-  return JSON.parse(cleaned);
+  const rawArrayStr = extractJsonArray(html, "youtubeVideoId");
+  return parseEmbeddedArray(rawArrayStr, "youtubeVideoId");
 }
 
 function titleCaseSlug(slug) {

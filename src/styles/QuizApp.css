@@ -1215,8 +1215,8 @@
 /* ─── Exam Bank: cards (design language borrowed from Manual's topic cards) ─── */
 .exambank-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
 }
 
 .exambank-card {
