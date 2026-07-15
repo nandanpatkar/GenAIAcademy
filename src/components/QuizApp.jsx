@@ -25,7 +25,7 @@ export default function QuizApp({ onClose }) {
   const { user } = useAuth();
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
   const [quizHistory, setQuizHistory] = useState([]);
-  const [activeTab, setActiveTab] = useState("setup"); // setup, history
+  const [activeTab, setActiveTab] = useState("examBank"); // examBank, setup, history
   const [savedQuizzes, setSavedQuizzes] = useState([]);
   const [pausedSessions, setPausedSessions] = useState([]);
   const [activeSessionId, setActiveSessionId] = useState(null);
@@ -217,6 +217,48 @@ export default function QuizApp({ onClose }) {
     setCorrectCount(0);
     setWrongCount(0);
     setTimeLeft(quizConfig.timeLimit * 60);
+  };
+
+  const mapExamDifficulty = (d) => {
+    const s = String(d || "").toLowerCase();
+    if (s === "easy") return "E";
+    if (s === "hard") return "I";
+    return "M";
+  };
+
+  // Adapts scraped exam-bank questions {question, options, correctAnswer, ...}
+  // into the internal quiz format {q, options, answer:[idx], ...} so the
+  // exam bank can reuse the exact same quiz-taking UI as custom quizzes.
+  const startExamQuiz = (examName, rawQuestions, config) => {
+    const transformed = rawQuestions.map((q, i) => ({
+      n: i + 1,
+      section: q.category || examName,
+      difficulty: mapExamDifficulty(q.difficulty),
+      multi: false,
+      q: q.question,
+      options: q.options || [],
+      answer: [typeof q.correctAnswer === "number" ? q.correctAnswer : 0],
+      explanation: q.explanation || "",
+    }));
+
+    setQuestions(transformed);
+    setQuizConfig({
+      name: examName,
+      timeLimit: config.timeLimit,
+      marksCorrect: config.marksCorrect,
+      marksWrong: config.marksWrong,
+      sections: [],
+      useDefault: false,
+      enableAiTutor: config.enableAiTutor,
+    });
+    setQuizState("quiz");
+    setCurrentIndex(0);
+    setUserAnswers({});
+    setCheckedQuestions(new Set());
+    setFlaggedQuestions(new Set());
+    setCorrectCount(0);
+    setWrongCount(0);
+    setTimeLeft(config.timeLimit * 60);
   };
 
   const restartTest = () => {
@@ -426,6 +468,13 @@ export default function QuizApp({ onClose }) {
           <div style={{ display: 'flex', gap: 10, marginBottom: 30, borderBottom: '1px solid var(--border)', paddingBottom: 16 }}>
             <button 
               className="quiz-btn"
+              style={{ background: activeTab === "examBank" ? 'var(--bg-secondary)' : 'transparent', color: 'var(--text-primary)', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: activeTab === "examBank" ? 600 : 400 }}
+              onClick={() => setActiveTab("examBank")}
+            >
+              Exam Bank
+            </button>
+            <button 
+              className="quiz-btn"
               style={{ background: activeTab === "setup" ? 'var(--bg-secondary)' : 'transparent', color: 'var(--text-primary)', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: activeTab === "setup" ? 600 : 400 }}
               onClick={() => setActiveTab("setup")}
             >
@@ -438,16 +487,9 @@ export default function QuizApp({ onClose }) {
             >
               My Quizzes
             </button>
-            <button 
-              className="quiz-btn"
-              style={{ background: activeTab === "examBank" ? 'var(--bg-secondary)' : 'transparent', color: 'var(--text-primary)', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: activeTab === "examBank" ? 600 : 400 }}
-              onClick={() => setActiveTab("examBank")}
-            >
-              Exam Bank
-            </button>
           </div>
 
-          {activeTab === "examBank" && <ExamPractice />}
+          {activeTab === "examBank" && <ExamPractice onStartExam={startExamQuiz} />}
 
           {activeTab !== "examBank" && (activeTab === "setup" ? (
             <>
