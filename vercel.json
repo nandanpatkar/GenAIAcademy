@@ -1,10 +1,10 @@
 {
   "functions": {
     "api/**/*.js": {
-      "excludeFiles": "{public/**,reference/**,themissingmanual/**,src/**,system-design-simulator/**,course_data*,scraped_data.json}"
+      "excludeFiles": "{public/**,dist/**,reference/**,themissingmanual/**,src/**,system-design-simulator/**,course_data*,scraped_data.json}"
     },
-    "api/**/*.py": {
-      "excludeFiles": "{public/**,reference/**,themissingmanual/**,src/**,system-design-simulator/**,course_data*,scraped_data.json}"
+    "api/notebooklm.py": {
+      "excludeFiles": "{public/**,dist/**,reference/**,themissingmanual/**,src/**,system-design-simulator/**,course_data*,scraped_data.json}"
     }
   },
   "rewrites": [
