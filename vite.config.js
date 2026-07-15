@@ -48,6 +48,37 @@ const apiMiddleware = () => ({
         }
       }
 
+      // /api/auth/* → /api/auth (single handler with full URL preserved)
+      if (url.startsWith("/api/auth/")) {
+        const filePath = path.join(process.cwd(), "api/auth.js");
+        if (fs.existsSync(filePath)) {
+          try {
+            const urlObj = new URL(req.url, "http://localhost");
+            req.query = Object.fromEntries(urlObj.searchParams.entries());
+
+            res.status = (statusCode) => {
+              res.statusCode = statusCode;
+              return res;
+            };
+            res.json = (data) => {
+              res.setHeader("Content-Type", "application/json");
+              res.end(JSON.stringify(data));
+            };
+            res.write = res.write.bind(res);
+            res.end = res.end.bind(res);
+
+            const module = await import(`${filePath}?update=${Date.now()}`);
+            await module.default(req, res);
+            return;
+          } catch (err) {
+            console.error("Auth Middleware error:", err);
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: err.message }));
+            return;
+          }
+        }
+      }
+
       if (url.startsWith("/api/")) {
         const endpoint = url;
         const filePath = path.join(process.cwd(), `${endpoint}.js`);

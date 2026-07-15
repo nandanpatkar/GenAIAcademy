@@ -10,7 +10,10 @@
   "rewrites": [
     { "source": "/notion-api/(.*)", "destination": "https://api.notion.com/$1" },
     { "source": "/graphql", "destination": "/api/graphql" },
-    { "source": "/api/copilot/:path*", "destination": "/api/copilot" }
+    { "source": "/api/copilot/:path*", "destination": "/api/copilot" },
+    { "source": "/api/auth/:path*", "destination": "/api/auth" },
+    { "source": "/manifest.json", "destination": "/editor/manifest.json" },
+    { "source": "/imgs/app-icon-:variant.ico", "destination": "/editor/imgs/app-icon-:variant.ico" }
   ],
   "redirects": [
     { "source": "/draw", "destination": "/k8sgames/draw.html", "permanent": true }
