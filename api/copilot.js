@@ -28,6 +28,30 @@ async function getGlobalAIConfig() {
   return data?.paths_data || {};
 }
 
+// ─── Per-visitor AI config (bring-your-own-key) ──────────────────────────────
+// AuthContext.jsx mirrors a signed-in visitor's own Settings-panel key into
+// cookies (see AI_SETTINGS_COOKIES there) since the embedded editor's own
+// fetch/EventSource calls can't carry custom headers. Cookies ride along on
+// same-origin requests automatically, so this is the one channel available
+// to let a visitor's own key reach this server-side handler.
+function getCookieAIConfig(req) {
+  const header = req.headers?.cookie || '';
+  const cookies = {};
+  for (const part of header.split(';')) {
+    const idx = part.indexOf('=');
+    if (idx === -1) continue;
+    const key = part.slice(0, idx).trim();
+    const value = part.slice(idx + 1).trim();
+    if (key) cookies[key] = decodeURIComponent(value);
+  }
+  return {
+    geminiKey: cookies['genai_gemini_key'] || '',
+    aiProvider: cookies['genai_ai_provider'] || '',
+    azureEndpoint: cookies['genai_azure_endpoint'] || '',
+    azureKey: cookies['genai_azure_key'] || '',
+  };
+}
+
 // ─── SSE Helpers ─────────────────────────────────────────────────────────────
 // AFFiNE's event-source.ts listens for named SSE events:
 //   - event: message  → data is raw text chunk (NOT JSON)
@@ -203,16 +227,17 @@ export default async function handler(req, res) {
     return;
   }
 
-  // Get AI config — prefer the shared global config (Admin Panel / Settings,
-  // stored in user_curriculum.paths_data) that every other AI feature in the
-  // app reads from, falling back to environment variables.
+  // Get AI config. Priority: the visitor's own key (Settings panel, mirrored
+  // into cookies by AuthContext.jsx) > the shared global config (Admin Panel,
+  // stored in user_curriculum.paths_data) > environment variables.
+  const cookieConfig = getCookieAIConfig(req);
   const globalConfig = await getGlobalAIConfig();
 
-  const rawProvider = globalConfig.aiProvider || process.env.AI_PROVIDER || process.env.VITE_AI_PROVIDER || 'gemini';
+  const rawProvider = cookieConfig.aiProvider || globalConfig.aiProvider || process.env.AI_PROVIDER || process.env.VITE_AI_PROVIDER || 'gemini';
   const aiProvider = (rawProvider === 'azure-openai' || rawProvider === 'azure') ? 'azure' : 'gemini';
-  const geminiKey = globalConfig.geminiKey || process.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
-  const azureEndpoint = globalConfig.azureEndpoint || process.env.VITE_AZURE_OPENAI_ENDPOINT || '';
-  const azureKey = globalConfig.azureKey || process.env.VITE_AZURE_OPENAI_KEY || '';
+  const geminiKey = cookieConfig.geminiKey || globalConfig.geminiKey || process.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
+  const azureEndpoint = cookieConfig.azureEndpoint || globalConfig.azureEndpoint || process.env.VITE_AZURE_OPENAI_ENDPOINT || '';
+  const azureKey = cookieConfig.azureKey || globalConfig.azureKey || process.env.VITE_AZURE_OPENAI_KEY || '';
   const azureDeployment = process.env.VITE_AZURE_OPENAI_DEPLOYMENT || 'gpt-5.2';
   const azureApiVersion = process.env.VITE_AZURE_OPENAI_API_VERSION || '2024-02-15-preview';
 

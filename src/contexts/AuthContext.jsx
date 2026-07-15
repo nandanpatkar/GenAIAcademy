@@ -5,6 +5,29 @@ const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
 
+// The Workspace Notes editor (public/editor, a self-hosted AFFiNE build) talks
+// to api/copilot.js over same-origin fetch/EventSource requests that we don't
+// control — there's no way to attach custom headers to them. Cookies, unlike
+// headers, ride along automatically on same-origin requests, so mirroring the
+// user's own AI provider settings into cookies is how api/copilot.js learns
+// to use the visitor's own key instead of the shared admin/env-var fallback.
+const AI_SETTINGS_COOKIES = {
+  geminiKey: 'genai_gemini_key',
+  aiProvider: 'genai_ai_provider',
+  azureEndpoint: 'genai_azure_endpoint',
+  azureKey: 'genai_azure_key',
+};
+
+function setAiSettingsCookie(name, value) {
+  const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+  if (!value) {
+    document.cookie = `${name}=; Path=/; Max-Age=0; SameSite=Lax${secure}`;
+    return;
+  }
+  const maxAge = 60 * 60 * 24 * 365; // 1 year
+  document.cookie = `${name}=${encodeURIComponent(value)}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
+}
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [session, setSession] = useState(null);
@@ -24,22 +47,44 @@ export const AuthProvider = ({ children }) => {
   const updateGeminiKey = (key) => {
     setGeminiKey(key);
     localStorage.setItem('genai_gemini_key', key);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, key);
   };
 
   const updateAiProvider = (provider) => {
     setAiProvider(provider);
     localStorage.setItem('genai_ai_provider', provider);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, provider);
   };
 
   const updateAzureEndpoint = (endpoint) => {
     setAzureEndpoint(endpoint);
     localStorage.setItem('genai_azure_endpoint', endpoint);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, endpoint);
   };
 
   const updateAzureKey = (key) => {
     setAzureKey(key);
     localStorage.setItem('genai_azure_key', key);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, key);
   };
+
+  // Migrate any pre-existing localStorage settings (from before this cookie
+  // bridge existed) so returning users don't have to re-enter their key for
+  // Workspace Notes to pick it up.
+  useEffect(() => {
+    if (localStorage.getItem('genai_gemini_key')) {
+      setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, localStorage.getItem('genai_gemini_key'));
+    }
+    if (localStorage.getItem('genai_ai_provider')) {
+      setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, localStorage.getItem('genai_ai_provider'));
+    }
+    if (localStorage.getItem('genai_azure_endpoint')) {
+      setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, localStorage.getItem('genai_azure_endpoint'));
+    }
+    if (localStorage.getItem('genai_azure_key')) {
+      setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, localStorage.getItem('genai_azure_key'));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchGlobalConfig = async () => {
