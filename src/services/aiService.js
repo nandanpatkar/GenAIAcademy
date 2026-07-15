@@ -916,3 +916,152 @@ Maintain an encouraging, senior-mentor tone.`;
   }
 };
 
+// ─── Public: Onboarding Chatbot ──────────────────────────────────────────────
+// Stage 1 — ONE LLM call. Given the user's onboarding answers plus compact
+// catalogs (roadmaps, sidebar sections, manual categories, reference tags),
+// ask the model to pick broad recommendations. Uses callAI so it automatically
+// follows whatever provider (Gemini or Azure OpenAI) is currently active —
+// same fallback logic every other generator in this file already uses.
+//
+// Stage 2 (matchManualAndReferenceDetails, below) resolves those broad picks
+// down to specific manual guides / reference sheets entirely client-side —
+// no second API call, so onboarding always costs exactly one LLM request.
+export const generateOnboardingRecommendation = async (answers, catalogs) => {
+  const { roadmapCatalog, sectionCatalog, manualCategoryCatalog, referenceTagCatalog } = catalogs;
+
+  const systemPrompt = `You are the onboarding guide for GenAI Academy, an AI/ML learning platform.
+A new user just answered a short questionnaire. Based on their answers, recommend where they
+should start.
+
+AVAILABLE ROADMAPS:
+${JSON.stringify(roadmapCatalog)}
+
+AVAILABLE SIDEBAR SECTIONS:
+${JSON.stringify(sectionCatalog)}
+
+AVAILABLE MANUAL CATEGORIES (long-form guides, pick 1-3 most relevant):
+${JSON.stringify(manualCategoryCatalog)}
+
+AVAILABLE REFERENCE TAGS (quick cheat sheets, pick 1-3 most relevant):
+${JSON.stringify(referenceTagCatalog)}
+
+Rules:
+1. "recommendedRoadmap" MUST be exactly one "id" value from AVAILABLE ROADMAPS.
+2. "sections" MUST use exactly the "id" values from AVAILABLE SIDEBAR SECTIONS. Pick 2-4 sections.
+3. "manualCategories" MUST use exactly the "slug" values from AVAILABLE MANUAL CATEGORIES. Pick 1-3.
+4. "referenceTags" MUST use exactly values from AVAILABLE REFERENCE TAGS. Pick 1-3.
+5. Never invent an id/slug/tag that isn't in the lists above.
+6. "message" should be a short (1-2 sentence), warm, direct explanation of the recommendation.
+7. Return ONLY valid JSON, no markdown fences, no explanation outside the JSON.
+
+Schema:
+{
+  "message": string,
+  "recommendedRoadmap": string,
+  "sections": [{"sectionId": string, "reason": string}],
+  "manualCategories": [string],
+  "referenceTags": [string]
+}`;
+
+  const userMessage = `User's onboarding answers:\n${JSON.stringify(answers, null, 2)}`;
+
+  try {
+    const messages = [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userMessage },
+    ];
+    const raw = await callAI(messages, 1024, 0.4, true);
+    const parsed = JSON.parse(extractJSON(raw));
+
+    // Defensive defaults — never let a malformed response crash the UI.
+    return {
+      message: typeof parsed.message === "string" ? parsed.message : "Here's where I'd start:",
+      recommendedRoadmap: typeof parsed.recommendedRoadmap === "string" ? parsed.recommendedRoadmap : null,
+      sections: Array.isArray(parsed.sections) ? parsed.sections : [],
+      manualCategories: Array.isArray(parsed.manualCategories) ? parsed.manualCategories : [],
+      referenceTags: Array.isArray(parsed.referenceTags) ? parsed.referenceTags : [],
+    };
+  } catch (error) {
+    console.error("Onboarding Recommendation Error:", error);
+    throw new Error("Couldn't generate a recommendation right now. Please try again.");
+  }
+};
+
+// Stage 2 — local keyword matching, no API call.
+// Takes the broad manualCategories/referenceTags picks from Stage 1 and the
+// user's raw answers, and finds specific guides/sheets to deep-link to.
+// manualStructure / referenceStructure are passed in (rather than imported
+// here) so this stays a pure function that's easy to test independently.
+const STOPWORDS = new Set(["a", "an", "the", "and", "or", "but", "to", "of", "in", "on", "for", "with", "i", "want", "learn", "get", "good", "at", "my", "is", "am", "be", "do"]);
+
+const tokenize = (text) =>
+  String(text || "")
+    .toLowerCase()
+    .split(/[^a-z0-9+]+/)
+    .filter((w) => w.length > 2 && !STOPWORDS.has(w));
+
+const scoreOverlap = (keywords, text) => {
+  const textTokens = new Set(tokenize(text));
+  let score = 0;
+  for (const kw of keywords) {
+    if (textTokens.has(kw)) score += 1;
+  }
+  return score;
+};
+
+export const matchManualAndReferenceDetails = (
+  manualCategorySlugs,
+  referenceTags,
+  answers,
+  manualStructure,
+  referenceStructure
+) => {
+  const answerText = Object.values(answers || {}).join(" ");
+  const keywords = tokenize(answerText);
+
+  // Manual: search guides within the LLM-picked categories only.
+  const manualMatches = [];
+  for (const catSlug of manualCategorySlugs || []) {
+    const category = (manualStructure || []).find((c) => c.slug === catSlug);
+    if (!category) continue;
+
+    const scoredGuides = (category.guides || [])
+      .map((guide) => ({
+        guide,
+        score: scoreOverlap(keywords, `${guide.title} ${guide.summary}`),
+      }))
+      .sort((a, b) => b.score - a.score);
+
+    // Take the best guide from each matched category (falls back to the
+    // first guide if nothing scored, so we still surface something relevant
+    // to the category itself).
+    const best = scoredGuides[0]?.guide || category.guides?.[0];
+    if (best && best.phases && best.phases.length > 0) {
+      const firstPhase = best.phases[0];
+      manualMatches.push({
+        categorySlug: category.slug,
+        guideSlug: best.slug,
+        phaseSlug: firstPhase.slug,
+        filePath: firstPhase.filePath,
+        title: best.title,
+      });
+    }
+  }
+
+  // Reference: search sheets whose tags overlap the LLM-picked tags, ranked
+  // by keyword relevance to the user's own answers.
+  const taggedSheets = (referenceStructure || []).filter((sheet) =>
+    (sheet.tags || []).some((t) => (referenceTags || []).includes(t))
+  );
+  const referenceMatches = taggedSheets
+    .map((sheet) => ({
+      sheet,
+      score: scoreOverlap(keywords, `${sheet.title} ${sheet.intro}`),
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map((m) => m.sheet);
+
+  return { manualMatches, referenceMatches };
+};
+

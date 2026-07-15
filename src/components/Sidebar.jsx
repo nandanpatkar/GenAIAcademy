@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe } from "lucide-react";
+// Note: Sparkles was already imported above — kept as a single import line to avoid duplicate-identifier errors.
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import BentoCard from "./BentoCard";
@@ -48,7 +49,8 @@ export default function Sidebar({
   showManual, setShowManual,
   activeManualPhase, setActiveManualPhase,
   showReference, setShowReference,
-  activeReferenceTopic, setActiveReferenceTopic
+  activeReferenceTopic, setActiveReferenceTopic,
+  showOnboarding, setShowOnboarding
 }) {
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
@@ -75,6 +77,7 @@ export default function Sidebar({
         { icon: <Share2 size={14} />, label: "Knowledge Graph", id: "knowledge_graph" },
         { icon: <Network size={14} />, label: "Study Map", id: "curriculum_map" },
         { icon: <CircleDashed size={14} />, label: "Progress", id: "progress" },
+        { icon: <Sparkles size={14} />, label: "Onboarding Guide", id: "onboarding_chat" },
       ]
     },
     {
@@ -218,8 +221,12 @@ export default function Sidebar({
     if (setShowQuiz) setShowQuiz(false);
     if (setShowManual) setShowManual(false);
     if (setShowReference) setShowReference(false);
+    if (setShowOnboarding) setShowOnboarding(false);
 
     switch (id) {
+      case "onboarding_chat":
+        if (setShowOnboarding) setShowOnboarding(true);
+        break;
       case "reference":
         if (setActiveReferenceTopic) setActiveReferenceTopic(null);
         if (setShowReference) setShowReference(true);
@@ -298,7 +305,7 @@ export default function Sidebar({
   };
 
   const pathList = Object.keys(paths || {})
-    .filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(k))
+    .filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding"].includes(k))
     .map(k => {
       const p = paths[k];
     if (!p) return null;
