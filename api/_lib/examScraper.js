@@ -200,24 +200,58 @@ export async function getStudyGuideTOCLive(examSlug) {
   return orderedCats.map((k) => categories[k]);
 }
 
-function buildArticleSanitizeOptions(sanitizeHtml) {
-  return {
-    allowedTags: [
-      "h1", "h2", "h3", "h4", "h5", "h6", "p", "br", "hr", "div", "span",
-      "ul", "ol", "li", "strong", "b", "em", "i", "u", "a", "img",
-      "table", "thead", "tbody", "tr", "td", "th", "code", "pre",
-      "blockquote", "figure", "figcaption",
-    ],
-    allowedAttributes: {
-      a: ["href", "title", "target", "rel"],
-      img: ["src", "alt", "title", "width", "height"],
-      "*": ["class"],
-    },
-    allowedSchemes: ["http", "https"],
-    transformTags: {
-      a: sanitizeHtml.simpleTransform("a", { target: "_blank", rel: "noopener noreferrer" }),
-    },
-  };
+// Dangerous elements are removed along with their content entirely.
+const STRIP_WITH_CONTENT = ["script", "style", "noscript", "iframe", "object", "embed", "link", "meta", "base", "form", "svg", "template"];
+// Interactive form-control elements are unwrapped (tag removed, any text kept).
+const STRIP_TAGS_ONLY = ["input", "button", "select", "textarea", "option"];
+
+/**
+ * Minimal, dependency-free HTML sanitizer for the scraped study-guide
+ * article content. Deliberately not a full parser — a blocklist of the
+ * concrete XSS vectors (script execution, event-handler attributes,
+ * javascript:/vbscript: URIs, inline style, srcdoc) rather than an
+ * allowlist-based rebuild, since the source is a specific, known,
+ * scraping-permitted third-party site rather than arbitrary user input.
+ * This avoids depending on a third-party sanitizer package after
+ * sanitize-html caused platform-level 500s when it failed to load in
+ * Vercel's serverless bundle.
+ */
+function sanitizeArticleHtml(html) {
+  let out = html;
+
+  // HTML comments can hide legacy/conditional script vectors.
+  out = out.replace(/<!--[\s\S]*?-->/g, "");
+
+  for (const tag of STRIP_WITH_CONTENT) {
+    out = out.replace(new RegExp(`<${tag}\\b[^>]*>[\\s\\S]*?<\\/${tag}>`, "gi"), "");
+    out = out.replace(new RegExp(`<${tag}\\b[^>]*\\/?>`, "gi"), "");
+  }
+
+  for (const tag of STRIP_TAGS_ONLY) {
+    out = out.replace(new RegExp(`<\\/?${tag}\\b[^>]*>`, "gi"), "");
+  }
+
+  // Event handler attributes: onclick=, onerror=, onload=, etc.
+  out = out.replace(/\son\w+\s*=\s*"(?:[^"\\]|\\.)*"/gi, "");
+  out = out.replace(/\son\w+\s*=\s*'(?:[^'\\]|\\.)*'/gi, "");
+  out = out.replace(/\son\w+\s*=\s*[^\s>]+/gi, "");
+
+  // Inline style can carry CSS-based exfiltration/expression tricks.
+  out = out.replace(/\sstyle\s*=\s*"(?:[^"\\]|\\.)*"/gi, "");
+  out = out.replace(/\sstyle\s*=\s*'(?:[^'\\]|\\.)*'/gi, "");
+
+  // Neutralize javascript:/vbscript: URIs in href/src/action.
+  out = out.replace(/\s(href|src|action)\s*=\s*"\s*(?:javascript|vbscript):[^"]*"/gi, ' $1="#"');
+  out = out.replace(/\s(href|src|action)\s*=\s*'\s*(?:javascript|vbscript):[^']*'/gi, " $1='#'");
+
+  // srcdoc can inline an entire executable HTML document.
+  out = out.replace(/\ssrcdoc\s*=\s*"(?:[^"\\]|\\.)*"/gi, "");
+  out = out.replace(/\ssrcdoc\s*=\s*'(?:[^'\\]|\\.)*'/gi, "");
+
+  // Force external links to open safely in a new tab.
+  out = out.replace(/<a\b((?:(?!target=)[^>])*)>/gi, '<a$1 target="_blank" rel="noopener noreferrer">');
+
+  return out.trim();
 }
 
 /** Scrape live study-guide article HTML for one topic, sanitized before returning. */
@@ -233,8 +267,7 @@ export async function getStudyGuideArticleLive(examSlug, topicPath) {
   articleHtml = articleHtml.split('src="/').join('src="https://open-exam-prep.com/');
   articleHtml = articleHtml.split('href="/').join('href="https://open-exam-prep.com/');
 
-  const { default: sanitizeHtml } = await import("sanitize-html");
-  return sanitizeHtml(articleHtml, buildArticleSanitizeOptions(sanitizeHtml));
+  return sanitizeArticleHtml(articleHtml);
 }
 
 /**
