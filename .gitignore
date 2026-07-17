@@ -23,3 +23,6 @@ dsa_data.txt
 dsa_data_*.txt
 .angular/
 
+
+# Ignore AFFiNE embedded repo
+AFFiNE/
