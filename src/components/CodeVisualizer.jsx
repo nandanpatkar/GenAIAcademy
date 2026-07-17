@@ -147,7 +147,7 @@ export default function CodeVisualizer({ onClose }) {
           color: #fff;
           display: flex;
           flex-direction: column;
-          font-family: 'Syne', sans-serif;
+          font-family: inherit;
           overflow: hidden;
         }
 

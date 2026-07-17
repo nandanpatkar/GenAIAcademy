@@ -64,7 +64,7 @@ export default function NoSignups({ onClose }) {
                 letterSpacing: '-0.8px', 
                 lineHeight: 1, 
                 margin: 0,
-                fontFamily: 'Syne, sans-serif'
+                fontFamily: 'var(--font-heading, inherit)'
               }}>
               NoSignups Tools
             </motion.h1>

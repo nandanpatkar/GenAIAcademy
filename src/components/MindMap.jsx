@@ -996,7 +996,7 @@ const Flow = ({ initialNodes, initialEdges, onSave }) => {
           border-bottom-width: 2px;
           border-radius: 4px;
           padding: 1px 4px;
-          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+          font-family: var(--font-mono, monospace);
           font-size: 10px;
           font-weight: 600;
           color: #374151;

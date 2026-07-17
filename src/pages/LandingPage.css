@@ -13,7 +13,7 @@
   --ga-green: #34d399;
   --ga-amber: #fbbf24;
   --ga-font: 'Inter', 'SF Pro Display', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
-  --ga-mono: 'Fira Code', 'JetBrains Mono', ui-monospace, monospace;
+  --ga-mono: var(--font-mono, monospace);
 
   position: fixed;
   inset: 0;

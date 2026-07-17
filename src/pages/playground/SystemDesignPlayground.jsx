@@ -533,7 +533,7 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
         <ArchitectureDesign />
       ) : (
 
-      <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg)", fontFamily: "'DM Mono','Fira Code',monospace", color: "var(--pg-text)", overflow: "hidden" }}>
+      <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg)", fontFamily: 'var(--font-mono, monospace)', color: "var(--pg-text)", overflow: "hidden" }}>
 
         {/* ══ SIDEBAR ══════════════════════════════════════════════════════════ */}
         {showSidebar && (

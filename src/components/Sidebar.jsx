@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe, Palette } from "lucide-react";
 // Note: Sparkles was already imported above — kept as a single import line to avoid duplicate-identifier errors.
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "../contexts/ThemeContext";
+import AppearanceSettings from "./AppearanceSettings";
 import BentoCard from "./BentoCard";
 
 
@@ -37,7 +39,6 @@ export default function Sidebar({
   showInterviewPrep, setShowInterviewPrep,
   isMobileMenuOpen, setIsMobileMenuOpen,
   setActiveNode, setActiveModule, setActiveTopic,
-  theme, toggleTheme,
   onSignOut,
   onHubNav,
   setLinksInitialTab,
@@ -55,6 +56,8 @@ export default function Sidebar({
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [isPathsVisible, setIsPathsVisible] = useState(true);
+  const [showAppearance, setShowAppearance] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, geminiKey, updateGeminiKey, aiProvider, updateAiProvider, azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey } = useAuth();
   const [localKey, setLocalKey] = useState(geminiKey || "");
   const [localProvider, setLocalProvider] = useState(aiProvider || "gemini");
@@ -342,6 +345,7 @@ export default function Sidebar({
   });
 
   return (
+    <>
     <aside className={`sidebar${isCollapsed ? " sidebar-collapsed" : ""}${isMobileMenuOpen ? " sidebar-mobile-open" : ""}${isPathsVisible ? " sidebar-paths-visible" : ""}`}>
       <div className="sidebar-logo morphing-header">
         <div className="logo-orb">
@@ -640,6 +644,15 @@ export default function Sidebar({
               <span>{theme === 'dark' ? "Dark Mode" : "Light Mode"}</span>
             </button>
 
+            <button
+              id="sidebar-appearance-btn"
+              className="popout-item overlay-item"
+              onClick={() => setShowAppearance(true)}
+            >
+              <Palette size={14} />
+              <span>Appearance</span>
+            </button>
+
             <button 
               id="sidebar-reset-data"
               className={`popout-item reset overlay-item ${resetConfirm ? 'danger confirmed' : ''}`}
@@ -811,6 +824,10 @@ export default function Sidebar({
         </div>
       </div>
     </aside>
+    {showAppearance && (
+      <AppearanceSettings onClose={() => setShowAppearance(false)} />
+    )}
+  </>
   );
 }
 

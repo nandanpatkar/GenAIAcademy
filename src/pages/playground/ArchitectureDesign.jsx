@@ -519,7 +519,7 @@ function ArchCanvas() {
   })).filter(cat => !search || cat.items.length > 0);
 
   return (
-    <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg, #0f1117)", fontFamily: "'DM Mono','Fira Code',monospace", overflow: "hidden" }}>
+    <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg, #0f1117)", fontFamily: 'var(--font-mono, monospace)', overflow: "hidden" }}>
 
       {/* ═══ SIDEBAR ════════════════════════════════════════════════════════ */}
       {showSidebar && (

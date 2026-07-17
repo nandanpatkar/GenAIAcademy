@@ -1,0 +1,536 @@
+/* ═══════════════════════════════════════════════════════
+   AppearanceSettings.css — Theme Customization Studio
+   Follows the project's Obsidian/Neon design language
+═══════════════════════════════════════════════════════ */
+
+/* ── Overlay ── */
+.appearance-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: stretch;
+}
+
+/* ── Panel ── */
+.appearance-panel {
+  width: 320px;
+  height: 100vh;
+  background: var(--bg2);
+  border-right: 1px solid var(--border2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 4px 0 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Header ── */
+.ap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.ap-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ap-header-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--neon-dim);
+  border: 1px solid var(--neon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neon);
+  flex-shrink: 0;
+}
+
+.ap-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.ap-subtitle {
+  font-size: 10px;
+  color: var(--text3);
+  margin-top: 1px;
+}
+
+.ap-close {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.ap-close:hover {
+  background: var(--bg5);
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+/* ── Live Preview ── */
+.ap-preview {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+  flex-shrink: 0;
+}
+
+.ap-preview-label {
+  font-size: 8px;
+  font-weight: 900;
+  color: var(--text3);
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.ap-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ap-preview-btn {
+  padding: 5px 12px;
+  border-radius: var(--radius, 8px);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: default;
+  transition: none;
+  border: none;
+}
+
+.ap-preview-btn--primary {
+  background: var(--neon);
+  color: #000;
+}
+
+.ap-preview-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border2) !important;
+  color: var(--text2);
+}
+
+.ap-preview-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius, 8px);
+  background: var(--neon-dim);
+  border: 1px solid var(--neon);
+  color: var(--neon);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.ap-preview-text {
+  font-size: 11px;
+  color: var(--text2);
+}
+
+/* ── Body (scrollable) ── */
+.ap-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg5) transparent;
+}
+
+.ap-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ap-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ap-body::-webkit-scrollbar-thumb {
+  background: var(--bg5);
+  border-radius: 4px;
+}
+
+/* ── Section ── */
+.ap-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ap-section:last-child {
+  border-bottom: none;
+}
+
+.ap-section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  font-weight: 900;
+  color: var(--text3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ── Theme Toggle ── */
+.ap-theme-row {
+  display: flex;
+  gap: 8px;
+}
+
+.ap-theme-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.ap-theme-btn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.ap-theme-btn.active {
+  border-color: var(--neon);
+  background: var(--neon-dim);
+  color: var(--neon);
+}
+
+.ap-theme-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ap-theme-swatch--dark {
+  background: #0a0a0c;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.ap-theme-swatch--light {
+  background: #fcfcfc;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+/* ── Color Grid ── */
+.ap-color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ap-color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.ap-color-swatch:hover {
+  transform: scale(1.15);
+}
+
+.ap-color-custom {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ap-color-custom-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: block;
+  border: 2px solid var(--border2);
+  transition: transform 0.2s;
+}
+
+.ap-color-custom:hover .ap-color-custom-icon {
+  transform: scale(1.15);
+  border-color: var(--border2);
+}
+
+/* ── Font List ── */
+.ap-font-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ap-font-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  position: relative;
+}
+
+.ap-font-card:hover {
+  border-color: var(--border2);
+  background: var(--bg4);
+}
+
+.ap-font-card.active {
+  border-color: var(--neon);
+  background: var(--neon-dim);
+}
+
+.ap-font-sample {
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 600;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.ap-font-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.ap-font-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text); /* Use system UI font for labels */
+}
+
+.ap-font-desc {
+  font-size: 9px;
+  color: var(--text3);
+}
+
+/* ── Toggle Row (font size + radius) ── */
+.ap-toggle-row {
+  display: flex;
+  gap: 6px;
+}
+
+.ap-toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ap-toggle-btn:hover {
+  border-color: var(--border2);
+  color: var(--text);
+  background: var(--bg4);
+}
+
+.ap-toggle-btn.active {
+  border-color: var(--neon);
+  background: var(--neon-dim);
+  color: var(--neon);
+}
+
+.ap-radius-icon {
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* ── Shared check mark ── */
+.ap-check {
+  margin-left: auto;
+  color: var(--neon);
+  flex-shrink: 0;
+}
+
+/* ── Footer ── */
+.ap-footer {
+  border-top: 1px solid var(--border);
+  padding: 12px 16px;
+  flex-shrink: 0;
+}
+
+.ap-reset-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 0;
+  border-radius: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ap-reset-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.ap-reset-btn.confirm {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+}
+
+.ap-reset-btn .spin {
+  animation: ap-spin 1.5s linear infinite;
+}
+
+@keyframes ap-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Light theme overrides ── */
+.light-theme .appearance-panel {
+  box-shadow: 4px 0 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ── System Theme Palette Grid ── */
+.ap-palette-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ap-palette-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  position: relative;
+}
+
+.ap-palette-card:hover {
+  border-color: var(--border2);
+  background: var(--bg4);
+}
+
+.ap-palette-card.active {
+  border-color: var(--neon);
+  background: var(--neon-dim);
+}
+
+.ap-palette-swatches {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.ap-palette-swatches span {
+  width: 14px;
+  height: 24px;
+  border-radius: 3px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.ap-palette-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.ap-palette-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ap-palette-desc {
+  font-size: 9px;
+  color: var(--text3);
+}
+
+/* ── Background Pattern Buttons ── */
+.ap-pattern-btn {
+  flex-direction: column;
+  gap: 3px !important;
+  padding: 8px 4px;
+}
+
+.ap-pattern-icon {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--text2);
+  transition: color 0.2s;
+}
+
+.ap-toggle-btn.active .ap-pattern-icon {
+  color: var(--neon);
+}
+
+/* ── Spin animation (keep at end) ── */
+.ap-reset-btn .spin {
+  animation: ap-spin 1.5s linear infinite;
+}
+

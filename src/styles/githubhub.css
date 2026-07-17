@@ -62,7 +62,6 @@
 }
 
 .gh-hub-main-title {
-  font-family: var(--font);
   font-size: 18px;
   font-weight: 800;
   color: #fff;
@@ -80,7 +79,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--mono);
 }
 
 .gh-stat-count {

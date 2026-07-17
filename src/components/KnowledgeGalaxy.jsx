@@ -343,7 +343,7 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
           background: #020408;
           z-index: 2000;
           overflow: hidden;
-          font-family: 'Syne', sans-serif;
+          font-family: inherit;
         }
         .galaxy-canvas {
           position: absolute;

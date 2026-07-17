@@ -24,7 +24,7 @@
     --violet: #a78bfa;
     --pink: #f472b6;
 
-    font-family: 'Inter', sans-serif;
+    font-family: inherit;
     color: var(--text-primary);
     position: relative;
     width: 100%;
@@ -264,7 +264,7 @@
     border-radius: 8px;
     padding: 14px 18px;
     margin: 12px 0;
-    font-family: 'Fira Code', 'Consolas', monospace;
+    font-family: var(--font-mono, monospace);
     font-size: 13px;
     line-height: 1.6;
     overflow-x: auto;

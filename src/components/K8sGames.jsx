@@ -52,7 +52,7 @@ export default function K8sGames({ onClose }) {
               boxShadow: '0 12px 32px rgba(14, 165, 233, 0.4)',
               border: '1px solid rgba(255, 255, 255, 0.2)'
             }}>
-            <span style={{ color: '#fff', fontSize: 18, fontWeight: 900, fontFamily: 'Syne, sans-serif' }}>K8s</span>
+            <span style={{ color: '#fff', fontSize: 18, fontWeight: 900, fontFamily: 'var(--font-heading, inherit)' }}>K8s</span>
           </motion.div>
           <div>
             <motion.h1 
@@ -64,7 +64,7 @@ export default function K8sGames({ onClose }) {
                 letterSpacing: '-0.8px', 
                 lineHeight: 1, 
                 margin: 0,
-                fontFamily: 'Syne, sans-serif'
+                fontFamily: 'var(--font-heading, inherit)'
               }}>
               Deployment Game
             </motion.h1>

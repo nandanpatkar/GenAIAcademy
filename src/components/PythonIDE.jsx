@@ -462,7 +462,7 @@ export default function PythonIDE({ onClose }) {
                   options={{
                     minimap: { enabled: false },
                     fontSize: 14,
-                    fontFamily: "'DM Mono', 'Fira Code', monospace",
+                    fontFamily: 'var(--font-mono, monospace)',
                     lineNumbers: "on",
                     renderLineHighlight: "line",
                     cursorBlinking: "phase",

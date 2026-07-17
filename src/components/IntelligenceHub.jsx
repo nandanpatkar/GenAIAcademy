@@ -864,7 +864,7 @@ export default function IntelligenceHub({
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          font-family: 'Syne', sans-serif;
+          font-family: inherit;
         }
 
         .hub-header {
@@ -1351,7 +1351,7 @@ export default function IntelligenceHub({
           font-size: 20px;
           font-weight: 700;
           outline: none;
-          font-family: 'Syne', sans-serif;
+          font-family: inherit;
         }
 
         .ai-glow-icon { color: #00ff88; filter: drop-shadow(0 0 10px #00ff88); }

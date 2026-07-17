@@ -427,7 +427,7 @@ const FocusPulse = ({ node, module, onClose, onToggleSubtopicStatus, onVideoSele
                 background: "linear-gradient(to bottom, #fff, rgba(255,255,255,0.7))",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                fontFamily: "'Syne', sans-serif"
+                fontFamily: 'var(--font-heading, inherit)'
               }}>
                 {node.title}
               </h1>
@@ -648,7 +648,7 @@ const FocusPulse = ({ node, module, onClose, onToggleSubtopicStatus, onVideoSele
                   DEEP KNOWLEDGE READER
                 </span>
               </div>
-              <h2 style={{ fontSize: "3.5rem", fontWeight: 900, letterSpacing: "-1px", marginBottom: "16px", fontFamily: "'Syne', sans-serif" }}>
+              <h2 style={{ fontSize: "3.5rem", fontWeight: 900, letterSpacing: "-1px", marginBottom: "16px", fontFamily: 'var(--font-heading, inherit)' }}>
                 {selectedSubtopic.title}
               </h2>
               <div style={{ display: "flex", justifyContent: "center", gap: 20, alignItems: "center" }}>
@@ -1081,7 +1081,7 @@ const FocusPulse = ({ node, module, onClose, onToggleSubtopicStatus, onVideoSele
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); borderRadius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
-        .immersive-markdown h1, .immersive-markdown h2, .immersive-markdown h3 { font-family: 'Syne', sans-serif; }
+        .immersive-markdown h1, .immersive-markdown h2, .immersive-markdown h3 { font-family: inherit; }
         input[type=range]::-webkit-slider-runnable-track {
           height: 2px;
           background: rgba(255,255,255,0.1);

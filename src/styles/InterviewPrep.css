@@ -11,7 +11,6 @@
   overflow: hidden;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font);
 }
 
 /* ── Topbar ──────────────────────────────────────────────────────────────── */
@@ -41,7 +40,6 @@
   border: 1px solid var(--border);
   border-radius: 7px;
   color: var(--text2);
-  font-family: var(--font);
   font-size: 12px;
   padding: 5px 10px;
   cursor: pointer;
@@ -59,7 +57,6 @@
   border: none;
   border-bottom: 1px solid var(--border);
   color: var(--text2);
-  font-family: var(--font);
   font-size: 13px;
   padding: 10px 16px;
   cursor: pointer;
@@ -72,7 +69,6 @@
 }
 .ip-brand-icon { color: var(--neon); }
 .ip-brand-text {
-  font-family: var(--mono);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -93,7 +89,6 @@
   transition: width 0.4s ease;
 }
 .ip-overall-label {
-  font-family: var(--mono);
   font-size: 10px;
   color: var(--neon);
   white-space: nowrap;
@@ -114,7 +109,6 @@
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--text);
-  font-family: var(--font);
   font-size: 13px;
   padding: 7px 28px 7px 30px;
   outline: none;
@@ -197,7 +191,7 @@
 .ip-search-results-pane { padding: 12px 14px; }
 .ip-search-count {
   font-size: 10.5px; color: var(--text3);
-  margin-bottom: 8px; font-family: var(--mono); letter-spacing: 0.5px;
+  margin-bottom: 8px; letter-spacing: 0.5px;
 }
 .ip-search-result {
   width: 100%;
@@ -213,7 +207,7 @@
 .ip-search-result.active { border-color: var(--sr-color, var(--neon)); }
 .ip-search-result svg { flex-shrink: 0; margin-top: 2px; }
 .ip-sr-title { font-size: 12px; color: var(--text); line-height: 1.4; margin-bottom: 2px; }
-.ip-sr-meta { font-size: 10px; color: var(--text3); font-family: var(--mono); }
+.ip-sr-meta { font-size: 10px; color: var(--text3); }
 .ip-done-icon { color: var(--neon); }
 .ip-todo-icon { color: var(--text3); }
 
@@ -258,7 +252,6 @@
 .ip-vh-label {
   font-size: 11px;
   font-weight: 700;
-  font-family: var(--mono);
   letter-spacing: 0.5px;
   color: var(--text2);
   text-align: center;
@@ -367,13 +360,12 @@
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.ip-cc-badge {
-  font-family: var(--mono); font-size: 8.5px; letter-spacing: 1.5px;
+.ip-cc-badge { font-size: 8.5px; letter-spacing: 1.5px;
   font-weight: 700; padding: 2px 7px; border-radius: 100px; border: 1px solid;
   flex-shrink: 0;
 }
 .ip-cc-pct {
-  margin-left: auto; font-family: var(--mono); font-size: 12px; font-weight: 700;
+  margin-left: auto; font-size: 12px; font-weight: 700;
 }
 .ip-cc-chevron { color: var(--text3); flex-shrink: 0; }
 .ip-cc-title {
@@ -385,7 +377,7 @@
 }
 .ip-cc-meta span {
   display: flex; align-items: center; gap: 3px;
-  font-size: 10px; color: var(--text3); font-family: var(--mono);
+  font-size: 10px; color: var(--text3);
 }
 .ip-cc-progress {
   height: 3px; background: var(--border); border-radius: 3px; overflow: hidden;
@@ -436,11 +428,10 @@
 .ip-chc-top {
   display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
 }
-.ip-chc-num {
-  font-family: var(--mono); font-size: 18px; font-weight: 800; line-height: 1;
+.ip-chc-num { font-size: 18px; font-weight: 800; line-height: 1;
 }
 .ip-chc-qcount {
-  margin-left: auto; font-family: var(--mono); font-size: 9.5px;
+  margin-left: auto; font-size: 9.5px;
   color: var(--text3); background: var(--bg3); border-radius: 100px; padding: 2px 7px;
 }
 .ip-chc-title {
@@ -450,7 +441,7 @@
 .ip-chc-footer { display: flex; align-items: center; gap: 6px; }
 .ip-chc-bar { flex: 1; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
 .ip-chc-fill { height: 100%; border-radius: 2px; transition: width 0.4s; }
-.ip-chc-pct { font-family: var(--mono); font-size: 9px; font-weight: 700; flex-shrink: 0; }
+.ip-chc-pct { font-size: 9px; font-weight: 700; flex-shrink: 0; }
 
 /* ═══ LESSON NODE (alternating) ═════════════════════════════════════════════ */
 .ip-rm-node.lesson-node.left {
@@ -482,7 +473,6 @@
   cursor: pointer; text-align: left;
   transition: all 0.15s;
   color: var(--text2);
-  font-family: var(--font);
   font-size: 11px;
   line-height: 1.4;
 }
@@ -551,9 +541,8 @@
 }
 .ip-es-val {
   font-size: 22px; font-weight: 800; color: var(--neon);
-  font-family: var(--mono);
 }
-.ip-es-lbl { font-size: 10.5px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.5px; }
+.ip-es-lbl { font-size: 10.5px; color: var(--text3); letter-spacing: 0.5px; }
 
 /* ── Lesson detail ───────────────────────────────────────────────────────── */
 .ip-lesson-detail {
@@ -564,7 +553,7 @@
 /* Breadcrumb */
 .ip-lesson-breadcrumb {
   display: flex; align-items: center; gap: 6px;
-  font-size: 11px; color: var(--text3); font-family: var(--mono);
+  font-size: 11px; color: var(--text3);
   margin-bottom: 20px;
 }
 .ip-lesson-breadcrumb span:last-child { color: var(--bc-color, var(--neon)); }
@@ -579,8 +568,7 @@
   margin-bottom: 28px;
 }
 .ip-qb-label {
-  display: flex; align-items: center; gap: 5px;
-  font-family: var(--mono); font-size: 10px;
+  display: flex; align-items: center; gap: 5px; font-size: 10px;
   color: var(--text3); letter-spacing: 0.5px;
   margin-bottom: 10px; text-transform: uppercase;
 }
@@ -598,8 +586,7 @@
   margin-bottom: 24px;
 }
 .ip-ab-label {
-  display: flex; align-items: center; gap: 5px;
-  font-family: var(--mono); font-size: 10px;
+  display: flex; align-items: center; gap: 5px; font-size: 10px;
   color: var(--neon); letter-spacing: 0.5px;
   margin-bottom: 16px; text-transform: uppercase;
 }
@@ -656,7 +643,7 @@
   overflow-x: auto;
 }
 .ip-content code {
-  font-family: var(--mono) !important;
+  
   font-size: 12.5px !important;
   color: #e6edf3 !important;
   background: transparent !important;
@@ -699,8 +686,7 @@
 .ip-complete-btn {
   display: flex; align-items: center; gap: 7px;
   background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 8px; color: var(--text2);
-  font-family: var(--font); font-size: 12.5px; font-weight: 600;
+  border-radius: 8px; color: var(--text2); font-size: 12.5px; font-weight: 600;
   padding: 8px 16px; cursor: pointer; transition: all 0.15s;
 }
 .ip-complete-btn:hover { border-color: var(--btn-color, var(--neon)); color: var(--text); }
@@ -711,15 +697,13 @@
 }
 
 .ip-nav-buttons { display: flex; align-items: center; gap: 6px; }
-.ip-nav-counter {
-  font-family: var(--mono); font-size: 10.5px;
+.ip-nav-counter { font-size: 10.5px;
   color: var(--text3); padding: 0 4px; white-space: nowrap;
 }
 .ip-nav-btn {
   display: flex; align-items: center; gap: 4px;
   background: none; border: 1px solid var(--border);
-  border-radius: 7px; color: var(--text2);
-  font-family: var(--font); font-size: 12px;
+  border-radius: 7px; color: var(--text2); font-size: 12px;
   padding: 7px 11px; cursor: pointer; transition: all 0.15s;
 }
 .ip-nav-btn:hover:not(:disabled) { border-color: var(--border2); color: var(--text); background: var(--bg3); }
@@ -729,8 +713,7 @@
 .ip-ai-tutor-btn {
   display: flex; align-items: center; gap: 7px;
   background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 8px; color: var(--text2);
-  font-family: var(--font); font-size: 12.5px; font-weight: 600;
+  border-radius: 8px; color: var(--text2); font-size: 12.5px; font-weight: 600;
   padding: 8px 16px; cursor: pointer; transition: all 0.15s;
 }
 .ip-ai-tutor-btn:hover { border-color: var(--btn-color, var(--neon)); color: var(--text); }
@@ -757,8 +740,7 @@
 }
 .ip-ai-header h4 {
   margin: 0; display: flex; align-items: center; gap: 7px;
-  color: var(--btn-color, var(--neon));
-  font-family: var(--font); font-size: 12.5px; font-weight: 700;
+  color: var(--btn-color, var(--neon)); font-size: 12.5px; font-weight: 700;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .ip-ai-header button {
@@ -775,8 +757,7 @@
 .ip-ai-toggle {
   display: flex; align-items: center; gap: 6px;
   background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 999px; color: var(--text3);
-  font-family: var(--font); font-size: 11px; font-weight: 600;
+  border-radius: 999px; color: var(--text3); font-size: 11px; font-weight: 600;
   padding: 5px 11px; cursor: pointer; transition: all 0.15s;
 }
 .ip-ai-toggle:hover { color: var(--text2); border-color: var(--border2); }
@@ -791,13 +772,11 @@
   display: flex; flex-direction: column; gap: 10px;
 }
 .ip-ai-empty {
-  text-align: center; color: var(--text3);
-  font-family: var(--font); font-size: 12.5px; font-style: italic;
+  text-align: center; color: var(--text3); font-size: 12.5px; font-style: italic;
   margin: 16px 0;
 }
 .ip-ai-msg {
-  padding: 9px 13px; border-radius: 8px;
-  font-family: var(--font); font-size: 13px; line-height: 1.5;
+  padding: 9px 13px; border-radius: 8px; font-size: 13px; line-height: 1.5;
   max-width: 85%;
 }
 .ip-ai-msg.user {
@@ -874,8 +853,7 @@
 }
 .ip-ai-input-area input {
   flex: 1; background: var(--bg2); border: 1px solid var(--border);
-  color: var(--text); padding: 9px 12px; border-radius: 6px;
-  font-family: var(--font); font-size: 12.5px;
+  color: var(--text); padding: 9px 12px; border-radius: 6px; font-size: 12.5px;
 }
 .ip-ai-input-area input:focus { outline: none; border-color: var(--btn-color, var(--neon)); }
 .ip-ai-input-area button {
@@ -997,8 +975,7 @@
 }
 .ip-input-group input, .ip-input-group textarea {
   background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 6px; color: var(--text); padding: 10px 12px;
-  font-family: var(--font); font-size: 14px; transition: border-color 0.2s;
+  border-radius: 6px; color: var(--text); padding: 10px 12px; font-size: 14px; transition: border-color 0.2s;
 }
 .ip-input-group input:focus, .ip-input-group textarea:focus {
   outline: none; border-color: var(--neon);

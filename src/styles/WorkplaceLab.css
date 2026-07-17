@@ -7,7 +7,7 @@
   align-items: stretch;
   justify-content: stretch;
   overflow: hidden;
-  font-family: 'Syne', sans-serif;
+  font-family: inherit;
   padding: 0;
 }
 
@@ -200,7 +200,7 @@
 }
 
 .repo-head span {
-  font-family: 'Syne', sans-serif;
+  font-family: inherit;
   font-weight: 800;
   color: #fff;
   text-transform: none;
@@ -291,7 +291,7 @@
 }
 
 /* --- Markdown Styling --- */
-.md-h1 { font-size: 28px; font-weight: 800; color: #fff; margin: 32px 0 16px; font-family: 'Syne', sans-serif; }
+.md-h1 { font-size: 28px; font-weight: 800; color: #fff; margin: 32px 0 16px; font-family: inherit; }
 .md-h2 { font-size: 22px; font-weight: 800; color: #00ff88; margin: 24px 0 12px; }
 .md-h3 { font-size: 18px; font-weight: 800; color: #fff; margin: 20px 0 10px; opacity: 0.9; }
 .md-p { font-size: 16px; line-height: 1.6; color: #ccc; margin-bottom: 16px; }
@@ -317,7 +317,7 @@
   background: rgba(255,255,255,0.08);
   padding: 2px 6px;
   border-radius: 4px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono, monospace);
   font-size: 0.9em;
   color: #00ccff;
 }
@@ -345,7 +345,7 @@
   font-weight: 800;
   color: #00ff88;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: 'Syne', sans-serif;
+  font-family: inherit;
 }
 
 .md-td {
@@ -431,7 +431,7 @@
   background: transparent;
   border: none;
   color: #eee;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono, monospace);
   font-size: 20px;
   line-height: 1.6;
   resize: none;
@@ -495,7 +495,7 @@
   font-size: 14px;
   outline: none;
   width: 100%;
-  font-family: 'Syne', sans-serif;
+  font-family: inherit;
   letter-spacing: 0.5px;
 }
 
@@ -563,7 +563,7 @@
   font-size: 16px;
   font-weight: 700;
   outline: none;
-  font-family: 'Syne', sans-serif;
+  font-family: inherit;
   transition: border-color 0.3s ease;
 }
 
@@ -607,7 +607,7 @@
   border-radius: 16px;
   padding: 24px;
   color: #eee;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono, monospace);
   font-size: 14px;
   line-height: 1.6;
   resize: vertical;

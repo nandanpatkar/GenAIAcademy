@@ -723,7 +723,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                         options={{ 
                           minimap: { enabled: false }, 
                           fontSize: 13, 
-                          fontFamily: "'Fira Code', monospace", 
+                          fontFamily: 'var(--font-mono, monospace)', 
                           lineNumbers: "on", 
                           padding: { top: 20 }, 
                           cursorBlinking: "smooth", 
@@ -1107,7 +1107,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           display: flex;
           flex-direction: column;
           color: #fff;
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: inherit;
         }
 
         /* --- STUDIO PRO REDESIGN --- */
@@ -1120,7 +1120,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           flex-direction: column;
           padding: 0;
           gap: 0;
-          font-family: 'Syne', sans-serif;
+          font-family: inherit;
         }
         .studio-header {
           display: grid;
@@ -1759,7 +1759,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         .terminal-status { margin-left: auto; font-size: 8px; font-weight: 900; color: #00ff88; display: flex; align-items: center; gap: 6px; }
         .status-dot { width: 5px; height: 5px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 10px #00ff88; }
 
-        .terminal-body { flex: 1; padding: 12px 16px; font-family: 'Fira Code', monospace; overflow-y: auto; }
+        .terminal-body { flex: 1; padding: 12px 16px; font-family: var(--font-mono, monospace); overflow-y: auto; }
         .t-log { font-size: 11px; margin-bottom: 4px; line-height: 1.4; }
         .t-time { color: #333; margin-right: 10px; }
         .t-log.muted { color: #444; }
@@ -1869,7 +1869,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         .graph-svg text {
           user-select: none;
           pointer-events: none;
-          font-family: 'Syne', sans-serif;
+          font-family: inherit;
         }
 
         .viz-row {
@@ -1946,7 +1946,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           transform: translateX(-50%);
           background: #00ff88;
           color: #000;
-          font-family: 'Syne', sans-serif;
+          font-family: inherit;
           font-weight: 800;
           font-size: 11px;
           padding: 2px 8px;
@@ -1973,7 +1973,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           font-size: 15px;
           margin-bottom: 4px;
           text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-          font-family: 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
         }
 
         .array-node .idx {
@@ -2011,7 +2011,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           font-size: 14px; 
           font-weight: 900; 
           color: #fff; 
-          font-family: 'Fira Code'; 
+          font-family: var(--font-mono, monospace); 
           overflow-wrap: anywhere;
           display: -webkit-box;
           -webkit-line-clamp: 3;
@@ -2115,7 +2115,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           font-size: 14px;
           font-weight: 800;
           color: #fff;
-          font-family: 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
         }
 
         .array-cell-pro .c-idx {
@@ -2181,7 +2181,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           font-size: 15px;
           font-weight: 900;
           color: #fff;
-          font-family: 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
         }
 
         /* --- Stdout Terminal --- */
@@ -2207,7 +2207,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
         .stdout-content {
           padding: 16px;
-          font-family: 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
           font-size: 12px;
           color: #00ff88;
           white-space: pre-wrap;
@@ -2303,7 +2303,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
         .cell-inner {
           color: #fff;
-          font-family: 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
           font-weight: 700;
           font-size: 13px;
         }
@@ -2333,7 +2333,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
 
         .error-body {
           margin: 0;
-          font-family: 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
           font-size: 13px;
           color: #fca5a5;
           background: rgba(0,0,0,0.3);
@@ -2422,7 +2422,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
         }
 
         .comp-item .val {
-          font-family: 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
           font-size: 14px;
           color: #00ff88;
           font-weight: 600;

@@ -246,7 +246,7 @@ export default function ModuleNotes({ moduleId, userId, pathColor }) {
         .mn-editor-inner strong { color: var(--text); font-weight: 700; }
         .mn-editor-inner em { opacity: 0.85; font-style: italic; }
         .mn-editor-inner code {
-          font-family: 'JetBrains Mono', 'Fira Code', monospace;
+          font-family: var(--font-mono, monospace);
           font-size: 11.5px;
           background: rgba(255,255,255,0.07);
           border: 1px solid var(--border);

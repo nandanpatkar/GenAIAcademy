@@ -18,7 +18,7 @@ import NotebookViewer from './NotebookViewer';
 
 const MONACO_OPTIONS = {
   fontSize: 13,
-  fontFamily: "'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace",
+  fontFamily: 'var(--font-mono, monospace)',
   fontLigatures: true,
   lineHeight: 1.6,
   minimap: { enabled: true, scale: 0.7 },
@@ -234,7 +234,7 @@ function JSONCrackWidget({ content, onViewSource }) {
         padding: 40,
         background: '#0a0a0a',
         color: '#fff',
-        fontFamily: 'Syne, sans-serif',
+        fontFamily: 'var(--font-heading, inherit)',
         textAlign: 'center'
       }}>
         <div style={{

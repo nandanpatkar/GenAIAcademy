@@ -48,6 +48,7 @@ import WorkplaceLab from "./components/WorkplaceLab";
 import OnboardingChatbot from "./components/OnboardingChatbot";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { setDynamicGeminiKey } from "./services/aiService";
 import { supabase } from "./config/supabaseClient";
 import AuthInterface from "./components/AuthInterface";
@@ -108,6 +109,7 @@ const injectDefaultIcons = (paths) => {
 
 function MainApp() {
   const { user, isAdmin, isLocked, signOut, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   // isMobile now comes from the centralized useIsMobile hook (Phase 0 of
   // the mobile redesign) instead of an inline `width <= 768` check.
   const isMobile = useIsMobile();
@@ -122,7 +124,7 @@ function MainApp() {
     });
   }, [geminiKey, aiProvider, azureEndpoint, azureKey]);
 
-  const [theme, setTheme] = useState(() => localStorage.getItem("genai_theme") || "dark");
+  // theme & toggleTheme now come from ThemeContext (see above)
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pathsData, setPathsData] = useState({});
   const [activePath, setActivePath] = useState("ds");
@@ -352,12 +354,7 @@ function MainApp() {
     });
   };
 
-  useEffect(() => {
-    localStorage.setItem("genai_theme", theme);
-    document.body.className = `${theme}-theme`;
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(prev => prev === "dark" ? "light" : "dark");
+  // Theme persistence is handled by ThemeContext — no duplicate effect needed here.
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [editingPath, setEditingPath] = useState(false);
@@ -1062,8 +1059,6 @@ function MainApp() {
         }} />
       )}
       <MobileHeader
-        theme={theme}
-        toggleTheme={toggleTheme}
         user={user}
         onSignOut={handleSignOut}
         isMobileMenuOpen={isMobileMenuOpen}
@@ -1114,7 +1109,7 @@ function MainApp() {
           onHubNav={handleHubNav}
           isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
           activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
-          theme={theme} toggleTheme={toggleTheme} onSignOut={handleSignOut}
+          onSignOut={handleSignOut}
           isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed}
           onSectionWalkthrough={handleSectionWalkthrough}
         />
@@ -1423,7 +1418,8 @@ function MainApp() {
   );
 }
 
-function MobileHeader({ theme, toggleTheme, user, onSignOut, isMobileMenuOpen, setIsMobileMenuOpen }) {
+function MobileHeader({ user, onSignOut, isMobileMenuOpen, setIsMobileMenuOpen }) {
+  const { theme, toggleTheme } = useTheme();
   return (
     <div className="mobile-header mobile-only">
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -1476,7 +1472,9 @@ function MobileBottomNav({ activeView, setView }) {
 export default function App() {
   return (
     <AuthProvider>
-      <MainApp />
+      <ThemeProvider>
+        <MainApp />
+      </ThemeProvider>
     </AuthProvider>
   );
 }

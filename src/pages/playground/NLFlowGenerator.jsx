@@ -153,7 +153,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
       position: "fixed", inset: 0, zIndex: 9998,
       background: "rgba(0,0,0,0.75)",
       display: "flex", alignItems: "center", justifyContent: "center",
-      fontFamily: "'DM Mono','Fira Code',monospace",
+      fontFamily: 'var(--font-mono, monospace)',
       backdropFilter: "blur(4px)",
     }}>
       <div style={{

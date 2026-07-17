@@ -103,7 +103,6 @@
 }
 
 .header-prefix {
-  font-family: var(--font-header);
   font-size: 11px;
   font-weight: 700;
   color: var(--accent-cyan);
@@ -113,7 +112,6 @@
 }
 
 .title-area h1 {
-  font-family: var(--font-header);
   font-size: 32px;
   font-weight: 800;
   margin: 0;
@@ -147,7 +145,6 @@
 }
 
 .status-label {
-  font-family: var(--font-header);
   font-size: 10px;
   font-weight: 700;
   color: var(--text-secondary);
@@ -281,7 +278,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: var(--font-header);
   font-weight: 800;
   font-size: 22px;
   color: #fff;
@@ -295,7 +291,6 @@
 }
 
 .category-title {
-  font-family: var(--font-header);
   font-size: 11px;
   font-weight: 700;
   color: var(--text-tertiary);
@@ -403,7 +398,6 @@
 }
 
 .channel-name {
-  font-family: var(--font-header);
   font-weight: 800;
   font-size: 22px;
   color: #fff;
@@ -510,7 +504,6 @@
 }
 
 .author {
-  font-family: var(--font-header);
   font-weight: 700;
   font-size: 14px;
   color: #fff;
@@ -719,7 +712,6 @@
 }
 
 .section-header {
-  font-family: var(--font-header);
   font-size: 10px;
   font-weight: 800;
   color: var(--text-muted);
@@ -812,7 +804,6 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  font-family: var(--font-header);
   font-weight: 800;
   font-size: 24px;
   color: #fff;
@@ -834,7 +825,6 @@
   padding: 8px 16px;
   border-radius: var(--radius-md);
   color: var(--text-secondary);
-  font-family: var(--font-header);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -886,7 +876,6 @@
   padding: 14px 32px;
   border-radius: var(--radius-lg);
   font-weight: 700;
-  font-family: var(--font-header);
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -902,7 +891,6 @@
   padding: 14px 32px;
   border-radius: var(--radius-lg);
   font-weight: 800;
-  font-family: var(--font-header);
   border: none;
   display: flex;
   align-items: center;
@@ -966,7 +954,6 @@
   background: transparent;
   border: none;
   color: var(--text-tertiary);
-  font-family: var(--font-header);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -1059,7 +1046,6 @@
 }
 
 .form-group label {
-  font-family: var(--font-header);
   font-size: 11px;
   font-weight: 700;
   color: var(--text-tertiary);
@@ -1156,7 +1142,6 @@
   padding: 2px;
   border: 2px solid var(--bg-deep);
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
-  font-family: var(--font-header);
   z-index: 2;
 }
 

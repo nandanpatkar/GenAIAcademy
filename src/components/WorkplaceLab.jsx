@@ -2014,7 +2014,7 @@ export default function WorkplaceLab({
                   letterSpacing: '-0.8px', 
                   lineHeight: 1, 
                   margin: 0,
-                  fontFamily: 'Syne, sans-serif'
+                  fontFamily: 'var(--font-heading, inherit)'
                 }}>
                   Quick Notes
                 </h1>
@@ -2215,7 +2215,7 @@ export default function WorkplaceLab({
                           fontWeight: 800,
                           color: '#fff',
                           marginBottom: '14px',
-                          fontFamily: 'Syne, sans-serif',
+                          fontFamily: 'var(--font-heading, inherit)',
                           zIndex: 1
                         }}>
                           {card.title}
