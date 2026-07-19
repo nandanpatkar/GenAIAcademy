@@ -39,7 +39,7 @@ export default function InlineLink({ url }) {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        style={{ color: 'inherit', textDecoration: 'underline', textDecorationColor: 'rgba(255,255,255,0.4)', textUnderlineOffset: '3px', wordBreak: 'break-all' }}
+        style={{ color: 'var(--notion-link-bright, #9fe8ff)', textDecoration: 'underline', textDecorationColor: 'rgba(130, 217, 255, 0.9)', textUnderlineOffset: '3px', wordBreak: 'break-all' }}
       >
         {url}
       </a>
@@ -55,19 +55,19 @@ export default function InlineLink({ url }) {
         display: 'inline-flex',
         alignItems: 'center',
         gap: '4px',
-        color: 'var(--text)',
+        color: 'var(--notion-link-bright, #9fe8ff)',
         textDecoration: 'none',
-        background: 'rgba(255,255,255,0.05)',
+        background: 'rgba(56, 189, 248, 0.16)',
         padding: '0 4px',
         borderRadius: '3px',
-        borderBottom: '1px solid rgba(255,255,255,0.2)',
+        borderBottom: '1px solid rgba(130, 217, 255, 0.62)',
         wordBreak: 'break-word',
         verticalAlign: 'bottom',
         transition: 'background 0.2s',
         lineHeight: 1.4
       }}
-      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
+      onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(56, 189, 248, 0.28)'}
+      onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(56, 189, 248, 0.16)'}
     >
       {metadata.logo?.url ? (
         <img src={metadata.logo.url} alt="icon" style={{ width: 14, height: 14, objectFit: 'contain' }} />

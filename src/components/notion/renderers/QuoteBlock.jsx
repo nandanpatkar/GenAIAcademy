@@ -12,7 +12,7 @@ export default function QuoteBlock({ block }) {
 
   return (
     <blockquote style={{
-      borderLeft: '3px solid var(--text)',
+      borderLeft: '3px solid var(--notion-link-bright, #9fe8ff)',
       paddingLeft: '14px',
       marginLeft: 0,
       marginRight: 0,

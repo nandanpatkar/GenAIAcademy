@@ -1,0 +1,178 @@
+/* Saved Links — Notion-style AWS system-design surface */
+.links-companion-shell {
+  --links-bg: #070b12;
+  --links-panel: rgba(14, 22, 34, 0.68);
+  --links-line: rgba(170, 214, 255, 0.16);
+  --links-text: #f1f6ff;
+  --links-muted: #9eafc3;
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 78% -8%, rgba(255, 160, 63, .14), transparent 34%),
+    radial-gradient(ellipse at 8% 72%, rgba(26, 155, 255, .09), transparent 31%),
+    linear-gradient(180deg, #0d1119 0%, #080c13 56%, #06090f 100%) !important;
+  color: var(--links-text) !important;
+}
+
+.links-companion-shell::before,
+.links-companion-shell::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.links-companion-shell::before {
+  z-index: -2;
+  opacity: .62;
+  background-image: radial-gradient(circle, rgba(124, 192, 255, .24) 1px, transparent 1.35px);
+  background-size: 26px 26px;
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.8) 60%, transparent 100%);
+}
+
+.links-companion-shell::after {
+  z-index: -1;
+  background:
+    radial-gradient(circle at 17% 28%, rgba(88, 210, 255, .72) 0 1.5px, transparent 3px),
+    radial-gradient(circle at 83% 22%, rgba(255, 181, 83, .75) 0 1.5px, transparent 3px),
+    radial-gradient(ellipse at 17% 28%, transparent 0 17%, rgba(58, 184, 255, .1) 17.2%, transparent 17.5%),
+    radial-gradient(ellipse at 82% 68%, transparent 0 22%, rgba(255, 163, 62, .08) 22.2%, transparent 22.5%);
+}
+
+.links-companion-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.links-companion-header {
+  background: rgba(11, 18, 29, .66) !important;
+  border-bottom-color: rgba(174, 216, 255, .14) !important;
+  box-shadow: 0 12px 36px rgba(0,0,0,.18), inset 0 1px rgba(255,255,255,.06);
+  backdrop-filter: blur(28px) saturate(145%);
+  -webkit-backdrop-filter: blur(28px) saturate(145%);
+}
+
+.links-companion-header h1 {
+  color: var(--links-text) !important;
+  letter-spacing: -.04em !important;
+}
+
+.links-companion-body,
+.links-companion-content {
+  background: transparent !important;
+}
+
+.links-companion-sidebar {
+  background: rgba(10, 17, 28, .62) !important;
+  border-right-color: var(--links-line) !important;
+  backdrop-filter: blur(25px) saturate(135%);
+  -webkit-backdrop-filter: blur(25px) saturate(135%);
+}
+
+.links-companion-tabs button {
+  background: rgba(255,255,255,.035) !important;
+  border-color: transparent !important;
+  color: var(--links-muted) !important;
+}
+
+.links-companion-tabs button:hover,
+.links-companion-tabs button:focus-visible {
+  background: rgba(114, 216, 255, .08) !important;
+  color: #c7efff !important;
+}
+
+.links-companion-tabs button:first-child[style*="var(--neon)"],
+.links-companion-tabs button:last-child[style*="#0088ff"] {
+  box-shadow: inset 0 -2px rgba(114,216,255,.75), inset 0 1px rgba(255,255,255,.08);
+}
+
+.links-companion-search {
+  background: rgba(3, 10, 19, .48) !important;
+  border-color: var(--links-line) !important;
+  border-radius: 13px !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.05), 0 10px 24px rgba(0,0,0,.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.links-companion-search:focus-within {
+  border-color: rgba(114,216,255,.5) !important;
+  box-shadow: 0 0 0 3px rgba(114,216,255,.08), 0 10px 28px rgba(0,0,0,.16);
+}
+
+.links-companion-search input {
+  color: var(--links-text) !important;
+}
+
+.links-companion-add {
+  border: 1px solid rgba(125, 226, 255, .32) !important;
+  border-radius: 11px !important;
+  background: linear-gradient(135deg, rgba(96, 216, 255, .92), rgba(79, 119, 255, .88)) !important;
+  color: #06111b !important;
+  box-shadow: 0 10px 24px rgba(44, 165, 255, .16), inset 0 1px rgba(255,255,255,.42);
+}
+
+.links-companion-add:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.links-companion-list {
+  scrollbar-color: rgba(154, 198, 235, .25) transparent;
+}
+
+.links-companion-item {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: var(--links-text) !important;
+}
+
+.links-companion-item:hover,
+.links-companion-item:focus-visible {
+  border-color: rgba(114,216,255,.22) !important;
+  background: rgba(114,216,255,.08) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.06);
+}
+
+.links-companion-item.is-active {
+  border-color: rgba(114,216,255,.3) !important;
+  background: linear-gradient(100deg, rgba(69, 180, 255, .14), rgba(114,216,255,.035)) !important;
+  box-shadow: inset 2px 0 #72d8ff, inset 0 1px rgba(255,255,255,.08);
+}
+
+.links-preview-stage {
+  scrollbar-color: rgba(154,198,235,.25) transparent;
+}
+
+.links-preview-card {
+  border-color: rgba(174,216,255,.18) !important;
+  border-radius: 24px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.095), rgba(255,255,255,.035) 48%, rgba(5,9,14,.48)) !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.12) !important;
+  backdrop-filter: blur(26px) saturate(145%);
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
+}
+
+.links-preview-hero {
+  border-bottom-color: rgba(174,216,255,.14) !important;
+  background:
+    radial-gradient(circle at 72% 32%, rgba(255,173,79,.16), transparent 28%),
+    radial-gradient(circle at 22% 70%, rgba(64,184,255,.14), transparent 31%),
+    rgba(5, 12, 21, .64) !important;
+}
+
+.links-preview-body {
+  background: linear-gradient(180deg, rgba(12,21,33,.26), rgba(4,9,16,.2));
+}
+
+.links-preview-url {
+  border-color: rgba(174,216,255,.18) !important;
+  background: rgba(3,10,19,.44) !important;
+  border-radius: 999px !important;
+}
+
+@media (max-width: 760px) {
+  .links-companion-sidebar { width: min(300px, 86vw) !important; min-width: min(300px, 86vw) !important; }
+  .links-preview-stage { padding: 22px 14px !important; }
+  .links-preview-body { padding: 22px 20px 24px !important; }
+}

@@ -1,8 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../config/supabaseClient';
 import BlockRenderer from './BlockRenderer';
 import { Loader2, AlertCircle, Maximize, Minimize, Eye, EyeOff } from 'lucide-react';
 import FocusPulse from '../FocusPulse';
+
+async function readFunctionError(functionError, fallbackMessage) {
+  const response = functionError?.context;
+  if (response && typeof response.clone === 'function') {
+    try {
+      const payload = await response.clone().json();
+      if (payload?.error) return payload.error;
+    } catch {
+      // Keep the SDK's fallback message when the Edge Function did not return JSON.
+    }
+  }
+  return fallbackMessage;
+}
+
+function formatNotionError(message) {
+  const normalized = String(message || '');
+  if (/rate limit|rate limited|too many requests/i.test(normalized)) {
+    return 'Notion is temporarily rate-limiting requests. Wait a few seconds, then load the page again.';
+  }
+  if (/unauthorized|invalid.*token|authentication/i.test(normalized)) {
+    return 'The Notion connection is not authorized. Check the NOTION_API_KEY secret and integration access.';
+  }
+  if (/could not find|not found|object_not_found/i.test(normalized)) {
+    return 'This Notion page was not found. Confirm the page ID and invite the integration to the page.';
+  }
+  return normalized || 'Unable to load the Notion page.';
+}
 
 export default function NotionRenderer({ passedPageId }) {
   const defaultPage = "1dfb2067f6d580ffbf61fdec2aca1a1c";
@@ -16,9 +43,15 @@ export default function NotionRenderer({ passedPageId }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [history, setHistory] = useState([]);
+  const requestInFlightRef = useRef(null);
 
   useEffect(() => {
     async function fetchNotionData(pageId) {
+      // React Strict Mode re-runs effects in development. Avoid issuing a
+      // second identical Notion request while the first one is still active.
+      if (requestInFlightRef.current === pageId) return;
+      requestInFlightRef.current = pageId;
+
       try {
         setLoading(true);
 
@@ -27,7 +60,10 @@ export default function NotionRenderer({ passedPageId }) {
         const { data: pageResult, error: pageError } = await supabase.functions.invoke('notion-fetch', {
           body: { pageId }
         });
-        if (pageError) throw new Error(`Failed to fetch Notion page: ${pageError.message}`);
+        if (pageError) {
+          const message = await readFunctionError(pageError, pageError.message);
+          throw new Error(`Failed to fetch Notion page: ${message}`);
+        }
         if (pageResult?.error) throw new Error(`Failed to fetch Notion page: ${pageResult.error}`);
 
         const pageData = pageResult.page;
@@ -38,7 +74,10 @@ export default function NotionRenderer({ passedPageId }) {
           const { data: blockResult, error: blockError } = await supabase.functions.invoke('notion-fetch', {
             body: { blockId }
           });
-          if (blockError) throw new Error(`Failed to fetch Notion blocks: ${blockError.message}`);
+          if (blockError) {
+            const message = await readFunctionError(blockError, blockError.message);
+            throw new Error(`Failed to fetch Notion blocks: ${message}`);
+          }
           if (blockResult?.error) throw new Error(`Failed to fetch Notion blocks: ${blockResult.error}`);
 
           const blocks = blockResult.blocks;
@@ -65,9 +104,10 @@ export default function NotionRenderer({ passedPageId }) {
         setError(null);
       } catch (err) {
         console.error("Error fetching notion data:", err);
-        setError(err.message);
+        setError(formatNotionError(err.message));
       } finally {
         setLoading(false);
+        if (requestInFlightRef.current === pageId) requestInFlightRef.current = null;
       }
     }
 
@@ -273,20 +313,40 @@ export default function NotionRenderer({ passedPageId }) {
     notionContent = renderInput();
   } else if (loading) {
     notionContent = (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
         {!isUIHidden && renderInput()}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, color: 'var(--text3)' }}>
-          <Loader2 className="spin" size={24} style={{ marginRight: 8 }} />
-          <span>Loading Notion Content...</span>
+        <div className="notion-loading-state" role="status" aria-live="polite">
+          <div className="notion-loading-orbit" aria-hidden="true">
+            <span className="notion-loading-ring notion-loading-ring-one" />
+            <span className="notion-loading-ring notion-loading-ring-two" />
+            <span className="notion-loading-packet notion-loading-packet-one" />
+            <span className="notion-loading-packet notion-loading-packet-two" />
+            <div className="notion-loading-core"><Loader2 size={22} /></div>
+          </div>
+          <div className="notion-loading-copy">
+            <span className="notion-loading-kicker"><span className="notion-loading-dot" /> SYNCING / NOTION API</span>
+            <strong>Connecting your knowledge graph</strong>
+            <span>Fetching page blocks and nested content</span>
+          </div>
+          <div className="notion-loading-progress" aria-hidden="true"><span /></div>
+          <div className="notion-loading-skeleton" aria-hidden="true">
+            <span className="notion-loading-skeleton-title" />
+            <span />
+            <span />
+            <span className="notion-loading-skeleton-short" />
+          </div>
         </div>
       </div>
     );
   } else if (error) {
     notionContent = (
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
         {!isUIHidden && renderInput()}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, color: '#ff4444' }}>
-          <span>Error loading Notion content.</span>
+        <div className="notion-error-state" role="alert">
+          <div className="notion-error-copy">
+            <strong>Error loading Notion content</strong>
+            <span>{error}</span>
+          </div>
         </div>
       </div>
     );
@@ -385,19 +445,52 @@ export default function NotionRenderer({ passedPageId }) {
   };
   const finalFont = getFontFamilyFallback();
 
+  const awsBackdrop = (
+    <div className="notion-aws-backdrop" aria-hidden="true">
+      <div className="notion-aws-backdrop-grid" />
+      <div className="notion-aws-backdrop-glow notion-aws-backdrop-glow-one" />
+      <div className="notion-aws-backdrop-glow notion-aws-backdrop-glow-two" />
+      <svg className="notion-aws-backdrop-graph" viewBox="0 0 900 520" preserveAspectRatio="none">
+        <path d="M40 330 C180 330 190 155 340 155 S510 330 665 330 S780 200 870 200" />
+        <path d="M40 330 C190 330 205 420 360 420 S515 330 665 330" />
+        <path d="M340 155 C430 155 455 64 540 64 S650 160 665 330" />
+        <circle cx="40" cy="330" r="4" />
+        <circle cx="340" cy="155" r="4" />
+        <circle cx="540" cy="64" r="4" />
+        <circle cx="665" cy="330" r="4" />
+        <circle cx="870" cy="200" r="4" />
+      </svg>
+      <div className="notion-aws-backdrop-label notion-aws-backdrop-label-client">CLIENT</div>
+      <div className="notion-aws-backdrop-label notion-aws-backdrop-label-edge">EDGE</div>
+      <div className="notion-aws-backdrop-label notion-aws-backdrop-label-compute">COMPUTE</div>
+      <div className="notion-aws-backdrop-label notion-aws-backdrop-label-data">DATA</div>
+      <div className="notion-aws-backdrop-label notion-aws-backdrop-label-observe">OBSERVE</div>
+      <div className="notion-aws-backdrop-caption">
+        <span className="notion-aws-backdrop-status" />
+        AWS SYSTEM DESIGN / READING CONTEXT
+      </div>
+    </div>
+  );
+
   if (isFocusMode) {
     return (
       <FocusPulse mode="custom" onClose={() => setIsFocusMode(false)} hidePlayer={isUIHidden}>
-        <div className="notion-renderer-container" style={{ display: 'flex', flexDirection: 'column', height: '100%', '--notion-font': finalFont, width: '100%' }}>
-          {notionContent}
+        <div className="notion-renderer-container" style={{ display: 'flex', flexDirection: 'column', height: '100%', '--notion-font': finalFont, width: '100%', position: 'relative', overflow: 'hidden' }}>
+          {awsBackdrop}
+          <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
+            {notionContent}
+          </div>
         </div>
       </FocusPulse>
     );
   }
 
   return (
-    <div className="notion-renderer-container" style={{ display: 'flex', flexDirection: 'column', height: '100%', '--notion-font': finalFont }}>
-      {notionContent}
+    <div className="notion-renderer-container" style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', minWidth: 0, '--notion-font': finalFont, position: 'relative', overflow: 'hidden' }}>
+      {awsBackdrop}
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
+        {notionContent}
+      </div>
     </div>
   );
 }

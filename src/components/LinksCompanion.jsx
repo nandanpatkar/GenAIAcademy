@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { X, Search, ChevronDown, ChevronUp, PanelLeft, Link2 as LinkIcon, Globe, BookOpen, ArrowUpRight, Loader2, Plus, Trash2, Edit2, Star, GitFork, GitBranch } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../config/supabaseClient";
+import "../styles/links-companion.css";
 
 // ── In-memory preview cache ───────────────────────────────────────────────────
 const previewCache = {};
@@ -9,7 +10,7 @@ const previewCache = {};
 async function fetchPreview(url) {
   if (previewCache[url]) return previewCache[url];
   
-  // Special handling for Github URLs
+  // Special handling for GitHub URLs
   if (url.includes("github.com")) {
     try {
       const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
@@ -33,7 +34,7 @@ async function fetchPreview(url) {
         }
       }
     } catch (e) {
-      console.error("Github fetch failed", e);
+      console.error("GitHub fetch failed", e);
     }
   }
 
@@ -71,12 +72,12 @@ function PreviewCard({ item }) {
   }, [item.url]);
 
   return (
-    <div style={{
+    <div className="links-preview-stage" style={{
       flex: 1, display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center",
       padding: "32px 40px", overflowY: "auto",
     }}>
-      <div style={{
+      <div className="links-preview-card" style={{
         width: "100%", maxWidth: 660,
         background: "var(--bg2)",
         border: "1px solid var(--border)",
@@ -85,7 +86,7 @@ function PreviewCard({ item }) {
       }}>
 
         {/* Screenshot strip */}
-        <div style={{
+        <div className="links-preview-hero" style={{
           width: "100%", aspectRatio: "16/9",
           background: "var(--bg3)", position: "relative", overflow: "hidden",
           borderBottom: "1px solid var(--border)",
@@ -130,7 +131,7 @@ function PreviewCard({ item }) {
         </div>
 
         {/* Card body */}
-        <div style={{ padding: "26px 30px 30px" }}>
+        <div className="links-preview-body" style={{ padding: "26px 30px 30px" }}>
 
           {/* Curriculum breadcrumb */}
           {item.currLabel && (
@@ -167,7 +168,7 @@ function PreviewCard({ item }) {
           </div>
 
           {/* URL pill */}
-          <div style={{
+          <div className="links-preview-url" style={{
             display: "inline-flex", alignItems: "center", gap: 6,
             fontSize: 10, color: "var(--text3)",
             background: "var(--bg3)", border: "1px solid var(--border)",
@@ -207,7 +208,7 @@ function PreviewCard({ item }) {
               }}
             >
               {preview?.isGithub ? <GitBranch size={14} /> : <BookOpen size={14} />}
-              {preview?.isGithub ? "View on Github" : "Open Link"}
+              {preview?.isGithub ? "View on GitHub" : "Open Link"}
               <ArrowUpRight size={14} />
             </a>
 
@@ -446,13 +447,13 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
   };
 
   return (
-    <div style={{
+    <div className="links-companion-shell" style={{
       flex: 1, display: "flex", flexDirection: "column", overflow: "hidden",
       background: "var(--bg)", color: "var(--text)",
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     }}>
 
-      <header className="aiml-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0 }}>
+      <header className="aiml-header links-companion-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0 }}>
         
         <button
           onClick={() => setShowSidebar(v => !v)}
@@ -475,7 +476,7 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
           </div>
           <div>
             <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>
-              {activeTab === 'links' ? 'Links' : 'Github'}
+              {activeTab === 'links' ? 'Links' : 'GitHub'}
             </h1>
             <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>
               {activeList.length} saved {activeTab} · Personal Collection
@@ -493,16 +494,16 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
       </header>
 
       {/* Body */}
-      <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
+      <div className="links-companion-body" style={{ flex: 1, display: "flex", overflow: "hidden" }}>
 
         {/* Sidebar */}
         {showSidebar && (
-          <div style={{
+          <div className="links-companion-sidebar" style={{
             width: 280, minWidth: 280, borderRight: "1px solid var(--border)",
             background: "var(--bg2)", display: "flex", flexDirection: "column", overflow: "hidden",
           }}>
             {/* Tab Switcher */}
-            <div style={{ 
+            <div className="links-companion-tabs" style={{
               display: 'flex', padding: '14px 14px 0', gap: 4
             }}>
               <button 
@@ -529,12 +530,12 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
                   cursor: 'pointer', transition: '0.2s'
                 }}
               >
-                Github
+                GitHub
               </button>
             </div>
 
             {/* Search */}
-            <div style={{
+            <div className="links-companion-search" style={{
               display: "flex", alignItems: "center", gap: 8,
               margin: "0 14px 10px", padding: "8px 12px",
               background: "var(--bg3)", borderRadius: "0 0 8px 8px", border: "1px solid var(--border)",
@@ -557,7 +558,7 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
             {/* Add Link Button */}
             {isEditMode && (
               <div style={{ padding: "0 14px 10px" }}>
-                <button 
+                <button className="links-companion-add"
                   onClick={handleAddNew}
                   style={{
                     width: "100%", padding: "9px", borderRadius: 8,
@@ -568,7 +569,7 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
                   }}
                 >
                   {editingId === 'new' ? <X size={14} /> : (activeTab === 'links' ? <Plus size={14} /> : <GitBranch size={14} />)}
-                  {editingId === 'new' ? "Cancel" : (activeTab === 'links' ? "Add New Link" : "Add Github Repo")}
+                  {editingId === 'new' ? "Cancel" : (activeTab === 'links' ? "Add New Link" : "Add GitHub Repo")}
                 </button>
               </div>
             )}
@@ -589,7 +590,7 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
                 )}
                 <input
                   required
-                  placeholder={activeTab === 'links' ? "URL (e.g. https://example.com)" : "Github URL (e.g. github.com/user/repo)"}
+                  placeholder={activeTab === 'links' ? "URL (e.g. https://example.com)" : "GitHub URL (e.g. github.com/user/repo)"}
                   value={newUrl}
                   onChange={e => setNewUrl(e.target.value)}
                   style={{ padding: "8px 12px", borderRadius: 6, border: "1px solid var(--border)", background: "var(--bg3)", color: "var(--text)", fontSize: 12, outline: "none" }}
@@ -616,7 +617,7 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
             )}
 
             {/* List */}
-            <div style={{ flex: 1, overflowY: "auto", padding: "4px 0" }}>
+            <div className="links-companion-list" style={{ flex: 1, overflowY: "auto", padding: "4px 0" }}>
               {isLoading ? (
                 <div style={{ padding: 40, textAlign: 'center', color: 'var(--text3)' }}>
                   <Loader2 size={24} style={{ animation: "aiml-spin 1s linear infinite", marginBottom: 12 }} />
@@ -632,8 +633,9 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
                   const isActive = activeItem?.id === item.id;
                   const accent = item.color || (activeTab === 'github' ? "#0088ff" : "#00ff88");
                   return (
-                    <div key={item.id} style={{ display: "flex", alignItems: "center", paddingRight: 8 }}>
+                    <div key={item.id} className="links-companion-list-row" style={{ display: "flex", alignItems: "center", paddingRight: 8 }}>
                       <button
+                        className={`links-companion-item ${isActive ? "is-active" : ""}`}
                         onClick={() => handleSelect(item)}
                         style={{
                           flex: 1, display: "flex", flexDirection: "column", gap: 4,
@@ -689,7 +691,7 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
         )}
 
         {/* Content Area */}
-        <div style={{ flex: 1, background: "var(--bg)", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
+        <div className="links-companion-content" style={{ flex: 1, background: "var(--bg)", display: "flex", flexDirection: "column", position: "relative", overflow: "hidden" }}>
           {activeItem ? (
             <PreviewCard key={activeItem.url} item={activeItem} />
           ) : (

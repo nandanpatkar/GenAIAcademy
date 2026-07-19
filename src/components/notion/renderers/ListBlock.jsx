@@ -9,7 +9,7 @@ export default function ListBlock({ block }) {
 
   const textContent = <RichTextRenderer textArray={content} />;
   const style = {
-    color: 'var(--text2)',
+    color: 'var(--notion-text-bright, #f4f7ff)',
     lineHeight: '1.6',
     marginBottom: '0.5em',
     marginLeft: '1.5em'

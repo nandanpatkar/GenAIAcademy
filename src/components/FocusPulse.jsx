@@ -237,6 +237,7 @@ const FocusPulse = ({ node, module, onClose, onToggleSubtopicStatus, onVideoSele
 
   return (
     <motion.div
+      className="focus-pulse-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

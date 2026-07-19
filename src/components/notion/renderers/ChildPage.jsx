@@ -50,7 +50,7 @@ export default function ChildPage({ block, onNavigateToPage }) {
         borderRadius: '4px',
         cursor: 'pointer',
         fontWeight: 500,
-        color: 'var(--text)',
+        color: 'var(--notion-text-bright, #f4f7ff)',
         transition: 'background 0.2s',
         marginBottom: '0.5em',
         borderBottom: '1px solid transparent',
@@ -60,7 +60,7 @@ export default function ChildPage({ block, onNavigateToPage }) {
       onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
     >
       {renderIcon()}
-      <span style={{ textDecoration: 'underline', textDecorationColor: 'var(--text3)', wordBreak: 'break-word' }}>{title}</span>
+      <span style={{ textDecoration: 'underline', textDecorationColor: 'var(--notion-link-bright, #9fe8ff)', wordBreak: 'break-word' }}>{title}</span>
     </div>
   );
 }

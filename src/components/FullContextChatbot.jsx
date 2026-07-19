@@ -16,10 +16,13 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Plus,
+  KeyRound,
   Search,
   Sparkles,
   Trash2,
   X,
+  Eye,
+  EyeOff,
   Zap,
 } from "lucide-react";
 import { askContextCopilot } from "../services/aiService";
@@ -30,6 +33,7 @@ import "../styles/full-context-chatbot-sources.css";
 import "../styles/full-context-chatbot-overrides.css";
 
 const STORAGE_PREFIX = "genai_atlas_chats_v1";
+const FAB_POSITION_KEY = "genai_atlas_fab_position_v1";
 
 function AtlasLogo({ size = 18 }) {
   return (
@@ -37,6 +41,16 @@ function AtlasLogo({ size = 18 }) {
       <path d="M20 3.5C22.7 11.2 28.8 17.3 36.5 20C28.8 22.7 22.7 28.8 20 36.5C17.3 28.8 11.2 22.7 3.5 20C11.2 17.3 17.3 11.2 20 3.5Z" fill="currentColor" opacity=".22" />
       <path d="M20 8C22.1 14.2 25.8 17.9 32 20C25.8 22.1 22.1 25.8 20 32C17.9 25.8 14.2 22.1 8 20C14.2 17.9 17.9 14.2 20 8Z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
       <circle cx="20" cy="20" r="3.2" fill="currentColor" />
+    </svg>
+  );
+}
+
+function AtlasFabLogo({ size = 26 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <rect x="1.5" y="1.5" width="29" height="29" rx="7" fill="#171b1f" />
+      <path d="M10 23.5V8.5L22 23.5V8.5" stroke="#f7f4eb" strokeWidth="2.35" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 23.5H14.1" stroke="#b7f397" strokeWidth="2.35" strokeLinecap="round" />
     </svg>
   );
 }
@@ -131,7 +145,16 @@ export default function FullContextChatbot({
   activeTopic,
   user,
 }) {
-  const { geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
+  const {
+    geminiKey,
+    updateGeminiKey,
+    aiProvider,
+    updateAiProvider,
+    azureEndpoint,
+    updateAzureEndpoint,
+    azureKey,
+    updateAzureKey,
+  } = useAuth();
   const storageKey = `${STORAGE_PREFIX}_${user?.id || "local"}`;
   const [isOpen, setIsOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -142,7 +165,26 @@ export default function FullContextChatbot({
   const [isLoading, setIsLoading] = useState(false);
   const [historyQuery, setHistoryQuery] = useState("");
   const [copiedId, setCopiedId] = useState(null);
+  const [showCredentials, setShowCredentials] = useState(false);
+  const [credentialProvider, setCredentialProvider] = useState(aiProvider || "gemini");
+  const [geminiDraft, setGeminiDraft] = useState(geminiKey || "");
+  const [azureEndpointDraft, setAzureEndpointDraft] = useState(azureEndpoint || "");
+  const [azureKeyDraft, setAzureKeyDraft] = useState(azureKey || "");
+  const [showGeminiKey, setShowGeminiKey] = useState(false);
+  const [showAzureKey, setShowAzureKey] = useState(false);
+  const [fabPosition, setFabPosition] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(FAB_POSITION_KEY) || "null");
+      return saved && Number.isFinite(saved.left) && Number.isFinite(saved.top) ? saved : null;
+    } catch (_) {
+      return null;
+    }
+  });
+  const [isFabDragging, setIsFabDragging] = useState(false);
   const messagesEndRef = useRef(null);
+  const fabRef = useRef(null);
+  const fabDragRef = useRef(null);
+  const suppressFabClickRef = useRef(false);
 
   useEffect(() => {
     const nextChats = readChats(storageKey, aiProvider);
@@ -151,8 +193,45 @@ export default function FullContextChatbot({
   }, [storageKey, aiProvider]);
 
   useEffect(() => {
+    setCredentialProvider(aiProvider || "gemini");
+  }, [aiProvider]);
+
+  useEffect(() => {
+    setGeminiDraft(geminiKey || "");
+    setAzureEndpointDraft(azureEndpoint || "");
+    setAzureKeyDraft(azureKey || "");
+  }, [geminiKey, azureEndpoint, azureKey]);
+
+  useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(chats.slice(0, 30)));
   }, [chats, storageKey]);
+
+  useEffect(() => {
+    if (!fabPosition) return;
+    localStorage.setItem(FAB_POSITION_KEY, JSON.stringify(fabPosition));
+  }, [fabPosition]);
+
+  useEffect(() => {
+    if (!fabPosition || !fabRef.current) return undefined;
+
+    const keepFabInViewport = () => {
+      const element = fabRef.current;
+      if (!element) return;
+      const maxLeft = Math.max(0, window.innerWidth - element.offsetWidth);
+      const maxTop = Math.max(0, window.innerHeight - element.offsetHeight);
+      const nextPosition = {
+        left: Math.min(Math.max(0, fabPosition.left), maxLeft),
+        top: Math.min(Math.max(0, fabPosition.top), maxTop),
+      };
+      if (nextPosition.left !== fabPosition.left || nextPosition.top !== fabPosition.top) {
+        setFabPosition(nextPosition);
+      }
+    };
+
+    keepFabInViewport();
+    window.addEventListener("resize", keepFabInViewport);
+    return () => window.removeEventListener("resize", keepFabInViewport);
+  }, [fabPosition]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -165,6 +244,23 @@ export default function FullContextChatbot({
   const projectContext = useMemo(() => buildProjectContext({ pathsData, activePath, activeNode, activeModule, activeTopic }), [pathsData, activePath, activeNode, activeModule, activeTopic]);
   const currentPathTitle = pathsData?.[activePath]?.title || pathsData?.[activePath]?.name || activePath || "Workspace";
   const currentTopicTitle = normalizeTopic(activeTopic);
+
+  const openCredentials = () => {
+    setCredentialProvider(activeChat?.provider || aiProvider || "gemini");
+    setShowCredentials(true);
+  };
+
+  const saveCredentials = () => {
+    if (credentialProvider === "gemini") {
+      updateGeminiKey(geminiDraft.trim());
+    } else {
+      updateAzureEndpoint(azureEndpointDraft.trim());
+      updateAzureKey(azureKeyDraft.trim());
+    }
+    updateAiProvider(credentialProvider);
+    updateActiveChat({ provider: credentialProvider });
+    setShowCredentials(false);
+  };
 
   const updateActiveChat = (update) => {
     setChats((current) => current.map((chat) => chat.id === activeChatId ? {
@@ -233,13 +329,78 @@ export default function FullContextChatbot({
     "Turn my current roadmap into a focused 7-day study plan.",
   ];
 
+  const handleFabPointerDown = (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    const element = fabRef.current;
+    if (!element) return;
+
+    const rect = element.getBoundingClientRect();
+    fabDragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      startLeft: rect.left,
+      startTop: rect.top,
+      moved: false,
+    };
+    element.setPointerCapture?.(event.pointerId);
+  };
+
+  const handleFabPointerMove = (event) => {
+    const drag = fabDragRef.current;
+    const element = fabRef.current;
+    if (!drag || drag.pointerId !== event.pointerId || !element) return;
+
+    const deltaX = event.clientX - drag.startX;
+    const deltaY = event.clientY - drag.startY;
+    if (!drag.moved && Math.hypot(deltaX, deltaY) < 5) return;
+
+    drag.moved = true;
+    suppressFabClickRef.current = true;
+    setIsFabDragging(true);
+    const maxLeft = Math.max(0, window.innerWidth - element.offsetWidth);
+    const maxTop = Math.max(0, window.innerHeight - element.offsetHeight);
+    setFabPosition({
+      left: Math.min(Math.max(0, drag.startLeft + deltaX), maxLeft),
+      top: Math.min(Math.max(0, drag.startTop + deltaY), maxTop),
+    });
+  };
+
+  const handleFabPointerUp = (event) => {
+    const drag = fabDragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    fabRef.current?.releasePointerCapture?.(event.pointerId);
+    fabDragRef.current = null;
+    setIsFabDragging(false);
+  };
+
+  const handleFabClick = (event) => {
+    if (suppressFabClickRef.current) {
+      event.preventDefault();
+      event.stopPropagation();
+      suppressFabClickRef.current = false;
+      return;
+    }
+    setIsOpen(true);
+  };
+
   return (
     <>
       {!isOpen && (
-        <button className="atlas-fab" onClick={() => setIsOpen(true)} aria-label="Open Atlas project copilot">
-          <span className="atlas-fab-orbit" />
-          <AtlasLogo size={24} />
-          <span className="atlas-fab-label">Ask Atlas</span>
+        <button
+          ref={fabRef}
+          className={`atlas-fab ${isFabDragging ? "is-dragging" : ""}`}
+          style={fabPosition ? { left: fabPosition.left, top: fabPosition.top, right: "auto", bottom: "auto" } : undefined}
+          onPointerDown={handleFabPointerDown}
+          onPointerMove={handleFabPointerMove}
+          onPointerUp={handleFabPointerUp}
+          onPointerCancel={handleFabPointerUp}
+          onClick={handleFabClick}
+          aria-label="Open Atlas project copilot. Drag to reposition."
+          title="Drag to move · Click to open"
+        >
+          <span className="atlas-fab-orbit" aria-hidden="true" />
+          <span className="atlas-fab-icon"><AtlasFabLogo size={28} /></span>
         </button>
       )}
 
@@ -248,16 +409,17 @@ export default function FullContextChatbot({
           <div className={`atlas-shell ${isHistoryOpen ? "history-visible" : "history-hidden"} ${isFullscreen ? "atlas-fullscreen" : ""}`}>
             <aside className="atlas-history">
               <div className="atlas-history-topline">
-                <div className="atlas-brand-mark"><AtlasLogo size={18} /></div>
+                <div className="atlas-brand-mark"><AtlasLogo size={19} /></div>
                 <div>
                   <div className="atlas-brand-name">ATLAS</div>
-                  <div className="atlas-brand-subtitle">PROJECT COPILOT</div>
+                  <div className="atlas-brand-subtitle">LEARNING COPILOT</div>
                 </div>
                 <button className="atlas-icon-button atlas-mobile-close" onClick={() => setIsOpen(false)} aria-label="Close"><X size={16} /></button>
               </div>
+              <div className="atlas-sidebar-intro"><span className="atlas-sidebar-kicker">YOUR SPACE</span><p>Bring your roadmap, notes, and next move into one conversation.</p></div>
               <button className="atlas-new-chat" onClick={startNewChat}><MessageSquarePlus size={16} /> New conversation <Plus size={14} /></button>
               <label className="atlas-history-search"><Search size={14} /><input value={historyQuery} onChange={(e) => setHistoryQuery(e.target.value)} placeholder="Search history" /></label>
-              <div className="atlas-history-label"><span>RECENT</span><span>{filteredChats.length}</span></div>
+              <div className="atlas-history-label"><span>RECENT CONVERSATIONS</span><span>{filteredChats.length}</span></div>
               <div className="atlas-history-list">
                 {filteredChats.map((chat) => (
                   <button key={chat.id} className={`atlas-history-item ${chat.id === activeChatId ? "active" : ""}`} onClick={() => setActiveChatId(chat.id)}>
@@ -267,7 +429,7 @@ export default function FullContextChatbot({
                   </button>
                 ))}
               </div>
-              <div className="atlas-history-footer"><Archive size={14} /><span>Chats stay on this device</span></div>
+              <div className="atlas-history-footer"><Archive size={14} /><span><strong>Private by default</strong><small>Chats stay on this device</small></span></div>
             </aside>
 
             <section className="atlas-main">
@@ -275,19 +437,40 @@ export default function FullContextChatbot({
                 <div className="atlas-header-left">
                   <button className="atlas-icon-button atlas-history-toggle" onClick={() => setIsHistoryOpen((value) => !value)} aria-label="Toggle chat history">{isHistoryOpen ? <PanelLeftClose size={17} /> : <PanelLeftOpen size={17} />}</button>
                   <div className="atlas-avatar"><AtlasLogo size={20} /></div>
-                  <div><h2>Atlas <span>·</span> your project-aware copilot</h2><div className="atlas-context-status"><i /> Full workspace context active</div></div>
+                  <div><div className="atlas-header-kicker">PROJECT-AWARE ASSISTANT</div><h2>Atlas <span>·</span> think it through together</h2><div className="atlas-context-status"><i /> Full workspace context active</div></div>
                 </div>
                 <div className="atlas-header-actions">
-                  <div className="atlas-model-select"><Zap size={13} /><select value={activeChat?.provider || "gemini"} onChange={(e) => updateActiveChat({ provider: e.target.value })}><option value="gemini">Gemini</option><option value="azure-openai">Azure OpenAI</option></select><ChevronDown size={13} /></div>
-                  <button className={`atlas-web-toggle ${activeChat?.webEnabled ? "enabled" : ""}`} onClick={() => updateActiveChat({ webEnabled: !activeChat?.webEnabled })}><Globe2 size={14} /> Web {activeChat?.webEnabled ? "on" : "off"}</button>
+                  <div className="atlas-model-select"><Zap size={13} /><span>MODEL</span><select value={activeChat?.provider || "gemini"} onChange={(e) => updateActiveChat({ provider: e.target.value })}><option value="gemini">Gemini</option><option value="azure-openai">Azure OpenAI</option></select><ChevronDown size={13} /></div>
+                  <button className={`atlas-web-toggle ${activeChat?.webEnabled ? "enabled" : ""}`} onClick={() => updateActiveChat({ webEnabled: !activeChat?.webEnabled })}><Globe2 size={14} /><span>{activeChat?.webEnabled ? "Web on" : "Web off"}</span></button>
+                  <button className="atlas-credentials-button" onClick={openCredentials}><KeyRound size={14} /><span>Credentials</span></button>
                   <button className="atlas-icon-button atlas-fullscreen-toggle" onClick={() => setIsFullscreen((value) => !value)} aria-label={isFullscreen ? "Exit full screen" : "Open full screen"} title={isFullscreen ? "Exit full screen" : "Open full screen"}>{isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}</button>
                   <button className="atlas-icon-button" onClick={() => setIsOpen(false)} aria-label="Close Atlas"><X size={18} /></button>
                 </div>
               </header>
 
-              <div className="atlas-context-strip"><span className="atlas-context-pulse" /><span>Seeing</span><strong>{currentPathTitle}</strong><span>/</span><strong>{activeNode?.title || activeNode?.name || "Roadmap"}</strong><span>/</span><strong>{activeModule?.title || activeModule?.name || currentTopicTitle}</strong><span className="atlas-context-spacer" /><span className="atlas-context-caption">{activeChat?.webEnabled ? "Live web grounding enabled" : "Roadmap + workspace memory"}</span></div>
+              <div className="atlas-context-strip"><span className="atlas-context-pulse" /><span className="atlas-context-label">IN CONTEXT</span><strong>{currentPathTitle}</strong><span className="atlas-context-slash">/</span><strong>{activeNode?.title || activeNode?.name || "Roadmap"}</strong><span className="atlas-context-slash">/</span><strong>{activeModule?.title || activeModule?.name || currentTopicTitle}</strong><span className="atlas-context-spacer" /><span className="atlas-context-caption">{activeChat?.webEnabled ? "Live web grounding" : "Roadmap + workspace memory"}</span></div>
+
+              {showCredentials && (
+                <div className="atlas-credentials-panel" role="dialog" aria-label="AI provider credentials">
+                  <div className="atlas-credentials-heading"><div><span className="atlas-eyebrow"><KeyRound size={12} /> PERSONAL CREDENTIALS</span><h3>Connect your AI provider</h3><p>Your credentials are stored only for your signed-in account and used by Atlas for this workspace.</p></div><button className="atlas-icon-button" onClick={() => setShowCredentials(false)} aria-label="Close credentials"><X size={17} /></button></div>
+                  <div className="atlas-provider-tabs"><button className={credentialProvider === "gemini" ? "active" : ""} onClick={() => setCredentialProvider("gemini")}><span className="atlas-provider-logo gemini">G</span><span><strong>Google Gemini</strong><small>{geminiKey ? "Configured" : "Needs setup"}</small></span></button><button className={credentialProvider === "azure-openai" ? "active" : ""} onClick={() => setCredentialProvider("azure-openai")}><span className="atlas-provider-logo azure">A</span><span><strong>Azure OpenAI</strong><small>{azureEndpoint && azureKey ? "Configured" : "Needs setup"}</small></span></button></div>
+                  {credentialProvider === "gemini" ? (
+                    <label className="atlas-credential-field"><span>Gemini API key</span><div className="atlas-secret-field"><input type={showGeminiKey ? "text" : "password"} value={geminiDraft} onChange={(event) => setGeminiDraft(event.target.value)} placeholder="Paste your Gemini API key" autoComplete="off" /><button type="button" onClick={() => setShowGeminiKey((value) => !value)} aria-label={showGeminiKey ? "Hide Gemini API key" : "Show Gemini API key"}>{showGeminiKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div><small>Get one from Google AI Studio.</small></label>
+                  ) : (
+                    <div className="atlas-credential-fields"><label className="atlas-credential-field"><span>Azure endpoint</span><input value={azureEndpointDraft} onChange={(event) => setAzureEndpointDraft(event.target.value)} placeholder="https://your-resource.openai.azure.com" autoComplete="off" /></label><label className="atlas-credential-field"><span>Azure API key</span><div className="atlas-secret-field"><input type={showAzureKey ? "text" : "password"} value={azureKeyDraft} onChange={(event) => setAzureKeyDraft(event.target.value)} placeholder="Paste your Azure API key" autoComplete="off" /><button type="button" onClick={() => setShowAzureKey((value) => !value)} aria-label={showAzureKey ? "Hide Azure API key" : "Show Azure API key"}>{showAzureKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div></label></div>
+                  )}
+                  <div className="atlas-credentials-footer"><span><i /> Atlas will use {credentialProvider === "gemini" ? "Gemini" : "Azure OpenAI"} for new messages.</span><button className="atlas-credentials-save" onClick={saveCredentials}>Save & use provider <ArrowUpRight size={14} /></button></div>
+                </div>
+              )}
 
               <div className="atlas-messages">
+                {activeChat?.messages.length === 1 && !isLoading && (
+                  <div className="atlas-welcome-card">
+                    <div className="atlas-welcome-orb"><AtlasLogo size={28} /></div>
+                    <div><span className="atlas-eyebrow">ATLAS / READY TO HELP</span><h1>Make your next move<br /><em>make sense.</em></h1><p>Ask about your current topic, turn your roadmap into a plan, or pressure-test an idea. I’ll use the context already in your workspace.</p></div>
+                    <div className="atlas-welcome-meta"><span><i /> {currentPathTitle}</span><span><i /> {activeChat?.webEnabled ? "Web connected" : "Private workspace context"}</span></div>
+                  </div>
+                )}
                 {activeChat?.messages.map((message, index) => (
                   <div key={message.id} className={`atlas-message-row ${message.role}`}>
                     {message.role === "assistant" && <div className="atlas-message-avatar"><AtlasLogo size={16} /></div>}
@@ -299,19 +482,20 @@ export default function FullContextChatbot({
                     </div>
                   </div>
                 ))}
-                {activeChat?.messages.length === 1 && !isLoading && <div className="atlas-suggestions"><div className="atlas-suggestion-heading"><Sparkles size={13} /> Try asking Atlas</div>{suggestions.map((suggestion) => <button key={suggestion} onClick={() => sendMessage(suggestion)}>{suggestion}<ArrowUp size={13} /></button>)}</div>}
+                {activeChat?.messages.length === 1 && !isLoading && <div className="atlas-suggestions"><div className="atlas-suggestion-heading"><Sparkles size={13} /> START WITH A PROMPT</div>{suggestions.map((suggestion) => <button key={suggestion} onClick={() => sendMessage(suggestion)}><span>{suggestion}</span><ArrowUpRight size={14} /></button>)}</div>}
                 {isLoading && <div className="atlas-message-row assistant"><div className="atlas-message-avatar"><AtlasLogo size={16} /></div><div className="atlas-typing"><span /><span /><span /> <em>Atlas is connecting the dots…</em></div></div>}
                 <div ref={messagesEndRef} />
               </div>
 
-              {!providerReady && <div className="atlas-credentials-warning"><Zap size={14} /><span><strong>Personal credentials required.</strong> Open Settings, choose {activeChat?.provider === "azure-openai" ? "Azure OpenAI" : "Gemini"}, and save your own credentials before sending.</span></div>}
+              {!providerReady && <div className="atlas-credentials-warning"><Zap size={14} /><span><strong>Personal credentials required.</strong> Add a key for {activeChat?.provider === "azure-openai" ? "Azure OpenAI" : "Gemini"} to start chatting.</span><button onClick={openCredentials}>Configure now <ArrowUpRight size={13} /></button></div>}
 
               <div className="atlas-composer-area">
                 <div className="atlas-composer">
-                  <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} placeholder={!providerReady ? "Configure your personal AI credentials in Settings first" : activeChat?.webEnabled ? "Ask anything — Atlas can search the web too" : "Ask Atlas about your project…"} rows={1} />
-                  <div className="atlas-composer-bottom"><span><span className="atlas-command-key">⌘</span> Enter to send <span className="atlas-composer-divider" /> Shift + Enter for a new line</span><button className={`atlas-send ${input.trim() ? "ready" : ""}`} onClick={() => sendMessage()} disabled={!input.trim() || isLoading} aria-label="Send message"><ArrowUp size={17} /></button></div>
+                  <div className="atlas-composer-label"><span className="atlas-composer-pulse" /> ASK ATLAS</div>
+                  <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} placeholder={!providerReady ? "Configure your personal AI credentials in Settings first" : activeChat?.webEnabled ? "Ask anything — Atlas can search the web too" : "What are you working through?"} rows={1} />
+                  <div className="atlas-composer-bottom"><span><span className="atlas-command-key">⌘</span> Enter <span className="atlas-composer-divider" /> Shift + Enter for a new line</span><button className={`atlas-send ${input.trim() ? "ready" : ""}`} onClick={() => sendMessage()} disabled={!input.trim() || isLoading} aria-label="Send message"><ArrowUp size={17} /></button></div>
                 </div>
-                <div className="atlas-disclaimer"><Sparkles size={11} /> Atlas can make mistakes. Check important details and cited sources.</div>
+                <div className="atlas-disclaimer"><Sparkles size={11} /> Atlas can make mistakes — check important details.</div>
               </div>
             </section>
           </div>

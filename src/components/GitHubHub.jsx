@@ -94,6 +94,27 @@ export default function GitHubHub({ onClose }) {
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
+      <div className="gh-hub-backdrop" aria-hidden="true">
+        <svg className="gh-github-watermark" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.65 7.65 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+        </svg>
+        <div className="gh-backdrop-kicker">OPEN SOURCE / REPOSITORY NETWORK</div>
+        <div className="gh-contribution-wall">
+          {Array.from({ length: 84 }, (_, index) => <i key={index} style={{ "--cell-index": index }} />)}
+        </div>
+        <svg className="gh-branch-map" viewBox="0 0 1000 720" preserveAspectRatio="none">
+          <path d="M-20 520 C150 500 120 250 300 290 S430 580 600 445 S790 155 1020 215" />
+          <path d="M245 720 C315 570 265 445 395 385 S610 420 715 300 S805 90 990 55" />
+          <path d="M510 720 C520 610 690 590 750 510 S820 380 1030 390" />
+          <circle cx="300" cy="290" r="5" />
+          <circle cx="600" cy="445" r="5" />
+          <circle cx="715" cy="300" r="5" />
+          <circle cx="750" cy="510" r="5" />
+        </svg>
+        <div className="gh-backdrop-branch gh-backdrop-branch-a"><span /></div>
+        <div className="gh-backdrop-branch gh-backdrop-branch-b"><span /></div>
+      </div>
+
       {/* Premium Header */}
       <motion.header 
         className="gh-hub-header"
@@ -216,4 +237,3 @@ export default function GitHubHub({ onClose }) {
     </motion.div>
   );
 }
-

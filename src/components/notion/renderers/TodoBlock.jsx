@@ -21,14 +21,14 @@ export default function TodoBlock({ block }) {
       backgroundColor: isBg ? mappedColor : 'transparent',
       padding: isBg ? '4px 8px' : '2px 0',
       borderRadius: isBg ? '4px' : '0',
-      opacity: checked ? 0.6 : 1,
+      opacity: checked ? 0.78 : 1,
     }}>
       <div style={{
         marginTop: '3px',
         width: '16px',
         height: '16px',
         borderRadius: '3px',
-        border: checked ? 'none' : '2px solid var(--text3)',
+        border: checked ? 'none' : '2px solid var(--notion-link-bright, #9fe8ff)',
         backgroundColor: checked ? 'var(--neon)' : 'transparent',
         display: 'flex',
         alignItems: 'center',
@@ -41,7 +41,7 @@ export default function TodoBlock({ block }) {
           </svg>
         )}
       </div>
-      <div style={{ flex: 1, textDecoration: checked ? 'line-through' : 'none', textDecorationColor: 'var(--text3)' }}>
+      <div style={{ flex: 1, textDecoration: checked ? 'line-through' : 'none', textDecorationColor: 'var(--notion-text-muted, #ced8ea)' }}>
         <RichTextRenderer textArray={content} />
       </div>
     </div>

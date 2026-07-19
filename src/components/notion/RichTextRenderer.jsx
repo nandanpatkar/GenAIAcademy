@@ -2,25 +2,25 @@ import React from 'react';
 import InlineLink from './renderers/InlineLink';
 
 export const darkColorMap = {
-  default: 'inherit',
-  gray: 'rgba(255, 255, 255, 0.65)',
-  brown: '#937264',
-  orange: '#ffa344',
-  yellow: '#ffdc49',
-  green: '#4dab9a',
-  blue: '#529cca',
-  purple: '#9a6dd7',
-  pink: '#e255a1',
-  red: '#ff7369',
-  gray_background: 'rgba(255, 255, 255, 0.05)',
-  brown_background: 'rgba(147, 114, 100, 0.2)',
-  orange_background: 'rgba(255, 163, 68, 0.2)',
-  yellow_background: 'rgba(255, 220, 73, 0.2)',
-  green_background: 'rgba(77, 171, 154, 0.2)',
-  blue_background: 'rgba(82, 156, 202, 0.2)',
-  purple_background: 'rgba(154, 109, 215, 0.2)',
-  pink_background: 'rgba(226, 85, 161, 0.2)',
-  red_background: 'rgba(255, 115, 105, 0.2)',
+  default: 'var(--notion-text-bright, #f4f7ff)',
+  gray: '#d7deed',
+  brown: '#f3b08c',
+  orange: '#ffc267',
+  yellow: '#ffe56e',
+  green: '#6ff5bb',
+  blue: '#82d9ff',
+  purple: '#d29aff',
+  pink: '#ff8bd1',
+  red: '#ff9388',
+  gray_background: 'rgba(148, 163, 184, 0.28)',
+  brown_background: 'rgba(217, 119, 87, 0.34)',
+  orange_background: 'rgba(245, 158, 11, 0.36)',
+  yellow_background: 'rgba(250, 204, 21, 0.34)',
+  green_background: 'rgba(16, 185, 129, 0.32)',
+  blue_background: 'rgba(14, 165, 233, 0.34)',
+  purple_background: 'rgba(139, 92, 246, 0.36)',
+  pink_background: 'rgba(236, 72, 153, 0.34)',
+  red_background: 'rgba(239, 68, 68, 0.34)',
 };
 
 export default function RichTextRenderer({ textArray }) {
@@ -44,12 +44,13 @@ export default function RichTextRenderer({ textArray }) {
               <code
                 key={`code-${idx}`}
                 style={{
-                  background: 'rgba(255,255,255,0.1)',
+                  background: 'rgba(34, 211, 238, 0.18)',
+                  border: '1px solid rgba(34, 211, 238, 0.26)',
                   padding: '2px 4px',
                   borderRadius: 4,
                   fontFamily: 'monospace',
                   fontSize: '0.9em',
-                  color: 'var(--neon)'
+                  color: '#9fffe0'
                 }}
               >
                 {content}
@@ -70,7 +71,7 @@ export default function RichTextRenderer({ textArray }) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: 'inherit', textDecoration: 'underline', textDecorationColor: 'rgba(255,255,255,0.4)', textUnderlineOffset: '3px' }}
+                style={{ color: 'var(--notion-link-bright, #9fe8ff)', textDecoration: 'underline', textDecorationColor: 'rgba(130, 217, 255, 0.9)', textUnderlineOffset: '3px' }}
               >
                 {content}
               </a>

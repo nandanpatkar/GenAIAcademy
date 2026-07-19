@@ -5,6 +5,25 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+class NotionApiError extends Error {
+  status: number
+
+  constructor(message: string, status: number) {
+    super(message)
+    this.name = 'NotionApiError'
+    this.status = status
+  }
+}
+
+async function getNotionError(response: Response) {
+  try {
+    const body = await response.json()
+    return body?.message || body?.code || `Notion API returned HTTP ${response.status}`
+  } catch {
+    return `Notion API returned HTTP ${response.status}`
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -15,7 +34,11 @@ serve(async (req) => {
     const NOTION_API_KEY = Deno.env.get('NOTION_API_KEY')
 
     if (!pageId && !blockId) {
-      throw new Error('pageId or blockId is required')
+      throw new NotionApiError('pageId or blockId is required', 400)
+    }
+
+    if (!NOTION_API_KEY) {
+      throw new NotionApiError('NOTION_API_KEY is not configured on the Edge Function', 500)
     }
 
     // If only blockId is provided, just return that block's children (used for recursive nesting)
@@ -28,8 +51,7 @@ serve(async (req) => {
         }
       });
       if (!blocksResponse.ok) {
-        const err = await blocksResponse.json();
-        throw new Error(`Failed to fetch Notion blocks: ${err.message}`);
+        throw new NotionApiError(`Failed to fetch Notion blocks: ${await getNotionError(blocksResponse)}`, blocksResponse.status)
       }
       const blocksData = await blocksResponse.json();
       return new Response(
@@ -51,9 +73,9 @@ serve(async (req) => {
     });
     
     if (!pageResponse.ok) {
-       const err = await pageResponse.json();
-       console.error(err);
-       throw new Error(`Failed to fetch Notion page: ${err.message}`);
+       const message = await getNotionError(pageResponse)
+       console.error(message)
+       throw new NotionApiError(`Failed to fetch Notion page: ${message}`, pageResponse.status)
     }
 
     const pageData = await pageResponse.json();
@@ -68,8 +90,7 @@ serve(async (req) => {
     });
 
     if (!blocksResponse.ok) {
-       const err = await blocksResponse.json();
-       throw new Error(`Failed to fetch Notion blocks: ${err.message}`);
+       throw new NotionApiError(`Failed to fetch Notion blocks: ${await getNotionError(blocksResponse)}`, blocksResponse.status)
     }
 
     const blocksData = await blocksResponse.json();
@@ -85,9 +106,11 @@ serve(async (req) => {
       }
     )
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    const status = error instanceof NotionApiError ? error.status : 500
+    const message = error instanceof Error ? error.message : 'Unexpected Notion fetch error'
+    return new Response(JSON.stringify({ error: message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 400,
+      status,
     })
   }
 })
