@@ -69,7 +69,7 @@ export default function RoadmapMobile({
   const notStarted = Math.max(0, total - completedCount - inProgress);
 
   const tabLabels = Object.keys(pathsData || {})
-    .filter(key => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(key))
+    .filter(key => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance"].includes(key))
     .map((key) => ({
       key,
       label: PATH_LABELS[key] || (pathsData[key]?.title || key).toUpperCase(),
@@ -87,6 +87,7 @@ export default function RoadmapMobile({
 
   return (
     <MobileShell
+      className="roadmap-mobile-shell"
       title={title}
       subtitle={`${completedCount}/${total} completed · ${pct}%`}
       accentColor={color}

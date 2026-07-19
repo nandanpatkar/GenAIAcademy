@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Hexagon, Mail, Lock, LogIn, UserPlus, ArrowLeft, Brain, Sparkles } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  BrainCircuit,
+  Check,
+  Eye,
+  EyeOff,
+  Hexagon,
+  Layers3,
+  Lock,
+  LogIn,
+  Mail,
+  ShieldCheck,
+  Sparkles,
+  UserPlus,
+} from 'lucide-react';
+import '../styles/auth.css';
 
 export default function AuthInterface({ onBackToLanding, theme, toggleTheme }) {
   const { signIn, signUp, signInWithGoogle, adminSignInMock } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [loginMode, setLoginMode] = useState('user'); // 'user' | 'admin'
-  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -20,24 +36,18 @@ export default function AuthInterface({ onBackToLanding, theme, toggleTheme }) {
     try {
       if (loginMode === 'admin') {
         if (email === 'nandanpatkar14114@gmail.com' && password === 'Nandan@14114') {
-          // First attempt to log in normally if the account exists in Supabase
           const { error: signInError } = await signIn(email, password);
-          if (signInError) {
-            // Mock it if account isn't explicitly signed up in Supabase
-            adminSignInMock();
-          }
+          if (signInError) adminSignInMock();
         } else {
-          throw new Error("Invalid admin credentials");
+          throw new Error('Invalid admin credentials');
         }
+      } else if (isSignUp) {
+        const { error: signUpError } = await signUp(email, password);
+        if (signUpError) throw signUpError;
+        alert('Check your email for the confirmation link!');
       } else {
-        if (isSignUp) {
-          const { error: signUpError } = await signUp(email, password);
-          if (signUpError) throw signUpError;
-          alert('Check your email for the confirmation link!');
-        } else {
-          const { error: signInError } = await signIn(email, password);
-          if (signInError) throw signInError;
-        }
+        const { error: signInError } = await signIn(email, password);
+        if (signInError) throw signInError;
       }
     } catch (err) {
       setError(err.message || 'An error occurred during authentication.');
@@ -49,156 +59,202 @@ export default function AuthInterface({ onBackToLanding, theme, toggleTheme }) {
   const handleGoogleSignIn = async () => {
     try {
       setError(null);
-      const { error } = await signInWithGoogle();
-      if (error) throw error;
+      const { error: googleError } = await signInWithGoogle();
+      if (googleError) throw googleError;
     } catch (err) {
       setError(err.message);
     }
   };
 
+  const isAdmin = loginMode === 'admin';
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--bg)', color: 'var(--text)', overflow: 'hidden', position: 'relative' }}>
-      
-      {/* Back Button */}
-      {onBackToLanding && (
-        <button 
-          onClick={onBackToLanding}
-          style={{ 
-            position: 'absolute', top: 32, left: 32, zIndex: 100,
-            display: 'flex', alignItems: 'center', gap: 8,
-            padding: '10px 18px', background: 'var(--bg3)',
-            border: '1px solid var(--border)', borderRadius: 12,
-            color: 'var(--text2)', fontSize: 13, fontWeight: 700,
-            cursor: 'pointer', transition: 'all 0.2s',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-          }}
-          onMouseOver={(e) => { e.currentTarget.style.background = 'var(--bg4)'; e.currentTarget.style.borderColor = 'var(--border2)'; e.currentTarget.style.color = 'var(--text)'; }}
-          onMouseOut={(e) => { e.currentTarget.style.background = 'var(--bg3)'; e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text2)'; }}
-        >
-          <ArrowLeft size={16} /> Back to Home
-        </button>
-      )}
-
-
-      
-      {/* Background Decorators */}
-      <div style={{ position: 'absolute', top: '-10%', left: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, var(--neon-dim) 0%, transparent 60%)', filter: 'blur(40px)' }} />
-      <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '500px', height: '500px', background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 60%)', filter: 'blur(40px)' }} />
-
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 32, zIndex: 10 }}>
-        <div style={{ width: 44, height: 44, borderRadius: 12, background: "var(--neon-dim)", border: "1px solid var(--neon)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--neon)", marginBottom: 16 }}>
-          <Hexagon size={28} />
-        </div>
-        <h1 style={{ fontSize: 28, fontWeight: 800, letterSpacing: "-.5px", margin: 0 }}>GenAI<span style={{ color: "var(--neon)" }}>Academy</span></h1>
-        <p style={{ color: "var(--text3)", fontSize: 13, marginTop: 8 }}>Authenticate to sync your curriculum progress to the cloud.</p>
+    <main className={`auth-page ${theme === 'light' ? 'auth-page--light' : ''}`}>
+      <div className="auth-page__ambient auth-page__ambient--one" />
+      <div className="auth-page__ambient auth-page__ambient--two" />
+      <div className="auth-page__grid" />
+      <div className="auth-network" aria-hidden="true">
+        <span className="auth-network__line" />
+        <i className="auth-network__node auth-network__node--one" />
+        <i className="auth-network__node auth-network__node--two" />
+        <i className="auth-network__node auth-network__node--three" />
+        <i className="auth-network__node auth-network__node--four" />
       </div>
 
-      <div style={{ width: '100%', maxWidth: 380, background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 20, padding: 32, position: 'relative', zIndex: 10, boxShadow: theme === 'light' ? '0 24px 60px rgba(0,0,0,0.1)' : '0 24px 60px rgba(0,0,0,0.4)', backdropFilter: 'blur(20px)' }}>
-        
-        {/* Role Toggle */}
-        <div style={{ display: 'flex', background: 'var(--bg3)', borderRadius: 12, padding: 4, marginBottom: 24 }}>
-          <button 
-            type="button"
-            onClick={() => setLoginMode('user')}
-            style={{ flex: 1, padding: '8px 0', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: 'pointer', background: loginMode === 'user' ? 'var(--bg2)' : 'transparent', color: loginMode === 'user' ? 'var(--text)' : 'var(--text3)', boxShadow: loginMode === 'user' ? '0 2px 8px rgba(0,0,0,0.2)' : 'none', transition: 'all 0.2s' }}
-          >
-            Learner
+      <header className="auth-topbar">
+        {onBackToLanding ? (
+          <button className="auth-back" onClick={onBackToLanding} type="button">
+            <ArrowLeft size={16} />
+            <span>Back to home</span>
           </button>
-          <button 
+        ) : <span />}
+
+        {toggleTheme && (
+          <button
+            className="auth-theme-toggle"
+            onClick={toggleTheme}
             type="button"
-            onClick={() => setLoginMode('admin')}
-            style={{ flex: 1, padding: '8px 0', border: 'none', borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: 'pointer', background: loginMode === 'admin' ? 'var(--bg2)' : 'transparent', color: loginMode === 'admin' ? 'var(--text)' : 'var(--text3)', boxShadow: loginMode === 'admin' ? '0 2px 8px rgba(0,0,0,0.2)' : 'none', transition: 'all 0.2s' }}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
           >
-            Admin
+            <span className="auth-theme-toggle__dot" />
+            {theme === 'light' ? 'Dark mode' : 'Light mode'}
           </button>
-        </div>
-
-        <h2 style={{ margin: "0 0 24px 0", fontSize: 20, fontWeight: 800, textAlign: 'center' }}>
-          {loginMode === 'admin' ? "Admin Portal" : (isSignUp ? "Create an Account" : "Welcome Back")}
-        </h2>
-
-        {error && (
-          <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#ef4444', padding: '12px 16px', borderRadius: 8, fontSize: 13, marginBottom: 20, textAlign: 'center' }}>
-            {error}
-          </div>
         )}
+      </header>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label style={{ fontSize: 11, color: "var(--text2)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1 }}>Email Address</label>
-            <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text3)' }}><Mail size={16} /></div>
-              <input 
-                type="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                style={{ width: '100%', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px 12px 40px', color: 'var(--text)', outline: 'none', transition: 'border-color .2s', fontSize: 14 }}
-              />
+      <div className="auth-layout">
+        <section className="auth-story" aria-label="GenAI Academy overview">
+          <div className="auth-story__eyebrow">
+            <span className="auth-story__eyebrow-dot" />
+            Your AI engineering workspace
+          </div>
+
+          <div className="auth-brand auth-brand--story">
+            <span className="auth-brand__mark"><Hexagon size={22} strokeWidth={2.2} /></span>
+            <span>GenAI<span>Academy</span></span>
+          </div>
+
+          <h1>Build what’s next<br /><em>with clarity.</em></h1>
+          <p className="auth-story__intro">
+            One focused space to learn, practise, and ship the systems behind the AI era.
+          </p>
+
+          <div className="auth-story__cards">
+            <div className="auth-story-card auth-story-card--primary">
+              <div className="auth-story-card__icon"><BrainCircuit size={19} /></div>
+              <div>
+                <strong>Learn by building</strong>
+                <span>Roadmaps, labs, and real-world patterns</span>
+              </div>
+              <ArrowUpRight className="auth-story-card__arrow" size={17} />
+            </div>
+            <div className="auth-story-card auth-story-card--secondary">
+              <div className="auth-story-card__icon"><Layers3 size={19} /></div>
+              <div>
+                <strong>Keep your momentum</strong>
+                <span>Your progress, saved and ready anywhere</span>
+              </div>
+              <div className="auth-story-card__progress"><i /><i /><i /><i /><i /></div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label style={{ fontSize: 11, color: "var(--text2)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1 }}>Password</label>
-            <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text3)' }}><Lock size={16} /></div>
-              <input 
-                type="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                style={{ width: '100%', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 10, padding: '12px 14px 12px 40px', color: 'var(--text)', outline: 'none', transition: 'border-color .2s', fontSize: 14 }}
-              />
+          <div className="auth-trust-line">
+            <div className="auth-trust-line__avatars"><span>G</span><span>A</span><span>+</span></div>
+            <span>Join a growing community of curious builders</span>
+          </div>
+        </section>
+
+        <section className="auth-panel" aria-label={isAdmin ? 'Admin sign in' : 'Learner sign in'}>
+          <div className="auth-panel__topline">
+            <div className="auth-brand auth-brand--panel">
+              <span className="auth-brand__mark"><Hexagon size={18} strokeWidth={2.2} /></span>
+              <span>GenAI<span>Academy</span></span>
             </div>
+            <span className="auth-panel__status"><span /> Secure access</span>
           </div>
 
-          <button 
-            type="submit" 
-            disabled={loading}
-            style={{ width: '100%', padding: '12px', background: 'var(--neon)', border: 'none', borderRadius: 10, color: '#000', fontSize: 14, fontWeight: 800, cursor: loading ? 'not-allowed' : 'pointer', transition: 'opacity .2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 8 }}
-          >
-            {loginMode === 'admin' ? <><LogIn size={16} /> Admin Sign In</> : (isSignUp ? <><UserPlus size={16} /> Sign Up</> : <><LogIn size={16} /> Sign In</>)}
-          </button>
-        </form>
+          <div className="auth-panel__heading">
+            <p className="auth-kicker">{isAdmin ? 'Restricted workspace' : isSignUp ? 'Start your journey' : 'Welcome back'}</p>
+            <h2>{isAdmin ? 'Admin portal' : isSignUp ? 'Create your account' : 'Sign in to continue'}</h2>
+            <p>{isAdmin ? 'Manage the Academy from a secure control room.' : 'Pick up where you left off and keep learning.'}</p>
+          </div>
 
-        {loginMode === 'user' && (
-          <>
-            <div style={{ display: 'flex', alignItems: 'center', margin: '24px 0', color: 'var(--text3)' }}>
-              <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
-              <span style={{ padding: '0 12px', fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>Or continue with</span>
-              <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
-            </div>
-
-            <button 
-              onClick={handleGoogleSignIn}
+          <div className="auth-mode-switch" role="tablist" aria-label="Account type">
+            <button
+              className={!isAdmin ? 'is-active' : ''}
+              onClick={() => { setLoginMode('user'); setError(null); }}
               type="button"
-              style={{ width: '100%', padding: '12px', background: 'var(--bg3)', border: '1px solid var(--border)', borderRadius: 10, color: 'var(--text)', fontSize: 14, fontWeight: 700, cursor: 'pointer', transition: 'all .2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
+              role="tab"
+              aria-selected={!isAdmin}
             >
-              <svg style={{ width: 18, height: 18 }} viewBox="0 0 24 24">
-                <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-              </svg>
-              Google
+              <span className="auth-mode-switch__icon"><Sparkles size={14} /></span>
+              Learner
             </button>
+            <button
+              className={isAdmin ? 'is-active' : ''}
+              onClick={() => { setLoginMode('admin'); setIsSignUp(false); setError(null); }}
+              type="button"
+              role="tab"
+              aria-selected={isAdmin}
+            >
+              <span className="auth-mode-switch__icon"><ShieldCheck size={14} /></span>
+              Admin
+            </button>
+          </div>
 
-            <div style={{ textAlign: 'center', marginTop: 24, fontSize: 12, color: 'var(--text2)' }}>
-              {isSignUp ? "Already have an account? " : "Don't have an account? "}
-              <button 
-                type="button"
-                onClick={() => setIsSignUp(!isSignUp)}
-                style={{ background: 'none', border: 'none', color: 'var(--neon)', fontWeight: 700, cursor: 'pointer', padding: 0, fontSize: 12, textDecoration: 'underline' }}
-              >
-                {isSignUp ? "Sign In" : "Sign Up"}
+          {error && <div className="auth-error" role="alert">{error}</div>}
+
+          <form onSubmit={handleSubmit} className="auth-form">
+            <label className="auth-field">
+              <span>Email address</span>
+              <div className="auth-input-wrap">
+                <Mail size={17} aria-hidden="true" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  required
+                />
+              </div>
+            </label>
+
+            <label className="auth-field">
+              <span>Password</span>
+              <div className="auth-input-wrap">
+                <Lock size={17} aria-hidden="true" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  autoComplete={isSignUp ? 'new-password' : 'current-password'}
+                  required
+                />
+                <button
+                  className="auth-input-action"
+                  type="button"
+                  onClick={() => setShowPassword((visible) => !visible)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+                </button>
+              </div>
+            </label>
+
+            <button className="auth-submit" type="submit" disabled={loading}>
+              <span>{loading ? 'Connecting…' : isAdmin ? 'Enter admin portal' : isSignUp ? 'Create account' : 'Continue to Academy'}</span>
+              {!loading && (isSignUp ? <UserPlus size={17} /> : <LogIn size={17} />)}
+            </button>
+          </form>
+
+          {!isAdmin && (
+            <>
+              <div className="auth-divider"><span>or continue with</span></div>
+              <button className="auth-google" onClick={handleGoogleSignIn} type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="#4285F4" d="M21.35 12.23c0-.72-.06-1.42-.18-2.09H12v3.96h5.24a4.48 4.48 0 0 1-1.94 2.94v2.45h3.15c1.84-1.7 2.9-4.2 2.9-7.26Z" />
+                  <path fill="#34A853" d="M12 21.5c2.63 0 4.84-.87 6.45-2.36l-3.15-2.45c-.87.58-1.98.93-3.3.93-2.54 0-4.7-1.72-5.47-4.03H3.28v2.53A9.74 9.74 0 0 0 12 21.5Z" />
+                  <path fill="#FBBC05" d="M6.53 13.59a5.84 5.84 0 0 1 0-3.18V7.88H3.28a9.75 9.75 0 0 0 0 8.24l3.25-2.53Z" />
+                  <path fill="#EA4335" d="M12 6.38c1.43 0 2.71.49 3.72 1.46l2.8-2.8C16.83 3.47 14.63 2.5 12 2.5a9.74 9.74 0 0 0-8.72 5.38l3.25 2.53C7.3 8.1 9.46 6.38 12 6.38Z" />
+                </svg>
+                Continue with Google
               </button>
-            </div>
-          </>
-        )}
 
+              <p className="auth-switch-copy">
+                {isSignUp ? 'Already have an account?' : 'New to GenAI Academy?'}{' '}
+                <button type="button" onClick={() => { setIsSignUp((value) => !value); setError(null); }}>
+                  {isSignUp ? 'Sign in' : 'Create an account'}
+                </button>
+              </p>
+            </>
+          )}
+
+          <p className="auth-legal">By continuing, you agree to learn generously and build responsibly.</p>
+          {isAdmin && <div className="auth-admin-note"><Check size={14} /> Admin access is monitored and protected</div>}
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

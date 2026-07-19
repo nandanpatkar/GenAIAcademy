@@ -16,7 +16,7 @@ import {
   Save, FolderOpen as FolderOpenIcon, AlertCircle, RotateCcw, Redo2,
   StickyNote, Square, Grid3X3, Map, Maximize2, ZoomIn, ZoomOut,
   Play, Info, Star, Tag, CheckCircle, Minimize2, ExternalLink,
-  MoreHorizontal, Upload, PanelLeft,
+  MoreHorizontal, Upload, PanelLeft, PanelRight,
   Image, Mic, Volume2, Eye, Activity, Timer, Bell, FlaskConical, Key, UserCheck,
   Plus,
 } from "lucide-react";
@@ -34,6 +34,9 @@ import ArchitectureDesign from "./ArchitectureDesign";
 import useIsMobile from "../../hooks/useIsMobile";
 import MobileNodePicker from "./components/MobileNodePicker.jsx";
 import "./components/mobile-node-picker.css";
+import DesignBriefPanel from "./components/DesignBriefPanel.jsx";
+import ArchitectureReviewPanel from "./components/ArchitectureReviewPanel.jsx";
+import "./components/design-workspace.css";
 
 // ─── Icon Registry ─────────────────────────────────────────────────────────────
 const ICON_MAP = {
@@ -61,9 +64,11 @@ function GenAINode({ id, data, selected }) {
   const status = STATUS_CFG[data.status]   || STATUS_CFG.planned;
   const inPT   = PORT_TYPES[data.inputPort]  || PORT_TYPES.any;
   const outPT  = PORT_TYPES[data.outputPort] || PORT_TYPES.any;
+  const runtime = data.runtimeState || "idle";
+  const runtimeBorder = runtime === "active" ? "#38bdf8" : runtime === "complete" ? "#34d399" : null;
 
   if (data.collapsed) return (
-    <div style={{ background: "#0d1117", border: `1.5px solid ${selected ? col.bg : col.border}`, borderRadius: 8, padding: "6px 10px", minWidth: 150, display: "flex", alignItems: "center", gap: 8, fontFamily: "'DM Mono',monospace", boxShadow: selected ? `0 0 0 2px ${col.bg}44` : "0 2px 8px rgba(0,0,0,0.4)" }}>
+    <div style={{ background: "#0d1117", border: `1.5px solid ${runtimeBorder || (selected ? col.bg : col.border)}`, borderRadius: 8, padding: "6px 10px", minWidth: 150, display: "flex", alignItems: "center", gap: 8, fontFamily: "'DM Mono',monospace", boxShadow: runtime === "active" ? "0 0 0 3px #38bdf833, 0 0 20px #38bdf833" : selected ? `0 0 0 2px ${col.bg}44` : "0 2px 8px rgba(0,0,0,0.4)" }}>
       <Handle type="target" position={Position.Left} id="in" style={{ background: inPT.color, border: "2px solid #0d1117", width: 9, height: 9, left: -5 }} />
       <div style={{ width: 18, height: 18, borderRadius: 4, background: col.dim, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><IC name={data.icon} size={10} color={col.bg} /></div>
       <span style={{ fontSize: 10, fontWeight: 700, color: "#e6edf3", whiteSpace: "nowrap" }}>{data.label}</span>
@@ -72,7 +77,7 @@ function GenAINode({ id, data, selected }) {
   );
 
   return (
-    <div style={{ background: "linear-gradient(145deg,#0d1117 0%,#161b22 100%)", border: `1.5px solid ${selected ? col.bg : col.border}`, borderRadius: 10, minWidth: 190, maxWidth: 260, boxShadow: selected ? `0 0 0 2px ${col.bg}44,0 6px 24px ${col.bg}22` : "0 2px 10px rgba(0,0,0,0.5)", transition: "all 0.15s", fontFamily: "'DM Mono',monospace", overflow: "hidden" }}>
+    <div style={{ background: "linear-gradient(145deg,#0d1117 0%,#161b22 100%)", border: `1.5px solid ${runtimeBorder || (selected ? col.bg : col.border)}`, borderRadius: 10, minWidth: 190, maxWidth: 260, boxShadow: runtime === "active" ? "0 0 0 3px #38bdf833, 0 0 26px #38bdf833" : selected ? `0 0 0 2px ${col.bg}44,0 6px 24px ${col.bg}22` : "0 2px 10px rgba(0,0,0,0.5)", transition: "all 0.15s", fontFamily: "'DM Mono',monospace", overflow: "hidden" }}>
       <NodeResizer minWidth={190} minHeight={80} isVisible={selected} lineStyle={{ border: `1px solid ${col.bg}55` }} handleStyle={{ background: col.bg, width: 7, height: 7 }} />
       <div style={{ height: 2, background: `linear-gradient(90deg,${col.bg},${col.bg}33)` }} />
       <Handle type="target" position={Position.Left} id="in" title={`Input: ${inPT.label}`} style={{ background: inPT.color, border: "2px solid #0d1117", width: 10, height: 10, left: -6 }} />
@@ -207,6 +212,11 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
   const [activeFlowId,  setActiveFlowId]  = useState(null);
   const [mainTab,       setMainTab]       = useState(initialTab || "system"); // "system" | "arch"
   const [showSidebar,   setShowSidebar]   = useState(true);
+  const [workspaceMode, setWorkspaceMode] = useState("brief"); // "brief" | "components"
+  const [activePhase,   setActivePhase]   = useState("define");
+  const [showReview,    setShowReview]    = useState(true);
+  const [runState,      setRunState]      = useState("idle");
+  const [runStep,       setRunStep]       = useState(-1);
   const isMobile = useIsMobile();
   const [showMobilePicker, setShowMobilePicker] = useState(false);
   const mobilePlaceCountRef = useRef(0);
@@ -224,6 +234,26 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
       setMainTab(initialTab);
     }
   }, [initialTab]);
+
+  // The walkthrough is a visual, local simulation of the request path. It
+  // deliberately never mutates the saved architecture data.
+  useEffect(() => {
+    if (runState !== "running") return undefined;
+    if (runStep >= nodes.length - 1) {
+      const finish = setTimeout(() => setRunState("complete"), 500);
+      return () => clearTimeout(finish);
+    }
+    const timer = setTimeout(() => setRunStep(step => step + 1), 700);
+    return () => clearTimeout(timer);
+  }, [runState, runStep, nodes.length]);
+
+  useEffect(() => {
+    if (runState === "complete") {
+      const reset = setTimeout(() => { setRunState("idle"); setRunStep(-1); }, 1800);
+      return () => clearTimeout(reset);
+    }
+    return undefined;
+  }, [runState]);
 
   const rfWrapper = useRef(null);
   const [rfi, setRfi] = useState(null);
@@ -448,6 +478,28 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
   const errorCount = validationIssues.filter(i => i.type === "error").length;
   const warnCount  = validationIssues.filter(i => i.type === "warning").length;
 
+  const displayNodes = useMemo(() => nodes.map((node, index) => ({
+    ...node,
+    data: {
+      ...node.data,
+      runtimeState: runState === "running" && index === runStep ? "active" : runState === "running" && index < runStep ? "complete" : runState === "complete" ? "complete" : "idle",
+    },
+  })), [nodes, runState, runStep]);
+
+  const displayEdges = useMemo(() => edges.map(edge => {
+    const sourceIndex = nodes.findIndex(node => node.id === edge.source);
+    const targetIndex = nodes.findIndex(node => node.id === edge.target);
+    const active = runState === "running" && sourceIndex >= 0 && targetIndex >= 0 && sourceIndex < runStep && targetIndex <= runStep;
+    const complete = runState === "complete" || (runState === "running" && sourceIndex >= 0 && targetIndex >= 0 && targetIndex < runStep);
+    return { ...edge, animated: active, style: { ...(edge.style || {}), stroke: active ? "#38bdf8" : complete ? "#34d399" : "var(--pg-accent)", strokeWidth: active ? 2.4 : 1.5 } };
+  }), [edges, nodes, runState, runStep]);
+
+  const runFlow = () => {
+    if (!nodes.length) return;
+    setRunStep(0);
+    setRunState("running");
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", overflow: "hidden" }}>
 
@@ -533,10 +585,22 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
         <ArchitectureDesign />
       ) : (
 
-      <div style={{ display: "flex", flex: 1, height: "100%", background: "var(--pg-bg)", fontFamily: 'var(--font-mono, monospace)', color: "var(--pg-text)", overflow: "hidden" }}>
+      <div className="pg-workspace-shell">
+
+        <DesignBriefPanel
+          nodes={nodes}
+          edges={edges}
+          phase={activePhase}
+          onPhaseChange={setActivePhase}
+          brief={flowDesc}
+          onBriefChange={setFlowDesc}
+          onBuildMode={() => { setWorkspaceMode("components"); setShowSidebar(true); }}
+          onRun={runFlow}
+          runState={runState}
+        />
 
         {/* ══ SIDEBAR ══════════════════════════════════════════════════════════ */}
-        {showSidebar && (
+        {showSidebar && workspaceMode === "components" && (
         <div style={{ width: 230, minWidth: 230, background: "var(--pg-sidebar)", borderRight: "1px solid var(--pg-border)", display: "flex", flexDirection: "column", overflow: "hidden", flexShrink: 0 }}>
 
           {/* Tabs */}
@@ -665,12 +729,13 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {/* Sidebar toggle */}
               <button
-                onClick={() => setShowSidebar(s => !s)}
-                title="Toggle Sidebar"
+                onClick={() => { setWorkspaceMode("components"); setShowSidebar(s => !s); }}
+                title="Toggle Components"
                 style={{ background: showSidebar ? "var(--pg-panel)" : "transparent", border: `1px solid ${showSidebar ? "var(--pg-border2)" : "transparent"}`, borderRadius: 5, color: showSidebar ? "var(--pg-text)" : "var(--pg-text3)", cursor: "pointer", width: 26, height: 26, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all .15s" }}
               >
                 <PanelLeft size={13} />
               </button>
+              <TBtn icon={PanelRight} label="Architecture Review" onClick={() => setShowReview(s => !s)} active={showReview} accent="#34d399" />
               <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
               <div style={{ fontSize: 10, color: "var(--pg-accent)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap" }}>
                 <Workflow size={11} /> System Design
@@ -698,6 +763,7 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
               <TBtn icon={Grid3X3}   label="Snap to Grid" onClick={() => setSnapToGrid(!snapToGrid)} active={snapToGrid} />
               <TBtn icon={Map}       label="Toggle Minimap" onClick={() => setShowMinimap(!showMinimap)} active={showMinimap} />
               <TBtn icon={Maximize2} label="Auto Layout" onClick={doAutoLayout} />
+              <TBtn icon={Play} label="Run Flow" onClick={runFlow} disabled={!nodes.length || runState === "running"} accent="#38bdf8" active={runState === "complete"} />
               <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
 
               {/* Zoom */}
@@ -755,7 +821,7 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
           <div style={{ flex: 1, display: "flex", overflow: "hidden", background: "var(--pg-bg)" }}>
             <div ref={rfWrapper} style={{ flex: 1, position: "relative" }} onDragOver={onDragOver} onDrop={onDrop}>
               <ReactFlow
-                nodes={nodes} edges={edges}
+                nodes={displayNodes} edges={displayEdges}
                 onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}
                 onConnect={onConnect} onInit={setRfi}
                 nodeTypes={NODE_TYPES}
@@ -810,6 +876,15 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
                 onUpdate={updateNode}
                 onDelete={deleteNode}
                 onDuplicate={duplicateNode}
+              />
+            )}
+            {!showInspect && showReview && (
+              <ArchitectureReviewPanel
+                nodes={nodes}
+                edges={edges}
+                selectedNode={selNode}
+                onClose={() => setShowReview(false)}
+                onInspect={node => { setSelNode(node); setShowInspect(true); }}
               />
             )}
           </div>

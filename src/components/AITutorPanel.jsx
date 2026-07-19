@@ -10,7 +10,7 @@ import { askAITutor } from "../services/aiService";
 
 SyntaxHighlighter.registerLanguage('python', python);
 
-export default function AITutorPanel({ isOpen, onClose, activeTopic, activeModule, activeCode }) {
+export default function AITutorPanel({ isOpen, onClose, activeTopic, activeModule, activeCode, onInsertCode }) {
   const [messages, setMessages] = useState([
     { role: "assistant", content: "Hi! I'm your GenAI Academy Tutor. \n\  \nI can see you're currently working on **" + (activeTopic || "a new problem") + "**. Let me know if you need any hints or if you'd like me to review your code!" }
   ]);
@@ -68,15 +68,15 @@ export default function AITutorPanel({ isOpen, onClose, activeTopic, activeModul
   };
 
   return (
-    <div style={{
-      position: "fixed", top: 16, right: 16, bottom: 16, width: 400,
-      background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16,
+    <div className="ai-tutor-panel" style={{
+      position: "fixed", top: 16, right: 16, bottom: 16, width: "min(440px, calc(100vw - 32px))",
+      background: "radial-gradient(circle at 100% 0, rgba(139,120,255,.18), transparent 34%), var(--bg2)", border: "1px solid rgba(139,120,255,.35)", borderRadius: 18,
       boxShadow: "0 12px 48px rgba(0,0,0,0.5)", zIndex: 9999, display: "flex", flexDirection: "column",
       backdropFilter: "blur(20px)",
       overflow: "hidden"
     }}>
       {/* Header */}
-      <div style={{ padding: "16px 20px", borderBottom: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "var(--bg3)" }}>
+      <div style={{ padding: "17px 20px", borderBottom: "1px solid rgba(139,120,255,.2)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "linear-gradient(135deg, rgba(139,120,255,.16), var(--bg3))" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ background: "var(--neon-dim)", color: "var(--neon)", padding: 6, borderRadius: 8 }}>
             <Sparkles size={18} />
@@ -89,6 +89,12 @@ export default function AITutorPanel({ isOpen, onClose, activeTopic, activeModul
         <button onClick={onClose} style={{ background: "transparent", border: "none", color: "var(--text3)", cursor: "pointer", padding: 4, borderRadius: 6, display: "flex" }} className="hover-node">
           <X size={18} />
         </button>
+      </div>
+
+      <div style={{ display: "flex", gap: 7, padding: "12px 16px 0", overflowX: "auto" }}>
+        {["Give me a hint", "Explain the pattern", "Review my code"].map(prompt => (
+          <button key={prompt} onClick={() => setInput(prompt)} style={{ flexShrink: 0, border: "1px solid rgba(139,120,255,.25)", borderRadius: 20, padding: "7px 10px", background: "rgba(139,120,255,.08)", color: "#c6baff", font: "10px var(--mono)", cursor: "pointer" }}>{prompt}</button>
+        ))}
       </div>
 
       {/* Chat Area */}
@@ -138,6 +144,17 @@ export default function AITutorPanel({ isOpen, onClose, activeTopic, activeModul
                   >
                     {msg.content}
                   </ReactMarkdown>
+                  {onInsertCode && /```[\s\S]*?```/.test(msg.content) && (
+                    <button
+                      onClick={() => {
+                        const match = msg.content.match(/```(?:\w+)?\s*\n?([\s\S]*?)```/);
+                        if (match?.[1]) onInsertCode(match[1].trimEnd());
+                      }}
+                      style={{ marginTop: 10, display: "inline-flex", alignItems: "center", gap: 6, border: "1px solid rgba(0,255,136,.25)", borderRadius: 6, padding: "6px 9px", background: "rgba(0,255,136,.08)", color: "var(--neon)", cursor: "pointer", font: "10px var(--mono)" }}
+                    >
+                      <Send size={12} /> Insert code into editor
+                    </button>
+                  )}
                 </div>
               )}
             </div>

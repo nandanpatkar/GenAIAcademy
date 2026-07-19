@@ -1,0 +1,554 @@
+import React, { useMemo, useState } from "react";
+import {
+  ArrowRight, ArrowUpRight, AudioLines, Bot, Box, Boxes, BrainCircuit,
+  Check, CheckCircle2, ChevronRight, CircleDot, Cloud, Code2, Command,
+  Bookmark, BookOpen, FileText, GitBranch, GraduationCap, Layers3, Lightbulb, ListChecks,
+  MessageSquare, Mic, Network, NotebookPen, Play, Plus, Radio, Search,
+  Send, Sparkles, Target, Terminal, Timer, Trophy, WandSparkles, X, Zap
+} from "lucide-react";
+import { CHRONOLOGICAL_DB } from "../data/blogData";
+import "../styles/FeatureHome.css";
+
+const BLOG_CATALOG = Object.entries(CHRONOLOGICAL_DB)
+  .flatMap(([year, articles]) => articles.map(article => ({ ...article, year })))
+  .slice(0, 8);
+
+const HOMES = {
+  interview: {
+    eyebrow: "CAREER STUDIO / 01",
+    title: "Turn knowledge into confident answers.",
+    description: "A structured interview runway for AI engineering, ML, RAG, agents, and system design — with enough repetition to make the explanation feel natural.",
+    accent: "#38bdf8", accentSoft: "rgba(56,189,248,.18)", icon: GraduationCap,
+    action: "Open Interview Prep", actionNote: "22 courses · guided lessons · AI tutor",
+    stats: [["22", "courses"], ["184", "lessons"], ["24 min", "next session"]],
+    features: ["Follow a course-to-lesson path", "Save progress and revisit weak spots", "Ask the AI tutor with course context"],
+    visual: "interview",
+  },
+  quiz: {
+    eyebrow: "CAREER STUDIO / 02",
+    title: "A quiz library for every cloud path.",
+    description: "Practice AWS, Azure, Databricks, and Google Cloud questions, build your own exam, review performance, and ask the AI tutor why an answer is right.",
+    accent: "#fbbf24", accentSoft: "rgba(251,191,36,.17)", icon: ListChecks,
+    action: "Open Quiz Library", actionNote: "AWS · Azure · Databricks · Google Cloud",
+    stats: [["4", "cloud tracks"], ["∞", "custom quizzes"], ["AI", "tutor + review"]],
+    features: ["Choose a cloud-specific question bank or exam mode", "Design and save your own quiz from a JSON question set", "Analyze accuracy, weak topics, and explanations with the AI tutor"],
+    visual: "quiz",
+  },
+  algo: {
+    eyebrow: "PRACTICE LAB / 03",
+    title: "See the algorithm think.",
+    description: "Trace variables, pointers, recursion, and data structures one frame at a time — then move from visual intuition to runnable code.",
+    accent: "#34d399", accentSoft: "rgba(52,211,153,.16)", icon: Code2,
+    action: "Open Algorithm Practice", actionNote: "Live tracing · Python runner · saved drills",
+    stats: [["2000", "trace frames"], ["Python", "runtime"], ["Step", "by step"]],
+    features: ["Play, pause, scrub, and inspect each frame", "See local variables change in context", "Save the algorithms you want to revisit"],
+    visual: "algo",
+  },
+  playground: {
+    eyebrow: "SYSTEMS LAB / 04",
+    title: "Prototype the intelligence layer.",
+    description: "Experiment with prompts, models, tools, memory, and system flows in a visual sandbox built for thinking out loud.",
+    accent: "#a78bfa", accentSoft: "rgba(167,139,250,.18)", icon: Boxes,
+    action: "Enter AI Playground", actionNote: "Flow canvas · templates · AI generation",
+    stats: [["4", "canvas modes"], ["27", "components"], ["Live", "connections"]],
+    features: ["Start from a working system template", "Generate a flow from a plain-language idea", "Inspect the role of every component"],
+    visual: "playground",
+  },
+  interviewer: {
+    eyebrow: "CAREER STUDIO / 05",
+    title: "Practice under real interview pressure.",
+    description: "A realistic interviewer that listens, asks follow-ups, and gives you a clearer signal than a silent list of questions ever could.",
+    accent: "#fb7185", accentSoft: "rgba(251,113,133,.17)", icon: Mic,
+    action: "Meet the AI Interviewer", actionNote: "Voice practice · follow-ups · feedback",
+    stats: [["Voice", "or text"], ["Live", "follow-ups"], ["360°", "feedback"]],
+    features: ["Answer naturally with voice or text", "Get probing questions based on your answer", "Review strengths, gaps, and next steps"],
+    visual: "interviewer",
+  },
+  dsa: {
+    eyebrow: "VISUAL PRACTICE / 06",
+    title: "Make data structures visible.",
+    description: "Stop guessing what a pointer is doing. Watch arrays, trees, graphs, and edge cases move through a problem in an animated workspace.",
+    accent: "#fb923c", accentSoft: "rgba(251,146,60,.17)", icon: Target,
+    action: "Open DSA Animator", actionNote: "100+ visualizations · tricks · edge cases",
+    stats: [["100+", "visualizations"], ["3", "practice modes"], ["Easy →", "Hard"]],
+    features: ["Choose a problem by pattern or difficulty", "Use code tricks when you are stuck", "Stress-test your mental model with edge cases"],
+    visual: "dsa",
+  },
+  notion: {
+    eyebrow: "KNOWLEDGE DESK / 07",
+    title: "Give your ideas somewhere to grow.",
+    description: "Open your Notion workspace as a calm, focused reading surface — so notes, decisions, and learning references stay connected.",
+    accent: "#f5c2a8", accentSoft: "rgba(245,194,168,.15)", icon: NotebookPen,
+    action: "Open Notion Workspace", actionNote: "Pages · blocks · focus mode",
+    stats: [["Blocks", "rendered"], ["Focus", "mode"], ["Sans / Serif", "your choice"]],
+    features: ["Render nested pages and rich blocks", "Switch typography for reading or scanning", "Focus on one page without the surrounding UI"],
+    visual: "notion",
+  },
+  kubernetes: {
+    eyebrow: "INFRASTRUCTURE GAMES / 08",
+    title: "Learn Kubernetes by keeping it alive.",
+    description: "Deploy, diagnose, and recover a cluster through short challenges that make pods, services, and rollouts feel concrete.",
+    accent: "#38bdf8", accentSoft: "rgba(56,189,248,.16)", icon: Cloud,
+    action: "Play Kubernetes Games", actionNote: "Deployments · incidents · cluster thinking",
+    stats: [["Pods", "to place"], ["Live", "incidents"], ["Fast", "feedback"]],
+    features: ["Make the tradeoff before you see the result", "Read cluster signals instead of memorizing YAML", "Build intuition through safe failure"],
+    visual: "kubernetes",
+  },
+  flow: {
+    eyebrow: "ARCHITECTURE STUDIO / 09",
+    title: "Design the path a request takes.",
+    description: "Lay out the screens, services, and decisions behind an application flow — then explore the experience from the first click to the final state.",
+    accent: "#818cf8", accentSoft: "rgba(129,140,248,.17)", icon: GitBranch,
+    action: "Open Flow Design", actionNote: "Visual flows · branches · handoffs",
+    stats: [["Visual", "canvas"], ["Branch", "anywhere"], ["Share", "your flow"]],
+    features: ["Map happy paths and edge cases together", "Make handoffs visible to the whole team", "Use a flow as the starting point for system design"],
+    visual: "flow",
+    focus: "clear architecture",
+  },
+  projects: {
+    eyebrow: "BUILD STUDIO / 10",
+    title: "An AI IDE for cloud projects.",
+    description: "Write, review, pull, visualize, and manage the history of a real project with an AI pair that understands the files, the architecture, and the next useful change.",
+    accent: "#60a5fa", accentSoft: "rgba(96,165,250,.17)", icon: Terminal,
+    action: "Open Cloud Projects", actionNote: "AI pair · pull requests · history · visualizer",
+    stats: [["AI", "code partner"], ["Git", "pull + history"], ["Live", "architecture view"]],
+    features: ["Write and review files with project-aware AI assistance", "Pull code from GitHub and keep changes organized", "Inspect history, visualize the system, and move from idea to deployable work"],
+    visual: "projects", focus: "shipping momentum",
+  },
+  notes: {
+    eyebrow: "WORKPLACE LAB / 11",
+    title: "Turn loose thoughts into connected knowledge.",
+    description: "Capture rich workspace notes, link ideas on a mind map, attach resources, and keep the next action close to the thought that created it.",
+    accent: "#f59e0b", accentSoft: "rgba(245,158,11,.16)", icon: NotebookPen,
+    action: "Open Notes + Mind Maps", actionNote: "Workspace notes · rich editor · visual connections",
+    stats: [["Rich", "workspace notes"], ["Visual", "mind maps"], ["Linked", "resources + tasks"]],
+    features: ["Capture rich notes, checklists, links, and decisions in one workspace", "Turn a note into a node and grow a visual mind map around it", "Attach resources and jump back to the roadmap context when an idea needs action"],
+    visual: "notes", focus: "useful memory",
+  },
+  community: {
+    eyebrow: "COMMONS / 12",
+    title: "A live room for builders and questions.",
+    description: "Ask, reply, share a build, and chat with people moving through the same AI engineering problems inside the platform.",
+    accent: "#22c55e", accentSoft: "rgba(34,197,94,.16)", icon: MessageSquare,
+    action: "Join the Community", actionNote: "Chat rooms · threads · build showcases",
+    stats: [["Live", "conversations"], ["Ask", "and reply"], ["Share", "what you build"]],
+    features: ["Join focused conversations around RAG, cloud, DSA, and interviews", "Share a project or question and get feedback from other learners", "Turn strong replies into notes, resources, or the next discussion"],
+    visual: "community", focus: "shared learning",
+  },
+  github: {
+    eyebrow: "REPOSITORY RADAR / 13",
+    title: "Study how real systems are built.",
+    description: "Explore repositories with the pieces that matter for learning: structure, code flow, README context, trends, and the commits that changed the design.",
+    accent: "#e2e8f0", accentSoft: "rgba(226,232,240,.12)", icon: GitBranch,
+    action: "Explore GitHub", actionNote: "Repository maps · code flow · trends",
+    stats: [["Tree", "explorer"], ["Flow", "viewer"], ["Live", "trends"]],
+    features: ["Open a repository and understand its shape quickly", "Trace a change from commit to the code it touched", "Keep the most useful examples close to your roadmap"],
+    visual: "github", focus: "code literacy",
+  },
+  links: {
+    eyebrow: "PERSONAL INDEX / 14",
+    title: "Save the link before it becomes a lost tab.",
+    description: "Keep the videos, docs, repos, and articles you know you will need later in one searchable shelf, grouped by the ideas you are learning.",
+    accent: "#c084fc", accentSoft: "rgba(192,132,252,.16)", icon: Bookmark,
+    action: "Open Saved Links", actionNote: "Bookmarks · tags · search · quick return",
+    stats: [["Saved", "for later"], ["Tagged", "by topic"], ["Search", "when memory fails"]],
+    features: ["Save a useful link with a label and a short reason to remember it", "Organize the shelf into topics like RAG, Agents, and Cloud", "Return to the exact article, video, or repo when the context becomes useful again"],
+    visual: "links", focus: "low-friction recall",
+  },
+  blog: {
+    eyebrow: "SIGNAL DESK / 15",
+    title: "A living archive of AI ideas.",
+    description: "Browse Analytics Vidya research, practical breakdowns, and platform articles by topic and year — then open the source when you are ready for the deep dive.",
+    accent: "#f472b6", accentSoft: "rgba(244,114,182,.16)", icon: Sparkles,
+    action: "Read the Blog Archive", actionNote: "Analytics Vidya · search · tags · related posts",
+    stats: [["100+", "archive signals"], ["AI", "research + builds"], ["By year", "and topic"]],
+    features: ["Browse many articles instead of a single featured post", "Scan by theme, year, or AI focus before opening the source", "Follow related ideas from one article to the next and keep your reading trail moving"],
+    visual: "blog", focus: "better inputs",
+  },
+  reference: {
+    eyebrow: "QUICK LOOKUP / 16",
+    title: "Answers at the speed of a lookup.",
+    description: "A compact mental-model index for when you know the shape of the question but need the right definition, pattern, or tradeoff before moving on.",
+    accent: "#06b6d4", accentSoft: "rgba(6,182,212,.16)", icon: Search,
+    action: "Open Quick Reference", actionNote: "Concept index · tradeoffs · fast refresh",
+    stats: [["Fast", "lookup"], ["Clear", "definitions"], ["Short", "refreshes"]],
+    features: ["Search concepts without leaving your workspace", "Compare patterns, tradeoffs, and examples", "Use a quick refresh as a launchpad into deeper study"],
+    visual: "reference", focus: "working clarity",
+  },
+  manual: {
+    eyebrow: "GUIDED MANUAL / 17",
+    title: "A guided path through complexity.",
+    description: "When the subject feels too broad, follow a deliberate sequence of explanations and exercises that builds the foundations before the edge cases.",
+    accent: "#8b5cf6", accentSoft: "rgba(139,92,246,.17)", icon: BookOpen,
+    action: "Open the Manual", actionNote: "Phases · explanations · applied checkpoints",
+    stats: [["5", "phases"], ["Guided", "sequence"], ["Build", "foundations"]],
+    features: ["See where a concept sits in the larger picture", "Move from explanation to applied checkpoint", "Resume the phase that best matches your current question"],
+    visual: "manual", focus: "strong foundations",
+  },
+  system: {
+    eyebrow: "ARCHITECTURE LAB / 18",
+    title: "Make tradeoffs visible before they become incidents.",
+    description: "Practice system design as a sequence of decisions: route traffic, choose boundaries, absorb failure, and explain why the architecture earns its complexity.",
+    accent: "#f59e0b", accentSoft: "rgba(245,158,11,.17)", icon: Network,
+    action: "Open System Design", actionNote: "Traffic simulations · tradeoffs · challenge mode",
+    stats: [["Live", "traffic flow"], ["AWS", "components"], ["3", "design loops"]],
+    features: ["Start with a realistic architecture challenge", "Watch load, latency, and failure move through the design", "Explain the tradeoff instead of memorizing a diagram"],
+    visual: "system", focus: "architectural judgment",
+  },
+  coding: {
+    eyebrow: "PRACTICE LAB / 19",
+    title: "A fast loop from code to feedback.",
+    description: "Write, run, inspect, and iterate in one place. Coding Practice keeps the setup out of the way so the useful part—the next attempt—starts immediately.",
+    accent: "#34d399", accentSoft: "rgba(52,211,153,.16)", icon: Terminal,
+    action: "Open Coding Practice", actionNote: "Browser runtime · multi-language · instant output",
+    stats: [["0 sec", "setup"], ["6", "runtimes"], ["Live", "output"]],
+    features: ["Open a ready-to-run exercise and make it your own", "See output and errors beside the code", "Use the practice loop before moving into a full project"],
+    visual: "coding", focus: "deliberate repetition",
+  },
+  resources: {
+    eyebrow: "RESOURCE LIBRARY / 20",
+    title: "One organized library for everything worth learning.",
+    description: "Store videos, links, articles, files, and saved quiz or mind-map sets beside the roadmap context where they become useful.",
+    accent: "#06b6d4", accentSoft: "rgba(6,182,212,.16)", icon: Layers3,
+    action: "Browse Resource Library", actionNote: "Videos · links · articles · files · quizzes",
+    stats: [["5", "resource types"], ["Path", "context-aware"], ["Save", "sets + maps"]],
+    features: ["Organize videos, links, articles, files, and generated quiz or mind-map sets", "Browse by roadmap, node, or module instead of hunting through tabs", "Keep the source and the learning artifact connected for the next session"],
+    visual: "resources", focus: "better discovery",
+  },
+};
+
+const HOME_DETAILS = {
+  notes: {
+    label: "FROM THOUGHT TO SYSTEM",
+    title: "Two surfaces, one working memory.",
+    cards: [
+      [NotebookPen, "Capture", "Write a rich note, checklist, decision, or follow-up while the context is still warm."],
+      [GitBranch, "Connect", "Attach the note to a mind-map node and make related ideas visible instead of leaving them isolated."],
+      [Bookmark, "Return", "Link resources and roadmap context so the next session starts with the right evidence."],
+    ],
+  },
+  resources: {
+    label: "THE ORGANIZING LOOP",
+    title: "Every source gets a useful home.",
+    cards: [
+      [Play, "Collect", "Bring in videos, articles, links, and files from the path or module where you found them."],
+      [Layers3, "Organize", "Browse by resource type, roadmap context, or your own folders instead of relying on browser history."],
+      [ListChecks, "Learn", "Keep saved quiz sets, flashcards, summaries, and mind maps beside the source that inspired them."],
+    ],
+  },
+  blog: {
+    label: "READING THAT LEADS SOMEWHERE",
+    title: "Scan, choose, and go deeper.",
+    cards: [
+      [Search, "Find a signal", "Filter the archive by year, topic, or a phrase that matches the problem you are solving."],
+      [BookOpen, "Open the source", "Read a short context line here, then jump to the original Analytics Vidya article when ready."],
+      [ArrowRight, "Follow the thread", "Use related topics to move from a model idea to an implementation or production tradeoff."],
+    ],
+  },
+  links: {
+    label: "THE MEMORY EXTENSION",
+    title: "Your future self can find it.",
+    cards: [
+      [Bookmark, "Save in the moment", "Capture the link before the tab disappears, even if you only have time for a short label."],
+      [Layers3, "Group by intent", "Use topic tags to turn a pile of bookmarks into a shelf for RAG, agents, cloud, or interviews."],
+      [Search, "Return with context", "Search by title, URL, or description when the original reason for saving comes back."],
+    ],
+  },
+  quiz: {
+    label: "THE PRACTICE LOOP",
+    title: "A wrong answer becomes a plan.",
+    cards: [
+      [ListChecks, "Choose a track", "Practice AWS, Azure, Databricks, or Google Cloud with a question bank that matches your target."],
+      [WandSparkles, "Make your own", "Upload and save a custom question set when the default bank is not the right challenge."],
+      [Bot, "Understand the miss", "Use the AI tutor for a hint, explanation, comparison, or a focused next question."],
+    ],
+  },
+  community: {
+    label: "LEARNING WITH OTHER PEOPLE",
+    title: "The answer gets better in conversation.",
+    cards: [
+      [MessageSquare, "Ask openly", "Post the question you would normally keep in a private tab and give others a chance to help."],
+      [Send, "Reply with context", "Share the tradeoff, code, or diagram behind your answer so the discussion stays useful."],
+      [Sparkles, "Carry it forward", "Turn a strong conversation into a note, resource, or build that helps the next learner."],
+    ],
+  },
+  projects: {
+    label: "FROM IDEA TO SHIPPABLE CHANGE",
+    title: "An AI pair across the whole project loop.",
+    cards: [
+      [Bot, "Write + review", "Ask the project-aware AI to draft a file, explain a function, or point out a risky change."],
+      [GitBranch, "Pull + compare", "Bring in repository changes, inspect history, and keep the reasoning behind each iteration visible."],
+      [Network, "Visualize + ship", "Turn the project into an architecture view and use it to decide what to change next."],
+    ],
+  },
+};
+
+function Dot({ color }) { return <span className="fh-dot" style={{ background: color, boxShadow: `0 0 14px ${color}` }} />; }
+
+function InterviewVisual({ color }) {
+  return <div className="fh-visual fh-interview-visual">
+    <div className="fh-visual-label"><Dot color={color} /> LIVE PREP SIGNAL <span>01 / 03</span></div>
+    <div className="fh-interview-ring" style={{ "--fh-accent": color }}><span>82</span><small>confidence</small></div>
+    <div className="fh-question-card"><div className="fh-mini-label">SYSTEM DESIGN · FOLLOW-UP</div><strong>How would you scale retrieval for 10M documents?</strong><div className="fh-answer-line" /><div className="fh-answer-line short" /></div>
+    <div className="fh-interview-rail"><span style={{ background: color }} /><i /><i /><i /><i /><i /></div>
+  </div>;
+}
+
+function QuizVisual({ color }) {
+  const providers = ["AWS", "Azure", "Databricks", "Google Cloud"];
+  const [provider, setProvider] = useState("AWS");
+  const [mode, setMode] = useState("practice");
+  return <div className="fh-visual fh-quiz-visual">
+    <div className="fh-visual-label"><Dot color={color} /> QUIZ LIBRARY / 4 TRACKS <span>{mode.toUpperCase()}</span></div>
+    <div className="fh-quiz-library">
+      <div className="fh-quiz-provider-rail">{providers.map(item => <button key={item} className={provider === item ? "active" : ""} style={provider === item ? { "--fh-accent": color } : {}} onClick={() => setProvider(item)}>{item}</button>)}</div>
+      <div className="fh-quiz-card-main"><div className="fh-quiz-card-top"><span style={{ color }}>{provider} CERTIFICATION</span><small>42 questions</small></div><strong>{provider} Cloud Foundations</strong><p>Architecture, storage, security, and production tradeoffs.</p><div className="fh-quiz-meter"><span style={{ width: provider === "AWS" ? "72%" : "38%", background: color }} /><small>{provider === "AWS" ? "18 / 25 mastered" : "start this track"}</small></div><div className="fh-quiz-card-actions"><button className={mode === "practice" ? "active" : ""} onClick={() => setMode("practice")}>Practice set</button><button className={mode === "analytics" ? "active" : ""} onClick={() => setMode("analytics")}>Analyze</button><button className={mode === "custom" ? "active" : ""} onClick={() => setMode("custom")}><Plus size={11} /> Make quiz</button></div></div>
+      <div className="fh-quiz-ai"><Bot size={17} style={{ color }} /><div><small>AI TUTOR</small><strong>{mode === "analytics" ? "Weak spot: IAM policies" : mode === "custom" ? "Design a question set" : "Ask why an answer is correct"}</strong><span>{mode === "analytics" ? "3 concepts to revisit" : "Explain, hint, or compare"}</span></div><ArrowUpRight size={13} style={{ color }} /></div>
+    </div>
+  </div>;
+}
+
+function AlgoVisual({ color }) {
+  const bars = [30, 52, 42, 78, 58, 92, 46, 68, 36];
+  const [active, setActive] = useState(5);
+  return <div className="fh-visual fh-algo-visual">
+    <div className="fh-visual-label"><Dot color={color} /> TRACE FRAME 014 <span>PLAYING</span></div>
+    <div className="fh-code-strip"><span className="line-active" style={{ background: color }} /> <code>while left &lt; right:</code><b>→ compare</b></div>
+    <div className="fh-bars">{bars.map((height, index) => <button key={index} className={index === active ? "fh-bar active" : "fh-bar"} style={{ height: `${height}%`, "--fh-accent": color }} onClick={() => setActive(index)}><em>{index}</em></button>)}</div>
+    <div className="fh-pointer-track"><span style={{ left: "10%", color }}>left</span><span style={{ left: "59%", color }}>right</span></div>
+    <div className="fh-variable-row"><span><b>left</b> 1</span><span><b>right</b> 7</span><span><b>swap</b> false</span></div>
+  </div>;
+}
+
+function PlaygroundVisual({ color }) {
+  const [selected, setSelected] = useState("Model");
+  const node = (name, icon, className, sub) => <button className={"fh-node " + className + (selected === name ? " selected" : "")} style={{ "--fh-accent": color }} onClick={() => setSelected(name)}>{icon}<span>{name}</span><small>{sub}</small></button>;
+  return <div className="fh-visual fh-playground-visual">
+    <div className="fh-visual-label"><Dot color={color} /> FLOW CANVAS <span>SIMULATING</span></div>
+    <svg className="fh-flow-lines" viewBox="0 0 500 250" preserveAspectRatio="none"><path d="M100 125 C150 125 150 70 205 70 S270 125 310 125" /><path d="M100 125 C150 125 150 180 205 180 S270 125 310 125" /><path d="M350 125 C390 125 395 125 430 125" /></svg>
+    {node("Prompt", <Terminal size={15} />, "fh-node-prompt", "input")}
+    {node("Model", <BrainCircuit size={17} />, "fh-node-model", "reasoning")}
+    {node("Tools", <Zap size={15} />, "fh-node-tool", "actions")}
+    {node("Answer", <Sparkles size={15} />, "fh-node-output", "streaming")}
+    <div className="fh-node-selection" style={{ color }}>selected / {selected.toLowerCase()}</div>
+    <div className="fh-packet fh-packet-a" style={{ background: color }} /><div className="fh-packet fh-packet-b" style={{ background: color }} />
+  </div>;
+}
+
+function InterviewerVisual({ color }) {
+  const [listening, setListening] = useState(true);
+  return <div className="fh-visual fh-interviewer-visual">
+    <div className="fh-visual-label"><Dot color={color} /> SESSION 04 <span>{listening ? "LISTENING" : "PAUSED"}</span></div>
+    <div className="fh-wave"><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /><span /></div>
+    <div className="fh-transcript"><div><small>AI INTERVIEWER · 09:42</small><strong>Tell me about a tradeoff you made in production.</strong></div><div className="user-line"><small>YOU · SPEAKING NOW</small><span>“I chose async processing because…”</span></div></div>
+    <button className="fh-mic-button" style={{ "--fh-accent": color }} onClick={() => setListening(value => !value)}><Mic size={18} /><span>{listening ? "Pause feedback" : "Resume feedback"}</span></button>
+  </div>;
+}
+
+function DsaVisual({ color }) {
+  const [active, setActive] = useState(1);
+  return <div className="fh-visual fh-dsa-visual">
+    <div className="fh-visual-label"><Dot color={color} /> TWO POINTERS <span>FRAME 08 / 16</span></div>
+    <div className="fh-dsa-array">{[4, 1, 7, 2, 9, 3, 6].map((n, index) => <button key={n} className={index === active || index === 5 ? "focus" : ""} style={{ "--fh-accent": color }} onClick={() => setActive(index)}><span>{n}</span><small>{index}</small></button>)}</div>
+    <div className="fh-dsa-pointer left" style={{ left: "18%", color }}><i />i</div><div className="fh-dsa-pointer right" style={{ left: "78%", color }}><i />j</div>
+    <div className="fh-dsa-log"><span style={{ color }}>STEP 08</span><strong>move j left</strong><small>sum = 10 · target found</small></div>
+  </div>;
+}
+
+function NotionVisual({ color }) {
+  const [page, setPage] = useState("Product notes");
+  return <div className="fh-visual fh-notion-visual">
+    <div className="fh-visual-label"><Dot color={color} /> READING VIEW <span>PRODUCT NOTES</span></div>
+    <div className="fh-notion-page"><div className="fh-notion-cover" style={{ background: `linear-gradient(105deg, ${color}, rgba(255,255,255,.45))` }} /><div className="fh-notion-icon">✦</div><div className="fh-notion-title">{page}</div><div className="fh-notion-meta"><span /><span /><span /></div><div className="fh-notion-block heading" /><div className="fh-notion-block" /><div className="fh-notion-block short" /><div className="fh-notion-callout"><Lightbulb size={13} /><span>Keep the mental model close to the implementation.</span></div></div>
+    <div className="fh-notion-sidebar"><button className={page === "Product notes" ? "active" : ""} onClick={() => setPage("Product notes")}><FileText size={13} /> Product notes</button><button className={page === "Reading list" ? "active" : ""} onClick={() => setPage("Reading list")}><FileText size={13} /> Reading list</button><button onClick={() => setPage("New page")}><Plus size={13} /> New page</button></div>
+  </div>;
+}
+
+function KubernetesVisual({ color }) {
+  const pods = ["ok", "ok", "warn", "ok", "cold", "ok"];
+  const [selected, setSelected] = useState(2);
+  return <div className="fh-visual fh-kubernetes-visual">
+    <div className="fh-visual-label"><Dot color={color} /> CLUSTER / STAGING <span>ROLLING OUT</span></div>
+    <div className="fh-cluster-grid"><div className="fh-cluster-control"><Box size={17} /><span>control plane</span></div>{pods.map((state, index) => <button key={index} className={`fh-pod ${state} ${selected === index ? "selected" : ""}`} onClick={() => setSelected(index)}><div><span /><span /><span /></div><small>pod-{index + 1}</small></button>)}</div>
+    <div className="fh-deploy-line"><span style={{ width: "72%", background: color }} /><small>deployment / api-server</small><b>4 / 6 ready</b></div>
+    <div className="fh-k8s-event"><Radio size={13} style={{ color }} /><span>new replica scheduled</span><time>now</time></div>
+  </div>;
+}
+
+function FlowVisual({ color }) {
+  const [selected, setSelected] = useState("Landing");
+  const step = (name, icon, className, sub) => <button className={"fh-flow-step " + className + (selected === name ? " selected" : "")} onClick={() => setSelected(name)}>{icon}<span>{name}</span><small>{sub}</small></button>;
+  return <div className="fh-visual fh-flow-visual">
+    <div className="fh-visual-label"><Dot color={color} /> CHECKOUT / HAPPY PATH <span>SELECTED / {selected.toUpperCase()}</span></div>
+    <div className="fh-flow-board"><svg viewBox="0 0 520 210" preserveAspectRatio="none"><path d="M78 105 H162 M218 105 H302 M358 105 H442" /><path d="M190 105 V172 H318 V105" /></svg>{step("Landing", <CircleDot size={14} />, "first", "screen")}{step("Cart", <Command size={14} />, "", "state")}{step("Pay", <Send size={14} />, "", "handoff")}{step("Success", <CheckCircle2 size={14} />, "last", "outcome")}<i className="fh-flow-cursor" style={{ background: color }} /></div>
+    <div className="fh-flow-legend"><span><i style={{ background: color }} /> user action</span><span><i /> system handoff</span><span><i className="branch" /> branch</span></div>
+  </div>;
+}
+
+function ProjectsVisual({ color }) {
+  const [tab, setTab] = useState("build");
+  const tabs = [["build", "Build"], ["review", "Review"], ["pull", "Pull"], ["history", "History"], ["visualize", "Visualize"]];
+  const file = tab === "review" ? "eval_report.md" : tab === "pull" ? "pull_request.diff" : tab === "history" ? "commit-8f2a" : tab === "visualize" ? "architecture.flow" : "retriever.py";
+  return <div className="fh-visual fh-projects-visual">
+    <div className="fh-visual-label"><Dot color={color} /> CLOUD PROJECT / RAG EVALUATOR <span>{tab.toUpperCase()}</span></div>
+    <div className="fh-project-tabs">{tabs.map(([id, label]) => <button key={id} className={tab === id ? "active" : ""} style={tab === id ? { "--fh-accent": color } : {}} onClick={() => setTab(id)}>{label}</button>)}</div>
+    <div className="fh-project-editor"><div className="fh-file-tree"><span>▾ src</span><span className="selected">◦ {file}</span><span>◦ README.md</span><span>◦ tests/</span><span>▸ infra/</span></div><div className="fh-editor-lines"><i /><i /><i className="long" /><i className="mid" /><i /><i className="active" style={{ background: color }} /><i className="long" /><i className="mid" /><i /></div><div className="fh-project-ai"><Bot size={13} style={{ color }} /><span>AI REVIEW</span><strong>{tab === "review" ? "2 suggestions found" : tab === "pull" ? "PR ready to explain" : tab === "history" ? "Compare any commit" : tab === "visualize" ? "Flow generated" : "Ask about this file"}</strong></div></div>
+    <div className="fh-project-status"><span style={{ color }}><CheckCircle2 size={13} /> {tab === "build" ? "tests passing" : tab === "review" ? "2 review notes" : tab === "pull" ? "pull request ready" : tab === "history" ? "12 commits indexed" : "architecture mapped"}</span><span><GitBranch size={12} /> feature/rerank</span></div>
+  </div>;
+}
+
+function NotesVisual({ color }) {
+  const [done, setDone] = useState(false);
+  const [focus, setFocus] = useState("notes");
+  return <div className="fh-visual fh-notes-visual">
+    <div className="fh-visual-label"><Dot color={color} /> NOTES + MIND MAPS <span>{focus === "notes" ? "CAPTURE" : "CONNECT"}</span></div>
+    <div className="fh-notes-switch"><button className={focus === "notes" ? "active" : ""} onClick={() => setFocus("notes")}><NotebookPen size={11} /> Workspace Notes</button><button className={focus === "map" ? "active" : ""} onClick={() => setFocus("map")}><GitBranch size={11} /> Mind Map</button></div>
+    <div className={`fh-notes-dual ${focus === "notes" ? "focus-notes" : "focus-map"}`}>
+      <div className="fh-notes-pane"><small>WORKSPACE NOTE</small><strong>Why does reranking help?</strong><p>Move from similarity to relevance before the answer is composed.</p><div className="fh-note-checklist"><span>✓</span> Compare retrieval quality <span>○</span> Add an eval example</div><button className={done ? "done" : ""} onClick={() => setDone(value => !value)}><span className="fh-note-check">{done ? "✓" : ""}</span>{done ? "Follow-up captured" : "Add follow-up"}</button></div>
+      <div className="fh-mindmap-pane"><small>CONNECTED MIND MAP</small><svg viewBox="0 0 240 125"><path d="M116 62 H53 M125 54 L180 23 M125 72 L181 101" /><circle cx="120" cy="63" r="17" /><circle cx="37" cy="62" r="11" /><circle cx="193" cy="18" r="11" /><circle cx="194" cy="107" r="11" /></svg><div className="fh-map-labels"><span>retrieval</span><span>embeddings</span><span>evals</span><span>RAG</span></div></div>
+    </div>
+    <div className="fh-note-rail"><span><Bookmark size={13} /> note → node</span><span><Timer size={13} /> 25 min focus</span></div>
+  </div>;
+}
+
+function CommunityVisual({ color }) {
+  const [liked, setLiked] = useState(false);
+  const [room, setRoom] = useState("RAG builders");
+  const [reply, setReply] = useState("");
+  const [sent, setSent] = useState(false);
+  const rooms = ["RAG builders", "Cloud study", "Show & tell"];
+  return <div className="fh-visual fh-community-visual">
+    <div className="fh-visual-label"><Dot color={color} /> COMMUNITY CHAT <span>24 PEOPLE ONLINE</span></div>
+    <div className="fh-community-rooms">{rooms.map(item => <button key={item} className={room === item ? "active" : ""} onClick={() => setRoom(item)}>{item}</button>)}</div>
+    <div className="fh-chat-window"><div className="fh-chat-message"><span className="fh-avatar">AK</span><div><small>ARJUN K. · 2 MIN AGO</small><p>What would you cache first in a RAG system?</p></div></div><div className="fh-chat-message reply"><span className="fh-avatar purple">NS</span><div><small>NEHA S. · REPLYING</small><p>Embeddings first, then measure freshness against latency.</p></div></div>{sent && <div className="fh-chat-message sent"><span className="fh-avatar" style={{ background: color }}>YOU</span><div><small>YOU · JUST NOW</small><p>{reply}</p></div></div>}</div>
+    <form className="fh-chat-composer" onSubmit={event => { event.preventDefault(); if (reply.trim()) { setSent(true); setReply(""); } }}><input value={reply} onChange={event => setReply(event.target.value)} placeholder={`Reply in ${room}...`} /><button type="submit" style={{ color }} aria-label="Send message"><Send size={13} /></button></form>
+    <div className="fh-reply-stack"><div><span style={{ background: color }} /> 5 replies</div><button onClick={() => setLiked(value => !value)} className={liked ? "liked" : ""}>♡ {liked ? "14" : "13"} helpful</button><div><span style={{ background: "#f59e0b" }} /> live chat</div></div>
+  </div>;
+}
+
+function GithubVisual({ color }) {
+  const [branch, setBranch] = useState("main");
+  return <div className="fh-visual fh-github-visual">
+    <div className="fh-visual-label"><Dot color={color} /> REPO / VECTOR-SEARCH <span>12 COMMITS</span></div>
+    <div className="fh-repo-top"><GitBranch size={14} /><button onClick={() => setBranch(value => value === "main" ? "feature/rerank" : "main")}><span>{branch}</span>⌄</button><span className="fh-repo-star">★ 248</span></div>
+    <div className="fh-repo-grid"><div className="fh-repo-tree"><b>repository</b><span className="active">▾ src</span><span>　◦ retriever.py</span><span>　◦ reranker.py</span><span>　◦ config.yml</span><span>▸ tests</span><span>◦ README.md</span></div><div className="fh-commit-graph"><svg viewBox="0 0 180 160"><path d="M24 20 V140 M24 56 C65 56 65 91 106 91 S145 120 160 120" /><path d="M24 91 C64 91 65 40 106 40 S140 20 160 20" /><circle cx="24" cy="20" r="5" /><circle cx="24" cy="56" r="5" /><circle cx="24" cy="91" r="5" /><circle cx="24" cy="140" r="5" /><circle cx="106" cy="40" r="5" /><circle cx="106" cy="91" r="5" /><circle cx="160" cy="20" r="5" /><circle cx="160" cy="120" r="5" /></svg><small>commit history · inspect the change</small></div></div>
+  </div>;
+}
+
+function LinksVisual({ color }) {
+  const [tag, setTag] = useState("All");
+  const [saved, setSaved] = useState(false);
+  const tags = ["All", "RAG", "Agents", "Cloud"];
+  const items = [
+    ["RAG", "The Illustrated RAG", "lilianweng.github.io · 8 min read", "pink"],
+    ["Agents", "Tool-use patterns", "anthropic.com · saved yesterday", "blue"],
+    ["Cloud", "Production eval checklist", "internal notes · continue", "gold"]
+  ];
+  const visible = tag === "All" ? items : items.filter(item => item[0] === tag);
+  return <div className="fh-visual fh-links-visual">
+    <div className="fh-visual-label"><Dot color={color} /> SAVED LINKS / PERSONAL SHELF <span>{saved ? "NEW LINK SAVED" : "24 LINKS ORGANIZED"}</span></div>
+    <div className="fh-link-capture"><span className="fh-capture-pulse" style={{ background: color }} /><span>Paste a link now → label it later</span><button onClick={() => setSaved(value => !value)} style={{ color }}>{saved ? "Saved" : "+ Save"}</button></div>
+    <div className="fh-link-tags">{tags.map(item => <button key={item} className={tag === item ? "active" : ""} style={tag === item ? { "--fh-accent": color } : {}} onClick={() => setTag(item)}>{item}</button>)}</div>
+    <div className="fh-link-stack">{visible.map(([type, title, meta, tone]) => <button key={title} className="fh-link-row" onClick={() => setTag(type)}><span className={`fh-link-favicon ${tone}`}>↗</span><span><strong>{title}</strong><small>{meta}</small></span><Bookmark size={14} /></button>)}</div>
+    <div className="fh-link-folders"><span><Bookmark size={11} /> later</span><span><Bookmark size={11} /> tagged</span><span><Search size={11} /> searchable</span></div>
+  </div>;
+}
+
+function BlogVisual({ color }) {
+  const [selected, setSelected] = useState(0);
+  const cards = BLOG_CATALOG.length ? BLOG_CATALOG : [{ title: "AI Agents vs Apps", url: "https://www.analyticsvidhya.com/blog/2025/04/ai-agents-vs-apps/", year: "Featured", description: "A practical signal for builders." }];
+  const active = cards[selected % cards.length];
+  const openActive = () => window.open(active.url, "_blank", "noopener,noreferrer");
+  return <div className="fh-visual fh-blog-visual">
+    <div className="fh-visual-label"><Dot color={color} /> BLOG ARCHIVE / ANALYTICS VIDHYA <span>{cards.length}+ SIGNALS</span></div>
+    <div className="fh-blog-lead"><small>{active.year} / EXTERNAL RESEARCH</small><strong>{active.title}</strong><p>{active.description || "A compact idea with enough context to change what you build next."}</p><div className="fh-blog-lead-actions"><button style={{ color }} onClick={openActive}>Open source <ArrowUpRight size={13} /></button><button style={{ color }} onClick={() => setSelected(value => (value + 1) % cards.length)}>Next article <ArrowRight size={13} /></button></div></div>
+    <div className="fh-blog-rail">{cards.slice(0, 4).map((article, index) => <button key={`${article.title}-${index}`} className={index === selected ? "active" : ""} onClick={() => setSelected(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{article.title}</strong><small>{article.year}</small></button>)}</div>
+  </div>;
+}
+
+function ReferenceVisual({ color }) {
+  const [query, setQuery] = useState("embedding");
+  const suggestions = ["embedding", "reranking", "agent loop"];
+  return <div className="fh-visual fh-reference-visual">
+    <div className="fh-visual-label"><Dot color={color} /> CONCEPT INDEX <span>3 MATCHES</span></div>
+    <div className="fh-reference-search"><Search size={14} /><input aria-label="Search concepts" value={query} onChange={event => setQuery(event.target.value)} /><span>⌘K</span></div>
+    <div className="fh-reference-result"><div className="fh-ref-result-top"><strong>{query || "Search a concept"}</strong><span style={{ color }}>FOUND</span></div><p>Represent text as vectors so related meaning can be compared with a distance function.</p><div><span style={{ background: color }} /> mental model <span style={{ background: "#a78bfa" }} /> example <span style={{ background: "#f59e0b" }} /> tradeoff</div></div>
+    <div className="fh-reference-chips">{suggestions.map(item => <button key={item} onClick={() => setQuery(item)}>{item}</button>)}</div>
+  </div>;
+}
+
+function ManualVisual({ color }) {
+  const [phase, setPhase] = useState(2);
+  const phases = ["Foundations", "Representations", "Retrieval", "Generation", "Evaluation"];
+  return <div className="fh-visual fh-manual-visual">
+    <div className="fh-visual-label"><Dot color={color} /> MANUAL / GENAI <span>PHASE {phase + 1} OF 5</span></div>
+    <div className="fh-manual-map"><div className="fh-manual-spine" style={{ background: `linear-gradient(${color}, rgba(255,255,255,.1))` }} />{phases.map((item, index) => <button key={item} className={index === phase ? "active" : index < phase ? "complete" : ""} onClick={() => setPhase(index)}><span>{index < phase ? "✓" : index + 1}</span><strong>{item}</strong><small>{index === phase ? "current checkpoint" : index < phase ? "completed" : "up next"}</small></button>)}</div>
+    <div className="fh-manual-foot"><BookOpen size={13} style={{ color }} /><span>Continue with the mental model, then test it.</span><ArrowRight size={13} /></div>
+  </div>;
+}
+
+function SystemVisual({ color }) {
+  const [mode, setMode] = useState("traffic");
+  const modes = [["traffic", "Traffic"], ["failure", "Failure"], ["cost", "Cost"]];
+  return <div className="fh-visual fh-system-visual">
+    <div className="fh-visual-label"><Dot color={color} /> CHALLENGE / URL SHORTENER <span>{mode.toUpperCase()} MODE</span></div>
+    <div className="fh-system-controls">{modes.map(([id, label]) => <button key={id} className={mode === id ? "active" : ""} style={mode === id ? { "--fh-accent": color } : {}} onClick={() => setMode(id)}>{label}</button>)}</div>
+    <div className="fh-system-graph"><svg viewBox="0 0 500 210" preserveAspectRatio="none"><path d="M74 105 H175 M245 105 H330 M400 105 H455" /><path d="M210 105 V165 H400 V105" /><circle className="fh-system-packet" cx="74" cy="105" r="4" style={{ fill: color }} /></svg><div className="fh-system-node client"><span>client</span><small>request</small></div><div className="fh-system-node edge"><span>edge</span><small>route</small></div><div className="fh-system-node db"><span>cache / db</span><small>{mode === "failure" ? "degraded" : mode === "cost" ? "$ · estimate" : "healthy"}</small></div><div className="fh-system-node worker"><span>worker</span><small>async</small></div></div>
+    <div className="fh-system-status"><span style={{ color }}><i /> {mode === "failure" ? "replica 2 draining" : mode === "cost" ? "$0.018 / 1k req" : "p95 86ms"}</span><span>decision / {mode === "traffic" ? "scale at 70%" : mode === "failure" ? "fail open" : "cache first"}</span></div>
+  </div>;
+}
+
+function CodingVisual({ color }) {
+  const [running, setRunning] = useState(false);
+  return <div className="fh-visual fh-coding-visual">
+    <div className="fh-visual-label"><Dot color={color} /> PYTHON / TWO SUM <span>{running ? "RUNNING" : "READY"}</span></div>
+    <div className="fh-coding-editor"><div className="fh-code-gutter"><span>01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div><div className="fh-code-content"><span><b>def</b> two_sum(nums, target):</span><span>  seen = {}</span><span>  <b>for</b> i, value <b>in</b> enumerate(nums):</span><span>    complement = target - value</span><span>    <b>if</b> complement <b>in</b> seen:</span><span className="active" style={{ borderColor: color }}>      <em>return</em> [seen[complement], i]</span></div></div>
+    <div className="fh-coding-terminal"><div><span>$ python main.py</span><button onClick={() => setRunning(value => !value)} style={{ color }}>{running ? "stop" : "run"} <Play size={10} fill="currentColor" /></button></div><strong style={{ color }}>{running ? "✓ tests passed · 3 cases" : "ready for your next run"}</strong></div>
+  </div>;
+}
+
+function ResourcesVisual({ color }) {
+  const [filter, setFilter] = useState("All");
+  const [query, setQuery] = useState("");
+  const filters = ["All", "Videos", "Links", "Articles", "Quizzes"];
+  const resources = [{ type: "Videos", title: "RAG evaluation walkthrough", meta: "YouTube · 24 min", color: "#f59e0b" }, { type: "Articles", title: "Attention is all you need", meta: "paper · 18 min", color: "#a78bfa" }, { type: "Links", title: "Streaming response pattern", meta: "docs · hands-on", color }, { type: "Quizzes", title: "AWS architecture checkpoint", meta: "12 questions · saved set", color: "#fb7185" }];
+  const visible = resources.filter(item => (filter === "All" || item.type === filter) && item.title.toLowerCase().includes(query.toLowerCase()));
+  return <div className="fh-visual fh-resources-visual">
+    <div className="fh-visual-label"><Dot color={color} /> RESOURCE LIBRARY / ORGANIZING <span>{visible.length} OF 24 ITEMS</span></div>
+    <div className="fh-resource-stream"><span className="video" style={{ background: "#f59e0b" }} /><span className="link" style={{ background: color }} /><span className="article" style={{ background: "#a78bfa" }} /><span className="quiz" style={{ background: "#fb7185" }} /><div className="fh-resource-vault"><Layers3 size={19} style={{ color }} /><strong>learning vault</strong><small>store → tag → revisit</small></div></div>
+    <div className="fh-resource-search"><Search size={13} /><input aria-label="Search resources" value={query} onChange={event => setQuery(event.target.value)} placeholder="Search your learning library" /></div>
+    <div className="fh-resource-filters">{filters.map(item => <button key={item} className={filter === item ? "active" : ""} style={filter === item ? { "--fh-accent": color } : {}} onClick={() => setFilter(item)}>{item}</button>)}</div>
+    <div className="fh-resource-list">{visible.map(item => <button key={item.title} className="fh-resource-item" onClick={() => setQuery(item.title.split(" ")[0])}><span className="fh-resource-type" style={{ color: item.color }}>{item.type}</span><span><strong>{item.title}</strong><small>{item.meta}</small></span><ArrowUpRight size={13} /></button>)}{visible.length === 0 && <div className="fh-resource-empty">No exact match — try a broader intent.</div>}</div>
+  </div>;
+}
+
+function Visual({ type, color }) {
+  const map = { interview: InterviewVisual, quiz: QuizVisual, algo: AlgoVisual, playground: PlaygroundVisual, interviewer: InterviewerVisual, dsa: DsaVisual, notion: NotionVisual, kubernetes: KubernetesVisual, flow: FlowVisual, projects: ProjectsVisual, notes: NotesVisual, community: CommunityVisual, github: GithubVisual, links: LinksVisual, blog: BlogVisual, reference: ReferenceVisual, manual: ManualVisual, system: SystemVisual, coding: CodingVisual, resources: ResourcesVisual };
+  const Component = map[type] || PlaygroundVisual;
+  return <Component color={color} />;
+}
+
+export default function FeatureHome({ feature, onLaunch, onClose }) {
+  const data = HOMES[feature] || HOMES.playground;
+  const details = HOME_DETAILS[feature] || {
+    label: "INSIDE THE WORKSPACE",
+    title: data.features?.[0] || "A clear next step for real progress.",
+    cards: (data.features || []).map((text, index) => [[CheckCircle2, Sparkles, ArrowRight][index] || CheckCircle2, `Step ${index + 1}`, text]),
+  };
+  const Icon = data.icon;
+  const focusText = data.focus || (feature === "kubernetes" ? "operational thinking" : feature === "notion" ? "connected thinking" : feature === "interviewer" ? "clear communication" : "real progress");
+  const accentStyle = useMemo(() => ({ "--fh-accent": data.accent, "--fh-accent-soft": data.accentSoft }), [data]);
+
+  return <div className="feature-home" style={accentStyle}>
+    <div className="fh-aurora" /><div className="fh-grid" />
+    <header className="fh-header"><button className="fh-brand" onClick={onClose}><span className="fh-brand-mark"><Sparkles size={15} /></span><span>GENAI ACADEMY</span></button><div className="fh-header-meta"><span><span className="fh-status-dot" /> workspace ready</span><button className="fh-close" onClick={onClose} aria-label="Back to workspace"><X size={17} /></button></div></header>
+    <main className="fh-main">
+      <section className="fh-hero-copy"><div className="fh-eyebrow"><Icon size={14} /> {data.eyebrow}</div><h1>{data.title}</h1><p>{data.description}</p><div className="fh-hero-actions"><button className="fh-primary" onClick={() => onLaunch(feature)}><Play size={15} fill="currentColor" /> {data.action} <ArrowRight size={16} /></button><span>{data.actionNote}</span></div></section>
+      <section className="fh-hero-visual"><Visual type={data.visual} color={data.accent} /></section>
+      <section className="fh-stats">{data.stats.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</section>
+      <section className="fh-bottom"><div className="fh-feature-intro"><span>WHY THIS SPACE EXISTS</span><h2>A focused loop for <em>{focusText}</em>.</h2></div><div className="fh-feature-list">{data.features.map((featureText, index) => <div key={featureText}><span className="fh-feature-number" style={{ color: data.accent }}>0{index + 1}</span><CheckCircle2 size={16} style={{ color: data.accent }} /><p>{featureText}</p><ArrowUpRight size={14} /></div>)}</div></section>
+      {details && <section className="fh-detail-section"><div className="fh-detail-heading"><span>{details.label}</span><h2>{details.title}</h2></div><div className="fh-detail-grid">{details.cards.map(([CardIcon, title, text]) => <button key={title} className="fh-detail-card" onClick={() => onLaunch(feature)}><span className="fh-detail-icon" style={{ color: data.accent, background: data.accentSoft }}><CardIcon size={17} /></span><strong>{title}</strong><p>{text}</p><ArrowUpRight size={14} style={{ color: data.accent }} /></button>)}</div></section>}
+      <button className="fh-lower-link" onClick={() => onLaunch(feature)}>Enter the workspace <ChevronRight size={15} /></button>
+    </main>
+  </div>;
+}

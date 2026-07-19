@@ -25,7 +25,7 @@ export default function ProgressTracker({ pathsData, onClose }) {
     let pathsInfo = [];
 
     Object.keys(pathsData || {})
-      .filter(pk => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(pk))
+      .filter(pk => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance"].includes(pk))
       .forEach(pk => {
         const p = pathsData[pk];
       if (!p) return;
@@ -79,38 +79,46 @@ export default function ProgressTracker({ pathsData, onClose }) {
   const inProgPct = stats.total > 0 ? (stats.inProgress / stats.total) * 100 : 0;
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "var(--bg)", height: "100%", overflow: "hidden" }}>
+    <div className="progress-tracker-page" style={{ flex: 1, display: "flex", flexDirection: "column", background: "var(--bg)", height: "100%", overflow: "hidden" }}>
       {/* Header */}
-      <div style={{ padding: "24px 40px 20px", borderBottom: "1px solid var(--border)", background: "var(--bg2)", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ background: "rgba(0,255,136,0.1)", color: "#00ff88", padding: 10, borderRadius: 10 }}>
+      <div className="progress-tracker-header" style={{ padding: "24px 40px 20px", borderBottom: "1px solid var(--border)", background: "var(--bg2)", display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}>
+        <div className="progress-tracker-heading" style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div className="progress-tracker-icon" style={{ background: "rgba(0,255,136,0.1)", color: "#00ff88", padding: 10, borderRadius: 10 }}>
             <Activity size={24} />
           </div>
           <div>
-            <h2 style={{ margin: 0, fontSize: 24, fontWeight: 800, color: "var(--text)", letterSpacing: "-.5px" }}>Global Analytics Dashboard</h2>
+            <h2 className="progress-tracker-title" style={{ margin: 0, fontSize: 24, fontWeight: 800, color: "var(--text)", letterSpacing: "-.5px" }}>Global Analytics Dashboard</h2>
             <div style={{ fontSize: 12, color: "var(--text3)", marginTop: 4, fontWeight: 500 }}>Track your study path progress, completion metrics, and deep hierarchy state.</div>
           </div>
         </div>
-        <button onClick={onClose} className="rg-btn" style={{ padding: "8px 16px", background: "var(--bg3)", color: "var(--text)", border: "1px solid var(--border)", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>Close Dashboard</button>
+        <button onClick={onClose} className="rg-btn progress-tracker-close" style={{ padding: "8px 16px", background: "var(--bg3)", color: "var(--text)", border: "1px solid var(--border)", borderRadius: 8, cursor: "pointer", fontWeight: 700 }}>Close Dashboard</button>
       </div>
 
-      <div style={{ flex: 1, padding: "32px 40px", overflowY: "auto", display: "flex", gap: 32, alignItems: "flex-start" }}>
+      <div className="progress-tracker-content" style={{ flex: 1, padding: "32px 40px", overflowY: "auto", display: "flex", gap: 32, alignItems: "flex-start" }}>
         
         {/* Left Col: Master Analytics */}
-        <div style={{ width: "340px", flexShrink: 0, display: "flex", flexDirection: "column", gap: 24 }}>
+        <div className="progress-overview-column" style={{ width: "340px", flexShrink: 0, display: "flex", flexDirection: "column", gap: 24 }}>
           {/* Master Overview Card */}
-          <div style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, padding: "24px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <h3 style={{ margin: "0 0 20px 0", fontSize: 13, textTransform: "uppercase", letterSpacing: "1px", color: "var(--text2)", fontWeight: 800 }}>Overall Progress</h3>
+          <div className="progress-overview-card" style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, padding: "24px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div className="progress-overview-card-heading">
+              <div>
+                <span className="progress-overview-eyebrow">Master snapshot</span>
+                <h3 className="progress-overview-title" style={{ margin: 0, fontSize: 13, textTransform: "uppercase", letterSpacing: "1px", color: "var(--text2)", fontWeight: 800 }}>Overall Progress</h3>
+              </div>
+              <span className="progress-overview-live"><span />Live</span>
+            </div>
             
             {/* SVG Donut Chart */}
-            <div style={{ position: "relative", width: size, height: size, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
+            <div className="progress-overview-donut" style={{ position: "relative", width: size, height: size, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div className="progress-overview-donut-halo" />
+              <svg className="progress-overview-ring" width={size} height={size} style={{ transform: "rotate(-90deg)" }}>
                 {/* Background Ring */}
-                <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="var(--bg4)" strokeWidth={strokeWidth} />
+                <circle className="progress-overview-ring-track" cx={size/2} cy={size/2} r={radius} fill="none" stroke="var(--bg4)" strokeWidth={strokeWidth} />
                 
                 {/* In Progress Ring (drawn UNDER complete) */}
                 {inProgPct > 0 && (
                   <circle 
+                    className="progress-overview-ring-progress"
                     cx={size/2} cy={size/2} r={radius} fill="none" 
                     stroke="#f59e0b" strokeWidth={strokeWidth} 
                     strokeDasharray={circumference} 
@@ -122,6 +130,7 @@ export default function ProgressTracker({ pathsData, onClose }) {
                 {/* Complete Ring */}
                 {completePct > 0 && (
                   <circle 
+                    className="progress-overview-ring-complete"
                     cx={size/2} cy={size/2} r={radius} fill="none" 
                     stroke="#00ff88" strokeWidth={strokeWidth} 
                     strokeDasharray={circumference} 
@@ -133,29 +142,30 @@ export default function ProgressTracker({ pathsData, onClose }) {
               </svg>
 
               {/* Center Text */}
-              <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                <span style={{ fontSize: 42, fontWeight: 800, color: "var(--text)", lineHeight: 1 }}>{stats.globalPct}<span style={{ fontSize: 20 }}>%</span></span>
-                <span style={{ fontSize: 11, color: "var(--text3)", fontWeight: 700, letterSpacing: 1, marginTop: 4 }}>COMPLETED</span>
+              <div className="progress-overview-center" style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <span className="progress-overall-value" style={{ fontSize: 42, fontWeight: 800, color: "var(--text)", lineHeight: 1 }}>{stats.globalPct}<span style={{ fontSize: 20 }}>%</span></span>
+                <span className="progress-overall-caption" style={{ fontSize: 11, color: "var(--text3)", fontWeight: 700, letterSpacing: 1, marginTop: 4 }}>COMPLETED</span>
+                <span className="progress-overall-total">{stats.complete} of {stats.total} modules</span>
               </div>
             </div>
 
             {/* Legend Stats */}
-            <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12, marginTop: 32 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
+            <div className="progress-overview-legend" style={{ width: "100%", display: "flex", flexDirection: "column", gap: 12, marginTop: 32 }}>
+              <div className="progress-overview-stat-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "center", color: "var(--text2)", fontWeight: 600 }}>
-                  <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#00ff88", boxShadow: "0 0 8px #00ff88" }} /> Completed
+                  <div className="progress-overview-stat-dot is-complete" style={{ width: 10, height: 10, borderRadius: "50%", background: "#00ff88", boxShadow: "0 0 8px #00ff88" }} /> Completed
                 </div>
                 <div style={{ fontWeight: 800, color: "var(--text)", fontFamily: "var(--mono)" }}>{stats.complete} <span style={{color:"var(--text3)"}}>modules</span></div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
+              <div className="progress-overview-stat-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "center", color: "var(--text2)", fontWeight: 600 }}>
-                  <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }} /> In Progress
+                  <div className="progress-overview-stat-dot is-progress" style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }} /> In Progress
                 </div>
                 <div style={{ fontWeight: 800, color: "var(--text)", fontFamily: "var(--mono)" }}>{stats.inProgress} <span style={{color:"var(--text3)"}}>modules</span></div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
+              <div className="progress-overview-stat-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
                 <div style={{ display: "flex", gap: 8, alignItems: "center", color: "var(--text3)", fontWeight: 600 }}>
-                  <div style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--bg4)" }} /> Locked / Pending
+                  <div className="progress-overview-stat-dot is-locked" style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--bg4)" }} /> Locked / Pending
                 </div>
                 <div style={{ fontWeight: 800, color: "var(--text)", fontFamily: "var(--mono)" }}>{stats.locked} <span style={{color:"var(--text3)"}}>modules</span></div>
               </div>
@@ -163,13 +173,13 @@ export default function ProgressTracker({ pathsData, onClose }) {
           </div>
 
           {/* Quick Metrics */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            <div style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 12, padding: 16 }}>
+          <div className="progress-metrics-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div className="progress-metric-card" style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 12, padding: 16 }}>
               <Target size={18} color="#00ff88" style={{ marginBottom: 12 }} />
               <div style={{ fontSize: 24, fontWeight: 800, color: "var(--text)" }}>{stats.total}</div>
               <div style={{ fontSize: 10, color: "var(--text3)", fontWeight: 700, textTransform:"uppercase", letterSpacing: 1 }}>Total Modules</div>
             </div>
-            <div style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 12, padding: 16 }}>
+            <div className="progress-metric-card" style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 12, padding: 16 }}>
               <Award size={18} color="#a855f7" style={{ marginBottom: 12 }} />
               <div style={{ fontSize: 24, fontWeight: 800, color: "var(--text)" }}>{stats.pathsInfo.filter(p => p.pct === 100).length}</div>
               <div style={{ fontSize: 10, color: "var(--text3)", fontWeight: 700, textTransform:"uppercase", letterSpacing: 1 }}>Paths Mastered</div>
@@ -178,13 +188,14 @@ export default function ProgressTracker({ pathsData, onClose }) {
         </div>
 
         {/* Right Col: Deep Hierarchy Tracker */}
-        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 24 }}>
+        <div className="progress-detail-column" style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 24 }}>
           <ActivityHeatmap pathsData={pathsData} />
 
           {stats.pathsInfo.map(path => (
-            <div key={path.key} style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden" }}>
+            <div key={path.key} className="progress-path-card" style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, overflow: "hidden" }}>
               {/* Path Header */}
               <div 
+                className="progress-path-header"
                 style={{ padding: "20px 24px", cursor: "pointer", display: "flex", alignItems: "center", background: expandedPaths[path.key] ? "var(--bg3)" : "transparent", transition: "all .2s" }}
                 onClick={(e) => togglePath(e, path.key)}
               >
@@ -192,17 +203,17 @@ export default function ProgressTracker({ pathsData, onClose }) {
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
                     <div style={{ fontSize: 16, fontWeight: 800, color: "var(--text)", letterSpacing: "-0.3px" }}>{path.title}</div>
-                    <div style={{ fontSize: 16, fontWeight: 800, fontFamily: "var(--mono)", color: path.color }}>{path.pct}%</div>
+                    <div className="progress-path-percentage" style={{ fontSize: 16, fontWeight: 800, fontFamily: "var(--mono)", color: path.color }}>{path.pct}%</div>
                   </div>
-                  <div style={{ width: "100%", height: 6, background: "var(--bg4)", borderRadius: 3, overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${path.pct}%`, background: path.color, transition: "width 0.5s ease" }} />
+                  <div className="progress-bar-track" style={{ width: "100%", height: 6, background: "var(--bg4)", borderRadius: 3, overflow: "hidden" }}>
+                    <div className="progress-bar-fill" style={{ "--bar-color": path.color, height: "100%", width: `${path.pct}%`, background: path.color, transition: "width 0.5s ease" }} />
                   </div>
                 </div>
               </div>
 
               {/* Node Breakdown */}
               {expandedPaths[path.key] && (
-                <div style={{ padding: "0 24px 24px 60px" }}>
+                <div className="progress-path-detail" style={{ padding: "0 24px 24px 60px" }}>
                   {path.nodes.map(node => (
                     <div key={node.id} style={{ marginTop: 24 }}>
                       <div 
@@ -212,8 +223,8 @@ export default function ProgressTracker({ pathsData, onClose }) {
                         <div style={{ color: "var(--text3)" }}>{expandedNodes[node.id] ? <ChevronDown size={16}/> : <ChevronRight size={16}/>}</div>
                         <h4 style={{ margin: 0, fontSize: 14, color: "var(--text2)", fontWeight: 700, flex: 1 }}>{node.title}</h4>
                         <span style={{ fontSize: 12, color: "var(--text3)", fontWeight: 600 }}>{node.complete} / {node.total}</span>
-                        <div style={{ width: 100, height: 4, background: "var(--bg4)", borderRadius: 2, overflow: "hidden" }}>
-                           <div style={{ height: "100%", width: `${node.pct}%`, background: path.color, opacity: 0.8 }} />
+                        <div className="progress-node-bar-track" style={{ width: 100, height: 4, background: "var(--bg4)", borderRadius: 2, overflow: "hidden" }}>
+                           <div className="progress-node-bar-fill" style={{ "--bar-color": path.color, height: "100%", width: `${node.pct}%`, background: path.color, opacity: 0.8 }} />
                         </div>
                       </div>
 
@@ -221,7 +232,7 @@ export default function ProgressTracker({ pathsData, onClose }) {
                       {expandedNodes[node.id] && (
                         <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingLeft: 28, marginTop: 12 }}>
                           {node.modules.map(mod => (
-                            <div key={mod.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "var(--bg3)", border: "1px solid var(--border)", borderRadius: 8 }}>
+                            <div key={mod.id} className="progress-module-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", background: "var(--bg3)", border: "1px solid var(--border)", borderRadius: 8 }}>
                                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                                   {mod.status === 'complete' ? <CheckCircle2 size={16} color="#00ff88" /> 
                                    : mod.status === 'in_progress' ? <CircleDashed size={16} color="#f59e0b" />
@@ -356,8 +367,8 @@ const ActivityHeatmap = ({ pathsData }) => {
   };
 
   return (
-    <div style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, padding: "24px", marginBottom: "24px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+    <div className="progress-activity-card" style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, padding: "24px", marginBottom: "24px" }}>
+      <div className="progress-activity-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <h3 style={{ margin: 0, fontSize: 13, textTransform: "uppercase", letterSpacing: "1px", color: "var(--text2)", fontWeight: 800 }}>Learning Activity</h3>
         <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "var(--text3)", fontWeight: 600 }}>
           <span>Less</span>
@@ -432,4 +443,3 @@ const ActivityHeatmap = ({ pathsData }) => {
     </div>
   );
 };
-

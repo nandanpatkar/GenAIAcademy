@@ -195,6 +195,160 @@
   opacity: 1;
 }
 
+/* ── Missing Manual: Apple glass + AWS system-design surface ──────── */
+.manual-viewer-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 72% -8%, rgba(255,151,36,.12), transparent 34%),
+    linear-gradient(180deg, #0d0f12 0%, #090b0e 52%, #07090b 100%);
+}
+
+.manual-viewer-panel::before,
+.manual-viewer-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.manual-viewer-panel::before {
+  z-index: -2;
+  opacity: .64;
+  background-image: radial-gradient(circle, rgba(255,154,45,.22) 1px, transparent 1.3px);
+  background-size: 25px 25px;
+  background-position: 1px 1px;
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.82) 58%, transparent 100%);
+}
+
+.manual-viewer-panel::after {
+  z-index: -1;
+  background:
+    radial-gradient(circle at 78% 13%, rgba(255,180,75,.18) 0 1.5px, transparent 2.5px),
+    radial-gradient(ellipse at 75% 9%, rgba(255,145,20,.1), transparent 28%),
+    radial-gradient(ellipse at 18% 67%, rgba(39,157,255,.06), transparent 33%);
+}
+
+.manual-viewer-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.manual-viewer-header {
+  background: rgba(15,17,21,.68) !important;
+  border-bottom-color: rgba(255,255,255,.1) !important;
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+}
+
+.manual-viewer-body {
+  background: transparent;
+  scrollbar-color: rgba(255,255,255,.18) transparent;
+}
+
+.manual-topic-card {
+  min-height: 176px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.095), rgba(255,255,255,.035) 48%, rgba(5,9,14,.44)) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  border-radius: 20px;
+  box-shadow: 0 18px 42px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.1);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+
+.manual-topic-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 12% 0%, var(--topic-color, #ffae52), transparent 47%);
+  opacity: .06;
+  pointer-events: none;
+}
+
+.manual-topic-card::after {
+  inset: auto 18px 0;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--topic-color, #ffae52), transparent);
+  opacity: .2;
+}
+
+.manual-topic-card:hover {
+  transform: translateY(-5px);
+  border-color: color-mix(in srgb, var(--topic-color, #ffae52) 55%, rgba(255,255,255,.2)) !important;
+  box-shadow: 0 22px 50px rgba(0,0,0,.3), 0 0 28px color-mix(in srgb, var(--topic-color, #ffae52) 18%, transparent), inset 0 1px rgba(255,255,255,.14);
+}
+
+.manual-topic-card:hover::before { opacity: .12; }
+
+.manual-card-icon {
+  width: 38px;
+  height: 38px;
+  border: 1px solid color-mix(in srgb, var(--topic-color, #ffae52) 28%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--topic-color, #ffae52) 10%, rgba(7,11,16,.5));
+  box-shadow: inset 0 1px rgba(255,255,255,.08), 0 8px 18px color-mix(in srgb, var(--topic-color, #ffae52) 12%, transparent);
+}
+
+.manual-card-count {
+  padding: 5px 8px;
+  border-color: rgba(255,255,255,.1);
+  border-radius: 999px;
+  background: rgba(255,255,255,.05);
+  color: rgba(202,214,222,.66);
+  letter-spacing: .02em;
+}
+
+.manual-card-title {
+  position: relative;
+  z-index: 1;
+  font-size: 17px;
+  letter-spacing: -.35px;
+}
+
+.manual-card-blurb {
+  position: relative;
+  z-index: 1;
+  color: rgba(173,188,198,.68);
+  line-height: 1.55;
+}
+
+.manual-category-view-header,
+.manual-guide-section,
+.manual-phase-card {
+  background: rgba(255,255,255,.035);
+  border-color: rgba(255,255,255,.1);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+}
+
+/* Keep the surface treatment last in the cascade so it also wins over the
+   legacy viewer defaults above. */
+.manual-viewer-panel {
+  background:
+    radial-gradient(ellipse at 72% -8%, rgba(255,151,36,.12), transparent 34%),
+    linear-gradient(180deg, #0d0f12 0%, #090b0e 52%, #07090b 100%) !important;
+}
+
+.manual-viewer-body { background: transparent !important; }
+
+.manual-topic-card {
+  min-height: 176px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.095), rgba(255,255,255,.035) 48%, rgba(5,9,14,.44)) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 42px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.1) !important;
+}
+
+.manual-topic-card:hover {
+  border-color: color-mix(in srgb, var(--topic-color, #ffae52) 55%, rgba(255,255,255,.2)) !important;
+  box-shadow: 0 22px 50px rgba(0,0,0,.3), 0 0 28px color-mix(in srgb, var(--topic-color, #ffae52) 18%, transparent), inset 0 1px rgba(255,255,255,.14) !important;
+}
+
 .manual-search-results {
   display: flex;
   flex-direction: column;

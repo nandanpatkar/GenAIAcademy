@@ -164,7 +164,7 @@ export function FlowEditor({ onGoHome }: FlowEditorProps) {
       <ArchitectureLintProvider nodes={nodes} edges={edges} rulesJson={viewSettings.lintRules}>
         <div
           id="main-content"
-          className="w-full h-screen flex flex-col relative transition-colors duration-150"
+          className="flow-editor-shell w-full h-screen flex flex-col relative transition-colors duration-150"
           ref={reactFlowWrapper}
           style={{
             background: cinematicExportState.active

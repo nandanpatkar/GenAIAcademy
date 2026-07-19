@@ -1,9 +1,14 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+const getCorsHeaders = (req: Request) => ({
+  // Reflect the browser origin so this works with credentialed Supabase
+  // requests during local development and in production.
+  'Access-Control-Allow-Origin': req.headers.get('origin') || '*',
+  'Access-Control-Allow-Headers': req.headers.get('access-control-request-headers') || 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Max-Age': '86400',
+  'Vary': 'Origin',
+})
 
 // Proxies Tavily search so the API key never reaches the client bundle.
 // Set the secret once via:
@@ -12,8 +17,10 @@ const corsHeaders = {
 //   supabase functions deploy web-search
 
 serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req)
+
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+    return new Response(null, { status: 204, headers: corsHeaders })
   }
 
   try {

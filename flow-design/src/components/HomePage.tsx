@@ -107,13 +107,13 @@ export const HomePage: React.FC<HomePageProps> = ({
   }
 
   return (
-    <div className="min-h-screen bg-[var(--brand-background)] flex flex-col text-[var(--brand-text)] md:flex-row">
+    <div className="flow-home-shell min-h-screen flex flex-col text-[var(--brand-text)] md:flex-row">
       <HomeSidebar activeTab={activeTab} onTabChange={handleTabChange} />
 
       {/* Main Content */}
       <main
         id="main-content"
-        className="flex-1 flex min-w-0 flex-col bg-[var(--brand-surface)] md:ml-64"
+        className="flow-dotted-surface flex-1 flex min-w-0 flex-col md:ml-64"
       >
         {activeTab === 'home' && (
           <HomeDashboard

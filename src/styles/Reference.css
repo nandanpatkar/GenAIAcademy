@@ -501,3 +501,156 @@
   margin-bottom: 12px;
   opacity: 0.5;
 }
+
+/* ── Quick Reference: Apple glass + AWS system-design surface ────── */
+.reference-viewer-panel {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 72% -8%, rgba(255,151,36,.12), transparent 34%),
+    linear-gradient(180deg, #0d0f12 0%, #090b0e 52%, #07090b 100%);
+}
+
+.reference-viewer-panel::before,
+.reference-viewer-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.reference-viewer-panel::before {
+  z-index: -2;
+  opacity: .64;
+  background-image: radial-gradient(circle, rgba(255,154,45,.22) 1px, transparent 1.3px);
+  background-size: 25px 25px;
+  background-position: 1px 1px;
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.82) 58%, transparent 100%);
+}
+
+.reference-viewer-panel::after {
+  z-index: -1;
+  background:
+    radial-gradient(circle at 78% 13%, rgba(255,180,75,.18) 0 1.5px, transparent 2.5px),
+    radial-gradient(ellipse at 75% 9%, rgba(255,145,20,.1), transparent 28%),
+    radial-gradient(ellipse at 18% 67%, rgba(39,157,255,.06), transparent 33%);
+}
+
+.reference-viewer-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-viewer-header {
+  background: rgba(15,17,21,.68) !important;
+  border-bottom-color: rgba(255,255,255,.1) !important;
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+}
+
+.reference-viewer-body {
+  background: transparent;
+  scrollbar-color: rgba(255,255,255,.18) transparent;
+}
+
+.reference-portal-controls {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.03) 55%, rgba(5,9,14,.4)) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  border-radius: 22px;
+  box-shadow: 0 20px 48px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.1);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+
+.reference-search-input {
+  background: rgba(4,8,12,.42) !important;
+  border-color: rgba(255,255,255,.1) !important;
+  border-radius: 13px;
+  box-shadow: inset 0 1px rgba(255,255,255,.05);
+}
+
+.reference-search-input:focus {
+  border-color: rgba(0,220,255,.48) !important;
+  box-shadow: 0 0 0 3px rgba(0,220,255,.08), 0 0 24px rgba(0,220,255,.1) !important;
+}
+
+.reference-category-pills {
+  border-top-color: rgba(255,255,255,.08);
+}
+
+.category-pill {
+  background: rgba(255,255,255,.045);
+  border-color: rgba(255,255,255,.09);
+  border-radius: 999px;
+  color: rgba(188,202,211,.68);
+}
+
+.category-pill.active {
+  background: rgba(0,220,255,.1);
+  border-color: rgba(0,220,255,.42);
+  color: #7cecff;
+  box-shadow: 0 0 18px rgba(0,220,255,.13), inset 0 1px rgba(255,255,255,.1);
+}
+
+.reference-card {
+  min-height: 176px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.095), rgba(255,255,255,.035) 48%, rgba(5,9,14,.44)) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  border-radius: 20px;
+  box-shadow: 0 18px 42px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.1);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+
+.reference-card::before {
+  border-radius: inherit;
+  background: radial-gradient(circle at 12% 0%, var(--topic-color, #ffae52), transparent 47%);
+  opacity: .07;
+}
+
+.reference-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 18px 0;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--topic-color, #ffae52), transparent);
+  opacity: .2;
+  pointer-events: none;
+}
+
+.reference-card:hover {
+  transform: translateY(-5px);
+  border-color: color-mix(in srgb, var(--topic-color, #ffae52) 55%, rgba(255,255,255,.2)) !important;
+  box-shadow: 0 22px 50px rgba(0,0,0,.3), 0 0 28px color-mix(in srgb, var(--topic-color, #ffae52) 18%, transparent), inset 0 1px rgba(255,255,255,.14);
+}
+
+.reference-card-title {
+  position: relative;
+  z-index: 1;
+  font-size: 17px;
+  letter-spacing: -.35px;
+}
+
+.reference-card-color-dot {
+  width: 7px;
+  height: 7px;
+  box-shadow: 0 0 12px var(--topic-color, var(--neon));
+}
+
+.reference-card-intro {
+  position: relative;
+  z-index: 1;
+  color: rgba(173,188,198,.68);
+  line-height: 1.55;
+}
+
+.reference-card-tag {
+  padding: 4px 7px;
+  border-color: rgba(255,255,255,.09);
+  border-radius: 999px;
+  background: rgba(255,255,255,.045);
+  color: rgba(188,202,211,.66);
+}

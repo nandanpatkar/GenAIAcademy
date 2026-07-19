@@ -1,4 +1,3 @@
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
 const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
 
@@ -10,29 +9,19 @@ let dynamicAzureKey = "";
 
 // ─── External Controls ──────────────────────────────────────────────────────────
 export const setDynamicGeminiKey = (key) => {
-  if (key) {
-    console.log("AI Service: Dynamic Gemini Key injected.");
-    dynamicGeminiKey = key;
-  }
+  dynamicGeminiKey = key || "";
 };
 
 export const setAiProvider = (provider) => {
-  if (provider) {
-    console.log("AI Service: AI Provider set to " + provider);
-    currentAiProvider = provider;
-  }
+  currentAiProvider = provider || "gemini";
 };
 
 export const setAzureEndpoint = (endpoint) => {
-  if (endpoint) {
-    dynamicAzureEndpoint = endpoint;
-  }
+  dynamicAzureEndpoint = endpoint || "";
 };
 
 export const setAzureKey = (key) => {
-  if (key) {
-    dynamicAzureKey = key;
-  }
+  dynamicAzureKey = key || "";
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -123,9 +112,9 @@ const normalizeStudyData = (json) => {
 
 // ─── Internal: call Gemini ──────────────────────────────────────────────────
 const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
-  const apiKey = dynamicGeminiKey || GEMINI_API_KEY;
+  const apiKey = dynamicGeminiKey;
   if (!apiKey || apiKey.includes("your-api-key")) {
-    throw new Error("Missing Gemini API Key. Please add VITE_GEMINI_API_KEY to .env or update in Admin portal.");
+    throw new Error("Missing personal Gemini API key. Add it in Settings before using AI.");
   }
 
   const systemMessage = messages.find(m => m.role === 'system')?.content || "";
@@ -259,6 +248,44 @@ export const askAITutor = async (userMessage, contextData, chatHistory = []) => 
   }
 };
 
+// ─── Public: Full-project context copilot ────────────────────────────────────
+// Kept separate from the topic tutor so the global copilot can choose its
+// provider per conversation without mutating the rest of the application.
+export const askContextCopilot = async ({
+  userMessage,
+  projectContext,
+  chatHistory = [],
+  provider = currentAiProvider,
+  webResults = [],
+}) => {
+  const webContext = webResults.length > 0
+    ? `\n\nLIVE WEB SOURCES (use these when relevant and cite them as [1], [2], etc.):\n${webResults.map((source, index) => `[${index + 1}] ${source.title}\nURL: ${source.url}\n${source.content}`).join("\n\n")}`
+    : "";
+
+  const systemPrompt = `You are Atlas, the full-project AI copilot inside GenAI Academy.
+You have access to the learner's current curriculum, roadmap progress, workspace notes, saved projects, and the active screen below.
+Answer directly and practically. Use clean Markdown, short sections, bullets, and code blocks when useful.
+When the question is about the learner's roadmap or progress, ground the answer in the supplied project context instead of inventing details.
+When live web sources are supplied, use them for current facts and add numbered citations like [1] next to the relevant claim. Never invent a citation.
+If the context does not contain enough information, say what is missing and then give the best general guidance.
+
+PROJECT CONTEXT:
+${projectContext}${webContext}`;
+
+  const messages = [
+    { role: "system", content: systemPrompt },
+    ...chatHistory.map((message) => ({
+      role: message.role === "assistant" ? "assistant" : "user",
+      content: message.content,
+    })),
+    { role: "user", content: userMessage },
+  ];
+
+  return provider === "azure-openai"
+    ? await callAzureOpenAI(messages, 1200, 0.65)
+    : await callGemini(messages, 1200, 0.65);
+};
+
 // ─── Public: Project Ideas ───────────────────────────────────────────────────
 export const generateProjectIdeas = async (moduleTitle, subtopics) => {
   const systemPrompt =
@@ -285,9 +312,206 @@ export const generateProjectIdeas = async (moduleTitle, subtopics) => {
 };
 
 // ─── Public: Flow Architecture ───────────────────────────────────────────────────
+const flowText = (value) => String(value ?? "").trim();
+const flowSlug = (value) => flowText(value).toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+
+const flowEdgeLabel = (source, target, fallback = "flow") => {
+  const sourceText = `${flowText(source?.label)} ${flowText(source?.sub)} ${flowText(source?.info)}`.toLowerCase();
+  const targetText = `${flowText(target?.label)} ${flowText(target?.sub)} ${flowText(target?.info)}`.toLowerCase();
+  if (/human|agent|transfer|escalat/.test(targetText)) return "fallback";
+  if (/tool|function|action|executor|api/.test(targetText)) return "tool call";
+  if (/knowledge|retriev|search|vector|document|rag/.test(targetText)) return "retrieve";
+  if (/monitor|metric|trace|log|observ/.test(targetText)) return "telemetry";
+  if (/audio|speech|telephony|call/.test(sourceText) && /audio|speech|telephony|call/.test(targetText)) return "audio";
+  return fallback;
+};
+
+const inferFlowRole = (label = "") => {
+  const text = flowText(label).toLowerCase();
+  if (/log|metric|trace|telemetry|monitor|observ/.test(text)) return "observability";
+  if (/retry|response|state retrieval|state update|error|timeout/.test(text)) return "feedback";
+  if (/branch|fallback|escalat|human|tool|retriev|approved|denied|condition/.test(text)) return "branch";
+  return "primary";
+};
+
+const isFlowObject = (value) => value && typeof value === "object" && !Array.isArray(value);
+
+const expandFlowEdge = (rawEdge) => {
+  if (typeof rawEdge === "string") {
+    const parts = rawEdge.split(/\s*(?:->|=>|→)\s*/);
+    return parts.length >= 2
+      ? parts.slice(0, -1).map((source, index) => ({ source, target: parts[index + 1], label: "flow", role: null }))
+      : [];
+  }
+  if (!isFlowObject(rawEdge)) return [];
+
+  const source = rawEdge.source ?? rawEdge.from ?? rawEdge.start ?? rawEdge.sourceId ?? rawEdge.fromId ?? rawEdge.upstream;
+  const targetValue = rawEdge.target ?? rawEdge.to ?? rawEdge.end ?? rawEdge.targetId ?? rawEdge.toId ?? rawEdge.downstream ?? rawEdge.targets ?? rawEdge.outputs;
+  const label = rawEdge.label ?? rawEdge.condition ?? rawEdge.when ?? rawEdge.branch ?? rawEdge.data?.label ?? rawEdge.metadata?.label ?? "flow";
+  const role = rawEdge.role ?? rawEdge.data?.role ?? null;
+  const targets = Array.isArray(targetValue) ? targetValue : [targetValue];
+  const expanded = targets.filter((target) => target !== undefined && target !== null).map((target) => ({ source, target, label, role }));
+
+  if (Array.isArray(rawEdge.branches)) {
+    rawEdge.branches.forEach((branch) => {
+      if (!isFlowObject(branch)) return;
+      expanded.push({ source, target: branch.target ?? branch.to ?? branch.node ?? branch.id, label: branch.condition ?? branch.label ?? "branch", role: "branch" });
+    });
+  }
+  return expanded;
+};
+
+const recoverFlowEdges = (nodes, existingEdges, description = "") => {
+  const edges = [...existingEdges];
+  const keys = new Set(edges.map((edge) => `${edge.source}->${edge.target}`));
+  const degree = new Map(nodes.map((node) => [String(node.id), 0]));
+  edges.forEach((edge) => {
+    degree.set(edge.source, (degree.get(edge.source) || 0) + 1);
+    degree.set(edge.target, (degree.get(edge.target) || 0) + 1);
+  });
+
+  const add = (sourceNode, targetNode, label, role = "primary") => {
+    if (!sourceNode || !targetNode || sourceNode.id === targetNode.id) return;
+    const key = `${sourceNode.id}->${targetNode.id}`;
+    if (keys.has(key)) return;
+    keys.add(key);
+    edges.push({ source: String(sourceNode.id), target: String(targetNode.id), label: label || flowEdgeLabel(sourceNode, targetNode), role });
+    degree.set(String(sourceNode.id), (degree.get(String(sourceNode.id)) || 0) + 1);
+    degree.set(String(targetNode.id), (degree.get(String(targetNode.id)) || 0) + 1);
+  };
+
+  // A truncated model response commonly contains all nodes but no edges. Keep
+  // the architecture usable by recovering an ordered backbone from the nodes.
+  if (!edges.length) {
+    for (let index = 0; index < nodes.length - 1; index += 1) add(nodes[index], nodes[index + 1], flowEdgeLabel(nodes[index], nodes[index + 1]));
+  } else {
+    // If the model returned only a few relationships, connect isolated nodes
+    // to their nearest neighbor without overwriting the model's graph.
+    nodes.forEach((node, index) => {
+      if ((degree.get(String(node.id)) || 0) > 0) return;
+      add(node, nodes[index + 1] || nodes[index - 1], "flow");
+    });
+  }
+
+  const branchPattern = /branch|condition|decision|router|route|orchestrat|workflow|classif|intent|policy|guardrail|fallback|gateway|transfer/i;
+  const branchNodes = nodes.filter((node) => branchPattern.test(`${flowText(node.label)} ${flowText(node.sub)} ${flowText(node.info)}`));
+  branchNodes.forEach((branchNode) => {
+    const outgoingCount = edges.filter((edge) => edge.source === String(branchNode.id)).length;
+    if (outgoingCount >= 2) return;
+    const index = nodes.indexOf(branchNode);
+    const candidates = nodes.slice(index + 1, index + 5).filter((node) => node && node.id !== branchNode.id).slice(0, 2);
+    candidates.forEach((targetNode, branchIndex) => {
+      const text = `${flowText(targetNode.label)} ${flowText(targetNode.sub)} ${flowText(targetNode.info)}`.toLowerCase();
+      const label = /human|agent|transfer|escalat|fallback/.test(text)
+        ? "fallback"
+        : /tool|function|action|executor|api/.test(text)
+          ? "tool call"
+          : /knowledge|retriev|search|vector|document|rag/.test(text)
+            ? "retrieve"
+            : branchIndex === 0 ? "primary" : `branch ${branchIndex + 1}`;
+      add(branchNode, targetNode, label, "branch");
+    });
+  });
+
+  // Make sure a prompt that explicitly asks for a decision tree gets at least
+  // one fan-out even when the model omitted the decision node's edges.
+  if (/if\s*-?else|branch|conditional|fallback|route|escalat/i.test(description) && nodes.length >= 3 && !branchNodes.length) {
+    add(nodes[0], nodes[1], "primary", "branch");
+    add(nodes[0], nodes[2], "fallback", "branch");
+  }
+  const nodeById = new Map(nodes.map((node) => [String(node.id), node]));
+  const compacted = [];
+  const bySource = new Map();
+  edges.forEach((edge) => {
+    if (!bySource.has(edge.source)) bySource.set(edge.source, []);
+    bySource.get(edge.source).push(edge);
+  });
+  bySource.forEach((outgoing) => {
+    const keepCount = Math.min(4, outgoing.length);
+    outgoing
+      .map((edge, index) => {
+        const targetText = `${flowText(nodeById.get(edge.target)?.label)} ${flowText(nodeById.get(edge.target)?.sub)} ${flowText(nodeById.get(edge.target)?.info)}`.toLowerCase();
+        const roleScore = edge.role === "primary" ? 5 : edge.role === "branch" ? 4 : edge.role === "feedback" ? 3 : 1;
+        const targetScore = /human|transfer|escalat|llm|model|speech|audio|tool|retriev|knowledge|error|fallback/.test(targetText) ? 2 : 0;
+        return { edge, index, score: roleScore + targetScore };
+      })
+      .sort((left, right) => right.score - left.score || left.index - right.index)
+      .slice(0, keepCount)
+      .sort((left, right) => left.index - right.index)
+      .forEach(({ edge }) => compacted.push(edge));
+  });
+  const compactedKeys = new Set(compacted.map((edge) => `${edge.source}->${edge.target}`));
+  const readableEdges = edges.filter((edge) => compactedKeys.has(`${edge.source}->${edge.target}`));
+  const maxEdges = Math.max(nodes.length - 1, Math.min(24, nodes.length + 5));
+  if (readableEdges.length <= maxEdges) return readableEdges;
+  return readableEdges
+    .map((edge, index) => ({ edge, index, score: edge.role === "primary" ? 4 : edge.role === "branch" ? 3 : edge.role === "feedback" ? 2 : 1 }))
+    .sort((left, right) => right.score - left.score || left.index - right.index)
+    .slice(0, maxEdges)
+    .sort((left, right) => left.index - right.index)
+    .map(({ edge }) => edge);
+};
+
+export const normalizeFlowArchitecture = (architecture, description = "") => {
+  const sourceNodes = Array.isArray(architecture?.nodes) ? architecture.nodes.filter(isFlowObject) : [];
+  const nodes = sourceNodes.map((node, index) => ({ ...node, id: flowText(node.id) || flowSlug(node.label) || `node_${index + 1}` }));
+  const aliases = new Map();
+  const addAlias = (value, id) => {
+    const text = flowText(value);
+    if (!text) return;
+    aliases.set(text, id);
+    aliases.set(text.toLowerCase(), id);
+    aliases.set(flowSlug(text), id);
+  };
+  nodes.forEach((node, index) => {
+    const id = String(node.id);
+    [node.id, index, node.label, node.name, node.title, node.sub].forEach((value) => addAlias(value, id));
+  });
+
+  const resolveEndpoint = (value) => {
+    if (isFlowObject(value)) return resolveEndpoint(value.id ?? value.nodeId ?? value.label ?? value.name ?? value.title);
+    const text = flowText(value);
+    return aliases.get(text) || aliases.get(text.toLowerCase()) || aliases.get(flowSlug(text)) || null;
+  };
+  const rawEdges = [architecture?.edges, architecture?.connections, architecture?.links, architecture?.relationships]
+    .filter(Array.isArray)
+    .flatMap((collection) => collection.flatMap(expandFlowEdge));
+  const edges = [];
+  const edgeKeys = new Set();
+  rawEdges.forEach((edge) => {
+    const source = resolveEndpoint(edge.source);
+    const target = resolveEndpoint(edge.target);
+    if (!source || !target || source === target) return;
+    const key = `${source}->${target}`;
+    if (edgeKeys.has(key)) return;
+    edgeKeys.add(key);
+    edges.push({ source, target, label: flowText(edge.label) || "flow", role: edge.role || inferFlowRole(edge.label) });
+  });
+
+  return {
+    ...architecture,
+    nodes,
+    edges: recoverFlowEdges(nodes, edges, description),
+  };
+};
+
 export const generateFlowArchitecture = async (description) => {
-  const systemPrompt = `You are an expert GenAI system architect. Convert this natural language description into a ReactFlow diagram.
+const systemPrompt = `You are an expert GenAI system architect. Convert this natural language description into a ReactFlow diagram.
 Return ONLY a valid JSON object. No explanation.
+
+Architecture rules:
+- Build a concrete, end-to-end production architecture from the requirements, not a generic chain of services.
+- Return 8-18 nodes and connect the primary request path plus important control, storage, tool, and escalation paths.
+- Edges are mandatory: return at least one edge for every primary stage and at least 10 meaningful edges when the architecture has 8 or more nodes.
+- Create real fan-out/fan-in paths for routers, orchestrators, classifiers, policy checks, if/else conditions, fallbacks, and human escalation. A branching node should have 2-4 outgoing edges when the requirements imply multiple outcomes.
+- Prefer one dominant left-to-right primary path. Keep supporting systems as short side branches that rejoin the primary path; do not connect every node to every other node.
+- Return no more than 24 edges. Remove redundant, duplicate, and low-value telemetry links; observability should usually be a single branch from the orchestrator or service boundary.
+- Use edge roles: "primary" for the main path, "branch" for conditional/tool/escalation paths, "feedback" for retries or state responses, and "observability" for logs and metrics.
+- Every edge must use the exact IDs from the nodes array. Put the path condition in the edge label, such as "approved", "fallback", "tool call", "no match", or "human escalation".
+- Never return an empty edges array. If a relationship is implied by the prompt, model it explicitly.
+- Every node label must be a descriptive 2-6 word component name. Never use one-letter labels, abbreviations such as "C" or "R", or generic repeated labels.
+- Include the major runtime stages, integrations, failure boundaries, state stores, security controls, and observability components that the prompt requires.
+- For voice/contact-center prompts, explicitly model telephony ingress, streaming audio/WebSocket handling, VAD or barge-in, STT, conversation orchestration, session state, LLM/tool execution, RAG when requested, TTS, human transfer, call summary, and monitoring.
 
 Schema:
 {
@@ -309,7 +533,8 @@ Schema:
     {
       "source": "source_id",
       "target": "target_id",
-      "label": "data type"
+      "label": "data type or condition",
+      "role": "primary|branch|feedback|observability"
     }
   ]
 }`;
@@ -319,8 +544,32 @@ Schema:
       { role: "system", content: systemPrompt },
       { role: "user", content: `Target description: ${description}` }
     ];
-      const raw = await callAI(messages, 900, 0.2, true);
-    return JSON.parse(extractJSON(raw));
+    const raw = await callAI(messages, 2600, 0.2, true);
+    const clean = extractJSON(raw);
+
+    try {
+      const parsed = parseSafety(clean, raw);
+      if (!Array.isArray(parsed?.nodes)) throw new Error("AI architecture response is missing nodes.");
+      return normalizeFlowArchitecture(parsed, description);
+    } catch (parseError) {
+      // Models occasionally omit a comma or add a partial JSON fragment even
+      // when responseMimeType is JSON. Give the same provider one bounded,
+      // JSON-only repair pass before surfacing an error to the playground.
+      const repairMessages = [
+        {
+          role: "system",
+          content: `${systemPrompt}\nYou are repairing an invalid response. Return ONLY corrected valid JSON. Preserve the architecture and schema. Do not add markdown or commentary.`,
+        },
+        {
+          role: "user",
+          content: `Repair this malformed architecture JSON and return only valid JSON:\n${clean}`,
+        },
+      ];
+      const repairedRaw = await callAI(repairMessages, 2600, 0.05, true);
+      const repaired = parseSafety(extractJSON(repairedRaw), repairedRaw);
+      if (!Array.isArray(repaired?.nodes)) throw parseError;
+      return normalizeFlowArchitecture(repaired, description);
+    }
   } catch (error) {
     console.error("Flow Architecture Error:", error);
     throw new Error("Failed to generate architecture.");
@@ -1064,4 +1313,3 @@ export const matchManualAndReferenceDetails = (
 
   return { manualMatches, referenceMatches };
 };
-

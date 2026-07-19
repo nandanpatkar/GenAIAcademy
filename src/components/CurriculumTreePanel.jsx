@@ -9,7 +9,12 @@ export default function CurriculumTreePanel({
   activeTopic, setActiveTopic,
   onClose
 }) {
-  const nodes = pathData?.nodes || [];
+  const fallbackPath = Object.entries(paths || {})
+    .find(([key, value]) => value?.nodes && !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "appearance", "onboarding"].includes(key))?.[1];
+  // The panel can render once before curriculum data finishes loading, or
+  // after a stale saved view points at a removed path. Keep the map usable.
+  const currentPath = pathData || paths?.[activePath] || fallbackPath || { title: "Study Path", color: "#00ff88", nodes: [] };
+  const nodes = currentPath.nodes || [];
 
   const [expandedNodes, setExpandedNodes] = useState({});
   const [expandedModules, setExpandedModules] = useState({});
@@ -28,7 +33,7 @@ export default function CurriculumTreePanel({
   };
 
   const tabLabels = Object.keys(paths || {})
-    .filter(key => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(key))
+    .filter(key => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "appearance", "onboarding"].includes(key))
     .map(key => ({
       key,
       label: PATH_LABELS[key] || (paths[key]?.title || key).toUpperCase(),
@@ -71,7 +76,7 @@ export default function CurriculumTreePanel({
   };
 
   return (
-    <div className="curriculum-tree-panel" style={{ "--path-color": pathData.color }}>
+    <div className="curriculum-tree-panel" style={{ "--path-color": currentPath.color || "#00ff88" }}>
       <header className="cm-header">
         <div className="cm-header-top">
           <div className="cm-title-group">
@@ -130,8 +135,8 @@ export default function CurriculumTreePanel({
 
           {/* Global Actions */}
           <div className="cm-control-group">
-            <button className="cm-action-btn" onClick={expandAll}>Expand All</button>
-            <button className="cm-action-btn" onClick={collapseAll}>Collapse All</button>
+            <button type="button" className="cm-action-btn" onClick={expandAll}>Expand All</button>
+            <button type="button" className="cm-action-btn" onClick={collapseAll}>Collapse All</button>
           </div>
         </div>
       </header>
@@ -143,7 +148,7 @@ export default function CurriculumTreePanel({
             const hasModules = node.modules && node.modules.length > 0;
 
             return (
-              <div key={node.id} className="tree-node-group" style={{ background: "var(--bg2)", borderRadius: 12, padding: 20, border: `1px solid ${pathData.color}33`, transition: "all 0.2s" }}>
+              <div key={node.id} className="tree-node-group" style={{ background: "var(--bg2)", borderRadius: 12, padding: 20, border: `1px solid ${currentPath.color}33`, transition: "all 0.2s" }}>
                 <div
                   className="tree-item node"
                   onClick={(e) => hasModules ? toggleNode(e, node.id) : handleSelect(e, node, null, null)}
@@ -155,8 +160,8 @@ export default function CurriculumTreePanel({
                   >
                     {hasModules ? <ChevronRight size={16} /> : ""}
                   </div>
-                  <span className="tree-icon" style={{ background: pathData.color, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, color: "#fff" }}><Box size={18} /></span>
-                  <span className="tree-label" style={{ transition: "color 0.2s", flex: 1 }} onMouseOver={e => e.target.style.color = pathData.color} onMouseOut={e => e.target.style.color = "var(--text)"}>{node.title}</span>
+                  <span className="tree-icon" style={{ background: currentPath.color, width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: 8, color: "#fff" }}><Box size={18} /></span>
+                  <span className="tree-label" style={{ transition: "color 0.2s", flex: 1 }} onMouseOver={e => e.target.style.color = currentPath.color} onMouseOut={e => e.target.style.color = "var(--text)"}>{node.title}</span>
 
                   <button
                     onClick={(e) => handleSelect(e, node, null, null)}
@@ -186,7 +191,7 @@ export default function CurriculumTreePanel({
                             >
                               {hasTopics ? <ChevronRight size={14} /> : ""}
                             </div>
-                            <span style={{ color: pathData.color, display: "flex", alignItems: "center" }}>{isModExpanded ? <Hexagon size={14} fill="currentColor" /> : <Hexagon size={14} />}</span>
+                            <span style={{ color: currentPath.color, display: "flex", alignItems: "center" }}>{isModExpanded ? <Hexagon size={14} fill="currentColor" /> : <Hexagon size={14} />}</span>
                             <span className="tree-label" style={{ transition: "color 0.2s", flex: 1 }} onMouseOver={e => e.target.style.color = "var(--text)"} onMouseOut={e => e.target.style.color = "var(--text2)"}>{mod.title}</span>
 
                             <button
@@ -231,13 +236,13 @@ export default function CurriculumTreePanel({
         </div>
       ) : (
         <div className="hybrid-tree-wrapper" style={{
-          "--connector-color": `${pathData.color}CC`,
+          "--connector-color": `${currentPath.color || "#00ff88"}CC`,
           paddingBottom: 80, paddingLeft: 40, paddingTop: 40,
           overflowX: "auto", display: "flex", flexDirection: "column", alignItems: "flex-start",
           zoom: zoomLevel, transition: "zoom 0.2s ease-in-out"
         }}>
 
-          <div className="org-node root-node" style={{ marginBottom: 40 }}>{pathData.title || "Study Path"}</div>
+          <div className="org-node root-node" style={{ marginBottom: 40 }}>{currentPath.title || "Study Path"}</div>
 
           {nodes.length > 0 && (
             <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 40, paddingLeft: 60 }}>

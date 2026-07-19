@@ -728,52 +728,62 @@ export default function IntelligenceHub({
               )}
             </motion.div>
           ) : view === 'main' ? (
-            <motion.div 
+            <motion.div
               key="main"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="hub-grid"
+              exit={{ opacity: 0, scale: 0.96 }}
+              className="hub-command-center"
             >
-              {mainCards.map((card, i) => (
-                <motion.div
-                  key={card.id}
-                  className="hub-card"
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={card.action}
-                  style={{ '--card-accent': card.color }}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0, transition: { delay: i * 0.1 } }}
-                >
-                  <div className="hub-card-glow" />
-                  <div className="hub-card-inner">
-                    <div className="hub-icon-wrapper">
-                      {card.icon}
-                    </div>
-                    <h2>{card.title}</h2>
-                    <p className="card-subtitle">{card.subtitle}</p>
-                    <p className="card-description">{card.description}</p>
-                    
-                    {card.progress !== undefined && (
-                      <div className="card-progress-container">
-                        <div className="progress-label">
-                          <span>Progress</span>
-                          <span>{card.progress}%</span>
-                        </div>
-                        <div className="progress-bar-bg">
-                          <div className="progress-bar-fill" style={{ width: `${card.progress}%` }} />
-                        </div>
-                      </div>
-                    )}
+              <div className="hub-command-intro">
+                <div>
+                  <div className="hub-command-eyebrow"><span /> ADMIN INTELLIGENCE CONTROL PLANE</div>
+                  <h1>Shape the systems<br /><em>behind the intelligence.</em></h1>
+                  <p>One operating surface for learning paths, system design, research, and the people building what comes next.</p>
+                </div>
+                <div className="hub-command-summary">
+                  <div className="hub-summary-status"><span /> ALL SYSTEMS NOMINAL</div>
+                  <div className="hub-summary-copy"><span>ACADEMY SIGNAL</span><strong>Connected intelligence</strong><small>Paths, labs, and practice are ready.</small></div>
+                </div>
+              </div>
 
-                    <div className="hub-card-foot">
-                      <span>{card.footerLabel || 'INITIALIZE'}</span>
-                      <ChevronRight size={14} />
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+              <div className="hub-command-layout">
+                <motion.button
+                  className="hub-command-feature"
+                  onClick={mainCards[0].action}
+                  style={{ '--card-accent': mainCards[0].color }}
+                  whileHover={{ y: -5 }}
+                  whileTap={{ scale: 0.99 }}
+                >
+                  <div className="hub-feature-orbit hub-feature-orbit-one" /><div className="hub-feature-orbit hub-feature-orbit-two" /><div className="hub-feature-node hub-feature-node-one" /><div className="hub-feature-node hub-feature-node-two" />
+                  <div className="hub-feature-top"><span className="hub-feature-index">01 / ORIENTATION</span><span className="hub-feature-live"><span /> LIVE MAP</span></div>
+                  <div className="hub-feature-content"><span className="hub-feature-icon">{mainCards[0].icon}</span><span className="hub-feature-kicker">KNOWLEDGE GALAXY</span><h2>See the whole system.</h2><p>Trace the relationships between concepts, paths, and the next capability to unlock.</p><div className="hub-feature-progress"><span><b>ACADEMY PROGRESS</b><strong>{mainCards[0].progress}%</strong></span><i><em style={{ width: `${mainCards[0].progress}%` }} /></i></div><span className="hub-feature-action">OPEN KNOWLEDGE GALAXY <ChevronRight size={15} /></span></div>
+                </motion.button>
+                <div className="hub-command-briefing">
+                  <div className="hub-briefing-head"><span className="hub-command-eyebrow"><Zap size={12} /> OPERATING BRIEF</span><span className="hub-briefing-time">NOW</span></div>
+                  <div className="hub-briefing-item"><span className="hub-briefing-icon hub-briefing-icon-green"><BookOpen size={15} /></span><span><b>Learning paths</b><small>Continue the roadmap thread</small></span><button onClick={mainCards[1].action} aria-label="Open study hub"><ChevronRight size={15} /></button></div>
+                  <div className="hub-briefing-item"><span className="hub-briefing-icon hub-briefing-icon-blue"><Layers size={15} /></span><span><b>System lab</b><small>Turn a concept into architecture</small></span><button onClick={mainCards[2].action} aria-label="Open system design"><ChevronRight size={15} /></button></div>
+                  <div className="hub-briefing-item"><span className="hub-briefing-icon hub-briefing-icon-amber"><Users size={15} /></span><span><b>Readiness signal</b><small>Practice the explanation next</small></span><button onClick={mainCards[3].action} aria-label="Open interview practice"><ChevronRight size={15} /></button></div>
+                  <div className="hub-briefing-footer"><span><Activity size={13} /> 5 connected surfaces</span><span><Network size={13} /> admin view</span></div>
+                </div>
+              </div>
+
+              <div className="hub-surface-header"><span className="hub-command-eyebrow"><Sparkles size={12} /> ACADEMY SURFACES</span><span>Choose where to move the work forward.</span></div>
+              <div className="hub-surface-grid">
+                {mainCards.slice(1).map((card, i) => (
+                  <motion.button
+                    key={card.id}
+                    className="hub-surface-card"
+                    onClick={card.action}
+                    style={{ '--card-accent': card.color }}
+                    whileHover={{ y: -5 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span className="hub-surface-index">0{i + 2}</span><span className="hub-surface-icon">{card.icon}</span><span className="hub-surface-copy"><b>{card.title}</b><strong>{card.subtitle}</strong><small>{card.description}</small></span><span className="hub-surface-arrow"><ChevronRight size={15} /></span>
+                  </motion.button>
+                ))}
+              </div>
+              <div className="hub-command-footer"><span><span className="hub-footer-dot" /> Intelligence Hub online</span><span>Admin workspace · {activePathTitle}</span><button onClick={onTour}><Sparkles size={13} /> TAKE THE TOUR</button></div>
             </motion.div>
           ) : (
             <motion.div 
@@ -1453,6 +1463,184 @@ export default function IntelligenceHub({
           .repo-area { max-height: calc(100vh - 300px) !important; }
         }
 
+        /* --- Shared submenu card system --- */
+        .hub-sub-layout {
+          width: 100%;
+          max-width: 1370px;
+        }
+
+        .hub-sub-header {
+          margin: 0 auto 25px;
+          text-align: center;
+        }
+
+        .hub-sub-header h2 {
+          margin: 10px 0 7px;
+          color: #f2fff9;
+          font-size: clamp(30px, 4vw, 46px);
+          font-weight: 600;
+          letter-spacing: -2.5px;
+        }
+
+        .hub-sub-header .sub-tagline {
+          margin: 0;
+          color: #76968c;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: .1px;
+        }
+
+        .hub-sub-header .hub-back-btn {
+          margin: 0 auto;
+          padding: 8px 13px;
+          border-color: rgba(111, 241, 191, .16);
+          background: rgba(255,255,255,.035);
+          color: #8ca69e;
+          font-size: 8px;
+          letter-spacing: 1.5px;
+        }
+
+        .hub-sub-header .hub-back-btn:hover {
+          border-color: #74f2bd;
+          background: rgba(111,241,191,.09);
+          color: #dffff1;
+        }
+
+        .hub-scroll-area {
+          max-height: calc(100vh - 205px);
+          padding: 8px 6px 22px;
+          scrollbar-color: rgba(110, 234, 181, .32) transparent;
+          scrollbar-width: thin;
+        }
+
+        .hub-sub-grid {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          gap: 14px;
+          max-width: none;
+        }
+
+        .hub-sub-card {
+          --sub-accent: #66e8ef;
+          position: relative;
+          min-height: 184px;
+          aspect-ratio: auto;
+          padding: 17px;
+          overflow: hidden;
+          border: 1px solid rgba(162, 255, 222, .1);
+          border-radius: 17px;
+          background: linear-gradient(145deg, rgba(22, 37, 38, .72), rgba(6, 15, 16, .92));
+          box-shadow: inset 0 1px rgba(255,255,255,.035), 0 12px 24px rgba(0,0,0,.08);
+          transition: transform .28s cubic-bezier(.16,1,.3,1), border-color .28s ease, background .28s ease, box-shadow .28s ease;
+        }
+
+        .hub-sub-card::before {
+          content: "";
+          position: absolute;
+          inset: 0 0 auto;
+          height: 2px;
+          background: linear-gradient(90deg, var(--sub-accent), transparent 72%);
+          opacity: .8;
+        }
+
+        .hub-sub-card::after {
+          content: "";
+          position: absolute;
+          right: -55px;
+          bottom: -75px;
+          width: 175px;
+          height: 175px;
+          border: 1px solid color-mix(in srgb, var(--sub-accent) 21%, transparent);
+          border-radius: 50%;
+          box-shadow: 0 0 0 22px color-mix(in srgb, var(--sub-accent) 4%, transparent);
+          opacity: .65;
+          pointer-events: none;
+        }
+
+        .hub-sub-card:hover {
+          transform: translateY(-6px);
+          border-color: color-mix(in srgb, var(--sub-accent) 68%, white 5%);
+          background: linear-gradient(145deg, color-mix(in srgb, var(--sub-accent) 10%, rgba(22, 37, 38, .86)), rgba(7, 17, 18, .96));
+          box-shadow: inset 0 1px rgba(255,255,255,.07), 0 20px 36px rgba(0,0,0,.2), 0 0 24px color-mix(in srgb, var(--sub-accent) 11%, transparent);
+        }
+
+        .sub-icon {
+          position: relative;
+          z-index: 1;
+          width: 36px;
+          height: 36px;
+          margin: 0;
+          border: 1px solid color-mix(in srgb, var(--sub-accent) 18%, transparent);
+          border-radius: 10px;
+          background: color-mix(in srgb, var(--sub-accent) 9%, rgba(255,255,255,.02));
+          color: var(--sub-accent) !important;
+          transition: transform .28s ease, background .28s ease, color .28s ease;
+        }
+
+        .hub-sub-card:hover .sub-icon {
+          transform: translateY(-2px);
+          background: var(--sub-accent);
+          color: #061313 !important;
+        }
+
+        .sub-info {
+          position: relative;
+          z-index: 1;
+          margin-top: auto;
+          padding-top: 22px;
+        }
+
+        .sub-info h3 {
+          margin: 0 0 6px;
+          color: #f0fff8;
+          font-size: 16px;
+          font-weight: 650;
+          letter-spacing: -.45px;
+        }
+
+        .sub-info p {
+          max-width: 220px;
+          margin: 0;
+          color: #78938b;
+          font-size: 10px;
+          line-height: 1.45;
+        }
+
+        .hub-sub-card:not(.year-node):not(.article-node) .sub-info::after {
+          content: "OPEN SURFACE  →";
+          display: block;
+          margin-top: 12px;
+          color: var(--sub-accent);
+          font-size: 8px;
+          font-weight: 900;
+          letter-spacing: 1.3px;
+          opacity: .55;
+          transition: opacity .25s ease, transform .25s ease;
+        }
+
+        .hub-sub-card:not(.year-node):not(.article-node):hover .sub-info::after {
+          opacity: 1;
+          transform: translateX(4px);
+        }
+
+        .category-section { margin-bottom: 31px; }
+        .category-header { gap: 15px; margin-bottom: 14px; padding: 0 2px; }
+        .category-line { background: linear-gradient(to right, transparent, rgba(111,241,191,.18), transparent); }
+        .category-title { color: #6b887e; font-size: 9px; letter-spacing: 2.7px; }
+        .category-section:hover .category-title { color: #75f3bd; }
+
+        .year-node { min-height: 160px; border-left: 2px solid var(--year-accent); background: linear-gradient(145deg, color-mix(in srgb, var(--year-accent) 7%, rgba(22,37,38,.72)), rgba(6,15,16,.94)); }
+        .year-val { position: relative; z-index: 1; margin: 0; color: var(--year-accent); font-size: 32px; letter-spacing: -1.5px; opacity: .9; }
+        .year-node .sub-info { padding-top: 14px; }.year-node .sub-info h3 { font-size: 14px; }.year-node .sub-info p { color: #759188; }.year-action { position: relative; z-index: 1; margin-top: 13px; color: var(--year-accent); font-size: 8px; letter-spacing: 1.3px; }
+
+        .article-node { min-height: 175px; padding: 16px; border-left: 2px solid #56dcb4; background: linear-gradient(145deg, rgba(46, 112, 94, .15), rgba(6,15,16,.94)); }
+        .article-node h3 { position: relative; z-index: 1; margin: 14px 0 7px; color: #effff7; font-size: 13px; }.article-node p { position: relative; z-index: 1; color: #78938b; }.article-foot { position: relative; z-index: 1; color: #6ce9b7; }
+        .source-tag, .year-pill { border: 1px solid rgba(105,243,185,.16); border-radius: 5px; color: #70caaa; background: rgba(105,243,185,.06); font-size: 7px; letter-spacing: 1.2px; }
+
+        @media (max-width: 1400px) { .hub-sub-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        @media (max-width: 1100px) { .hub-sub-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }.hub-scroll-area { max-height: calc(100vh - 185px); } }
+        @media (max-width: 768px) { .hub-sub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.hub-sub-card { min-height: 168px; }.hub-scroll-area { max-height: calc(100vh - 170px); } }
+        @media (max-width: 560px) { .hub-sub-grid { grid-template-columns: 1fr; }.hub-sub-card { min-height: 145px; }.hub-sub-header h2 { font-size: 34px; }.hub-scroll-area { padding-right: 2px; } }
+
         /* --- Landing Search --- */
         .hub-landing-search {
           max-width: 600px;
@@ -1534,6 +1722,160 @@ export default function IntelligenceHub({
         .opacity-40 {
           opacity: 0.4;
         }
+
+        /* --- Admin control plane landing --- */
+        .hub-command-center {
+          width: 100%;
+          max-width: 1320px;
+          margin: 0 auto;
+          color: #f2fff9;
+        }
+
+        .hub-command-intro {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 48px;
+          margin-bottom: 28px;
+        }
+
+        .hub-command-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #69f9bd;
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 2.3px;
+        }
+
+        .hub-command-eyebrow > span:first-child {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: #69f9bd;
+          box-shadow: 0 0 14px #69f9bd;
+        }
+
+        .hub-command-intro h1 {
+          margin: 15px 0 11px;
+          color: #effff8;
+          font-size: clamp(37px, 4.5vw, 64px);
+          font-weight: 600;
+          letter-spacing: -3.4px;
+          line-height: .96;
+        }
+
+        .hub-command-intro h1 em {
+          color: #72f7c1;
+          font-style: normal;
+        }
+
+        .hub-command-intro p {
+          max-width: 610px;
+          margin: 0;
+          color: rgba(187, 211, 202, .64);
+          font-size: 13px;
+          line-height: 1.6;
+        }
+
+        .hub-command-summary {
+          width: 245px;
+          flex: 0 0 245px;
+          padding: 16px;
+          border: 1px solid rgba(109, 255, 193, .15);
+          border-radius: 15px;
+          background: linear-gradient(145deg, rgba(67, 220, 163, .08), rgba(255,255,255,.018));
+        }
+
+        .hub-summary-status {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          padding-bottom: 13px;
+          border-bottom: 1px solid rgba(255,255,255,.08);
+          color: #75f9c1;
+          font-size: 8px;
+          font-weight: 900;
+          letter-spacing: 1.4px;
+        }
+
+        .hub-summary-status > span, .hub-feature-live > span {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #75f9c1;
+          box-shadow: 0 0 11px #75f9c1;
+        }
+
+        .hub-summary-copy {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          padding-top: 14px;
+        }
+
+        .hub-summary-copy span { color: #6d8f84; font-size: 8px; font-weight: 900; letter-spacing: 1.5px; }
+        .hub-summary-copy strong { color: #e7fff4; font-size: 14px; letter-spacing: -.3px; }
+        .hub-summary-copy small { color: #78958c; font-size: 10px; }
+
+        .hub-command-layout {
+          display: grid;
+          grid-template-columns: minmax(0, 1.45fr) minmax(310px, .75fr);
+          gap: 16px;
+        }
+
+        .hub-command-feature {
+          position: relative;
+          min-height: 354px;
+          overflow: hidden;
+          padding: 23px 25px 25px;
+          border: 1px solid rgba(95, 238, 183, .2);
+          border-radius: 20px;
+          background: radial-gradient(circle at 77% 50%, rgba(0, 255, 180, .13), transparent 32%), linear-gradient(132deg, rgba(16, 54, 44, .92), rgba(6, 21, 19, .97) 66%);
+          color: #f2fff9;
+          cursor: pointer;
+          text-align: left;
+          transition: border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .hub-command-feature:hover { border-color: rgba(105, 255, 194, .62); box-shadow: 0 22px 55px rgba(0,0,0,.25), 0 0 35px rgba(82, 244, 183, .08); }
+        .hub-command-feature::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 0 67%, rgba(122,255,209,.05) 67.1%, transparent 67.25%), linear-gradient(0deg, transparent 0 75%, rgba(122,255,209,.04) 75.1%, transparent 75.25%); }
+        .hub-feature-top { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; }
+        .hub-feature-index { color: #7fb9a2; font-size: 8px; font-weight: 900; letter-spacing: 1.8px; }
+        .hub-feature-live { display: inline-flex; align-items: center; gap: 6px; color: #70f5bc; font-size: 8px; font-weight: 900; letter-spacing: 1.4px; }
+        .hub-feature-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; max-width: 430px; height: 100%; padding-top: 34px; }
+        .hub-feature-icon { display: grid; place-items: center; width: 43px; height: 43px; border: 1px solid rgba(100, 221, 255, .4); border-radius: 12px; background: rgba(55, 185, 226, .13); color: #52dff3; }
+        .hub-feature-kicker { margin-top: 19px; color: #6bdbeb; font-size: 8px; font-weight: 900; letter-spacing: 1.8px; }
+        .hub-command-feature h2 { margin: 7px 0 8px; color: #f5fffb; font-size: 30px; letter-spacing: -1.3px; }
+        .hub-command-feature p { max-width: 390px; margin: 0; color: #8db1a6; font-size: 11px; line-height: 1.55; }
+        .hub-feature-progress { width: min(100%, 365px); margin-top: 24px; }
+        .hub-feature-progress > span { display: flex; align-items: center; justify-content: space-between; margin-bottom: 7px; }
+        .hub-feature-progress b { color: #658d7c; font-size: 8px; letter-spacing: 1.5px; }
+        .hub-feature-progress strong { color: #73f6c1; font-size: 10px; }
+        .hub-feature-progress > i { display: block; height: 4px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.12); }
+        .hub-feature-progress > i em { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #5fdcf0, #73f6c1); box-shadow: 0 0 12px rgba(112,244,193,.5); }
+        .hub-feature-action { display: inline-flex; align-items: center; gap: 7px; margin-top: auto; color: #74ddf0; font-size: 9px; font-weight: 900; letter-spacing: 1.7px; }
+        .hub-feature-orbit { position: absolute; z-index: 1; right: -48px; top: 42px; border: 1px solid rgba(80, 231, 206, .18); border-radius: 50%; transform: rotate(-17deg); pointer-events: none; }
+        .hub-feature-orbit-one { width: 310px; height: 152px; }.hub-feature-orbit-two { width: 440px; height: 212px; right: -105px; top: 9px; opacity: .55; }
+        .hub-feature-node { position: absolute; z-index: 2; width: 8px; height: 8px; border-radius: 50%; background: #68f7c1; box-shadow: 0 0 16px #68f7c1; }.hub-feature-node-one { right: 170px; top: 95px; }.hub-feature-node-two { right: 84px; top: 255px; background: #5bd9ee; box-shadow: 0 0 16px #5bd9ee; }
+
+        .hub-command-briefing { min-height: 354px; padding: 22px 21px 17px; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; background: linear-gradient(150deg, rgba(25,43,45,.84), rgba(8,19,20,.96)); }
+        .hub-briefing-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 19px; border-bottom: 1px solid rgba(255,255,255,.08); }.hub-briefing-head .hub-command-eyebrow { color: #89a7a0; }.hub-briefing-head .hub-command-eyebrow svg { color: #78e7d6; }.hub-briefing-time { color: #6ce8bb; font-size: 8px; font-weight: 900; letter-spacing: 1.4px; }
+        .hub-briefing-item { display: grid; grid-template-columns: 33px minmax(0,1fr) 22px; align-items: center; gap: 10px; padding: 17px 0; border-bottom: 1px solid rgba(255,255,255,.065); }.hub-briefing-icon { display: grid; place-items: center; width: 33px; height: 33px; border-radius: 10px; }.hub-briefing-icon-green { color: #71f6c0; background: rgba(113,246,192,.1); }.hub-briefing-icon-blue { color: #6cddf4; background: rgba(108,221,244,.1); }.hub-briefing-icon-amber { color: #f5ca73; background: rgba(245,202,115,.1); }.hub-briefing-item span:nth-child(2) { display: flex; min-width: 0; flex-direction: column; gap: 4px; }.hub-briefing-item b { color: #e9fff7; font-size: 11px; }.hub-briefing-item small { overflow: hidden; color: #78958e; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }.hub-briefing-item button { display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; background: transparent; color: #80a59b; cursor: pointer; }.hub-briefing-item button:hover { border-color: #74f2bd; color: #74f2bd; }.hub-briefing-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 17px; color: #6d8a83; font-size: 8px; letter-spacing: .5px; }.hub-briefing-footer span { display: inline-flex; align-items: center; gap: 5px; }.hub-briefing-footer svg { color: #6eeabb; }
+
+        .hub-surface-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 28px 2px 13px; }.hub-surface-header > span:last-child { color: #69867e; font-size: 10px; }.hub-surface-header .hub-command-eyebrow { color: #71988a; }.hub-surface-header .hub-command-eyebrow svg { color: #70e8ba; }
+        .hub-command-center .hub-surface-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .hub-command-center .hub-surface-card { position: relative; display: grid; grid-template-columns: auto auto 1fr auto; grid-template-rows: auto 1fr; align-items: start; gap: 13px; min-height: 154px; padding: 17px; overflow: hidden; border: 1px solid rgba(255,255,255,.09); border-radius: 16px; background: rgba(255,255,255,.028); color: #fff; cursor: pointer; text-align: left; transition: .25s ease; }
+        .hub-command-center .hub-surface-card::after { content: ""; position: absolute; right: -38px; bottom: -59px; width: 145px; height: 145px; border: 1px solid color-mix(in srgb, var(--card-accent) 25%, transparent); border-radius: 50%; opacity: .7; }
+        .hub-command-center .hub-surface-card:hover { border-color: color-mix(in srgb, var(--card-accent) 70%, white 5%); background: color-mix(in srgb, var(--card-accent) 8%, rgba(255,255,255,.03)); box-shadow: 0 16px 36px rgba(0,0,0,.18); }
+        .hub-surface-index { color: #5d7970; font-size: 8px; font-weight: 900; letter-spacing: 1.5px; }.hub-command-center .hub-surface-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; color: var(--card-accent); background: color-mix(in srgb, var(--card-accent) 12%, transparent); }.hub-surface-copy { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 5px; }.hub-surface-copy b { color: #edfdf6; font-size: 14px; letter-spacing: -.2px; }.hub-surface-copy strong { color: var(--card-accent); font-size: 8px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; }.hub-surface-copy small { max-width: 220px; color: #78968d; font-size: 10px; line-height: 1.45; }.hub-surface-arrow { grid-column: 4; grid-row: 1; display: grid; place-items: center; color: #76978d; }
+        .hub-command-footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 19px; color: #5f7c73; font-size: 8px; letter-spacing: .8px; }.hub-command-footer > span:first-child { display: inline-flex; align-items: center; gap: 7px; }.hub-footer-dot { width: 6px; height: 6px; border-radius: 50%; background: #6df4bc; box-shadow: 0 0 10px #6df4bc; }.hub-command-footer button { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: transparent; color: #72e9bc; cursor: pointer; font-size: 8px; font-weight: 900; letter-spacing: 1.2px; }
+
+        @media (max-width: 1100px) { .hub-command-layout { grid-template-columns: 1fr; }.hub-command-briefing { min-height: auto; }.hub-briefing-item { padding: 13px 0; }.hub-command-center .hub-surface-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-height: 800px) and (min-width: 769px) { .hub-command-intro { margin-bottom: 18px; }.hub-command-intro h1 { margin: 10px 0 8px; font-size: 46px; }.hub-command-intro p { font-size: 11px; }.hub-command-feature, .hub-command-briefing { min-height: 280px; }.hub-command-feature { padding: 18px 20px; }.hub-feature-content { padding-top: 18px; }.hub-command-feature h2 { font-size: 25px; }.hub-feature-progress { margin-top: 14px; }.hub-briefing-item { padding: 10px 0; }.hub-briefing-footer { padding-top: 10px; }.hub-surface-header { margin-top: 16px; margin-bottom: 8px; }.hub-command-center .hub-surface-card { min-height: 112px; padding: 13px; }.hub-command-footer { margin-top: 10px; } }
+        @media (max-width: 768px) { .hub-command-intro { align-items: stretch; flex-direction: column; gap: 22px; }.hub-command-summary { width: auto; flex-basis: auto; }.hub-command-intro h1 { font-size: 42px; }.hub-command-center .hub-surface-grid { grid-template-columns: 1fr; }.hub-command-footer { align-items: flex-start; flex-direction: column; }.hub-feature-orbit-one { right: -90px; }.hub-feature-orbit-two { right: -160px; } }
+        @media (max-width: 560px) { .hub-command-intro h1 { font-size: 34px; letter-spacing: -2px; }.hub-container { padding: 80px 16px 24px; }.hub-header { padding: 14px 16px; }.hub-breadcrumbs { display: none; }.hub-command-feature { min-height: 390px; padding: 18px; }.hub-command-feature h2 { font-size: 26px; }.hub-command-briefing { padding: 18px 16px 14px; }.hub-surface-header { align-items: flex-start; flex-direction: column; gap: 8px; } }
       `}</style>
     </div>
   );

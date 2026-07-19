@@ -98,7 +98,7 @@ export default function RoadmapGraph({
   };
   
   const tabLabels = Object.keys(pathsData || {})
-    .filter(key => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"].includes(key))
+    .filter(key => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance"].includes(key))
     .map(key => ({
       key,
       label: PATH_LABELS[key] || (pathsData[key]?.title || key).toUpperCase(),

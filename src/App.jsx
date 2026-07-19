@@ -34,6 +34,7 @@ import ManualViewer from "./components/ManualViewer";
 import ReferenceViewer from "./components/ReferenceViewer";
 import InterviewPrep from "./components/InterviewPrep";
 import QuizApp from "./components/QuizApp";
+import LeetCodePage from "./pages/LeetCodePage";
 import ProjectIDE from "./components/Projects/ProjectIDE";
 import { ProjectsProvider } from "./contexts/ProjectsContext";
 import {
@@ -44,8 +45,10 @@ import {
   HelpCircle
 } from "lucide-react";
 import IntelligenceHub from "./components/IntelligenceHub";
+import HomeDashboard from "./components/HomeDashboard";
 import WorkplaceLab from "./components/WorkplaceLab";
 import OnboardingChatbot from "./components/OnboardingChatbot";
+import FullContextChatbot from "./components/FullContextChatbot";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
@@ -60,11 +63,16 @@ import LandingWrapper from "./pages/LandingWrapper";
 import KnowledgeGraph from "./pages/KnowledgeGraph";
 import Community from "./components/Community/Community";
 import AppWalkthrough from "./components/AppWalkthrough";
+import FeatureHome from "./components/FeatureHome";
 import { MAIN_STEPS, SECTION_STEPS, SIDEBAR_OVERVIEW_STEPS } from "./data/walkthroughSteps";
 import { AnimatePresence } from "framer-motion";
 import useIsMobile from "./hooks/useIsMobile";
 import "./styles/global.css";
 import "./styles/mobile-foundation.css";
+
+// Keep the complete multi-provider icon library out of the initial app bundle;
+// it is loaded when the full-screen v2 studio is opened.
+const GenAIPlayground2 = React.lazy(() => import("./pages/playground2/GenAIPlayground2"));
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -117,10 +125,10 @@ function MainApp() {
   // Sync Global AI Config to AI Service
   useEffect(() => {
     import('./services/aiService').then(({ setDynamicGeminiKey, setAiProvider, setAzureEndpoint, setAzureKey }) => {
-      if (geminiKey) setDynamicGeminiKey(geminiKey);
-      if (aiProvider) setAiProvider(aiProvider);
-      if (azureEndpoint) setAzureEndpoint(azureEndpoint);
-      if (azureKey) setAzureKey(azureKey);
+      setDynamicGeminiKey(geminiKey);
+      setAiProvider(aiProvider);
+      setAzureEndpoint(azureEndpoint);
+      setAzureKey(azureKey);
     });
   }, [geminiKey, aiProvider, azureEndpoint, azureKey]);
 
@@ -141,6 +149,7 @@ function MainApp() {
   });
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [showLeetCode, setShowLeetCode] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingMode, setOnboardingMode] = useState("modal"); // "modal" (first login) | "panel" (sidebar reopen)
   const hasCheckedOnboarding = React.useRef(false);
@@ -249,7 +258,7 @@ function MainApp() {
         }
 
         setPathsData(mergedData);
-        const keys = Object.keys(mergedData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding"].includes(k));
+        const keys = Object.keys(mergedData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance", "leetcode"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
 
         // Existing user: only show the onboarding modal if they haven't completed it.
@@ -264,7 +273,7 @@ function MainApp() {
         // New user: Use default paths strictly, do NOT pull from localStorage
         const initialData = injectDefaultIcons(PATHS);
         setPathsData(initialData);
-        const keys = Object.keys(initialData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding"].includes(k));
+        const keys = Object.keys(initialData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance", "leetcode"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
         await supabase.from('user_curriculum').insert({ id: user.id, paths_data: initialData });
 
@@ -373,6 +382,7 @@ function MainApp() {
   const [showResources, setShowResources] = useState(savedViews.showResources ?? false);
   const [showProgress, setShowProgress] = useState(savedViews.showProgress ?? false);
   const [showPlayground, setShowPlayground] = useState(savedViews.showPlayground ?? false);
+  const [showGenAIPlayground2, setShowGenAIPlayground2] = useState(false);
   const [showDSAAnimator, setShowDSAAnimator] = useState(savedViews.showDSAAnimator ?? false);
   const [showAimlCompanion, setShowAimlCompanion] = useState(savedViews.showAimlCompanion ?? false);
   const [showLinks, setShowLinks] = useState(savedViews.showLinks ?? false);
@@ -397,11 +407,27 @@ function MainApp() {
   const [showInterviewPrep, setShowInterviewPrep] = useState(savedViews.showInterviewPrep ?? false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
   const [showProjects, setShowProjects] = useState(savedViews.showProjects ?? false);
+  const [activeToolHome, setActiveToolHome] = useState(null);
+  const [sidebarBeforeGenAI2, setSidebarBeforeGenAI2] = useState(null);
+
+  const openGenAIPlayground2 = useCallback(() => {
+    setSidebarBeforeGenAI2(isSidebarCollapsed);
+    closeAllPanels();
+    setIsSidebarCollapsed(false);
+    setShowGenAIPlayground2(true);
+  }, [isSidebarCollapsed]);
+
+  const closeGenAIPlayground2 = useCallback(() => {
+    setShowGenAIPlayground2(false);
+    if (sidebarBeforeGenAI2 !== null) setIsSidebarCollapsed(sidebarBeforeGenAI2);
+    setSidebarBeforeGenAI2(null);
+  }, [sidebarBeforeGenAI2]);
 
   const [showGitHubHub, setShowGitHubHub] = useState(savedViews.showGitHubHub ?? false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showModuleDetails, setShowModuleDetails] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useState(savedViews.showIntelligenceHub ?? true);
+  const [showLegacyIntelligenceHub, setShowLegacyIntelligenceHub] = useState(false);
   const [showWorkplaceLab, setShowWorkplaceLab] = useState(savedViews.showWorkplaceLab ?? false);
   const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(savedViews.showKnowledgeGraph ?? false);
   const [hubConfig, setHubConfig] = useState(() => {
@@ -540,16 +566,23 @@ function MainApp() {
   };
 
   const closeAllPanels = () => {
+    setActiveToolHome(null);
     setShowCurriculumMap(false);
     setShowIDE(false);
     setShowResources(false);
     setShowProgress(false);
     setShowPlayground(false);
+    setShowGenAIPlayground2(false);
+    if (sidebarBeforeGenAI2 !== null) {
+      setIsSidebarCollapsed(sidebarBeforeGenAI2);
+      setSidebarBeforeGenAI2(null);
+    }
     setShowDSAAnimator(false);
     setShowAimlCompanion(false);
     setShowLinks(false);
     setShowBlog(false);
     setShowAdminManagement(false);
+    setShowAwsSimulator(false);
     setShowSimulator(false);
     setShowGalaxy(false);
     setShowAIInterviewer(false);
@@ -557,10 +590,12 @@ function MainApp() {
     setShowAlgoVisualizer(false);
     setShowK8sGames(false);
     setShowGitVisualizer(false);
+    setShowFlowDesign(false);
     setShowGitHubHub(false);
     setIsMobileMenuOpen(false);
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
     setShowIntelligenceHub(false);
+    setShowLegacyIntelligenceHub(false);
     setShowWorkplaceLab(false);
     setShowKnowledgeGraph(false);
     setShowCommunity(false);
@@ -570,8 +605,61 @@ function MainApp() {
     setShowProjects(false);
     setShowManual(false);
     setShowReference(false);
+    setShowLeetCode(false);
     setShowOnboarding(false);
     setInterviewDeepLinkId(null);
+  };
+
+  const launchToolFromHome = (feature) => {
+    closeAllPanels();
+    const launchers = {
+      interview: () => setShowInterviewPrep(true),
+      quiz: () => setShowQuiz(true),
+      algo: () => setShowAlgoVisualizer(true),
+      playground: () => setShowPlayground(true),
+      interviewer: () => setShowAIInterviewer(true),
+      dsa: () => setShowDSAAnimator(true),
+      notion: () => setShowNotion(true),
+      kubernetes: () => setShowK8sGames(true),
+      flow: () => setShowFlowDesign(true),
+      projects: () => setShowProjects(true),
+      notes: () => setShowWorkplaceLab(true),
+      community: () => setShowCommunity(true),
+      github: () => setShowGitHubHub(true),
+      links: () => setShowLinks(true),
+      blog: () => setShowBlog(true),
+      reference: () => setShowReference(true),
+      manual: () => setShowManual(true),
+      system: () => setShowSimulator(true),
+      coding: () => setShowIDE(true),
+      resources: () => setShowResources(true),
+    };
+    launchers[feature]?.();
+  };
+
+  const handleLeetCodeSubmission = async (submission) => {
+    const nextPathsData = {
+      ...pathsData,
+      leetcode: {
+        ...(pathsData.leetcode || {}),
+        submissions: {
+          ...(pathsData.leetcode?.submissions || {}),
+          [submission.problemId]: { ...submission, updatedAt: new Date().toISOString() },
+        },
+      },
+    };
+    setPathsData(nextPathsData);
+    if (user) {
+      try {
+        await supabase.from('user_curriculum').upsert({
+          id: user.id,
+          paths_data: nextPathsData,
+          updated_at: new Date().toISOString(),
+        });
+      } catch (error) {
+        console.error('LeetCode submission save failed:', error);
+      }
+    }
   };
 
   // Used by OnboardingChatbot's recommendation chips to jump straight to a
@@ -585,28 +673,30 @@ function MainApp() {
       case "knowledge_graph": setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
       case "progress": setShowProgress(true); break;
-      case "manual": setShowManual(true); break;
-      case "reference": setShowReference(true); break;
-      case "projects": setShowProjects(true); break;
-      case "ide": setShowIDE(true); break;
-      case "playground": setShowPlayground(true); break;
-      case "simulator": setShowSimulator(true); break;
+      case "manual": setActiveToolHome("manual"); break;
+      case "reference": setActiveToolHome("reference"); break;
+      case "projects": setActiveToolHome("projects"); break;
+      case "ide": setActiveToolHome("coding"); break;
+      case "playground": setActiveToolHome("playground"); break;
+      case "simulator": setActiveToolHome("system"); break;
       case "aws_simulator": setShowAwsSimulator(true); break;
-      case "dsa_animator": setShowDSAAnimator(true); break;
-      case "algo_visualizer": setShowAlgoVisualizer(true); break;
-      case "k8s_games": setShowK8sGames(true); break;
+      case "dsa_animator": setActiveToolHome("dsa"); break;
+      case "algo_visualizer": setActiveToolHome("algo"); break;
+      case "k8s_games": setActiveToolHome("kubernetes"); break;
       case "git_visualizer": setShowGitVisualizer(true); break;
-      case "flow_design": setShowFlowDesign(true); break;
-      case "notion": setShowNotion(true); break;
+      case "flow_design": setActiveToolHome("flow"); break;
+      case "notion": setActiveToolHome("notion"); break;
       case "nosignups": setShowNoSignups(true); break;
-      case "blog": setShowBlog(true); break;
-      case "links": setShowLinks(true); break;
-      case "github": setShowGitHubHub(true); break;
-      case "tasks": setShowWorkplaceLab(true); break;
-      case "resources": setShowResources(true); break;
-      case "interviewer": setShowAIInterviewer(true); break;
-      case "interview_prep": setShowInterviewPrep(true); break;
-      case "quiz": setShowQuiz(true); break;
+      case "blog": setActiveToolHome("blog"); break;
+      case "links": setActiveToolHome("links"); break;
+      case "github": setActiveToolHome("github"); break;
+      case "tasks": setActiveToolHome("notes"); break;
+      case "community": setActiveToolHome("community"); break;
+      case "resources": setActiveToolHome("resources"); break;
+      case "interviewer": setActiveToolHome("interviewer"); break;
+      case "interview_prep": setActiveToolHome("interview"); break;
+      case "quiz": setActiveToolHome("quiz"); break;
+      case "leetcode": setShowLeetCode(true); break;
       default: break;
     }
   };
@@ -619,10 +709,20 @@ function MainApp() {
     setPathsData(prev => ({
       ...prev,
       onboarding: {
+        ...(prev.onboarding || {}),
         completed: true,
+        assessmentVersion: recommendation?.version || 1,
         lastAnswers: answers,
         lastRecommendation: recommendation,
         completedAt: new Date().toISOString(),
+        history: [
+          ...(prev.onboarding?.history || []),
+          {
+            answers,
+            recommendation,
+            completedAt: new Date().toISOString(),
+          },
+        ].slice(-5),
       },
     }));
   };
@@ -668,7 +768,7 @@ function MainApp() {
     }
   }, [pathsData]);
 
-  const pathData = pathsData[activePath] || pathsData[Object.keys(pathsData).find(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding"].includes(k))] || Object.values(pathsData)[0];
+  const pathData = pathsData[activePath] || pathsData[Object.keys(pathsData).find(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance", "leetcode"].includes(k))] || Object.values(pathsData)[0];
 
   const handleNodeClick = (node, pathId) => {
     if (pathId) setActivePath(pathId);
@@ -1036,7 +1136,7 @@ function MainApp() {
   }
 
   return (
-    <div className={`app ${isEditMode ? "edit-mode-active" : ""}`}>
+    <div className={`app ${isEditMode ? "edit-mode-active" : ""}${showOnboarding ? " onboarding-active" : ""}`}>
       <GlobalSearchPalette items={searchItems} onNavigate={handleSearchNavigate} />
       {showOnboarding && (
         <OnboardingChatbot
@@ -1075,6 +1175,7 @@ function MainApp() {
           showResources={showResources} setShowResources={setShowResources}
           showProgress={showProgress} setShowProgress={setShowProgress}
           showPlayground={showPlayground} setShowPlayground={setShowPlayground}
+          onOpenGenAIPlayground2={openGenAIPlayground2}
           showDSAAnimator={showDSAAnimator} setShowDSAAnimator={setShowDSAAnimator}
           showAimlCompanion={showAimlCompanion} setShowAimlCompanion={setShowAimlCompanion}
           showLinks={showLinks} setShowLinks={setShowLinks}
@@ -1091,6 +1192,7 @@ function MainApp() {
           showFlowDesign={showFlowDesign} setShowFlowDesign={setShowFlowDesign}
           showGitHubHub={showGitHubHub} setShowGitHubHub={setShowGitHubHub}
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
+          showLegacyIntelligenceHub={showLegacyIntelligenceHub} setShowLegacyIntelligenceHub={setShowLegacyIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
           showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
           showCommunity={showCommunity} setShowCommunity={setShowCommunity}
@@ -1103,7 +1205,9 @@ function MainApp() {
           showOnboarding={showOnboarding}
           setShowOnboarding={(v) => { if (v) setOnboardingMode("panel"); setShowOnboarding(v); }}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
+          activeToolHome={activeToolHome} onOpenToolHome={setActiveToolHome}
           showQuiz={showQuiz} setShowQuiz={setShowQuiz}
+          showLeetCode={showLeetCode} setShowLeetCode={setShowLeetCode}
           showProjects={showProjects} setShowProjects={setShowProjects}
           setLinksInitialTab={setLinksInitialTab}
           onHubNav={handleHubNav}
@@ -1154,6 +1258,7 @@ function MainApp() {
                       onClose={() => setShowGalaxy(false)}
                     />
                   ) :
+                    activeToolHome ? <FeatureHome feature={activeToolHome} onLaunch={launchToolFromHome} onClose={() => setActiveToolHome(null)} /> :
                     showAwsSimulator ? <AWSSystemDesignSimulator onClose={() => setShowAwsSimulator(false)} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} /> :
                       showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
                         showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
@@ -1161,7 +1266,8 @@ function MainApp() {
                             (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
                                 showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
-                                  showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
+                                  showGenAIPlayground2 ? <React.Suspense fallback={<div style={{ display: "grid", placeItems: "center", width: "100%", height: "100%", background: "#f7f8ff", color: "#64748b", fontSize: 12 }}>Loading Gen AI Playground 2.0…</div>}><GenAIPlayground2 theme={theme} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} onClose={closeGenAIPlayground2} /></React.Suspense> :
+                                    showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
                                     showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
                                       showProjects ? (
                                         <ProjectsProvider>
@@ -1205,23 +1311,58 @@ function MainApp() {
                                                       showNoSignups ? <NoSignups onClose={() => setShowNoSignups(false)} /> :
                                                         showManual ? <ManualViewer activePhase={activeManualPhase} onSelectPhase={setActiveManualPhase} onClose={() => setShowManual(false)} /> :
                                                         showReference ? <ReferenceViewer activeTopic={activeReferenceTopic} onSelectTopic={setActiveReferenceTopic} onClose={() => setShowReference(false)} /> :
-                                                        showInterviewPrep ? <InterviewPrep onClose={() => setShowInterviewPrep(false)} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
+                                                      showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
+                                                      showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showQuiz ? <QuizApp /> :
-                                                      showIntelligenceHub ? (
-                                                      <IntelligenceHub
-                                                        paths={pathsData}
-                                                        pathsData={pathsData}
-                                                        activePath={activePath}
-                                                        onStudyAction={handleHubStudyAction}
-                                                        onDesignAction={handleHubDesignAction}
-                                                        onInterview={handleHubInterview}
-                                                        onShowAll={() => setShowIntelligenceHub(false)}
-                                                        initialView={hubConfig.view}
-                                                        initialYear={hubConfig.year}
-                                                        initialAI={hubConfig.isAI}
-                                                        onTour={() => setShowSidebarWalkthrough(true)}
-                                                      />
-                                                    ) :
+                                                      showLegacyIntelligenceHub ? (
+                                                        <IntelligenceHub
+                                                          paths={pathsData}
+                                                          pathsData={pathsData}
+                                                          activePath={activePath}
+                                                          onStudyAction={handleHubStudyAction}
+                                                          onDesignAction={handleHubDesignAction}
+                                                          onInterview={handleHubInterview}
+                                                          onShowAll={() => setShowLegacyIntelligenceHub(false)}
+                                                          initialView={hubConfig.view}
+                                                          initialYear={hubConfig.year}
+                                                          initialAI={hubConfig.isAI}
+                                                          onTour={() => setShowSidebarWalkthrough(true)}
+                                                        />
+                                                      ) : showIntelligenceHub ? (
+                                                        <HomeDashboard
+                                                          user={user}
+                                                          pathsData={pathsData}
+                                                          activePath={activePath}
+                                                          setActivePath={setActivePath}
+                                                          onContinue={(node, pathId) => { setShowIntelligenceHub(false); handleNodeClick(node, pathId); }}
+                                                          onOpenShelfItem={(item) => {
+                                                            if (item.type === "roadmap") return;
+                                                            closeAllPanels();
+                                                            if (item.type === "manual") setShowManual(true);
+                                                            if (item.type === "reference") setShowReference(true);
+                                                            if (item.type === "quiz") setShowQuiz(true);
+                                                            if (item.type === "dsa") setShowDSAAnimator(true);
+                                                          }}
+                                                          onOpenRoadmap={() => setShowIntelligenceHub(false)}
+                                                          onOpenProgress={() => { closeAllPanels(); setShowProgress(true); }}
+                                                          onOpenPractice={() => { closeAllPanels(); setShowIDE(true); }}
+                                                          onOpenPlayground={() => { closeAllPanels(); setShowPlayground(true); }}
+                                                          onOpenAwsSystemDesign={() => { closeAllPanels(); setShowAwsSimulator(true); }}
+                                                          onOpenDiscovery={(item) => {
+                                                            closeAllPanels();
+                                                            if (item.type === "interview") {
+                                                              setInterviewDeepLinkId(item.lessonId || null);
+                                                              setShowInterviewPrep(true);
+                                                            }
+                                                            if (item.type === "manual") {
+                                                              if (item.phase) setActiveManualPhase(item.phase);
+                                                              setShowManual(true);
+                                                            }
+                                                            if (item.type === "reference") setShowReference(true);
+                                                          }}
+                                                          onOpenOnboarding={() => { setOnboardingMode("panel"); setShowOnboarding(true); }}
+                                                        />
+                                                      ) :
                                                       showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={handleTopicSelect} onClose={() => setShowCurriculumMap(false)} /> :
                                                         <>
                                                           {!freshActiveNode && (
@@ -1316,6 +1457,15 @@ function MainApp() {
         }}
       />
 
+      <FullContextChatbot
+        user={user}
+        pathsData={pathsData}
+        activePath={activePath}
+        activeNode={freshActiveNode}
+        activeModule={freshActiveModule}
+        activeTopic={activeTopic}
+      />
+
       <AnimatePresence>
         {focusNodeId && freshActiveNode && freshActiveModule && (
           <FocusPulse
@@ -1366,11 +1516,11 @@ function MainApp() {
       {/* Re-trigger Walkthrough Button (top-right, hidden until hover) — only on home/roadmap */}
       {!showWalkthrough && !sectionWalkthroughId &&
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
-        !showPlayground && !showDSAAnimator && !showAimlCompanion && !showLinks &&
+        !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showAimlCompanion && !showLinks &&
         !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
         !showAIInterviewer && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
-        !showIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&
+        !showIntelligenceHub && !showLegacyIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&
         !showCommunity && (
           null
         )}

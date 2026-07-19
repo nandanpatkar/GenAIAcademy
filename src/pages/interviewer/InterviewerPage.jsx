@@ -4,7 +4,8 @@ import { createRetellWebCall, generateInterviewAnalysis, updateRetellCallVariabl
 import { 
   Mic, MicOff, PhoneOff, Play, CheckCircle, 
   AlertCircle, Loader2, User, Briefcase, 
-  ChevronRight, Zap, MessageSquare, BarChart2, Activity, Code2
+  ChevronRight, Zap, MessageSquare, BarChart2, Activity, Code2,
+  ShieldCheck, Radio, Gauge, Sparkles, Cpu
 } from "lucide-react";
 import "../../styles/Interviewer.css";
 
@@ -324,13 +325,13 @@ sys.stdout = io.StringIO()
   return (
     <div className="interviewer-page">
       <div className="interviewer-header">
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, #00ff88, #0088ff)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Activity size={18} color="#000" />
+        <div className="interviewer-brand">
+            <div className="interviewer-brand-mark">
+              <Activity size={18} />
             </div>
             <div>
-              <h1 style={{ fontSize: 16, fontWeight: 900, margin: 0, letterSpacing: -0.5 }}>INTELLIGENCE STUDIO</h1>
-              <p style={{ fontSize: 10, color: "rgba(255, 255, 255, 0.4)", margin: 0, fontWeight: 700, textTransform: "uppercase" }}>
+              <h1>INTELLIGENCE STUDIO</h1>
+              <p>
                 {stage === "setup" ? "Session Ready" : stage === "calling" ? "Live Interview" : "Performance Report"}
               </p>
             </div>
@@ -342,7 +343,7 @@ sys.stdout = io.StringIO()
           </div>
         )}
 
-        <button onClick={onClose} style={{ background: "transparent", border: "none", color: "rgba(255, 255, 255, 0.4)", cursor: "pointer" }}>
+        <button className="interviewer-close" onClick={onClose} aria-label="Exit interviewer">
           <PhoneOff size={20} />
         </button>
       </div>
@@ -350,113 +351,76 @@ sys.stdout = io.StringIO()
       <div className="interviewer-content">
         {stage === "setup" && (
           <div className="setup-container">
-            <div className="setup-card">
-              <div style={{ textAlign: "center", marginBottom: 32 }}>
-                <div style={{ display: "inline-flex", padding: 14, borderRadius: 20, background: "rgba(0, 255, 136, 0.1)", marginBottom: 16 }}>
-                  <Mic size={40} color="#00ff88" />
+            <div className="setup-shell">
+              <section className="setup-intro">
+                <div className="setup-eyebrow"><span className="setup-live-dot" /> VOICE INTERVIEW / READY TO CONFIGURE</div>
+                <div className="setup-intro-orb"><Mic size={30} /></div>
+                <h2>Practice for <em>signal.</em></h2>
+                <p>Enter the room with a sharper story, clearer thinking, and an AI Tech Lead that knows what to ask next.</p>
+                <div className="setup-intro-stats">
+                  <div><Radio size={14} /><span><strong>LIVE</strong> voice loop</span></div>
+                  <div><Cpu size={14} /><span><strong>ADAPTIVE</strong> follow-ups</span></div>
+                  <div><ShieldCheck size={14} /><span><strong>PRIVATE</strong> session context</span></div>
                 </div>
-                <h2 style={{ fontSize: 32, fontWeight: 900, marginBottom: 8, letterSpacing: -1 }}>Practice for Perfection</h2>
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, maxWidth: 400, margin: "0 auto" }}>Real-time voice interview simulation with a custom AI Tech Lead.</p>
-              </div>
-
-              {/* Target Role & Seniority */}
-              <div className="form-grid">
-                <div className="form-group">
-                  <label><Briefcase size={16} /> Target Role</label>
-                  <input 
-                    className="form-input"
-                    type="text" 
-                    value={form.role} 
-                    onChange={(e) => setForm({...form, role: e.target.value})}
-                    placeholder="e.g. Software Engineer"
-                  />
+                <div className="setup-blueprint" aria-hidden="true">
+                  <div className="blueprint-line blueprint-line-a" />
+                  <div className="blueprint-line blueprint-line-b" />
+                  <div className="blueprint-node blueprint-node-core"><Activity size={16} /><span>AI LEAD</span></div>
+                  <div className="blueprint-node blueprint-node-top"><Gauge size={14} /><span>DEPTH</span></div>
+                  <div className="blueprint-node blueprint-node-right"><MessageSquare size={14} /><span>CLARITY</span></div>
+                  <div className="blueprint-node blueprint-node-bottom"><Sparkles size={14} /><span>FEEDBACK</span></div>
                 </div>
+              </section>
 
-                <div className="form-group">
-                  <label><BarChart2 size={16} /> Seniority</label>
-                  <select 
-                    className="form-select"
-                    value={form.seniority}
-                    onChange={(e) => setForm({...form, seniority: e.target.value})}
-                  >
-                    <option>Entry-Level</option>
-                    <option>Mid-Level</option>
-                    <option>Senior</option>
-                    <option>Lead / Architect</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Language Selection Row */}
-              <div className="form-group">
-                <label><MessageSquare size={16} /> Interview Language</label>
-                <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
-                  {["English", "Hindi"].map(lang => (
-                    <button
-                      key={lang}
-                      type="button"
-                      onClick={() => setForm({...form, language: lang})}
-                      style={{
-                        flex: 1,
-                        padding: "16px",
-                        borderRadius: "16px",
-                        border: "1px solid",
-                        borderColor: form.language === lang ? "#00ff88" : "rgba(255, 255, 255, 0.1)",
-                        background: form.language === lang 
-                          ? "rgba(0, 255, 136, 0.1)" 
-                          : "rgba(255, 255, 255, 0.05)",
-                        color: form.language === lang ? "#00ff88" : "rgba(255, 255, 255, 0.4)",
-                        cursor: "pointer",
-                        transition: "all 0.3s",
-                        display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontWeight: 800, fontSize: 13
-                      }}
-                    >
-                      {lang}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="form-grid">
-                <div className="form-group">
-                  <label><Briefcase size={16} /> Job Description (Skills Focus)</label>
-                  <textarea 
-                    className="form-textarea"
-                    value={form.jobDescription}
-                    onChange={(e) => setForm({...form, jobDescription: e.target.value})}
-                    placeholder="Paste JD text here..."
-                    rows={4}
-                    style={{ resize: "none" }}
-                  />
+              <section className="setup-card">
+                <div className="setup-card-header">
+                  <div><span className="setup-section-kicker">SESSION BUILDER / 01</span><h3>Design your interview</h3><p>Give the interviewer enough signal to make every question count.</p></div>
+                  <div className="setup-card-status"><span className="setup-live-dot" /> READY</div>
                 </div>
 
-                <div className="form-group">
-                  <label><User size={16} /> Your Resume (Personalization)</label>
-                  <textarea 
-                    className="form-textarea"
-                    value={form.resumeText}
-                    onChange={(e) => setForm({...form, resumeText: e.target.value})}
-                    placeholder="Paste your resume content here..."
-                    rows={4}
-                    style={{ resize: "none" }}
-                  />
+                <div className="setup-field-grid">
+                  <div className="form-group">
+                    <label><Briefcase size={15} /> Target role</label>
+                    <input className="form-input" type="text" value={form.role} onChange={(e) => setForm({...form, role: e.target.value})} placeholder="e.g. Software Engineer" />
+                  </div>
+                  <div className="form-group">
+                    <label><BarChart2 size={15} /> Seniority</label>
+                    <select className="form-select" value={form.seniority} onChange={(e) => setForm({...form, seniority: e.target.value})}>
+                      <option>Entry-Level</option><option>Mid-Level</option><option>Senior</option><option>Lead / Architect</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
 
-              {error && (
-                <div style={{ padding: 16, borderRadius: 12, background: "rgba(239, 68, 68, 0.1)", color: "#ef4444", fontSize: 13, display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
-                  <AlertCircle size={16} /> {error}
+                <div className="form-group setup-language-group">
+                  <label><MessageSquare size={15} /> Interview language</label>
+                  <div className="language-switcher">
+                    {["English", "Hindi"].map(lang => (
+                      <button key={lang} type="button" className={form.language === lang ? "language-option active" : "language-option"} onClick={() => setForm({...form, language: lang})}>{lang}<span>{form.language === lang ? "PRIMARY" : ""}</span></button>
+                    ))}
+                  </div>
                 </div>
-              )}
 
-              <button 
-                className="start-btn" 
-                onClick={handleStartCall}
-                disabled={loading}
-              >
-                {loading ? <Loader2 className="animate-spin" size={20} /> : <Zap size={20} />}
-                {loading ? "INITIALIZING AGENT..." : "START VOICE INTERVIEW"}
-              </button>
+                <div className="setup-field-grid context-fields">
+                  <div className="form-group">
+                    <label><Briefcase size={15} /> Job signal <span>OPTIONAL</span></label>
+                    <textarea className="form-textarea" value={form.jobDescription} onChange={(e) => setForm({...form, jobDescription: e.target.value})} placeholder="Paste the role, skills, or JD focus here..." rows={4} />
+                  </div>
+                  <div className="form-group">
+                    <label><User size={15} /> Candidate signal <span>OPTIONAL</span></label>
+                    <textarea className="form-textarea" value={form.resumeText} onChange={(e) => setForm({...form, resumeText: e.target.value})} placeholder="Paste your resume context here..." rows={4} />
+                  </div>
+                </div>
+
+                {error && <div className="setup-error"><AlertCircle size={16} /> {error}</div>}
+
+                <div className="setup-card-footer">
+                  <div className="setup-footer-note"><Zap size={14} /><span>Your interviewer will adapt to your answers in real time.</span></div>
+                  <button className="start-btn" onClick={handleStartCall} disabled={loading}>
+                    {loading ? <Loader2 className="animate-spin" size={19} /> : <Zap size={19} />}
+                    <span>{loading ? "INITIALIZING AGENT..." : "START VOICE INTERVIEW"}</span><ChevronRight size={17} />
+                  </button>
+                </div>
+              </section>
             </div>
           </div>
         )}

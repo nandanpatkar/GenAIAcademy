@@ -4,6 +4,43 @@
    Uses the app's existing CSS variable theme system.
    ───────────────────────────────────────────────────────────── */
 
+/* Match the desktop roadmap's simulator-like canvas on touch layouts too. */
+.roadmap-mobile-shell {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% -12%, color-mix(in srgb, var(--mshell-accent, #818cf8) 13%, transparent), transparent 48%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 92%, #05070d), var(--bg));
+}
+
+.roadmap-mobile-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.62;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--mshell-accent, #818cf8) 23%, transparent) 1px,
+    transparent 1.15px
+  );
+  background-size: 28px 28px;
+  background-position: center top;
+  mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.8) 72%, transparent 100%);
+}
+
+.roadmap-mobile-shell .mshell-header,
+.roadmap-mobile-shell .mshell-scroll {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.roadmap-mobile-shell .mshell-header {
+  backdrop-filter: blur(14px);
+}
+
 .rgm-jump-btn {
   --rgm-accent: var(--neon);
   width: 32px;

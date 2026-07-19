@@ -464,29 +464,29 @@ export default function QuizApp({ onClose }) {
 
       {quizState === "start" && (
         <div className="quiz-start-screen" style={{ maxWidth: 1200, margin: '0 auto' }}>
-          
-          <div style={{ display: 'flex', gap: 10, marginBottom: 30, borderBottom: '1px solid var(--border)', paddingBottom: 16 }}>
+          <div className="quiz-topbar">
+            <div className="quiz-topbar-brand"><span className="quiz-brand-mark"><TargetIcon size={18} /></span><span><strong>Quiz lab</strong><small>GenAI Academy</small></span></div>
+            <div className="quiz-topbar-tabs">
             <button 
-              className="quiz-btn"
-              style={{ background: activeTab === "examBank" ? 'var(--bg-secondary)' : 'transparent', color: 'var(--text-primary)', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: activeTab === "examBank" ? 600 : 400 }}
+              className={`quiz-tab ${activeTab === "examBank" ? 'active' : ''}`}
               onClick={() => setActiveTab("examBank")}
             >
-              Exam Bank
+              <span>01</span> Exam bank
             </button>
             <button 
-              className="quiz-btn"
-              style={{ background: activeTab === "setup" ? 'var(--bg-secondary)' : 'transparent', color: 'var(--text-primary)', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: activeTab === "setup" ? 600 : 400 }}
+              className={`quiz-tab ${activeTab === "setup" ? 'active' : ''}`}
               onClick={() => setActiveTab("setup")}
             >
-              Quiz Setup
+              <span>02</span> Build a quiz
             </button>
             <button 
-              className="quiz-btn"
-              style={{ background: activeTab === "history" ? 'var(--bg-secondary)' : 'transparent', color: 'var(--text-primary)', border: 'none', padding: '10px 20px', borderRadius: 8, fontWeight: activeTab === "history" ? 600 : 400 }}
+              className={`quiz-tab ${activeTab === "history" ? 'active' : ''}`}
               onClick={() => setActiveTab("history")}
             >
-              My Quizzes
+              <span>03</span> My progress
             </button>
+            </div>
+            <div className="quiz-topbar-status"><span className="quiz-status-pulse" />Practice mode</div>
           </div>
 
           {activeTab === "examBank" && <ExamPractice onStartExam={startExamQuiz} />}
@@ -715,55 +715,58 @@ export default function QuizApp({ onClose }) {
 
       {quizState === "quiz" && (
         <>
-          <div className="quiz-header" style={{ padding: '0 0 20px', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
-            <h1 style={{ fontSize: 24, margin: 0 }}>{quizConfig.name}</h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              <button className="quiz-btn quiz-btn-secondary" onClick={saveAndExit} title="Save progress and exit" style={{ padding: '8px 12px', fontSize: 13 }}>
-                <Save size={16} style={{ marginRight: 6 }} /> Save & Exit
-              </button>
-              <button className="quiz-btn quiz-btn-primary" onClick={finishTest} title="Submit quiz now" style={{ padding: '8px 12px', fontSize: 13, background: 'var(--danger)', color: 'white', borderColor: 'var(--danger)' }}>
-                <LogOut size={16} style={{ marginRight: 6 }} /> Finish Early
-              </button>
-              <div className={`quiz-timer ${timeLeft < 300 ? 'critical' : ''}`} style={{ fontSize: 20, fontWeight: 700, display: 'flex', gap: 8, alignItems: 'center' }}>
-                ⏱ {formatTime(timeLeft)}
-              </div>
+          <div className="quiz-live-header">
+            <div className="quiz-live-heading">
+              <div className="quiz-live-kicker"><span className="quiz-status-pulse" /> LIVE PRACTICE <span>•</span> {questions.length} QUESTIONS</div>
+              <h1>{quizConfig.name}</h1>
+              <p>Stay focused, trust your reasoning, and use the flag when you want a second pass.</p>
+            </div>
+            <div className="quiz-live-actions">
+              <button className="quiz-live-action" onClick={saveAndExit} title="Save progress and exit"><Save size={16} /> <span>Save & Exit</span></button>
+              <button className="quiz-live-action finish" onClick={finishTest} title="Submit quiz now"><LogOut size={16} /> <span>Finish Early</span></button>
+              <div className={`quiz-live-timer ${timeLeft < 300 ? 'critical' : ''}`}><span>TIME LEFT</span><strong>◷ {formatTime(timeLeft)}</strong></div>
             </div>
           </div>
           
-          <div className="quiz-stats-bar">
-            <div className="quiz-stat-card">
-              <div className="quiz-stat-value">{currentIndex + 1}/{questions.length}</div>
-              <div className="quiz-stat-label">Question</div>
+          <div className="quiz-live-overview">
+            <div className="quiz-stats-bar">
+              <div className="quiz-stat-card">
+                <div className="quiz-stat-value">{currentIndex + 1}<span>/{questions.length}</span></div>
+                <div className="quiz-stat-label">Current question</div>
+              </div>
+              <div className="quiz-stat-card">
+                <div className="quiz-stat-value success">{correctCount}</div>
+                <div className="quiz-stat-label">Correct</div>
+              </div>
+              <div className="quiz-stat-card">
+                <div className="quiz-stat-value danger">{wrongCount}</div>
+                <div className="quiz-stat-label">Incorrect</div>
+              </div>
             </div>
-            <div className="quiz-stat-card">
-              <div className="quiz-stat-value success">{correctCount}</div>
-              <div className="quiz-stat-label">Correct</div>
-            </div>
-            <div className="quiz-stat-card">
-              <div className="quiz-stat-value danger">{wrongCount}</div>
-              <div className="quiz-stat-label">Incorrect</div>
-            </div>
-          </div>
 
-          <div className="quiz-question-map">
-            {questions.map((_, i) => {
-              const answered = (userAnswers[i] || []).length > 0;
-              const checked = checkedQuestions.has(i);
-              const correct = checked && arraysEqual(userAnswers[i], questions[i].answer || []);
-              
-              let c = "quiz-qmap-dot";
-              if (i === currentIndex) c += " current";
-              else if (checked && correct) c += " correct-dot";
-              else if (checked && !correct) c += " incorrect-dot";
-              else if (answered) c += " answered";
-              if (flaggedQuestions.has(i)) c += " flagged-dot";
+            <div className="quiz-question-map-panel">
+              <div className="quiz-map-heading"><div><span>Question navigator</span><small>Jump to any question</small></div><div className="quiz-map-legend"><span><i className="is-current" /> Current</span><span><i className="is-answered" /> Answered</span><span><i className="is-flagged" /> Flagged</span></div></div>
+              <div className="quiz-question-map">
+                {questions.map((_, i) => {
+                  const answered = (userAnswers[i] || []).length > 0;
+                  const checked = checkedQuestions.has(i);
+                  const correct = checked && arraysEqual(userAnswers[i], questions[i].answer || []);
 
-              return (
-                <div key={i} className={c} onClick={() => setCurrentIndex(i)}>
-                  {i + 1}
-                </div>
-              )
-            })}
+                  let c = "quiz-qmap-dot";
+                  if (i === currentIndex) c += " current";
+                  else if (checked && correct) c += " correct-dot";
+                  else if (checked && !correct) c += " incorrect-dot";
+                  else if (answered) c += " answered";
+                  if (flaggedQuestions.has(i)) c += " flagged-dot";
+
+                  return (
+                    <button key={i} className={c} onClick={() => setCurrentIndex(i)} aria-label={`Go to question ${i + 1}`}>
+                      {i + 1}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
           </div>
 
           <div className="quiz-progress-container">
@@ -783,7 +786,7 @@ export default function QuizApp({ onClose }) {
             const diffLabel = q.difficulty === 'E' ? 'Easy' : q.difficulty === 'I' ? 'Intense' : 'Medium';
 
             return (
-              <div className="quiz-question-card">
+              <div className="quiz-question-card quiz-live-question-card">
                 <div className="quiz-question-meta">
                   <span className="quiz-meta-tag number">Q{currentIndex + 1}</span>
                   {q.difficulty && <span className={`quiz-meta-tag difficulty-${q.difficulty}`}>{diffLabel}</span>}
@@ -791,7 +794,7 @@ export default function QuizApp({ onClose }) {
                   {q.multi && <span className="quiz-meta-tag multi">Select {q.multiCount || 2}</span>}
                 </div>
                 
-                <div className="quiz-question-text">
+                <div className="quiz-question-text quiz-question-prompt">
                   {renderFormattedText(q.q || q.question)}
                 </div>
 
@@ -828,8 +831,8 @@ export default function QuizApp({ onClose }) {
                   </div>
                 )}
 
-                <div className="quiz-nav-buttons" style={{ position: 'relative' }}>
-                  <div style={{ display: 'flex', gap: 10 }}>
+                <div className="quiz-nav-buttons quiz-question-actions">
+                  <div className="quiz-question-secondary-actions">
                     <button className="quiz-btn quiz-btn-secondary" onClick={prevQuestion} disabled={currentIndex === 0}>
                       ← Previous
                     </button>
@@ -849,7 +852,7 @@ export default function QuizApp({ onClose }) {
                       {flaggedQuestions.has(currentIndex) ? 'Flagged' : 'Flag for Review'}
                     </button>
                   </div>
-                  <div style={{ display: 'flex', gap: 10 }}>
+                  <div className="quiz-question-primary-actions">
                     {isChecked && quizConfig.enableAiTutor && (
                       <button className="quiz-btn" style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', border: '1px solid var(--border)' }} onClick={() => setAiChatOpen(!aiChatOpen)}>
                         <Bot size={16} style={{ marginRight: 6 }} /> Ask AI Tutor

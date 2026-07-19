@@ -5,11 +5,11 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Plus, Search, FolderCode, GitBranch, FileText, MoreVertical,
   Trash2, Copy, Edit2, Clock, Calendar, SortAsc, ChevronRight,
-  Terminal, Upload, ArrowLeft
+  Terminal, Upload, ArrowLeft, Sparkles, Code2, GitMerge, Bot, Activity
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useProjects } from '../../contexts/ProjectsContext';
@@ -183,6 +183,63 @@ function RenameModal({ project, onClose, onRename }) {
   );
 }
 
+function ProjectHomeVisual({ projectCount, fileCount }) {
+  const shouldReduceMotion = useReducedMotion();
+  const stages = [
+    { label: 'Plan', icon: <Sparkles size={13} /> },
+    { label: 'Build', icon: <Code2 size={13} /> },
+    { label: 'Ship', icon: <GitMerge size={13} /> },
+  ];
+
+  return (
+    <div className="project-home-visual" role="img" aria-label="Animated project workspace showing plan, build, and ship stages">
+      <div className="project-home-visual-grid" />
+      <motion.div
+        className="project-home-orbit project-home-orbit-one"
+        animate={shouldReduceMotion ? { rotate: 0 } : { rotate: 360 }}
+        transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
+      />
+      <motion.div
+        className="project-home-orbit project-home-orbit-two"
+        animate={shouldReduceMotion ? { rotate: 0 } : { rotate: -360 }}
+        transition={{ duration: 17, repeat: Infinity, ease: 'linear' }}
+      />
+
+      <motion.div
+        className="project-home-core"
+        animate={shouldReduceMotion
+          ? { scale: 1 }
+          : { scale: [1, 1.04, 1], boxShadow: ['0 0 0 0 rgba(var(--neon-rgb, 0, 255, 136), 0)', '0 0 34px 4px rgba(var(--neon-rgb, 0, 255, 136), .16)', '0 0 0 0 rgba(var(--neon-rgb, 0, 255, 136), 0)'] }}
+        transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <Bot size={22} />
+        <span>workspace</span>
+        <strong>ready</strong>
+      </motion.div>
+
+      <div className="project-home-stage-list">
+        {stages.map((stage, index) => (
+          <motion.div
+            className="project-home-stage"
+            key={stage.label}
+            animate={shouldReduceMotion ? { y: 0, opacity: 1 } : { y: [0, -5, 0], opacity: [0.72, 1, 0.72] }}
+            transition={{ duration: 3.4, delay: index * 0.55, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <span className="project-home-stage-icon">{stage.icon}</span>
+            <span>{stage.label}</span>
+            <i />
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="project-home-visual-footer">
+        <span><Activity size={12} /> live workspace</span>
+        <span>{projectCount} projects · {fileCount} files</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ProjectsDashboard({ onClose }) {
   const { user } = useAuth();
   const { openProject, setProjectsList } = useProjects();
@@ -276,6 +333,8 @@ export default function ProjectsDashboard({ onClose }) {
       return new Date(b[sortBy]) - new Date(a[sortBy]);
     });
 
+  const totalFiles = projects.reduce((sum, project) => sum + (project.file_count || 0), 0);
+
   return (
     <div className="projects-root" id="projects-dashboard-root">
       <div className="projects-dashboard">
@@ -318,6 +377,20 @@ export default function ProjectsDashboard({ onClose }) {
               <Plus size={14} /> New Project
             </button>
           </div>
+        </div>
+
+        <div className="project-home-hero">
+          <div className="project-home-hero-copy">
+            <div className="project-home-eyebrow"><span /> PROJECT HOME <span className="project-home-eyebrow-line" /></div>
+            <h1>Turn a blank canvas into <em>something real.</em></h1>
+            <p>Your ideas, code, and shipping workflow in one focused workspace.</p>
+            <div className="project-home-signals">
+              <span><strong>{projects.length}</strong> projects</span>
+              <span><strong>{totalFiles}</strong> files in orbit</span>
+              <span><span className="project-home-live-dot" /> cloud synced</span>
+            </div>
+          </div>
+          <ProjectHomeVisual projectCount={projects.length} fileCount={totalFiles} />
         </div>
 
         {/* Content */}

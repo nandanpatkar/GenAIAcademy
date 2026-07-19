@@ -34,10 +34,11 @@ export default function MobileShell({
   accentColor,
   rightSlot,
   scrollPadBottom = 84,
+  className = "",
   children,
 }) {
   return (
-    <div className="mshell">
+    <div className={`mshell ${className}`.trim()}>
       <div
         className="mshell-header"
         style={accentColor ? { "--mshell-accent": accentColor } : undefined}

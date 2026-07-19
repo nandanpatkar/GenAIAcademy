@@ -18,6 +18,8 @@ const AI_SETTINGS_COOKIES = {
   azureKey: 'genai_azure_key',
 };
 
+const personalAiStorageKey = (name, userId) => `genai_${userId}_${name}`;
+
 function setAiSettingsCookie(name, value) {
   const secure = window.location.protocol === 'https:' ? '; Secure' : '';
   if (!value) {
@@ -35,10 +37,12 @@ export const AuthProvider = ({ children }) => {
   const [adminsList, setAdminsList] = useState(['nandanpatkar14114@gmail.com']);
   const [lockedUsers, setLockedUsers] = useState([]);
   const [allowAimlForAll, setAllowAimlForAll] = useState(false);
-  const [geminiKey, setGeminiKey] = useState(() => localStorage.getItem('genai_gemini_key') || "");
-  const [aiProvider, setAiProvider] = useState(() => localStorage.getItem('genai_ai_provider') || "gemini");
-  const [azureEndpoint, setAzureEndpoint] = useState(() => localStorage.getItem('genai_azure_endpoint') || "");
-  const [azureKey, setAzureKey] = useState(() => localStorage.getItem('genai_azure_key') || "");
+  // AI credentials are personal settings. They are intentionally scoped to
+  // the signed-in user and never fall back to the Admin Panel's global row.
+  const [geminiKey, setGeminiKey] = useState("");
+  const [aiProvider, setAiProvider] = useState("gemini");
+  const [azureEndpoint, setAzureEndpoint] = useState("");
+  const [azureKey, setAzureKey] = useState("");
   const [isLocked, setIsLocked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isAdminView, setIsAdminView] = useState(() => localStorage.getItem('genai_isAdminView') !== 'false'); // Default to true if not set
@@ -46,45 +50,54 @@ export const AuthProvider = ({ children }) => {
 
   const updateGeminiKey = (key) => {
     setGeminiKey(key);
-    localStorage.setItem('genai_gemini_key', key);
+    if (user?.id) localStorage.setItem(personalAiStorageKey('gemini_key', user.id), key);
     setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, key);
   };
 
   const updateAiProvider = (provider) => {
     setAiProvider(provider);
-    localStorage.setItem('genai_ai_provider', provider);
+    if (user?.id) localStorage.setItem(personalAiStorageKey('ai_provider', user.id), provider);
     setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, provider);
   };
 
   const updateAzureEndpoint = (endpoint) => {
     setAzureEndpoint(endpoint);
-    localStorage.setItem('genai_azure_endpoint', endpoint);
+    if (user?.id) localStorage.setItem(personalAiStorageKey('azure_endpoint', user.id), endpoint);
     setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, endpoint);
   };
 
   const updateAzureKey = (key) => {
     setAzureKey(key);
-    localStorage.setItem('genai_azure_key', key);
+    if (user?.id) localStorage.setItem(personalAiStorageKey('azure_key', user.id), key);
     setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, key);
   };
 
-  // Migrate any pre-existing localStorage settings (from before this cookie
-  // bridge existed) so returning users don't have to re-enter their key for
-  // Workspace Notes to pick it up.
+  // Load only this user's personal AI settings. Clearing the generic cookie
+  // on logout prevents one browser user from being reused by another.
   useEffect(() => {
-    if (localStorage.getItem('genai_gemini_key')) {
-      setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, localStorage.getItem('genai_gemini_key'));
+    if (!user?.id) {
+      setGeminiKey("");
+      setAiProvider("gemini");
+      setAzureEndpoint("");
+      setAzureKey("");
+      Object.values(AI_SETTINGS_COOKIES).forEach((name) => setAiSettingsCookie(name, ""));
+      return;
     }
-    if (localStorage.getItem('genai_ai_provider')) {
-      setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, localStorage.getItem('genai_ai_provider'));
-    }
-    if (localStorage.getItem('genai_azure_endpoint')) {
-      setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, localStorage.getItem('genai_azure_endpoint'));
-    }
-    if (localStorage.getItem('genai_azure_key')) {
-      setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, localStorage.getItem('genai_azure_key'));
-    }
-  }, []);
+
+    const personalGeminiKey = localStorage.getItem(personalAiStorageKey('gemini_key', user.id)) || "";
+    const personalProvider = localStorage.getItem(personalAiStorageKey('ai_provider', user.id)) || "gemini";
+    const personalAzureEndpoint = localStorage.getItem(personalAiStorageKey('azure_endpoint', user.id)) || "";
+    const personalAzureKey = localStorage.getItem(personalAiStorageKey('azure_key', user.id)) || "";
+
+    setGeminiKey(personalGeminiKey);
+    setAiProvider(personalProvider);
+    setAzureEndpoint(personalAzureEndpoint);
+    setAzureKey(personalAzureKey);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, personalGeminiKey);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, personalProvider);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, personalAzureEndpoint);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, personalAzureKey);
+  }, [user?.id]);
 
   useEffect(() => {
     const fetchGlobalConfig = async () => {
@@ -103,17 +116,8 @@ export const AuthProvider = ({ children }) => {
           if (data.paths_data.admins) setAdminsList(data.paths_data.admins);
           if (data.paths_data.locked) setLockedUsers(data.paths_data.locked);
           if (data.paths_data.allowAimlForAll !== undefined) setAllowAimlForAll(data.paths_data.allowAimlForAll);
-          // Only use global key if local key is empty
-          const localKey = localStorage.getItem('genai_gemini_key');
-          if (data.paths_data.geminiKey && !localKey) {
-            setGeminiKey(data.paths_data.geminiKey);
-          }
-          const localProvider = localStorage.getItem('genai_ai_provider');
-          if (data.paths_data.aiProvider && !localProvider) setAiProvider(data.paths_data.aiProvider);
-          const localAzureEndpoint = localStorage.getItem('genai_azure_endpoint');
-          if (data.paths_data.azureEndpoint && !localAzureEndpoint) setAzureEndpoint(data.paths_data.azureEndpoint);
-          const localAzureKey = localStorage.getItem('genai_azure_key');
-          if (data.paths_data.azureKey && !localAzureKey) setAzureKey(data.paths_data.azureKey);
+          // AI keys in the Admin Panel are deliberately not loaded here.
+          // Every user must configure their own credentials in Settings.
         }
       } catch (e) {
         console.warn("Global config not found, using defaults");

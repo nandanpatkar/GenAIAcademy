@@ -1,95 +1,36 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import { 
-  Users, Shield, Lock, Unlock, BarChart3, Search, UserPlus, X, Trash2, 
-  ShieldCheck, Activity, Globe, Map, TrendingUp, Clock, CheckCircle2, 
-  ChevronRight, UploadCloud, FileJson, FileText, Download, Database, 
-  AlertCircle, Copy, Cpu, Layout, Server, Sparkles, ExternalLink,
-  Zap, HardDrive, Terminal, RefreshCw, Filter, Eye, EyeOff
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Activity, AlertCircle, CheckCircle2, ChevronRight, Clock, Database, Download,
+  Eye, EyeOff, ExternalLink, FileJson, FileText, Layout, Lock, Map, RefreshCw,
+  Search, Shield, ShieldCheck, Sparkles, Terminal, Trash2, Unlock, UploadCloud,
+  UserPlus, Users, X, Zap
 } from "lucide-react";
 import { supabase } from "../config/supabaseClient";
 import { useAuth } from "../contexts/AuthContext";
 import "../styles/global.css";
+import "../styles/admin.css";
 
-/* --- Tiny Component: SVG Line Chart (Enhanced) --- */
 const SimpleLineChart = ({ data, color }) => {
   const max = Math.max(...data, 10);
-  const height = 100;
   const width = 300;
-  const points = data.map((d, i) => `${(i / (data.length - 1)) * width},${height - (d / max) * height}`).join(' ');
-  const areaPoints = `0,${height} ${points} ${width},${height}`;
-  
+  const height = 100;
+  const points = data.map((value, index) => `${(index / Math.max(data.length - 1, 1)) * width},${height - (value / max) * height}`).join(" ");
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="admin-svg-chart" style={{ overflow: 'visible' }}>
-      <defs>
-        <linearGradient id={`grad-${color}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
-          <stop offset="100%" stopColor={color} stopOpacity="0" />
-        </linearGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-      </defs>
-      <path d={`M ${areaPoints} Z`} fill={`url(#grad-${color})`} />
-      <polyline 
-        points={points} 
-        fill="none" 
-        stroke={color} 
-        strokeWidth="3" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        style={{ filter: 'url(#glow)', transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)' }} 
-      />
-      {data.map((d, i) => (
-        <circle 
-          key={i}
-          cx={(i / (data.length - 1)) * width} 
-          cy={height - (d / max) * height} 
-          r="4" 
-          fill="#fff" 
-          stroke={color} 
-          strokeWidth="2"
-          className="chart-dot"
-        />
-      ))}
+    <svg viewBox={`0 0 ${width} ${height}`} className="admin-line-chart" preserveAspectRatio="none" aria-label="Activity trend chart">
+      <defs><linearGradient id="admin-chart-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={color} stopOpacity=".25" /><stop offset="100%" stopColor={color} stopOpacity="0" /></linearGradient></defs>
+      <path d={`M 0 ${height} L ${points} L ${width} ${height} Z`} fill="url(#admin-chart-fill)" />
+      <polyline points={points} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      {data.map((value, index) => <circle key={index} cx={(index / Math.max(data.length - 1, 1)) * width} cy={height - (value / max) * height} r="3" fill="var(--admin-surface)" stroke={color} strokeWidth="2" />)}
     </svg>
   );
 };
 
-/* --- Tiny Component: SVG Doughnut (Enhanced) --- */
-const SimpleDoughnut = ({ percent, color, label }) => {
-  const radius = 35;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percent / 100) * circumference;
-  return (
-    <div className="admin-doughnut-wrapper">
-      <div className="doughnut-container">
-        <svg viewBox="0 0 100 100" className="admin-svg-doughnut">
-          <circle cx="50" cy="50" r={radius} stroke="rgba(255,255,255,0.03)" strokeWidth="10" fill="none" />
-          <circle 
-            cx="50" cy="50" r={radius} 
-            stroke={color} strokeWidth="10" fill="none" 
-            strokeDasharray={circumference} 
-            strokeDashoffset={offset} 
-            strokeLinecap="round"
-            transform="rotate(-90 50 50)" 
-            style={{ 
-              transition: 'stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1)', 
-              filter: `drop-shadow(0 0 8px ${color}66)` 
-            }} 
-          />
-        </svg>
-        <div className="doughnut-content">
-          <span className="doughnut-value" style={{ color: color }}>{percent}%</span>
-        </div>
-      </div>
-      <span className="doughnut-label">{label}</span>
-    </div>
-  );
-};
-
 export default function AdminManagement({ onClose, pathsData, setPathsData }) {
-  const { adminsList, setAdminsList, lockedUsers, setLockedUsers, allowAimlForAll, setAllowAimlForAll, geminiKey, setGeminiKey, aiProvider, updateAiProvider, azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey } = useAuth();
+  const {
+    adminsList, setAdminsList, lockedUsers, setLockedUsers, allowAimlForAll,
+    setAllowAimlForAll, geminiKey, updateGeminiKey, aiProvider, updateAiProvider,
+    azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey
+  } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -100,655 +41,190 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
   const [newAzureKey, setNewAzureKey] = useState(azureKey || "");
   const [showKey, setShowKey] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
-
-  // Content Studio State
   const [dragActive, setDragActive] = useState(false);
   const [errorInfo, setErrorInfo] = useState(null);
   const [successInfo, setSuccessInfo] = useState(null);
-  const [activeImportTab, setActiveImportTab] = useState("file"); 
+  const [activeImportTab, setActiveImportTab] = useState("file");
   const [rawPasteContent, setRawPasteContent] = useState("");
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  useEffect(() => { fetchUsers(); }, []);
 
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('user_curriculum')
-        .select('*')
-        .not('id', 'eq', '00000000-0000-0000-0000-000000000000')
-        .order('updated_at', { ascending: false });
+      const { data, error } = await supabase.from("user_curriculum").select("*").not("id", "eq", "00000000-0000-0000-0000-000000000000").order("updated_at", { ascending: false });
       if (error) throw error;
       setUsers(data || []);
-    } catch (err) {
-      console.error("Error fetching users:", err);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const updateGlobalConfig = async (newAdmins, newLocked, newAllowAiml, newKey, newProv, newAzEnd, newAzKey) => {
+  const updateGlobalConfig = async (newAdmins, newLocked, newAllowAiml, newKey, newProvider, newEndpoint, newAzureApiKey) => {
     try {
-      await supabase
-        .from('user_curriculum')
-        .upsert({
-          id: '00000000-0000-0000-0000-000000000000',
-          paths_data: { 
-            admins: newAdmins, 
-            locked: newLocked, 
-            allowAimlForAll: newAllowAiml,
-            geminiKey: newKey !== undefined ? newKey : geminiKey,
-            aiProvider: newProv !== undefined ? newProv : aiProvider,
-            azureEndpoint: newAzEnd !== undefined ? newAzEnd : azureEndpoint,
-            azureKey: newAzKey !== undefined ? newAzKey : azureKey,
-            updated_at: new Date().toISOString() 
-          }
-        });
-    } catch (err) { console.error(err); }
+      await supabase.from("user_curriculum").upsert({
+        id: "00000000-0000-0000-0000-000000000000",
+        paths_data: {
+          admins: newAdmins, locked: newLocked, allowAimlForAll: newAllowAiml,
+          geminiKey: newKey !== undefined ? newKey : geminiKey,
+          aiProvider: newProvider !== undefined ? newProvider : aiProvider,
+          azureEndpoint: newEndpoint !== undefined ? newEndpoint : azureEndpoint,
+          azureKey: newAzureApiKey !== undefined ? newAzureApiKey : azureKey,
+          updated_at: new Date().toISOString()
+        }
+      });
+    } catch (error) {
+      console.error("Could not update global admin config:", error);
+    }
   };
 
   const stats = useMemo(() => {
     const now = new Date();
-    const velocity = Array(7).fill(0).map((_, i) => {
-      const d = new Date();
-      d.setDate(now.getDate() - (6 - i));
-      return users.filter(u => new Date(u.updated_at).toDateString() === d.toDateString()).length;
+    const activityVelocity = Array.from({ length: 7 }, (_, index) => {
+      const date = new Date();
+      date.setDate(now.getDate() - (6 - index));
+      return users.filter(user => new Date(user.updated_at).toDateString() === date.toDateString()).length;
     });
-
     return {
       totalUsers: users.length,
       activeAdmins: adminsList.length,
-      lockedCount: lockedUsers.length,
-      totalNodes: Object.values(pathsData || {}).reduce((acc, p) => acc + (p.nodes?.length || 0), 0),
+      totalNodes: Object.values(pathsData || {}).reduce((total, path) => total + (path.nodes?.length || 0), 0),
       totalPaths: Object.keys(pathsData || {}).length,
-      activityVelocity: velocity,
+      activityVelocity,
       recentActivity: users.slice(0, 10)
     };
-  }, [users, adminsList, lockedUsers, pathsData]);
+  }, [users, adminsList, pathsData]);
 
-  const pathCounts = ['ds', 'genai', 'agentic'].map(path => {
-    const count = users.filter(u => u.paths_data && u.paths_data[path]).length;
+  const pathCounts = ["ds", "genai", "agentic"].map(path => {
+    const count = users.filter(user => user.paths_data && user.paths_data[path]).length;
     return { path, count, percent: stats.totalUsers > 0 ? (count / stats.totalUsers) * 100 : 0 };
   });
-
-  /* --- Operations Logic --- */
-  const filteredUsers = users.filter(u => 
-    u.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    (u.paths_data?.title || "").toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredUsers = users.filter(user => user.id.toLowerCase().includes(searchQuery.toLowerCase()) || (user.paths_data?.title || "").toLowerCase().includes(searchQuery.toLowerCase()));
 
   const handleToggleLock = async (userId) => {
-    let newLocked = lockedUsers.includes(userId) ? lockedUsers.filter(id => id !== userId) : [...lockedUsers, userId];
-    setLockedUsers(newLocked); await updateGlobalConfig(adminsList, newLocked, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
+    const nextLocked = lockedUsers.includes(userId) ? lockedUsers.filter(id => id !== userId) : [...lockedUsers, userId];
+    setLockedUsers(nextLocked);
+    await updateGlobalConfig(adminsList, nextLocked, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
-
   const handleAddAdmin = async () => {
-    if (!newAdminEmail || adminsList.includes(newAdminEmail)) return;
-    const newAdmins = [...adminsList, newAdminEmail];
-    setAdminsList(newAdmins); setNewAdminEmail(""); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
+    const email = newAdminEmail.trim();
+    if (!email || adminsList.includes(email)) return;
+    const nextAdmins = [...adminsList, email];
+    setAdminsList(nextAdmins); setNewAdminEmail("");
+    await updateGlobalConfig(nextAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
-
   const handleRemoveAdmin = async (email) => {
     if (adminsList.length <= 1) return;
-    const newAdmins = adminsList.filter(e => e !== email);
-    setAdminsList(newAdmins); await updateGlobalConfig(newAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
+    const nextAdmins = adminsList.filter(item => item !== email);
+    setAdminsList(nextAdmins);
+    await updateGlobalConfig(nextAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
-
   const handleToggleAimlAccess = async () => {
-    const newVal = !allowAimlForAll;
-    setAllowAimlForAll(newVal);
-    await updateGlobalConfig(adminsList, lockedUsers, newVal, geminiKey, aiProvider, azureEndpoint, azureKey);
+    const nextValue = !allowAimlForAll;
+    setAllowAimlForAll(nextValue);
+    await updateGlobalConfig(adminsList, lockedUsers, nextValue, geminiKey, aiProvider, azureEndpoint, azureKey);
   };
-
-  const handleUpdateGeminiKey = async () => {
-    setGeminiKey(newGeminiKey);
-    updateAiProvider(newAiProvider);
-    updateAzureEndpoint(newAzureEndpoint);
-    updateAzureKey(newAzureKey);
+  const handleUpdateAiConfig = async () => {
+    updateGeminiKey(newGeminiKey); updateAiProvider(newAiProvider); updateAzureEndpoint(newAzureEndpoint); updateAzureKey(newAzureKey);
     await updateGlobalConfig(adminsList, lockedUsers, allowAimlForAll, newGeminiKey, newAiProvider, newAzureEndpoint, newAzureKey);
-    setSuccessInfo("Infrastructure: AI Configuration updated.");
+    setSuccessInfo("AI configuration saved.");
   };
-
   const handleExportRegistry = () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(users, null, 2));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href",     dataStr);
-    downloadAnchorNode.setAttribute("download", `genai_registry_export_${new Date().toISOString().split('T')[0]}.json`);
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-  };
-
-  /* --- Content Studio Logic --- */
-  const handleDrag = (e) => {
-    e.preventDefault(); e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") setDragActive(true);
-    else if (e.type === "dragleave") setDragActive(false);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault(); e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
-  };
-
-  const handleFile = async (file) => {
-    setErrorInfo(null); setSuccessInfo(null);
-    const text = await file.text();
-    const ext = file.name.split('.').pop().toLowerCase();
-    if (ext === "json") {
-      try {
-        const json = JSON.parse(text);
-        if (json.nodes || json.id || json.title) importPath(json);
-        else if (typeof json === "object") {
-          let count = 0; let newPathsData = { ...pathsData };
-          for (const key of Object.keys(json)) { newPathsData[key] = json[key]; count++; }
-          setPathsData(newPathsData); setSuccessInfo(`Forge: Processed ${count} paths.`);
-        }
-      } catch (err) { setErrorInfo("JSON Error: " + err.message); }
-    } else if (ext === "md" || ext === "markdown" || ext === "txt") {
-      try { importPath(parseMarkdown(text, file.name)); } catch (err) { setErrorInfo(err.message); }
-    }
+    const anchor = document.createElement("a");
+    anchor.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(users, null, 2));
+    anchor.download = `nucleus-registry-${new Date().toISOString().split("T")[0]}.json`;
+    document.body.appendChild(anchor); anchor.click(); anchor.remove();
   };
 
   const parseMarkdown = (text, filename) => {
-    const newPath = { id: `path-${Date.now()}`, title: filename.replace('.md', ''), color: "#8b5cf6", nodes: [] };
+    const path = { id: `path-${Date.now()}`, title: filename.replace(/\.(md|markdown)$/i, ""), color: "#8b5cf6", nodes: [] };
     let currentNode = null; let currentModule = null;
-    const lines = text.split('\n');
-    for (let line of lines) {
-      line = line.trim(); if (!line) continue;
-      if (line.startsWith('# ')) newPath.title = line.substring(2).trim();
-      else if (line.startsWith('## ')) {
-        currentNode = { id: `node-${Date.now()}`, title: line.substring(3).trim(), modules: [] };
-        newPath.nodes.push(currentNode); currentModule = null;
-      } else if (line.startsWith('### ')) {
-        if (!currentNode) { currentNode = { id: `node-${Date.now()}`, title: "Module", modules: [] }; newPath.nodes.push(currentNode); }
-        currentModule = { id: `mod-${Date.now()}`, title: line.substring(4).trim(), subtopics: [], status: "pending" };
-        currentNode.modules.push(currentModule);
-      } else if (line.startsWith('- ') || line.startsWith('* ')) {
-        if (!currentModule) {
-           currentModule = { id: `mod-${Date.now()}`, title: "Unit", subtopics: [], status: "pending" };
-           if (currentNode) currentNode.modules.push(currentModule);
-        }
-        currentModule.subtopics.push({ title: line.substring(2).trim(), status: "pending", id: `topic-${Math.random().toString(36).substr(2, 5)}` });
-      }
-    }
-    return newPath;
+    text.split("\n").forEach(rawLine => {
+      const line = rawLine.trim(); if (!line) return;
+      if (line.startsWith("# ")) path.title = line.slice(2).trim();
+      else if (line.startsWith("## ")) { currentNode = { id: `node-${Date.now()}-${path.nodes.length}`, title: line.slice(3).trim(), modules: [] }; path.nodes.push(currentNode); currentModule = null; }
+      else if (line.startsWith("### ")) { if (!currentNode) { currentNode = { id: `node-${Date.now()}`, title: "Module", modules: [] }; path.nodes.push(currentNode); } currentModule = { id: `mod-${Date.now()}-${currentNode.modules.length}`, title: line.slice(4).trim(), subtopics: [], status: "pending" }; currentNode.modules.push(currentModule); }
+      else if (line.startsWith("- ") || line.startsWith("* ")) { if (!currentModule) { currentModule = { id: `mod-${Date.now()}`, title: "Unit", subtopics: [], status: "pending" }; if (currentNode) currentNode.modules.push(currentModule); } currentModule.subtopics.push({ id: `topic-${Math.random().toString(36).slice(2, 7)}`, title: line.slice(2).trim(), status: "pending" }); }
+    });
+    return path;
   };
-
-  const importPath = (pathObj) => {
-    const id = pathObj.id || `path-${Date.now()}`;
-    const cleanPath = { ...pathObj, id, title: pathObj.title || "Untitled Path" };
-    setPathsData(prev => ({ ...prev, [id]: cleanPath }));
-    setSuccessInfo(`Forge: Injected path "${cleanPath.title}"`);
+  const importPath = (pathObject) => {
+    const path = { ...pathObject, id: pathObject.id || `path-${Date.now()}`, title: pathObject.title || "Untitled path" };
+    setPathsData(previous => ({ ...previous, [path.id]: path }));
+    setSuccessInfo(`Added “${path.title}” to the roadmap.`);
   };
-
+  const handleFile = async file => {
+    setErrorInfo(null); setSuccessInfo(null);
+    try {
+      const text = await file.text(); const extension = file.name.split(".").pop().toLowerCase();
+      if (extension === "json") {
+        const json = JSON.parse(text);
+        if (json.nodes || json.id || json.title) importPath(json);
+        else if (json && typeof json === "object") { setPathsData(previous => ({ ...previous, ...json })); setSuccessInfo(`Added ${Object.keys(json).length} paths to the roadmap.`); }
+      } else if (["md", "markdown", "txt"].includes(extension)) importPath(parseMarkdown(text, file.name));
+      else setErrorInfo("Please choose a JSON, Markdown, or text file.");
+    } catch (error) { setErrorInfo(`Could not read this blueprint: ${error.message}`); }
+  };
+  const handleDrop = event => { event.preventDefault(); setDragActive(false); if (event.dataTransfer.files?.[0]) handleFile(event.dataTransfer.files[0]); };
+  const handleDrag = event => { event.preventDefault(); if (event.type === "dragleave") setDragActive(false); else setDragActive(true); };
   const handlePasteProcess = () => {
     setErrorInfo(null); setSuccessInfo(null);
-    if (!rawPasteContent.trim()) return setErrorInfo("Payload required.");
-    const trimmed = rawPasteContent.trim();
-    if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
-      try { importPath(JSON.parse(trimmed)); } catch (e) { setErrorInfo(e.message); }
-    } else {
-      try { importPath(parseMarkdown(trimmed, "Pasted Blueprint.md")); } catch (e) { setErrorInfo(e.message); }
-    }
+    if (!rawPasteContent.trim()) return setErrorInfo("Paste a blueprint before processing.");
+    try { const value = rawPasteContent.trim(); importPath(value.startsWith("{") || value.startsWith("[") ? JSON.parse(value) : parseMarkdown(value, "Pasted blueprint.md")); } catch (error) { setErrorInfo(error.message); }
   };
-
-  const downloadSample = (type) => {
-    let content = type === 'md' ? "# AI Roadmap\n## Theory\n### Basics\n- Introduction" : JSON.stringify({ title: "Sample", nodes: [] }, null, 2);
-    const b = new Blob([content], { type: "text/plain" });
-    const u = URL.createObjectURL(b); const a = document.createElement('a');
-    a.href = u; a.download = `sample.${type}`; a.click(); URL.revokeObjectURL(u);
+  const downloadSample = type => {
+    const content = type === "md" ? "# AI Roadmap\n## Theory\n### Basics\n- Introduction" : JSON.stringify({ title: "Sample path", nodes: [] }, null, 2);
+    const anchor = document.createElement("a"); anchor.href = URL.createObjectURL(new Blob([content], { type: "text/plain" })); anchor.download = `sample.${type}`; anchor.click();
   };
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: <Activity size={14} /> },
-    { id: 'users', label: 'Identities', icon: <Users size={14} /> },
-    { id: 'infra', label: 'Infrastructure', icon: <Terminal size={14} /> },
-    { id: 'forge', label: 'Forge', icon: <Zap size={14} /> }
+    { id: "overview", label: "Overview", icon: <Activity size={15} /> },
+    { id: "users", label: "People", icon: <Users size={15} /> },
+    { id: "infra", label: "Infrastructure", icon: <Terminal size={15} /> },
+    { id: "forge", label: "Content forge", icon: <Zap size={15} /> }
   ];
+  const currentTab = tabs.find(tab => tab.id === activeTab) || tabs[0];
+  const pageCopy = {
+    overview: ["Workspace overview", "Good morning, operator.", "A quick read on your learning platform, access, and content health."],
+    users: ["People", "Identity directory", "Review learner accounts and keep access in good standing."],
+    infra: ["Configuration", "Infrastructure", "Manage the services and permissions that power the workspace."],
+    forge: ["Content operations", "Content forge", "Bring new roadmap structures into the platform with confidence."]
+  }[activeTab];
+  const openTab = tab => { setActiveTab(tab); setErrorInfo(null); setSuccessInfo(null); };
+  const displayDate = new Intl.DateTimeFormat("en", { weekday: "long", month: "long", day: "numeric" }).format(new Date());
 
   return (
-    <div className="admin-page unified-dashboard">
-      <div className="dashboard-bg-glow" />
-      
-      <header className="admin-header sticky-header">
-        <div className="admin-header-left">
-          <div className="admin-logo-orb">
-             <Shield size={24} className="admin-shield" />
-             <div className="orb-pulse-anim" />
-          </div>
-          <div>
-            <h1>Command Center</h1>
-            <p>Unified ecosystem intelligence & resource engineering.</p>
-          </div>
-        </div>
-        <div className="header-actions">
-           <div className="infrastructure-status-pill">
-              <div className="status-dot pulsing" />
-              <span>Network Active</span>
-           </div>
-           <button className="admin-refresh-btn" onClick={fetchUsers} title="Sync Real-time Data">
-              <RefreshCw size={16} className={loading ? "spin" : ""} />
-           </button>
-           <button className="admin-close-btn" onClick={onClose}><X size={18} /></button>
-        </div>
-      </header>
+    <div className="admin-redesign">
+      <aside className="admin-rail">
+        <div className="admin-brand"><div className="admin-brand-mark"><ShieldCheck size={19} /></div><div><strong>Nucleus</strong><span>Admin workspace</span></div></div>
+        <div className="admin-rail-label">Manage</div>
+        <nav className="admin-rail-nav" aria-label="Admin sections">{tabs.map(tab => <button key={tab.id} className={`admin-rail-item ${activeTab === tab.id ? "active" : ""}`} onClick={() => openTab(tab.id)}><span className="admin-rail-icon">{tab.icon}</span><span>{tab.label}</span>{tab.id === "users" && <span className="admin-rail-count">{stats.totalUsers}</span>}</button>)}</nav>
+        <div className="admin-rail-spacer" />
+        <div className="admin-rail-status"><div className="admin-status-heading"><span className="admin-live-dot" />All systems normal</div><p>Last synced just now</p><div className="admin-rail-status-line"><span>Workspace</span><strong>Production</strong></div></div>
+        <button className="admin-back-button" onClick={onClose}><ChevronRight size={15} /><span>Back to workspace</span></button>
+      </aside>
 
-      <nav className="admin-tabs">
-        {tabs.map(tab => (
-          <button 
-            key={tab.id}
-            className={`admin-tab-item ${activeTab === tab.id ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.icon}
-            <span>{tab.label}</span>
-          </button>
-        ))}
-      </nav>
+      <div className="admin-workspace">
+        <header className="admin-topbar"><div className="admin-breadcrumb"><span>Admin</span><ChevronRight size={13} /><strong>{currentTab.label}</strong></div><div className="admin-topbar-actions"><div className="admin-network-status"><span className="admin-live-dot" />Live data</div><button className="admin-icon-button" onClick={fetchUsers} title="Refresh data"><RefreshCw size={16} className={loading ? "spin" : ""} /></button><button className="admin-icon-button close" onClick={onClose} title="Close admin"><X size={17} /></button></div></header>
+        <main className="admin-main-scroll">
+          <div className="admin-page-heading"><div><span className="admin-eyebrow">{pageCopy[0]}</span><h1>{pageCopy[1]}</h1><p>{pageCopy[2]}</p></div><span className="admin-date-label">{displayDate}</span></div>
 
-      <main className="admin-content scrolling-layout">
-        {activeTab === 'overview' && (
-          <div className="tab-content-fade">
-            <section className="dashboard-section metrics-section">
-              <div className="admin-stats-grid">
-                  {[
-                    { label: 'Total Identities', value: stats.totalUsers, icon: <Users />, color: 'var(--neon)', trend: '+12%' },
-                    { label: 'Deployed Paths', value: stats.totalPaths, icon: <Map />, color: '#3b82f6', trend: 'Live' },
-                    { label: 'Ecosystem Nodes', value: stats.totalNodes, icon: <Cpu />, color: '#a855f7', trend: 'Synced' },
-                    { label: 'Admin Authority', value: stats.activeAdmins, icon: <ShieldCheck />, color: '#fbbf24', trend: 'Secured' }
-                  ].map((s, i) => (
-                    <div key={i} className="admin-stat-card" style={{ "--stat-color": s.color }}>
-                      <div className="stat-card-header">
-                        <div className="stat-icon-wrapper">{React.cloneElement(s.icon, { size: 18 })}</div>
-                        <span className="stat-trend">{s.trend}</span>
-                      </div>
-                      <div className="stat-card-body">
-                        <h3>{s.value}</h3>
-                        <p>{s.label}</p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            </section>
+          {activeTab === "overview" && <div className="admin-view admin-view-overview">
+            <section className="admin-welcome-card"><div className="admin-welcome-copy"><span className="admin-card-kicker">Platform pulse</span><h2>Your workspace is in a good place.</h2><p>There are no outstanding system alerts. Use the shortcuts to jump into the work that needs your attention.</p></div><div className="admin-welcome-art"><div className="admin-art-ring ring-one" /><div className="admin-art-ring ring-two" /><div className="admin-art-core"><Sparkles size={23} /></div></div><div className="admin-quick-actions"><button onClick={() => openTab("users")}><Users size={15} /> Review people <ChevronRight size={14} /></button><button onClick={() => openTab("forge")}><Zap size={15} /> Add content <ChevronRight size={14} /></button></div></section>
+            <section className="admin-stat-row">{[{ label: "Total people", value: stats.totalUsers, note: "Registered accounts", icon: <Users size={17} />, tone: "mint" }, { label: "Roadmap paths", value: stats.totalPaths, note: "Published learning paths", icon: <Map size={17} />, tone: "blue" }, { label: "Content nodes", value: stats.totalNodes, note: "Across all roadmaps", icon: <Layout size={17} />, tone: "violet" }, { label: "Admins", value: stats.activeAdmins, note: "With workspace access", icon: <ShieldCheck size={17} />, tone: "amber" }].map(stat => <div className={`admin-stat-tile ${stat.tone}`} key={stat.label}><div className="admin-stat-tile-top"><span className="admin-stat-icon">{stat.icon}</span><span className="admin-stat-dot" /></div><strong>{stat.value}</strong><span>{stat.label}</span><small>{stat.note}</small></div>)}</section>
+            <div className="admin-overview-grid"><section className="admin-panel admin-activity-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Engagement</span><h3>Activity this week</h3></div><span className="admin-panel-meta">Last 7 days</span></div><div className="admin-chart-area"><SimpleLineChart data={stats.activityVelocity} color="var(--admin-accent)" /></div><div className="admin-chart-labels"><span>6 days ago</span><span>Today</span></div></section><section className="admin-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Reliability</span><h3>System health</h3></div><span className="admin-health-score">100%</span></div><div className="admin-health-list"><div><span className="admin-health-name"><span className="admin-health-dot" />AI provider</span><strong>Operational</strong></div><div><span className="admin-health-name"><span className="admin-health-dot" />Data gateway</span><strong>Operational</strong></div><div><span className="admin-health-name"><span className="admin-health-dot" />Access control</span><strong>Protected</strong></div></div><button className="admin-text-button" onClick={() => openTab("infra")}>View infrastructure <ChevronRight size={14} /></button></section><section className="admin-panel admin-path-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Learning catalog</span><h3>Path coverage</h3></div><button className="admin-text-button" onClick={() => openTab("forge")}>Manage paths <ChevronRight size={14} /></button></div><div className="admin-path-list">{pathCounts.map(path => <div className="admin-path-row" key={path.path}><div className="admin-path-row-label"><span>{path.path === "ds" ? "Data structures" : path.path === "genai" ? "Generative AI" : "Agentic systems"}</span><strong>{path.count} people</strong></div><div className="admin-progress-track"><span style={{ width: `${Math.max(path.percent, path.count ? 4 : 0)}%`, background: path.path === "ds" ? "#4f8cff" : path.path === "genai" ? "var(--admin-accent)" : "#a78bfa" }} /></div></div>)}</div></section><section className="admin-panel admin-recent-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Live feed</span><h3>Recent activity</h3></div><button className="admin-text-button" onClick={() => openTab("users")}>View all <ChevronRight size={14} /></button></div><div className="admin-recent-list">{stats.recentActivity.slice(0, 4).map(user => <div className="admin-recent-item" key={user.id}><span className="admin-recent-avatar"><span>{user.id.slice(0, 2).toUpperCase()}</span></span><div><strong>{user.id.slice(0, 18)}…</strong><p>Updated {user.paths_data?.title || "learning profile"}</p></div><time>{new Date(user.updated_at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}</time></div>)}</div></section></div>
+          </div>}
 
-            <section className="dashboard-section split-view-section">
-              <div className="admin-grid-main">
-                  <div className="visuals-column">
-                    <div className="admin-card chart-card glass-panel mb-4">
-                      <div className="card-header">
-                          <div className="header-icon-mini"><TrendingUp size={14} /></div>
-                          <div><h3>Activity Velocity</h3><p>Real-time ecosystem interaction trend.</p></div>
-                      </div>
-                      <div className="chart-wrapper">
-                        <SimpleLineChart data={stats.activityVelocity} color="var(--neon)" />
-                      </div>
-                    </div>
+          {activeTab === "users" && <div className="admin-view admin-view-directory"><section className="admin-panel admin-directory-panel"><div className="admin-panel-heading directory-heading"><div><span className="admin-card-kicker">Access management</span><h3>People directory</h3><p>{filteredUsers.length} of {users.length} profiles shown</p></div><div className="admin-directory-actions"><div className="admin-search"><Search size={15} /><input type="text" placeholder="Search by identity…" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} /></div><button className="admin-secondary-button" onClick={handleExportRegistry}><Download size={15} /> Export</button></div></div><div className="admin-table-shell"><table className="admin-directory-table"><thead><tr><th>Person</th><th>Last activity</th><th>Access</th><th /></tr></thead><tbody>{filteredUsers.map(user => { const locked = lockedUsers.includes(user.id); return <tr key={user.id}><td><div className="admin-person-cell"><span className="admin-person-avatar">{user.id.slice(0, 2).toUpperCase()}</span><div><strong>{user.id.slice(0, 24)}…</strong><small>{user.paths_data?.title || "Default learning profile"}</small></div></div></td><td><span className="admin-date-cell"><Clock size={14} />{new Date(user.updated_at).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</span></td><td><span className={`admin-access-badge ${locked ? "restricted" : "active"}`}><span />{locked ? "Restricted" : "Active"}</span></td><td className="admin-row-action"><button className={`admin-table-action ${locked ? "unlock" : ""}`} onClick={() => handleToggleLock(user.id)} title={locked ? "Grant access" : "Restrict access"}>{locked ? <Unlock size={15} /> : <Lock size={15} />}{locked ? "Grant access" : "Restrict"}</button></td></tr>; })}</tbody></table>{!loading && filteredUsers.length === 0 && <div className="admin-empty-state"><Users size={26} /><strong>No profiles found</strong><span>Try a different search term.</span></div>}{loading && <div className="admin-empty-state"><RefreshCw size={24} className="spin" /><span>Loading profiles…</span></div>}</div></section></div>}
 
-                    <div className="admin-card chart-card glass-panel">
-                      <div className="card-header">
-                          <div className="header-icon-mini"><Globe size={14} /></div>
-                          <div><h3>Path Distribution</h3><p>Architecture engagement levels.</p></div>
-                      </div>
-                      <div className="doughnut-grid">
-                          {pathCounts.map(p => (
-                            <SimpleDoughnut 
-                              key={p.path} 
-                              percent={Math.round(p.percent)} 
-                              color={p.path === 'ds' ? '#3b82f6' : p.path === 'genai' ? 'var(--neon)' : '#a855f7'} 
-                              label={p.path.toUpperCase()} 
-                            />
-                          ))}
-                      </div>
-                    </div>
-                  </div>
+          {activeTab === "infra" && <div className="admin-view admin-view-infra"><section className="admin-service-grid">{[{ name: "AI provider", detail: newAiProvider === "azure-openai" ? "Azure OpenAI" : "Google Gemini", status: geminiKey || newAzureKey ? "Configured" : "Needs setup", icon: <Sparkles size={18} />, tone: "mint" }, { name: "Data gateway", detail: "Supabase", status: "Operational", icon: <Database size={18} />, tone: "blue" }, { name: "Access control", detail: "Role-based access", status: "Protected", icon: <ShieldCheck size={18} />, tone: "violet" }].map(service => <div className="admin-service-card" key={service.name}><div className={`admin-service-icon ${service.tone}`}>{service.icon}</div><div><span>{service.name}</span><strong>{service.detail}</strong></div><em className={service.status === "Needs setup" ? "attention" : ""}><span />{service.status}</em></div>)}</section><div className="admin-infra-grid"><section className="admin-panel admin-config-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Workspace controls</span><h3>AI configuration</h3><p>Shared credentials are disabled. Each learner must add personal credentials in Settings.</p></div><span className="admin-config-lock"><Lock size={13} /> Private</span></div><label className="admin-field-label">Provider<select className="admin-field" value={newAiProvider} onChange={event => setNewAiProvider(event.target.value)}><option value="gemini">Google Gemini</option><option value="azure-openai">Azure OpenAI</option></select></label>{newAiProvider === "gemini" && <label className="admin-field-label">API key<div className="admin-field-with-action"><input className="admin-field" type={showKey ? "text" : "password"} placeholder="Paste your Gemini API key" value={newGeminiKey} onChange={event => setNewGeminiKey(event.target.value)} /><button onClick={() => setShowKey(!showKey)} title={showKey ? "Hide key" : "Show key"}>{showKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div></label>}{newAiProvider === "azure-openai" && <><label className="admin-field-label">Endpoint<input className="admin-field" type="text" placeholder="https://your-resource.openai.azure.com" value={newAzureEndpoint} onChange={event => setNewAzureEndpoint(event.target.value)} /></label><label className="admin-field-label">API key<div className="admin-field-with-action"><input className="admin-field" type={showKey ? "text" : "password"} placeholder="Paste your Azure API key" value={newAzureKey} onChange={event => setNewAzureKey(event.target.value)} /><button onClick={() => setShowKey(!showKey)}>{showKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div></label></>}<div className="admin-config-footer"><a href="https://aistudio.google.com/app/api-keys" target="_blank" rel="noreferrer">Get an API key <ExternalLink size={13} /></a><button className="admin-primary-button" onClick={handleUpdateAiConfig}><CheckCircle2 size={15} /> Save changes</button></div></section><section className="admin-panel admin-access-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Permissions</span><h3>Admin access</h3><p>People who can manage this workspace.</p></div></div><div className="admin-invite-row"><input className="admin-field" type="email" placeholder="name@company.com" value={newAdminEmail} onChange={event => setNewAdminEmail(event.target.value)} /><button className="admin-primary-button icon-only" onClick={handleAddAdmin} title="Add admin"><UserPlus size={16} /></button></div><div className="admin-admin-list">{adminsList.map(email => <div className="admin-admin-row" key={email}><span className="admin-person-avatar small"><Shield size={14} /></span><span>{email}</span>{email !== "nandanpatkar14114@gmail.com" && <button onClick={() => handleRemoveAdmin(email)} title="Remove admin"><Trash2 size={14} /></button>}</div>)}</div><div className="admin-permission-note"><ShieldCheck size={15} /><span>At least one administrator must remain active.</span></div></section></div><section className="admin-panel admin-access-setting"><div><span className="admin-card-kicker">Feature access</span><h3>AI companion for everyone</h3><p>Allow every learner to use the companion without individual approval.</p></div><button onClick={handleToggleAimlAccess} className={`admin-toggle ${allowAimlForAll ? "on" : ""}`} aria-label="Toggle AI companion access"><span /></button></section></div>}
 
-                  <div className="pulse-column">
-                    <div className="admin-card glass-panel h-full">
-                      <div className="card-header">
-                        <div className="header-icon-mini"><Zap size={14} /></div>
-                        <div><h3>Activity Pulse</h3><p>Real-time identity synchronization feed.</p></div>
-                      </div>
-                      <div className="pulse-feed mini-scrollbar">
-                        {stats.recentActivity.map((u, i) => (
-                          <div key={u.id} className="pulse-item" style={{ animationDelay: `${i * 0.05}s` }}>
-                            <div className="pulse-avatar">
-                              <div className="avatar-orb" />
-                            </div>
-                            <div className="pulse-info">
-                              <div className="pulse-user">Identity <code>{u.id.substring(0, 12)}</code></div>
-                              <div className="pulse-action">Architecture Synced: {u.paths_data?.title || "Default"}</div>
-                              <div className="pulse-time"><Clock size={10} /> {new Date(u.updated_at).toLocaleTimeString()}</div>
-                            </div>
-                            <ChevronRight size={14} className="pulse-chevron" />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </section>
-          </div>
-        )}
-
-        {activeTab === 'users' && (
-          <section className="dashboard-section tab-content-fade">
-             <div className="admin-card glass-panel registry-card">
-                 <div className="card-header split">
-                    <div>
-                       <h3>Ecosystem Registry</h3>
-                       <p>Real-time identity management cluster ({users.length} profiles).</p>
-                    </div>
-                    <div className="header-ops">
-                      <button className="export-btn" onClick={handleExportRegistry} title="Export as JSON">
-                        <Download size={16} />
-                      </button>
-                      <div className="admin-search-wrapper">
-                        <Search size={16} />
-                        <input type="text" placeholder="Filter identities..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-                      </div>
-                    </div>
-                 </div>
-                 <div className="admin-table-wrapper mini-scrollbar">
-                    <table className="admin-table">
-                       <thead>
-                         <tr>
-                           <th>Identity Identifier</th>
-                           <th>Temporal Signature</th>
-                           <th>Status</th>
-                           <th style={{ textAlign: 'right' }}>Controls</th>
-                         </tr>
-                       </thead>
-                       <tbody>
-                          {filteredUsers.map(u => (
-                            <tr key={u.id} className="admin-table-row">
-                              <td className="cell-user">
-                                <div className="user-id-wrapper">
-                                  <HardDrive size={12} className="id-icon" />
-                                  <code>{u.id}</code>
-                                </div>
-                              </td>
-                              <td className="cell-date">
-                                <div className="date-flex">
-                                  <Clock size={12} /> {new Date(u.updated_at).toLocaleString()}
-                                </div>
-                              </td>
-                              <td className="cell-status">
-                                 <span className={`admin-status-badge ${lockedUsers.includes(u.id) ? 'locked' : 'active'}`}>
-                                    {lockedUsers.includes(u.id) ? 'Restricted' : 'Active'}
-                                 </span>
-                              </td>
-                              <td className="cell-actions">
-                                 <button 
-                                   className={`admin-lock-toggle ${lockedUsers.includes(u.id) ? 'unlock' : 'lock'}`} 
-                                   onClick={() => handleToggleLock(u.id)}
-                                   title={lockedUsers.includes(u.id) ? "Grant Access" : "Restrict Access"}
-                                 >
-                                    {lockedUsers.includes(u.id) ? <Unlock size={14} /> : <Lock size={14} />}
-                                 </button>
-                              </td>
-                            </tr>
-                          ))}
-                       </tbody>
-                    </table>
-                 </div>
-              </div>
-          </section>
-        )}
-
-        {activeTab === 'infra' && (
-          <div className="tab-content-fade">
-            <section className="dashboard-section infra-section">
-              <div className="admin-grid-infra">
-                <div className="admin-card glass-panel infra-card">
-                  <div className="infra-header">
-                    <div className="infra-icon-bg gemini"><Sparkles size={16} /></div>
-                    <div className="infra-title">
-                      <h4>Gemini Infrastructure</h4>
-                      <div className="infra-status online">Operational</div>
-                    </div>
-                  </div>
-                  <div className="infra-details">
-                    <div className="infra-stat"><span>Latency</span> <span>420ms</span></div>
-                    <div className="infra-stat"><span>Reliability</span> <span>99.9%</span></div>
-                    <div className="infra-stat"><span>Key Status</span> <span className={geminiKey ? "text-neon" : "text-error"}>{geminiKey ? "Dynamic ACTIVE" : "MISSING"}</span></div>
-                  </div>
-                </div>
-
-                <div className="admin-card glass-panel infra-card">
-                  <div className="infra-header">
-                    <div className="infra-icon-bg supabase"><Database size={16} /></div>
-                    <div className="infra-title">
-                      <h4>Supabase Gateway</h4>
-                      <div className="infra-status online">Operational</div>
-                    </div>
-                  </div>
-                  <div className="infra-details">
-                    <div className="infra-stat"><span>Connections</span> <span>{users.length} Active</span></div>
-                    <div className="infra-stat"><span>DB Health</span> <span>Healthy</span></div>
-                    <div className="infra-stat"><span>Persistence</span> <span>Encrypted</span></div>
-                  </div>
-                </div>
-
-                <div className="admin-card glass-panel infra-card">
-                  <div className="infra-header">
-                    <div className="infra-icon-bg security"><ShieldCheck size={16} /></div>
-                    <div className="infra-title">
-                      <h4>Security Firewall</h4>
-                      <div className="infra-status online">Guarded</div>
-                    </div>
-                  </div>
-                  <div className="infra-details">
-                    <div className="infra-stat"><span>Locked IDs</span> <span>{lockedUsers.length} Restricted</span></div>
-                    <div className="infra-stat"><span>Admin Pool</span> <span>{adminsList.length} Operators</span></div>
-                    <div className="infra-stat"><span>Auth Layer</span> <span>RBAC Tier 1</span></div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="dashboard-section">
-              <div className="admin-grid-main">
-                <div className="admin-card glass-panel authority-card">
-                  <div className="card-header">
-                      <h3>Infrastructure Controller</h3>
-                      <p>Global system parameters & credentials.</p>
-                  </div>
-
-                  <div className="config-switch-panel">
-                      <div className="switch-row">
-                        <div className="switch-text">
-                          <h4>AIML Universal Access</h4>
-                          <p>Enable companion for entire student pool.</p>
-                        </div>
-                        <button 
-                          onClick={handleToggleAimlAccess}
-                          className={`ios-switch ${allowAimlForAll ? 'on' : 'off'}`}
-                        >
-                          <div className="switch-handle" />
-                        </button>
-                      </div>
-                    </div>
-                  
-                  <div className="infra-config-section mt-6">
-                      <div className="config-header">
-                        <div className="config-icon-bg"><Sparkles size={14} /></div>
-                        <div>
-                          <h4>Backbone Intelligence</h4>
-                          <p>Dynamic Gemini API Credential</p>
-                        </div>
-                      </div>
-                      
-                      <div className="invite-form-minimal">
-                        <select 
-                          className="modern-select" 
-                          value={newAiProvider} 
-                          onChange={(e) => setNewAiProvider(e.target.value)}
-                          style={{ marginBottom: '10px', width: '100%' }}
-                        >
-                          <option value="gemini">Google Gemini (Default)</option>
-                          <option value="azure-openai">Azure OpenAI</option>
-                        </select>
-                        {newAiProvider === 'gemini' && (
-                          <div className="input-with-icon" style={{ marginBottom: '10px', width: '100%' }}>
-                            <Lock size={14} />
-                            <input 
-                              type={showKey ? "text" : "password"} 
-                              placeholder="Paste Gemini API Key..." 
-                              value={newGeminiKey} 
-                              onChange={e => setNewGeminiKey(e.target.value)}
-                            />
-                          </div>
-                        )}
-                        {newAiProvider === 'azure-openai' && (
-                          <>
-                            <div className="input-with-icon" style={{ marginBottom: '10px', width: '100%' }}>
-                              <Globe size={14} />
-                              <input 
-                                type="text" 
-                                placeholder="Azure OpenAI Endpoint (e.g. https://...)" 
-                                value={newAzureEndpoint} 
-                                onChange={e => setNewAzureEndpoint(e.target.value)}
-                              />
-                            </div>
-                            <div className="input-with-icon" style={{ marginBottom: '10px', width: '100%' }}>
-                              <Lock size={14} />
-                              <input 
-                                type={showKey ? "text" : "password"} 
-                                placeholder="Azure OpenAI Key..." 
-                                value={newAzureKey} 
-                                onChange={e => setNewAzureKey(e.target.value)}
-                              />
-                            </div>
-                          </>
-                        )}
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button onClick={() => setShowKey(!showKey)} className="mini-action-btn">
-                            {showKey ? <EyeOff size={14} /> : <Eye size={14} />}
-                          </button>
-                          <button onClick={handleUpdateGeminiKey} className="mini-action-btn highlight">
-                            <CheckCircle2 size={14} />
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="config-footer">
-                        <a href="https://aistudio.google.com/app/api-keys" target="_blank" rel="noreferrer" className="config-link">
-                          <ExternalLink size={10} /> GOOGLE AI STUDIO
-                        </a>
-                        {geminiKey && <span className="config-status-tag">ACTIVE</span>}
-                      </div>
-                    </div>
-                </div>
-
-                <div className="admin-card glass-panel authority-card">
-                  <div className="card-header">
-                      <h3>Authority Pool</h3>
-                      <p>Operator cluster management.</p>
-                  </div>
-
-                  <div className="invite-form-minimal">
-                      <div className="input-with-icon">
-                        <Terminal size={14} />
-                        <input type="email" placeholder="operator_email@genai.com" value={newAdminEmail} onChange={e => setNewAdminEmail(e.target.value)} />
-                      </div>
-                      <button onClick={handleAddAdmin} className="mini-action-btn primary"><UserPlus size={14} /></button>
-                  </div>
-
-                  <div className="authority-list mini-scrollbar mt-4">
-                      {adminsList.map(email => (
-                        <div key={email} className="authority-item-compact">
-                           <div className="auth-user-info">
-                              <Shield size={14} className="auth-icon" />
-                              <span className="auth-email">{email}</span>
-                           </div>
-                           {email !== 'nandanpatkar14114@gmail.com' && (
-                             <button className="auth-remove-btn" onClick={() => handleRemoveAdmin(email)}><Trash2 size={14} /></button>
-                           )}
-                        </div>
-                      ))}
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        )}
-
-        {activeTab === 'forge' && (
-          <section className="dashboard-section tab-content-fade">
-             <div className="admin-card glass-panel studio-forge-card">
-                <div className="card-header split">
-                   <div className="studio-header-main">
-                      <div className="studio-icon-bg"><Zap size={20} /></div>
-                      <div>
-                         <h3>Architecture Forge</h3>
-                         <p>Ecosystem blueprint injection & mass synchronization.</p>
-                      </div>
-                   </div>
-                   <div className="studio-tabs-row">
-                      {['file', 'paste'].map(t => (
-                        <button 
-                          key={t} 
-                          className={`studio-tab-btn ${activeImportTab === t ? 'active' : ''}`} 
-                          onClick={() => setActiveImportTab(t)}
-                        >
-                          {t.toUpperCase()}
-                        </button>
-                      ))}
-                   </div>
-                </div>
-
-                <div className="forge-body-unified">
-                   {activeImportTab === 'file' ? (
-                     <div className={`forge-drop-well ${dragActive ? 'drag-active' : ''}`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop} onClick={() => fileInputRef.current?.click()}>
-                        <input ref={fileInputRef} type="file" accept=".json,.md,.txt" onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])} style={{ display: 'none' }} />
-                        <div className="well-content">
-                          <UploadCloud size={48} className="well-icon" />
-                          <h4>Inject Blueprint Payload</h4>
-                          <p>Drop .json or .md structures to rebuild ecosystem architecture</p>
-                          <div className="well-status-badge">READY FOR INJECTION</div>
-                        </div>
-                     </div>
-                   ) : (
-                     <div className="forge-paste-container">
-                        <textarea 
-                          value={rawPasteContent} 
-                          onChange={e => setRawPasteContent(e.target.value)} 
-                          placeholder="Paste architectural blueprint JSON or Markdown structure here..." 
-                          className="forge-textarea-compact mini-scrollbar" 
-                        />
-                        <div className="forge-actions">
-                           <button className="forge-btn-exec" onClick={handlePasteProcess}><Zap size={16} /> Execute Synchronization</button>
-                           <button className="forge-btn-clear" onClick={() => setRawPasteContent("")}><Trash2 size={16} /> Clear</button>
-                        </div>
-                     </div>
-                   )}
-
-                   {(errorInfo || successInfo) && (
-                     <div className={`forge-notifier ${errorInfo ? 'error' : 'success'}`}>
-                        <div className="notifier-content">
-                          {errorInfo ? <AlertCircle size={16} /> : <CheckCircle2 size={16} />}
-                          <span>{errorInfo || successInfo}</span>
-                        </div>
-                        <button onClick={() => { setErrorInfo(null); setSuccessInfo(null); }} className="notifier-close"><X size={12} /></button>
-                     </div>
-                   )}
-                </div>
-                
-                <div className="forge-footer-unified">
-                   <div className="template-links">
-                      <span className="label">Blueprint Templates:</span>
-                      <button onClick={() => downloadSample('md')} className="template-btn"><FileText size={14} /> Markdown</button>
-                      <button onClick={() => downloadSample('json')} className="template-btn"><FileJson size={14} /> JSON Schema</button>
-                   </div>
-                </div>
-             </div>
-          </section>
-        )}
-      </main>
+          {activeTab === "forge" && <div className="admin-view admin-view-forge"><section className="admin-forge-intro"><div><span className="admin-card-kicker">Content operations</span><h2>Bring a new path to life.</h2><p>Import a Markdown outline or JSON blueprint. Existing paths stay untouched unless the incoming file uses the same path ID.</p></div><div className="admin-forge-stat"><FileJson size={17} /><span><strong>{stats.totalPaths}</strong> paths live</span></div></section><section className="admin-panel admin-forge-panel"><div className="admin-panel-heading"><div><h3>Import blueprint</h3><p>Choose a source, then review the result in your roadmap.</p></div><div className="admin-source-tabs">{["file", "paste"].map(type => <button key={type} className={activeImportTab === type ? "active" : ""} onClick={() => setActiveImportTab(type)}>{type === "file" ? <UploadCloud size={15} /> : <Terminal size={15} />}{type === "file" ? "Upload file" : "Paste content"}</button>)}</div></div>{activeImportTab === "file" ? <div className={`admin-drop-zone ${dragActive ? "active" : ""}`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop} onClick={() => fileInputRef.current?.click()}><input ref={fileInputRef} type="file" accept=".json,.md,.txt" onChange={event => event.target.files?.[0] && handleFile(event.target.files[0])} hidden /><span className="admin-drop-icon"><UploadCloud size={23} /></span><strong>Drop a blueprint here</strong><p>or click to browse · .json, .md, .txt</p></div> : <div className="admin-paste-area"><textarea value={rawPasteContent} onChange={event => setRawPasteContent(event.target.value)} placeholder="Paste JSON or Markdown here…" /><div><button className="admin-primary-button" onClick={handlePasteProcess}><Zap size={15} /> Process content</button><button className="admin-secondary-button" onClick={() => setRawPasteContent("")}><Trash2 size={15} /> Clear</button></div></div>}{(errorInfo || successInfo) && <div className={`admin-notice ${errorInfo ? "error" : "success"}`}>{errorInfo ? <AlertCircle size={15} /> : <CheckCircle2 size={15} />}<span>{errorInfo || successInfo}</span><button onClick={() => { setErrorInfo(null); setSuccessInfo(null); }}><X size={14} /></button></div>}</section><div className="admin-template-grid"><button onClick={() => downloadSample("md")}><FileText size={17} /><span><strong>Markdown outline</strong><small>Best for a quick draft</small></span><Download size={14} /></button><button onClick={() => downloadSample("json")}><FileJson size={17} /><span><strong>JSON blueprint</strong><small>Best for a complete import</small></span><Download size={14} /></button></div></div>}
+        </main>
+      </div>
     </div>
   );
 }

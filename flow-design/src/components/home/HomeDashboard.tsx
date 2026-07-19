@@ -77,14 +77,19 @@ export function HomeDashboard({
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-4 py-6 animate-in fade-in duration-300 sm:px-6 md:px-10 md:py-12">
-      <div className="mb-8 flex flex-col gap-4 md:mb-12 md:flex-row md:items-end md:justify-between">
+    <div className="flow-dashboard flex-1 overflow-y-auto px-4 py-6 animate-in fade-in duration-300 sm:px-6 md:px-12 md:py-12">
+      <div className="flow-dashboard-header mb-8 flex flex-col gap-5 md:mb-12 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-[var(--brand-text)] tracking-tight mb-1">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[var(--brand-primary-200)]/60 bg-[var(--brand-primary-50)]/75 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[var(--brand-primary-700)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--brand-primary)] shadow-[0_0_0_4px_rgba(255,153,0,0.12)]" />
+            System blueprint workspace
+          </div>
+          <h1 className="flow-display-title text-3xl font-semibold text-[var(--brand-text)] mb-2 sm:text-4xl">
             {t('home.title', 'Dashboard')}
           </h1>
-          <p className="text-[var(--brand-secondary)] text-sm">
-            {t('home.description', 'Manage your flows and diagrams.')}
+          <p className="max-w-xl text-[var(--brand-secondary)] text-sm leading-6">
+            {t('home.description', 'Manage your flows and diagrams.')}{' '}
+            <span className="text-[var(--brand-text)]/70">Your architecture, clear at a glance.</span>
           </p>
         </div>
         <Button
@@ -92,6 +97,7 @@ export function HomeDashboard({
           data-testid="home-create-new-header"
           variant="primary"
           size="sm"
+          className="flow-create-button self-start rounded-full px-4 md:self-auto"
         >
           <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
           {t('home.createNew', 'Create new')}
@@ -99,9 +105,9 @@ export function HomeDashboard({
       </div>
 
       <section>
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="text-xs font-semibold text-[var(--brand-secondary)] uppercase tracking-wider">
+            <h2 className="text-[11px] font-bold text-[var(--brand-secondary)] uppercase tracking-[0.18em]">
               {t('home.recentFiles', 'Recent Files')}
             </h2>
             <Tooltip
@@ -133,25 +139,26 @@ export function HomeDashboard({
             className="flex w-full flex-col py-2 sm:py-6 animate-in fade-in zoom-in-[0.99] duration-700"
             data-testid="home-empty-state"
           >
-            <div className="relative overflow-hidden w-full max-w-[840px] mx-auto rounded-[24px] bg-[var(--brand-surface)] border border-[var(--color-brand-border)]/80 shadow-[0_8px_30px_rgba(0,0,0,0.03)]">
+            <div className="flow-glass relative mx-auto w-full max-w-[900px] overflow-hidden rounded-[30px] border-[var(--brand-glass-border)]">
               {/* Super-delicate background gradient inside card */}
-              <div className="absolute top-0 left-0 w-full h-[140px] bg-gradient-to-b from-[var(--brand-background)] to-[var(--brand-surface)] pointer-events-none"></div>
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[120px] bg-[var(--brand-primary)]/5 blur-[50px] rounded-full pointer-events-none"></div>
+              <div className="pointer-events-none absolute left-0 top-0 h-[190px] w-full bg-gradient-to-b from-white/65 to-transparent dark:from-white/5"></div>
+              <div className="pointer-events-none absolute left-1/2 top-[-80px] h-[260px] w-[620px] -translate-x-1/2 rounded-full bg-[var(--brand-primary)]/10 blur-[70px]"></div>
+              <div className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_1px_1px,var(--brand-primary)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:linear-gradient(to_bottom,black,transparent_72%)]"></div>
 
               <div className="relative z-10 flex flex-col items-center px-6 py-10 text-center">
                 {/* Sleek Icon */}
-                <div className="flex h-16 w-16 items-center justify-center rounded-[18px] bg-[var(--brand-surface)] shadow-[0_4px_16px_rgba(0,0,0,0.04)] border border-[var(--color-brand-border)]/60 mb-5 relative group cursor-default">
-                  <div className="absolute inset-0 bg-[var(--brand-primary)]/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-[18px]"></div>
+                <div className="relative mb-6 flex h-[72px] w-[72px] cursor-default items-center justify-center rounded-[22px] border border-white/80 bg-white/60 shadow-[0_16px_34px_rgba(15,23,42,0.1)] backdrop-blur-xl transition-transform duration-500 group hover:-translate-y-1 dark:border-white/10 dark:bg-white/10">
+                  <div className="absolute inset-2 rounded-[16px] border border-[var(--brand-primary-200)]/50 bg-[var(--brand-primary-50)]/80 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110"></div>
                   <Layout
-                    className="w-8 h-8 text-[var(--brand-primary)] transition-transform group-hover:scale-105 duration-500"
+                    className="relative z-10 h-8 w-8 text-[var(--brand-primary-700)] transition-transform duration-500 group-hover:scale-105"
                     strokeWidth={1.5}
                   />
                 </div>
 
-                <h2 className="text-[24px] sm:text-[28px] font-bold tracking-tight text-[var(--brand-text)] mb-2">
+                <h2 className="flow-display-title mb-2 text-[26px] font-bold text-[var(--brand-text)] sm:text-[32px]">
                   {t('home.homeEmptyTitle', 'Create your first flow')}
                 </h2>
-                <p className="text-[14px] text-[var(--brand-secondary)] max-w-[500px] mb-8 leading-relaxed">
+                <p className="mb-8 max-w-[540px] text-[14px] leading-6 text-[var(--brand-secondary)]">
                   {t(
                     'home.homeEmptySubtitle',
                     'Design enterprise-grade architectures instantly. Start from a blank canvas, describe your infrastructure with our AI builder, or use a tailored template.'
@@ -159,7 +166,7 @@ export function HomeDashboard({
                 </p>
 
                 {/* Action Grid strictly inside the card */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full max-w-[640px]">
+                <div className="grid w-full max-w-[680px] grid-cols-1 gap-3 md:grid-cols-3">
                   <Button
                     onClick={handleCreateNew}
                     data-testid="home-create-new-main"
@@ -176,7 +183,7 @@ export function HomeDashboard({
                     data-testid="home-generate-with-ai"
                     variant="secondary"
                     size="lg"
-                    className="w-full text-[14.5px] group"
+                    className="flow-action-card group w-full text-[14.5px]"
                   >
                     <WandSparkles className={secondaryActionIconClass} strokeWidth={2} />{' '}
                     {t('home.homeFlowpilotAI', 'Flowpilot AI')}
@@ -187,14 +194,14 @@ export function HomeDashboard({
                     data-testid="home-open-templates"
                     variant="secondary"
                     size="lg"
-                    className="w-full text-[14.5px]"
+                    className="flow-action-card w-full text-[14.5px]"
                   >
                     <LayoutTemplate className={secondaryActionIconClass} strokeWidth={2} />{' '}
                     {t('home.homeTemplates', 'Templates')}
                   </Button>
                 </div>
 
-                <div className="mt-8 flex items-center justify-center pt-6 border-t border-[var(--color-brand-border)]/60 w-full max-w-[640px]">
+                <div className="mt-8 flex w-full max-w-[680px] items-center justify-center border-t border-[var(--color-brand-border)]/60 pt-6">
                   <ImportExistingFileButton
                     label={t('home.homeImportFile', 'Or import an existing file')}
                     onClick={handleImportJSON}
@@ -209,9 +216,9 @@ export function HomeDashboard({
               <div
                 key={flow.id}
                 onClick={() => onOpenFlow(flow.id)}
-                className="group relative cursor-pointer flex flex-col overflow-hidden rounded-[16px] border border-[color-mix(in_srgb,var(--color-brand-border),transparent_50%)] bg-[var(--brand-surface)] transition-all duration-300 hover:border-[var(--brand-primary-400)]/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:-translate-y-0.5"
+                className="flow-glass group relative flex cursor-pointer flex-col overflow-hidden rounded-[22px] border-[var(--brand-glass-border)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--brand-primary-300)]/70 hover:shadow-[0_20px_42px_rgba(15,23,42,0.12)]"
               >
-                <div className="relative flex h-[160px] w-full items-center justify-center overflow-hidden border-b border-[color-mix(in_srgb,var(--color-brand-border),transparent_50%)] bg-[var(--brand-background)]">
+                <div className="relative flex h-[160px] w-full items-center justify-center overflow-hidden border-b border-[color-mix(in_srgb,var(--color-brand-border),transparent_50%)]/70 bg-white/20 dark:bg-black/10">
                   <FlowPreview preview={flow.preview} />
 
                   {/* Sleek Floating Actions Pill */}
@@ -241,7 +248,7 @@ export function HomeDashboard({
                     </FlowCardActionButton>
                   </div>
                 </div>
-                <div className="flex flex-col p-4 bg-[var(--brand-surface)] transition-colors group-hover:bg-[color-mix(in_srgb,var(--brand-surface),white_2%)]">
+                <div className="flex flex-col bg-white/25 p-4 transition-colors group-hover:bg-white/45 dark:bg-white/5 dark:group-hover:bg-white/10">
                   <h3 className="font-semibold text-[13.5px] text-[var(--brand-text)] tracking-tight truncate mb-1.5 group-hover:text-[var(--brand-primary)] transition-colors">
                     {flow.name}
                   </h3>

@@ -1,9 +1,30 @@
 import React, { useState, useEffect, useRef } from "react";
-import { X, ChevronLeft, Clock, Tag, Search, BookOpen, Edit3, Sparkles } from "lucide-react";
+import { X, ChevronLeft, Clock, Tag, Search, BookOpen, Edit3, Sparkles, ArrowUpRight, Activity, Layers3, Database, SlidersHorizontal } from "lucide-react";
 import { supabase } from "../../config/supabaseClient";
 import { useAuth } from "../../contexts/AuthContext";
 import AdminBlogEditor from "./AdminBlogEditor";
 import { generateAI_TLDR } from "../../services/aiService";
+import { CHRONOLOGICAL_DB } from "../../data/blogData";
+import "./BlogPage.css";
+
+const ARCHIVE_YEARS = Object.keys(CHRONOLOGICAL_DB).sort((a, b) => {
+  if (a === "Featured") return 1;
+  if (b === "Featured") return -1;
+  return b.localeCompare(a);
+});
+
+const ARCHIVE_BLOGS = ARCHIVE_YEARS.flatMap(year => CHRONOLOGICAL_DB[year].map((article, index) => ({
+    id: `archive-${year}-${index}-${article.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+    title: article.title,
+    content: article.description || `Read ${article.title} on Analytics Vidya.`,
+    description: article.description,
+    tags: [year, "Analytics Vidya"],
+    url: article.url,
+    created_at: `${year === "Featured" ? "2025" : year}-01-01T00:00:00.000Z`,
+    is_external: true,
+    archive_year: year,
+    source: "Intelligence Hub",
+  })));
 
 export default function BlogPage({ theme, isEditMode, onClose }) {
   const [blogs, setBlogs] = useState([]);
@@ -29,69 +50,70 @@ export default function BlogPage({ theme, isEditMode, onClose }) {
         .eq('status', 'published')
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error("Error fetching blogs:", error);
-      } else {
-        setBlogs(data || []);
-      }
+      if (error) console.error("Error fetching blogs:", error);
+      const published = error ? [] : (data || []);
+      const archiveUrls = new Set(ARCHIVE_BLOGS.map(blog => blog.url).filter(Boolean));
+      // Keep the Intelligence Hub archive as the primary catalogue. Published
+      // in-app posts remain available after it without duplicating archive URLs.
+      setBlogs([...ARCHIVE_BLOGS, ...published.filter(blog => !blog.url || !archiveUrls.has(blog.url))]);
     } catch (err) {
       console.error("Error connecting to Supabase for blogs:", err);
+      // The Hub archive is local, so it should still render if the CMS is offline.
+      setBlogs(ARCHIVE_BLOGS);
     }
     setLoading(false);
   };
 
   const filteredBlogs = blogs.filter(b => {
-    const matchesSearch = b.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          (b.tags && b.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
+    const search = searchQuery.toLowerCase();
+    const matchesSearch = (b.title || '').toLowerCase().includes(search) ||
+                          (b.description || '').toLowerCase().includes(search) ||
+                          (b.tags && b.tags.some(t => t.toLowerCase().includes(search)));
     const matchesTags = selectedTags.length === 0 || selectedTags.every(t => (b.tags || []).includes(t));
     return matchesSearch && matchesTags;
   });
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", overflow: "hidden", background: "var(--bg)" }}>
+    <div className="blog-shell" style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", overflow: "hidden", background: "var(--bg)" }}>
       {/* ══ TOP TAB BAR ══════════════════════════════════════════════════════ */}
-      <header className="blog-header" style={{ height: 62, background: 'var(--bg2)', borderBottom: `1px solid var(--border)`, display: 'flex', alignItems: 'center', padding: '0 20px', gap: 14, flexShrink: 0 }}>
+      <header className="blog-header">
         
         {/* Placeholder for sidebar toggle alignment */}
-        <div style={{ width: 30, height: 30, flexShrink: 0 }} />
+        <div className="blog-header-spacer" />
 
         {/* Logo + Title Stack */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 38, height: 38, borderRadius: 11, background: `linear-gradient(135deg, #6366f1, #4f46e5)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 0 18px rgba(99, 102, 241, 0.35)' }}>
-            <BookOpen size={19} color="#fff" />
+        <div className="blog-brand">
+          <div className="blog-brand-mark">
+            <BookOpen size={18} />
           </div>
           <div>
-            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>GenAI Blog</h1>
-            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>Intelligence Hub · Latest Insights · Research Papers</p>
+            <h1>GenAI Blog</h1>
+            <p>Intelligence Hub · Research repository</p>
           </div>
         </div>
 
-        <div style={{ flex: 1 }} />
+        <div className="blog-header-rail"><span /><span /><span /></div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div className="blog-header-actions">
           {isAdmin && !showEditor && !selectedBlog && (
             <button 
               onClick={() => { setEditingBlog(null); setShowEditor(true); }}
-              style={{
-                background: 'var(--primary)', color: '#000', border: 'none', borderRadius: 8, padding: '8px 16px',
-                fontSize: 11, fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6,
-                boxShadow: '0 0 18px rgba(0, 255, 136, 0.35)'
-              }}
+              className="blog-write-button"
             >
               <Edit3 size={14} /> WRITE ARTICLE
             </button>
           )}
           
-          <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+          <div className="blog-header-divider" />
 
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: '4px 8px' }}>
+          <button onClick={onClose} className="blog-close-button" aria-label="Close Blogs">
             <X size={20} />
           </button>
         </div>
       </header>
 
       {/* ══ CONTENT AREA ══════════════════════════════════════════════════════ */}
-      <div id="blog-scroll-container" style={{ flex: 1, overflowY: "auto", position: "relative" }}>
+      <div id="blog-scroll-container" className="blog-scroll-container" style={{ flex: 1, overflowY: "auto", position: "relative" }}>
         {showEditor ? (
           <AdminBlogEditor 
             blog={editingBlog} 
@@ -112,7 +134,13 @@ export default function BlogPage({ theme, isEditMode, onClose }) {
           <BlogList 
             blogs={filteredBlogs} 
             loading={loading} 
-            onSelect={setSelectedBlog}
+            onSelect={(blog) => {
+              if (blog.is_external && blog.url) {
+                window.open(blog.url, '_blank', 'noopener,noreferrer');
+              } else {
+                setSelectedBlog(blog);
+              }
+            }}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             selectedTags={selectedTags}
@@ -127,148 +155,104 @@ export default function BlogPage({ theme, isEditMode, onClose }) {
 }
 
 function BlogList({ blogs, loading, onSelect, searchQuery, setSearchQuery, selectedTags, setSelectedTags, isAdmin, onWrite }) {
+  const [activeYear, setActiveYear] = useState("All");
+
+  const getBlogYear = (blog) => blog.archive_year || (blog.created_at ? new Date(blog.created_at).getFullYear().toString() : "Unsorted");
+  const availableYears = ["All", ...Array.from(new Set(blogs.map(getBlogYear))).sort((a, b) => {
+    if (a === "Featured") return 1;
+    if (b === "Featured") return -1;
+    return b.localeCompare(a);
+  })];
+  const visibleBlogs = activeYear === "All" ? blogs : blogs.filter(blog => getBlogYear(blog) === activeYear);
+  const yearSections = Array.from(new Set(visibleBlogs.map(getBlogYear))).map(year => ({
+    year,
+    posts: visibleBlogs.filter(blog => getBlogYear(blog) === year),
+  }));
+
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', color: 'var(--text2)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16, alignItems: 'center' }}>
-           <div style={{ width: 24, height: 24, border: '2px solid var(--border)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
-           Loading articles...
+      <div className="blog-loading-state">
+        <div>
+           <div className="blog-loading-orbit" />
+           <span>Syncing research nodes...</span>
         </div>
-        <style>
-          {`@keyframes spin { 100% { transform: rotate(360deg); } }`}
-        </style>
       </div>
     );
   }
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '32px 48px' }}>
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40, flexWrap: 'wrap', gap: 16
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <h1 style={{ margin: 0, fontSize: 32, fontWeight: 800, color: 'var(--text)', display: 'flex', alignItems: 'center', gap: 12 }}>
-              Latest Articles
-            </h1>
-            {isAdmin && (
-              <button 
-                onClick={onWrite}
-                style={{
-                  background: 'var(--primary)', color: '#000', border: 'none', borderRadius: 6, padding: '8px 16px',
-                  fontSize: 14, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
-                  transition: 'all 0.2s'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}
-              >
-                Write Article
-              </button>
-            )}
+    <div className="blog-list">
+      <section className="blog-hero-panel">
+        <div className="blog-hero-grid" aria-hidden="true" />
+        <div className="blog-hero-copy">
+          <div className="blog-kicker"><span className="blog-live-dot" /> INTELLIGENCE HUB / RESEARCH REPOSITORY</div>
+          <h2>Signals worth<br /><em>understanding.</em></h2>
+          <p>Every article that opens from the Intelligence Hub, organized as an explorable system of research nodes.</p>
+          <div className="blog-hero-stats">
+            <span><strong>{blogs.filter(blog => blog.is_external).length}</strong> hub articles</span>
+            <span><strong>{availableYears.length - 1}</strong> year bands</span>
+            <span><strong>01</strong> shared source</span>
           </div>
-          {selectedTags.length > 0 && (
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {selectedTags.map(tag => (
-                <span key={tag} style={{
-                  fontSize: 12, background: 'rgba(0, 255, 136, 0.1)', color: 'var(--primary)',
-                  padding: '4px 8px', borderRadius: 6, fontWeight: 600, border: '1px solid rgba(0, 255, 136, 0.2)',
-                  display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer'
-                }} onClick={() => setSelectedTags(selectedTags.filter(t => t !== tag))}>
-                  {tag} <X size={12} />
-                </span>
-              ))}
-              <span style={{ fontSize: 12, color: 'var(--text3)', cursor: 'pointer', padding: '4px 8px' }} onClick={() => setSelectedTags([])}>
-                Clear All
-              </span>
-            </div>
-          )}
         </div>
-        
-        <div style={{
-          display: 'flex', alignItems: 'center', background: 'var(--bg2)',
-          border: '1px solid var(--border)', borderRadius: 8, padding: '8px 12px', width: 320,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
-        }}>
-          <Search size={16} color="var(--text2)" style={{ marginRight: 8 }} />
-          <input 
-            type="text" 
-            placeholder="Search articles or tags..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              background: 'transparent', border: 'none', color: 'var(--text)', outline: 'none', width: '100%', fontSize: 14
-            }}
-          />
+        <div className="blog-hero-diagram" aria-hidden="true">
+          <div className="diagram-line diagram-line-one" />
+          <div className="diagram-line diagram-line-two" />
+          <div className="diagram-node diagram-node-core"><Activity size={18} /><span>RESEARCH</span></div>
+          <div className="diagram-node diagram-node-top"><Layers3 size={16} /><span>MODELS</span></div>
+          <div className="diagram-node diagram-node-right"><Database size={16} /><span>ARCHIVE</span></div>
+          <div className="diagram-node diagram-node-bottom"><BookOpen size={16} /><span>INSIGHTS</span></div>
         </div>
-      </div>
+      </section>
 
-      {blogs.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '64px 0', color: 'var(--text3)' }}>
-          <BookOpen size={48} opacity={0.3} style={{ marginBottom: 16 }} />
-          <div>{searchQuery ? "No articles found matching your search." : "No published articles yet."}</div>
+      <section className="blog-toolbar" aria-label="Blog filters">
+        <div className="blog-year-filter">
+          <span className="toolbar-label"><SlidersHorizontal size={13} /> YEAR VIEW</span>
+          {availableYears.map(year => (
+            <button key={year} className={activeYear === year ? "year-filter active" : "year-filter"} onClick={() => setActiveYear(year)}>
+              {year === "All" ? "All years" : year}
+            </button>
+          ))}
         </div>
+        <label className="blog-search">
+          <Search size={16} />
+          <input type="text" placeholder="Search the repository..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+        </label>
+      </section>
+
+      {selectedTags.length > 0 && (
+        <div className="blog-active-filters">
+          <span>FILTERED BY</span>
+          {selectedTags.map(tag => (
+            <button key={tag} onClick={() => setSelectedTags(selectedTags.filter(t => t !== tag))}>{tag}<X size={12} /></button>
+          ))}
+          <button className="clear-filters" onClick={() => setSelectedTags([])}>Clear all</button>
+        </div>
+      )}
+
+      {yearSections.length === 0 ? (
+        <div className="blog-empty-state"><BookOpen size={34} /><div>{searchQuery ? "No nodes match that search." : "No published research nodes yet."}</div></div>
       ) : (
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 32
-        }}>
-          {blogs.map(blog => (
-            <div 
-              key={blog.id} 
-              onClick={() => onSelect(blog)}
-              style={{
-                background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 16,
-                overflow: 'hidden', cursor: 'pointer', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', display: 'flex', flexDirection: 'column'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-6px)';
-                e.currentTarget.style.boxShadow = '0 16px 32px rgba(0,0,0,0.3)';
-                e.currentTarget.style.borderColor = 'var(--primary)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'none';
-                e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.style.borderColor = 'var(--border)';
-              }}
-            >
-              {blog.cover_image ? (
-                <div style={{ height: 200, width: '100%', background: `url(${blog.cover_image}) center/cover`, borderBottom: '1px solid var(--border)' }} />
-              ) : (
-                <div style={{ height: 200, width: '100%', background: 'linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid var(--border)' }}>
-                  <BookOpen size={48} color="var(--text3)" opacity={0.4} />
-                </div>
-              )}
-              
-              <div style={{ padding: 24, display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-                  {(blog.tags || []).map(tag => (
-                    <span key={tag} 
-                      onClick={(e) => { 
-                        e.stopPropagation(); 
-                        if (!selectedTags.includes(tag)) setSelectedTags([...selectedTags, tag]); 
-                      }}
-                      style={{
-                        fontSize: 12, background: 'rgba(0, 255, 136, 0.1)', color: 'var(--primary)',
-                        padding: '4px 8px', borderRadius: 6, fontWeight: 600, border: '1px solid rgba(0, 255, 136, 0.2)'
-                      }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                
-                <h3 style={{ margin: '0 0 12px 0', fontSize: 22, fontWeight: 700, color: 'var(--text)', lineHeight: 1.3 }}>
-                  {blog.title}
-                </h3>
-                
-                <p style={{ margin: 0, fontSize: 15, color: 'var(--text2)', lineHeight: 1.6, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                  {blog.content ? blog.content.replace(/<[^>]+>/g, '').substring(0, 180) + '...' : ''}
-                </p>
-                
-                <div style={{ marginTop: 'auto', paddingTop: 24, display: 'flex', alignItems: 'center', color: 'var(--text3)', fontSize: 13, fontWeight: 500 }}>
-                  <Clock size={14} style={{ marginRight: 6 }} />
-                  {new Date(blog.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                </div>
+        <div className="blog-year-sections">
+          {yearSections.map(({ year, posts }) => (
+            <section className="blog-year-section" key={year}>
+              <div className="blog-year-heading">
+                <div className="year-heading-mark"><span>{year === "Featured" ? "✦" : year.slice(-2)}</span></div>
+                <div><p>{year === "Featured" ? "CURATED SIGNALS" : "RESEARCH BAND"}</p><h3>{year === "Featured" ? "Featured research" : `${year} archive`}</h3></div>
+                <span className="blog-year-count">{posts.length.toString().padStart(2, "0")} nodes</span>
               </div>
-            </div>
+              <div className="blog-card-grid">
+                {posts.map((blog, index) => (
+                  <article className="blog-card" key={blog.id} onClick={() => onSelect(blog)} tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") onSelect(blog); }}>
+                    <div className="blog-card-glow" />
+                    <div className="blog-card-top"><span className="blog-card-index">{String(index + 1).padStart(2, "0")}</span><span className="blog-card-source">{blog.is_external ? "AL_VIDHYA / HUB" : "ACADEMY / NOTE"}</span><ArrowUpRight size={15} /></div>
+                    <div className="blog-card-icon">{blog.is_external ? <Database size={17} /> : <BookOpen size={17} />}</div>
+                    <h4>{blog.title}</h4>
+                    <p>{(blog.description || blog.content || "").replace(/<[^>]+>/g, "").substring(0, 150)}{(blog.description || blog.content || "").length > 150 ? "…" : ""}</p>
+                    <div className="blog-card-footer"><span>{blog.is_external ? "OPEN RESEARCH" : "READ ARTICLE"}</span><span className="blog-card-year">{getBlogYear(blog)}</span></div>
+                  </article>
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       )}
@@ -337,17 +321,17 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
     .slice(0, 3);
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="blog-detail-shell" style={{ position: 'relative' }}>
       {/* Progress Bar */}
       <div style={{ position: 'fixed', top: 42, left: 0, right: 0, height: 3, background: 'var(--border)', zIndex: 100 }}>
         <div style={{ height: '100%', background: 'var(--primary)', width: `${progress}%`, transition: 'width 0.1s' }} />
       </div>
 
-      <div style={{ display: 'flex', maxWidth: 1200, margin: '0 auto', alignItems: 'flex-start' }}>
+      <div className="blog-detail-layout" style={{ display: 'flex', maxWidth: 1200, margin: '0 auto', alignItems: 'flex-start' }}>
         
         {/* Main Content */}
-        <div style={{ flex: 1, padding: '40px 24px 80px', maxWidth: 860 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
+        <div className="blog-detail-main" style={{ flex: 1, padding: '40px 24px 80px', maxWidth: 860 }}>
+          <div className="blog-detail-toolbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 40 }}>
             <button 
               onClick={onBack}
               style={{
@@ -401,11 +385,11 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
             ))}
           </div>
 
-          <h1 style={{ fontSize: 48, margin: '0 0 24px 0', fontWeight: 800, lineHeight: 1.2, color: 'var(--text)' }}>
+          <h1 className="blog-detail-title" style={{ fontSize: 48, margin: '0 0 24px 0', fontWeight: 800, lineHeight: 1.2, color: 'var(--text)' }}>
             {blog.title}
           </h1>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, color: 'var(--text2)', marginBottom: 24, fontSize: 16 }}>
+          <div className="blog-detail-meta" style={{ display: 'flex', alignItems: 'center', gap: 16, color: 'var(--text2)', marginBottom: 24, fontSize: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <Clock size={16} />
               {new Date(blog.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
@@ -415,7 +399,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
           </div>
 
           {/* AI TLDR Action */}
-          <div style={{ paddingBottom: 40, borderBottom: '1px solid var(--border)', marginBottom: 40 }}>
+          <div className="blog-detail-tldr" style={{ paddingBottom: 40, borderBottom: '1px solid var(--border)', marginBottom: 40 }}>
             {!tldr ? (
               <button onClick={handleGenerateTLDR} disabled={loadingTldr}
                 style={{
@@ -444,7 +428,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
 
           {/* Related Posts Strip */}
           {relatedPosts.length > 0 && (
-            <div style={{ marginTop: 80, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
+            <div className="blog-detail-related" style={{ marginTop: 80, paddingTop: 40, borderTop: '1px solid var(--border)' }}>
               <h3 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', marginBottom: 32 }}>Related Posts</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 24 }}>
                 {relatedPosts.map(post => (
@@ -464,7 +448,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
 
         {/* TOC Sidebar */}
         {toc.length > 0 && (
-          <div style={{ width: 280, padding: '40px 24px', position: 'sticky', top: 0, height: 'calc(100vh - 42px)', overflowY: 'auto', display: 'none', '@media (min-width: 1024px)': { display: 'block' } }}>
+          <div className="blog-detail-toc" style={{ width: 280, padding: '40px 24px', position: 'sticky', top: 0, height: 'calc(100vh - 42px)', overflowY: 'auto', display: 'none', '@media (min-width: 1024px)': { display: 'block' } }}>
             <h4 style={{ fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text3)', fontWeight: 700, marginBottom: 20 }}>
               On this page
             </h4>

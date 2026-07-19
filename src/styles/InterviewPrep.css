@@ -904,6 +904,248 @@
   padding: 6px 10px; font-size: 11px; font-weight: 600;
   cursor: pointer; transition: all 0.2s;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SYSTEM DESIGN GLASS OVERRIDES
+   A quiet AWS-architecture canvas: dotted topology, luminous connectors,
+   and translucent Apple-glass surfaces that keep the lesson hierarchy clear.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.ip-root {
+  --ip-bg: #05080c;
+  --ip-surface: rgba(17, 23, 31, 0.68);
+  --ip-surface-strong: rgba(20, 28, 37, 0.84);
+  --ip-line: rgba(159, 212, 221, 0.14);
+  --ip-line-strong: rgba(159, 212, 221, 0.27);
+  --ip-copy: #e5f1f3;
+  --ip-muted: #7d929d;
+  --ip-cyan: #6bd7ef;
+  --ip-green: #8ff2c7;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 77% 0%, rgba(34, 119, 145, 0.16), transparent 29%),
+    radial-gradient(circle at 17% 65%, rgba(26, 116, 106, 0.09), transparent 25%),
+    var(--ip-bg);
+  color: var(--ip-copy);
+}
+
+.ip-root::before,
+.ip-root::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* AWS-style topology field: small, regular nodes instead of a heavy grid. */
+.ip-root::before {
+  z-index: -2;
+  opacity: 0.42;
+  background-image: radial-gradient(circle, rgba(150, 220, 227, 0.5) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(125deg, #000 0%, rgba(0,0,0,.82) 52%, transparent 92%);
+}
+
+.ip-root::after {
+  z-index: -1;
+  opacity: 0.34;
+  background-image:
+    linear-gradient(rgba(102, 192, 210, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(102, 192, 210, .055) 1px, transparent 1px);
+  background-size: 120px 120px;
+  mask-image: linear-gradient(to bottom, #000, transparent 75%);
+}
+
+.ip-root > * { position: relative; z-index: 1; }
+
+.ip-topbar {
+  min-height: 64px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--ip-line);
+  background: rgba(7, 12, 17, 0.72);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .17), inset 0 1px 0 rgba(255,255,255,.055);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+}
+
+.ip-topbar-left { gap: 13px; }
+.ip-brand { gap: 8px; }
+.ip-brand-icon { color: var(--ip-cyan); filter: drop-shadow(0 0 9px rgba(107,215,239,.7)); }
+.ip-brand-text { color: var(--ip-copy); font-size: 10px; letter-spacing: 2.5px; }
+.ip-overall-progress { gap: 9px; }
+.ip-overall-bar { width: 92px; height: 4px; background: rgba(255,255,255,.08); }
+.ip-overall-fill { background: linear-gradient(90deg, var(--ip-cyan), var(--ip-green)); box-shadow: 0 0 12px rgba(143,242,199,.55); }
+.ip-overall-label { color: var(--ip-green); font-family: var(--mono, monospace); }
+
+.ip-back-btn,
+.ip-icon-btn,
+.ip-admin-toggle,
+.ip-export-btn {
+  border-color: var(--ip-line);
+  background: rgba(255,255,255,.035);
+  color: var(--ip-muted);
+  backdrop-filter: blur(12px);
+}
+.ip-back-btn:hover,
+.ip-icon-btn:hover,
+.ip-admin-toggle:hover,
+.ip-export-btn:hover { color: var(--ip-copy); border-color: var(--ip-line-strong); background: rgba(255,255,255,.08); }
+.ip-admin-toggle.active { color: var(--ip-green); border-color: var(--ip-green); background: rgba(143,242,199,.1); box-shadow: 0 0 20px rgba(143,242,199,.1); }
+
+.ip-search-input {
+  min-height: 40px;
+  color: var(--ip-copy);
+  border-color: var(--ip-line);
+  border-radius: 12px;
+  background: rgba(255,255,255,.045);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.055);
+  backdrop-filter: blur(16px);
+}
+.ip-search-input:focus { border-color: rgba(107,215,239,.62); box-shadow: 0 0 0 4px rgba(107,215,239,.07); }
+.ip-search-icon { color: var(--ip-muted); }
+.ip-search-input::placeholder { color: #5d727d; }
+
+.ip-body { background: transparent; }
+.ip-list-pane,
+.ip-detail-pane {
+  background: rgba(5, 9, 14, .42);
+  border-color: var(--ip-line);
+  backdrop-filter: blur(13px) saturate(125%);
+  -webkit-backdrop-filter: blur(13px) saturate(125%);
+}
+.ip-list-pane::before,
+.ip-detail-pane::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .25;
+  background-image: radial-gradient(circle, rgba(141, 225, 230, .55) 1px, transparent 1px);
+  background-size: 23px 23px;
+  mask-image: linear-gradient(to bottom, #000, transparent 88%);
+}
+.ip-list-pane > *, .ip-detail-pane > * { position: relative; z-index: 1; }
+
+.ip-breadcrumb {
+  padding: 11px 18px;
+  border-color: var(--ip-line);
+  background: rgba(255,255,255,.025);
+  color: var(--ip-muted);
+  backdrop-filter: blur(14px);
+}
+.ip-bc-link:hover { color: var(--ip-cyan); }
+.ip-bc-current { color: var(--ip-copy); }
+.ip-state { color: var(--ip-muted); }
+.ip-state.ip-error { color: #ff8b9c; }
+
+.ip-roadmap {
+  padding: 24px 18px 72px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(107,215,239,.06), transparent 44%);
+}
+.ip-roadmap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .45;
+  background-image: radial-gradient(circle, rgba(143,242,199,.35) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, transparent 86%);
+}
+.ip-spine { width: 1px; background: linear-gradient(to bottom, transparent, rgba(107,215,239,.42) 13%, rgba(143,242,199,.36) 84%, transparent); box-shadow: 0 0 12px rgba(107,215,239,.18); }
+.ip-rm-arm, .ip-rm-string-h, .ip-rm-string { height: 1px; background: var(--ip-line-strong); }
+.ip-rm-dot { background: rgba(5,8,12,.9); border-color: var(--node-color, var(--ip-cyan)); }
+.ip-rm-dot.glow { box-shadow: 0 0 0 4px rgba(107,215,239,.07), 0 0 14px var(--node-color, var(--ip-cyan)); }
+.ip-vh-label { color: var(--ip-copy); font-family: var(--font, system-ui); }
+.ip-vh-dot { box-shadow: 0 0 0 5px rgba(107,215,239,.08), 0 0 16px var(--vh-color, var(--ip-cyan)); }
+
+.ip-course-card,
+.ip-chapter-card,
+.ip-lesson-card {
+  border-color: var(--ip-line);
+  background: linear-gradient(135deg, rgba(22,32,41,.8), rgba(10,16,23,.68));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 14px 28px rgba(0,0,0,.18);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
+.ip-course-card { border-top-color: var(--node-color, var(--ip-cyan)); }
+.ip-course-card:hover,
+.ip-chapter-card:hover,
+.ip-lesson-card:hover {
+  border-color: var(--node-color, var(--ip-cyan));
+  background: linear-gradient(135deg, rgba(29,47,56,.88), rgba(12,21,28,.8));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 18px 38px rgba(0,0,0,.28), 0 0 24px color-mix(in srgb, var(--node-color, var(--ip-cyan)) 13%, transparent);
+}
+.ip-rm-node.lesson-node.active .ip-lesson-card { background: color-mix(in srgb, var(--node-color, var(--ip-cyan)) 12%, rgba(12,20,27,.83)); box-shadow: inset 0 1px 0 rgba(255,255,255,.11), 0 0 24px color-mix(in srgb, var(--node-color, var(--ip-cyan)) 13%, transparent); }
+.ip-cc-title, .ip-chc-title { color: var(--ip-copy); }
+.ip-cc-meta span, .ip-chc-qcount, .ip-lc-title { color: var(--ip-muted); }
+.ip-rm-node.lesson-node.done .ip-lesson-card { color: var(--ip-green); }
+
+.ip-detail-pane { position: relative; }
+.ip-empty-state { min-height: 100%; }
+.ip-empty-orb {
+  border-color: var(--ip-line-strong);
+  background: rgba(255,255,255,.05);
+  color: var(--ip-cyan);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 0 36px rgba(107,215,239,.1);
+  backdrop-filter: blur(18px);
+}
+.ip-empty-title { color: var(--ip-copy); }
+.ip-empty-sub, .ip-es-lbl { color: var(--ip-muted); }
+.ip-es-val { color: var(--ip-green); text-shadow: 0 0 16px rgba(143,242,199,.25); }
+
+.ip-lesson-detail { padding: 40px clamp(22px, 4vw, 56px) 90px; }
+.ip-lesson-breadcrumb { color: var(--ip-muted); }
+.ip-lesson-breadcrumb span:last-child { color: var(--bc-color, var(--ip-green)); }
+.ip-question-block,
+.ip-answer-block {
+  border-color: var(--ip-line);
+  background: linear-gradient(135deg, rgba(23,30,39,.78), rgba(11,16,22,.72));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 20px 46px rgba(0,0,0,.17);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+.ip-question-block { border-left-color: var(--qb-color, var(--ip-cyan)); }
+.ip-qb-label { color: var(--ip-muted); }
+.ip-lesson-title { color: var(--ip-copy); font-size: clamp(20px, 2.1vw, 31px); letter-spacing: -.035em; }
+.ip-ab-label { color: var(--ip-cyan); }
+.ip-content, .ip-content p, .ip-content li { color: #a9bdc4; }
+.ip-content strong, .ip-content b, .ip-content h1, .ip-content h2, .ip-content h3, .ip-content h4 { color: var(--ip-copy) !important; }
+.ip-content a { color: var(--ip-cyan) !important; }
+.ip-content pre { background: rgba(4,10,16,.82) !important; border-color: var(--ip-line); box-shadow: inset 0 1px 0 rgba(255,255,255,.05); }
+
+.ip-lesson-footer { border-top-color: var(--ip-line); }
+.ip-complete-btn, .ip-ai-tutor-btn, .ip-nav-btn {
+  border-color: var(--ip-line);
+  background: rgba(255,255,255,.045);
+  color: var(--ip-muted);
+  backdrop-filter: blur(15px);
+}
+.ip-complete-btn:hover, .ip-ai-tutor-btn:hover, .ip-nav-btn:hover:not(:disabled) { border-color: var(--btn-color, var(--ip-cyan)); color: var(--ip-copy); background: rgba(255,255,255,.09); }
+.ip-complete-btn.done, .ip-ai-tutor-btn.active { background: color-mix(in srgb, var(--btn-color, var(--ip-green)) 12%, rgba(7,12,17,.78)); }
+.ip-nav-counter { color: var(--ip-muted); }
+
+.ip-ai-chat-panel {
+  border-color: var(--btn-color, var(--ip-cyan));
+  background: rgba(12,20,27,.78);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 44px rgba(0,0,0,.25);
+  backdrop-filter: blur(22px) saturate(145%);
+}
+.ip-ai-header, .ip-ai-toggles { background: rgba(255,255,255,.045); border-color: var(--ip-line); }
+.ip-ai-input-area { background: rgba(255,255,255,.04); border-color: var(--ip-line); }
+.ip-ai-input-area input { background: rgba(0,0,0,.22); border-color: var(--ip-line); }
+
+@media (max-width: 768px) {
+  .ip-topbar { min-height: 58px; padding: 0 12px; }
+  .ip-brand-text { font-size: 9px; letter-spacing: 1.8px; }
+  .ip-lesson-detail { padding: 25px 16px 65px; }
+  .ip-question-block, .ip-answer-block { border-radius: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ip-course-card, .ip-chapter-card, .ip-lesson-card, .ip-empty-orb { transition: none; }
+}
 .ip-export-btn:hover { border-color: var(--border2); background: var(--bg3); }
 
 /* Add Node Buttons in Roadmap */

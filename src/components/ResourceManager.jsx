@@ -10,6 +10,7 @@ import {
 import { getSavedSets, deleteSavedSet, MODE_LABELS } from "../store/savedStudyStore";
 import { AIResult } from "./AIStudyContent";
 import YouTubeThumbnail from './YouTubeThumbnail';
+import "../styles/ResourceManager.css";
 
 const MODE_ICONS = { quiz: CheckSquare, flashcards: Library, mindmap: Network, summary: AlignLeft };
 
@@ -217,90 +218,103 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
   };
 
   const activeColor = selected?.type === 'custom_folder' ? '#f59e0b' : pathsData[selected?.pathKey]?.color || "#3b82f6";
+  const selectedLabel = selected?.type === 'custom_folder'
+    ? selected.folder.name
+    : selected?.type === 'module'
+      ? selected.module.title
+      : selected?.type === 'node'
+        ? selected.node.title
+        : selected?.type === 'path'
+          ? pathsData[selected.pathKey]?.title || selected.pathKey
+          : 'Choose a collection';
 
   return (
     <div className="resource-vault-shell">
-      <header className="vault-header sticky-header" style={{ padding: '16px 24px' }}>
-        <div className="admin-header-left">
-          <div className="admin-logo-orb" style={{ width: 32, height: 32 }}>
-             <BookOpen size={16} color={activeColor} />
-             <div className="orb-pulse" style={{ background: activeColor }} />
+      <header className="vault-header">
+        <div className="vault-brand">
+          <div className="vault-brand-mark" style={{ '--brand-color': activeColor }}>
+            <BookOpen size={17} />
+            <span />
           </div>
-          <div>
-            <h1 style={{ fontSize: 24, fontWeight: 800, letterSpacing: '-.5px', margin: 0, color: 'var(--text)', fontFamily: 'var(--font)' }}>Discovery Hub</h1>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
+          <div className="vault-brand-copy">
+            <div className="vault-eyebrow"><span className="vault-live-dot" /> Personal learning library</div>
+            <h1>Discovery Hub</h1>
+            <div className="vault-breadcrumbs">
                {breadcrumbs.map((crumb, idx) => (
                  <React.Fragment key={idx}>
-                   {idx > 0 && <span style={{ color: 'var(--text3)', fontSize: 10 }}>/</span>}
+                   {idx > 0 && <span className="vault-crumb-separator">/</span>}
                    <span 
                      onClick={crumb.onClick}
-                     style={{ 
-                       fontSize: 11, cursor: crumb.onClick ? 'pointer' : 'default', 
-                       color: idx === breadcrumbs.length - 1 ? 'var(--text)' : 'var(--text3)',
-                       fontWeight: idx === breadcrumbs.length - 1 ? 700 : 500
-                     }}
+                     className={idx === breadcrumbs.length - 1 ? 'is-current' : ''}
                    >
                      {crumb.label}
                    </span>
-                 </React.Fragment>
-               ))}
+               </React.Fragment>
+             ))}
             </div>
           </div>
         </div>
-        <div className="header-actions">
-           {selected && (
-             <div style={{ display: 'flex', gap: 8 }}>
-                <div className="admin-status-badge active" style={{ background: 'var(--bg3)', color: 'var(--text2)', border: '1px solid var(--border)' }}>{resources.videos.length} Videos</div>
-                <div className="admin-status-badge active" style={{ background: 'var(--bg3)', color: 'var(--text2)', border: '1px solid var(--border)' }}>{resources.files.length} Files</div>
-             </div>
-           )}
-           <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 8px' }} />
-           <button className="admin-close-btn" onClick={onClose} style={{ width: 32, height: 32 }}><X size={16} /></button>
+        <div className="vault-header-actions">
+          <div className="vault-header-metrics">
+            <span><strong>{resources.videos.length}</strong> videos</span>
+            <span><strong>{resources.files.length}</strong> files</span>
+            <span><strong>{resources.links.length}</strong> links</span>
+          </div>
+          <button className="vault-close-btn" onClick={onClose} aria-label="Close resources"><X size={17} /></button>
         </div>
       </header>
 
-      <main className="vault-main" style={{ padding: '12px' }}>
+      <main className="vault-main">
         {/* Sidebar: Tactical Directory */}
-        <aside className="vault-sidebar" style={{ width: 360 }}>
-          <div className="sidebar-header" style={{ padding: '12px 16px' }}>
-            <span style={{ fontSize: 10, fontWeight: 800, color: 'var(--text3)', letterSpacing: 1.5, fontFamily: "var(--font)" }}>STRATEGIC TOPOLOGY</span>
-            <button onClick={() => {
+        <aside className="vault-sidebar">
+          <div className="vault-sidebar-intro">
+            <div>
+              <span className="vault-section-label">Library index</span>
+              <h2>Browse your space</h2>
+            </div>
+            <button className="vault-icon-btn" onClick={() => {
               const n = window.prompt("New folder name:");
               if (n) saveCustom({ ...customData, folders: [...customData.folders, { id: 'cf-'+Date.now(), name: n }] });
-            }} className="mini-action-btn" style={{ width: 24, height: 24, background: 'rgba(255,255,255,0.05)', color: 'var(--text)' }}><FolderPlus size={12}/></button>
+            }} aria-label="Create folder" title="Create folder"><FolderPlus size={14}/></button>
+          </div>
+          <div className="vault-sidebar-summary">
+            <div className="vault-summary-orb"><Library size={16} /></div>
+            <div><strong>{selected ? selectedLabel : 'All resources'}</strong><span>{selected ? 'Current collection' : 'Select a path to explore'}</span></div>
+            <Activity size={14} className="vault-summary-signal" />
           </div>
           
           <div className="tree-container mini-scrollbar">
+            <div className="vault-tree-label"><span>YOUR FOLDERS</span><em>{customData.folders.length}</em></div>
             {customData.folders.map(f => (
-              <div key={f.id} className={`tree-row ${selected?.folderId === f.id ? 'active' : ''}`} onClick={() => setSelected({ type: 'custom_folder', folderId: f.id, folder: f })}>
-                 <Folder size={14} color="#f59e0b" />
+              <div key={f.id} className={`tree-row ${selected?.folderId === f.id ? 'active' : ''}`} style={{ '--path-color': '#f59e0b' }} onClick={() => setSelected({ type: 'custom_folder', folderId: f.id, folder: f })}>
+                 <span className="vault-tree-icon vault-folder-icon"><FolderOpen size={14} /></span>
                  <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>{f.name}</span>
                  <Trash2 size={12} color="#ef4444" style={{ marginLeft: 'auto', opacity: 0.4 }} onClick={(e) => { e.stopPropagation(); saveCustom({ ...customData, folders: customData.folders.filter(fx => fx.id !== f.id) }); }} />
               </div>
             ))}
 
-            <div style={{ margin: '12px 16px 6px', fontSize: 10, fontWeight: 800, color: 'var(--text3)', letterSpacing: 1, fontFamily: "var(--font)" }}>ECOSYSTEM PATHS</div>
+            <div className="vault-tree-label ecosystem-label"><span>ECOSYSTEM PATHS</span><em>{Object.keys(pathsData).length}</em></div>
             
             {Object.entries(pathsData).map(([pk, p]) => (
               <div key={pk} className="tree-item">
-                <div className={`tree-row ${selected?.type === 'path' && selected.pathKey === pk ? 'active' : ''}`} onClick={() => setSelected({ type: 'path', pathKey: pk })}>
+                <div className={`tree-row ${selected?.type === 'path' && selected.pathKey === pk ? 'active' : ''}`} style={{ '--path-color': p.color }} onClick={() => setSelected({ type: 'path', pathKey: pk })}>
                   <ChevronRight size={12} style={{ transform: expandedPaths[pk] ? 'rotate(90deg)' : 'none', transition: '0.2s' }} onClick={(e) => { e.stopPropagation(); setExpandedPaths(ex => ({ ...ex, [pk]: !ex[pk] })); }} />
-                  <Database size={14} color={p.color} />
+                  <span className="vault-tree-icon vault-path-icon"><Network size={14} /></span>
                   <span style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', fontFamily: "var(--font)" }}>{p.title || pk}</span>
                 </div>
                 
                 {expandedPaths[pk] && p.nodes?.map(n => (
                   <div key={n.id} className="tree-sub-group" style={{ position: 'relative' }}>
                     <div className="tree-row-line" style={{ background: p.color, left: 24, opacity: 0.2 }} />
-                    <div className={`tree-row ${selected?.nodeId === n.id ? 'active' : ''}`} style={{ paddingLeft: 32 }} onClick={() => setSelected({ type: 'node', pathKey: pk, nodeId: n.id, node: n })}>
+                    <div className={`tree-row ${selected?.nodeId === n.id ? 'active' : ''}`} style={{ paddingLeft: 32, '--path-color': p.color }} onClick={() => setSelected({ type: 'node', pathKey: pk, nodeId: n.id, node: n })}>
                       <ChevronRight size={10} style={{ transform: expandedNodes[n.id] ? 'rotate(90deg)' : 'none', transition: '0.2s' }} onClick={(e) => { e.stopPropagation(); setExpandedNodes(ex => ({ ...ex, [n.id]: !ex[n.id] })); }} />
-                      <Layers size={13} color={`${p.color}cc`} />
+                      <span className="vault-tree-icon vault-node-icon"><Layers size={13} /></span>
                       <span style={{ fontSize: 12, color: 'var(--text2)' }}>{n.title}</span>
                     </div>
 
                     {expandedNodes[n.id] && n.modules?.map(m => (
-                      <div key={m.id} className={`tree-row ${selected?.module?.id === m.id ? 'active' : ''}`} style={{ paddingLeft: 52 }} onClick={() => setSelected({ type: 'module', pathKey: pk, nodeId: n.id, module: m })}>
-                        <div style={{ width: 4, height: 4, borderRadius: 2, background: p.color, opacity: 0.6 }} />
+                      <div key={m.id} className={`tree-row ${selected?.module?.id === m.id ? 'active' : ''}`} style={{ paddingLeft: 52, '--path-color': p.color }} onClick={() => setSelected({ type: 'module', pathKey: pk, nodeId: n.id, module: m })}>
+                        <span className="vault-module-icon"><span /></span>
                         <span style={{ fontSize: 11, color: 'var(--text3)' }}>{m.title}</span>
                       </div>
                     ))}
@@ -312,9 +326,21 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
         </aside>
 
         {/* Dashboard Content */}
-        <section className="vault-dashboard" style={{ borderRadius: 20 }}>
-          <div className="dashboard-toolbar" style={{ padding: '12px 20px' }}>
-            <div 
+        <section className="vault-dashboard">
+          <div className="vault-dashboard-hero">
+            <div className="vault-hero-copy">
+              <span className="vault-section-label"><Sparkles size={12} /> Curated workspace</span>
+              <h2>Everything you need,<br /><span>right where you left it.</span></h2>
+              <p>Collect videos, files, links, and generated study sets without losing the context that makes them useful.</p>
+            </div>
+            <div className="vault-hero-visual" aria-hidden="true">
+              <div className="vault-hero-ring ring-one" /><div className="vault-hero-ring ring-two" />
+              <div className="vault-hero-core"><BookOpen size={18} /><span>LIBRARY<br />CORE</span></div>
+              <div className="vault-hero-orbit orbit-one"><Video size={12} /></div><div className="vault-hero-orbit orbit-two"><Link size={12} /></div><div className="vault-hero-orbit orbit-three"><Brain size={12} /></div>
+            </div>
+          </div>
+          <div className="dashboard-toolbar">
+            <div className="vault-tab-switcher"
                style={{ 
                  display: 'flex', 
                  background: 'rgba(255, 255, 255, 0.03)',
@@ -378,6 +404,7 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                    >
                      <Icon size={14} style={{ opacity: isActive ? 1 : 0.6 }} />
                      {t.label}
+                     <small>{filtered[t.id]?.length || 0}</small>
                      {isActive && (
                        <motion.div
                          layoutId="activePill_res"
@@ -395,17 +422,20 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                  );
                })}
              </div>
-            <div className="admin-search-wrapper" style={{ width: 300 }}>
+            <div className="admin-search-wrapper vault-search">
                <Search size={14} />
-               <input placeholder="Search study blocks..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={{ padding: '8px 12px 8px 40px', borderRadius: 10, fontSize: 13 }} />
+               <input placeholder="Search your library..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={{ padding: '8px 12px 8px 40px', borderRadius: 10, fontSize: 13 }} />
             </div>
           </div>
 
-          <div className="asset-scroll-area mini-scrollbar" style={{ padding: '24px' }}>
+          <div className="asset-scroll-area mini-scrollbar">
             {!selected ? (
-              <div className="empty-state" style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: 0.2 }}>
-                 <MousePointer2 size={64} strokeWidth={1} />
-                 <p style={{ marginTop: 20, fontWeight: 700, fontSize: 14 }}>Select a topology element to explore assets.</p>
+              <div className="vault-empty-state">
+                 <div className="vault-empty-icon"><MousePointer2 size={22} /></div>
+                 <span className="vault-section-label">Start exploring</span>
+                 <h3>Pick a collection to unlock your resources</h3>
+                 <p>Choose an ecosystem path or one of your folders from the library index.</p>
+                 <div className="vault-empty-hints"><span><Database size={13} /> Ecosystem paths</span><span><Folder size={13} /> Personal folders</span><span><Search size={13} /> Instant search</span></div>
               </div>
             ) : (
               <>

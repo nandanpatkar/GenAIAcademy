@@ -49,9 +49,11 @@ export function HomeSidebar({
   ];
 
   return (
-    <aside className="sticky top-0 z-20 flex w-full flex-col border-b border-[var(--color-brand-border)] bg-[var(--brand-surface)] md:fixed md:inset-y-0 md:left-0 md:w-64 md:border-b-0 md:border-r">
-      <div className="flex h-14 items-center gap-3 border-b border-[var(--color-brand-border)] px-4">
-        <OpenFlowLogo className="h-8 w-8 shrink-0" />
+    <aside className="flow-glass sticky top-0 z-20 flex w-full flex-col border-b-0 md:fixed md:inset-y-4 md:left-4 md:w-60 md:rounded-[26px] md:border md:border-[var(--brand-glass-border)]">
+      <div className="flex h-16 items-center gap-3 border-b border-[var(--color-brand-border)]/60 px-5">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[12px] bg-[var(--brand-primary)] shadow-[0_8px_18px_rgba(255,153,0,0.28)]">
+          <OpenFlowLogo className="h-7 w-7" />
+        </div>
 
         <span className="truncate text-base font-semibold tracking-tight text-[var(--brand-text)]">
           {localizedAppName}
@@ -64,7 +66,7 @@ export function HomeSidebar({
         </div>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto p-3 md:block md:flex-1 md:space-y-5 md:overflow-y-auto">
+      <div className="flex gap-2 overflow-x-auto p-3 md:block md:flex-1 md:space-y-5 md:overflow-y-auto md:p-4">
         <div className="flex gap-2 md:block md:space-y-1">
           {navigationItems.map((item) => (
             <SidebarItem

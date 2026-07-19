@@ -65,7 +65,7 @@ export const FLOW_CANVAS_STYLE_PRESETS = {
 } as const;
 
 export function getFlowCanvasClassName(isEffectiveSelectMode: boolean): string {
-    return `bg-[var(--brand-background)] ${isEffectiveSelectMode ? 'flow-canvas-select-mode' : 'flow-canvas-pan-mode'}`;
+    return `flow-canvas-stage bg-[var(--brand-background)] ${isEffectiveSelectMode ? 'flow-canvas-select-mode' : 'flow-canvas-pan-mode'}`;
 }
 
 export function getFlowCanvasInteractionMode(isEffectiveSelectMode: boolean): {
