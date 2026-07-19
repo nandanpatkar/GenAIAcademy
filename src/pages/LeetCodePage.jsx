@@ -10,12 +10,12 @@ import { useSimplePyodide } from "../components/PythonIDE";
 import AITutorPanel from "../components/AITutorPanel";
 import "../styles/LeetCode.css";
 
-const solutionFiles = import.meta.glob("../../Leetcode/**/*.py", {
+const solutionFiles = import.meta.glob("../data/leetcode/**/*.py", {
   query: "?raw",
   import: "default",
   eager: true,
 });
-const readmeFiles = import.meta.glob("../../Leetcode/README.md", { query: "?raw", import: "default", eager: true });
+const readmeFiles = import.meta.glob("../data/leetcode/README.md", { query: "?raw", import: "default", eager: true });
 
 const readmeText = Object.values(readmeFiles)[0] || "";
 const readmeProblems = Object.fromEntries(
@@ -110,9 +110,21 @@ function parseProblem(path, source) {
   return { id: path, number, folder, title: problemTitle(number, fileName), difficulty: problemDifficulty(number), description: markdownDescription, solution: cleanSolution(source), boilerplate: createBoilerplate(source) };
 }
 
-const problems = Object.entries(solutionFiles)
+const parsedProblems = Object.entries(solutionFiles)
   .map(([path, source]) => parseProblem(path, source))
   .sort((a, b) => a.number - b.number || a.title.localeCompare(b.title));
+
+const fallbackProblem = {
+  id: "builtin:two-sum",
+  number: 1,
+  folder: "Starter problems",
+  title: "Two Sum",
+  difficulty: "Easy",
+  description: "Given an array of integers and a target, return the indices of the two numbers that add up to the target.",
+  solution: "class Solution:\n    def twoSum(self, nums, target):\n        return []\n",
+  boilerplate: "class Solution:\n    def twoSum(self, nums, target):\n        pass\n",
+};
+const problems = parsedProblems.length ? parsedProblems : [fallbackProblem];
 
 export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissions = {} }) {
   const initial = problems.find(p => p.title === "Two Sum") || problems[0];
@@ -132,7 +144,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
   const dragRef = useRef(null);
   const [completed, setCompleted] = useState(() => { try { return JSON.parse(localStorage.getItem("leetcode_completed") || "[]"); } catch { return []; } });
   const { runPython, stdout, stderr, isRunning } = useSimplePyodide();
-  const selected = problems.find(p => p.id === selectedId) || initial;
+  const selected = problems.find(p => p.id === selectedId) || initial || fallbackProblem;
 
   const filtered = useMemo(() => problems.filter(p =>
     (!query || `${p.number} ${p.title}`.toLowerCase().includes(query.toLowerCase())) &&
@@ -149,7 +161,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
     onSubmitLeetCode?.({ problemId: selected.id, problemNumber: selected.number, title: selected.title, code, status: "submitted" });
   };
 
-  const problemOfDay = problems[(new Date().getDate() * 7) % Math.max(problems.length, 1)] || initial;
+  const problemOfDay = problems[(new Date().getDate() * 7) % Math.max(problems.length, 1)] || initial || fallbackProblem;
   const difficultyClass = (difficulty) => difficulty.toLowerCase();
 
   useEffect(() => {
