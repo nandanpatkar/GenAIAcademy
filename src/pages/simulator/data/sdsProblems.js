@@ -1,4 +1,4 @@
-// System Design Simulator — Problems Data (35 problems ported from original repo)
+// System Design Simulator — Problems Data (33 problems ported from original repo)
 // Full port from vijaygupta18/system-design-simulator
 
 import { useCustomProblemsStore } from "../../../store/customProblemsStore";
@@ -2618,4 +2618,3 @@ export function getProblemById(id) {
 
   return undefined;
 }
-
