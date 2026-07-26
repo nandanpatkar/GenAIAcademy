@@ -639,6 +639,7 @@ function MainApp() {
       system: () => setShowSimulator(true),
       coding: () => setShowIDE(true),
       resources: () => setShowResources(true),
+      visualize: () => setShowLearnBug(true),
     };
     launchers[feature]?.();
   };

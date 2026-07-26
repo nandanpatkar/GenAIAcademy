@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ExternalLink, Monitor, RefreshCw, X } from "lucide-react";
 
-const LEARNBUG_URL = "https://www.learnbug.in/";
+const LEARNBUG_URL = "https://www.learnbug.in/learn";
 
 export default function LearnBugEmbed({ onClose }) {
   const [isLoading, setIsLoading] = useState(true);

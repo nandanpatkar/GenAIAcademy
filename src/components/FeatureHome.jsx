@@ -215,6 +215,16 @@ const HOMES = {
     features: ["Organize videos, links, articles, files, and generated quiz or mind-map sets", "Browse by roadmap, node, or module instead of hunting through tabs", "Keep the source and the learning artifact connected for the next session"],
     visual: "resources", focus: "better discovery",
   },
+  visualize: {
+    eyebrow: "VISUAL DEBUGGER / 21",
+    title: "See your code think in public.",
+    description: "Turn invisible execution into something you can follow. Step through Python, watch memory change, and build the intuition that makes debugging feel less like guesswork.",
+    accent: "#76d8ff", accentSoft: "rgba(118,216,255,.16)", icon: Network,
+    action: "Start Visualizing", actionNote: "Live traces · memory views · control flow",
+    stats: [["3", "ways to see state"], ["Frame", "by frame"], ["Live", "Python traces"]],
+    features: ["Step through execution without losing the story", "Inspect variables, stack frames, and data structure shape", "Move from a confusing line to a confident mental model"],
+    visual: "visualize", focus: "runtime intuition",
+  },
 };
 
 const HOME_DETAILS = {
@@ -279,6 +289,15 @@ const HOME_DETAILS = {
       [Bot, "Write + review", "Ask the project-aware AI to draft a file, explain a function, or point out a risky change."],
       [GitBranch, "Pull + compare", "Bring in repository changes, inspect history, and keep the reasoning behind each iteration visible."],
       [Network, "Visualize + ship", "Turn the project into an architecture view and use it to decide what to change next."],
+    ],
+  },
+  visualize: {
+    label: "THE DEBUGGING LOOP",
+    title: "From ‘why?’ to ‘there it is.’",
+    cards: [
+      [Play, "Trace", "Play, pause, or scrub through a running program one meaningful frame at a time."],
+      [BrainCircuit, "Inspect", "See the variables, references, and data structure changes behind the line you are on."],
+      [Target, "Understand", "Use the visual story to explain the bug, then make the next fix with confidence."],
     ],
   },
 };
@@ -522,8 +541,57 @@ function ResourcesVisual({ color }) {
   </div>;
 }
 
+function VisualizeVisual({ color }) {
+  const [mode, setMode] = useState("memory");
+  const [activeFrame, setActiveFrame] = useState(3);
+  const frames = [
+    { line: 2, label: "input", value: "[3, 1, 4]", note: "list created" },
+    { line: 3, label: "cursor", value: "i = 0", note: "loop begins" },
+    { line: 4, label: "current", value: "value = 1", note: "compare with best" },
+    { line: 5, label: "best", value: "best = 4", note: "state updated" },
+    { line: 7, label: "return", value: "4", note: "function exits" },
+  ];
+  const frame = frames[activeFrame % frames.length];
+  const modeCopy = {
+    memory: ["Memory snapshot", "best → 4", "current → 1", "stack → max_value"],
+    flow: ["Control flow", "loop / active", "branch / skipped", "return / next"],
+    timeline: ["Execution timeline", "5 checkpoints", "1 branch", "0 hidden steps"],
+  }[mode];
+
+  return <div className="fh-visual fh-visualize-visual">
+    <div className="fh-visual-label"><Dot color={color} /> PYTHON TRACE / MAX VALUE <span>FRAME {String(activeFrame + 1).padStart(2, "0")} / 05</span></div>
+    <div className="fh-viz-runbar"><span><i style={{ background: color }} /> running <b>max_value.py</b></span><span>session / 04A8</span></div>
+    <div className="fh-viz-workspace">
+      <div className="fh-viz-code">
+        <div className="fh-viz-code-head"><span>EDITOR</span><span>PYTHON</span></div>
+        {["def max_value(values):", "  best = values[0]", "  for value in values:", "    if value > best:", "      best = value", "  return best"].map((line, index) => <button key={line} className={frame.line === index + 1 ? "active" : ""} onClick={() => setActiveFrame(Math.min(frames.length - 1, index))}><span>{String(index + 1).padStart(2, "0")}</span><code>{line}</code>{frame.line === index + 1 && <b style={{ background: color }} />}</button>)}
+      </div>
+      <div className="fh-viz-canvas">
+        <div className="fh-viz-canvas-head"><span>EXECUTION MAP</span><small>step / {String(activeFrame + 1).padStart(2, "0")}</small></div>
+        <div className="fh-viz-flow">
+          <button className="fh-viz-node source" onClick={() => setActiveFrame(0)}><span>values</span><strong>[3, 1, 4]</strong><small>input list</small></button>
+          <i className="fh-viz-connector one" style={{ background: color }} />
+          <button className={`fh-viz-node loop ${activeFrame > 0 ? "lit" : ""}`} onClick={() => setActiveFrame(1)}><span>for value</span><strong>looping</strong><small>3 items</small></button>
+          <i className="fh-viz-connector two" style={{ background: color }} />
+          <button className={`fh-viz-node decision ${activeFrame > 1 ? "lit" : ""}`} onClick={() => setActiveFrame(2)}><span>value &gt; best?</span><strong>{activeFrame >= 3 ? "true" : "pending"}</strong><small>branch check</small></button>
+          <i className="fh-viz-connector three" style={{ background: color }} />
+          <button className={`fh-viz-node output ${activeFrame >= 3 ? "lit" : ""}`} onClick={() => setActiveFrame(4)}><span>return</span><strong>best = 4</strong><small>output ready</small></button>
+        </div>
+        <div className="fh-viz-packet" style={{ background: color }} />
+      </div>
+      <div className="fh-viz-inspector">
+        <div className="fh-viz-inspector-head"><span>INSPECTOR</span><span className="fh-viz-live">LIVE</span></div>
+        <div className="fh-viz-mode-tabs">{[["memory", "Memory"], ["flow", "Flow"], ["timeline", "Timeline"]].map(([id, label]) => <button key={id} className={mode === id ? "active" : ""} style={mode === id ? { "--fh-accent": color } : {}} onClick={() => setMode(id)}>{label}</button>)}</div>
+        <div className="fh-viz-inspector-card"><small>{modeCopy[0]}</small><strong>{modeCopy[1]}</strong><span>{modeCopy[2]}</span><span>{modeCopy[3]}</span></div>
+        <div className="fh-viz-focus"><span>FOCUS</span><strong>line {frame.line}</strong><small>{frame.note}</small></div>
+      </div>
+    </div>
+    <div className="fh-viz-timeline"><span className="fh-viz-timeline-label">TIMELINE</span>{frames.map((item, index) => <button key={item.label} className={index === activeFrame ? "active" : ""} style={index === activeFrame ? { "--fh-accent": color } : {}} onClick={() => setActiveFrame(index)}><i /><small>0{index + 1}</small><span>{item.label}</span></button>)}</div>
+  </div>;
+}
+
 function Visual({ type, color }) {
-  const map = { interview: InterviewVisual, quiz: QuizVisual, algo: AlgoVisual, playground: PlaygroundVisual, interviewer: InterviewerVisual, dsa: DsaVisual, notion: NotionVisual, kubernetes: KubernetesVisual, flow: FlowVisual, projects: ProjectsVisual, notes: NotesVisual, community: CommunityVisual, github: GithubVisual, links: LinksVisual, blog: BlogVisual, reference: ReferenceVisual, manual: ManualVisual, system: SystemVisual, coding: CodingVisual, resources: ResourcesVisual };
+  const map = { interview: InterviewVisual, quiz: QuizVisual, algo: AlgoVisual, playground: PlaygroundVisual, interviewer: InterviewerVisual, dsa: DsaVisual, notion: NotionVisual, kubernetes: KubernetesVisual, flow: FlowVisual, projects: ProjectsVisual, notes: NotesVisual, community: CommunityVisual, github: GithubVisual, links: LinksVisual, blog: BlogVisual, reference: ReferenceVisual, manual: ManualVisual, system: SystemVisual, coding: CodingVisual, resources: ResourcesVisual, visualize: VisualizeVisual };
   const Component = map[type] || PlaygroundVisual;
   return <Component color={color} />;
 }

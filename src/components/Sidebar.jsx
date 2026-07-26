@@ -194,6 +194,7 @@ export default function Sidebar({
     if (activeToolHome === "system") return "simulator";
     if (activeToolHome === "coding") return "ide";
     if (activeToolHome === "resources") return "resources";
+    if (activeToolHome === "visualize") return "learnbug";
     if (showKnowledgeGraph) return "knowledge_graph";
     if (showAdminManagement) return "admin_management";
     if (showBlog) return "blog";
@@ -304,7 +305,7 @@ export default function Sidebar({
       case "playground": if (onOpenToolHome) onOpenToolHome("playground"); else if (setShowPlayground) setShowPlayground(true); break;
       case "genai_playground2": if (onOpenGenAIPlayground2) onOpenGenAIPlayground2(); break;
       case "dsa_animator": if (onOpenToolHome) onOpenToolHome("dsa"); else if (setShowDSAAnimator) setShowDSAAnimator(true); break;
-      case "learnbug": if (setShowLearnBug) setShowLearnBug(true); break;
+      case "learnbug": if (onOpenToolHome) onOpenToolHome("visualize"); else if (setShowLearnBug) setShowLearnBug(true); break;
       case "agent_library": if (setShowAgentLibrary) setShowAgentLibrary(true); break;
       case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
       case "links": 
