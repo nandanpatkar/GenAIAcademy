@@ -19,6 +19,7 @@ export default function Sidebar({
   showPlayground, setShowPlayground,
   showDSAAnimator, setShowDSAAnimator,
   showLearnBug, setShowLearnBug,
+  showAgentLibrary, setShowAgentLibrary,
   showBlog, setShowBlog,
   showAdminManagement, setShowAdminManagement,
   showAwsSimulator, setShowAwsSimulator,
@@ -140,6 +141,7 @@ export default function Sidebar({
     {
       label: "More tools",
       items: [
+        { icon: <Database size={14} />, label: "Agent Library", id: "agent_library", description: "Sync GitHub skills, prompts, and MCP definitions" },
         { icon: <Terminal size={14} />, label: "Cloud Projects", id: "projects", description: "Build and save projects" },
         { icon: <Layers size={14} />, label: "AWS System Design", id: "aws_simulator", description: "Practice AWS architecture" },
         { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator", description: "Animate data structures" },
@@ -200,6 +202,7 @@ export default function Sidebar({
     if (showGalaxy) return "galaxy";
     if (showDSAAnimator) return "dsa_animator";
     if (showLearnBug) return "learnbug";
+    if (showAgentLibrary) return "agent_library";
     if (showAimlCompanion) return "aiml_companion";
     if (showLinks) return "links";
     if (showPlayground) return "playground";
@@ -246,6 +249,7 @@ export default function Sidebar({
     if (setShowPlayground) setShowPlayground(false);
     if (setShowDSAAnimator) setShowDSAAnimator(false);
     if (setShowLearnBug) setShowLearnBug(false);
+    if (setShowAgentLibrary) setShowAgentLibrary(false);
     if (setShowAimlCompanion) setShowAimlCompanion(false);
     if (setShowLinks) setShowLinks(false);
     if (setShowBlog) setShowBlog(false);
@@ -301,6 +305,7 @@ export default function Sidebar({
       case "genai_playground2": if (onOpenGenAIPlayground2) onOpenGenAIPlayground2(); break;
       case "dsa_animator": if (onOpenToolHome) onOpenToolHome("dsa"); else if (setShowDSAAnimator) setShowDSAAnimator(true); break;
       case "learnbug": if (setShowLearnBug) setShowLearnBug(true); break;
+      case "agent_library": if (setShowAgentLibrary) setShowAgentLibrary(true); break;
       case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
       case "links": 
         if (setLinksInitialTab) setLinksInitialTab("links");
