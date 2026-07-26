@@ -74,9 +74,20 @@ class AlgoTracer:
         if self.step_count >= self.limit or frame.f_code.co_filename != '<exec>':
             return self.trace_hook
         
-        if event in ('line', 'call', 'return'):
+        if event in ('line', 'call', 'return', 'exception'):
             self.step_count += 1
             curr_locals = self.serialize_locals(frame.f_locals)
+
+            stack = []
+            cursor = frame
+            while cursor:
+                if cursor.f_code.co_filename == '<exec>':
+                    stack.append({
+                        'func': cursor.f_code.co_name,
+                        'line': cursor.f_lineno
+                    })
+                cursor = cursor.f_back
+            stack.reverse()
             
             snapshot = {
                 'line': frame.f_lineno,
@@ -84,6 +95,9 @@ class AlgoTracer:
                 'func': frame.f_code.co_name,
                 'locals': curr_locals,
                 'stdout': self.stdout_buf.getvalue(),
+                'stack': stack,
+                'depth': max(0, len(stack) - 1),
+                'exception': str(arg[1]) if event == 'exception' else None,
                 'changed_vars': []
             }
             
@@ -97,28 +111,65 @@ class AlgoTracer:
             self.frames.append(snapshot)
         return self.trace_hook
 
+    def safe_value(self, value, depth=0, seen=None):
+        if seen is None:
+            seen = set()
+        if depth > 4:
+            return f"<{type(value).__name__}: max depth>"
+        if isinstance(value, (int, str, bool, type(None))):
+            return value
+        if isinstance(value, float):
+            if math.isinf(value): return "inf" if value > 0 else "-inf"
+            if math.isnan(value): return "nan"
+            return value
+
+        value_id = id(value)
+        if value_id in seen:
+            return f"<{type(value).__name__}: circular reference>"
+
+        if isinstance(value, (list, tuple, set)):
+            seen.add(value_id)
+            items = list(value)
+            result = [self.safe_value(item, depth + 1, seen) for item in items[:100]]
+            if len(items) > 100:
+                result.append(f"... {len(items) - 100} more items")
+            seen.remove(value_id)
+            return result
+
+        if isinstance(value, dict):
+            seen.add(value_id)
+            items = list(value.items())
+            result = {
+                str(key): self.safe_value(item, depth + 1, seen)
+                for key, item in items[:100]
+            }
+            if len(items) > 100:
+                result["..."] = f"{len(items) - 100} more items"
+            seen.remove(value_id)
+            return result
+
+        if hasattr(value, '__dict__'):
+            seen.add(value_id)
+            attributes = {
+                str(key): self.safe_value(item, depth + 1, seen)
+                for key, item in list(vars(value).items())[:50]
+                if not str(key).startswith('_')
+            }
+            seen.remove(value_id)
+            return {'__type__': type(value).__name__, **attributes}
+
+        try:
+            return repr(value)[:300]
+        except Exception:
+            return f"<{type(value).__name__}>"
+
     def serialize_locals(self, locals_dict):
         serializable = {'vars': {}, 'objects': {}}
         for k, v in locals_dict.items():
             if k in self.exclude_vars or k.startswith('_') or k == 'tracer': continue
             obj_type = type(v).__name__
             if obj_type in ('module', 'function', 'type', 'builtin_function_or_method'): continue
-            
-            # Simple value serialization
-            if isinstance(v, (int, str, bool, type(None))):
-                serializable['vars'][k] = v
-            elif isinstance(v, float):
-                if math.isinf(v): serializable['vars'][k] = "inf" if v > 0 else "-inf"
-                elif math.isnan(v): serializable['vars'][k] = "nan"
-                else: serializable['vars'][k] = v
-            elif isinstance(v, (list, dict, set, tuple)):
-                # For basic visualization we send the full object if small
-                if len(str(v)) < 1000:
-                    serializable['vars'][k] = list(v) if isinstance(v, (set, tuple)) else v
-                else:
-                    serializable['vars'][k] = str(v)[:100] + "..."
-            else:
-                serializable['vars'][k] = str(v)[:50]
+            serializable['vars'][k] = self.safe_value(v)
         return serializable
 
     def get_trace(self):
@@ -137,7 +188,14 @@ finally:
 
 const TRACE_OFFSET = TRACER_TEMPLATE.split('{{USER_CODE}}')[0].split('\n').length - 1;
 
-export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onClose }) {
+export default function AlgoVisualizer({
+  user,
+  savedAlgos = [],
+  onSaveAlgo,
+  onClose,
+  workspaceTitle = 'Algo Studio',
+  workspaceSubtitle
+}) {
   // State
   const [code, setCode] = useState(ALGO_EXAMPLES[0].code);
   const [isNewProblemMode, setIsNewProblemMode] = useState(false);
@@ -146,6 +204,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
   const [isExecuting, setIsExecuting] = useState(false);
   const [trace, setTrace] = useState([]);
   const [currentFrameIdx, setCurrentFrameIdx] = useState(-1);
+  const [vizView, setVizView] = useState('memory');
   const [playbackSpeedDivisor, setPlaybackSpeedDivisor] = useState(1); // 0.25, 0.5, 1, 2
   const playbackSpeed = useMemo(() => 500 / playbackSpeedDivisor, [playbackSpeedDivisor]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -265,6 +324,17 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
       if (data.length > 0) setCurrentFrameIdx(0);
     } catch (err) {
       console.error("Execution Error:", err);
+      try {
+        const partialJson = pyodide.globals.get('trace_output');
+        if (partialJson) {
+          const sanitized = partialJson.replace(/\b(Infinity|-Infinity|NaN)\b/g, '"$1"');
+          const partialTrace = JSON.parse(sanitized);
+          setTrace(partialTrace);
+          if (partialTrace.length > 0) setCurrentFrameIdx(partialTrace.length - 1);
+        }
+      } catch (traceError) {
+        console.warn("Partial trace recovery failed:", traceError);
+      }
       setExecutionError(err.message);
     } finally {
       setIsExecuting(false);
@@ -470,6 +540,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
       arrays: Object.entries(vars).filter(([_, v]) => Array.isArray(v) && !Array.isArray(v[0])),
       matrices: Object.entries(vars).filter(([_, v]) => Array.isArray(v) && Array.isArray(v[0])),
       scalars: Object.entries(vars).filter(([_, v]) => !Array.isArray(v) && typeof v !== 'object'),
+      collections: Object.entries(vars).filter(([_, v]) => !Array.isArray(v) && v && typeof v === 'object'),
       pointers: Object.entries(vars).filter(([k, v]) => 
         ['i', 'j', 'k', 'low', 'high', 'mid', 'left', 'right', 'p', 'q', 'idx'].includes(k.toLowerCase()) && 
         typeof v === 'number'
@@ -477,6 +548,67 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
       changedSet: new Set(changed)
     };
   }, [currentFrame]);
+
+  const sourceLines = useMemo(() => code.split('\n'), [code]);
+  const activeSourceLine = Math.max(0, (currentFrame.line || 0) - TRACE_OFFSET);
+
+  const executionFlow = useMemo(() => {
+    const nodeMap = new Map();
+    const edgeMap = new Map();
+    let previousLine = null;
+
+    trace.forEach((frame, step) => {
+      const line = frame.line - TRACE_OFFSET;
+      if (line < 1 || line > sourceLines.length) return;
+
+      if (!nodeMap.has(line)) {
+        nodeMap.set(line, {
+          line,
+          code: sourceLines[line - 1]?.trim() || '(blank line)',
+          visits: 0,
+          firstStep: step,
+          lastStep: step,
+          events: new Set(),
+          functions: new Set()
+        });
+      }
+
+      const node = nodeMap.get(line);
+      node.visits += 1;
+      node.lastStep = step;
+      node.events.add(frame.event);
+      node.functions.add(frame.func);
+
+      if (previousLine !== null) {
+        const edgeKey = `${previousLine}:${line}`;
+        const edge = edgeMap.get(edgeKey) || { from: previousLine, to: line, count: 0 };
+        edge.count += 1;
+        edgeMap.set(edgeKey, edge);
+      }
+      previousLine = line;
+    });
+
+    const edges = Array.from(edgeMap.values());
+    return Array.from(nodeMap.values()).map((node) => ({
+      ...node,
+      events: Array.from(node.events),
+      functions: Array.from(node.functions),
+      outgoing: edges.filter((edge) => edge.from === node.line)
+    }));
+  }, [trace, sourceLines]);
+
+  const timelineFrames = useMemo(() => {
+    if (!trace.length) return [];
+    const windowSize = 160;
+    const preferredStart = Math.max(0, currentFrameIdx - Math.floor(windowSize / 2));
+    const start = Math.min(preferredStart, Math.max(0, trace.length - windowSize));
+    return trace.slice(start, start + windowSize).map((frame, offset) => ({
+      frame,
+      index: start + offset,
+      sourceLine: frame.line - TRACE_OFFSET,
+      source: sourceLines[frame.line - TRACE_OFFSET - 1]?.trim() || ''
+    }));
+  }, [trace, currentFrameIdx, sourceLines]);
 
 
   const filteredAlgos = ALGO_EXAMPLES.filter(a => 
@@ -515,8 +647,8 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
             <Cpu size={19} color="#000" />
           </div>
           <div>
-            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>Algo Studio</h1>
-            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{currentAlgo ? `⚡ ${currentAlgo.title}` : 'Develop · Simulate · Optimize Algorithms'}</p>
+            <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1.1, margin: 0 }}>{workspaceTitle}</h1>
+            <p style={{ margin: 0, fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{workspaceSubtitle || (currentAlgo ? `⚡ ${currentAlgo.title}` : 'Develop · Simulate · Optimize Algorithms')}</p>
           </div>
         </div>
 
@@ -769,10 +901,20 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
             <section className={`viz-section ${isVizMaximized ? 'maximized' : ''} ${isMobile && mobileTab !== 'viz' ? 'mobile-hidden' : ''}`}>
               <div className="pane-header">
                 <div className="tabs-pill">
-                  <button className="tab active">
-                    <Monitor size={14} />
-                    <span>Visualization</span>
-                  </button>
+                  {[
+                    { id: 'memory', label: 'Memory', icon: Monitor },
+                    { id: 'structure', label: 'Structure', icon: Share2 },
+                    { id: 'timeline', label: 'Timeline', icon: Activity }
+                  ].map(({ id, label, icon: Icon }) => (
+                    <button
+                      key={id}
+                      className={`tab ${vizView === id ? 'active' : ''}`}
+                      onClick={() => setVizView(id)}
+                    >
+                      <Icon size={14} />
+                      <span>{label}</span>
+                    </button>
+                  ))}
                 </div>
                 <div className="tab-actions" style={{ display: 'flex', gap: 12 }}>
                      <button 
@@ -793,7 +935,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
               </div>
 
               <div className="viz-canvas mini-scrollbar">
-                {executionError ? (
+                {executionError && trace.length === 0 ? (
                   <div className="error-console mini-scrollbar">
                     <div className="error-header">
                       <Terminal size={16} />
@@ -856,18 +998,7 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                       </>
                     )}
                   </div>
-                ) : executionError ? (
-                  <div className="error-card-pro">
-                    <div className="e-header">
-                      <Zap size={16} />
-                      <span>RUNTIME_EXCEPTION</span>
-                      <button onClick={() => { navigator.clipboard.writeText(executionError); }} className="copy-e">COPY ERROR</button>
-                    </div>
-                    <div className="e-body mini-scrollbar">
-                      <pre>{executionError}</pre>
-                    </div>
-                  </div>
-                ) : (
+                ) : vizView === 'memory' ? (
                   <div className="canvas-content mini-scrollbar">
                     {/* Render Arrays */}
                     {classification.arrays.map(([name, arr]) => (
@@ -985,6 +1116,37 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                       ))}
                     </div>
 
+                    {/* Render dictionaries and other JSON-like collections */}
+                    {classification.collections.map(([name, val]) => (
+                      <div key={name} className={`memory-collection ${classification.changedSet.has(name) ? 'hl' : ''}`}>
+                        <div className="viz-group-header">
+                          <Grid3X3 size={14} />
+                          <span>{name.toUpperCase()} ({Array.isArray(val) ? 'LIST' : 'OBJECT'})</span>
+                        </div>
+                        <pre>{JSON.stringify(val, null, 2)}</pre>
+                      </div>
+                    ))}
+
+                    {/* Python call stack */}
+                    {currentFrame.stack?.length > 0 && (
+                      <div className="call-stack-panel">
+                        <div className="viz-group-header">
+                          <Layers size={14} />
+                          <span>CALL STACK</span>
+                          <span className="v-count">{currentFrame.stack.length} FRAMES</span>
+                        </div>
+                        <div className="call-stack-list">
+                          {[...currentFrame.stack].reverse().map((stackFrame, index) => (
+                            <div className={`stack-frame ${index === 0 ? 'active' : ''}`} key={`${stackFrame.func}-${stackFrame.line}-${index}`}>
+                              <span className="stack-depth">#{currentFrame.stack.length - index - 1}</span>
+                              <span className="stack-function">{stackFrame.func === '<module>' ? 'module' : stackFrame.func}()</span>
+                              <span className="stack-line">line {Math.max(1, stackFrame.line - TRACE_OFFSET)}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Stdout Terminal */}
                     {currentFrame.stdout && (
                       <div className="viz-stdout-panel">
@@ -992,6 +1154,86 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
                         <pre className="stdout-content">{currentFrame.stdout}</pre>
                       </div>
                     )}
+                  </div>
+                ) : vizView === 'structure' ? (
+                  <div className="structure-view mini-scrollbar">
+                    <div className="view-intro">
+                      <div>
+                        <span className="view-kicker">EXECUTED CONTROL FLOW</span>
+                        <h3>Python structure</h3>
+                      </div>
+                      <span>{executionFlow.length} active lines</span>
+                    </div>
+                    <div className="flowchart">
+                      {executionFlow.map((node, nodeIndex) => (
+                        <React.Fragment key={node.line}>
+                          <motion.button
+                            layout
+                            className={`flow-node ${node.line === activeSourceLine ? 'active' : ''}`}
+                            onClick={() => {
+                              setIsPlaying(false);
+                              setCurrentFrameIdx(node.lastStep);
+                            }}
+                          >
+                            <span className="flow-line">L{node.line}</span>
+                            <code>{node.code}</code>
+                            <span className="flow-visits">{node.visits}×</span>
+                            <div className="flow-meta">
+                              <span>{node.functions.map((func) => func === '<module>' ? 'module' : func).join(', ')}</span>
+                              <span>{node.events.join(' · ')}</span>
+                            </div>
+                          </motion.button>
+                          {nodeIndex < executionFlow.length - 1 && (
+                            <div className="flow-connector">
+                              <span />
+                              <ChevronRight size={15} />
+                              <div className="flow-destinations">
+                                {node.outgoing.slice(0, 4).map((edge) => (
+                                  <em key={`${edge.from}-${edge.to}`}>L{edge.to} · {edge.count}×</em>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="timeline-view mini-scrollbar">
+                    <div className="view-intro">
+                      <div>
+                        <span className="view-kicker">TRACE HISTORY</span>
+                        <h3>Execution timeline</h3>
+                      </div>
+                      <span>{trace.length} events</span>
+                    </div>
+                    {trace.length > timelineFrames.length && (
+                      <p className="timeline-window-note">
+                        Showing {timelineFrames[0]?.index + 1}–{timelineFrames[timelineFrames.length - 1]?.index + 1} around the current step.
+                      </p>
+                    )}
+                    <div className="timeline-list">
+                      {timelineFrames.map(({ frame, index, sourceLine, source }) => (
+                        <button
+                          key={index}
+                          className={`timeline-event ${index === currentFrameIdx ? 'active' : ''} event-${frame.event}`}
+                          onClick={() => {
+                            setIsPlaying(false);
+                            setCurrentFrameIdx(index);
+                          }}
+                          style={{ '--trace-depth': Math.min(frame.depth || 0, 8) }}
+                        >
+                          <span className="timeline-marker" />
+                          <span className="timeline-step">#{index + 1}</span>
+                          <span className="timeline-badge">{frame.event}</span>
+                          <span className="timeline-location">
+                            <strong>{frame.func === '<module>' ? 'module' : frame.func}()</strong>
+                            <small>L{Math.max(1, sourceLine)}</small>
+                          </span>
+                          <code>{frame.exception || source || '(interpreter event)'}</code>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -2212,6 +2454,353 @@ export default function AlgoVisualizer({ user, savedAlgos = [], onSaveAlgo, onCl
           color: #00ff88;
           white-space: pre-wrap;
           margin: 0;
+        }
+
+        .canvas-content,
+        .structure-view,
+        .timeline-view {
+          height: 100%;
+          overflow-y: auto;
+          padding: 24px 24px 112px;
+          box-sizing: border-box;
+        }
+
+        .viz-section .tabs-pill .tab {
+          padding: 6px 11px;
+        }
+
+        .memory-collection,
+        .call-stack-panel {
+          margin-top: 24px;
+          padding: 20px;
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 14px;
+          background: rgba(10,10,10,0.65);
+        }
+
+        .memory-collection.hl {
+          border-color: rgba(251,191,36,0.65);
+          background: rgba(251,191,36,0.04);
+        }
+
+        .memory-collection .viz-group-header,
+        .call-stack-panel .viz-group-header {
+          margin-bottom: 14px;
+        }
+
+        .memory-collection pre {
+          margin: 0;
+          max-height: 260px;
+          overflow: auto;
+          color: #cbd5e1;
+          font: 11px/1.6 var(--font-mono, monospace);
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+        }
+
+        .call-stack-list {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .stack-frame {
+          display: grid;
+          grid-template-columns: 30px minmax(0, 1fr) auto;
+          align-items: center;
+          gap: 10px;
+          padding: 9px 11px;
+          border: 1px solid rgba(255,255,255,0.05);
+          border-radius: 8px;
+          color: #64748b;
+          background: rgba(255,255,255,0.018);
+          font: 10px var(--font-mono, monospace);
+        }
+
+        .stack-frame.active {
+          border-color: rgba(0,255,136,0.35);
+          color: #d7ffe9;
+          background: rgba(0,255,136,0.06);
+        }
+
+        .stack-depth { color: #334155; }
+        .stack-function { overflow: hidden; text-overflow: ellipsis; }
+        .stack-line { color: #475569; }
+
+        .view-intro {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 20px;
+          margin-bottom: 24px;
+          padding-bottom: 18px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .view-kicker {
+          display: block;
+          margin-bottom: 6px;
+          color: #00ff88;
+          font-size: 9px;
+          font-weight: 900;
+          letter-spacing: 1.5px;
+        }
+
+        .view-intro h3 {
+          margin: 0;
+          color: #f8fafc;
+          font-size: 20px;
+          letter-spacing: -0.03em;
+        }
+
+        .view-intro > span {
+          padding: 6px 9px;
+          border: 1px solid rgba(0,255,136,0.15);
+          border-radius: 999px;
+          color: #64748b;
+          background: rgba(0,255,136,0.035);
+          font-size: 9px;
+          font-weight: 800;
+          white-space: nowrap;
+        }
+
+        .flowchart {
+          width: min(680px, 100%);
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .flow-node {
+          position: relative;
+          width: 100%;
+          display: grid;
+          grid-template-columns: 48px minmax(0, 1fr) auto;
+          align-items: center;
+          gap: 13px;
+          padding: 15px 16px;
+          text-align: left;
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 13px;
+          color: #94a3b8;
+          background: rgba(8,12,10,0.92);
+          cursor: pointer;
+          transition: border-color .18s, background .18s, transform .18s;
+        }
+
+        .flow-node:hover {
+          transform: translateY(-1px);
+          border-color: rgba(0,255,136,0.28);
+        }
+
+        .flow-node.active {
+          border-color: #00ff88;
+          background: linear-gradient(120deg, rgba(0,255,136,0.11), rgba(0,255,136,0.025));
+          box-shadow: 0 0 0 1px rgba(0,255,136,0.1), 0 12px 30px rgba(0,0,0,0.35);
+        }
+
+        .flow-line {
+          display: grid;
+          place-items: center;
+          width: 42px;
+          height: 28px;
+          border-radius: 7px;
+          color: #00ff88;
+          background: rgba(0,255,136,0.08);
+          font: 900 10px var(--font-mono, monospace);
+        }
+
+        .flow-node code {
+          overflow: hidden;
+          color: #dbe7df;
+          font: 11px/1.45 var(--font-mono, monospace);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .flow-visits {
+          color: #64748b;
+          font: 800 9px var(--font-mono, monospace);
+        }
+
+        .flow-meta {
+          grid-column: 2 / -1;
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          color: #3f4c47;
+          font-size: 8px;
+          font-weight: 800;
+          text-transform: uppercase;
+        }
+
+        .flow-connector {
+          position: relative;
+          height: 46px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba(0,255,136,0.65);
+        }
+
+        .flow-connector > span {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          background: linear-gradient(rgba(0,255,136,0.1), rgba(0,255,136,0.55));
+        }
+
+        .flow-connector > svg {
+          position: relative;
+          top: 6px;
+          transform: rotate(90deg);
+          background: #020202;
+        }
+
+        .flow-destinations {
+          position: absolute;
+          left: calc(50% + 18px);
+          top: 7px;
+          display: flex;
+          gap: 5px;
+          max-width: 45%;
+          overflow: hidden;
+        }
+
+        .flow-destinations em {
+          padding: 3px 6px;
+          border-radius: 5px;
+          color: #475569;
+          background: rgba(255,255,255,0.025);
+          font: normal 8px var(--font-mono, monospace);
+          white-space: nowrap;
+        }
+
+        .timeline-window-note {
+          margin: -10px 0 16px;
+          color: #475569;
+          font: 9px var(--font-mono, monospace);
+        }
+
+        .timeline-list {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+
+        .timeline-list::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 8px;
+          width: 1px;
+          background: rgba(255,255,255,0.07);
+        }
+
+        .timeline-event {
+          position: relative;
+          width: calc(100% - (var(--trace-depth) * 12px));
+          margin-left: calc(var(--trace-depth) * 12px);
+          display: grid;
+          grid-template-columns: 12px 48px 66px 120px minmax(0, 1fr);
+          align-items: center;
+          gap: 8px;
+          min-height: 44px;
+          padding: 7px 11px 7px 0;
+          border: 1px solid transparent;
+          border-radius: 9px;
+          color: #64748b;
+          text-align: left;
+          background: rgba(4,4,4,0.72);
+          cursor: pointer;
+          transition: .15s;
+        }
+
+        .timeline-event:hover {
+          border-color: rgba(255,255,255,0.08);
+          background: rgba(255,255,255,0.025);
+        }
+
+        .timeline-event.active {
+          border-color: rgba(0,255,136,0.4);
+          color: #e2e8f0;
+          background: rgba(0,255,136,0.065);
+        }
+
+        .timeline-marker {
+          position: relative;
+          z-index: 1;
+          width: 7px;
+          height: 7px;
+          border: 2px solid #020202;
+          border-radius: 50%;
+          background: #475569;
+          box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+        }
+
+        .timeline-event.active .timeline-marker { background: #00ff88; box-shadow: 0 0 8px rgba(0,255,136,0.8); }
+        .timeline-event.event-call .timeline-marker { background: #60a5fa; }
+        .timeline-event.event-return .timeline-marker { background: #a78bfa; }
+        .timeline-event.event-exception .timeline-marker { background: #ef4444; }
+
+        .timeline-step {
+          color: #475569;
+          font: 800 9px var(--font-mono, monospace);
+        }
+
+        .timeline-badge {
+          padding: 3px 6px;
+          border-radius: 5px;
+          color: #94a3b8;
+          background: rgba(255,255,255,0.04);
+          font: 800 8px var(--font-mono, monospace);
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        .timeline-location {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          min-width: 0;
+          color: #94a3b8;
+          font-size: 9px;
+        }
+
+        .timeline-location strong {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .timeline-location small { color: #334155; }
+
+        .timeline-event code {
+          overflow: hidden;
+          color: #64748b;
+          font: 10px var(--font-mono, monospace);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        @media (max-width: 700px) {
+          .studio-header h1 { font-size: 17px !important; }
+          .studio-header p { display: none; }
+          .studio-header .pro-pill-btn { display: none !important; }
+          .pane-header { padding: 0 8px; }
+          .viz-section .tabs-pill .tab { padding: 6px 8px; }
+          .viz-section .tabs-pill .tab span { display: none; }
+          .canvas-content, .structure-view, .timeline-view { padding: 16px 12px 112px; }
+          .timeline-event {
+            grid-template-columns: 12px 38px 56px minmax(70px, 1fr);
+          }
+          .timeline-event > code { grid-column: 2 / -1; }
+          .timeline-location { justify-content: flex-end; }
+          .flow-node { grid-template-columns: 42px minmax(0, 1fr) auto; padding: 12px; }
         }
 
         .rotate-90 { transform: rotate(90deg); }

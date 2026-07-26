@@ -18,6 +18,7 @@ export default function Sidebar({
   showProgress, setShowProgress,
   showPlayground, setShowPlayground,
   showDSAAnimator, setShowDSAAnimator,
+  showLearnBug, setShowLearnBug,
   showBlog, setShowBlog,
   showAdminManagement, setShowAdminManagement,
   showAwsSimulator, setShowAwsSimulator,
@@ -104,6 +105,7 @@ export default function Sidebar({
         { icon: <Sparkles size={14} />, label: "Gen AI Playground 2.0", id: "genai_playground2", description: "Design, simulate, and review GenAI systems" },
         { icon: <Layers size={14} />, label: "System Design", id: "simulator", description: "Practice architecture decisions" },
         { icon: <Box size={14} />, label: "Algorithm Practice", id: "algo_visualizer", description: "Learn algorithms step by step" },
+        { icon: <Terminal size={14} />, label: "Visualize", id: "learnbug", description: "Debug Python code with memory, structure, and timeline views" },
       ]
     },
     {
@@ -197,6 +199,7 @@ export default function Sidebar({
     if (showSimulator) return "simulator";
     if (showGalaxy) return "galaxy";
     if (showDSAAnimator) return "dsa_animator";
+    if (showLearnBug) return "learnbug";
     if (showAimlCompanion) return "aiml_companion";
     if (showLinks) return "links";
     if (showPlayground) return "playground";
@@ -242,6 +245,7 @@ export default function Sidebar({
     if (setShowProgress) setShowProgress(false);
     if (setShowPlayground) setShowPlayground(false);
     if (setShowDSAAnimator) setShowDSAAnimator(false);
+    if (setShowLearnBug) setShowLearnBug(false);
     if (setShowAimlCompanion) setShowAimlCompanion(false);
     if (setShowLinks) setShowLinks(false);
     if (setShowBlog) setShowBlog(false);
@@ -296,6 +300,7 @@ export default function Sidebar({
       case "playground": if (onOpenToolHome) onOpenToolHome("playground"); else if (setShowPlayground) setShowPlayground(true); break;
       case "genai_playground2": if (onOpenGenAIPlayground2) onOpenGenAIPlayground2(); break;
       case "dsa_animator": if (onOpenToolHome) onOpenToolHome("dsa"); else if (setShowDSAAnimator) setShowDSAAnimator(true); break;
+      case "learnbug": if (setShowLearnBug) setShowLearnBug(true); break;
       case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
       case "links": 
         if (setLinksInitialTab) setLinksInitialTab("links");

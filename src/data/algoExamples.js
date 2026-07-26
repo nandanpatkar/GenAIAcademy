@@ -118,5 +118,33 @@ insertion_sort(data)`
     return fib[n]
 
 fibonacci(8)`
+  },
+  {
+    id: 'container-with-most-water',
+    title: 'Container With Most Water',
+    category: 'Two Pointers',
+    difficulty: 'Medium',
+    description: 'Choose two vertical lines whose width and shorter height produce the largest possible container area.',
+    question: 'Given a list of non-negative heights, return the maximum amount of water a container formed by two lines can hold.',
+    code: `def max_area(height):
+    left = 0
+    right = len(height) - 1
+    best = 0
+
+    while left < right:
+        width = right - left
+        current = width * min(height[left], height[right])
+        best = max(best, current)
+
+        if height[left] <= height[right]:
+            left += 1
+        else:
+            right -= 1
+
+    return best
+
+heights = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+answer = max_area(heights)
+print(answer)`
   }
 ];

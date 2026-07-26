@@ -17,6 +17,7 @@ import SystemDesignPlayground from "./pages/playground/SystemDesignPlayground";
 import SystemDesignSimulator from "./pages/simulator/SystemDesignSimulator";
 import AWSSystemDesignSimulator from "./pages/simulator/AWSSystemDesignSimulator";
 import DSAAnimator from "./components/DSAAnimator";
+import LearnBugEmbed from "./components/LearnBugEmbed";
 import AimlCompanion from "./components/AimlCompanion";
 import LinksCompanion from "./components/LinksCompanion";
 import GitHubHub from "./components/GitHubHub";
@@ -384,6 +385,7 @@ function MainApp() {
   const [showPlayground, setShowPlayground] = useState(savedViews.showPlayground ?? false);
   const [showGenAIPlayground2, setShowGenAIPlayground2] = useState(false);
   const [showDSAAnimator, setShowDSAAnimator] = useState(savedViews.showDSAAnimator ?? false);
+  const [showLearnBug, setShowLearnBug] = useState(savedViews.showLearnBug ?? false);
   const [showAimlCompanion, setShowAimlCompanion] = useState(savedViews.showAimlCompanion ?? false);
   const [showLinks, setShowLinks] = useState(savedViews.showLinks ?? false);
   const [showBlog, setShowBlog] = useState(savedViews.showBlog ?? false);
@@ -441,7 +443,7 @@ function MainApp() {
     try {
       localStorage.setItem("genai_active_views", JSON.stringify({
         showCurriculumMap, showIDE, showResources, showProgress, showPlayground,
-        showDSAAnimator, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+        showDSAAnimator, showLearnBug, showAimlCompanion, showLinks, showBlog, showAdminManagement,
         showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
@@ -453,7 +455,7 @@ function MainApp() {
     }
   }, [
     showCurriculumMap, showIDE, showResources, showProgress, showPlayground,
-    showDSAAnimator, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+    showDSAAnimator, showLearnBug, showAimlCompanion, showLinks, showBlog, showAdminManagement,
     showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
@@ -578,6 +580,7 @@ function MainApp() {
       setSidebarBeforeGenAI2(null);
     }
     setShowDSAAnimator(false);
+    setShowLearnBug(false);
     setShowAimlCompanion(false);
     setShowLinks(false);
     setShowBlog(false);
@@ -1177,6 +1180,7 @@ function MainApp() {
           showPlayground={showPlayground} setShowPlayground={setShowPlayground}
           onOpenGenAIPlayground2={openGenAIPlayground2}
           showDSAAnimator={showDSAAnimator} setShowDSAAnimator={setShowDSAAnimator}
+          showLearnBug={showLearnBug} setShowLearnBug={setShowLearnBug}
           showAimlCompanion={showAimlCompanion} setShowAimlCompanion={setShowAimlCompanion}
           showLinks={showLinks} setShowLinks={setShowLinks}
           showBlog={showBlog} setShowBlog={setShowBlog}
@@ -1263,6 +1267,7 @@ function MainApp() {
                       showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
                         showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
                           showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
+                            showLearnBug ? <LearnBugEmbed onClose={() => setShowLearnBug(false)} /> :
                             (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
                                 showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
@@ -1516,7 +1521,7 @@ function MainApp() {
       {/* Re-trigger Walkthrough Button (top-right, hidden until hover) — only on home/roadmap */}
       {!showWalkthrough && !sectionWalkthroughId &&
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
-        !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showAimlCompanion && !showLinks &&
+        !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showAimlCompanion && !showLinks &&
         !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
         !showAIInterviewer && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
