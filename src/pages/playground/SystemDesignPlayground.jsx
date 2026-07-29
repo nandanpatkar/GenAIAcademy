@@ -18,7 +18,7 @@ import {
   Play, Info, Star, Tag, CheckCircle, Minimize2, ExternalLink,
   MoreHorizontal, Upload, PanelLeft, PanelRight,
   Image, Mic, Volume2, Eye, Activity, Timer, Bell, FlaskConical, Key, UserCheck,
-  Plus,
+  Plus, Command, History, FileCode2,
 } from "lucide-react";
 
 import { CATEGORIES, COLORS, COLOR_OVERRIDES, PORT_TYPES } from "./data/nodes.js";
@@ -36,6 +36,8 @@ import MobileNodePicker from "./components/MobileNodePicker.jsx";
 import "./components/mobile-node-picker.css";
 import DesignBriefPanel from "./components/DesignBriefPanel.jsx";
 import ArchitectureReviewPanel from "./components/ArchitectureReviewPanel.jsx";
+import DocsWorkspace from "./components/DocsWorkspace.jsx";
+import CanvasStudio from "./components/CanvasStudio.jsx";
 import "./components/design-workspace.css";
 
 // ─── Icon Registry ─────────────────────────────────────────────────────────────
@@ -211,6 +213,8 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
   const [flowTags,      setFlowTags]      = useState([]);
   const [activeFlowId,  setActiveFlowId]  = useState(null);
   const [mainTab,       setMainTab]       = useState(initialTab || "system"); // "system" | "arch"
+  const [showCommand,   setShowCommand]   = useState(false);
+  const [autosaveAt,    setAutosaveAt]    = useState(null);
   const [showSidebar,   setShowSidebar]   = useState(true);
   const [workspaceMode, setWorkspaceMode] = useState("brief"); // "brief" | "components"
   const [activePhase,   setActivePhase]   = useState("define");
@@ -261,6 +265,31 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
 
   const store = useFlowStore();
   const validationIssues = useMemo(() => validateFlow(nodes, edges), [nodes, edges]);
+
+  // A lightweight local version history: every meaningful canvas change is
+  // retained as a recoverable draft without requiring an account or backend.
+  useEffect(() => {
+    if (!nodes.length && !edges.length) return undefined;
+    const timer = setTimeout(() => {
+      const key = "genai_playground_snapshots_v1";
+      const item = { id: Date.now(), name: flowName, nodes, edges, createdAt: new Date().toISOString() };
+      try {
+        const current = JSON.parse(localStorage.getItem(key) || "[]");
+        localStorage.setItem(key, JSON.stringify([...current.slice(-19), item]));
+        setAutosaveAt(new Date());
+      } catch { /* local persistence is optional */ }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [nodes, edges, flowName]);
+
+  useEffect(() => {
+    const onKey = (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); setShowCommand(true); }
+      if (event.key === "Escape") setShowCommand(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   // ── Edge defaults ──────────────────────────────────────────────────────────
   const edgeDefaults = {
@@ -500,6 +529,23 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
     setRunState("running");
   };
 
+  const applyCodeFlow = ({ nodes: nextNodes, edges: nextEdges }) => {
+    store.snapshot(nodes, edges);
+    setNodes(nextNodes);
+    setEdges(nextEdges.map(edge => ({ ...edge, ...edgeDefaults })));
+    setMainTab("system");
+    setTimeout(() => rfi?.fitView({ padding: 0.15 }), 80);
+  };
+
+  const restoreLatestSnapshot = () => {
+    try {
+      const snapshots = JSON.parse(localStorage.getItem("genai_playground_snapshots_v1") || "[]");
+      const latest = snapshots.at(-1);
+      if (!latest) return alert("No local snapshots yet.");
+      store.snapshot(nodes, edges); setNodes(latest.nodes); setEdges(latest.edges); setFlowName(latest.name || "Recovered architecture");
+    } catch { alert("Could not recover the latest snapshot."); }
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", overflow: "hidden" }}>
 
@@ -516,6 +562,8 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
         {[
           { id: "system", label: "System Design", icon: Activity, color: "#00ff88" },
           { id: "arch",   label: "Architecture Design", icon: Layout, color: "#818cf8" },
+          { id: "docs",   label: "Docs + Code", icon: FileCode2, color: "#fbbf24" },
+          { id: "canvas", label: "Canvas Studio", icon: Sparkles, color: "#c084fc" },
         ].map(t => {
           const isActive = mainTab === t.id;
           return (
@@ -583,6 +631,10 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
       {/* ══ TAB CONTENT ══════════════════════════════════════════════════════ */}
       {mainTab === "arch" ? (
         <ArchitectureDesign />
+      ) : mainTab === "docs" ? (
+        <DocsWorkspace flowName={flowName} nodes={nodes} edges={edges} onApplyFlow={applyCodeFlow} />
+      ) : mainTab === "canvas" ? (
+        <CanvasStudio />
       ) : (
 
       <div className="pg-workspace-shell">
@@ -783,6 +835,7 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
               {/* Flow management */}
               <TBtn icon={FolderOpenIcon} label="My Flows"  onClick={() => setShowFlowMgr(true)} />
               <TBtn icon={Save}           label="Save Flow" onClick={() => setShowSaveModal(true)} accent="#34d399" />
+              <TBtn icon={History} label="Restore latest auto-save" onClick={restoreLatestSnapshot} />
               <div style={{ width: 1, height: 14, background: "var(--pg-border)" }} />
 
               {/* Import */}
@@ -794,6 +847,7 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
               <button onClick={() => setShowNLGen(true)} style={{ background: "linear-gradient(135deg,#818cf8,#a78bfa)", border: "none", borderRadius: 5, color: "#fff", fontSize: 9.5, fontWeight: 700, padding: "5px 11px", cursor: "pointer", fontFamily: "'DM Mono',monospace", letterSpacing: "0.05em", display: "flex", alignItems: "center", gap: 5, boxShadow: "0 4px 12px rgba(129,140,248,0.25)" }}>
                 <Sparkles size={11} /> AI Generate
               </button>
+              <TBtn icon={Command} label="Command palette (⌘K)" onClick={() => setShowCommand(true)} />
 
               {/* Export menu */}
               <div style={{ position: "relative" }}>
@@ -810,7 +864,7 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
               </div>
 
               {/* Stats */}
-              <span style={{ fontSize: 8.5, color: "var(--pg-border2)", whiteSpace: "nowrap" }}>{nodes.length}n · {edges.length}e</span>
+              <span style={{ fontSize: 8.5, color: "var(--pg-border2)", whiteSpace: "nowrap" }}>{autosaveAt ? "Auto-saved" : `${nodes.length}n · ${edges.length}e`}</span>
 
               {/* Clear */}
               <TBtn icon={Trash2} label="Clear canvas" onClick={() => { if (window.confirm("Clear canvas?")) { store.snapshot(nodes, edges); setNodes([]); setEdges([]); setSelNode(null); setShowInspect(false); }}} danger />
@@ -955,6 +1009,15 @@ export default function SystemDesignPlayground({ onClose, initialTab = "system" 
           />
         )}
 
+        {showCommand && <CommandPalette onClose={() => setShowCommand(false)} actions={[
+          { label: "Generate diagram with AI", hint: "AI", run: () => setShowNLGen(true) },
+          { label: "Open Docs + Diagram as code", hint: "⌘D", run: () => setMainTab("docs") },
+          { label: "Auto layout canvas", hint: "⌘L", run: doAutoLayout },
+          { label: "Save current architecture", hint: "⌘S", run: () => setShowSaveModal(true) },
+          { label: "Restore latest auto-save", hint: "History", run: restoreLatestSnapshot },
+          { label: "Validate architecture", hint: "Check", run: () => setShowValidation(true) },
+        ]} />}
+
         <style>{`
           @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
           .react-flow__controls button { background: #0d1117 !important; border-color: #21262d !important; color: #484f58 !important; }
@@ -1025,6 +1088,27 @@ function NodePopoverInline({ node, position }) {
       <div style={{ fontSize: 9.5, color: "#8b949e", lineHeight: 1.65, marginBottom: data.cost ? 6 : 0 }}>{data.info || data.sub}</div>
       {data.cost && <div style={{ fontSize: 8.5, color: "#34d399", background: "#34d3991a", border: "1px solid #34d39933", padding: "2px 6px", borderRadius: 3, display: "inline-block", marginTop: 4 }}>💰 {data.cost}</div>}
       <div style={{ fontSize: 7.5, color: "#30363d", borderTop: "1px solid #21262d", paddingTop: 5, marginTop: 6 }}>Click → inspect · Right-click → actions</div>
+    </div>
+  );
+}
+
+function CommandPalette({ actions, onClose }) {
+  const [query, setQuery] = useState("");
+  const matches = actions.filter(action => action.label.toLowerCase().includes(query.toLowerCase()));
+  const choose = (action) => { action.run(); onClose(); };
+  return (
+    <div onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }} style={{ position: "fixed", inset: 0, zIndex: 10020, background: "rgba(0,0,0,.56)", display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "16vh", fontFamily: "'DM Mono',monospace" }}>
+      <div style={{ width: "min(540px,calc(100vw - 32px))", background: "#161b22", border: "1px solid #30363d", borderRadius: 12, overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,.55)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 14px", borderBottom: "1px solid #30363d" }}>
+          <Command size={16} color="#a5b4fc" />
+          <input autoFocus value={query} onChange={event => setQuery(event.target.value)} onKeyDown={event => { if (event.key === "Enter" && matches[0]) choose(matches[0]); }} placeholder="Search commands…" style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "#e6edf3", font: "inherit", fontSize: 12 }} />
+          <kbd style={{ color: "#8b949e", border: "1px solid #30363d", borderRadius: 4, padding: "2px 5px", fontSize: 9 }}>ESC</kbd>
+        </div>
+        <div style={{ padding: 6 }}>
+          {matches.map(action => <button key={action.label} onClick={() => choose(action)} style={{ width: "100%", border: "none", borderRadius: 7, background: "transparent", color: "#e6edf3", padding: "10px 11px", cursor: "pointer", display: "flex", alignItems: "center", textAlign: "left", font: "inherit", fontSize: 11 }} onMouseEnter={event => event.currentTarget.style.background = "#21262d"} onMouseLeave={event => event.currentTarget.style.background = "transparent"}><span style={{ flex: 1 }}>{action.label}</span><span style={{ color: "#8b949e", fontSize: 9 }}>{action.hint}</span></button>)}
+          {!matches.length && <div style={{ padding: 18, textAlign: "center", color: "#8b949e", fontSize: 10 }}>No matching commands</div>}
+        </div>
+      </div>
     </div>
   );
 }

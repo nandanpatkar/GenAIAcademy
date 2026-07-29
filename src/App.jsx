@@ -192,9 +192,10 @@ function MainApp() {
     if (user && Object.keys(currentData).length > 0) {
       try {
         localStorage.setItem("genai_paths_v3", JSON.stringify(currentData));
-        await supabase
+        const { error } = await supabase
           .from('user_curriculum')
           .upsert({ id: user.id, paths_data: currentData, updated_at: new Date().toISOString() });
+        if (error) throw error;
       } catch (e) {
         console.error("Flush save before sign-out failed:", e);
       }
@@ -210,11 +211,18 @@ function MainApp() {
     hasFetched.current = true;
 
     const fetchCurriculum = async () => {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('user_curriculum')
         .select('paths_data')
         .eq('id', user.id)
         .single();
+
+      // Never treat an unavailable database as a brand-new account: that would
+      // replace an existing curriculum with defaults on the next sync.
+      if (error && error.code !== 'PGRST116') {
+        console.error('Could not load curriculum from Supabase:', error);
+        return;
+      }
 
       if (data && data.paths_data && Object.keys(data.paths_data).length > 0) {
         const defaultPaths = injectDefaultIcons(PATHS);
@@ -275,7 +283,13 @@ function MainApp() {
         setPathsData(initialData);
         const keys = Object.keys(initialData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance", "leetcode"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
-        await supabase.from('user_curriculum').insert({ id: user.id, paths_data: initialData });
+        const { error: insertError } = await supabase
+          .from('user_curriculum')
+          .insert({ id: user.id, paths_data: initialData });
+        if (insertError) {
+          console.error('Could not create curriculum in Supabase:', insertError);
+          return;
+        }
 
         // Brand new user — always show the onboarding modal.
         if (!hasCheckedOnboarding.current) {
@@ -302,13 +316,14 @@ function MainApp() {
         videoIntelligence: pathsData.videoIntelligence || {}
       };
       try {
-        await supabase
+        const { error } = await supabase
           .from('user_curriculum')
           .upsert({
             id: user.id,
             paths_data: dataToSync,
             updated_at: new Date().toISOString()
           });
+        if (error) throw error;
       } catch (e) {
         console.error("Supabase sync failed:", e);
       }

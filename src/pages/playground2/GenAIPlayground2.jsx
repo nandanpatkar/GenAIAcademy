@@ -26,19 +26,26 @@ import {
   Bot,
   Brain,
   BrainCircuit,
+  BringToFront,
+  Circle,
   Check,
   CheckCircle2,
   ChevronRight,
   CircleDot,
   Cloud,
   Code2,
+  Copy,
   Database,
+  Diamond,
   Download,
+  Eraser,
   FileUp,
   FileJson,
+  Frame,
   Gauge,
   GitBranch,
   Globe2,
+  Hand,
   KeyRound,
   Layers3,
   LayoutTemplate,
@@ -49,21 +56,36 @@ import {
   Minus,
   Network,
   Moon,
+  MousePointer2,
+  Palette,
+  Pause,
+  PenLine,
   PanelLeftClose,
   PanelLeftOpen,
   Play,
   Plus,
+  RectangleHorizontal,
+  Redo2,
   RefreshCw,
   Search,
+  SendToBack,
   ShieldCheck,
+  Shapes,
+  Square,
   Sparkles,
+  StickyNote,
+  Star,
   Sun,
   Table2,
   Target,
+  Type,
   Timer,
   Trash2,
+  Undo2,
   Upload,
   UserCheck,
+  User,
+  UserRound,
   Users,
   Webhook,
   Workflow,
@@ -77,11 +99,40 @@ import { SYSTEM_DESIGN_CHALLENGES } from "./data/systemDesignChallengeCatalog";
 import { getComponentById as getSystemComponentById } from "../simulator/data/sdsComponents";
 import { runMonteCarlo as runSystemDesignMonteCarlo, runSimulation as runSystemDesignSimulation, runTrace as runSystemDesignTrace } from "../simulator/engine/sdsSimulator";
 import { generateFlowArchitecture, normalizeFlowArchitecture } from "../../services/aiService";
+import {
+  WhiteboardFrameNode,
+  WhiteboardIconNode,
+  WhiteboardNoteNode,
+  WhiteboardShapeNode,
+  WhiteboardStrokeNode,
+  WhiteboardTextNode,
+} from "./WhiteboardNodes";
 import "./genai-playground2.css";
 
-const FALLBACK_ICONS = { Activity, AlertCircle, Archive, Binary, Bot, Brain, BrainCircuit, CheckCircle2, CircleDot, Cloud, Code2, Database, Gauge, GitBranch, Globe2, KeyRound, Layers3, ListTodo, MessageSquare, Network, Search, ShieldCheck, Sparkles, Table2, UserCheck, Users, Webhook, Workflow, Zap };
+const FALLBACK_ICONS = { Activity, AlertCircle, Archive, Binary, Bot, Brain, BrainCircuit, CheckCircle2, CircleDot, Cloud, Code2, Database, FileJson, Gauge, GitBranch, Globe2, KeyRound, Layers3, Lightbulb, ListTodo, MessageSquare, Network, Search, ShieldCheck, Sparkles, Star, Table2, Target, User, UserCheck, Users, Webhook, Workflow, Zap };
 const uid = (prefix = "node") => `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
 const PROJECT_STORAGE_KEY = "genai_playground2_project_v2";
+const HISTORY_LIMIT = 60;
+const WHITEBOARD_AI_TYPES = new Set(["flowchart", "erd", "dataflow", "sequence", "state", "bpmn", "mindmap", "userflow", "journey", "wireframe"]);
+const WHITEBOARD_SHAPES = [
+  { id: "rectangle", label: "Rectangle", icon: RectangleHorizontal },
+  { id: "rounded", label: "Rounded", icon: RectangleHorizontal },
+  { id: "ellipse", label: "Ellipse", icon: Circle },
+  { id: "diamond", label: "Decision", icon: Diamond },
+  { id: "hexagon", label: "Hexagon", icon: Shapes },
+  { id: "parallelogram", label: "Data", icon: Shapes },
+  { id: "document", label: "Document", icon: FileJson },
+  { id: "triangle", label: "Triangle", icon: Shapes },
+];
+const WHITEBOARD_ICONS = [
+  ["Lightbulb", "Idea"], ["User", "Person"], ["Users", "Team"], ["Target", "Goal"],
+  ["Star", "Priority"], ["MessageSquare", "Conversation"], ["Bot", "AI agent"],
+  ["Database", "Data"], ["Code2", "Code"], ["Globe2", "Web"], ["Zap", "Action"],
+  ["CheckCircle2", "Complete"], ["Cloud", "Cloud"], ["BrainCircuit", "Model"],
+  ["GitBranch", "Branch"], ["KeyRound", "Auth"], ["ShieldCheck", "Security"],
+  ["Network", "Network"], ["Layers3", "Platform"], ["FileJson", "Document"],
+];
+const WB_COLORS = ["#ffffff", "#ede9fe", "#dbeafe", "#dcfce7", "#fef3a5", "#fee2e2", "#fce7f3", "#172033"];
 const normalizeReactFlowEdges = (edges = []) => edges.map((edge) => edge?.type === "bezier" ? { ...edge, type: "default" } : edge);
 const SYSTEM_COMPONENT_BY_KIND = {
   source: "dns", sink: "app-server", service: "app-server", llm: "app-server", embedder: "app-server",
@@ -189,11 +240,23 @@ const arrowEdge = (id, source, target, label = "", options = {}) => ({
 });
 
 const shouldShowFlowLabel = (label = "", role = "primary") => role !== "primary" || /branch|fallback|escalat|human|tool|retriev|error|retry|approved|denied|timeout|security|condition|no match/i.test(String(label));
+const edgeHandlesForPositions = (sourcePosition, targetPosition) => {
+  const deltaX = (targetPosition?.x || 0) - (sourcePosition?.x || 0);
+  const deltaY = (targetPosition?.y || 0) - (sourcePosition?.y || 0);
+  if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+    return deltaX >= 0
+      ? { sourceHandle: "right-out", targetHandle: "left-in" }
+      : { sourceHandle: "left-out", targetHandle: "right-in" };
+  }
+  return deltaY >= 0
+    ? { sourceHandle: "bottom-out", targetHandle: "top-in" }
+    : { sourceHandle: "top-out", targetHandle: "bottom-in" };
+};
 
 // Layer the graph left-to-right and keep reverse/callback relationships on a
 // quieter feedback route. The AI is free to describe the graph; this function
 // owns the readable spatial arrangement.
-function layoutGeneratedGraph(sourceNodes, sourceEdges) {
+function layoutGeneratedGraph(sourceNodes, sourceEdges, diagramFormat = "architecture") {
   const nodes = sourceNodes.map((node) => ({ ...node }));
   const ids = nodes.map((node) => String(node.id));
   const order = new Map(ids.map((id, index) => [id, index]));
@@ -236,7 +299,21 @@ function layoutGeneratedGraph(sourceNodes, sourceEdges) {
     const id = String(node.id);
     const layer = rank.get(id) || 0;
     const index = slot.get(id) || 0;
-    return { ...node, position: { x: 90 + layer * 270, y: 120 + index * 165 } };
+    const sourceIndex = order.get(id) || 0;
+    let position = { x: 90 + layer * 270, y: 120 + index * 165 };
+    if (diagramFormat === "flowchart" || diagramFormat === "bpmn") {
+      position = { x: 180 + index * 270, y: 80 + layer * 170 };
+    } else if (diagramFormat === "sequence") {
+      position = { x: 70 + sourceIndex * 250, y: 100 };
+    } else if (diagramFormat === "mindmap") {
+      const branchIndex = Math.max(0, sourceIndex - 1);
+      const branchCount = Math.max(1, nodes.length - 1);
+      const angle = (branchIndex / branchCount) * Math.PI * 2;
+      position = sourceIndex === 0 ? { x: 560, y: 350 } : { x: 560 + Math.cos(angle) * 430, y: 350 + Math.sin(angle) * 280 };
+    } else if (diagramFormat === "wireframe") {
+      position = { x: 90 + (sourceIndex % 4) * 270, y: 90 + Math.floor(sourceIndex / 4) * 190 };
+    }
+    return { ...node, position };
   });
   const laidEdges = validEdges.map((edge, index) => {
     const source = String(edge.source);
@@ -244,9 +321,78 @@ function layoutGeneratedGraph(sourceNodes, sourceEdges) {
     const feedback = (rank.get(target) || 0) <= (rank.get(source) || 0);
     const role = edge.role || edge.data?.role || (feedback ? "feedback" : "primary");
     const label = String(edge.label || edge.condition || edge.data?.flowLabel || "");
-    return arrowEdge(edge.id || `generated-edge-${index}`, source, target, label, { feedback, role, showLabel: shouldShowFlowLabel(label, role) });
+    const rendered = arrowEdge(edge.id || `generated-edge-${index}`, source, target, label, { feedback, role, showLabel: shouldShowFlowLabel(label, role) });
+    if (["flowchart", "bpmn", "mindmap"].includes(diagramFormat)) {
+      const sourceNode = laidNodes.find((node) => String(node.id) === source);
+      const targetNode = laidNodes.find((node) => String(node.id) === target);
+      return { ...rendered, ...edgeHandlesForPositions(sourceNode?.position, targetNode?.position) };
+    }
+    return rendered;
   });
   return { nodes: laidNodes, edges: laidEdges };
+}
+
+function nodeDimensions(node) {
+  return {
+    width: Number(node.measured?.width || node.style?.width || (node.type === "architectureIcon" ? 142 : 210)),
+    height: Number(node.measured?.height || node.style?.height || (node.type === "architectureIcon" ? 120 : 110)),
+  };
+}
+
+// Frames are semantic containers. Arrange each contained subgraph first, size
+// the frame around it, and only then place the frames in non-overlapping lanes.
+// This keeps an Arrange click from scattering children outside their region.
+function layoutRegionAwareGraph(sourceNodes, sourceEdges, diagramFormat = "architecture") {
+  const frames = sourceNodes.filter((node) => node.type === "whiteboardFrame" && node.data?.region);
+  if (!frames.length) return layoutGeneratedGraph(sourceNodes, sourceEdges, diagramFormat);
+  const services = sourceNodes.filter((node) => node.type === "genaiService" || node.type === "architectureIcon");
+  const serviceIds = new Set(services.map((node) => node.id));
+  const claimed = new Set();
+  const groups = frames.map((frame) => {
+    const explicitIds = Array.isArray(frame.data?.memberIds) ? frame.data.memberIds.filter((id) => serviceIds.has(id)) : [];
+    const frameWidth = Number(frame.style?.width || 320);
+    const frameHeight = Number(frame.style?.height || 240);
+    const containedIds = services.filter((node) => {
+      const { width, height } = nodeDimensions(node);
+      const centerX = node.position.x + width / 2;
+      const centerY = node.position.y + height / 2;
+      return centerX >= frame.position.x && centerX <= frame.position.x + frameWidth && centerY >= frame.position.y && centerY <= frame.position.y + frameHeight;
+    }).map((node) => node.id);
+    const memberIds = (explicitIds.length ? explicitIds : containedIds).filter((id) => !claimed.has(id));
+    memberIds.forEach((id) => claimed.add(id));
+    return { frame, members: services.filter((node) => memberIds.includes(node.id)) };
+  }).filter((group) => group.members.length);
+  if (!groups.length) return layoutGeneratedGraph(sourceNodes, sourceEdges, diagramFormat);
+
+  let cursorX = 80;
+  let tallestFrame = 0;
+  const arrangedFrames = [];
+  const arrangedServices = [];
+  groups.forEach(({ frame, members }) => {
+    const memberIds = new Set(members.map((node) => node.id));
+    const innerEdges = sourceEdges.filter((edge) => memberIds.has(edge.source) && memberIds.has(edge.target));
+    const inner = layoutGeneratedGraph(members, innerEdges, diagramFormat).nodes;
+    const minX = Math.min(...inner.map((node) => node.position.x));
+    const minY = Math.min(...inner.map((node) => node.position.y));
+    const maxX = Math.max(...inner.map((node) => node.position.x + nodeDimensions(node).width));
+    const maxY = Math.max(...inner.map((node) => node.position.y + nodeDimensions(node).height));
+    const width = Math.max(300, maxX - minX + 110);
+    const height = Math.max(220, maxY - minY + 125);
+    const position = { x: cursorX, y: 90 };
+    arrangedFrames.push({ ...frame, position, style: { ...frame.style, width, height }, data: { ...frame.data, memberIds: [...memberIds] } });
+    arrangedServices.push(...inner.map((node) => ({ ...node, position: { x: position.x + 50 + node.position.x - minX, y: position.y + 66 + node.position.y - minY } })));
+    cursorX += width + 70;
+    tallestFrame = Math.max(tallestFrame, height);
+  });
+  const ungrouped = services.filter((node) => !claimed.has(node.id));
+  if (ungrouped.length) {
+    const loose = layoutGeneratedGraph(ungrouped, sourceEdges.filter((edge) => ungrouped.some((node) => node.id === edge.source) && ungrouped.some((node) => node.id === edge.target)), diagramFormat).nodes;
+    const minX = Math.min(...loose.map((node) => node.position.x));
+    const minY = Math.min(...loose.map((node) => node.position.y));
+    arrangedServices.push(...loose.map((node) => ({ ...node, position: { x: 90 + node.position.x - minX, y: tallestFrame + 210 + node.position.y - minY } })));
+  }
+  const otherNodes = sourceNodes.filter((node) => !serviceIds.has(node.id) && !frames.some((frame) => frame.id === node.id));
+  return { nodes: [...arrangedFrames, ...arrangedServices, ...otherNodes], edges: layoutGeneratedGraph(services, sourceEdges, diagramFormat).edges };
 }
 
 const patternPositions = [
@@ -259,7 +405,7 @@ function newNode(serviceId, position, index = 0, overrides = {}) {
   const label = overrides.label || service.label;
   return {
     id: uid(serviceId),
-    type: "genaiService",
+    type: overrides.iconOnly ? "architectureIcon" : "genaiService",
     position: { x: position?.[0] ?? 160 + index * 230, y: position?.[1] ?? 220 },
     data: { serviceId: service.id, label, service, runtimeState: "idle", config: {}, replicas: 1, maxQPS: component.maxQPS, latencyMs: component.latencyMs, instanceType: "t3.medium", region: "us-east-1", autoscaling: false, minReplicas: 1, maxReplicas: 20, flowMode: getDefaultFlowMode(service), sampleRate: 0.02, forceFailure: false, failureRate: 0.01, latencyOverrideMs: 0, latencyJitter: 0.3, maxRetries: 0, deadLetterQueue: false, overloadBehavior: false, degradedMode: false, cacheOutcome: "auto", cacheStrategy: "cache-aside", cacheHitRate: 0.85, ...overrides },
   };
@@ -267,11 +413,20 @@ function newNode(serviceId, position, index = 0, overrides = {}) {
 
 function makeDiagramTemplate(templateId) {
   const template = DIAGRAM_TEMPLATE_BY_ID[templateId] || DIAGRAM_TEMPLATES[0];
+  const frames = (template.regions || []).map((region, index) => ({
+    id: `region-${template.id}-${index}`,
+    type: "whiteboardFrame",
+    position: { x: region.position?.[0] || 0, y: region.position?.[1] || 0 },
+    style: { width: region.size?.[0] || 320, height: region.size?.[1] || 300 },
+    data: { label: region.label, subtitle: region.subtitle || "", whiteboard: true, region: true, style: { stroke: region.color || "#f59e0b", fill: region.fill || "transparent", text: "#172033" } },
+  }));
   const nodes = template.nodes.map((spec, index) => newNode(spec.serviceId, spec.position, index, {
     label: spec.label,
     diagramType: template.diagramType,
     fields: spec.fields,
     sentiment: spec.sentiment,
+    subtitle: spec.subtitle,
+    iconOnly: Boolean(spec.iconOnly),
   }));
   const edges = template.edges.map((link, index) => arrowEdge(
     `diagram-edge-${template.id}-${index}`,
@@ -280,7 +435,7 @@ function makeDiagramTemplate(templateId) {
     link.label,
     { role: link.role, feedback: link.role === "feedback" },
   )).filter((link) => link.source && link.target);
-  return { nodes, edges, diagramType: template.diagramType, name: template.label, description: template.description };
+  return { nodes: [...frames, ...nodes], edges, diagramType: template.diagramType, name: template.label, description: template.description };
 }
 
 function makePattern(patternId) {
@@ -327,19 +482,90 @@ function GenAIServiceNode({ data, selected }) {
   );
 }
 
-const nodeTypes = { genaiService: GenAIServiceNode };
+// Architecture references often use the provider mark itself as the node. Keep
+// the label and connection ports, but deliberately remove the surrounding card.
+function ArchitectureIconNode({ data, selected }) {
+  const service = data.service || SERVICE_BY_ID[data.serviceId] || SERVICE_BY_ID.lambda;
+  const runtime = data.runtimeState || "idle";
+  return <div className={`g2-architecture-icon runtime-${runtime} ${selected ? "is-selected" : ""}`} style={{ "--node-color": service.color }}>
+    <Handle type="target" position={Position.Left} id="in" />
+    <span className="g2-architecture-icon-art"><ServiceIcon service={service} size={48} /></span>
+    <strong>{data.label || service.label}</strong>
+    {data.subtitle && <small>{data.subtitle}</small>}
+    {runtime !== "idle" && <i className={`g2-runtime-dot ${runtime}`} />}
+    <Handle type="source" position={Position.Right} id="out" />
+  </div>;
+}
+
+const nodeTypes = {
+  genaiService: GenAIServiceNode,
+  architectureIcon: ArchitectureIconNode,
+  whiteboardShape: WhiteboardShapeNode,
+  whiteboardNote: WhiteboardNoteNode,
+  whiteboardText: WhiteboardTextNode,
+  whiteboardFrame: WhiteboardFrameNode,
+  whiteboardIcon: WhiteboardIconNode,
+  whiteboardStroke: WhiteboardStrokeNode,
+};
+
+// Produce playback waves rather than a single chosen route. This mirrors how
+// visual workflow runners reveal all reachable work: a node is emitted only
+// after every reachable non-feedback predecessor has been visited. Cycles are
+// handled safely by placing any remaining nodes in a final wave.
+function buildAnimationPlan(nodes, edges, entryNodeId = "") {
+  const validIds = new Set(nodes.map((node) => node.id));
+  const links = edges.filter((edge) => validIds.has(edge.source) && validIds.has(edge.target) && edge.data?.role !== "feedback");
+  const incoming = new Map(nodes.map((node) => [node.id, 0]));
+  const outgoing = new Map(nodes.map((node) => [node.id, []]));
+  links.forEach((edge) => {
+    incoming.set(edge.target, (incoming.get(edge.target) || 0) + 1);
+    outgoing.get(edge.source)?.push(edge);
+  });
+  // Kahn-style waves make every branch wait for its incoming work, while
+  // still allowing independent branches and disconnected starts to run. This
+  // avoids the old first-path BFS behaviour that could appear to end at a
+  // fan-in node even though work was still visible elsewhere on the canvas.
+  const ready = nodes.filter((node) => (incoming.get(node.id) || 0) === 0).map((node) => node.id);
+  if (entryNodeId && ready.includes(entryNodeId)) ready.sort((left, right) => left === entryNodeId ? -1 : right === entryNodeId ? 1 : 0);
+  const depth = new Map();
+  const completed = new Set();
+  const steps = [];
+  let wave = 0;
+  while (ready.length) {
+    const current = ready.splice(0).filter((id) => !completed.has(id));
+    if (!current.length) continue;
+    current.forEach((id) => { completed.add(id); depth.set(id, wave); });
+    steps.push(current);
+    current.forEach((id) => (outgoing.get(id) || []).forEach((edge) => {
+      incoming.set(edge.target, Math.max(0, (incoming.get(edge.target) || 0) - 1));
+      if ((incoming.get(edge.target) || 0) === 0 && !completed.has(edge.target)) ready.push(edge.target);
+    }));
+    wave += 1;
+  }
+  // Cycles or malformed links cannot block the preview. Add every remaining
+  // node as one final deterministic wave so no visible component is skipped.
+  const remaining = nodes.map((node) => node.id).filter((id) => !completed.has(id));
+  if (remaining.length) {
+    remaining.forEach((id) => depth.set(id, steps.length));
+    steps.push(remaining);
+  }
+  const edgeSteps = links.map((edge) => ({ ...edge, step: Math.max(1, depth.get(edge.target) || 0) }));
+  return { steps, edgeSteps };
+}
 
 function PillarBar({ label, value, color }) {
   return <div className="g2-pillar-row"><div><span>{label}</span><b>{value}%</b></div><div className="g2-progress"><i style={{ width: `${value}%`, background: color }} /></div></div>;
 }
 
-function StudioDrawer({ prompt, setPrompt, onGenerate, onApplyJson, projectJson, setProjectJson, isGenerating, studioError }) {
+function StudioDrawer({ prompt, setPrompt, onGenerate, onApplyJson, projectJson, setProjectJson, isGenerating, studioError, diagramType, componentDisplay, setComponentDisplay }) {
+  const formatLabel = DIAGRAM_TYPES.find((item) => item.id === diagramType)?.label || "diagram";
   return <div className="g2-drawer-content">
-    <div className="g2-drawer-kicker">STUDIO / AI ARCHITECT</div>
-    <h2>Turn an idea into a testable flow</h2>
-    <p className="g2-muted">Describe the user journey, constraints, model choice, or failure mode. Studio turns it into a starting pattern you can edit on the canvas.</p>
-    <textarea className="g2-textarea" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="Build a customer support RAG assistant with private documents, citations, and human escalation…" />
-    <button className="g2-primary-btn" onClick={onGenerate} disabled={isGenerating}>{isGenerating ? <RefreshCw size={15} className="g2-spin" /> : <Sparkles size={15} />} {isGenerating ? "Generating architecture…" : "Generate architecture"}</button>
+    <div className="g2-drawer-kicker">STUDIO / AI VISUAL DESIGNER</div>
+    <h2>Generate an editable {formatLabel.toLowerCase()}</h2>
+    <p className="g2-muted">Describe the content, relationships, constraints, and visual intent. Ask for “icon-only nodes” and named regions such as “private VPC” or “hot path”; Studio creates editable frames, labels, nodes, and connections.</p>
+    <div className="g2-studio-appearance"><span>Architecture components</span><div className="g2-component-display" role="group" aria-label="Generated component appearance"><button className={componentDisplay === "card" ? "active" : ""} onClick={() => setComponentDisplay("card")}><RectangleHorizontal size={14} /> Cards</button><button className={componentDisplay === "icon" ? "active" : ""} onClick={() => setComponentDisplay("icon")}><Sparkles size={14} /> Icons only</button></div></div>
+    <textarea className="g2-textarea" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="Build an icon-only AWS RAG architecture with frames for edge, private VPC, data plane, and observability…" />
+    <button className="g2-primary-btn" onClick={onGenerate} disabled={isGenerating}>{isGenerating ? <RefreshCw size={15} className="g2-spin" /> : <Sparkles size={15} />} {isGenerating ? `Generating ${formatLabel.toLowerCase()}…` : `Generate ${formatLabel.toLowerCase()}`}</button>
     {studioError && <div className="g2-studio-error"><AlertCircle size={14} /><span>{studioError}</span></div>}
     <div className="g2-section-label">Try a direction</div>
     <div className="g2-prompt-grid">
@@ -414,6 +640,23 @@ function ChallengeDrawer({ challenge, challenges, challengeScore, onSelectChalle
 
 function InspectorDrawer({ selectedNode, onUpdate, onDelete, onClose }) {
   if (!selectedNode) return <div className="g2-drawer-content"><div className="g2-empty-drawer"><CircleDot size={24} /><h2>Select a component</h2><p>Choose a node on the canvas to inspect its role, provider, and design notes.</p></div></div>;
+  if (String(selectedNode.type || "").startsWith("whiteboard")) {
+    const data = selectedNode.data || {};
+    const style = data.style || {};
+    const updateStyle = (patch) => onUpdate(selectedNode.id, { style: { ...style, ...patch } });
+    return <div className="g2-drawer-content">
+      <div className="g2-drawer-kicker">WHITEBOARD / FORMAT</div>
+      <div className="g2-wb-inspector-title"><Palette size={18} /><div><h2>{data.label || "Canvas object"}</h2><p>{selectedNode.type.replace("whiteboard", "").toLowerCase() || "ink"}</p></div></div>
+      {selectedNode.type === "whiteboardShape" && <label className="g2-control-select"><span>Shape</span><select className="g2-select" value={data.shape || "rectangle"} onChange={(event) => onUpdate(selectedNode.id, { shape: event.target.value })}>{WHITEBOARD_SHAPES.map((shape) => <option value={shape.id} key={shape.id}>{shape.label}</option>)}</select></label>}
+      {selectedNode.type !== "whiteboardStroke" && <div className="g2-wb-format-grid">
+        <label><span>Fill</span><input type="color" value={style.fill || "#ffffff"} onChange={(event) => updateStyle({ fill: event.target.value })} /></label>
+        <label><span>Border</span><input type="color" value={style.stroke || "#7c3aed"} onChange={(event) => updateStyle({ stroke: event.target.value })} /></label>
+        <label><span>Text</span><input type="color" value={style.text || "#172033"} onChange={(event) => updateStyle({ text: event.target.value })} /></label>
+      </div>}
+      <p className="g2-muted">Drag the selection handles to resize. Connect any visible port to another object, or edit text directly on the canvas.</p>
+      <button className="g2-danger-btn" onClick={() => { onDelete(selectedNode.id); onClose(); }}><Trash2 size={14} /> Remove object</button>
+    </div>;
+  }
   const service = selectedNode.data.service || SERVICE_BY_ID[selectedNode.data.serviceId];
   const config = getNodeConfig(selectedNode);
   const update = (patch) => onUpdate(selectedNode.id, patch);
@@ -423,13 +666,13 @@ function InspectorDrawer({ selectedNode, onUpdate, onDelete, onClose }) {
 function PlaygroundHome({ patterns, templates, onStudio, onDesign, onPattern, onTemplate }) {
   return <main className="g2-home">
     <section className="g2-home-hero">
-      <div className="g2-home-kicker"><span className="g2-home-kicker-dot" /> GEN AI ARCHITECTURE WORKBENCH</div>
-      <h1>Design systems that are ready to run.</h1>
-      <p>Turn a product idea into an editable architecture, test its runtime behavior, and review the decisions before you ship.</p>
+      <div className="g2-home-kicker"><span className="g2-home-kicker-dot" /> AI-NATIVE VISUAL WORKBENCH</div>
+      <h1>Think, draw, and design without limits.</h1>
+      <p>Move from a rough idea to a beautiful whiteboard, flow, wireframe, or testable architecture—all on one AI-assisted canvas.</p>
       <div className="g2-home-actions"><button className="g2-home-primary" onClick={onStudio}><Sparkles size={16} /> Ask Studio to build it</button><button className="g2-home-secondary" onClick={onDesign}><Layers3 size={16} /> Start from a blank canvas</button></div>
-      <div className="g2-home-meta"><span><CheckCircle2 size={13} /> AWS, Azure, Databricks, and Flow Design services</span><span><Workflow size={13} /> Editable paths and branching logic</span><span><Target size={13} /> Review against production concerns</span></div>
+      <div className="g2-home-meta"><span><CheckCircle2 size={13} /> Resizable shapes, cards, icons, and freehand ink</span><span><Workflow size={13} /> Diagrams, brainstorming, and architecture</span><span><Target size={13} /> Create manually or generate with AI</span></div>
     </section>
-    <section className="g2-home-section"><div className="g2-home-section-head"><div><span className="g2-drawer-kicker">QUICK STARTS</span><h2>Choose an architecture shape</h2></div><button className="g2-home-link" onClick={onDesign}>View all components <ChevronRight size={14} /></button></div><div className="g2-home-pattern-grid">{patterns.slice(0, 4).map((pattern) => <button className="g2-home-pattern" key={pattern.id} onClick={() => onPattern(pattern.id)}><span className="g2-home-pattern-icon"><Workflow size={18} /></span><span><strong>{pattern.label}</strong><small>{pattern.description}</small></span><ChevronRight size={15} /></button>)}</div></section>
+    <section className="g2-home-section"><div className="g2-home-section-head"><div><span className="g2-drawer-kicker">QUICK STARTS</span><h2>Choose a visual starting point</h2></div><button className="g2-home-link" onClick={onDesign}>Open the infinite canvas <ChevronRight size={14} /></button></div><div className="g2-home-pattern-grid">{patterns.slice(0, 4).map((pattern) => <button className="g2-home-pattern" key={pattern.id} onClick={() => onPattern(pattern.id)}><span className="g2-home-pattern-icon"><Workflow size={18} /></span><span><strong>{pattern.label}</strong><small>{pattern.description}</small></span><ChevronRight size={15} /></button>)}</div></section>
     <section className="g2-home-section g2-home-templates"><div className="g2-home-section-head"><div><span className="g2-drawer-kicker">FROM YOUR PLAYGROUND</span><h2>Continue with a template</h2></div><button className="g2-home-link" onClick={onDesign}>Open template library <ChevronRight size={14} /></button></div><div className="g2-home-template-row">{templates.slice(0, 3).map((template) => <button className="g2-home-template" key={template.id} onClick={() => onTemplate(template.id)}><LayoutTemplate size={16} /><span><strong>{template.label}</strong><small>{template.description || `${template.nodes.length} nodes · ${template.edges.length} connections`}</small></span></button>)}</div></section>
   </main>;
 }
@@ -445,6 +688,7 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const [componentDisplay, setComponentDisplay] = useState("card");
   const [brief, setBrief] = useState("Build a production-ready RAG assistant with citations, private documents, and a safe escalation path.");
   const [prompt, setPrompt] = useState("");
   const [notice, setNotice] = useState("Start from a pattern or assemble the architecture from the rail.");
@@ -461,18 +705,59 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
   const [capacitySettings, setCapacitySettings] = useState({ dau: 1000000, readsPerUser: 10, writesPerUser: 2, readSizeKb: 10, writeSizeKb: 2, storageMonths: 12, peakFactor: 3, replicationFactor: 3 });
   const [isRunning, setIsRunning] = useState(false);
   const [step, setStep] = useState(0);
+  const [playbackSpeed, setPlaybackSpeed] = useState(0.75);
+  const [isPlaybackPaused, setIsPlaybackPaused] = useState(false);
+  const [followExecution, setFollowExecution] = useState(true);
   const [challenge, setChallenge] = useState(CHALLENGES[0]);
   const [projectJson, setProjectJson] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [studioError, setStudioError] = useState("");
   const [didRestore, setDidRestore] = useState(false);
+  const [toolMode, setToolMode] = useState("select");
+  const [penColor, setPenColor] = useState("#172033");
+  const [penWidth, setPenWidth] = useState(3);
+  const [drawDraft, setDrawDraft] = useState([]);
+  const [historyVersion, setHistoryVersion] = useState(0);
   const importInputRef = useRef(null);
+  const canvasRef = useRef(null);
+  const historyRef = useRef([]);
+  const futureRef = useRef([]);
+  const nodesRef = useRef(nodes);
+  const edgesRef = useRef(edges);
+  const dragCheckpointRef = useRef(false);
+  const followedPlaybackRef = useRef(false);
   const [visualTheme, setVisualTheme] = useState(() => {
     try { return localStorage.getItem("genai_playground2_theme") || "light"; } catch { return "light"; }
   });
   const reactFlow = useReactFlow();
   const challengeCatalog = useMemo(() => [...CHALLENGES, ...SYSTEM_DESIGN_CHALLENGES], []);
   const fitCanvas = useCallback(() => window.setTimeout(() => reactFlow.fitView({ padding: 0.22, duration: 320 }), 60), [reactFlow]);
+
+  useEffect(() => { nodesRef.current = nodes; }, [nodes]);
+  useEffect(() => { edgesRef.current = edges; }, [edges]);
+
+  const checkpoint = useCallback(() => {
+    historyRef.current = [...historyRef.current.slice(-(HISTORY_LIMIT - 1)), {
+      nodes: nodesRef.current,
+      edges: edgesRef.current,
+    }];
+    futureRef.current = [];
+    setHistoryVersion((value) => value + 1);
+  }, []);
+  const undo = useCallback(() => {
+    const previous = historyRef.current.pop();
+    if (!previous) return;
+    futureRef.current.unshift({ nodes: nodesRef.current, edges: edgesRef.current });
+    setNodes(previous.nodes); setEdges(previous.edges); setSelectedNodeId(null);
+    setHistoryVersion((value) => value + 1);
+  }, [setEdges, setNodes]);
+  const redo = useCallback(() => {
+    const next = futureRef.current.shift();
+    if (!next) return;
+    historyRef.current.push({ nodes: nodesRef.current, edges: edgesRef.current });
+    setNodes(next.nodes); setEdges(next.edges); setSelectedNodeId(null);
+    setHistoryVersion((value) => value + 1);
+  }, [setEdges, setNodes]);
 
   useEffect(() => {
     const initial = makePattern("rag");
@@ -530,10 +815,11 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
   const effectiveSimQps = Math.max(1, Math.round(simQps * selectedSimulationScenario.factor));
 
   const updateNodeConfig = useCallback((nodeId, patch) => {
+    checkpoint();
     setNodes((current) => current.map((node) => node.id === nodeId ? { ...node, data: { ...node.data, ...patch } } : node));
     setSimResult(null);
     setMonteCarloResult(null);
-  }, [setNodes]);
+  }, [checkpoint, setNodes]);
 
   const selectChallenge = useCallback((nextChallenge) => {
     setChallenge(nextChallenge);
@@ -544,6 +830,7 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
   const loadChallengeReference = useCallback((nextChallenge) => {
     const reference = nextChallenge?.reference;
     if (!reference?.nodes?.length) return;
+    checkpoint();
     const nextNodes = reference.nodes.map((spec, index) => newNode(spec.serviceId, [spec.position.x, spec.position.y], index, {
       label: spec.label,
       diagramType: "architecture",
@@ -566,9 +853,10 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     setMode("design");
     setDrawer("challenge");
     fitCanvas();
-  }, [fitCanvas, setEdges, setNodes]);
+  }, [checkpoint, fitCanvas, setEdges, setNodes]);
 
   const applyPattern = useCallback((patternId) => {
+    checkpoint();
     const next = makePattern(patternId);
     setNodes(next.nodes);
     setEdges(next.edges);
@@ -578,11 +866,12 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     setMode("design");
     setDrawer(null);
     fitCanvas();
-  }, [fitCanvas, setEdges, setNodes]);
+  }, [checkpoint, fitCanvas, setEdges, setNodes]);
 
   const applyLegacyTemplate = useCallback((templateId) => {
     const template = LEGACY_TEMPLATES.find((item) => item.id === templateId);
     if (!template) return;
+    checkpoint();
     setNodes(template.nodes);
     setEdges(template.edges);
     setDiagramType("architecture");
@@ -591,9 +880,10 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     setDrawer(null);
     fitCanvas();
     setNotice(`${template.label} loaded from the original GenAI Playground template library.`);
-  }, [fitCanvas, setEdges, setNodes]);
+  }, [checkpoint, fitCanvas, setEdges, setNodes]);
 
   const applyDiagramTemplate = useCallback((templateId) => {
+    checkpoint();
     const next = makeDiagramTemplate(templateId);
     setNodes(next.nodes);
     setEdges(next.edges);
@@ -604,7 +894,7 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     setProjectJson(JSON.stringify({ name: next.name, description: next.description, brief, diagramType: next.diagramType, nodes: next.nodes, edges: next.edges }, null, 2));
     setNotice(`${next.name} loaded. Use Animate to walk through the behavior.`);
     fitCanvas();
-  }, [brief, fitCanvas, setEdges, setNodes]);
+  }, [brief, checkpoint, fitCanvas, setEdges, setNodes]);
 
   const applyDiagramType = useCallback((typeId) => {
     if (typeId === "architecture") {
@@ -612,19 +902,111 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
       return;
     }
     const template = DIAGRAM_TEMPLATES.find((item) => item.diagramType === typeId);
-    if (template) applyDiagramTemplate(template.id);
+    if (template) {
+      applyDiagramTemplate(template.id);
+      return;
+    }
+    setDiagramType(typeId);
+    setNotice(`${DIAGRAM_TYPES.find((item) => item.id === typeId)?.label || "Diagram"} mode selected. Build manually or ask Studio to generate it with AI.`);
   }, [applyDiagramTemplate, applyPattern]);
 
-  const addService = useCallback((serviceId) => {
+  const addService = useCallback((serviceId, display = componentDisplay) => {
     const service = SERVICE_BY_ID[serviceId];
     if (!service) return;
+    checkpoint();
     const position = { x: 170 + (nodes.length % 4) * 250, y: 120 + Math.floor(nodes.length / 4) * 170 };
-    const node = newNode(serviceId, [position.x, position.y], nodes.length, { diagramType });
+    const node = newNode(serviceId, [position.x, position.y], nodes.length, { diagramType, iconOnly: display === "icon" });
     setNodes((current) => [...current, node]);
     setSelectedNodeId(node.id);
     setDrawer("inspect");
     setNotice(`${service.label} added to the canvas.`);
-  }, [diagramType, nodes.length, setNodes]);
+  }, [checkpoint, componentDisplay, diagramType, nodes.length, setNodes]);
+
+  const updateWhiteboardText = useCallback((nodeId, label) => {
+    setNodes((current) => current.map((node) => node.id === nodeId ? { ...node, data: { ...node.data, label } } : node));
+  }, [setNodes]);
+
+  const createWhiteboardNode = useCallback((spec = {}, position) => {
+    const point = position || reactFlow.screenToFlowPosition({
+      x: (canvasRef.current?.getBoundingClientRect().left || 0) + (canvasRef.current?.clientWidth || 800) / 2,
+      y: (canvasRef.current?.getBoundingClientRect().top || 0) + (canvasRef.current?.clientHeight || 600) / 2,
+    });
+    const type = spec.type || "whiteboardShape";
+    const defaults = type === "whiteboardFrame"
+      ? { width: 520, height: 320 }
+      : type === "whiteboardText"
+        ? { width: 230, height: 64 }
+        : type === "whiteboardIcon"
+          ? { width: 126, height: 112 }
+          : type === "whiteboardNote"
+            ? { width: 190, height: 170 }
+            : { width: 210, height: 110 };
+    return {
+      id: uid("wb"),
+      type,
+      position: { x: point.x - defaults.width / 2, y: point.y - defaults.height / 2 },
+      style: defaults,
+      data: {
+        label: spec.label || (type === "whiteboardNote" ? "New idea" : type === "whiteboardText" ? "Heading" : type === "whiteboardFrame" ? "New frame" : "Type here"),
+        shape: spec.shape || "rectangle",
+        icon: spec.icon || "Lightbulb",
+        style: spec.style || { fill: type === "whiteboardNote" ? "#fef3a5" : "#ffffff", stroke: "#7c3aed", text: "#172033" },
+        whiteboard: true,
+      },
+    };
+  }, [reactFlow]);
+
+  const addWhiteboardItem = useCallback((spec, position) => {
+    checkpoint();
+    const node = createWhiteboardNode(spec, position);
+    setNodes((current) => [...current, node]);
+    setSelectedNodeId(node.id);
+    setDrawer("inspect");
+    setNotice(`${spec.label || "Whiteboard object"} added. Drag the corners to resize.`);
+    return node;
+  }, [checkpoint, createWhiteboardNode, setNodes]);
+
+  const applyBrainstormTemplate = useCallback((templateId) => {
+    checkpoint();
+    const center = reactFlow.screenToFlowPosition({
+      x: (canvasRef.current?.getBoundingClientRect().left || 0) + (canvasRef.current?.clientWidth || 900) / 2,
+      y: (canvasRef.current?.getBoundingClientRect().top || 0) + (canvasRef.current?.clientHeight || 620) / 2,
+    });
+    const notes = [];
+    const frames = [];
+    const templateEdges = [];
+    if (templateId === "swot") {
+      [["Strengths", -270, -190, "#dcfce7"], ["Weaknesses", 20, -190, "#fee2e2"], ["Opportunities", -270, 40, "#dbeafe"], ["Threats", 20, 40, "#fef3a5"]].forEach(([label, x, y, fill]) => {
+        frames.push(createWhiteboardNode({ type: "whiteboardFrame", label, style: { stroke: "#8b5cf6" } }, { x: center.x + x + 130, y: center.y + y + 90 }));
+        notes.push(createWhiteboardNode({ type: "whiteboardNote", label: `Add ${String(label).toLowerCase()}…`, style: { fill, text: "#172033", stroke: "#8b5cf6" } }, { x: center.x + x + 130, y: center.y + y + 100 }));
+      });
+    } else if (templateId === "retro") {
+      [["Went well", -280, "#dcfce7"], ["Could improve", 0, "#fee2e2"], ["Actions", 280, "#dbeafe"]].forEach(([label, x, fill]) => {
+        frames.push(createWhiteboardNode({ type: "whiteboardFrame", label, style: { stroke: "#8b5cf6" } }, { x: center.x + x, y: center.y }));
+        [-90, 80].forEach((y) => notes.push(createWhiteboardNode({ type: "whiteboardNote", label: "Add a thought…", style: { fill, text: "#172033" } }, { x: center.x + x, y: center.y + y })));
+      });
+    } else {
+      const central = createWhiteboardNode({ type: "whiteboardShape", shape: "ellipse", label: "Central idea", style: { fill: "#ede9fe", stroke: "#7c3aed", text: "#172033" } }, center);
+      notes.push(central);
+      const ideas = ["Users", "Problems", "Ideas", "Questions", "Next steps", "Risks"];
+      ideas.forEach((label, index) => {
+        const angle = (index / ideas.length) * Math.PI * 2;
+        const notePosition = { x: center.x + Math.cos(angle) * 360, y: center.y + Math.sin(angle) * 240 };
+        const note = createWhiteboardNode({ type: "whiteboardNote", label, style: { fill: WB_COLORS[2 + (index % 5)], text: "#172033" } }, notePosition);
+        notes.push(note);
+        templateEdges.push({
+          ...arrowEdge(uid("mindmap-edge"), central.id, note.id, "", { role: "branch", showLabel: false, curvature: 0.3 }),
+          ...edgeHandlesForPositions(center, notePosition),
+        });
+      });
+    }
+    const nextNodes = [...nodesRef.current, ...frames, ...notes];
+    setNodes(nextNodes);
+    setEdges((current) => [...current, ...templateEdges]);
+    setDiagramType(templateId === "mindmap" ? "mindmap" : "userflow");
+    setNotice(`${templateId === "swot" ? "SWOT" : templateId === "retro" ? "Retrospective" : "Mind map"} brainstorming board created.`);
+    fitCanvas();
+  }, [checkpoint, createWhiteboardNode, fitCanvas, reactFlow, setEdges, setNodes]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -633,35 +1015,114 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
 
   const onDrop = useCallback((event) => {
     event.preventDefault();
+    const whiteboardRaw = event.dataTransfer.getData("application/genai-whiteboard");
+    if (whiteboardRaw) {
+      try {
+        const spec = JSON.parse(whiteboardRaw);
+        const position = reactFlow.screenToFlowPosition({ x: event.clientX, y: event.clientY });
+        addWhiteboardItem(spec, position);
+      } catch { setNotice("That whiteboard item could not be added."); }
+      return;
+    }
     const serviceId = event.dataTransfer.getData("application/genai-service");
     const service = SERVICE_BY_ID[serviceId];
     if (!service) return;
+    checkpoint();
     const position = reactFlow.screenToFlowPosition({ x: event.clientX, y: event.clientY });
-    const node = newNode(serviceId, [position.x - 96, position.y - 35], nodes.length, { diagramType });
+    const display = event.dataTransfer.getData("application/genai-service-display") || componentDisplay;
+    const node = newNode(serviceId, [position.x - (display === "icon" ? 68 : 96), position.y - (display === "icon" ? 52 : 35)], nodes.length, { diagramType, iconOnly: display === "icon" });
     setNodes((current) => [...current, node]);
     setSelectedNodeId(node.id);
     setDrawer("inspect");
     setNotice(`${service.label} added to the canvas.`);
-  }, [diagramType, nodes.length, reactFlow, setNodes]);
+  }, [addWhiteboardItem, checkpoint, componentDisplay, diagramType, nodes.length, reactFlow, setNodes]);
+
+  const drawingPoint = useCallback((event) => {
+    const rect = canvasRef.current?.getBoundingClientRect();
+    if (!rect) return null;
+    return {
+      screen: { x: event.clientX - rect.left, y: event.clientY - rect.top },
+      flow: reactFlow.screenToFlowPosition({ x: event.clientX, y: event.clientY }),
+    };
+  }, [reactFlow]);
+  const eraseAt = useCallback((point) => {
+    const candidates = [...nodesRef.current].reverse();
+    const hit = candidates.find((node) => {
+      const width = Number(node.measured?.width || node.width || node.style?.width || 200);
+      const height = Number(node.measured?.height || node.height || node.style?.height || 100);
+      return point.x >= node.position.x && point.x <= node.position.x + width && point.y >= node.position.y && point.y <= node.position.y + height;
+    });
+    if (!hit) return;
+    checkpoint();
+    setNodes((current) => current.filter((node) => node.id !== hit.id));
+    setEdges((current) => current.filter((edge) => edge.source !== hit.id && edge.target !== hit.id));
+    if (selectedNodeId === hit.id) { setSelectedNodeId(null); setDrawer(null); }
+    setNotice("Object erased.");
+  }, [checkpoint, selectedNodeId, setEdges, setNodes]);
+  const onInkPointerDown = useCallback((event) => {
+    const point = drawingPoint(event);
+    if (!point) return;
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+    if (toolMode === "eraser") { eraseAt(point.flow); return; }
+    if (toolMode !== "pen") return;
+    setDrawDraft([point]);
+  }, [drawingPoint, eraseAt, toolMode]);
+  const onInkPointerMove = useCallback((event) => {
+    if (toolMode !== "pen" || !drawDraft.length) return;
+    const point = drawingPoint(event);
+    if (point) setDrawDraft((current) => [...current, point]);
+  }, [drawDraft.length, drawingPoint, toolMode]);
+  const finishInk = useCallback(() => {
+    if (toolMode !== "pen" || drawDraft.length < 2) { setDrawDraft([]); return; }
+    const flowPoints = drawDraft.map((point) => point.flow);
+    const minX = Math.min(...flowPoints.map((point) => point.x));
+    const minY = Math.min(...flowPoints.map((point) => point.y));
+    const maxX = Math.max(...flowPoints.map((point) => point.x));
+    const maxY = Math.max(...flowPoints.map((point) => point.y));
+    const padding = Math.max(4, penWidth * 2);
+    const width = Math.max(12, maxX - minX + padding * 2);
+    const height = Math.max(12, maxY - minY + padding * 2);
+    checkpoint();
+    const stroke = {
+      id: uid("ink"),
+      type: "whiteboardStroke",
+      position: { x: minX - padding, y: minY - padding },
+      style: { width, height },
+      data: {
+        whiteboard: true,
+        label: "Freehand drawing",
+        points: flowPoints.map((point) => ({ x: point.x - minX + padding, y: point.y - minY + padding })),
+        viewWidth: width,
+        viewHeight: height,
+        color: penColor,
+        strokeWidth: penWidth,
+      },
+    };
+    setNodes((current) => [...current, stroke]);
+    setDrawDraft([]);
+    setNotice("Ink added. Switch to Select to move or resize it.");
+  }, [checkpoint, drawDraft, penColor, penWidth, setNodes, toolMode]);
 
   const autoArrange = useCallback(() => {
     if (!nodes.length) return;
-    const next = layoutGeneratedGraph(nodes, edges);
+    checkpoint();
+    const next = layoutRegionAwareGraph(nodes, edges, diagramType);
     setNodes(next.nodes);
     setEdges(next.edges);
-    setNotice("Canvas arranged into a readable left-to-right flow.");
+    setNotice("Canvas arranged with dependency flow and fitted region boundaries.");
     fitCanvas();
-  }, [edges, fitCanvas, nodes, setEdges, setNodes]);
+  }, [checkpoint, diagramType, edges, fitCanvas, nodes, setEdges, setNodes]);
 
   const clearCanvas = useCallback(() => {
-    if (!nodes.length || !window.confirm("Clear the current architecture?")) return;
+    if (!nodes.length || !window.confirm("Clear the current board?")) return;
+    checkpoint();
     setNodes([]);
     setEdges([]);
     setSelectedNodeId(null);
     setDrawer(null);
     setProjectJson(JSON.stringify({ brief, nodes: [], edges: [] }, null, 2));
     setNotice("Canvas cleared. Add components or load a pattern to continue.");
-  }, [brief, nodes.length, setEdges, setNodes]);
+  }, [brief, checkpoint, nodes.length, setEdges, setNodes]);
 
   const importProject = useCallback(async (event) => {
     const file = event.target.files?.[0];
@@ -669,7 +1130,7 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     if (!file) return;
     try {
       const payload = JSON.parse(await file.text());
-      const isNativeProject = payload?.version === "genai-playground-2.0" && Array.isArray(payload.nodes) && payload.nodes.every((node) => node?.data?.service);
+      const isNativeProject = payload?.version === "genai-playground-2.0" && Array.isArray(payload.nodes) && Array.isArray(payload.edges);
       const normalized = isNativeProject ? payload : normalizeFlowArchitecture(payload, payload.brief || brief);
       if (!Array.isArray(normalized.nodes) || !Array.isArray(normalized.edges)) throw new Error("Expected nodes and edges arrays.");
       setNodes(normalized.nodes);
@@ -678,15 +1139,48 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
       setProjectJson(JSON.stringify(normalized, null, 2));
       setSelectedNodeId(null);
       setDrawer(null);
-      setNotice(`Imported ${normalized.nodes.length} components and ${normalized.edges.length} connections.`);
+      setNotice(`Imported ${normalized.nodes.length} objects and ${normalized.edges.length} connections.`);
       fitCanvas();
     } catch (error) {
       setNotice(`Could not import architecture: ${error.message}`);
     }
   }, [brief, fitCanvas, setEdges, setNodes]);
 
-  const onConnect = useCallback((connection) => setEdges((current) => addEdge({ ...connection, ...arrowEdge(uid("edge"), connection.source, connection.target) }, current)), [setEdges]);
+  const onConnect = useCallback((connection) => {
+    checkpoint();
+    setEdges((current) => addEdge({ ...connection, ...arrowEdge(uid("edge"), connection.source, connection.target) }, current));
+  }, [checkpoint, setEdges]);
   const focusNode = useCallback((nodeId) => { setSelectedNodeId(nodeId); setDrawer("inspect"); const node = nodes.find((item) => item.id === nodeId); if (node) reactFlow.setCenter(node.position.x + 100, node.position.y + 50, { zoom: 1.15, duration: 450 }); }, [nodes, reactFlow]);
+
+  const deleteSelected = useCallback(() => {
+    if (!selectedNodeId) return;
+    checkpoint();
+    setNodes((current) => current.filter((node) => node.id !== selectedNodeId));
+    setEdges((current) => current.filter((edge) => edge.source !== selectedNodeId && edge.target !== selectedNodeId));
+    setSelectedNodeId(null); setDrawer(null); setNotice("Selected object removed.");
+  }, [checkpoint, selectedNodeId, setEdges, setNodes]);
+  const duplicateSelected = useCallback(() => {
+    const selected = nodesRef.current.find((node) => node.id === selectedNodeId);
+    if (!selected) return;
+    checkpoint();
+    const clone = { ...selected, id: uid("copy"), selected: false, position: { x: selected.position.x + 34, y: selected.position.y + 34 }, data: { ...selected.data, label: selected.data?.label ? `${selected.data.label} copy` : selected.data?.label } };
+    setNodes((current) => [...current, clone]); setSelectedNodeId(clone.id); setNotice("Object duplicated.");
+  }, [checkpoint, selectedNodeId, setNodes]);
+  const changeLayer = useCallback((direction) => {
+    if (!selectedNodeId) return;
+    checkpoint();
+    setNodes((current) => {
+      const selected = current.find((node) => node.id === selectedNodeId);
+      if (!selected) return current;
+      const others = current.filter((node) => node.id !== selectedNodeId);
+      return direction === "front" ? [...others, selected] : [selected, ...others];
+    });
+  }, [checkpoint, selectedNodeId, setNodes]);
+  const onNodeDragStart = useCallback(() => {
+    if (dragCheckpointRef.current) return;
+    checkpoint(); dragCheckpointRef.current = true;
+  }, [checkpoint]);
+  const onNodeDragStop = useCallback(() => { dragCheckpointRef.current = false; }, []);
 
   const metrics = useMemo(() => {
     const modelCount = nodes.filter((node) => ["llm", "embedder"].includes(node.data.service?.kind)).length;
@@ -706,8 +1200,9 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
       setDrawer("simulate");
       return;
     }
-    const autoFailureTargetId = nodes.find((node) => node.id === failureNodeId)?.id || nodes.find((node) => node.data.service?.kind === "llm")?.id || nodes[0]?.id;
-    const systemNodes = nodes.map((node) => {
+    const executableNodes = nodes.filter((node) => node.type === "genaiService" || node.type === "architectureIcon");
+    const autoFailureTargetId = executableNodes.find((node) => node.id === failureNodeId)?.id || executableNodes.find((node) => node.data.service?.kind === "llm")?.id || executableNodes[0]?.id;
+    const systemNodes = executableNodes.map((node) => {
       const service = node.data.service || SERVICE_BY_ID[node.data.serviceId] || SERVICE_BY_ID.lambda;
       const config = getNodeConfig(node);
       const autoscaledReplicas = config.autoscaling
@@ -731,8 +1226,9 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     const traceResult = runSystemDesignTrace(systemNodes, edges, { entryNodeId: traceEntryNodeId, cacheOutcome: requestScenario === "cache-hit" ? "hit" : requestScenario === "cache-miss" ? "miss" : "auto", nodeMetrics });
     const systemNodeById = new Map(systemNodes.map((node) => [node.id, node]));
     const primaryExecutionIds = (engineResult.primaryExecutionOrder || engineResult.executionOrder || nodes.map((node) => node.id)).filter((nodeId) => systemNodeById.get(nodeId)?.flowMode === "primary");
-    const pathIds = traceResult.path?.length ? traceResult.path : (primaryExecutionIds.length ? primaryExecutionIds : nodes.map((node) => node.id));
-    const path = pathIds.map((nodeId) => nodes.find((node) => node.id === nodeId)).filter(Boolean);
+    const pathIds = traceResult.path?.length ? traceResult.path : (primaryExecutionIds.length ? primaryExecutionIds : executableNodes.map((node) => node.id));
+    const path = pathIds.map((nodeId) => executableNodes.find((node) => node.id === nodeId)).filter(Boolean);
+    const animationPlan = buildAnimationPlan(executableNodes, edges, traceEntryNodeId);
     const resolvedFailureNodeId = traceResult.failureNodeId || (failureMode ? autoFailureTargetId : "");
     const failedNode = nodes.find((node) => node.id === resolvedFailureNodeId);
     const failedConfig = failedNode ? getNodeConfig(failedNode) : null;
@@ -743,48 +1239,109 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     if (failedNode && !failureAffectsRequest) events.push({ id: `${failedNode.id}:contained`, label: `${failedNode.data.label || failedNode.data.service?.label} → telemetry side channel failed (request path unaffected)`, time: Math.round(38 + path.length * 22), status: "failed" });
     const system = { requestedQPS: effectiveSimQps, throughput: engineResult.throughput, totalLatencyMs: traceResult.totalLatencyMs || engineResult.totalLatencyMs, bottleneckNodeIds: engineResult.bottleneckNodes, warnings: engineResult.warnings, nodeMetrics, primaryExecutionOrder: pathIds, telemetryNodeIds: systemNodes.filter((node) => node.flowMode === "telemetry").map((node) => node.id), incident: traceResult.status === "success" ? { title: "Trace completed", detail: requestScenario === "cache-hit" ? "The cache served this request without touching the origin." : requestScenario === "cache-miss" ? "The cache missed and the request continued to the origin path." : "The request reached the end of its selected path." } : advice.incident, recommendations: traceResult.status === "success" ? ["Use Monte Carlo to turn this single trace into a distribution of success rate and tail latency."] : advice.recommendations };
     setMonteCarloResult(null);
-    setSimResult({ ...metrics, latency: system.totalLatencyMs || metrics.latency, throughput: Math.round(system.throughput), degraded: traceResult.status !== "success" || system.bottleneckNodeIds.length > 0, events, path: pathIds, failureNodeId: resolvedFailureNodeId, failureNodeLabel: failedNode?.data.label || failedNode?.data.service?.label || "Unknown node", failureIndex, failureAffectsRequest, failureImpact: failedConfig?.flowMode || "primary", system });
+    setSimResult({ ...metrics, latency: system.totalLatencyMs || metrics.latency, throughput: Math.round(system.throughput), degraded: traceResult.status !== "success" || system.bottleneckNodeIds.length > 0, events, path: pathIds, animationSteps: animationPlan.steps, animationEdges: animationPlan.edgeSteps, failureNodeId: resolvedFailureNodeId, failureNodeLabel: failedNode?.data.label || failedNode?.data.service?.label || "Unknown node", failureIndex, failureAffectsRequest, failureImpact: failedConfig?.flowMode || "primary", system });
     setStep(0);
+    setIsPlaybackPaused(false);
     setIsRunning(true);
     setMode("simulate");
     setDrawer("simulate");
   }, [edges, effectiveSimQps, failureMode, failureNodeId, metrics, monteCarloSettings, nodes, requestScenario, selectedSimulationScenario, simulationMode, traceEntryNodeId]);
 
-  useEffect(() => {
-    if (!isRunning || !simResult?.path?.length) return undefined;
-    const timer = window.setTimeout(() => {
-      const next = step + 1;
-      const failureIndex = simResult.failureIndex ?? -1;
-      setStep(next);
-      setNodes((current) => current.map((node) => {
-        const pathIndex = simResult.path.indexOf(node.id);
-        const load = simResult.system?.nodeMetrics?.[node.id];
-        const failed = node.id === simResult.failureNodeId && next > failureIndex;
-        const blocked = failureIndex >= 0 && pathIndex > failureIndex && next > failureIndex;
-        const overloaded = load?.status === "critical" && pathIndex >= 0 && pathIndex < next;
-        const runtimeState = failed ? "failed" : blocked ? "blocked" : overloaded ? "overloaded" : simResult.path[next - 1] === node.id ? "active" : simResult.path.slice(0, next).includes(node.id) ? "complete" : "idle";
-        return { ...node, data: { ...node.data, runtimeState, loadMetrics: load || null } };
-      }));
-      if (next >= simResult.path.length) setIsRunning(false);
-    }, 460);
-    return () => window.clearTimeout(timer);
-  }, [isRunning, simResult, step, setNodes]);
+  const advancePlayback = useCallback(() => {
+    if (!simResult?.animationSteps?.length || step >= simResult.animationSteps.length) return;
+    const next = step + 1;
+    const isFinalWave = next >= simResult.animationSteps.length;
+    const activeStepIds = new Set(simResult.animationSteps[step] || []);
+    const completedIds = new Set(simResult.animationSteps.slice(0, step).flat());
+    setStep(next);
+    setNodes((current) => current.map((node) => {
+      const load = simResult.system?.nodeMetrics?.[node.id];
+      const failed = node.id === simResult.failureNodeId && activeStepIds.has(node.id);
+      const overloaded = load?.status === "critical" && (activeStepIds.has(node.id) || completedIds.has(node.id));
+      const runtimeState = failed ? "failed" : overloaded ? "overloaded" : activeStepIds.has(node.id) ? (isFinalWave ? "complete" : "active") : completedIds.has(node.id) ? "complete" : "idle";
+      return { ...node, data: { ...node.data, runtimeState, loadMetrics: load || null } };
+    }));
+    if (isFinalWave) { setIsRunning(false); setIsPlaybackPaused(false); }
+  }, [setNodes, simResult, step]);
 
   useEffect(() => {
-    if (!simResult?.path?.length) return;
-    const activeIds = new Set(simResult.path.slice(0, Math.max(0, step)));
+    if (!isRunning || isPlaybackPaused || !simResult?.animationSteps?.length) return undefined;
+    const timer = window.setTimeout(advancePlayback, Math.round(1100 / playbackSpeed));
+    return () => window.clearTimeout(timer);
+  }, [advancePlayback, isPlaybackPaused, isRunning, playbackSpeed, simResult]);
+
+  useEffect(() => {
+    if (!simResult?.animationSteps?.length) return;
+    const completedIds = new Set(simResult.animationSteps.slice(0, step).flat());
+    const activeEdgeIds = new Set((simResult.animationEdges || []).filter((edge) => edge.step <= step).map((edge) => edge.id));
     setEdges((current) => current.map((edge) => {
-      const active = activeIds.has(edge.source) && (activeIds.has(edge.target) || simResult.path[step - 1] === edge.target);
+      const active = activeEdgeIds.has(edge.id) || (completedIds.has(edge.source) && completedIds.has(edge.target));
       const failed = simResult.failureNodeId && (edge.source === simResult.failureNodeId || edge.target === simResult.failureNodeId);
       return {
         ...edge,
-        animated: Boolean(isRunning && active && !failed),
+        animated: Boolean(isRunning && !isPlaybackPaused && active && !failed),
         style: { ...edge.style, stroke: failed ? "#ef4444" : active ? "#06b6d4" : edge.data?.feedback ? "#64748b" : "#8b5cf6" },
       };
     }));
-  }, [isRunning, setEdges, simResult, step]);
+  }, [isPlaybackPaused, isRunning, setEdges, simResult, step]);
 
-  const resetRuntime = useCallback(() => { setIsRunning(false); setStep(0); setSimResult(null); setMonteCarloResult(null); setNodes((current) => current.map((node) => ({ ...node, data: { ...node.data, runtimeState: "idle", loadMetrics: null } }))); setEdges((current) => current.map((edge) => ({ ...edge, animated: false, style: { ...edge.style, stroke: edge.data?.feedback ? "#64748b" : "#8b5cf6" } }))); }, [setEdges, setNodes]);
+  // Follow the active execution wave with React Flow's own animated viewport.
+  // Using setCenter (rather than CSS transforms) keeps the minimap, handles,
+  // edge paths, and user pan/zoom state coherent during playback.
+  useEffect(() => {
+    if (!isRunning || !followExecution || !simResult?.animationSteps?.length) {
+      if (!isRunning && followedPlaybackRef.current) {
+        followedPlaybackRef.current = false;
+        window.setTimeout(() => reactFlow.fitView({ padding: 0.2, duration: 440 }), 180);
+      }
+      return undefined;
+    }
+    followedPlaybackRef.current = true;
+    const activeIds = new Set(simResult.animationSteps[Math.max(0, step - 1)] || simResult.animationSteps[0]);
+    const activeNodes = nodes.filter((node) => activeIds.has(node.id));
+    if (!activeNodes.length) return undefined;
+    const bounds = activeNodes.reduce((result, node) => {
+      const { width, height } = nodeDimensions(node);
+      return {
+        minX: Math.min(result.minX, node.position.x), minY: Math.min(result.minY, node.position.y),
+        maxX: Math.max(result.maxX, node.position.x + width), maxY: Math.max(result.maxY, node.position.y + height),
+      };
+    }, { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity });
+    reactFlow.setCenter((bounds.minX + bounds.maxX) / 2, (bounds.minY + bounds.maxY) / 2, {
+      zoom: activeNodes.length === 1 ? 1.16 : 0.92,
+      duration: Math.round(380 / playbackSpeed),
+    });
+    return undefined;
+  }, [followExecution, isRunning, nodes, playbackSpeed, reactFlow, simResult, step]);
+
+  const resetRuntime = useCallback(() => { setIsRunning(false); setIsPlaybackPaused(false); setStep(0); setSimResult(null); setMonteCarloResult(null); setNodes((current) => current.map((node) => ({ ...node, data: { ...node.data, runtimeState: "idle", loadMetrics: null } }))); setEdges((current) => current.map((edge) => ({ ...edge, animated: false, style: { ...edge.style, stroke: edge.data?.feedback ? "#64748b" : "#8b5cf6" } }))); }, [setEdges, setNodes]);
+
+  const playFlowAnimation = useCallback(() => {
+    const executableNodes = nodes.filter((node) => node.type === "genaiService" || node.type === "architectureIcon");
+    if (!executableNodes.length) { setNotice("Add connected components before playing the flow."); return; }
+    const plan = buildAnimationPlan(executableNodes, edges, "");
+    if (!plan.steps.length) { setNotice("Connect at least one component before playing the flow."); return; }
+    setMonteCarloResult(null);
+    setSimResult({ animationSteps: plan.steps, animationEdges: plan.edgeSteps, path: plan.steps.flat(), failureNodeId: "", failureIndex: -1, system: { nodeMetrics: {} } });
+    setStep(0);
+    setIsPlaybackPaused(false);
+    setIsRunning(true);
+    setNotice(`Playing ${plan.steps.length} execution waves across the reachable graph.`);
+  }, [edges, nodes]);
+
+  const pauseOrResumePlayback = useCallback(() => {
+    if (!simResult?.animationSteps?.length || !isRunning) { playFlowAnimation(); return; }
+    setIsPlaybackPaused((paused) => !paused);
+    setNotice(isPlaybackPaused ? "Flow playback resumed." : "Flow playback paused. Use Next to advance one wave.");
+  }, [isPlaybackPaused, isRunning, playFlowAnimation, simResult]);
+
+  const stepPlaybackForward = useCallback(() => {
+    if (!simResult?.animationSteps?.length) { setNotice("Press Play flow to begin, then use Next to advance a wave."); return; }
+    if (step >= simResult.animationSteps.length) { setNotice("The flow is complete. Press Play flow to replay it."); return; }
+    setIsRunning(true);
+    setIsPlaybackPaused(true);
+    advancePlayback();
+  }, [advancePlayback, simResult, step]);
 
   const reviewRows = useMemo(() => {
     const hasObservability = nodeKinds.has("observability");
@@ -816,9 +1373,10 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     setIsGenerating(true);
     setStudioError("");
     try {
-      const parsed = await generateFlowArchitecture(request);
+      const parsed = await generateFlowArchitecture(request, diagramType);
       const sourceNodes = Array.isArray(parsed?.nodes) ? parsed.nodes.slice(0, 18) : [];
-      if (!sourceNodes.length) throw new Error("The AI returned no architecture nodes.");
+      const iconOnlyRequested = componentDisplay === "icon" || /icon[- ]only|icons? (rather than|instead of|not) cards?|aws reference|azure reference/i.test(request);
+      if (!sourceNodes.length) throw new Error("The AI returned no diagram objects.");
       const idMap = new Map(sourceNodes.map((node, index) => [String(node.id || index), `ai:${String(node.id || index)}:${Date.now()}`]));
       const generatedNodes = sourceNodes.map((node, index) => {
         const labelCandidates = [node.label, node.sub, node.info].map((value) => String(value || "").trim()).filter((value) => value.length >= 3 && /[a-z]{3}/i.test(value));
@@ -830,21 +1388,95 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
         const service = matched ? { ...matched, label, description: node.info || node.sub || matched.description } : { id: `ai-service:${index}`, label, provider: node.colorKey || "AI", category: "Generated", iconUrl: null, fallbackIcon: node.icon || "Cpu", color, kind: node.colorKey === "io" ? "sink" : node.colorKey === "llm" ? "llm" : "service", description: node.info || node.sub || "AI-generated architecture component" };
         const aiId = idMap.get(String(node.id || index));
         const position = node.position || { x: 120 + (index % 5) * 260, y: 180 + Math.floor(index / 5) * 170 };
-        return { id: aiId, type: "genaiService", position, data: { serviceId: service.id, label: service.label, service, runtimeState: "idle", config: {}, aiGenerated: true } };
+        if (WHITEBOARD_AI_TYPES.has(diagramType)) {
+          const isActor = ["userflow", "journey"].includes(diagramType) && /user|person|customer|team|actor|owner|stakeholder/i.test(label);
+          const whiteboardType = diagramType === "mindmap" && index > 0
+            ? "whiteboardNote"
+            : isActor
+              ? "whiteboardIcon"
+              : "whiteboardShape";
+          const shape = diagramType === "state"
+            ? "ellipse"
+            : ["bpmn", "flowchart"].includes(diagramType) && /gateway|decision|approve|check|condition|branch|if|yes|no/i.test(label)
+              ? "diamond"
+              : ["bpmn", "flowchart"].includes(diagramType) && /start|end|finish|complete|terminal/i.test(label)
+                ? "ellipse"
+              : diagramType === "dataflow" && /data|input|output|source|stream/i.test(label)
+                ? "parallelogram"
+                : diagramType === "sequence"
+                  ? "rounded"
+                  : diagramType === "mindmap" && index === 0
+                    ? "ellipse"
+                    : diagramType === "wireframe"
+                      ? "rounded"
+                  : "rectangle";
+          return {
+            id: aiId,
+            type: whiteboardType,
+            position,
+            style: {
+              width: whiteboardType === "whiteboardIcon" ? 126 : diagramType === "erd" ? 230 : diagramType === "mindmap" && index > 0 ? 190 : 210,
+              height: whiteboardType === "whiteboardIcon" ? 112 : diagramType === "mindmap" && index > 0 ? 150 : diagramType === "state" ? 90 : 110,
+            },
+            data: {
+              label,
+              subtitle: node.sub || "",
+              shape,
+              icon: isActor ? "User" : node.icon || "Sparkles",
+              whiteboard: true,
+              aiGenerated: true,
+              style: { fill: index % 3 === 0 ? "#ede9fe" : index % 3 === 1 ? "#dbeafe" : "#ffffff", stroke: color, text: "#172033" },
+            },
+          };
+        }
+        return { id: aiId, type: iconOnlyRequested ? "architectureIcon" : "genaiService", position, data: { serviceId: service.id, label: service.label, service, diagramType, runtimeState: "idle", config: {}, iconOnly: iconOnlyRequested, subtitle: node.sub || "", aiGenerated: true } };
       });
       const rawGeneratedEdges = (Array.isArray(parsed.edges) ? parsed.edges : []).map((edge, index) => {
         const source = idMap.get(String(edge.source));
         const target = idMap.get(String(edge.target));
         return source && target ? { id: `ai-edge:${Date.now()}:${index}`, source, target, label: String(edge.label || edge.condition || ""), role: edge.role || edge.data?.role || "primary" } : null;
       }).filter(Boolean);
-      const generatedGraph = layoutGeneratedGraph(generatedNodes, rawGeneratedEdges);
-      setNodes(generatedGraph.nodes);
-      setEdges(generatedGraph.edges);
-      setDiagramType("architecture");
-      setProjectJson(JSON.stringify({ name: parsed.name || "AI generated architecture", description: parsed.description || request, nodes: generatedGraph.nodes, edges: generatedGraph.edges }, null, 2));
+      const generatedGraph = layoutGeneratedGraph(generatedNodes, rawGeneratedEdges, diagramType);
+      // A frame is a layout boundary, not a decoration. Give each node to at
+      // most one meaningful region, then lay every region into its own lane so
+      // groups cannot overlap even when the model returns redundant regions.
+      const claimedNodeIds = new Set();
+      const regions = [];
+      (Array.isArray(parsed?.regions) ? parsed.regions : []).slice(0, 4).forEach((region) => {
+        const memberIds = (Array.isArray(region.nodeIds) ? region.nodeIds : [])
+          .map((id) => idMap.get(String(id)))
+          .filter((id) => id && !claimedNodeIds.has(id));
+        if (memberIds.length < 2) return;
+        memberIds.forEach((id) => claimedNodeIds.add(id));
+        regions.push({ ...region, memberIds });
+      });
+      const generatedFrames = [];
+      if (regions.length) {
+        let laneX = 70;
+        regions.forEach((region, index) => {
+          const columns = Math.min(3, Math.max(1, Math.ceil(Math.sqrt(region.memberIds.length))));
+          const rows = Math.ceil(region.memberIds.length / columns);
+          const width = Math.max(310, columns * 190 + 90);
+          const height = Math.max(250, rows * 150 + 115);
+          region.memberIds.forEach((id, memberIndex) => {
+            const node = generatedGraph.nodes.find((candidate) => candidate.id === id);
+            if (node) node.position = { x: laneX + 55 + (memberIndex % columns) * 190, y: 115 + Math.floor(memberIndex / columns) * 150 };
+          });
+          generatedFrames.push({ id: `ai-region:${Date.now()}:${index}`, type: "whiteboardFrame", position: { x: laneX, y: 55 }, style: { width, height }, data: { label: String(region.label || `Region ${index + 1}`), subtitle: String(region.subtitle || ""), memberIds: [...region.memberIds], whiteboard: true, region: true, aiGenerated: true, style: { stroke: region.color || ["#f59e0b", "#2563eb", "#10b981", "#8b5cf6"][index % 4], fill: "transparent", text: "#172033" } } });
+          laneX += width + 45;
+        });
+        const ungrouped = generatedGraph.nodes.filter((node) => !claimedNodeIds.has(node.id));
+        ungrouped.forEach((node, index) => { node.position = { x: 90 + index * 205, y: 400 }; });
+      }
+      generatedGraph.nodes = [...generatedFrames, ...generatedGraph.nodes];
+      const finalGraph = generatedFrames.length ? layoutRegionAwareGraph(generatedGraph.nodes, generatedGraph.edges, diagramType) : generatedGraph;
+      checkpoint();
+      setNodes(finalGraph.nodes);
+      setEdges(finalGraph.edges);
+      setProjectJson(JSON.stringify({ name: parsed.name || `AI generated ${diagramType}`, description: parsed.description || request, diagramType, nodes: finalGraph.nodes, edges: finalGraph.edges }, null, 2));
       setMode("studio");
       setDrawer("studio");
-      setNotice(`Studio generated ${generatedGraph.nodes.length} nodes and ${generatedGraph.edges.length} readable connections from your brief.`);
+      setNotice(`Studio generated ${finalGraph.nodes.length} nodes and ${finalGraph.edges.length} readable connections from your brief.`);
       fitCanvas();
     } catch (error) {
       const value = request.toLowerCase();
@@ -857,45 +1489,124 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
     } finally {
       setIsGenerating(false);
     }
-  }, [ALL_COMPONENTS, applyPattern, brief, fitCanvas, isGenerating, prompt, setEdges, setNodes]);
+  }, [ALL_COMPONENTS, applyPattern, brief, checkpoint, componentDisplay, diagramType, fitCanvas, isGenerating, prompt, setEdges, setNodes]);
 
   const applyJson = useCallback(() => {
     try {
       const parsed = normalizeFlowArchitecture(JSON.parse(projectJson), brief);
       if (!Array.isArray(parsed.nodes) || !Array.isArray(parsed.edges)) throw new Error("Expected nodes and edges arrays");
       const isGeneratedGraph = parsed.nodes.some((node) => node.data?.aiGenerated || String(node.id).startsWith("ai:"));
-      const nextGraph = isGeneratedGraph ? layoutGeneratedGraph(parsed.nodes, parsed.edges) : { nodes: parsed.nodes, edges: parsed.edges };
+      const nextGraph = isGeneratedGraph ? layoutGeneratedGraph(parsed.nodes, parsed.edges, parsed.diagramType || diagramType) : { nodes: parsed.nodes, edges: parsed.edges };
+      checkpoint();
       setNodes(nextGraph.nodes);
       setEdges(normalizeReactFlowEdges(nextGraph.edges));
       if (parsed.brief) setBrief(parsed.brief);
       if (parsed.diagramType) setDiagramType(parsed.diagramType);
       setNotice("JSON applied successfully.");
     } catch (error) { setNotice(`Could not apply JSON: ${error.message}`); }
-  }, [projectJson, setEdges, setNodes]);
+  }, [brief, checkpoint, diagramType, projectJson, setEdges, setNodes]);
 
   const exportProject = useCallback(() => {
     const payload = { version: "genai-playground-2.0", brief, diagramType, nodes, edges, exportedAt: new Date().toISOString() };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-    const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "genai-playground-2-architecture.json"; link.click(); URL.revokeObjectURL(link.href);
+    const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "genai-playground-2-board.json"; link.click(); URL.revokeObjectURL(link.href);
   }, [brief, diagramType, edges, nodes]);
+
+  const exportImage = useCallback(async (format = "png") => {
+    const element = canvasRef.current?.querySelector(".react-flow");
+    if (!element) return;
+    try {
+      const image = await import("html-to-image");
+      const dataUrl = format === "svg"
+        ? await image.toSvg(element, { backgroundColor: visualTheme === "dark" ? "#0f1117" : "#f7f8fb" })
+        : await image.toPng(element, { backgroundColor: visualTheme === "dark" ? "#0f1117" : "#f7f8fb", pixelRatio: 2 });
+      const link = document.createElement("a");
+      link.download = `genai-playground-2-whiteboard.${format}`;
+      link.href = dataUrl;
+      link.click();
+      setNotice(`${format.toUpperCase()} exported successfully.`);
+    } catch (error) { setNotice(`Could not export ${format.toUpperCase()}: ${error.message}`); }
+  }, [visualTheme]);
+
+  const selectCanvasNode = useCallback((nodeId) => {
+    setSelectedNodeId(nodeId);
+    setDrawer("inspect");
+  }, []);
+
+  const canvasNodes = useMemo(() => nodes.map((node) => ({
+    ...node,
+    selected: node.id === selectedNodeId,
+    data: {
+      ...node.data,
+      onTextChange: updateWhiteboardText,
+      onHistory: checkpoint,
+      onSelect: selectCanvasNode,
+    },
+  })), [checkpoint, nodes, selectCanvasNode, selectedNodeId, updateWhiteboardText]);
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      const target = event.target;
+      if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target?.isContentEditable) return;
+      const command = event.metaKey || event.ctrlKey;
+      if (command && event.key.toLowerCase() === "z") { event.preventDefault(); event.shiftKey ? redo() : undo(); return; }
+      if (command && event.key.toLowerCase() === "y") { event.preventDefault(); redo(); return; }
+      if (command && event.key.toLowerCase() === "d") { event.preventDefault(); duplicateSelected(); return; }
+      if (event.key === "Delete" || event.key === "Backspace") { event.preventDefault(); deleteSelected(); return; }
+      if (event.key.toLowerCase() === "v" || event.key === "Escape") setToolMode("select");
+      if (event.key.toLowerCase() === "p") setToolMode("pen");
+      if (event.key.toLowerCase() === "e") setToolMode("eraser");
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [deleteSelected, duplicateSelected, redo, undo]);
 
   const openMode = (nextMode) => { setShowHome(false); setMode(nextMode); setDrawer(nextMode === "design" ? null : nextMode); if (nextMode === "simulate") runSimulation(); };
   const openHome = () => { setShowHome(true); setMode("home"); setDrawer(null); setSelectedNodeId(null); };
   const openStudioFromHome = () => { setShowHome(false); setMode("studio"); setDrawer("studio"); };
-  const openBlankCanvas = () => { setShowHome(false); setMode("design"); setDrawer(null); setSelectedNodeId(null); setDiagramType("architecture"); setNodes([]); setEdges([]); setProjectJson(JSON.stringify({ brief, diagramType: "architecture", nodes: [], edges: [] }, null, 2)); setNotice("Blank canvas ready. Add services from the component rail or ask Studio to generate a flow."); };
+  const openBlankCanvas = () => { checkpoint(); setShowHome(false); setMode("design"); setDrawer(null); setSelectedNodeId(null); setDiagramType("architecture"); setNodes([]); setEdges([]); setProjectJson(JSON.stringify({ brief, diagramType: "architecture", nodes: [], edges: [] }, null, 2)); setNotice("Blank canvas ready. Open Whiteboard tools for shapes and ink, drag a component, or ask Studio."); };
+  const openRailTab = (nextTab) => {
+    setRailTab(nextTab);
+    if (mode === "studio") setMode("design");
+    if (drawer === "studio") setDrawer(null);
+  };
 
   return <div className={`g2-shell theme-${visualTheme}`}>
     <header className="g2-topbar">
-      <button className="g2-brand g2-brand-button" onClick={openHome}><span className="g2-brand-mark"><Sparkles size={16} /></span><span><strong>Gen AI Playground <span>2.0</span></strong><small>Architecture studio · simulation lab</small></span></button>
+      <button className="g2-brand g2-brand-button" onClick={openHome}><span className="g2-brand-mark"><Sparkles size={16} /></span><span><strong>Gen AI Playground <span>2.0</span></strong><small>AI whiteboard · visual systems studio</small></span></button>
       <div className="g2-phase-tabs" role="tablist">{[["design", Layers3, "Design"], ["studio", Sparkles, "Studio"], ["simulate", Activity, "Simulate"], ["review", Target, "Review"], ["challenge", Lightbulb, "Challenge"]].map(([id, Icon, label]) => <button key={id} className={mode === id ? "active" : ""} onClick={() => openMode(id)}><Icon size={14} />{label}</button>)}</div>
-      <div className="g2-top-actions"><span className="g2-saved"><CheckCircle2 size={13} /> autosaved</span><button className="g2-theme-btn" type="button" onClick={() => setVisualTheme((current) => current === "dark" ? "light" : "dark")} title={`Switch to ${visualTheme === "dark" ? "light" : "dark"} mode`}>{visualTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}<span>{visualTheme === "dark" ? "Light" : "Dark"}</span></button><button className="g2-icon-btn" onClick={exportProject} title="Export architecture"><Download size={15} /></button><button className="g2-close-btn" onClick={onClose}><ArrowLeft size={15} /> Exit</button></div>
+      <div className="g2-top-actions"><span className="g2-saved"><CheckCircle2 size={13} /> autosaved</span><button className="g2-theme-btn" type="button" onClick={() => setVisualTheme((current) => current === "dark" ? "light" : "dark")} title={`Switch to ${visualTheme === "dark" ? "light" : "dark"} mode`}>{visualTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}<span>{visualTheme === "dark" ? "Light" : "Dark"}</span></button><button className="g2-icon-btn" onClick={exportProject} title="Export board"><Download size={15} /></button><button className="g2-close-btn" onClick={onClose}><ArrowLeft size={15} /> Exit</button></div>
     </header>
     {showHome ? <PlaygroundHome patterns={PATTERNS} templates={LEGACY_TEMPLATES} onStudio={openStudioFromHome} onDesign={openBlankCanvas} onPattern={(patternId) => { applyPattern(patternId); setShowHome(false); }} onTemplate={(templateId) => { applyLegacyTemplate(templateId); setShowHome(false); }} /> : <div className="g2-workspace">
       <aside className={`g2-rail ${railTab === "collapsed" ? "is-collapsed" : ""}`}>
-        <div className="g2-rail-tabs"><button className={railTab === "components" ? "active" : ""} onClick={() => setRailTab("components")} title="Components"><Layers3 size={16} /></button><button className={railTab === "diagrams" ? "active" : ""} onClick={() => setRailTab("diagrams")} title="Diagram types"><Table2 size={16} /></button><button className={railTab === "patterns" ? "active" : ""} onClick={() => setRailTab("patterns")} title="Patterns"><Workflow size={16} /></button><button className={railTab === "templates" ? "active" : ""} onClick={() => setRailTab("templates")} title="Existing templates"><LayoutTemplate size={16} /></button><button className={railTab === "brief" ? "active" : ""} onClick={() => setRailTab("brief")} title="Brief"><FileJson size={16} /></button></div>
+        <div className="g2-rail-tabs"><button className={railTab === "components" ? "active" : ""} onClick={() => openRailTab("components")} title="Components"><Layers3 size={16} /></button><button className={railTab === "tools" ? "active" : ""} onClick={() => openRailTab("tools")} title="Whiteboard tools"><Shapes size={16} /></button><button className={railTab === "diagrams" ? "active" : ""} onClick={() => openRailTab("diagrams")} title="Diagram types"><Table2 size={16} /></button><button className={railTab === "patterns" ? "active" : ""} onClick={() => openRailTab("patterns")} title="Patterns"><Workflow size={16} /></button><button className={railTab === "templates" ? "active" : ""} onClick={() => openRailTab("templates")} title="Existing templates"><LayoutTemplate size={16} /></button><button className={railTab === "brief" ? "active" : ""} onClick={() => openRailTab("brief")} title="Brief"><FileJson size={16} /></button></div>
         {railTab !== "collapsed" && <div className="g2-rail-body">
           {railTab === "diagrams" && <><div className="g2-rail-heading"><div><span className="g2-drawer-kicker">DIAGRAM LANGUAGE</span><h3>Choose a view</h3></div><button className="g2-icon-btn" onClick={() => setRailTab("collapsed")} title="Collapse rail"><PanelLeftClose size={15} /></button></div><p className="g2-muted">Every view uses the same editable canvas, connectors, playback, and export pipeline.</p><div className="g2-diagram-type-list">{DIAGRAM_TYPES.map((item) => <button key={item.id} className={`g2-diagram-type ${diagramType === item.id ? "active" : ""}`} onClick={() => applyDiagramType(item.id)}><span><strong>{item.label}</strong><small>{item.description}</small></span><ChevronRight size={14} /></button>)}</div><div className="g2-section-label">Starter views</div><div className="g2-pattern-list">{DIAGRAM_TEMPLATES.map((template) => <button key={template.id} className="g2-pattern-card" onClick={() => applyDiagramTemplate(template.id)}><span className="g2-pattern-icon"><LayoutTemplate size={16} /></span><span><strong>{template.label}</strong><small>{template.description}</small></span><ChevronRight size={14} /></button>)}</div></>}
-          {railTab === "components" && <><div className="g2-rail-heading"><div><span className="g2-drawer-kicker">BUILDING BLOCKS</span><h3>Components</h3></div><button className="g2-icon-btn" onClick={() => setRailTab("collapsed")} title="Collapse rail"><PanelLeftClose size={15} /></button></div><div className="g2-search"><Search size={14} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search services" /></div><div className="g2-category-scroll">{categories.map((item) => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}</div><div className="g2-service-list">{filteredServices.map((service) => <button key={service.id} className="g2-service-item" draggable onDragStart={(event) => { event.dataTransfer.setData("application/genai-service", service.id); event.dataTransfer.effectAllowed = "copy"; }} onClick={() => addService(service.id)} title="Click to add or drag onto the canvas"><span className="g2-service-img" style={{ "--service-color": service.color }}><ServiceIcon service={service} size={22} /></span><span><strong>{service.label}</strong><small>{service.provider} · {service.kind}</small></span><Plus size={13} /></button>)}</div></>}
+          {railTab === "components" && <><div className="g2-rail-heading"><div><span className="g2-drawer-kicker">BUILDING BLOCKS</span><h3>Components</h3></div><button className="g2-icon-btn" onClick={() => setRailTab("collapsed")} title="Collapse rail"><PanelLeftClose size={15} /></button></div><div className="g2-component-display" role="group" aria-label="Component appearance"><button className={componentDisplay === "card" ? "active" : ""} onClick={() => setComponentDisplay("card")}><RectangleHorizontal size={14} /> Cards</button><button className={componentDisplay === "icon" ? "active" : ""} onClick={() => setComponentDisplay("icon")}><Sparkles size={14} /> Icons only</button></div><p className="g2-muted">Icon-only components keep the provider mark, label, and connectors without a surrounding card.</p><div className="g2-search"><Search size={14} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search services" /></div><div className="g2-category-scroll">{categories.map((item) => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}</div><div className="g2-service-list">{filteredServices.map((service) => <button key={service.id} className="g2-service-item" draggable onDragStart={(event) => { event.dataTransfer.setData("application/genai-service", service.id); event.dataTransfer.setData("application/genai-service-display", componentDisplay); event.dataTransfer.effectAllowed = "copy"; }} onClick={() => addService(service.id, componentDisplay)} title={`Add ${componentDisplay === "icon" ? "icon-only " : ""}${service.label}`}><span className="g2-service-img" style={{ "--service-color": service.color }}><ServiceIcon service={service} size={22} /></span><span><strong>{service.label}</strong><small>{service.provider} · {service.kind}</small></span><Plus size={13} /></button>)}</div></>}
+          {railTab === "tools" && <div className="g2-wb-tools">
+            <div className="g2-rail-heading"><div><span className="g2-drawer-kicker">CREATE / WHITEBOARD</span><h3>Tools</h3></div><button className="g2-icon-btn" onClick={() => setRailTab("collapsed")} title="Collapse rail"><PanelLeftClose size={15} /></button></div>
+            <p className="g2-muted">Sketch freely, build with shapes, or ask AI to assemble the board.</p>
+            <div className="g2-wb-mode-grid">
+              {[["select", MousePointer2, "Select", "V"], ["hand", Hand, "Pan", "H"], ["pen", PenLine, "Pen", "P"], ["eraser", Eraser, "Erase", "E"]].map(([id, Icon, label, key]) => <button key={id} className={toolMode === id ? "active" : ""} onClick={() => setToolMode(id)} title={`${label} (${key})`}><Icon size={15} /><span>{label}</span><kbd>{key}</kbd></button>)}
+            </div>
+            {toolMode === "pen" && <div className="g2-wb-pen-options"><label><span>Ink</span><input type="color" value={penColor} onChange={(event) => setPenColor(event.target.value)} /></label><label><span>Width</span><input type="range" min="1" max="12" value={penWidth} onChange={(event) => setPenWidth(Number(event.target.value))} /><b>{penWidth}</b></label></div>}
+            <div className="g2-section-label">Quick add</div>
+            <div className="g2-wb-quick-grid">
+              {[
+                { type: "whiteboardNote", label: "Sticky note", icon: StickyNote },
+                { type: "whiteboardText", label: "Text", icon: Type },
+                { type: "whiteboardFrame", label: "Frame", icon: Frame },
+                { type: "whiteboardIcon", label: "Icon card", icon: Lightbulb, itemIcon: "Lightbulb" },
+              ].map((item) => <button key={item.label} draggable onDragStart={(event) => { event.dataTransfer.setData("application/genai-whiteboard", JSON.stringify({ type: item.type, label: item.label, icon: item.itemIcon })); event.dataTransfer.effectAllowed = "copy"; }} onClick={() => addWhiteboardItem({ type: item.type, label: item.label, icon: item.itemIcon })}><item.icon size={16} /><span>{item.label}</span></button>)}
+            </div>
+            <div className="g2-section-label">Shapes</div>
+            <div className="g2-wb-shape-grid">{WHITEBOARD_SHAPES.map((shape) => <button key={shape.id} draggable onDragStart={(event) => { event.dataTransfer.setData("application/genai-whiteboard", JSON.stringify({ type: "whiteboardShape", shape: shape.id, label: shape.label })); event.dataTransfer.effectAllowed = "copy"; }} onClick={() => addWhiteboardItem({ type: "whiteboardShape", shape: shape.id, label: shape.label })} title={`Add ${shape.label}`}><shape.icon size={19} /><span>{shape.label}</span></button>)}</div>
+            <div className="g2-section-label">Icon cards</div>
+            <div className="g2-wb-icon-grid">{WHITEBOARD_ICONS.map(([icon, label]) => <button key={icon} draggable onDragStart={(event) => { event.dataTransfer.setData("application/genai-whiteboard", JSON.stringify({ type: "whiteboardIcon", icon, label })); event.dataTransfer.effectAllowed = "copy"; }} onClick={() => addWhiteboardItem({ type: "whiteboardIcon", icon, label })} title={label}>{(() => { const Icon = FALLBACK_ICONS[icon] || Lightbulb; return <Icon size={16} />; })()}</button>)}</div>
+            <div className="g2-section-label">Brainstorm boards</div>
+            <div className="g2-wb-template-list"><button onClick={() => applyBrainstormTemplate("mindmap")}><Lightbulb size={15} /><span><strong>Mind map</strong><small>Explore one idea radially</small></span></button><button onClick={() => applyBrainstormTemplate("swot")}><Target size={15} /><span><strong>SWOT board</strong><small>Strengths through threats</small></span></button><button onClick={() => applyBrainstormTemplate("retro")}><Users size={15} /><span><strong>Retrospective</strong><small>Reflect and assign actions</small></span></button></div>
+            <button className="g2-wb-ai-button" onClick={() => { setMode("studio"); setDrawer("studio"); }}><Sparkles size={15} /><span><strong>Create with AI</strong><small>AI can use cards and shapes too</small></span><ChevronRight size={14} /></button>
+          </div>}
           {railTab === "patterns" && <><div className="g2-rail-heading"><div><span className="g2-drawer-kicker">FLOW DESIGN PATTERNS</span><h3>Start with intent</h3></div><button className="g2-icon-btn" onClick={() => setRailTab("collapsed")} title="Collapse rail"><PanelLeftClose size={15} /></button></div><p className="g2-muted">Patterns are editable starting points, not locked templates.</p><div className="g2-pattern-list">{PATTERNS.map((pattern) => <button key={pattern.id} className="g2-pattern-card" onClick={() => applyPattern(pattern.id)}><span className="g2-pattern-icon"><Workflow size={16} /></span><span><strong>{pattern.label}</strong><small>{pattern.description}</small></span><ChevronRight size={14} /></button>)}</div><div className="g2-rail-tip"><Lightbulb size={15} /><span>Good architecture answers are paths, controls, and trade-offs.</span></div></>}
           {railTab === "templates" && <><div className="g2-rail-heading"><div><span className="g2-drawer-kicker">ORIGINAL GENAI PLAYGROUND</span><h3>Templates</h3></div><button className="g2-icon-btn" onClick={() => setRailTab("collapsed")} title="Collapse rail"><PanelLeftClose size={15} /></button></div><p className="g2-muted">All existing GenAI Playground templates are available here with their original nodes and connections.</p><div className="g2-pattern-list">{LEGACY_TEMPLATES.map((template) => <button key={template.id} className="g2-pattern-card" onClick={() => applyLegacyTemplate(template.id)}><span className="g2-pattern-icon"><LayoutTemplate size={16} /></span><span><strong>{template.label}</strong><small>{template.description || `${template.nodes.length} nodes · ${template.edges.length} connections`}</small></span><ChevronRight size={14} /></button>)}</div></>}
           {railTab === "brief" && <><div className="g2-rail-heading"><div><span className="g2-drawer-kicker">DESIGN BRIEF</span><h3>What are we solving?</h3></div><button className="g2-icon-btn" onClick={() => setRailTab("collapsed")} title="Collapse rail"><PanelLeftClose size={15} /></button></div><textarea className="g2-brief-textarea" value={brief} onChange={(event) => setBrief(event.target.value)} /><div className="g2-section-label">GenAI lifecycle</div>{["Scope", "Select model", "Customize", "Integrate", "Deploy", "Improve"].map((item, index) => <div className={`g2-lifecycle ${index < 3 ? "done" : ""}`} key={item}><span>{index < 3 ? <Check size={12} /> : index + 1}</span>{item}<small>{index < 3 ? "covered" : "next"}</small></div>)}<div className="g2-rail-tip"><MessageSquare size={15} /><span>Keep the brief visible while you design so every component has a job.</span></div></>}
@@ -903,15 +1614,73 @@ function GenAIPlayground2Canvas({ onClose, theme, isSidebarCollapsed, setIsSideb
         {railTab === "collapsed" && <button className="g2-rail-expand" onClick={() => setRailTab("components")} title="Expand rail"><PanelLeftOpen size={16} /></button>}
       </aside>
       <main className="g2-canvas-wrap">
-        <div className="g2-canvas-toolbar"><div><span className="g2-breadcrumb">PLAYGROUND / 2.0 /</span><strong>{DIAGRAM_TYPES.find((item) => item.id === diagramType)?.label || "Architecture"} workspace</strong></div><div className="g2-canvas-tools"><span className="g2-notice"><CircleDot size={11} /> {notice}</span><button type="button" className="g2-secondary-btn compact" onClick={runSimulation} title="Animate diagram"><Activity size={13} /> Animate</button><button type="button" className="g2-secondary-btn compact" onClick={autoArrange} title="Auto layout"><Wand2 size={13} /> Arrange</button><button type="button" className="g2-secondary-btn compact" onClick={fitCanvas} title="Fit canvas"><Maximize2 size={13} /></button><button type="button" className="g2-secondary-btn compact" onClick={() => importInputRef.current?.click()} title="Import JSON"><FileUp size={13} /></button><button type="button" className="g2-secondary-btn compact danger" onClick={clearCanvas} title="Clear canvas"><Trash2 size={13} /></button><button type="button" className="g2-secondary-btn compact" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setMode("studio"); setDrawer("studio"); }}><Sparkles size={13} /> Ask Studio</button><input ref={importInputRef} type="file" accept="application/json,.json" onChange={importProject} hidden /></div></div>
-        <ReactFlow nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange} onConnect={onConnect} onDragOver={onDragOver} onDrop={onDrop} connectionLineType={ConnectionLineType.Bezier} connectionLineStyle={{ stroke: "#64748b", strokeWidth: 1.5, strokeLinecap: "round" }} defaultEdgeOptions={{ type: "default", pathOptions: { curvature: 0.28 }, markerEnd: { type: MarkerType.ArrowClosed, color: "#64748b" }, style: { stroke: "#64748b", strokeWidth: 1.5, strokeLinecap: "round" } }} onNodeClick={(_, node) => { setSelectedNodeId(node.id); setDrawer("inspect"); }} onPaneClick={() => { setSelectedNodeId(null); if (mode === "design") setDrawer(null); }} nodeTypes={nodeTypes} fitView fitViewOptions={{ padding: 0.2 }} proOptions={{ hideAttribution: true }}>
-          <Background variant={BackgroundVariant.Dots} gap={22} size={1} color="#334155" />
-          <Controls showInteractive={false} />
-          <MiniMap nodeColor={(node) => node.data?.service?.color || "#64748b"} maskColor="rgba(2, 6, 23, .75)" />
-          <Panel position="bottom-left" className="g2-canvas-legend"><span><i className="dot source" />experience</span><span><i className="dot path" />data & flow</span><span><i className="dot safety" />safety boundary</span></Panel>
-        </ReactFlow>
+        <div className="g2-canvas-toolbar">
+          <div><span className="g2-breadcrumb">PLAYGROUND / 2.0 /</span><strong>{DIAGRAM_TYPES.find((item) => item.id === diagramType)?.label || "Architecture"} workspace</strong></div>
+          <div className="g2-canvas-tools">
+            <span className="g2-notice"><CircleDot size={11} /> {notice}</span>
+            <button type="button" className={`g2-secondary-btn compact ${isRunning && !isPlaybackPaused ? "is-playing" : ""}`} onClick={pauseOrResumePlayback} title={isRunning && !isPlaybackPaused ? "Pause flow playback" : "Play or resume flow playback"}>{isRunning && !isPlaybackPaused ? <Pause size={13} /> : <Play size={13} />}{isRunning && !isPlaybackPaused ? "Pause" : "Play flow"}</button>
+            <button type="button" className="g2-secondary-btn compact" onClick={stepPlaybackForward} disabled={!simResult?.animationSteps?.length || step >= (simResult?.animationSteps?.length || 0)} title="Advance one execution wave"><ChevronRight size={15} /> Next</button>
+            <button type="button" className="g2-secondary-btn compact danger" onClick={resetRuntime} disabled={!simResult?.animationSteps?.length && !isRunning} title="Stop and reset flow playback"><Square size={11} /> Stop</button>
+            <button type="button" className="g2-secondary-btn compact g2-speed-btn" onClick={() => setPlaybackSpeed((speed) => speed === 0.5 ? 0.75 : speed === 0.75 ? 1 : 0.5)} title="Cycle flow animation speed">{playbackSpeed}×</button>
+            <button type="button" className={`g2-secondary-btn compact ${followExecution ? "is-playing" : ""}`} onClick={() => setFollowExecution((value) => !value)} title="Follow the active node with animated zoom"><Maximize2 size={13} /> Follow</button>
+            <button type="button" className="g2-secondary-btn compact" onClick={runSimulation} title="Open detailed trace and Monte Carlo simulation"><Activity size={13} /> Simulate</button>
+            <button type="button" className="g2-secondary-btn compact" onClick={autoArrange} title="Auto layout"><Wand2 size={13} /> Arrange</button>
+            <button type="button" className="g2-secondary-btn compact" onClick={fitCanvas} title="Fit canvas"><Maximize2 size={13} /></button>
+            <button type="button" className="g2-secondary-btn compact" onClick={() => exportImage("png")} title="Export PNG"><Download size={13} /> PNG</button>
+            <button type="button" className="g2-secondary-btn compact" onClick={() => importInputRef.current?.click()} title="Import JSON"><FileUp size={13} /></button>
+            <button type="button" className="g2-secondary-btn compact" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setMode("studio"); setDrawer("studio"); }}><Sparkles size={13} /> Ask Studio</button>
+            <input ref={importInputRef} type="file" accept="application/json,.json" onChange={importProject} hidden />
+          </div>
+        </div>
+        <div ref={canvasRef} className={`g2-flow-stage tool-${toolMode}`}>
+          <ReactFlow
+            nodes={canvasNodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            onDragOver={onDragOver}
+            onDrop={onDrop}
+            onNodeDragStart={onNodeDragStart}
+            onNodeDragStop={onNodeDragStop}
+            connectionLineType={ConnectionLineType.Bezier}
+            connectionLineStyle={{ stroke: "#64748b", strokeWidth: 1.5, strokeLinecap: "round" }}
+            defaultEdgeOptions={{ type: "default", pathOptions: { curvature: 0.28 }, markerEnd: { type: MarkerType.ArrowClosed, color: "#64748b" }, style: { stroke: "#64748b", strokeWidth: 1.5, strokeLinecap: "round" } }}
+            onNodeClick={(_, node) => { if (toolMode === "eraser") { eraseAt(node.position); return; } setSelectedNodeId(node.id); setDrawer("inspect"); }}
+            onPaneClick={() => { setSelectedNodeId(null); if (mode === "design") setDrawer(null); }}
+            nodesDraggable={toolMode !== "hand" && toolMode !== "pen" && toolMode !== "eraser"}
+            elementsSelectable={toolMode !== "hand" && toolMode !== "pen" && toolMode !== "eraser"}
+            panOnDrag={toolMode === "hand" || toolMode === "select"}
+            nodeTypes={nodeTypes}
+            minZoom={0.05}
+            maxZoom={2.4}
+            fitView
+            fitViewOptions={{ padding: 0.2 }}
+            proOptions={{ hideAttribution: true }}
+          >
+            <Background variant={BackgroundVariant.Dots} gap={22} size={1} color="#94a3b855" />
+            <Controls showInteractive={false} />
+            <MiniMap nodeColor={(node) => node.data?.service?.color || node.data?.style?.fill || "#8b5cf6"} maskColor="rgba(2, 6, 23, .62)" />
+            <Panel position="bottom-left" className="g2-canvas-legend"><span><i className="dot source" />experience</span><span><i className="dot path" />data & flow</span><span><i className="dot safety" />safety boundary</span></Panel>
+          </ReactFlow>
+          {(toolMode === "pen" || toolMode === "eraser") && <svg className="g2-ink-overlay" onPointerDown={onInkPointerDown} onPointerMove={onInkPointerMove} onPointerUp={finishInk} onPointerCancel={finishInk}>
+            {drawDraft.length > 1 && <polyline points={drawDraft.map((point) => `${point.screen.x},${point.screen.y}`).join(" ")} fill="none" stroke={penColor} strokeWidth={penWidth} strokeLinecap="round" strokeLinejoin="round" />}
+          </svg>}
+          <div className="g2-selection-bar">
+            <button onClick={undo} disabled={!historyRef.current.length} title="Undo (⌘Z)"><Undo2 size={14} /></button>
+            <button onClick={redo} disabled={!futureRef.current.length} title="Redo (⌘⇧Z)"><Redo2 size={14} /></button>
+            <i />
+            <button onClick={duplicateSelected} disabled={!selectedNodeId} title="Duplicate (⌘D)"><Copy size={14} /></button>
+            <button onClick={() => changeLayer("front")} disabled={!selectedNodeId} title="Bring to front"><BringToFront size={14} /></button>
+            <button onClick={() => changeLayer("back")} disabled={!selectedNodeId} title="Send to back"><SendToBack size={14} /></button>
+            <button onClick={deleteSelected} disabled={!selectedNodeId} className="danger" title="Delete"><Trash2 size={14} /></button>
+            <i />
+            <button onClick={() => exportImage("svg")} title="Export SVG"><Download size={14} /><span>SVG</span></button>
+            <button onClick={clearCanvas} className="danger" title="Clear board"><Eraser size={14} /><span>Clear</span></button>
+          </div>
+        </div>
       </main>
-      {drawer && <aside className="g2-drawer"><div className="g2-drawer-head"><span>{drawer === "inspect" ? "Inspector" : drawer[0].toUpperCase() + drawer.slice(1)}</span><button className="g2-icon-btn" onClick={() => setDrawer(null)} title="Close panel"><X size={16} /></button></div>{drawer === "studio" && <StudioDrawer prompt={prompt} setPrompt={setPrompt} onGenerate={generateFromPrompt} onApplyJson={applyJson} projectJson={projectJson || JSON.stringify({ brief, nodes, edges }, null, 2)} setProjectJson={setProjectJson} isGenerating={isGenerating} studioError={studioError} />}{drawer === "simulate" && <SimulationDrawer simQps={simQps} setSimQps={setSimQps} simulationScenario={simulationScenario} setSimulationScenario={setSimulationScenario} effectiveSimQps={effectiveSimQps} simulationMode={simulationMode} setSimulationMode={setSimulationMode} requestScenario={requestScenario} setRequestScenario={setRequestScenario} traceEntryNodeId={traceEntryNodeId} setTraceEntryNodeId={setTraceEntryNodeId} monteCarloSettings={monteCarloSettings} setMonteCarloSettings={setMonteCarloSettings} failureMode={failureMode} setFailureMode={setFailureMode} failureNodeId={failureNodeId} setFailureNodeId={setFailureNodeId} nodes={nodes} capacitySettings={capacitySettings} setCapacitySettings={setCapacitySettings} capacityEstimate={capacityEstimate} simResult={simResult} monteCarloResult={monteCarloResult} isRunning={isRunning} step={step} onRun={runSimulation} onReset={resetRuntime} />}{drawer === "review" && <ReviewDrawer reviewScore={reviewScore} reviewRows={reviewRows} onFocus={focusNode} />}{drawer === "challenge" && <ChallengeDrawer challenge={challenge} challenges={challengeCatalog} challengeScore={challengeScore} onSelectChallenge={selectChallenge} onLoadReference={loadChallengeReference} onFocus={focusNode} />}{drawer === "inspect" && <InspectorDrawer selectedNode={selectedNode} onUpdate={updateNodeConfig} onDelete={(nodeId) => setNodes((current) => current.filter((node) => node.id !== nodeId))} onClose={() => setDrawer(null)} />}</aside>}
+      {drawer && <aside className="g2-drawer"><div className="g2-drawer-head"><span>{drawer === "inspect" ? "Inspector" : drawer[0].toUpperCase() + drawer.slice(1)}</span><button className="g2-icon-btn" onClick={() => setDrawer(null)} title="Close panel"><X size={16} /></button></div>{drawer === "studio" && <StudioDrawer prompt={prompt} setPrompt={setPrompt} onGenerate={generateFromPrompt} onApplyJson={applyJson} projectJson={projectJson || JSON.stringify({ brief, diagramType, nodes, edges }, null, 2)} setProjectJson={setProjectJson} isGenerating={isGenerating} studioError={studioError} diagramType={diagramType} componentDisplay={componentDisplay} setComponentDisplay={setComponentDisplay} />}{drawer === "simulate" && <SimulationDrawer simQps={simQps} setSimQps={setSimQps} simulationScenario={simulationScenario} setSimulationScenario={setSimulationScenario} effectiveSimQps={effectiveSimQps} simulationMode={simulationMode} setSimulationMode={setSimulationMode} requestScenario={requestScenario} setRequestScenario={setRequestScenario} traceEntryNodeId={traceEntryNodeId} setTraceEntryNodeId={setTraceEntryNodeId} monteCarloSettings={monteCarloSettings} setMonteCarloSettings={setMonteCarloSettings} failureMode={failureMode} setFailureMode={setFailureMode} failureNodeId={failureNodeId} setFailureNodeId={setFailureNodeId} nodes={nodes} capacitySettings={capacitySettings} setCapacitySettings={setCapacitySettings} capacityEstimate={capacityEstimate} simResult={simResult} monteCarloResult={monteCarloResult} isRunning={isRunning} step={step} onRun={runSimulation} onReset={resetRuntime} />}{drawer === "review" && <ReviewDrawer reviewScore={reviewScore} reviewRows={reviewRows} onFocus={focusNode} />}{drawer === "challenge" && <ChallengeDrawer challenge={challenge} challenges={challengeCatalog} challengeScore={challengeScore} onSelectChallenge={selectChallenge} onLoadReference={loadChallengeReference} onFocus={focusNode} />}{drawer === "inspect" && <InspectorDrawer selectedNode={selectedNode} onUpdate={updateNodeConfig} onDelete={deleteSelected} onClose={() => setDrawer(null)} />}</aside>}
     </div>}
   </div>;
 }

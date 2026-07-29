@@ -103,7 +103,7 @@ export default function Sidebar({
         { icon: <Terminal size={14} />, label: "Coding Practice", id: "ide", description: "Write and run code" },
         { icon: <Code2 size={14} />, label: "LeetCode", id: "leetcode", description: "Solve LeetCode problems" },
         { icon: <Boxes size={14} />, label: "AI Playground", id: "playground", description: "Experiment with AI systems" },
-        { icon: <Sparkles size={14} />, label: "Gen AI Playground 2.0", id: "genai_playground2", description: "Design, simulate, and review GenAI systems" },
+        { icon: <Sparkles size={14} />, label: "Gen AI Playground 2.0", id: "genai_playground2", description: "Design systems, diagrams, and AI whiteboards" },
         { icon: <Layers size={14} />, label: "System Design", id: "simulator", description: "Practice architecture decisions" },
         { icon: <Box size={14} />, label: "Algorithm Practice", id: "algo_visualizer", description: "Learn algorithms step by step" },
         { icon: <Terminal size={14} />, label: "Visualize", id: "learnbug", description: "Debug Python code with memory, structure, and timeline views" },

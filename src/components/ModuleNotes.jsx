@@ -17,7 +17,7 @@ import { supabase } from "../config/supabaseClient";
 const lowlight = createLowlight(common);
 
 // ── Toolbar ──────────────────────────────────────────────────────────────────
-function Toolbar({ editor, saveStatus }) {
+function Toolbar({ editor, saveStatus, onSaveNow }) {
   if (!editor) return null;
 
   const btn = (action, icon, title, isActive = false) => (
@@ -73,6 +73,20 @@ function Toolbar({ editor, saveStatus }) {
       {btn(() => editor.chain().focus().undo().run(), <Undo2 size={13} />, "Undo")}
       {btn(() => editor.chain().focus().redo().run(), <Redo2 size={13} />, "Redo")}
 
+      <button
+        type="button"
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={onSaveNow}
+        title="Save note now"
+        style={{
+          marginLeft: 4, padding: "5px 7px", borderRadius: 6, border: "none",
+          cursor: "pointer", background: "rgba(34,197,94,0.14)", color: "#22c55e",
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}
+      >
+        <Save size={13} />
+      </button>
+
       {/* Save status badge */}
       <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontWeight: 700, letterSpacing: "0.5px" }}>
         {saveStatus === "saving" && <><Loader2 size={11} style={{ animation: "spin 1s linear infinite", color: "var(--text3)" }} /><span style={{ color: "var(--text3)" }}>SAVING</span></>}
@@ -89,6 +103,10 @@ export default function ModuleNotes({ moduleId, userId, pathColor }) {
   const [isLoading, setIsLoading]     = useState(true);
   const saveTimer                     = useRef(null);
   const latestContent                 = useRef(null);
+
+  // Keep the identifier paired with the editor content. This makes a flush
+  // during a module switch write to the module that was actually being edited.
+  const latestTarget                  = useRef(null);
 
   // Build a stable key so switching modules resets the editor
   const noteKey = userId && moduleId ? `${userId}::${moduleId}` : null;
@@ -116,10 +134,44 @@ export default function ModuleNotes({ moduleId, userId, pathColor }) {
     },
   }, [noteKey]); // reinit when key changes
 
+  // ── Persist to Supabase ──
+  const persistNote = useCallback(async (content, target = latestTarget.current) => {
+    if (!target?.userId || !target?.moduleId || !content) return;
+    setSaveStatus("saving");
+    try {
+      const { error } = await supabase
+        .from("module_notes")
+        .upsert(
+          {
+            user_id: target.userId,
+            module_id: target.moduleId,
+            content,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id,module_id" }
+        );
+      if (error) throw error;
+      setSaveStatus("saved");
+      setTimeout(() => setSaveStatus("idle"), 2500);
+    } catch (err) {
+      console.error("ModuleNotes save error:", err);
+      setSaveStatus("error");
+    }
+  }, []);
+
+  const flushPendingSave = useCallback(() => {
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = null;
+    if (latestContent.current) void persistNote(latestContent.current);
+  }, [persistNote]);
+
   // ── Load note from Supabase ──
   useEffect(() => {
     if (!noteKey || !editor) return;
+    let cancelled = false;
     setIsLoading(true);
+    latestTarget.current = { userId, moduleId };
+    latestContent.current = null;
     (async () => {
       try {
         const { data, error } = await supabase
@@ -131,6 +183,7 @@ export default function ModuleNotes({ moduleId, userId, pathColor }) {
 
         if (error && error.code !== "PGRST116") throw error;
 
+        if (cancelled) return;
         if (data?.content) {
           editor.commands.setContent(data.content, false);
           latestContent.current = data.content;
@@ -139,36 +192,21 @@ export default function ModuleNotes({ moduleId, userId, pathColor }) {
           latestContent.current = null;
         }
       } catch (err) {
-        console.error("ModuleNotes load error:", err);
+        if (!cancelled) console.error("ModuleNotes load error:", err);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     })();
 
     return () => {
+      cancelled = true;
       if (saveTimer.current) clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+      // Do not drop text typed in the debounce window when the learner changes
+      // module, closes the panel, refreshes, or signs out.
+      if (latestContent.current) void persistNote(latestContent.current, { userId, moduleId });
     };
-  }, [noteKey, editor]);
-
-  // ── Persist to Supabase ──
-  const persistNote = useCallback(async (content) => {
-    if (!userId || !moduleId) return;
-    setSaveStatus("saving");
-    try {
-      const { error } = await supabase
-        .from("module_notes")
-        .upsert(
-          { user_id: userId, module_id: moduleId, content, updated_at: new Date().toISOString() },
-          { onConflict: "user_id,module_id" }
-        );
-      if (error) throw error;
-      setSaveStatus("saved");
-      setTimeout(() => setSaveStatus("idle"), 2500);
-    } catch (err) {
-      console.error("ModuleNotes save error:", err);
-      setSaveStatus("error");
-    }
-  }, [userId, moduleId]);
+  }, [noteKey, editor, moduleId, persistNote, userId]);
 
   // ── Empty state ──
   const isEmpty = editor?.isEmpty ?? true;
@@ -192,7 +230,7 @@ export default function ModuleNotes({ moduleId, userId, pathColor }) {
       position: "relative",
     }}>
       {/* Toolbar */}
-      <Toolbar editor={editor} saveStatus={saveStatus} />
+      <Toolbar editor={editor} saveStatus={saveStatus} onSaveNow={flushPendingSave} />
 
       {/* Editor area */}
       <div style={{ flex: 1, overflow: "auto", position: "relative" }}>
