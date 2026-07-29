@@ -1,5 +1,6 @@
 import { CATEGORIES } from "../../playground/data/nodes";
 import { TEMPLATES } from "../../playground/data/templates";
+import awsSimulatorConfig from "../../../../system-design-simulator/frontend/src/app/core/config/aws-services.json";
 
 const awsIconBase = "https://raw.githubusercontent.com/icacho-dev/aws-architecture-icons/main/Resource-Icons_02072025";
 const awsServiceIcon = (path) => `https://raw.githubusercontent.com/icacho-dev/aws-architecture-icons/main/Architecture-Service-Icons_02072025/${path}`;
@@ -29,6 +30,18 @@ const titleFromFlowPath = (path) => {
   return source.split(/[-_]+/).filter(Boolean).map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 };
 const flowProviderColor = { aws: "#f59e0b", azure: "#2563eb", gcp: "#16a34a", cncf: "#0891b2", developer: "#64748b" };
+
+// Keep this palette in lockstep with the AWS System Design Simulator.  Its JSON
+// owns the service names and categories; this map preserves the simulator's
+// official architecture icon for every service it exposes.
+const awsSimulatorIcons = {
+  client: `${awsIconBase}/Resource-Icons_02072025/Res_General-Icons/Res_48_Light/Res_Users_48_Light.svg`, route53: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_Amazon-Route-53_48.svg"), cloudfront: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_Amazon-CloudFront_48.svg"), apiGateway: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_Amazon-API-Gateway_48.svg"), elb: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_Elastic-Load-Balancing_48.svg"), vpc: `${awsIconBase}/Architecture-Group-Icons_02072025/Virtual-private-cloud-VPC_32.svg`,
+  ec2: awsServiceIcon("Arch_Compute/48/Arch_Amazon-EC2_48.svg"), ecs: awsServiceIcon("Arch_Containers/48/Arch_Amazon-Elastic-Container-Service_48.svg"), autoScalingGroup: awsServiceIcon("Arch_Compute/48/Arch_Amazon-EC2-Auto-Scaling_48.svg"), lambda: awsServiceIcon("Arch_Compute/48/Arch_AWS-Lambda_48.svg"), sqs: awsServiceIcon("Arch_App-Integration/48/Arch_Amazon-Simple-Queue-Service_48.svg"), sns: awsServiceIcon("Arch_App-Integration/48/Arch_Amazon-Simple-Notification-Service_48.svg"),
+  s3: awsServiceIcon("Arch_Storage/48/Arch_Amazon-Simple-Storage-Service_48.svg"), rds: awsServiceIcon("Arch_Database/48/Arch_Amazon-RDS_48.svg"), elastiCache: awsServiceIcon("Arch_Database/48/Arch_Amazon-ElastiCache_48.svg"), dynamoDb: awsServiceIcon("Arch_Database/48/Arch_Amazon-DynamoDB_48.svg"), iam: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_AWS-Identity-and-Access-Management_48.svg"), cloudWatch: awsServiceIcon("Arch_Management-Governance/48/Arch_Amazon-CloudWatch_48.svg"), stepFunctions: awsServiceIcon("Arch_App-Integration/48/Arch_AWS-Step-Functions_48.svg"), natGateway: `${awsIconBase}/Resource-Icons_02072025/Res_Networking-Content-Delivery/Res_Amazon-VPC_NAT-Gateway_48.svg`, securityGroup: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_AWS-Identity-and-Access-Management_48.svg"),
+  batch: awsServiceIcon("Arch_Compute/48/Arch_AWS-Batch_48.svg"), eks: awsServiceIcon("Arch_Containers/48/Arch_Amazon-Elastic-Kubernetes-Service_48.svg"), aurora: awsServiceIcon("Arch_Database/48/Arch_Amazon-Aurora_48.svg"), eventBridge: awsServiceIcon("Arch_App-Integration/48/Arch_Amazon-EventBridge_48.svg"), kinesis: awsServiceIcon("Arch_Analytics/48/Arch_Amazon-Kinesis-Data-Streams_48.svg"), msk: awsServiceIcon("Arch_Analytics/48/Arch_Amazon-Managed-Streaming-for-Apache-Kafka_48.svg"), cognito: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_Amazon-Cognito_48.svg"), waf: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_AWS-WAF_48.svg"), efs: awsServiceIcon("Arch_Storage/48/Arch_Amazon-EFS_48.svg"), athena: awsServiceIcon("Arch_Analytics/48/Arch_Amazon-Athena_48.svg"), secretsManager: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_AWS-Secrets-Manager_48.svg"),
+  transitGateway: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_AWS-Transit-Gateway_48.svg"), directConnect: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_AWS-Direct-Connect_48.svg"), globalAccelerator: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_AWS-Global-Accelerator_48.svg"), xray: awsServiceIcon("Arch_Developer-Tools/48/Arch_AWS-X-Ray_48.svg"), openSearch: awsServiceIcon("Arch_Analytics/48/Arch_Amazon-OpenSearch-Service_48.svg"), redshift: awsServiceIcon("Arch_Analytics/48/Arch_Amazon-Redshift_48.svg"), glue: awsServiceIcon("Arch_Analytics/48/Arch_AWS-Glue_48.svg"), emr: awsServiceIcon("Arch_Analytics/48/Arch_Amazon-EMR_48.svg"), kinesisFirehose: awsServiceIcon("Arch_Analytics/48/Arch_Amazon-Data-Firehose_48.svg"), mq: awsServiceIcon("Arch_App-Integration/48/Arch_Amazon-MQ_48.svg"), kms: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_AWS-Key-Management-Service_48.svg"), shield: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_AWS-Shield_48.svg"), organizations: awsServiceIcon("Arch_Management-Governance/48/Arch_AWS-Organizations_48.svg"),
+  codePipeline: awsServiceIcon("Arch_Developer-Tools/48/Arch_AWS-CodePipeline_48.svg"), codeBuild: awsServiceIcon("Arch_Developer-Tools/48/Arch_AWS-CodeBuild_48.svg"), codeDeploy: awsServiceIcon("Arch_Developer-Tools/48/Arch_AWS-CodeDeploy_48.svg"), bedrock: awsServiceIcon("Arch_Artificial-Intelligence/48/Arch_Amazon-Bedrock_48.svg"), sageMaker: awsServiceIcon("Arch_Artificial-Intelligence/48/Arch_Amazon-SageMaker-AI_48.svg"), appSync: awsServiceIcon("Arch_App-Integration/48/Arch_AWS-AppSync_48.svg"), iotCore: awsServiceIcon("Arch_Internet-of-Things/48/Arch_AWS-IoT-Core_48.svg"), rekognition: awsServiceIcon("Arch_Artificial-Intelligence/48/Arch_Amazon-Rekognition_48.svg"), textract: awsServiceIcon("Arch_Artificial-Intelligence/48/Arch_Amazon-Textract_48.svg"), mediaConvert: awsServiceIcon("Arch_Media-Services/48/Arch_AWS-Elemental-MediaConvert_48.svg"), cloudTrail: awsServiceIcon("Arch_Management-Governance/48/Arch_AWS-CloudTrail_48.svg"), backup: awsServiceIcon("Arch_Storage/48/Arch_AWS-Backup_48.svg"), appRunner: awsServiceIcon("Arch_Compute/48/Arch_AWS-App-Runner_48.svg"), elasticBeanstalk: awsServiceIcon("Arch_Compute/48/Arch_AWS-Elastic-Beanstalk_48.svg"), fsx: awsServiceIcon("Arch_Storage/48/Arch_Amazon-FSx_48.svg"), certificateManager: awsServiceIcon("Arch_Security-Identity-Compliance/48/Arch_AWS-Certificate-Manager_48.svg"), systemsManager: awsServiceIcon("Arch_Management-Governance/48/Arch_AWS-Systems-Manager_48.svg"), ecr: awsServiceIcon("Arch_Containers/48/Arch_Amazon-Elastic-Container-Registry_48.svg"), privateLink: awsServiceIcon("Arch_Networking-Content-Delivery/48/Arch_AWS-PrivateLink_48.svg"),
+};
 
 const legacyColor = {
   agent: "#818cf8", llm: "#a78bfa", processing: "#94a3b8", io: "#38bdf8", datasource: "#fbbf24",
@@ -127,7 +140,39 @@ export const FLOW_COMPONENTS = flowIconEntries.map((entry) => ({
   description: `${entry.provider.toUpperCase()} service icon from Flow Design's provider library.`,
   flowSource: true,
 }));
-export const ALL_COMPONENTS = [...SERVICE_CATALOG, ...LEGACY_COMPONENTS, ...FLOW_COMPONENTS];
+const awsKindFor = (type = "") => {
+  if (["sqs", "mq", "kinesis", "kinesisFirehose", "msk"].includes(type)) return "queue";
+  if (["sns", "eventBridge", "stepFunctions"].includes(type)) return "event";
+  if (["s3", "efs", "fsx", "backup"].includes(type)) return "datasource";
+  if (["rds", "aurora", "dynamoDb", "redshift"].includes(type)) return "database";
+  if (["elastiCache"].includes(type)) return "cache";
+  if (["openSearch"].includes(type)) return "vector";
+  if (["bedrock", "sageMaker"].includes(type)) return "llm";
+  if (["cloudWatch", "xray", "cloudTrail"].includes(type)) return "observability";
+  if (["waf", "shield", "iam", "kms", "secretsManager", "certificateManager", "cognito"].includes(type)) return "guardrail";
+  if (type === "client") return "source";
+  return "service";
+};
+
+// The simulator has a broader AWS palette than the GenAI starter set. Prefix
+// ids so the starter nodes keep their curated defaults while every simulator
+// icon remains independently draggable and discoverable in the component rail.
+export const AWS_SIMULATOR_COMPONENTS = awsSimulatorConfig.services
+  .filter((service) => awsSimulatorIcons[service.type])
+  .map((service) => ({
+    id: `aws-simulator:${service.type}`,
+    label: service.name,
+    category: `AWS Simulator / ${service.category}`,
+    provider: "AWS Simulator",
+    iconUrl: awsSimulatorIcons[service.type],
+    fallbackIcon: "Cloud",
+    color: "#f59e0b",
+    kind: awsKindFor(service.type),
+    description: service.description || `${service.name} from the AWS System Design Simulator catalog.`,
+    awsSimulatorSource: true,
+  }));
+
+export const ALL_COMPONENTS = [...SERVICE_CATALOG, ...AWS_SIMULATOR_COMPONENTS, ...LEGACY_COMPONENTS, ...FLOW_COMPONENTS];
 export const SERVICE_BY_ID = Object.fromEntries(ALL_COMPONENTS.map((service) => [service.id, service]));
 
 const legacyTemplateService = (node) => {
