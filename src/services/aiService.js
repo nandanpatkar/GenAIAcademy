@@ -495,13 +495,33 @@ export const normalizeFlowArchitecture = (architecture, description = "") => {
   };
 };
 
-export const generateFlowArchitecture = async (description) => {
-const systemPrompt = `You are an expert GenAI system architect. Convert this natural language description into a ReactFlow diagram.
+export const generateFlowArchitecture = async (description, diagramFormat = "architecture") => {
+const FORMAT_RULES = {
+  architecture: "Show system boundaries, runtime services, data stores, security and observability. Prefer a dominant request path with supporting branches.",
+  flowchart: "Model the procedure in order. Use decision nodes with clearly labelled yes/no or condition branches and terminal outcomes.",
+  dataflow: "Emphasize data sources, transformations, movement, persistence and consumers. Every edge label must name the payload or data operation.",
+  sequence: "Model participants or services as nodes and label edges with ordered message/action names. Keep one chronological interaction path, including failure or retry messages when material.",
+  erd: "Model entities, attributes in each node subtitle, and relationships. Label relationship edges with cardinality such as 1:1, 1:N, or N:M and a relationship verb.",
+  mindmap: "Start with one central idea and create concise themed branches. Use relationship labels sparingly and avoid forcing a linear request path.",
+  journey: "Model the journey left to right with stages, user actions, touchpoints, emotions or friction, and opportunities. Label transitions with the action that moves the person forward.",
+  wireframe: "Model screens, key interface regions, controls, and navigation links. Keep node labels concrete such as 'Checkout screen' or 'Primary CTA', and label edges with the user interaction.",
+  state: "Model explicit states and labelled transitions, including initial, success, failure and recovery states. Use guards or triggering events on transition labels.",
+  bpmn: "Model start/end events, activities, gateways, actors and exception paths. Label gateway branches with their conditions and make responsibilities concrete.",
+  userflow: "Model user goals, screens, actions, decisions, alternate paths and completion outcomes. Keep the flow readable from entry to success or abandonment.",
+  kubernetes: "Model clusters, namespaces, workloads, services, ingress, configuration, secrets, storage, scaling and observability boundaries.",
+  terraform: "Model infrastructure modules, providers, resources, dependencies, remote state and environment boundaries. Label edges with dependency or data relationships.",
+  network: "Model zones, networks, subnets, gateways, load balancers, compute and data tiers, trust boundaries, protocols and traffic direction.",
+};
+const formatRule = FORMAT_RULES[diagramFormat] || FORMAT_RULES.architecture;
+const systemPrompt = `You are an expert GenAI system architect. Convert this natural language description into a ReactFlow ${diagramFormat} diagram.
 Return ONLY a valid JSON object. No explanation.
 
+Selected diagram format: ${diagramFormat}
+Format-specific requirements: ${formatRule}
+
 Architecture rules:
-- Build a concrete, end-to-end production architecture from the requirements, not a generic chain of services.
-- Return 8-18 nodes and connect the primary request path plus important control, storage, tool, and escalation paths.
+- Build a concrete end-to-end ${diagramFormat} from the requirements, not a generic chain of boxes.
+- Return 6-18 nodes and connect the primary path plus the relationships that make the design understandable.
 - Edges are mandatory: return at least one edge for every primary stage and at least 10 meaningful edges when the architecture has 8 or more nodes.
 - Create real fan-out/fan-in paths for routers, orchestrators, classifiers, policy checks, if/else conditions, fallbacks, and human escalation. A branching node should have 2-4 outgoing edges when the requirements imply multiple outcomes.
 - Prefer one dominant left-to-right primary path. Keep supporting systems as short side branches that rejoin the primary path; do not connect every node to every other node.
@@ -510,13 +530,16 @@ Architecture rules:
 - Every edge must use the exact IDs from the nodes array. Put the path condition in the edge label, such as "approved", "fallback", "tool call", "no match", or "human escalation".
 - Never return an empty edges array. If a relationship is implied by the prompt, model it explicitly.
 - Every node label must be a descriptive 2-6 word component name. Never use one-letter labels, abbreviations such as "C" or "R", or generic repeated labels.
-- Include the major runtime stages, integrations, failure boundaries, state stores, security controls, and observability components that the prompt requires.
+- Include the components, stages, relationships, constraints, and supporting details that the chosen format requires. For architecture diagrams, include runtime stages, integrations, failure boundaries, state stores, security, and observability as appropriate.
+- When the request calls for frames, regions, zones, boundaries, lanes, VPCs, tiers, hot/warm/cold paths, or grouped sections, return 2-4 clearly named regions only. Each node ID may belong to one region only; every region must contain at least two nodes; never create nested or overlapping regions.
+- When the request asks for icon-only nodes, use provider-specific component names where possible; the canvas will render their service icon without a card.
 - For voice/contact-center prompts, explicitly model telephony ingress, streaming audio/WebSocket handling, VAD or barge-in, STT, conversation orchestration, session state, LLM/tool execution, RAG when requested, TTS, human transfer, call summary, and monitoring.
 
 Schema:
 {
   "name": "short architecture name",
   "description": "one sentence summary",
+  "diagramFormat": "${diagramFormat}",
   "nodes": [
     {
       "id": "unique_id",
@@ -536,6 +559,9 @@ Schema:
       "label": "data type or condition",
       "role": "primary|branch|feedback|observability"
     }
+  ],
+  "regions": [
+    { "label": "Private application VPC", "subtitle": "optional short context", "nodeIds": ["node_id_1", "node_id_2"], "color": "#f59e0b" }
   ]
 }`;
 

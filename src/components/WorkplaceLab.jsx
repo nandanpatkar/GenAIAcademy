@@ -1706,6 +1706,8 @@ export default function WorkplaceLab({
   const { user } = useAuth();
   const [lastSyncTime, setLastSyncTime] = useState(0);
   const [syncStatus, setSyncStatus] = useState('Idle'); // 'Idle', 'Syncing', 'Synced', 'Error'
+  const [workspaceReady, setWorkspaceReady] = useState(false);
+  const syncInFlight = useRef(false);
 
   const arrayBufferToBase64 = (buffer) => {
     let binary = '';
@@ -1727,13 +1729,30 @@ export default function WorkplaceLab({
     return bytes;
   };
 
+  const findWorkspaceDbs = useCallback(async () => {
+    if (!window.indexedDB.databases) return [];
+    const dbs = await window.indexedDB.databases();
+    return dbs.filter(db => db.name && db.name.startsWith('local:workspace:'));
+  }, []);
+
+  // AFFiNE creates its local database after its iframe has loaded. Wait for it
+  // before restoring so a first visit on a new browser can receive cloud notes.
+  const waitForWorkspaceDbs = useCallback(async () => {
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const dbs = await findWorkspaceDbs();
+      if (dbs.length > 0) return dbs;
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+    return [];
+  }, [findWorkspaceDbs]);
+
   const syncToSupabase = useCallback(async () => {
-    if (!user?.id) return;
+    if (!user?.id || !workspaceReady || syncInFlight.current) return;
     if (!window.indexedDB.databases) return;
 
     try {
-      const dbs = await window.indexedDB.databases();
-      const workspaceDbs = dbs.filter(db => db.name && db.name.startsWith('local:workspace:'));
+      syncInFlight.current = true;
+      const workspaceDbs = await findWorkspaceDbs();
 
       let hasChanges = false;
       let updatesToUpsert = [];
@@ -1814,12 +1833,14 @@ export default function WorkplaceLab({
     } catch (err) {
       console.error('[Sync] Error syncing to Supabase:', err);
       setSyncStatus('Error');
+    } finally {
+      syncInFlight.current = false;
     }
-  }, [user, lastSyncTime]);
+  }, [user, workspaceReady, findWorkspaceDbs, lastSyncTime]);
 
-  const restoreFromSupabase = useCallback(async () => {
+  const restoreFromSupabase = useCallback(async (workspaceDbs) => {
     if (!user?.id) return;
-    if (!window.indexedDB.databases) return;
+    if (!workspaceDbs.length) return;
 
     try {
       setSyncStatus('Syncing');
@@ -1833,9 +1854,6 @@ export default function WorkplaceLab({
         setSyncStatus('Idle');
         return;
       }
-
-      const dbs = await window.indexedDB.databases();
-      const workspaceDbs = dbs.filter(db => db.name && db.name.startsWith('local:workspace:'));
 
       for (const dbInfo of workspaceDbs) {
         const dbName = dbInfo.name;
@@ -1894,20 +1912,35 @@ export default function WorkplaceLab({
   }, [user]);
 
   useEffect(() => {
-    if (activeTab === 'affine' && user?.id) {
-      restoreFromSupabase();
+    if (activeTab !== 'affine' || !user?.id) {
+      setWorkspaceReady(false);
+      return;
     }
-  }, [activeTab, user?.id]);
+    let cancelled = false;
+    setWorkspaceReady(false);
+    (async () => {
+      const workspaceDbs = await waitForWorkspaceDbs();
+      if (cancelled) return;
+      if (workspaceDbs.length) await restoreFromSupabase(workspaceDbs);
+      if (!cancelled) setWorkspaceReady(true);
+    })();
+    return () => { cancelled = true; };
+  }, [activeTab, user?.id, restoreFromSupabase, waitForWorkspaceDbs]);
 
   useEffect(() => {
-    if (activeTab !== 'affine' || !user?.id) return;
+    if (activeTab !== 'affine' || !user?.id || !workspaceReady) return;
 
+    // Frequent incremental snapshots, plus the cleanup flush below, keep the
+    // local-first editor backed up without requiring a manual Sync click.
     const interval = setInterval(() => {
       syncToSupabase();
-    }, 10000);
+    }, 3000);
 
-    return () => clearInterval(interval);
-  }, [activeTab, user?.id, syncToSupabase]);
+    return () => {
+      clearInterval(interval);
+      void syncToSupabase();
+    };
+  }, [activeTab, user?.id, workspaceReady, syncToSupabase]);
 
   const filtered=notes.filter(n=>
     n.title.toLowerCase().includes(searchQuery.toLowerCase())||

@@ -34,11 +34,24 @@ const EXAMPLES = [
   "Azure AI Foundry multi-agent with content safety and monitoring",
 ];
 
+// The format is part of the AI contract, not just a visual skin. It tells the
+// model which relationships to preserve and tells the canvas how to arrange it.
+const DIAGRAM_FORMATS = [
+  { id: "architecture", label: "Architecture", hint: "Services, stores, boundaries", layout: "left-right" },
+  { id: "flowchart", label: "Flowchart", hint: "Steps, branches, outcomes", layout: "top-bottom" },
+  { id: "dataflow", label: "Data flow", hint: "Data movement and transforms", layout: "left-right" },
+  { id: "sequence", label: "Sequence", hint: "Actors and ordered messages", layout: "lanes" },
+  { id: "erd", label: "ER diagram", hint: "Entities and cardinality", layout: "grid" },
+  { id: "mindmap", label: "Mind map", hint: "Ideas and connected themes", layout: "radial" },
+  { id: "journey", label: "User journey", hint: "Stages, actions, moments", layout: "left-right" },
+  { id: "wireframe", label: "Wireframe", hint: "Screens and user paths", layout: "grid" },
+];
+
 let _uid = Date.now();
 const mkId = () => `gen_${_uid++}`;
 
 // ── Auto-layout: left-to-right, multi-row when many nodes ────────────────────
-function layoutNodes(rawNodes) {
+function layoutNodes(rawNodes, diagramFormat = "architecture") {
   const COL_W = 240;
   const ROW_H = 130;
   const COLS  = Math.ceil(Math.sqrt(rawNodes.length * 1.5)); // slightly wider than tall
@@ -46,8 +59,8 @@ function layoutNodes(rawNodes) {
   return rawNodes.map((n, i) => ({
     ...n,
     position: {
-      x: 60 + (i % COLS) * COL_W,
-      y: 60 + Math.floor(i / COLS) * ROW_H,
+      x: diagramFormat === "flowchart" ? 120 + (i % 3) * COL_W : 60 + (i % COLS) * COL_W,
+      y: diagramFormat === "flowchart" ? 60 + Math.floor(i / 3) * ROW_H : diagramFormat === "sequence" ? 80 : 60 + Math.floor(i / COLS) * ROW_H,
     },
   }));
 }
@@ -61,6 +74,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
   const [error,    setError]    = useState(null);
   const [preview,  setPreview]  = useState(null); // { name, description, nodes, edges }
   const [mode,     setMode]     = useState("replace"); // "replace" | "append"
+  const [diagramFormat, setDiagramFormat] = useState("architecture");
   const textareaRef = useRef(null);
 
   // Auto-focus textarea on mount
@@ -79,7 +93,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
     setPreview(null);
 
     try {
-      const parsed = await generateFlowArchitecture(trimmed);
+      const parsed = await generateFlowArchitecture(trimmed, diagramFormat);
 
       // Validate & sanitise
       if (!parsed.nodes?.length) throw new Error("No nodes returned — try a more specific description.");
@@ -89,7 +103,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
         e => nodeIds.has(e.source) && nodeIds.has(e.target)
       );
 
-      setPreview({ ...parsed, edges: validEdges });
+      setPreview({ ...parsed, diagramFormat, edges: validEdges });
     } catch (err) {
       setError(err.message?.includes("JSON")
         ? "Couldn't parse the response. Please try again."
@@ -123,7 +137,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
           inputPort:  n.inputPort  || "any",
           outputPort: n.outputPort || "any",
         },
-      }))
+      })), preview.diagramFormat || diagramFormat
     );
 
     // Map original ids → new ReactFlow ids for edges
@@ -233,6 +247,14 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
             </div>
           </div>
 
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "var(--pg-text3)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 7 }}>Diagram format</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 5 }}>
+              {DIAGRAM_FORMATS.map(format => <button key={format.id} onClick={() => setDiagramFormat(format.id)} title={format.hint} style={{ minHeight: 54, padding: "7px 5px", borderRadius: 7, cursor: "pointer", fontFamily: "'DM Mono',monospace", textAlign: "left", background: diagramFormat === format.id ? "rgba(129,140,248,.13)" : "var(--pg-bg)", border: `1px solid ${diagramFormat === format.id ? "#818cf8" : "var(--pg-border)"}`, color: diagramFormat === format.id ? "#c4b5fd" : "var(--pg-text3)" }}><div style={{ fontSize: 9.5, fontWeight: 700 }}>{format.label}</div><div style={{ fontSize: 7.5, marginTop: 3, lineHeight: 1.3, opacity: .82 }}>{format.hint}</div></button>)}
+            </div>
+            <div style={{ marginTop: 7, padding: "7px 9px", borderRadius: 6, background: "rgba(56,189,248,.06)", border: "1px solid rgba(56,189,248,.16)", color: "var(--pg-text3)", fontSize: 8.5, lineHeight: 1.55 }}>AI extracts components and relationships from your prompt, returns a validated JSON graph, then applies the selected layout. Review the graph before it changes your canvas.</div>
+          </div>
+
           {/* Example chips */}
           {!preview && (
             <div style={{ marginBottom: 16 }}>
@@ -304,7 +326,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
                 <CheckCircle2 size={13} color="#34d399" style={{ flexShrink: 0 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: "#34d399" }}>{preview.name}</div>
-                  <div style={{ fontSize: 9, color: "var(--pg-text3)", marginTop: 1 }}>{preview.description}</div>
+                  <div style={{ fontSize: 9, color: "var(--pg-text3)", marginTop: 1 }}>{preview.description} · {DIAGRAM_FORMATS.find(f => f.id === (preview.diagramFormat || diagramFormat))?.label}</div>
                 </div>
                 <button
                   onClick={generate}
