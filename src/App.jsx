@@ -1,43 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, Component } from "react";
-import Sidebar from "./components/Sidebar";
-import GlobalSearchPalette from "./components/GlobalSearchPalette";
 import { buildSearchIndex } from "./utils/buildSearchIndex";
-import RoadmapGraph from "./components/RoadmapGraph";
-import RoadmapMobile from "./pages/roadmap/RoadmapMobile";
-import ModulePanel from "./components/ModulePanel";
-import ResourcePanel from "./components/ResourcePanel";
-import DetailPanel from "./components/DetailPanel";
-import TopicContentPanel from "./components/TopicContentPanel";
-import EditorModal from "./components/EditorModal";
-import CurriculumTreePanel from "./components/CurriculumTreePanel";
-import PythonIDE from "./components/PythonIDE";
-import ResourceManager from "./components/ResourceManager";
-import ProgressTracker from "./components/ProgressTracker";
-import SystemDesignPlayground from "./pages/playground/SystemDesignPlayground";
-import SystemDesignSimulator from "./pages/simulator/SystemDesignSimulator";
-import AWSSystemDesignSimulator from "./pages/simulator/AWSSystemDesignSimulator";
-import DSAAnimator from "./components/DSAAnimator";
-import LearnBugEmbed from "./components/LearnBugEmbed";
-import AgentLibrary from "./components/AgentLibrary";
-import AimlCompanion from "./components/AimlCompanion";
-import LinksCompanion from "./components/LinksCompanion";
-import GitHubHub from "./components/GitHubHub";
-import BlogPage from "./pages/blog/BlogPage";
-import AdminManagement from "./components/AdminManagement";
-import InterviewerPage from "./pages/interviewer/InterviewerPage.jsx";
-import AlgoVisualizer from "./components/AlgoVisualizer";
-import CodeVisualizer from "./components/CodeVisualizer";
-import K8sGames from "./components/K8sGames";
-import GitVisualizer from "./components/GitVisualizer";
-import FlowDesign from "./components/FlowDesign";
-import NotionRenderer from "./components/notion/NotionRenderer";
-import NoSignups from "./components/NoSignups";
-import ManualViewer from "./components/ManualViewer";
-import ReferenceViewer from "./components/ReferenceViewer";
-import InterviewPrep from "./components/InterviewPrep";
-import QuizApp from "./components/QuizApp";
-import LeetCodePage from "./pages/LeetCodePage";
-import ProjectIDE from "./components/Projects/ProjectIDE";
 import { ProjectsProvider } from "./contexts/ProjectsContext";
 import {
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp,
@@ -46,34 +8,70 @@ import {
   Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit, Mic, BoxSelect,
   HelpCircle
 } from "lucide-react";
-import IntelligenceHub from "./components/IntelligenceHub";
-import HomeDashboard from "./components/HomeDashboard";
-import WorkplaceLab from "./components/WorkplaceLab";
-import OnboardingChatbot from "./components/OnboardingChatbot";
-import FullContextChatbot from "./components/FullContextChatbot";
 import { PATHS } from "./data/roadmap";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
-import { setDynamicGeminiKey } from "./services/aiService";
 import { supabase } from "./config/supabaseClient";
-import AuthInterface from "./components/AuthInterface";
-import KnowledgeGalaxy from "./components/KnowledgeGalaxy";
-import FocusPulse from "./components/FocusPulse";
-import VideoModal from "./components/VideoModal";
-import LandingPage from "./pages/LandingPage";
-import LandingWrapper from "./pages/LandingWrapper";
-import KnowledgeGraph from "./pages/KnowledgeGraph";
-import Community from "./components/Community/Community";
-import AppWalkthrough from "./components/AppWalkthrough";
-import FeatureHome from "./components/FeatureHome";
 import { MAIN_STEPS, SECTION_STEPS, SIDEBAR_OVERVIEW_STEPS } from "./data/walkthroughSteps";
 import { AnimatePresence } from "framer-motion";
 import useIsMobile from "./hooks/useIsMobile";
 import "./styles/global.css";
 import "./styles/mobile-foundation.css";
 
-// Keep the complete multi-provider icon library out of the initial app bundle;
-// it is loaded when the full-screen v2 studio is opened.
+// Product surfaces are loaded only when the user opens them. This keeps Monaco,
+// graphing libraries, editors, and simulators out of the landing-page download.
+const Sidebar = React.lazy(() => import("./components/Sidebar"));
+const GlobalSearchPalette = React.lazy(() => import("./components/GlobalSearchPalette"));
+const RoadmapGraph = React.lazy(() => import("./components/RoadmapGraph"));
+const RoadmapMobile = React.lazy(() => import("./pages/roadmap/RoadmapMobile"));
+const ModulePanel = React.lazy(() => import("./components/ModulePanel"));
+const ResourcePanel = React.lazy(() => import("./components/ResourcePanel"));
+const DetailPanel = React.lazy(() => import("./components/DetailPanel"));
+const TopicContentPanel = React.lazy(() => import("./components/TopicContentPanel"));
+const EditorModal = React.lazy(() => import("./components/EditorModal"));
+const CurriculumTreePanel = React.lazy(() => import("./components/CurriculumTreePanel"));
+const PythonIDE = React.lazy(() => import("./components/PythonIDE"));
+const ResourceManager = React.lazy(() => import("./components/ResourceManager"));
+const ProgressTracker = React.lazy(() => import("./components/ProgressTracker"));
+const SystemDesignPlayground = React.lazy(() => import("./pages/playground/SystemDesignPlayground"));
+const SystemDesignSimulator = React.lazy(() => import("./pages/simulator/SystemDesignSimulator"));
+const AWSSystemDesignSimulator = React.lazy(() => import("./pages/simulator/AWSSystemDesignSimulator"));
+const DSAAnimator = React.lazy(() => import("./components/DSAAnimator"));
+const LearnBugEmbed = React.lazy(() => import("./components/LearnBugEmbed"));
+const AgentLibrary = React.lazy(() => import("./components/AgentLibrary"));
+const AimlCompanion = React.lazy(() => import("./components/AimlCompanion"));
+const LinksCompanion = React.lazy(() => import("./components/LinksCompanion"));
+const GitHubHub = React.lazy(() => import("./components/GitHubHub"));
+const BlogPage = React.lazy(() => import("./pages/blog/BlogPage"));
+const AdminManagement = React.lazy(() => import("./components/AdminManagement"));
+const InterviewerPage = React.lazy(() => import("./pages/interviewer/InterviewerPage"));
+const AlgoVisualizer = React.lazy(() => import("./components/AlgoVisualizer"));
+const CodeVisualizer = React.lazy(() => import("./components/CodeVisualizer"));
+const K8sGames = React.lazy(() => import("./components/K8sGames"));
+const GitVisualizer = React.lazy(() => import("./components/GitVisualizer"));
+const FlowDesign = React.lazy(() => import("./components/FlowDesign"));
+const NotionRenderer = React.lazy(() => import("./components/notion/NotionRenderer"));
+const NoSignups = React.lazy(() => import("./components/NoSignups"));
+const ManualViewer = React.lazy(() => import("./components/ManualViewer"));
+const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"));
+const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
+const QuizApp = React.lazy(() => import("./components/QuizApp"));
+const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
+const ProjectIDE = React.lazy(() => import("./components/Projects/ProjectIDE"));
+const IntelligenceHub = React.lazy(() => import("./components/IntelligenceHub"));
+const HomeDashboard = React.lazy(() => import("./components/HomeDashboard"));
+const WorkplaceLab = React.lazy(() => import("./components/WorkplaceLab"));
+const OnboardingChatbot = React.lazy(() => import("./components/OnboardingChatbot"));
+const FullContextChatbot = React.lazy(() => import("./components/FullContextChatbot"));
+const AuthInterface = React.lazy(() => import("./components/AuthInterface"));
+const KnowledgeGalaxy = React.lazy(() => import("./components/KnowledgeGalaxy"));
+const FocusPulse = React.lazy(() => import("./components/FocusPulse"));
+const VideoModal = React.lazy(() => import("./components/VideoModal"));
+const LandingWrapper = React.lazy(() => import("./pages/LandingWrapper"));
+const KnowledgeGraph = React.lazy(() => import("./pages/KnowledgeGraph"));
+const Community = React.lazy(() => import("./components/Community/Community"));
+const AppWalkthrough = React.lazy(() => import("./components/AppWalkthrough"));
+const FeatureHome = React.lazy(() => import("./components/FeatureHome"));
 const GenAIPlayground2 = React.lazy(() => import("./pages/playground2/GenAIPlayground2"));
 
 class ErrorBoundary extends Component {
@@ -1634,7 +1632,11 @@ export default function App() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <MainApp />
+        <React.Suspense
+          fallback={<div style={{ minHeight: "100vh", background: "var(--bg, #0b1020)" }} />}
+        >
+          <MainApp />
+        </React.Suspense>
       </ThemeProvider>
     </AuthProvider>
   );

@@ -139,6 +139,12 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), apiMiddleware()],
     base: "./",
+    // Avoid serializing the dependency map for every lazy feature (including
+    // thousands of studio icon assets) into the app's startup bundle. Lazy
+    // modules still load on demand; they simply aren't preloaded at startup.
+    build: {
+      modulePreload: false,
+    },
     server: {
       proxy: {
         "/notion-api": {
