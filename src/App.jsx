@@ -52,6 +52,7 @@ const GitVisualizer = React.lazy(() => import("./components/GitVisualizer"));
 const FlowDesign = React.lazy(() => import("./components/FlowDesign"));
 const NotionRenderer = React.lazy(() => import("./components/notion/NotionRenderer"));
 const NoSignups = React.lazy(() => import("./components/NoSignups"));
+const FreeSystemDesign = React.lazy(() => import("./components/FreeSystemDesign"));
 const ManualViewer = React.lazy(() => import("./components/ManualViewer"));
 const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
@@ -417,6 +418,7 @@ function MainApp() {
   const [showCommunity, setShowCommunity] = useState(savedViews.showCommunity ?? false);
   const [showNotion, setShowNotion] = useState(savedViews.showNotion ?? false);
   const [showNoSignups, setShowNoSignups] = useState(savedViews.showNoSignups ?? false);
+  const [showFreeSystemDesign, setShowFreeSystemDesign] = useState(savedViews.showFreeSystemDesign ?? false);
   const [showManual, setShowManual] = useState(savedViews.showManual ?? false);
   const [activeManualPhase, setActiveManualPhase] = useState(null);
   const [showReference, setShowReference] = useState(savedViews.showReference ?? false);
@@ -461,7 +463,7 @@ function MainApp() {
         showDSAAnimator, showLearnBug, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
         showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
-        showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
+        showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
         showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
         showKnowledgeGraph, showReference
       }));
@@ -473,7 +475,7 @@ function MainApp() {
     showDSAAnimator, showLearnBug, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
     showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
-    showCommunity, showNotion, showNoSignups, showManual, showInterviewPrep,
+    showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
     showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
     showKnowledgeGraph, showReference
   ]);
@@ -620,6 +622,7 @@ function MainApp() {
     setShowCommunity(false);
     setShowNotion(false);
     setShowNoSignups(false);
+    setShowFreeSystemDesign(false);
     setShowInterviewPrep(false);
     setShowProjects(false);
     setShowManual(false);
@@ -707,6 +710,7 @@ function MainApp() {
       case "flow_design": setActiveToolHome("flow"); break;
       case "notion": setActiveToolHome("notion"); break;
       case "nosignups": setShowNoSignups(true); break;
+      case "free_system_design": setShowFreeSystemDesign(true); break;
       case "blog": setActiveToolHome("blog"); break;
       case "links": setActiveToolHome("links"); break;
       case "github": setActiveToolHome("github"); break;
@@ -1220,6 +1224,7 @@ function MainApp() {
           showCommunity={showCommunity} setShowCommunity={setShowCommunity}
           showNotion={showNotion} setShowNotion={setShowNotion}
           showNoSignups={showNoSignups} setShowNoSignups={setShowNoSignups}
+          showFreeSystemDesign={showFreeSystemDesign} setShowFreeSystemDesign={setShowFreeSystemDesign}
           showManual={showManual} setShowManual={setShowManual}
           activeManualPhase={activeManualPhase} setActiveManualPhase={setActiveManualPhase}
           showReference={showReference} setShowReference={setShowReference}
@@ -1333,6 +1338,7 @@ function MainApp() {
                                                   showResources ? <ErrorBoundary><ResourceManager pathsData={pathsData} setPathsData={setPathsData} onClose={() => setShowResources(false)} isEditMode={isEditMode} onVideoSelect={handleVideoSelect} /></ErrorBoundary> :
                                                     showNotion ? <NotionRenderer onClose={() => setShowNotion(false)} theme={theme} /> :
                                                       showNoSignups ? <NoSignups onClose={() => setShowNoSignups(false)} /> :
+                                                        showFreeSystemDesign ? <FreeSystemDesign onClose={() => setShowFreeSystemDesign(false)} /> :
                                                         showManual ? <ManualViewer activePhase={activeManualPhase} onSelectPhase={setActiveManualPhase} onClose={() => setShowManual(false)} /> :
                                                         showReference ? <ReferenceViewer activeTopic={activeReferenceTopic} onSelectTopic={setActiveReferenceTopic} onClose={() => setShowReference(false)} /> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :

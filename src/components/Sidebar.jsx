@@ -51,6 +51,7 @@ export default function Sidebar({
   showQuiz, setShowQuiz,
   showLeetCode, setShowLeetCode,
   showNoSignups, setShowNoSignups,
+  showFreeSystemDesign, setShowFreeSystemDesign,
   showManual, setShowManual,
   activeManualPhase, setActiveManualPhase,
   showReference, setShowReference,
@@ -150,6 +151,7 @@ export default function Sidebar({
         { icon: <Network size={14} />, label: "Flow Design", id: "flow_design", description: "Design application flows" },
         { icon: <FileText size={14} />, label: "Notion", id: "notion", description: "View your workspace" },
         { icon: <Globe size={14} />, label: "NoSignups", id: "nosignups", description: "Browse external tools" },
+        { icon: <Layers size={14} />, label: "Free System Design", id: "free_system_design", description: "Learn system design by building it" },
       ]
     },
     ...(isAdmin && isAdminView ? [{
@@ -221,6 +223,7 @@ export default function Sidebar({
     if (showCommunity) return "community";
     if (showNotion) return "notion";
     if (showNoSignups) return "nosignups";
+    if (showFreeSystemDesign) return "free_system_design";
     if (showInterviewPrep) return "interview_prep";
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
@@ -270,6 +273,7 @@ export default function Sidebar({
     if (setShowCommunity) setShowCommunity(false);
     if (setShowNotion) setShowNotion(false);
     if (setShowNoSignups) setShowNoSignups(false);
+    if (setShowFreeSystemDesign) setShowFreeSystemDesign(false);
     if (setShowInterviewPrep) setShowInterviewPrep(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
     if (setShowLegacyIntelligenceHub) setShowLegacyIntelligenceHub(false);
@@ -296,6 +300,7 @@ export default function Sidebar({
         if (onOpenToolHome) onOpenToolHome("manual"); else if (setShowManual) setShowManual(true);
         break;
       case "nosignups": if (setShowNoSignups) setShowNoSignups(true); break;
+      case "free_system_design": if (setShowFreeSystemDesign) setShowFreeSystemDesign(true); break;
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
       case "projects": if (onOpenToolHome) onOpenToolHome("projects"); else if (setShowProjects) setShowProjects(true); break;
