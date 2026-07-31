@@ -300,7 +300,7 @@ export default function Sidebar({
         if (onOpenToolHome) onOpenToolHome("manual"); else if (setShowManual) setShowManual(true);
         break;
       case "nosignups": if (setShowNoSignups) setShowNoSignups(true); break;
-      case "free_system_design": if (setShowFreeSystemDesign) setShowFreeSystemDesign(true); break;
+      case "free_system_design": window.open("https://freesystemdesign.com/", "_blank", "noopener,noreferrer"); break;
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
       case "projects": if (onOpenToolHome) onOpenToolHome("projects"); else if (setShowProjects) setShowProjects(true); break;
