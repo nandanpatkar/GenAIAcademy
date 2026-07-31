@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, Layers } from 'lucide-react';
+import { X, Layers, ExternalLink } from 'lucide-react';
 
 export default function FreeSystemDesign({ onClose }) {
   return (
@@ -107,12 +107,86 @@ export default function FreeSystemDesign({ onClose }) {
         </motion.button>
       </header>
 
-      <div style={{ flex: 1, position: 'relative' }}>
-        <iframe
-          src="https://freesystemdesign.com/"
-          style={{ width: '100%', height: '100%', border: 'none' }}
-          title="Free System Design"
-        />
+      <div style={{
+        flex: 1,
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 32
+      }}>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          style={{
+            maxWidth: 480,
+            width: '100%',
+            textAlign: 'center',
+            background: 'rgba(255,255,255,0.02)',
+            border: '1px solid rgba(255,255,255,0.08)',
+            borderRadius: 20,
+            padding: '48px 40px'
+          }}
+        >
+          <div style={{
+            width: 56,
+            height: 56,
+            borderRadius: 16,
+            background: 'linear-gradient(135deg, #00ff88, #0088ff)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 24px',
+            boxShadow: '0 0 24px rgba(0, 255, 136, 0.25)'
+          }}>
+            <Layers size={26} style={{ color: '#000' }} />
+          </div>
+
+          <h2 style={{
+            margin: '0 0 12px',
+            fontSize: 20,
+            fontWeight: 800,
+            color: 'var(--text, #fff)',
+            letterSpacing: '-0.4px'
+          }}>
+            This site can't be embedded
+          </h2>
+
+          <p style={{
+            margin: '0 0 28px',
+            fontSize: 14,
+            lineHeight: 1.6,
+            color: 'rgba(255,255,255,0.55)'
+          }}>
+            freesystemdesign.com blocks being displayed inside another site's frame,
+            so it can't be shown here directly. You can still open it in a new tab.
+          </p>
+
+          <motion.a
+            href="https://freesystemdesign.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              padding: '14px 28px',
+              borderRadius: 12,
+              background: 'linear-gradient(135deg, #00ff88, #0088ff)',
+              color: '#000',
+              fontWeight: 700,
+              fontSize: 14,
+              textDecoration: 'none',
+              boxShadow: '0 4px 20px rgba(0, 255, 136, 0.25)'
+            }}
+          >
+            Open Free System Design
+            <ExternalLink size={16} />
+          </motion.a>
+        </motion.div>
       </div>
     </div>
   );
