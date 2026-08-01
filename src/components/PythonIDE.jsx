@@ -51,7 +51,7 @@ export function useSimplePyodide() {
   return { runPython, stdout, stderr, isLoading, isRunning, interruptExecution };
 }
 
-export default function PythonIDE({ onClose }) {
+export default function PythonIDE({ onClose, onSubmitSolution }) {
   const [code, setCode] = useState("# Welcome to the Python Intelligence Studio\n# Redesigned for maximum engineering efficiency\n\nimport time\n\ndef initialize_workflow():\n    print(\"Initializing mission-critical modules...\")\n    time.sleep(0.4)\n    print(\"Accessing Neural Core: OK\")\n    print(\"Ready for engineering protocols.\")\n\ninitialize_workflow()\n");
   const { runPython, stdout, stderr, isLoading, isRunning, interruptExecution } = useSimplePyodide();
 
@@ -234,6 +234,11 @@ export default function PythonIDE({ onClose }) {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+           {onSubmitSolution && (
+             <button className="studio-btn-ghost" onClick={() => onSubmitSolution({ code, output: stderr || stdout })} style={{ fontSize: 10, letterSpacing: 0.5, color: 'var(--neon)' }}>
+               <ExternalLink size={14} /> SUBMIT TO INTERVIEWER
+             </button>
+           )}
            {viewMode === 'local' && (
              <>
                <button className="studio-btn-ghost" onClick={() => setShowSaveModal(true)} style={{ fontSize: 10, letterSpacing: 0.5 }}>

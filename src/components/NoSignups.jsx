@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Globe } from 'lucide-react';
+import { X, Globe, Hammer } from 'lucide-react';
 
 export default function NoSignups({ onClose }) {
+  const [activeTab, setActiveTab] = useState('nosignups');
+  const tabs = {
+    nosignups: {
+      label: 'NoSignups',
+      src: 'https://nosignups.net/',
+      title: 'NoSignups Directory',
+    },
+    builders: {
+      label: 'Builders Archive',
+      src: 'https://www.thebuildersarchive.com/',
+      title: 'Builders Archive AI Developer Tools Directory',
+    },
+  };
+  const activeSite = tabs[activeTab];
+
   return (
     <div style={{
       display: 'flex',
@@ -81,6 +96,32 @@ export default function NoSignups({ onClose }) {
               Open-Source & In-Browser Directory (Zero Signups)
             </motion.p>
           </div>
+          <div
+            role="tablist"
+            aria-label="No signup directories"
+            style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 12, flexWrap: 'wrap' }}
+          >
+            {Object.entries(tabs).map(([id, tab]) => (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === id}
+                onClick={() => setActiveTab(id)}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  padding: '7px 10px', borderRadius: 8, cursor: 'pointer',
+                  border: `1px solid ${activeTab === id ? 'rgba(0, 255, 136, 0.55)' : 'rgba(255, 255, 255, 0.1)'}`,
+                  background: activeTab === id ? 'rgba(0, 255, 136, 0.12)' : 'rgba(255, 255, 255, 0.03)',
+                  color: activeTab === id ? '#7dffc0' : 'rgba(255, 255, 255, 0.75)',
+                  fontSize: 11, fontWeight: 700,
+                }}
+              >
+                {id === 'builders' ? <Hammer size={13} /> : <Globe size={13} />}
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <motion.button 
@@ -109,9 +150,10 @@ export default function NoSignups({ onClose }) {
 
       <div style={{ flex: 1, position: 'relative' }}>
         <iframe 
-          src="https://nosignups.net/" 
+          key={activeTab}
+          src={activeSite.src}
           style={{ width: '100%', height: '100%', border: 'none' }}
-          title="NoSignups Directory"
+          title={activeSite.title}
         />
       </div>
     </div>

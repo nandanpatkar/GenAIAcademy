@@ -45,6 +45,7 @@ const GitHubHub = React.lazy(() => import("./components/GitHubHub"));
 const BlogPage = React.lazy(() => import("./pages/blog/BlogPage"));
 const AdminManagement = React.lazy(() => import("./components/AdminManagement"));
 const InterviewerPage = React.lazy(() => import("./pages/interviewer/InterviewerPage"));
+const GeminiInterviewerPage = React.lazy(() => import("./pages/gemini-interviewer/GeminiInterviewerPage"));
 const AlgoVisualizer = React.lazy(() => import("./components/AlgoVisualizer"));
 const CodeVisualizer = React.lazy(() => import("./components/CodeVisualizer"));
 const K8sGames = React.lazy(() => import("./components/K8sGames"));
@@ -410,6 +411,7 @@ function MainApp() {
   const [showAwsSimulator, setShowAwsSimulator] = useState(savedViews.showAwsSimulator ?? false);
   const [showGalaxy, setShowGalaxy] = useState(savedViews.showGalaxy ?? false);
   const [showAIInterviewer, setShowAIInterviewer] = useState(savedViews.showAIInterviewer ?? false);
+  const [showGeminiInterviewer, setShowGeminiInterviewer] = useState(false);
   const [showAlgoStudio, setShowAlgoStudio] = useState(savedViews.showAlgoStudio ?? false);
   const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(savedViews.showAlgoVisualizer ?? false);
   const [showK8sGames, setShowK8sGames] = useState(savedViews.showK8sGames ?? false);
@@ -607,6 +609,7 @@ function MainApp() {
     setShowSimulator(false);
     setShowGalaxy(false);
     setShowAIInterviewer(false);
+    setShowGeminiInterviewer(false);
     setShowAlgoStudio(false);
     setShowAlgoVisualizer(false);
     setShowK8sGames(false);
@@ -1211,6 +1214,7 @@ function MainApp() {
           showSimulator={showSimulator} setShowSimulator={setShowSimulator}
           showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
           showAIInterviewer={showAIInterviewer} setShowAIInterviewer={setShowAIInterviewer}
+          showGeminiInterviewer={showGeminiInterviewer} setShowGeminiInterviewer={setShowGeminiInterviewer}
           showAlgoStudio={showAlgoStudio} setShowAlgoStudio={setShowAlgoStudio}
           showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
           showK8sGames={showK8sGames} setShowK8sGames={setShowK8sGames}
@@ -1289,6 +1293,7 @@ function MainApp() {
                     showAwsSimulator ? <AWSSystemDesignSimulator onClose={() => setShowAwsSimulator(false)} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} /> :
                       showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
                         showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
+                          showGeminiInterviewer ? <GeminiInterviewerPage onClose={() => setShowGeminiInterviewer(false)} /> :
                           showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
                             showLearnBug ? <LearnBugEmbed onClose={() => setShowLearnBug(false)} /> :
                             showAgentLibrary ? <AgentLibrary onClose={() => setShowAgentLibrary(false)} /> :
@@ -1548,7 +1553,7 @@ function MainApp() {
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
         !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showAgentLibrary && !showAimlCompanion && !showLinks &&
         !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
-        !showAIInterviewer && !showAlgoStudio && !showAlgoVisualizer &&
+        !showAIInterviewer && !showGeminiInterviewer && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
         !showIntelligenceHub && !showLegacyIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&
         !showCommunity && (

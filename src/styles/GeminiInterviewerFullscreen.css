@@ -1,0 +1,17 @@
+/* Atlas owns the viewport itself, avoiding parent-width/overflow constraints. */
+.gemini-interviewer { position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100dvh !important; z-index: 9000 !important; overflow: hidden !important; }
+.app-layout-root:has(.gemini-interviewer) > .sidebar { display: none !important; }
+.app-layout-root:has(.gemini-interviewer) > .app-primary-content { width: 100vw !important; max-width: none !important; }
+
+.gemini-interviewer__workspace { max-width: none; min-height: calc(100dvh - var(--gi-header, 68px)); padding: 0; display: block; position: relative; }
+.gemini-interviewer__room { min-height: calc(100dvh - var(--gi-header, 68px)); height: calc(100dvh - var(--gi-header, 68px)); padding: 26px clamp(18px, 5vw, 72px); border: 0; border-radius: 0; }
+.gemini-interviewer__brief { position: absolute; z-index: 10; top: 24px; left: clamp(16px, 4vw, 48px); width: min(410px, calc(100vw - 32px)); max-height: calc(100dvh - var(--gi-header, 68px) - 48px); overflow: auto; }
+.gemini-interviewer__workspace.is-active .gemini-interviewer__brief { display: none; }
+.gemini-interviewer__workspace.is-active .gemini-voice-orb { margin-top: clamp(20px, 4vh, 56px); }
+.gemini-interviewer__workspace.is-active .gemini-interviewer__transcript { max-height: 29vh; }
+
+@media (max-width: 620px) {
+  .gemini-interviewer__brief { top: 16px; left: 12px; width: calc(100vw - 24px); max-height: calc(100dvh - var(--gi-header, 60px) - 32px); }
+  .gemini-interviewer__room { padding: 18px 16px; }
+  .gemini-interviewer__workspace.is-active .gemini-voice-orb { margin-top: 5vh; }
+}
