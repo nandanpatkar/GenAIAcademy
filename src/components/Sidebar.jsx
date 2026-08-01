@@ -28,6 +28,7 @@ export default function Sidebar({
   showAimlCompanion, setShowAimlCompanion,
   showLinks, setShowLinks,
   showAIInterviewer, setShowAIInterviewer,
+  showGeminiInterviewer, setShowGeminiInterviewer,
   showAlgoStudio, setShowAlgoStudio,
   showAlgoVisualizer, setShowAlgoVisualizer,
   showK8sGames, setShowK8sGames,
@@ -126,6 +127,7 @@ export default function Sidebar({
       items: [
         { icon: <HelpCircle size={14} />, label: "Interview Prep", id: "interview_prep", description: "Prepare with structured lessons" },
         { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer", description: "Practice realistic interviews" },
+        { icon: <Sparkles size={14} />, label: "Gemini Interview", id: "gemini_interviewer", description: "Live data science voice interview" },
         { icon: <CheckSquare size={14} />, label: "Quiz", id: "quiz", description: "Test your understanding" },
       ]
     },
@@ -215,6 +217,7 @@ export default function Sidebar({
     if (showResources) return "resources";
     if (showCurriculumMap) return "curriculum_map";
     if (showAIInterviewer) return "interviewer";
+    if (showGeminiInterviewer) return "gemini_interviewer";
     if (showAlgoStudio) return "algo_studio";
     if (showAlgoVisualizer) return "algo_visualizer";
     if (showK8sGames) return "k8s_games";
@@ -262,6 +265,7 @@ export default function Sidebar({
     if (setShowSimulator) setShowSimulator(false);
     if (setShowGalaxy) setShowGalaxy(false);
     if (setShowAIInterviewer) setShowAIInterviewer(false);
+    if (setShowGeminiInterviewer) setShowGeminiInterviewer(false);
     if (setShowAlgoStudio) setShowAlgoStudio(false);
     if (setShowAlgoVisualizer) setShowAlgoVisualizer(false);
     if (setShowK8sGames) setShowK8sGames(false);
@@ -332,6 +336,9 @@ export default function Sidebar({
         break;
       case "interviewer":
         if (onOpenToolHome) onOpenToolHome("interviewer"); else if (setShowAIInterviewer) setShowAIInterviewer(true);
+        break;
+      case "gemini_interviewer":
+        if (setShowGeminiInterviewer) setShowGeminiInterviewer(true);
         break;
       case "algo_studio":
         if (setShowAlgoStudio) setShowAlgoStudio(true);
