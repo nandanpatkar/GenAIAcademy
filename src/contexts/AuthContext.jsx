@@ -37,6 +37,8 @@ export const AuthProvider = ({ children }) => {
   const [adminsList, setAdminsList] = useState(['nandanpatkar14114@gmail.com']);
   const [lockedUsers, setLockedUsers] = useState([]);
   const [allowAimlForAll, setAllowAimlForAll] = useState(false);
+  // { overrides: { [itemId]: 'all' | 'admin' }, layout: [{ id, label, custom?, itemIds }] } | null
+  const [sidebarConfig, setSidebarConfig] = useState(null);
   // AI credentials are personal settings. They are intentionally scoped to
   // the signed-in user and never fall back to the Admin Panel's global row.
   const [geminiKey, setGeminiKey] = useState("");
@@ -70,6 +72,27 @@ export const AuthProvider = ({ children }) => {
     setAzureKey(key);
     if (user?.id) localStorage.setItem(personalAiStorageKey('azure_key', user.id), key);
     setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, key);
+  };
+
+  // Same sentinel-row-upsert pattern AdminManagement's updateGlobalConfig uses —
+  // always rewrites the whole paths_data blob, so every field it knows about
+  // must be included or a concurrent save from the other admin surface would
+  // wipe it out.
+  const persistSidebarConfig = async (nextConfig) => {
+    setSidebarConfig(nextConfig);
+    try {
+      await supabase.from('user_curriculum').upsert({
+        id: '00000000-0000-0000-0000-000000000000',
+        paths_data: {
+          admins: adminsList, locked: lockedUsers, allowAimlForAll,
+          geminiKey, aiProvider, azureEndpoint, azureKey,
+          sidebarConfig: nextConfig,
+          updated_at: new Date().toISOString(),
+        },
+      });
+    } catch (error) {
+      console.error("Could not update sidebar config:", error);
+    }
   };
 
   // Load only this user's personal AI settings. Clearing the generic cookie
@@ -116,6 +139,7 @@ export const AuthProvider = ({ children }) => {
           if (data.paths_data.admins) setAdminsList(data.paths_data.admins);
           if (data.paths_data.locked) setLockedUsers(data.paths_data.locked);
           if (data.paths_data.allowAimlForAll !== undefined) setAllowAimlForAll(data.paths_data.allowAimlForAll);
+          if (data.paths_data.sidebarConfig !== undefined) setSidebarConfig(data.paths_data.sidebarConfig);
           // AI keys in the Admin Panel are deliberately not loaded here.
           // Every user must configure their own credentials in Settings.
         }
@@ -215,6 +239,9 @@ export const AuthProvider = ({ children }) => {
     setLockedUsers,
     allowAimlForAll,
     setAllowAimlForAll,
+    sidebarConfig,
+    setSidebarConfig,
+    persistSidebarConfig,
     geminiKey,
     updateGeminiKey,
     aiProvider,

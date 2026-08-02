@@ -75,8 +75,11 @@ function estimatePitch(buffer, sampleRate) {
 }
 
 export class GeminiLiveSession {
-  constructor({ systemInstruction, onStatus, onTranscript, onError, onVolume, onPitch, onAiVolume, onAiPitch, onInterruption }) {
+  constructor({ systemInstruction, initialMessage = "Begin the interview now. Introduce yourself briefly and ask the first question.", transcriptRoles = { assistant: "interviewer", user: "candidate" }, languageCode, onStatus, onTranscript, onError, onVolume, onPitch, onAiVolume, onAiPitch, onInterruption }) {
     this.systemInstruction = systemInstruction;
+    this.initialMessage = initialMessage;
+    this.transcriptRoles = transcriptRoles;
+    this.languageCode = languageCode;
     this.onStatus = onStatus;
     this.onTranscript = onTranscript;
     this.onError = onError;
@@ -119,7 +122,10 @@ export class GeminiLiveSession {
           model: `models/${MODEL}`,
           // In the raw WebSocket protocol this belongs in generationConfig
           // (the JavaScript SDK promotes it to the top-level config object).
-          generationConfig: { responseModalities: ["AUDIO"] },
+          generationConfig: {
+            responseModalities: ["AUDIO"],
+            ...(this.languageCode ? { speechConfig: { languageCode: this.languageCode } } : {}),
+          },
           inputAudioTranscription: {},
           outputAudioTranscription: {},
           systemInstruction: { parts: [{ text: this.systemInstruction }] },
@@ -186,18 +192,16 @@ export class GeminiLiveSession {
     // Gemini requires setupComplete before any realtime input (text or audio).
     if (message.setupComplete) {
       this.onStatus?.("Connected — microphone is live");
-      this.socket.send(JSON.stringify({
-        realtimeInput: { text: "Begin the interview now. Introduce yourself briefly and ask the first question." },
-      }));
+      this.socket.send(JSON.stringify({ realtimeInput: { text: this.initialMessage } }));
       this.startMicrophone().catch((error) => this.onError?.(error));
       return;
     }
     const content = message.serverContent;
     if (!content) return;
     const text = content.outputTranscription?.text;
-    if (text) this.onTranscript?.({ role: "interviewer", text });
+    if (text) this.onTranscript?.({ role: this.transcriptRoles.assistant, text });
     const candidateText = content.inputTranscription?.text;
-    if (candidateText) this.onTranscript?.({ role: "candidate", text: candidateText });
+    if (candidateText) this.onTranscript?.({ role: this.transcriptRoles.user, text: candidateText });
     for (const part of content.modelTurn?.parts || []) {
       if (part.inlineData?.mimeType?.startsWith("audio/pcm") && part.inlineData.data) this.playAudio(part.inlineData.data);
     }

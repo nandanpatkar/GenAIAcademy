@@ -46,6 +46,7 @@ const BlogPage = React.lazy(() => import("./pages/blog/BlogPage"));
 const AdminManagement = React.lazy(() => import("./components/AdminManagement"));
 const InterviewerPage = React.lazy(() => import("./pages/interviewer/InterviewerPage"));
 const GeminiInterviewerPage = React.lazy(() => import("./pages/gemini-interviewer/GeminiInterviewerPage"));
+const EmotionalSupportPage = React.lazy(() => import("./pages/emotional-support/EmotionalSupportPage"));
 const AlgoVisualizer = React.lazy(() => import("./components/AlgoVisualizer"));
 const CodeVisualizer = React.lazy(() => import("./components/CodeVisualizer"));
 const K8sGames = React.lazy(() => import("./components/K8sGames"));
@@ -62,6 +63,7 @@ const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
 const ProjectIDE = React.lazy(() => import("./components/Projects/ProjectIDE"));
 const IntelligenceHub = React.lazy(() => import("./components/IntelligenceHub"));
 const HomeDashboard = React.lazy(() => import("./components/HomeDashboard"));
+const Home2Dashboard = React.lazy(() => import("./components/Home2Dashboard"));
 const WorkplaceLab = React.lazy(() => import("./components/WorkplaceLab"));
 const OnboardingChatbot = React.lazy(() => import("./components/OnboardingChatbot"));
 const FullContextChatbot = React.lazy(() => import("./components/FullContextChatbot"));
@@ -118,7 +120,7 @@ const injectDefaultIcons = (paths) => {
 };
 
 function MainApp() {
-  const { user, isAdmin, isLocked, signOut, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
+  const { user, isAdmin, isLocked, signOut, geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
   const { theme, toggleTheme } = useTheme();
   // isMobile now comes from the centralized useIsMobile hook (Phase 0 of
   // the mobile redesign) instead of an inline `width <= 768` check.
@@ -412,6 +414,7 @@ function MainApp() {
   const [showGalaxy, setShowGalaxy] = useState(savedViews.showGalaxy ?? false);
   const [showAIInterviewer, setShowAIInterviewer] = useState(savedViews.showAIInterviewer ?? false);
   const [showGeminiInterviewer, setShowGeminiInterviewer] = useState(false);
+  const [showEmotionalSupport, setShowEmotionalSupport] = useState(false);
   const [showAlgoStudio, setShowAlgoStudio] = useState(savedViews.showAlgoStudio ?? false);
   const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(savedViews.showAlgoVisualizer ?? false);
   const [showK8sGames, setShowK8sGames] = useState(savedViews.showK8sGames ?? false);
@@ -448,6 +451,7 @@ function MainApp() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showModuleDetails, setShowModuleDetails] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useState(savedViews.showIntelligenceHub ?? true);
+  const [showHome2, setShowHome2] = useState(false);
   const [showLegacyIntelligenceHub, setShowLegacyIntelligenceHub] = useState(false);
   const [showWorkplaceLab, setShowWorkplaceLab] = useState(savedViews.showWorkplaceLab ?? false);
   const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(savedViews.showKnowledgeGraph ?? false);
@@ -610,6 +614,7 @@ function MainApp() {
     setShowGalaxy(false);
     setShowAIInterviewer(false);
     setShowGeminiInterviewer(false);
+    setShowEmotionalSupport(false);
     setShowAlgoStudio(false);
     setShowAlgoVisualizer(false);
     setShowK8sGames(false);
@@ -619,6 +624,7 @@ function MainApp() {
     setIsMobileMenuOpen(false);
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
     setShowIntelligenceHub(false);
+    setShowHome2(false);
     setShowLegacyIntelligenceHub(false);
     setShowWorkplaceLab(false);
     setShowKnowledgeGraph(false);
@@ -695,6 +701,7 @@ function MainApp() {
     closeAllPanels();
     switch (sectionId) {
       case "overview": break; // closeAllPanels already returns to the dashboard
+      case "home2": setShowHome2(true); break;
       case "galaxy": setShowGalaxy(true); break;
       case "knowledge_graph": setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
@@ -724,6 +731,11 @@ function MainApp() {
       case "interview_prep": setActiveToolHome("interview"); break;
       case "quiz": setActiveToolHome("quiz"); break;
       case "leetcode": setShowLeetCode(true); break;
+      case "agent_library": setShowAgentLibrary(true); break;
+      case "aiml_companion": setShowAimlCompanion(true); break;
+      case "gemini_interviewer": setShowGeminiInterviewer(true); break;
+      case "emotional_support": setShowEmotionalSupport(true); break;
+      case "genai_playground2": openGenAIPlayground2(); break;
       default: break;
     }
   };
@@ -752,6 +764,23 @@ function MainApp() {
         ].slice(-5),
       },
     }));
+  };
+
+  // Fires when the user closes the modal without finishing the assessment
+  // (X button / Esc). Still marks onboarding as seen so the forced popup
+  // only ever shows once per new user, not on every refresh/Home click.
+  const handleOnboardingDismiss = () => {
+    if (onboardingMode === "modal") {
+      setPathsData(prev => ({
+        ...prev,
+        onboarding: {
+          ...(prev.onboarding || {}),
+          completed: true,
+          dismissedAt: new Date().toISOString(),
+        },
+      }));
+    }
+    setShowOnboarding(false);
   };
 
   // ── Global Search (Cmd+K) ──────────────────────────────────────────────
@@ -1168,7 +1197,7 @@ function MainApp() {
       {showOnboarding && (
         <OnboardingChatbot
           mode={onboardingMode}
-          onClose={() => setShowOnboarding(false)}
+          onClose={handleOnboardingDismiss}
           onComplete={handleOnboardingComplete}
           navigateToSection={navigateToSection}
           setActivePath={setActivePath}
@@ -1215,6 +1244,7 @@ function MainApp() {
           showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
           showAIInterviewer={showAIInterviewer} setShowAIInterviewer={setShowAIInterviewer}
           showGeminiInterviewer={showGeminiInterviewer} setShowGeminiInterviewer={setShowGeminiInterviewer}
+          showEmotionalSupport={showEmotionalSupport} setShowEmotionalSupport={setShowEmotionalSupport}
           showAlgoStudio={showAlgoStudio} setShowAlgoStudio={setShowAlgoStudio}
           showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
           showK8sGames={showK8sGames} setShowK8sGames={setShowK8sGames}
@@ -1222,6 +1252,7 @@ function MainApp() {
           showFlowDesign={showFlowDesign} setShowFlowDesign={setShowFlowDesign}
           showGitHubHub={showGitHubHub} setShowGitHubHub={setShowGitHubHub}
           showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
+          showHome2={showHome2} setShowHome2={setShowHome2}
           showLegacyIntelligenceHub={showLegacyIntelligenceHub} setShowLegacyIntelligenceHub={setShowLegacyIntelligenceHub}
           showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
           showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
@@ -1294,10 +1325,11 @@ function MainApp() {
                       showSimulator ? <SystemDesignSimulator onClose={() => setShowSimulator(false)} /> :
                         showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
                           showGeminiInterviewer ? <GeminiInterviewerPage onClose={() => setShowGeminiInterviewer(false)} /> :
+                          showEmotionalSupport ? <EmotionalSupportPage onClose={() => setShowEmotionalSupport(false)} /> :
                           showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
                             showLearnBug ? <LearnBugEmbed onClose={() => setShowLearnBug(false)} /> :
                             showAgentLibrary ? <AgentLibrary onClose={() => setShowAgentLibrary(false)} /> :
-                            (showAimlCompanion && (isAdmin || allowAimlForAll)) ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
+                            showAimlCompanion ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
                                 showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
                                   showGenAIPlayground2 ? <React.Suspense fallback={<div style={{ display: "grid", placeItems: "center", width: "100%", height: "100%", background: "#f7f8ff", color: "#64748b", fontSize: 12 }}>Loading Gen AI Playground 2.0…</div>}><GenAIPlayground2 theme={theme} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} onClose={closeGenAIPlayground2} /></React.Suspense> :
@@ -1349,6 +1381,30 @@ function MainApp() {
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showQuiz ? <QuizApp /> :
+                                                      showHome2 ? (
+                                                        <Home2Dashboard
+                                                          user={user}
+                                                          pathsData={pathsData}
+                                                          activePath={activePath}
+                                                          setActivePath={setActivePath}
+                                                          onContinue={(node, pathId) => { setShowHome2(false); handleNodeClick(node, pathId); }}
+                                                          onOpenRoadmap={() => setShowHome2(false)}
+                                                          onOpenProgress={() => { closeAllPanels(); setShowProgress(true); }}
+                                                          onOpenDiscovery={(item) => {
+                                                            closeAllPanels();
+                                                            if (item.type === "interview") {
+                                                              setInterviewDeepLinkId(item.lessonId || null);
+                                                              setShowInterviewPrep(true);
+                                                            }
+                                                            if (item.type === "manual") {
+                                                              if (item.phase) setActiveManualPhase(item.phase);
+                                                              setShowManual(true);
+                                                            }
+                                                          }}
+                                                          onOpenOnboarding={() => { setOnboardingMode("panel"); setShowOnboarding(true); }}
+                                                          onNavigate={navigateToSection}
+                                                        />
+                                                      ) :
                                                       showLegacyIntelligenceHub ? (
                                                         <IntelligenceHub
                                                           paths={pathsData}
@@ -1553,7 +1609,7 @@ function MainApp() {
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
         !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showAgentLibrary && !showAimlCompanion && !showLinks &&
         !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
-        !showAIInterviewer && !showGeminiInterviewer && !showAlgoStudio && !showAlgoVisualizer &&
+        !showAIInterviewer && !showGeminiInterviewer && !showEmotionalSupport && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
         !showIntelligenceHub && !showLegacyIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&
         !showCommunity && (

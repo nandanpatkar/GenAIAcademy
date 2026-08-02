@@ -2,11 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Activity, AlertCircle, CheckCircle2, ChevronRight, Clock, Database, Download,
   Eye, EyeOff, ExternalLink, FileJson, FileText, Layout, Lock, Map, RefreshCw,
-  Search, Shield, ShieldCheck, Sparkles, Terminal, Trash2, Unlock, UploadCloud,
-  UserPlus, Users, X, Zap
+  RotateCcw, Search, Shield, ShieldCheck, Sparkles, Terminal, Trash2, Unlock,
+  UploadCloud, UserPlus, Users, X, Zap
 } from "lucide-react";
 import { supabase } from "../config/supabaseClient";
 import { useAuth } from "../contexts/AuthContext";
+import { resolveEffectiveLayout, resolveItemVisibility, SIDEBAR_ITEM_REGISTRY } from "../config/sidebarRegistry";
 import "../styles/global.css";
 import "../styles/admin.css";
 
@@ -29,7 +30,8 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
   const {
     adminsList, setAdminsList, lockedUsers, setLockedUsers, allowAimlForAll,
     setAllowAimlForAll, geminiKey, updateGeminiKey, aiProvider, updateAiProvider,
-    azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey
+    azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey,
+    sidebarConfig, persistSidebarConfig,
   } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -73,6 +75,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
           aiProvider: newProvider !== undefined ? newProvider : aiProvider,
           azureEndpoint: newEndpoint !== undefined ? newEndpoint : azureEndpoint,
           azureKey: newAzureApiKey !== undefined ? newAzureApiKey : azureKey,
+          sidebarConfig,
           updated_at: new Date().toISOString()
         }
       });
@@ -126,6 +129,15 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     const nextValue = !allowAimlForAll;
     setAllowAimlForAll(nextValue);
     await updateGlobalConfig(adminsList, lockedUsers, nextValue, geminiKey, aiProvider, azureEndpoint, azureKey);
+  };
+  const effectiveSidebarLayout = useMemo(() => resolveEffectiveLayout(sidebarConfig?.layout), [sidebarConfig]);
+  const handleSetItemVisibility = async (itemId, visibility) => {
+    const nextOverrides = { ...(sidebarConfig?.overrides || {}), [itemId]: visibility };
+    await persistSidebarConfig({ ...(sidebarConfig || {}), overrides: nextOverrides });
+  };
+  const handleResetSidebarLayout = async () => {
+    if (!window.confirm("Reset the sidebar back to its default sections and order? Visibility settings will be kept.")) return;
+    await persistSidebarConfig({ ...(sidebarConfig || {}), layout: null });
   };
   const handleUpdateAiConfig = async () => {
     updateGeminiKey(newGeminiKey); updateAiProvider(newAiProvider); updateAzureEndpoint(newAzureEndpoint); updateAzureKey(newAzureKey);
@@ -184,6 +196,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     { id: "overview", label: "Overview", icon: <Activity size={15} /> },
     { id: "users", label: "People", icon: <Users size={15} /> },
     { id: "infra", label: "Infrastructure", icon: <Terminal size={15} /> },
+    { id: "sidebar", label: "Sidebar", icon: <Layout size={15} /> },
     { id: "forge", label: "Content forge", icon: <Zap size={15} /> }
   ];
   const currentTab = tabs.find(tab => tab.id === activeTab) || tabs[0];
@@ -191,6 +204,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     overview: ["Workspace overview", "Good morning, operator.", "A quick read on your learning platform, access, and content health."],
     users: ["People", "Identity directory", "Review learner accounts and keep access in good standing."],
     infra: ["Configuration", "Infrastructure", "Manage the services and permissions that power the workspace."],
+    sidebar: ["Navigation", "Sidebar access", "Choose who can see each item. Drag items between sections from Edit Mode in the sidebar."],
     forge: ["Content operations", "Content forge", "Bring new roadmap structures into the platform with confidence."]
   }[activeTab];
   const openTab = tab => { setActiveTab(tab); setErrorInfo(null); setSuccessInfo(null); };
@@ -221,6 +235,33 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
           {activeTab === "users" && <div className="admin-view admin-view-directory"><section className="admin-panel admin-directory-panel"><div className="admin-panel-heading directory-heading"><div><span className="admin-card-kicker">Access management</span><h3>People directory</h3><p>{filteredUsers.length} of {users.length} profiles shown</p></div><div className="admin-directory-actions"><div className="admin-search"><Search size={15} /><input type="text" placeholder="Search by identity…" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} /></div><button className="admin-secondary-button" onClick={handleExportRegistry}><Download size={15} /> Export</button></div></div><div className="admin-table-shell"><table className="admin-directory-table"><thead><tr><th>Person</th><th>Last activity</th><th>Access</th><th /></tr></thead><tbody>{filteredUsers.map(user => { const locked = lockedUsers.includes(user.id); return <tr key={user.id}><td><div className="admin-person-cell"><span className="admin-person-avatar">{user.id.slice(0, 2).toUpperCase()}</span><div><strong>{user.id.slice(0, 24)}…</strong><small>{user.paths_data?.title || "Default learning profile"}</small></div></div></td><td><span className="admin-date-cell"><Clock size={14} />{new Date(user.updated_at).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}</span></td><td><span className={`admin-access-badge ${locked ? "restricted" : "active"}`}><span />{locked ? "Restricted" : "Active"}</span></td><td className="admin-row-action"><button className={`admin-table-action ${locked ? "unlock" : ""}`} onClick={() => handleToggleLock(user.id)} title={locked ? "Grant access" : "Restrict access"}>{locked ? <Unlock size={15} /> : <Lock size={15} />}{locked ? "Grant access" : "Restrict"}</button></td></tr>; })}</tbody></table>{!loading && filteredUsers.length === 0 && <div className="admin-empty-state"><Users size={26} /><strong>No profiles found</strong><span>Try a different search term.</span></div>}{loading && <div className="admin-empty-state"><RefreshCw size={24} className="spin" /><span>Loading profiles…</span></div>}</div></section></div>}
 
           {activeTab === "infra" && <div className="admin-view admin-view-infra"><section className="admin-service-grid">{[{ name: "AI provider", detail: newAiProvider === "azure-openai" ? "Azure OpenAI" : "Google Gemini", status: geminiKey || newAzureKey ? "Configured" : "Needs setup", icon: <Sparkles size={18} />, tone: "mint" }, { name: "Data gateway", detail: "Supabase", status: "Operational", icon: <Database size={18} />, tone: "blue" }, { name: "Access control", detail: "Role-based access", status: "Protected", icon: <ShieldCheck size={18} />, tone: "violet" }].map(service => <div className="admin-service-card" key={service.name}><div className={`admin-service-icon ${service.tone}`}>{service.icon}</div><div><span>{service.name}</span><strong>{service.detail}</strong></div><em className={service.status === "Needs setup" ? "attention" : ""}><span />{service.status}</em></div>)}</section><div className="admin-infra-grid"><section className="admin-panel admin-config-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Workspace controls</span><h3>AI configuration</h3><p>Shared credentials are disabled. Each learner must add personal credentials in Settings.</p></div><span className="admin-config-lock"><Lock size={13} /> Private</span></div><label className="admin-field-label">Provider<select className="admin-field" value={newAiProvider} onChange={event => setNewAiProvider(event.target.value)}><option value="gemini">Google Gemini</option><option value="azure-openai">Azure OpenAI</option></select></label>{newAiProvider === "gemini" && <label className="admin-field-label">API key<div className="admin-field-with-action"><input className="admin-field" type={showKey ? "text" : "password"} placeholder="Paste your Gemini API key" value={newGeminiKey} onChange={event => setNewGeminiKey(event.target.value)} /><button onClick={() => setShowKey(!showKey)} title={showKey ? "Hide key" : "Show key"}>{showKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div></label>}{newAiProvider === "azure-openai" && <><label className="admin-field-label">Endpoint<input className="admin-field" type="text" placeholder="https://your-resource.openai.azure.com" value={newAzureEndpoint} onChange={event => setNewAzureEndpoint(event.target.value)} /></label><label className="admin-field-label">API key<div className="admin-field-with-action"><input className="admin-field" type={showKey ? "text" : "password"} placeholder="Paste your Azure API key" value={newAzureKey} onChange={event => setNewAzureKey(event.target.value)} /><button onClick={() => setShowKey(!showKey)}>{showKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div></label></>}<div className="admin-config-footer"><a href="https://aistudio.google.com/app/api-keys" target="_blank" rel="noreferrer">Get an API key <ExternalLink size={13} /></a><button className="admin-primary-button" onClick={handleUpdateAiConfig}><CheckCircle2 size={15} /> Save changes</button></div></section><section className="admin-panel admin-access-panel"><div className="admin-panel-heading"><div><span className="admin-card-kicker">Permissions</span><h3>Admin access</h3><p>People who can manage this workspace.</p></div></div><div className="admin-invite-row"><input className="admin-field" type="email" placeholder="name@company.com" value={newAdminEmail} onChange={event => setNewAdminEmail(event.target.value)} /><button className="admin-primary-button icon-only" onClick={handleAddAdmin} title="Add admin"><UserPlus size={16} /></button></div><div className="admin-admin-list">{adminsList.map(email => <div className="admin-admin-row" key={email}><span className="admin-person-avatar small"><Shield size={14} /></span><span>{email}</span>{email !== "nandanpatkar14114@gmail.com" && <button onClick={() => handleRemoveAdmin(email)} title="Remove admin"><Trash2 size={14} /></button>}</div>)}</div><div className="admin-permission-note"><ShieldCheck size={15} /><span>At least one administrator must remain active.</span></div></section></div><section className="admin-panel admin-access-setting"><div><span className="admin-card-kicker">Feature access</span><h3>AI companion for everyone</h3><p>Allow every learner to use the companion without individual approval.</p></div><button onClick={handleToggleAimlAccess} className={`admin-toggle ${allowAimlForAll ? "on" : ""}`} aria-label="Toggle AI companion access"><span /></button></section></div>}
+
+          {activeTab === "sidebar" && <div className="admin-view admin-view-sidebarcfg">
+            <section className="admin-panel admin-sidebarcfg-intro">
+              <div><span className="admin-card-kicker">Navigation</span><h3>Who sees what</h3><p>Every sidebar item defaults to Everyone unless marked Admin only. Reordering sections or creating custom ones happens from Edit Mode in the sidebar itself — that control is admin-only too.</p></div>
+              {sidebarConfig?.layout && <button className="admin-secondary-button" onClick={handleResetSidebarLayout}><RotateCcw size={15} /> Reset arrangement</button>}
+            </section>
+            {effectiveSidebarLayout.map(group => <section className="admin-panel admin-sidebarcfg-group" key={group.id}>
+              <div className="admin-panel-heading"><div><span className="admin-card-kicker">{group.custom ? "Custom section" : "Section"}</span><h3>{group.label}</h3></div><span className="admin-panel-meta">{group.itemIds.length} item{group.itemIds.length === 1 ? "" : "s"}</span></div>
+              <div className="admin-sidebarcfg-list">
+                {group.itemIds.map(itemId => {
+                  const def = SIDEBAR_ITEM_REGISTRY[itemId];
+                  if (!def) return null;
+                  const visibility = resolveItemVisibility(itemId, { overrides: sidebarConfig?.overrides, allowAimlForAll });
+                  const Icon = def.icon;
+                  return <div className="admin-sidebarcfg-row" key={itemId}>
+                    <span className="admin-sidebarcfg-icon"><Icon size={15} /></span>
+                    <div className="admin-sidebarcfg-copy"><strong>{def.label}</strong>{def.description && <small>{def.description}</small>}</div>
+                    <div className="admin-segmented" role="group" aria-label={`${def.label} visibility`}>
+                      <button type="button" className={visibility === "all" ? "active" : ""} onClick={() => handleSetItemVisibility(itemId, "all")}>Everyone</button>
+                      <button type="button" className={visibility === "admin" ? "active" : ""} onClick={() => handleSetItemVisibility(itemId, "admin")}>Admin only</button>
+                    </div>
+                  </div>;
+                })}
+                {group.itemIds.length === 0 && <p className="admin-sidebarcfg-empty">No items in this section yet.</p>}
+              </div>
+            </section>)}
+          </div>}
 
           {activeTab === "forge" && <div className="admin-view admin-view-forge"><section className="admin-forge-intro"><div><span className="admin-card-kicker">Content operations</span><h2>Bring a new path to life.</h2><p>Import a Markdown outline or JSON blueprint. Existing paths stay untouched unless the incoming file uses the same path ID.</p></div><div className="admin-forge-stat"><FileJson size={17} /><span><strong>{stats.totalPaths}</strong> paths live</span></div></section><section className="admin-panel admin-forge-panel"><div className="admin-panel-heading"><div><h3>Import blueprint</h3><p>Choose a source, then review the result in your roadmap.</p></div><div className="admin-source-tabs">{["file", "paste"].map(type => <button key={type} className={activeImportTab === type ? "active" : ""} onClick={() => setActiveImportTab(type)}>{type === "file" ? <UploadCloud size={15} /> : <Terminal size={15} />}{type === "file" ? "Upload file" : "Paste content"}</button>)}</div></div>{activeImportTab === "file" ? <div className={`admin-drop-zone ${dragActive ? "active" : ""}`} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop} onClick={() => fileInputRef.current?.click()}><input ref={fileInputRef} type="file" accept=".json,.md,.txt" onChange={event => event.target.files?.[0] && handleFile(event.target.files[0])} hidden /><span className="admin-drop-icon"><UploadCloud size={23} /></span><strong>Drop a blueprint here</strong><p>or click to browse · .json, .md, .txt</p></div> : <div className="admin-paste-area"><textarea value={rawPasteContent} onChange={event => setRawPasteContent(event.target.value)} placeholder="Paste JSON or Markdown here…" /><div><button className="admin-primary-button" onClick={handlePasteProcess}><Zap size={15} /> Process content</button><button className="admin-secondary-button" onClick={() => setRawPasteContent("")}><Trash2 size={15} /> Clear</button></div></div>}{(errorInfo || successInfo) && <div className={`admin-notice ${errorInfo ? "error" : "success"}`}>{errorInfo ? <AlertCircle size={15} /> : <CheckCircle2 size={15} />}<span>{errorInfo || successInfo}</span><button onClick={() => { setErrorInfo(null); setSuccessInfo(null); }}><X size={14} /></button></div>}</section><div className="admin-template-grid"><button onClick={() => downloadSample("md")}><FileText size={17} /><span><strong>Markdown outline</strong><small>Best for a quick draft</small></span><Download size={14} /></button><button onClick={() => downloadSample("json")}><FileJson size={17} /><span><strong>JSON blueprint</strong><small>Best for a complete import</small></span><Download size={14} /></button></div></div>}
         </main>

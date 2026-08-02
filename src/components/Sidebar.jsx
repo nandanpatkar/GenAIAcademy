@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, Code2, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe, Palette } from "lucide-react";
+import React, { useMemo, useState, useEffect } from "react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, Code2, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe, Palette, HeartHandshake, GripVertical, Plus, Trash2, Pencil, X } from "lucide-react";
 // Note: Sparkles was already imported above — kept as a single import line to avoid duplicate-identifier errors.
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import AppearanceSettings from "./AppearanceSettings";
 import BentoCard from "./BentoCard";
+import { DEFAULT_SIDEBAR_LAYOUT, resolveEffectiveLayout, resolveItemVisibility, SIDEBAR_ITEM_REGISTRY } from "../config/sidebarRegistry";
+
+const ADMIN_GROUP_ITEMS = [
+  { icon: Shield, label: "Admin Panel", id: "admin_management" },
+  { icon: Cpu, label: "Algo Studio", id: "algo_studio" },
+  { icon: Sparkles, label: "AI Pathfinder", id: "onboarding_chat", description: "Build a learning path around your goals" },
+];
 
 
 export default function Sidebar({
@@ -29,12 +36,14 @@ export default function Sidebar({
   showLinks, setShowLinks,
   showAIInterviewer, setShowAIInterviewer,
   showGeminiInterviewer, setShowGeminiInterviewer,
+  showEmotionalSupport, setShowEmotionalSupport,
   showAlgoStudio, setShowAlgoStudio,
   showAlgoVisualizer, setShowAlgoVisualizer,
   showK8sGames, setShowK8sGames,
   showGitVisualizer, setShowGitVisualizer,
   showFlowDesign, setShowFlowDesign,
   showIntelligenceHub, setShowIntelligenceHub,
+  showHome2, setShowHome2,
   showLegacyIntelligenceHub, setShowLegacyIntelligenceHub,
   showWorkplaceLab, setShowWorkplaceLab,
   showKnowledgeGraph, setShowKnowledgeGraph,
@@ -64,18 +73,18 @@ export default function Sidebar({
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [isPathsVisible, setIsPathsVisible] = useState(true);
+  const [draggedItem, setDraggedItem] = useState(null); // { id, groupId } while a sidebar item drag is in flight
   const [expandedGroups, setExpandedGroups] = useState({
-    Learn: true,
-    Practice: true,
-    Library: false,
-    Career: false,
-    Community: false,
-    Support: false,
-    "More tools": false,
+    learn: true,
+    practice: true,
+    library: false,
+    career: false,
+    community: false,
+    more_tools: false,
   });
   const [showAppearance, setShowAppearance] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, geminiKey, updateGeminiKey, aiProvider, updateAiProvider, azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey } = useAuth();
+  const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, sidebarConfig, persistSidebarConfig, geminiKey, updateGeminiKey, aiProvider, updateAiProvider, azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey } = useAuth();
   const [localKey, setLocalKey] = useState(geminiKey || "");
   const [localProvider, setLocalProvider] = useState(aiProvider || "gemini");
   const [localAzureEndpoint, setLocalAzureEndpoint] = useState(azureEndpoint || "");
@@ -88,83 +97,109 @@ export default function Sidebar({
     setLocalAzureKey(azureKey || "");
   }, [geminiKey, aiProvider, azureEndpoint, azureKey]);
 
-  const sidebarGroups = [
-    {
-      label: "Learn",
-      items: [
-        { icon: <LayoutDashboard size={14} />, label: "Home", id: "overview", description: "Continue your learning" },
-        { icon: <Network size={14} />, label: "Roadmaps", id: "curriculum_map", description: "See the full learning journey" },
-        { icon: <CircleDashed size={14} />, label: "Progress", id: "progress", description: "Track what you have completed" },
-        { icon: <Orbit size={14} />, label: "Explore Concepts", id: "galaxy", description: "Discover connected topics" },
-        { icon: <Share2 size={14} />, label: "Concept Connections", id: "knowledge_graph", description: "See how ideas relate" },
-      ]
-    },
-    {
-      label: "Practice",
-      items: [
-        { icon: <Terminal size={14} />, label: "Coding Practice", id: "ide", description: "Write and run code" },
-        { icon: <Code2 size={14} />, label: "LeetCode", id: "leetcode", description: "Solve LeetCode problems" },
-        { icon: <Boxes size={14} />, label: "AI Playground", id: "playground", description: "Experiment with AI systems" },
-        { icon: <Sparkles size={14} />, label: "Gen AI Playground 2.0", id: "genai_playground2", description: "Design systems, diagrams, and AI whiteboards" },
-        { icon: <Layers size={14} />, label: "System Design", id: "simulator", description: "Practice architecture decisions" },
-        { icon: <Box size={14} />, label: "Algorithm Practice", id: "algo_visualizer", description: "Learn algorithms step by step" },
-        { icon: <Terminal size={14} />, label: "Visualize", id: "learnbug", description: "Debug Python code with memory, structure, and timeline views" },
-      ]
-    },
-    {
-      label: "Library",
-      items: [
-        { icon: <BookOpen size={14} />, label: "Manual", id: "manual", description: "Follow guided lessons" },
-        { icon: <BookMarked size={14} />, label: "Quick Reference", id: "reference", description: "Look up key concepts" },
-        { icon: <BookOpen size={14} />, label: "Resources", id: "resources", description: "Browse learning materials" },
-        { icon: <BookMarked size={14} />, label: "Blog", id: "blog", description: "Read curated research" },
-        { icon: <Bookmark size={14} />, label: "Saved Links", id: "links", description: "Keep useful bookmarks" },
-        { icon: <GitBranch size={14} />, label: "GitHub", id: "github", description: "Explore repositories" },
-      ]
-    },
-    {
-      label: "Career",
-      items: [
-        { icon: <HelpCircle size={14} />, label: "Interview Prep", id: "interview_prep", description: "Prepare with structured lessons" },
-        { icon: <Users size={14} />, label: "AI Interviewer", id: "interviewer", description: "Practice realistic interviews" },
-        { icon: <Sparkles size={14} />, label: "Gemini Interview", id: "gemini_interviewer", description: "Live data science voice interview" },
-        { icon: <CheckSquare size={14} />, label: "Quiz", id: "quiz", description: "Test your understanding" },
-      ]
-    },
-    {
-      label: "Community",
-      items: [
-        { icon: <Users size={14} />, label: "Community", id: "community", description: "Chat and connect with learners" },
-        { icon: <CheckSquare size={14} />, label: "Notes", id: "tasks", description: "Capture ideas and reminders" },
-        ...((isAdmin || allowAimlForAll) ? [
-          { icon: <GraduationCap size={14} />, label: "AIML Companion", id: "aiml_companion", description: "Get help while studying" }
-        ] : []),
-      ]
-    },
-    {
-      label: "More tools",
-      items: [
-        { icon: <Database size={14} />, label: "Agent Library", id: "agent_library", description: "Sync GitHub skills, prompts, and MCP definitions" },
-        { icon: <Terminal size={14} />, label: "Cloud Projects", id: "projects", description: "Build and save projects" },
-        { icon: <Layers size={14} />, label: "AWS System Design", id: "aws_simulator", description: "Practice AWS architecture" },
-        { icon: <Clapperboard size={14} />, label: "DSA Animator", id: "dsa_animator", description: "Animate data structures" },
-        { icon: <Boxes size={14} />, label: "Kubernetes Games", id: "k8s_games", description: "Learn through challenges" },
-        { icon: <GitCommit size={14} />, label: "Git Visualizer", id: "git_visualizer", description: "Explore branches visually" },
-        { icon: <Network size={14} />, label: "Flow Design", id: "flow_design", description: "Design application flows" },
-        { icon: <FileText size={14} />, label: "Notion", id: "notion", description: "View your workspace" },
-        { icon: <Globe size={14} />, label: "NoSignups", id: "nosignups", description: "Browse external tools" },
-        { icon: <Layers size={14} />, label: "Free System Design", id: "free_system_design", description: "Learn system design by building it" },
-      ]
-    },
-    ...(isAdmin && isAdminView ? [{
-      label: "Admin",
-      items: [
-        { icon: <Shield size={14} />, label: "Admin Panel", id: "admin_management" },
-        { icon: <Cpu size={14} />, label: "Algo Studio", id: "algo_studio" },
-        { icon: <Sparkles size={14} />, label: "AI Pathfinder", id: "onboarding_chat", description: "Build a learning path around your goals" },
-      ]
-    }] : [])
-  ];
+  // Every default/custom group + item comes from the shared registry so the Admin
+  // Panel's visibility toggles and this component's drag-and-drop editor stay in sync.
+  const effectiveLayout = useMemo(() => resolveEffectiveLayout(sidebarConfig?.layout), [sidebarConfig?.layout]);
+  const sidebarEditable = isAdmin && isEditMode && !isCollapsed;
+
+  const isItemVisible = (itemId) => {
+    const visibility = resolveItemVisibility(itemId, { overrides: sidebarConfig?.overrides, allowAimlForAll });
+    return visibility === "admin" ? isAdmin : true;
+  };
+
+  const sidebarGroups = effectiveLayout
+    .map((group) => ({
+      id: group.id,
+      label: group.label,
+      custom: !!group.custom,
+      items: group.itemIds
+        .map((itemId) => {
+          const def = SIDEBAR_ITEM_REGISTRY[itemId];
+          if (!def || !isItemVisible(itemId)) return null;
+          return { id: itemId, ...def };
+        })
+        .filter(Boolean),
+    }))
+    // Keep empty custom sections visible while editing so there's somewhere to drop items into them.
+    .filter((group) => group.items.length > 0 || (sidebarEditable && group.custom))
+    .concat(isAdmin && isAdminView ? [{ id: "admin", label: "Admin", items: ADMIN_GROUP_ITEMS }] : []);
+
+  const commitLayout = (nextLayout) => {
+    if (persistSidebarConfig) persistSidebarConfig({ ...(sidebarConfig || {}), layout: nextLayout });
+  };
+
+  // The dragged item's identity travels on event.dataTransfer, not React state — state
+  // updates from dragstart aren't guaranteed to have flushed by the time drop fires (they're
+  // two different native events), so reading it back from the event itself is the only
+  // reliable source of truth. `draggedItem` state still exists, purely for the drag-in-flight
+  // visual styling (opacity, drop-target highlight), where a one-frame lag doesn't matter.
+  const handleItemDragStart = (event, itemId, groupId) => {
+    if (!sidebarEditable) return;
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", JSON.stringify({ id: itemId, groupId }));
+    setDraggedItem({ id: itemId, groupId });
+  };
+
+  const handleDragOverTarget = (event) => {
+    if (!sidebarEditable) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
+
+  const moveDraggedItem = (dragged, targetGroupId, targetItemId) => {
+    if (!dragged) return;
+    const layout = effectiveLayout.map((group) => ({ ...group, itemIds: [...group.itemIds] }));
+    const fromGroup = layout.find((group) => group.id === dragged.groupId);
+    if (fromGroup) fromGroup.itemIds = fromGroup.itemIds.filter((id) => id !== dragged.id);
+    const toGroup = layout.find((group) => group.id === targetGroupId);
+    if (!toGroup) { setDraggedItem(null); return; }
+    const targetIndex = targetItemId ? toGroup.itemIds.indexOf(targetItemId) : -1;
+    toGroup.itemIds.splice(targetIndex === -1 ? toGroup.itemIds.length : targetIndex, 0, dragged.id);
+    commitLayout(layout);
+    setDraggedItem(null);
+  };
+
+  const readDraggedPayload = (event) => {
+    try { return JSON.parse(event.dataTransfer.getData("text/plain")); } catch { return null; }
+  };
+
+  const handleItemDrop = (event, groupId, itemId) => {
+    if (!sidebarEditable) return;
+    event.preventDefault();
+    event.stopPropagation();
+    moveDraggedItem(readDraggedPayload(event), groupId, itemId);
+  };
+
+  const handleGroupDrop = (event, groupId) => {
+    if (!sidebarEditable) return;
+    event.preventDefault();
+    moveDraggedItem(readDraggedPayload(event), groupId, null);
+  };
+
+  const handleAddSection = () => {
+    const name = window.prompt("Name this section:");
+    if (!name || !name.trim()) return;
+    const layout = effectiveLayout.map((group) => ({ ...group, itemIds: [...group.itemIds] }));
+    layout.push({ id: `custom-${Date.now()}`, label: name.trim(), custom: true, itemIds: [] });
+    commitLayout(layout);
+  };
+
+  const handleRenameSection = (groupId, currentLabel) => {
+    const name = window.prompt("Rename section:", currentLabel);
+    if (!name || !name.trim()) return;
+    const layout = effectiveLayout.map((group) => ({ ...group, itemIds: [...group.itemIds], ...(group.id === groupId ? { label: name.trim() } : {}) }));
+    commitLayout(layout);
+  };
+
+  const handleDeleteSection = (groupId, currentLabel, itemIds) => {
+    if (!window.confirm(`Delete "${currentLabel}"?${itemIds.length ? " Its items will move to More tools." : ""}`)) return;
+    const layout = effectiveLayout.map((group) => ({ ...group, itemIds: [...group.itemIds] })).filter((group) => group.id !== groupId);
+    if (itemIds.length) {
+      const fallback = layout.find((group) => group.id === "more_tools") || layout[0];
+      if (fallback) fallback.itemIds.push(...itemIds);
+    }
+    commitLayout(layout);
+  };
 
   const handleResetClick = () => {
     if (!resetConfirm) {
@@ -218,6 +253,7 @@ export default function Sidebar({
     if (showCurriculumMap) return "curriculum_map";
     if (showAIInterviewer) return "interviewer";
     if (showGeminiInterviewer) return "gemini_interviewer";
+    if (showEmotionalSupport) return "emotional_support";
     if (showAlgoStudio) return "algo_studio";
     if (showAlgoVisualizer) return "algo_visualizer";
     if (showK8sGames) return "k8s_games";
@@ -230,6 +266,7 @@ export default function Sidebar({
     if (showInterviewPrep) return "interview_prep";
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
+    if (showHome2) return "home2";
     if (showIntelligenceHub) return "overview";
     if (showLegacyIntelligenceHub) return "legacy_hub";
     if (showQuiz) return "quiz";
@@ -243,6 +280,10 @@ export default function Sidebar({
   const activeNavId = getActiveId();
 
   const handleNavClick = (id) => {
+    // Defense in depth: registry-governed items must stay unreachable for a
+    // non-admin even if something other than this component's own filtered
+    // render triggers the click (e.g. a stale walkthrough target).
+    if (SIDEBAR_ITEM_REGISTRY[id] && !isItemVisible(id)) return;
     if (onOpenToolHome) onOpenToolHome(null);
     if (setActiveNode) setActiveNode(null);
     if (setActiveModule) setActiveModule(null);
@@ -266,6 +307,7 @@ export default function Sidebar({
     if (setShowGalaxy) setShowGalaxy(false);
     if (setShowAIInterviewer) setShowAIInterviewer(false);
     if (setShowGeminiInterviewer) setShowGeminiInterviewer(false);
+    if (setShowEmotionalSupport) setShowEmotionalSupport(false);
     if (setShowAlgoStudio) setShowAlgoStudio(false);
     if (setShowAlgoVisualizer) setShowAlgoVisualizer(false);
     if (setShowK8sGames) setShowK8sGames(false);
@@ -280,6 +322,7 @@ export default function Sidebar({
     if (setShowFreeSystemDesign) setShowFreeSystemDesign(false);
     if (setShowInterviewPrep) setShowInterviewPrep(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
+    if (setShowHome2) setShowHome2(false);
     if (setShowLegacyIntelligenceHub) setShowLegacyIntelligenceHub(false);
     if (setShowQuiz) setShowQuiz(false);
     if (setShowLeetCode) setShowLeetCode(false);
@@ -291,6 +334,9 @@ export default function Sidebar({
       case "overview":
         // Home is the learner dashboard, not just the roadmap canvas.
         if (setShowIntelligenceHub) setShowIntelligenceHub(true);
+        break;
+      case "home2":
+        if (setShowHome2) setShowHome2(true);
         break;
       case "onboarding_chat":
         if (setShowOnboarding) setShowOnboarding(true);
@@ -339,6 +385,9 @@ export default function Sidebar({
         break;
       case "gemini_interviewer":
         if (setShowGeminiInterviewer) setShowGeminiInterviewer(true);
+        break;
+      case "emotional_support":
+        if (setShowEmotionalSupport) setShowEmotionalSupport(true);
         break;
       case "algo_studio":
         if (setShowAlgoStudio) setShowAlgoStudio(true);
@@ -496,32 +545,58 @@ export default function Sidebar({
 
       <div className="sidebar-nav-container">
         <div className="sidebar-nav">
-          {sidebarGroups.map((group) => (
-            <div key={group.label} className="sidebar-group">
+          {sidebarGroups.map((group) => {
+            const isAdminGroup = group.id === "admin";
+            const groupDraggable = sidebarEditable && !isAdminGroup;
+            return (
+            <div
+              key={group.id}
+              className={`sidebar-group ${groupDraggable && draggedItem ? "sidebar-group-droppable" : ""}`}
+              onDragOver={groupDraggable ? handleDragOverTarget : undefined}
+              onDrop={groupDraggable ? (event) => handleGroupDrop(event, group.id) : undefined}
+            >
               {!isCollapsed && (
-                <button
-                  className="sidebar-section-header sidebar-section-toggle"
-                  onClick={() => setExpandedGroups(prev => ({ ...prev, [group.label]: !prev[group.label] }))}
-                  aria-expanded={expandedGroups[group.label] !== false}
-                >
-                  <span className="sidebar-section-label">{group.label}</span>
-                  <ChevronDown size={12} className={expandedGroups[group.label] === false ? "section-chevron collapsed" : "section-chevron"} />
-                </button>
+                <div className="sidebar-section-header">
+                  <button
+                    className="sidebar-section-toggle"
+                    onClick={() => setExpandedGroups(prev => ({ ...prev, [group.id]: !prev[group.id] }))}
+                    aria-expanded={expandedGroups[group.id] !== false}
+                  >
+                    <span className="sidebar-section-label">{group.label}</span>
+                    <ChevronDown size={12} className={expandedGroups[group.id] === false ? "section-chevron collapsed" : "section-chevron"} />
+                  </button>
+                  {groupDraggable && group.custom && (
+                    <span className="sidebar-section-actions">
+                      <button type="button" title="Rename section" onClick={() => handleRenameSection(group.id, group.label)}><Pencil size={11} /></button>
+                      <button type="button" title="Delete section" onClick={() => handleDeleteSection(group.id, group.label, group.items.map(i => i.id))}><Trash2 size={11} /></button>
+                    </span>
+                  )}
+                </div>
               )}
-              <div className="sidebar-section" style={{ display: isCollapsed || expandedGroups[group.label] !== false ? undefined : "none" }}>
-                {group.items.map((item) => (
+              <div className="sidebar-section" style={{ display: isCollapsed || expandedGroups[group.id] !== false ? undefined : "none" }}>
+                {group.items.map((item) => {
+                  const itemDraggable = groupDraggable;
+                  const isAdminOnly = sidebarEditable && resolveItemVisibility(item.id, { overrides: sidebarConfig?.overrides, allowAimlForAll }) === "admin";
+                  return (
                   <React.Fragment key={item.id}>
                     <div
                       id={`sidebar-item-${item.id}`}
-                      className={`sidebar-item ${activeNavId === item.id ? "active" : ""}`}
+                      className={`sidebar-item ${activeNavId === item.id ? "active" : ""} ${itemDraggable ? "sidebar-item-editable" : ""} ${draggedItem?.id === item.id ? "is-dragging" : ""}`}
                       onClick={() => handleNavClick(item.id)}
                       data-label={item.label}
                       title={!isCollapsed && item.description ? item.description : item.label}
+                      draggable={itemDraggable}
+                      onDragStart={itemDraggable ? (event) => handleItemDragStart(event, item.id, group.id) : undefined}
+                      onDragEnd={itemDraggable ? () => setDraggedItem(null) : undefined}
+                      onDragOver={itemDraggable ? handleDragOverTarget : undefined}
+                      onDrop={itemDraggable ? (event) => handleItemDrop(event, group.id, item.id) : undefined}
                     >
+                      {itemDraggable && <span className="sidebar-item-grip" title="Drag to rearrange"><GripVertical size={13} /></span>}
                       <span className="sidebar-item-icon">
-                        {item.icon}
+                        <item.icon size={14} />
                       </span>
                       {!isCollapsed && <span>{item.label}</span>}
+                      {!isCollapsed && isAdminOnly && <span className="sidebar-item-admin-badge" title="Admin only — change in Admin Panel › Sidebar"><Shield size={11} /></span>}
                       {!isCollapsed && item.id !== 'blog' && onSectionWalkthrough && (
                         <button
                           className="sidebar-section-info-btn"
@@ -556,11 +631,21 @@ export default function Sidebar({
                       </div>
                     )}
                   </React.Fragment>
-                ))}
+                  );
+                })}
+                {groupDraggable && group.items.length === 0 && (
+                  <div className="sidebar-empty-section">Drop items here</div>
+                )}
               </div>
               {!isCollapsed && <div className="group-divider" />}
             </div>
-          ))}
+            );
+          })}
+          {sidebarEditable && (
+            <button type="button" className="sidebar-add-section" onClick={handleAddSection}>
+              <Plus size={13} /> Add section
+            </button>
+          )}
         </div>
       </div>
 

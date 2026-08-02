@@ -1,0 +1,365 @@
+/* ── Home 2.0 — cinematic homepage ──────────────────────────────────────────
+   Act structure: hero (neural canvas + kinetic type) → marquee → mission log
+   terminal → orbital universe → daily transmissions → outro. */
+
+.h2x-root {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+.h2x-scroll-progress {
+  position: sticky; top: 0; z-index: 60;
+  height: 2px; width: 100%;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--neon), #22d3ee);
+}
+
+.h2x-kicker { display: inline-flex; align-items: center; gap: 7px; color: var(--neon); font-size: 10px; font-weight: 800; letter-spacing: 2px; }
+
+/* ── ACT I · Hero ─────────────────────────────────────────────────────── */
+.h2x-hero {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  min-height: clamp(560px, 96vh, 1000px);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(0,255,136,.09), transparent 55%),
+    radial-gradient(ellipse at 85% -10%, rgba(34,211,238,.07), transparent 45%),
+    var(--bg);
+}
+.h2x-neural-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .9; }
+.h2x-hero-glow {
+  position: absolute; left: 50%; top: 58%; width: 66vw; height: 40vh;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--neon) 9%, transparent), transparent 70%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+.h2x-hero-inner { position: relative; z-index: 2; width: min(1160px, calc(100% - 48px)); text-align: center; pointer-events: none; }
+.h2x-hero-inner button { pointer-events: auto; }
+
+.h2x-hero-greeting {
+  display: inline-flex; align-items: center; gap: 9px; margin: 0 0 26px;
+  color: var(--text2); font-family: var(--mono); font-size: 12px; letter-spacing: .5px;
+}
+.h2x-pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--neon); box-shadow: 0 0 12px var(--neon); animation: h2x-pulse 2.2s ease-in-out infinite; }
+@keyframes h2x-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.6); opacity: .5; } }
+
+.h2x-display { display: flex; flex-direction: column; margin: 0; font-family: var(--font); font-weight: 800; font-size: clamp(46px, 9.4vw, 138px); line-height: .96; letter-spacing: -.035em; text-transform: uppercase; }
+.h2x-display-outline { color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--text) 55%, transparent); }
+.h2x-display-gradient {
+  background: linear-gradient(100deg, var(--neon), #22d3ee 40%, #a78bfa 75%, var(--neon));
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: h2x-gradient-slide 7s linear infinite;
+}
+@keyframes h2x-gradient-slide { to { background-position: 250% 0; } }
+.h2x-display-solid em { color: var(--neon); font-style: normal; }
+
+.h2x-hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 40px; }
+.h2x-cta {
+  display: inline-flex; align-items: center; gap: 9px; max-width: min(560px, 90vw); padding: 14px 20px;
+  border: 1px solid var(--neon); border-radius: 999px; background: var(--neon); color: #03140b;
+  cursor: pointer; font-size: 13px; font-weight: 800; letter-spacing: .2px;
+  box-shadow: 0 10px 34px color-mix(in srgb, var(--neon) 28%, transparent);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.h2x-cta:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 44px color-mix(in srgb, var(--neon) 40%, transparent); }
+.h2x-cta-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.h2x-cta-ghost {
+  display: inline-flex; align-items: center; gap: 8px; padding: 13px 18px;
+  border: 1px solid var(--border2); border-radius: 999px; background: color-mix(in srgb, var(--bg2) 70%, transparent);
+  color: var(--text); cursor: pointer; font-size: 12px; font-weight: 800;
+  backdrop-filter: blur(6px);
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.h2x-cta-ghost:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--neon) 60%, transparent); background: color-mix(in srgb, var(--neon) 8%, var(--bg2)); }
+
+.h2x-hero-stats { display: flex; justify-content: center; gap: clamp(12px, 3vw, 34px); flex-wrap: wrap; margin-top: 44px; color: var(--text3); font-family: var(--mono); font-size: 11px; letter-spacing: 1px; }
+
+.h2x-scroll-cue { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text3); font-size: 9px; font-weight: 800; letter-spacing: 3px; }
+.h2x-scroll-cue i { width: 1px; height: 34px; background: linear-gradient(var(--text3), transparent); animation: h2x-cue 1.8s ease-in-out infinite; }
+@keyframes h2x-cue { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+/* ── Marquee ──────────────────────────────────────────────────────────── */
+.h2x-marquee { padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg2); overflow: hidden; transform: rotate(-.6deg) scale(1.02); }
+.h2x-marquee-row { overflow: hidden; }
+.h2x-marquee-row + .h2x-marquee-row { margin-top: 12px; }
+.h2x-marquee-track { display: inline-flex; align-items: center; gap: 26px; width: max-content; padding-right: 26px; animation: h2x-marquee 46s linear infinite; }
+.h2x-marquee-row.reverse .h2x-marquee-track { animation-direction: reverse; animation-duration: 60s; }
+.h2x-marquee-track span { color: var(--text2); font-family: var(--font); font-size: 15px; font-weight: 800; letter-spacing: 2px; white-space: nowrap; }
+.h2x-marquee-row.reverse span { color: var(--text3); -webkit-text-stroke: .6px var(--text3); -webkit-text-fill-color: transparent; }
+.h2x-marquee-track i { color: var(--neon); font-style: normal; font-size: 11px; }
+@keyframes h2x-marquee { to { transform: translateX(-50%); } }
+
+/* ── Acts (shared) ────────────────────────────────────────────────────── */
+.h2x-act { width: min(1160px, calc(100% - 48px)); margin: 0 auto; padding: 96px 0 20px; }
+.h2x-act-head { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 34px; }
+.h2x-act-index { color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--text3) 70%, transparent); font-family: var(--font); font-size: clamp(40px, 5vw, 64px); font-weight: 800; line-height: 1; }
+.h2x-act-head h2 { margin: 10px 0 0; font-size: clamp(22px, 2.6vw, 34px); letter-spacing: -1px; line-height: 1.1; }
+
+/* ── ACT II · Terminal ────────────────────────────────────────────────── */
+.h2x-terminal {
+  max-width: 720px; overflow: hidden;
+  border: 1px solid rgba(0,255,136,.18); border-radius: 16px;
+  background: #0a0f0c;
+  box-shadow: 0 30px 80px rgba(0,0,0,.35), 0 0 0 1px rgba(0,0,0,.4);
+}
+.h2x-terminal-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,.06); background: rgba(255,255,255,.03); }
+.h2x-terminal-bar span { width: 11px; height: 11px; border-radius: 50%; }
+.h2x-terminal-bar span:nth-child(1) { background: #ff5f57; }
+.h2x-terminal-bar span:nth-child(2) { background: #febc2e; }
+.h2x-terminal-bar span:nth-child(3) { background: #28c840; }
+.h2x-terminal-bar b { margin-left: 10px; color: #4d5a52; font-family: var(--mono); font-size: 11px; font-weight: 500; }
+.h2x-terminal-body { min-height: 190px; padding: 20px 22px 24px; font-family: var(--mono); font-size: 13px; line-height: 1.9; }
+.h2x-term-cmd { color: #e8fff2; }
+.h2x-term-out { color: #38e08a; }
+.h2x-term-cursor { display: inline-block; width: 9px; height: 16px; margin-top: 4px; background: #38e08a; animation: h2x-blink 1s steps(1) infinite; vertical-align: text-bottom; }
+@keyframes h2x-blink { 50% { opacity: 0; } }
+
+/* ── ACT III · Orbital universe ───────────────────────────────────────── */
+.h2x-universe { display: grid; grid-template-columns: minmax(300px, 1.1fr) minmax(280px, 1fr); align-items: center; gap: clamp(20px, 4vw, 60px); }
+.h2x-orbit-stage { position: relative; width: min(540px, 100%); aspect-ratio: 1; margin: 0 auto; }
+.h2x-orbit-core {
+  position: absolute; inset: 0; margin: auto; z-index: 2;
+  display: grid; place-items: center; align-content: center; gap: 2px;
+  width: 26%; aspect-ratio: 1; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--neon) 45%, transparent);
+  background:
+    radial-gradient(circle at 32% 30%, color-mix(in srgb, var(--neon) 22%, transparent), transparent 60%),
+    var(--bg2);
+  box-shadow: 0 0 46px color-mix(in srgb, var(--neon) 22%, transparent), inset 0 0 26px color-mix(in srgb, var(--neon) 10%, transparent);
+  animation: h2x-core-breathe 5s ease-in-out infinite;
+  text-align: center;
+}
+@keyframes h2x-core-breathe {
+  0%, 100% { box-shadow: 0 0 40px color-mix(in srgb, var(--neon) 18%, transparent), inset 0 0 24px color-mix(in srgb, var(--neon) 9%, transparent); }
+  50% { box-shadow: 0 0 66px color-mix(in srgb, var(--neon) 34%, transparent), inset 0 0 32px color-mix(in srgb, var(--neon) 15%, transparent); }
+}
+.h2x-orbit-core strong { font-size: clamp(20px, 2.6vw, 30px); letter-spacing: -1px; }
+.h2x-orbit-core span { color: var(--text3); font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+
+.h2x-ring {
+  position: absolute; inset: 0; margin: auto;
+  aspect-ratio: 1; border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--text3) 36%, transparent);
+  animation: h2x-spin var(--h2x-orbit-dur, 50s) linear infinite;
+}
+.h2x-ring-rev { animation-direction: reverse; }
+@keyframes h2x-spin { to { transform: rotate(360deg); } }
+
+.h2x-planet { position: absolute; top: 0; left: 50%; margin: -14px 0 0 -14px; width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; pointer-events: auto; }
+.h2x-planet-inner { position: relative; display: grid; place-items: center; width: 100%; height: 100%; animation: h2x-spin var(--h2x-orbit-dur, 50s) linear infinite reverse; }
+.h2x-ring-rev .h2x-planet-inner { animation-direction: normal; }
+.h2x-planet-dot {
+  width: 15px; height: 15px; border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.85), var(--h2x-planet, var(--neon)) 42%);
+  box-shadow: 0 0 14px var(--h2x-planet, var(--neon));
+  transition: transform .2s ease;
+}
+.h2x-planet.active .h2x-planet-dot { width: 20px; height: 20px; box-shadow: 0 0 20px var(--h2x-planet, var(--neon)), 0 0 0 5px color-mix(in srgb, var(--h2x-planet, var(--neon)) 18%, transparent); }
+.h2x-planet:hover .h2x-planet-dot { transform: scale(1.35); }
+.h2x-planet-tag {
+  position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%);
+  padding: 4px 9px; border: 1px solid color-mix(in srgb, var(--h2x-planet, var(--neon)) 45%, transparent);
+  border-radius: 99px; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  color: var(--text); font-size: 10px; font-weight: 800; white-space: nowrap;
+  opacity: 0; transition: opacity .2s ease; pointer-events: none;
+}
+.h2x-planet:hover .h2x-planet-tag, .h2x-planet.active .h2x-planet-tag { opacity: 1; }
+.h2x-orbit-stage:hover .h2x-ring, .h2x-orbit-stage:hover .h2x-planet-inner { animation-play-state: paused; }
+
+.h2x-universe-legend { display: flex; flex-direction: column; gap: 9px; }
+.h2x-legend-lede { margin: 0 0 6px; color: var(--text3); font-size: 12px; }
+.h2x-legend-row {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; text-align: left;
+  border: 1px solid var(--border); border-radius: 13px; background: var(--bg2); color: var(--text);
+  transition: transform .18s ease, border-color .18s ease;
+}
+.h2x-legend-row:hover { transform: translateX(4px); border-color: color-mix(in srgb, var(--neon) 55%, transparent); }
+.h2x-legend-row.active { border-color: color-mix(in srgb, var(--neon) 60%, transparent); background: color-mix(in srgb, var(--neon) 5%, var(--bg2)); }
+.h2x-legend-dot { flex: 0 0 auto; width: 10px; height: 10px; border-radius: 50%; box-shadow: 0 0 9px currentColor; }
+.h2x-legend-copy { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+.h2x-legend-copy strong { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.h2x-legend-copy small { color: var(--text3); font-size: 10px; }
+.h2x-legend-meter { flex: 0 0 76px; height: 4px; border-radius: 99px; background: color-mix(in srgb, var(--text3) 22%, transparent); overflow: hidden; }
+.h2x-legend-meter i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--neon), #22d3ee); }
+.h2x-legend-row b { flex: 0 0 auto; color: var(--neon); font-size: 11px; }
+.h2x-legend-new {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; padding: 12px;
+  border: 1px dashed var(--border2); border-radius: 13px; background: none; color: var(--text2);
+  cursor: pointer; font-size: 12px; font-weight: 800; transition: border-color .2s ease, color .2s ease;
+}
+.h2x-legend-new:hover { border-color: var(--neon); color: var(--text); }
+
+/* ── ACT IV · The voyage (3D) ─────────────────────────────────────────── */
+.h2x-act-voyage { padding-bottom: 30px; }
+.h2x-voyage {
+  position: relative;
+  height: clamp(460px, 82vh, 880px);
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 100%, #0b1420, #05070c 72%);
+  border-top: 1px solid rgba(0,255,136,.12);
+  border-bottom: 1px solid rgba(0,255,136,.12);
+}
+.h2x-voyage-canvas { position: absolute; inset: 0; }
+.h2x-voyage-canvas canvas { display: block; width: 100%; height: 100%; }
+.h2x-voyage-scan {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 3px);
+}
+.h2x-voyage-loading {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  color: #38e08a; font-family: var(--mono); font-size: 12px; letter-spacing: 2px;
+}
+.h2x-voyage-hud {
+  position: absolute; top: 18px; z-index: 3; pointer-events: none;
+  color: rgba(160, 240, 200, .8); font-family: var(--mono); font-size: 10px;
+  letter-spacing: 1.6px; text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(0,255,136,.35);
+}
+.h2x-voyage-hud-tl { left: 22px; }
+.h2x-voyage-hud-tr { right: 22px; text-align: right; }
+.h2x-voyage-overlay {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 70px 20px 40px; text-align: center;
+  background: linear-gradient(transparent, rgba(4, 6, 10, .9));
+}
+.h2x-voyage-overlay p { margin: 0; color: rgba(160, 240, 200, .7); font-family: var(--mono); font-size: 10px; letter-spacing: 3px; }
+.h2x-voyage-overlay h3 { margin: 0 0 6px; max-width: 760px; color: #eafff4; font-size: clamp(20px, 3vw, 34px); letter-spacing: -1px; line-height: 1.1; }
+
+/* ── ACT V · The route ahead ──────────────────────────────────────────── */
+.h2x-route { display: flex; align-items: stretch; gap: 0; overflow-x: auto; padding: 10px 4px 18px; scroll-snap-type: x proximity; }
+.h2x-route-link {
+  flex: 1 0 44px; align-self: center; height: 2px; margin: 0 -2px;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--neon) 55%, transparent) 0 7px, transparent 7px 13px);
+  transform-origin: left;
+}
+.h2x-station {
+  flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 7px;
+  min-width: 158px; max-width: 190px; padding: 18px 16px; cursor: pointer; text-align: center;
+  border: 1px solid var(--border2); border-radius: 16px; background: var(--bg2); color: var(--text);
+  scroll-snap-align: center;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.h2x-station:hover { border-color: color-mix(in srgb, var(--neon) 55%, transparent); box-shadow: 0 14px 34px rgba(0,0,0,.14); }
+.h2x-station-icon {
+  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%;
+  border: 1px solid var(--border2); background: var(--bg3); font-size: 21px; line-height: 1;
+}
+.h2x-station strong { font-size: 12.5px; letter-spacing: -.1px; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.h2x-station small { color: var(--text3); font-family: var(--mono); font-size: 9.5px; letter-spacing: 1px; text-transform: uppercase; }
+.h2x-station.done { opacity: .78; }
+.h2x-station.done .h2x-station-icon { border-color: color-mix(in srgb, var(--neon) 55%, transparent); background: color-mix(in srgb, var(--neon) 10%, var(--bg3)); }
+.h2x-station.done small { color: var(--neon); }
+.h2x-station.current { border-color: color-mix(in srgb, var(--neon) 65%, transparent); background: color-mix(in srgb, var(--neon) 6%, var(--bg2)); }
+.h2x-station.current .h2x-station-icon { border-color: var(--neon); box-shadow: 0 0 0 0 color-mix(in srgb, var(--neon) 45%, transparent); animation: h2x-station-ping 2.2s ease-out infinite; }
+.h2x-station.current small { color: var(--neon); }
+@keyframes h2x-station-ping {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--neon) 45%, transparent); }
+  70% { box-shadow: 0 0 0 14px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.h2x-station.ahead .h2x-station-icon { filter: saturate(.4); }
+
+/* ── ACT VI · Pilot telemetry ─────────────────────────────────────────── */
+.h2x-telemetry { display: grid; grid-template-columns: 1.55fr 1fr; gap: 14px; align-items: stretch; }
+.h2x-panel { display: flex; flex-direction: column; gap: 16px; padding: 22px; border: 1px solid var(--border2); border-radius: 18px; background: var(--bg2); }
+.h2x-panel-title { display: inline-flex; align-items: center; gap: 8px; color: var(--text2); font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 2px; }
+.h2x-panel-title svg { color: var(--neon); }
+
+.h2x-heatmap-wrap { display: flex; flex-direction: column; gap: 14px; overflow-x: auto; }
+.h2x-heatmap { display: grid; grid-template-rows: repeat(7, 11px); grid-auto-flow: column; grid-auto-columns: 11px; gap: 3px; width: max-content; }
+.h2x-hm-cell { border-radius: 3px; opacity: 0; }
+.h2x-heatmap.lit .h2x-hm-cell { animation: h2x-cell-in .4s ease both; animation-delay: var(--d, 0ms); }
+@keyframes h2x-cell-in { from { opacity: 0; transform: scale(.25); } to { opacity: 1; transform: scale(1); } }
+.h2x-hm-cell.l0 { background: color-mix(in srgb, var(--text3) 16%, transparent); }
+.h2x-hm-cell.l1 { background: color-mix(in srgb, var(--neon) 28%, transparent); }
+.h2x-hm-cell.l2 { background: color-mix(in srgb, var(--neon) 48%, transparent); }
+.h2x-hm-cell.l3 { background: color-mix(in srgb, var(--neon) 72%, transparent); }
+.h2x-hm-cell.l4 { background: var(--neon); box-shadow: 0 0 7px color-mix(in srgb, var(--neon) 65%, transparent); }
+.h2x-hm-cell:hover { outline: 1px solid var(--neon); }
+.h2x-heatmap-stats { display: flex; gap: 22px; flex-wrap: wrap; color: var(--text3); font-family: var(--mono); font-size: 10px; letter-spacing: 1.4px; }
+.h2x-heatmap-stats b { color: var(--neon); font-size: 15px; margin-right: 4px; }
+.h2x-heatmap-hint { margin: 0; color: var(--text3); font-size: 11.5px; }
+
+.h2x-radar { display: grid; place-items: center; flex: 1; }
+.h2x-radar svg { width: 100%; max-width: 270px; overflow: visible; }
+.h2x-radar-ring { fill: none; stroke: color-mix(in srgb, var(--text3) 26%, transparent); stroke-width: 1; }
+.h2x-radar-axis { stroke: color-mix(in srgb, var(--text3) 20%, transparent); stroke-width: 1; }
+.h2x-radar-poly { fill: color-mix(in srgb, var(--neon) 16%, transparent); stroke: var(--neon); stroke-width: 1.6; stroke-linejoin: round; }
+.h2x-radar-dot { stroke: var(--bg2); stroke-width: 1.5; }
+.h2x-radar-label { fill: var(--text3); font-size: 8.5px; font-weight: 700; letter-spacing: .4px; }
+.h2x-radar-note { margin: 0; color: var(--text3); font-size: 11px; text-align: center; }
+
+/* ── ACT VII · Transmissions ──────────────────────────────────────────── */
+.h2x-transmissions { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.h2x-signal-card {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  padding: 22px; cursor: pointer; text-align: left; overflow: hidden;
+  border: 1px solid var(--border2); border-radius: 18px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--h2x-signal, var(--neon)) 7%, var(--bg2)), var(--bg2) 55%);
+  color: var(--text);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.h2x-signal-card:hover { border-color: color-mix(in srgb, var(--h2x-signal, var(--neon)) 55%, transparent); box-shadow: 0 18px 44px rgba(0,0,0,.16); }
+.h2x-signal-card > svg { color: var(--h2x-signal, var(--neon)); }
+.h2x-signal-head { display: inline-flex; align-items: center; gap: 9px; color: var(--h2x-signal, var(--neon)); font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 1.6px; }
+.h2x-signal-bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.h2x-signal-bars i { width: 3px; border-radius: 2px; background: currentColor; animation: h2x-eq 1.1s ease-in-out infinite; }
+.h2x-signal-bars i:nth-child(1) { height: 5px; animation-delay: 0s; }
+.h2x-signal-bars i:nth-child(2) { height: 10px; animation-delay: .15s; }
+.h2x-signal-bars i:nth-child(3) { height: 7px; animation-delay: .3s; }
+.h2x-signal-bars i:nth-child(4) { height: 11px; animation-delay: .45s; }
+@keyframes h2x-eq { 0%, 100% { transform: scaleY(.4); } 50% { transform: scaleY(1); } }
+.h2x-signal-card h3 { margin: 2px 0 0; font-size: 16px; letter-spacing: -.4px; line-height: 1.28; }
+.h2x-signal-card p { margin: 0; color: var(--text3); font-size: 11.5px; line-height: 1.5; }
+.h2x-signal-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--text); font-size: 11px; font-weight: 800; }
+.h2x-signal-card:hover .h2x-signal-cta { color: var(--h2x-signal, var(--neon)); }
+
+/* ── ACT V · Outro ────────────────────────────────────────────────────── */
+.h2x-outro { padding: 130px 24px 90px; text-align: center; }
+.h2x-outro h2 { margin: 0 0 34px; font-family: var(--font); font-size: clamp(40px, 7vw, 96px); font-weight: 800; letter-spacing: -.03em; line-height: .98; text-transform: uppercase; }
+.h2x-outro h2 em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--neon), #22d3ee 55%, var(--neon));
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: h2x-gradient-slide 6s linear infinite;
+}
+.h2x-outro-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.h2x-outro-foot { margin: 64px 0 0; color: var(--text3); font-family: var(--mono); font-size: 10px; letter-spacing: 1.6px; }
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .h2x-universe { grid-template-columns: 1fr; }
+  .h2x-orbit-stage { width: min(430px, 92vw); }
+  .h2x-telemetry { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .h2x-act { padding-top: 70px; }
+  .h2x-act-head { gap: 13px; }
+  .h2x-hero-stats { gap: 10px 16px; }
+  .h2x-cta-label { max-width: 52vw; }
+  .h2x-terminal-body { font-size: 11.5px; }
+  .h2x-planet-tag { display: none; }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .h2x-root { scroll-behavior: auto; }
+  .h2x-marquee-track, .h2x-ring, .h2x-planet-inner, .h2x-orbit-core,
+  .h2x-display-gradient, .h2x-outro h2 em, .h2x-signal-bars i,
+  .h2x-pulse-dot, .h2x-scroll-cue i, .h2x-term-cursor,
+  .h2x-station.current .h2x-station-icon, .h2x-heatmap.lit .h2x-hm-cell { animation: none; }
+  .h2x-planet-tag { opacity: 1; }
+  .h2x-hm-cell { opacity: 1; }
+}

@@ -1,0 +1,17 @@
+{
+  "theme": "dark",
+  "accentColor": "#7C5CFC",
+  "fontFamily": "inter",
+  "headingFontFamily": "space-grotesk",
+  "monoFontFamily": "jetbrains-mono",
+  "fontSize": "md",
+  "lineHeight": "relaxed",
+  "borderRadius": "lg",
+  "themePalette": "midnight-neon",
+  "bgPattern": "aurora-gradient",
+  "panelStyle": "frosted-glass",
+  "reduceMotion": false,
+  "highContrast": false,
+  "scrollbarStyle": "minimal",
+  "syncWithSystem": false
+}

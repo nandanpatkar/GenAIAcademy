@@ -201,6 +201,166 @@ html { scroll-behavior: smooth; }
   --neon-rgb: 255,121,198;
 }
 
+/* ── Tokyo Night ── */
+.palette-tokyo-night {
+  --bg:       #1a1b26;
+  --bg2:      #16161e;
+  --bg3:      #24283b;
+  --bg4:      #292e42;
+  --bg5:      #343a52;
+  --border:   rgba(122,162,247,0.1);
+  --border2:  rgba(122,162,247,0.2);
+  --text:     #c0caf5;
+  --text2:    #a9b1d6;
+  --text3:    #565f89;
+  --neon:     #7aa2f7;
+  --neon-dim: rgba(122,162,247,0.15);
+  --neon-rgb: 122,162,247;
+}
+
+/* ── Gruvbox ── */
+.palette-gruvbox {
+  --bg:       #282828;
+  --bg2:      #1d2021;
+  --bg3:      #3c3836;
+  --bg4:      #504945;
+  --bg5:      #665c54;
+  --border:   rgba(254,128,25,0.1);
+  --border2:  rgba(254,128,25,0.2);
+  --text:     #ebdbb2;
+  --text2:    #d5c4a1;
+  --text3:    #a89984;
+  --neon:     #fe8019;
+  --neon-dim: rgba(254,128,25,0.15);
+  --neon-rgb: 254,128,25;
+}
+
+/* ── Catppuccin Mocha ── */
+.palette-catppuccin {
+  --bg:       #1e1e2e;
+  --bg2:      #181825;
+  --bg3:      #313244;
+  --bg4:      #45475a;
+  --bg5:      #585b70;
+  --border:   rgba(203,166,247,0.1);
+  --border2:  rgba(203,166,247,0.2);
+  --text:     #cdd6f4;
+  --text2:    #bac2de;
+  --text3:    #a6adc8;
+  --neon:     #cba6f7;
+  --neon-dim: rgba(203,166,247,0.15);
+  --neon-rgb: 203,166,247;
+}
+
+/* ── Rosé Pine ── */
+.palette-rosepine {
+  --bg:       #191724;
+  --bg2:      #16141f;
+  --bg3:      #1f1d2e;
+  --bg4:      #26233a;
+  --bg5:      #403d52;
+  --border:   rgba(196,167,231,0.1);
+  --border2:  rgba(196,167,231,0.2);
+  --text:     #e0def4;
+  --text2:    #908caa;
+  --text3:    #6e6a86;
+  --neon:     #c4a7e7;
+  --neon-dim: rgba(196,167,231,0.15);
+  --neon-rgb: 196,167,231;
+}
+
+/* ── One Dark ── */
+.palette-onedark {
+  --bg:       #282c34;
+  --bg2:      #21252b;
+  --bg3:      #2c313c;
+  --bg4:      #333842;
+  --bg5:      #3e4451;
+  --border:   rgba(97,175,239,0.1);
+  --border2:  rgba(97,175,239,0.2);
+  --text:     #abb2bf;
+  --text2:    #9da5b4;
+  --text3:    #5c6370;
+  --neon:     #61afef;
+  --neon-dim: rgba(97,175,239,0.15);
+  --neon-rgb: 97,175,239;
+}
+
+/* ── Solarized Dark ── */
+.palette-solarized-dark {
+  --bg:       #002b36;
+  --bg2:      #00212b;
+  --bg3:      #073642;
+  --bg4:      #0d4351;
+  --bg5:      #154e5f;
+  --border:   rgba(38,139,210,0.12);
+  --border2:  rgba(38,139,210,0.22);
+  --text:     #93a1a1;
+  --text2:    #839496;
+  --text3:    #587073;
+  --neon:     #268bd2;
+  --neon-dim: rgba(38,139,210,0.15);
+  --neon-rgb: 38,139,210;
+}
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT-MODE PALETTES
+   Applied as body classes alongside .light-theme:
+   .light-theme.palette-solarized-light, etc.
+   "Paper" = default .light-theme (:root), no extra class needed.
+═══════════════════════════════════════════════════════ */
+
+/* ── Solarized Light ── */
+.light-theme.palette-solarized-light {
+  --bg:       #fdf6e3;
+  --bg2:      #f5eeda;
+  --bg3:      #eee8d5;
+  --bg4:      #e4dec4;
+  --bg5:      #d3cbb0;
+  --border:   rgba(38,139,210,0.15);
+  --border2:  rgba(38,139,210,0.25);
+  --text:     #586e75;
+  --text2:    #657b83;
+  --text3:    #93a1a1;
+  --neon:     #268bd2;
+  --neon-dim: rgba(38,139,210,0.15);
+  --neon-rgb: 38,139,210;
+}
+
+/* ── Sepia ── */
+.light-theme.palette-sepia {
+  --bg:       #f4ecd8;
+  --bg2:      #eee2c6;
+  --bg3:      #e8dcc0;
+  --bg4:      #ddceac;
+  --bg5:      #d0bf98;
+  --border:   rgba(184,98,45,0.15);
+  --border2:  rgba(184,98,45,0.25);
+  --text:     #4a3728;
+  --text2:    #6b5541;
+  --text3:    #8c7259;
+  --neon:     #b8622d;
+  --neon-dim: rgba(184,98,45,0.15);
+  --neon-rgb: 184,98,45;
+}
+
+/* ── Catppuccin Latte ── */
+.light-theme.palette-catppuccin-latte {
+  --bg:       #eff1f5;
+  --bg2:      #e6e9ef;
+  --bg3:      #dce0e8;
+  --bg4:      #ccd0da;
+  --bg5:      #bcc0cc;
+  --border:   rgba(136,57,239,0.12);
+  --border2:  rgba(136,57,239,0.2);
+  --text:     #4c4f69;
+  --text2:    #5c5f77;
+  --text3:    #6c6f85;
+  --neon:     #8839ef;
+  --neon-dim: rgba(136,57,239,0.15);
+  --neon-rgb: 136,57,239;
+}
+
 /* ═══════════════════════════════════════════════════════
    BACKGROUND PATTERNS
    Applied via body pseudo-element classes: .bg-grid, .bg-dots, .bg-noise
@@ -315,6 +475,145 @@ html { scroll-behavior: smooth; }
 .palette-synthwave.panel-glass [class*="-modal"] {
   background: rgba(20,4,38, 0.55) !important;
   border-color: rgba(255,121,198,0.1) !important;
+}
+
+/* ── Tokyo Night glass tint ── */
+.palette-tokyo-night.panel-glass .sidebar,
+.palette-tokyo-night.panel-glass [class*="-panel"],
+.palette-tokyo-night.panel-glass [class*="-card"],
+.palette-tokyo-night.panel-glass [class*="-modal"] {
+  background: rgba(22,22,30, 0.6) !important;
+  border-color: rgba(122,162,247,0.1) !important;
+}
+
+/* ── Gruvbox glass tint ── */
+.palette-gruvbox.panel-glass .sidebar,
+.palette-gruvbox.panel-glass [class*="-panel"],
+.palette-gruvbox.panel-glass [class*="-card"],
+.palette-gruvbox.panel-glass [class*="-modal"] {
+  background: rgba(29,32,33, 0.6) !important;
+  border-color: rgba(254,128,25,0.1) !important;
+}
+
+/* ── Catppuccin Mocha glass tint ── */
+.palette-catppuccin.panel-glass .sidebar,
+.palette-catppuccin.panel-glass [class*="-panel"],
+.palette-catppuccin.panel-glass [class*="-card"],
+.palette-catppuccin.panel-glass [class*="-modal"] {
+  background: rgba(24,24,37, 0.6) !important;
+  border-color: rgba(203,166,247,0.1) !important;
+}
+
+/* ── Rosé Pine glass tint ── */
+.palette-rosepine.panel-glass .sidebar,
+.palette-rosepine.panel-glass [class*="-panel"],
+.palette-rosepine.panel-glass [class*="-card"],
+.palette-rosepine.panel-glass [class*="-modal"] {
+  background: rgba(22,20,31, 0.6) !important;
+  border-color: rgba(196,167,231,0.1) !important;
+}
+
+/* ── One Dark glass tint ── */
+.palette-onedark.panel-glass .sidebar,
+.palette-onedark.panel-glass [class*="-panel"],
+.palette-onedark.panel-glass [class*="-card"],
+.palette-onedark.panel-glass [class*="-modal"] {
+  background: rgba(33,37,43, 0.6) !important;
+  border-color: rgba(97,175,239,0.1) !important;
+}
+
+/* ── Solarized Dark glass tint ── */
+.palette-solarized-dark.panel-glass .sidebar,
+.palette-solarized-dark.panel-glass [class*="-panel"],
+.palette-solarized-dark.panel-glass [class*="-card"],
+.palette-solarized-dark.panel-glass [class*="-modal"] {
+  background: rgba(0,33,43, 0.6) !important;
+  border-color: rgba(38,139,210,0.12) !important;
+}
+
+/* ── Light-mode palette glass tints ── */
+.light-theme.palette-solarized-light.panel-glass .sidebar,
+.light-theme.palette-solarized-light.panel-glass [class*="-panel"],
+.light-theme.palette-solarized-light.panel-glass [class*="-card"],
+.light-theme.palette-solarized-light.panel-glass [class*="-modal"] {
+  background: rgba(253,246,227, 0.65) !important;
+}
+
+.light-theme.palette-sepia.panel-glass .sidebar,
+.light-theme.palette-sepia.panel-glass [class*="-panel"],
+.light-theme.palette-sepia.panel-glass [class*="-card"],
+.light-theme.palette-sepia.panel-glass [class*="-modal"] {
+  background: rgba(244,236,216, 0.65) !important;
+}
+
+.light-theme.palette-catppuccin-latte.panel-glass .sidebar,
+.light-theme.palette-catppuccin-latte.panel-glass [class*="-panel"],
+.light-theme.palette-catppuccin-latte.panel-glass [class*="-card"],
+.light-theme.palette-catppuccin-latte.panel-glass [class*="-modal"] {
+  background: rgba(239,241,245, 0.65) !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   TYPOGRAPHY — LINE HEIGHT
+   Controlled by ThemeContext.jsx via --line-height-base
+═══════════════════════════════════════════════════════ */
+body {
+  line-height: var(--line-height-base, 1.6);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SCROLLBAR STYLE
+   Controlled by ThemeContext.jsx via --scrollbar-width / --scrollbar-size
+   Component-level ::-webkit-scrollbar rules (higher specificity) still win.
+═══════════════════════════════════════════════════════ */
+* {
+  scrollbar-width: var(--scrollbar-width, thin);
+  scrollbar-color: var(--bg5) transparent;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-size, 6px);
+  height: var(--scrollbar-size, 6px);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg5);
+  border-radius: 8px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACCESSIBILITY — REDUCE MOTION
+   Applied as body class: .reduce-motion
+═══════════════════════════════════════════════════════ */
+.reduce-motion,
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ACCESSIBILITY — HIGH CONTRAST
+   Applied as body class: .high-contrast
+   Overrides secondary text / borders toward full contrast,
+   regardless of active palette (uses !important to win the cascade).
+═══════════════════════════════════════════════════════ */
+.high-contrast {
+  --text2: var(--text) !important;
+  --text3: var(--text2) !important;
+  --border: var(--border2) !important;
+}
+
+.high-contrast *:focus-visible {
+  outline: 2px solid var(--neon) !important;
+  outline-offset: 2px !important;
 }
 
 /* Theme Switch */
@@ -665,6 +964,23 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   box-shadow: 0 4px 12px var(--black-40);
 }
 .sidebar-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); flex-shrink: 0; transition: all .2s; }
+
+/* --- Sidebar edit-mode: drag-and-drop reordering + custom sections (admin only) --- */
+.sidebar-section-toggle { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: 1; min-width: 0; }
+.sidebar-section-actions { display: flex; flex: none; gap: 2px; opacity: .5; transition: opacity .15s; }
+.sidebar-section-header:hover .sidebar-section-actions { opacity: 1; }
+.sidebar-section-actions button { width: 21px; height: 21px; display: grid; place-items: center; color: var(--text3); background: transparent; border: 0; border-radius: 5px; cursor: pointer; transition: all .15s; }
+.sidebar-section-actions button:hover { color: var(--text); background: var(--white-5); }
+.sidebar-item-grip { display: flex; align-items: center; color: var(--text3); opacity: .5; cursor: grab; flex-shrink: 0; }
+.sidebar-item-editable:hover .sidebar-item-grip { opacity: .9; }
+.sidebar-item-editable { cursor: grab; }
+.sidebar-item.is-dragging { opacity: .4; }
+.sidebar-group-droppable { border-radius: 12px; outline: 1px dashed transparent; transition: outline-color .15s, background .15s; }
+.sidebar-group-droppable:hover, .sidebar-group-droppable .sidebar-section:hover { outline-color: var(--neon-dim); background: var(--white-2); }
+.sidebar-item-admin-badge { display: flex; align-items: center; margin-left: auto; color: #f3ba65; opacity: .8; flex-shrink: 0; }
+.sidebar-empty-section { margin: 2px 8px; padding: 14px 10px; color: var(--text3); font-size: 11px; text-align: center; border: 1px dashed var(--border2); border-radius: 10px; }
+.sidebar-add-section { width: calc(100% - 16px); margin: 6px 8px 4px; padding: 9px 12px; display: flex; align-items: center; gap: 8px; color: var(--text3); background: transparent; border: 1px dashed var(--border2); border-radius: 10px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; }
+.sidebar-add-section:hover { color: var(--text); border-color: var(--neon-dim); background: var(--white-2); }
 
 /* --- Learning Paths Section --- */
 .sidebar-path-pills {
