@@ -19,6 +19,7 @@ export default function Sidebar({
   activePath, setActivePath, paths,
   activeNode, onReset, isEditMode, setIsEditMode, onAddPath, onEditPath,
   showCurriculumMap, setShowCurriculumMap,
+  showRoadmap2, setShowRoadmap2,
   showIDE, setShowIDE,
   showProjects, setShowProjects,
   showResources, setShowResources,
@@ -251,6 +252,7 @@ export default function Sidebar({
     if (showIDE) return "ide";
     if (showResources) return "resources";
     if (showCurriculumMap) return "curriculum_map";
+    if (showRoadmap2) return "roadmap2";
     if (showAIInterviewer) return "interviewer";
     if (showGeminiInterviewer) return "gemini_interviewer";
     if (showEmotionalSupport) return "emotional_support";
@@ -290,6 +292,7 @@ export default function Sidebar({
     if (setActiveTopic) setActiveTopic(null);
 
     setShowCurriculumMap(false);
+    if (setShowRoadmap2) setShowRoadmap2(false);
     if (setShowIDE) setShowIDE(false);
     if (setShowProjects) setShowProjects(false);
     if (setShowResources) setShowResources(false);
@@ -353,6 +356,7 @@ export default function Sidebar({
       case "free_system_design": window.open("https://freesystemdesign.com/", "_blank", "noopener,noreferrer"); break;
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
+      case "roadmap2": if (setShowRoadmap2) setShowRoadmap2(true); break;
       case "projects": if (onOpenToolHome) onOpenToolHome("projects"); else if (setShowProjects) setShowProjects(true); break;
       case "ide": if (onOpenToolHome) onOpenToolHome("coding"); else if (setShowIDE) setShowIDE(true); break;
       case "resources": if (onOpenToolHome) onOpenToolHome("resources"); else if (setShowResources) setShowResources(true); break;

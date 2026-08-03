@@ -1,0 +1,525 @@
+/* ============================================================
+   Roadmap 2.0 — "Highway" study path view
+   A serpentine night road with a car that drives between stops.
+   ============================================================ */
+
+.r2-root {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -10%, rgba(168, 85, 247, 0.10), transparent 60%),
+    radial-gradient(ellipse 70% 40% at 85% 110%, rgba(0, 255, 136, 0.05), transparent 60%),
+    var(--bg, #0a0a0c);
+}
+
+/* Subtle grid, matching the classic roadmap canvas */
+.r2-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* ===== HUD ===== */
+
+.r2-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px 18px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(10, 10, 14, 0.92) 30%, rgba(10, 10, 14, 0.55) 75%, transparent);
+}
+
+.r2-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  pointer-events: auto;
+}
+
+.r2-tab {
+  border: none;
+  background: transparent;
+  color: var(--text2, #8888a0);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+.r2-tab:hover { color: var(--text, #e8e8f0); }
+
+.r2-tab.active {
+  color: var(--path-color, #a855f7);
+  background: color-mix(in srgb, var(--path-color, #a855f7) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--path-color, #a855f7) 35%, transparent);
+}
+
+.r2-dashboard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 18px;
+  border-radius: 18px;
+  background: rgba(16, 16, 24, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+.r2-gauge { position: relative; display: grid; place-items: center; }
+.r2-gauge svg { display: block; }
+
+.r2-gauge-label {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  color: var(--text, #e8e8f0);
+}
+
+.r2-gauge-pct { font-size: 15px; font-weight: 900; }
+.r2-gauge-unit { font-size: 9px; font-weight: 700; opacity: 0.6; }
+
+.r2-odometer { display: flex; flex-direction: column; gap: 3px; }
+
+.r2-odo-main {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: var(--text, #e8e8f0);
+}
+
+.r2-odo-sub {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text3, #55556a);
+}
+
+.r2-odo-chips { display: flex; gap: 6px; margin-top: 2px; }
+
+.r2-chip {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text2, #8888a0);
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.r2-chip.progress {
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.25);
+}
+
+.r2-drive-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid color-mix(in srgb, var(--path-color, #a855f7) 45%, transparent);
+  background: color-mix(in srgb, var(--path-color, #a855f7) 14%, transparent);
+  color: var(--text, #e8e8f0);
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 9px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.r2-drive-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--path-color, #a855f7) 35%, transparent);
+}
+
+.r2-drive-btn:disabled { opacity: 0.55; cursor: default; }
+
+/* ===== Scene ===== */
+
+.r2-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 150px;  /* keep the road's start clear of the HUD */
+  padding-bottom: 60px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+.r2-scroll::-webkit-scrollbar { width: 8px; }
+.r2-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+
+.r2-scene {
+  position: relative;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.r2-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ===== Road layers ===== */
+
+.r2-road-glow {
+  stroke: rgba(168, 85, 247, 0.10);
+  stroke-width: 120;
+  stroke-linecap: round;
+  filter: blur(6px);
+}
+
+.r2-road-asphalt {
+  stroke: #16161e;
+  stroke-width: 92;
+  stroke-linecap: round;
+}
+
+/* Drawn under the asphalt but 8 units wider, so only a thin bright rim
+   shows on each shoulder of the road. */
+.r2-road-edge {
+  stroke: rgba(232, 232, 240, 0.35);
+  stroke-width: 100;
+  stroke-linecap: round;
+}
+
+.r2-road-dashes {
+  stroke: rgba(232, 232, 240, 0.55);
+  stroke-width: 4;
+  stroke-dasharray: 26 30;
+  stroke-linecap: round;
+  animation: r2-dash-crawl 2.6s linear infinite;
+}
+
+@keyframes r2-dash-crawl {
+  to { stroke-dashoffset: -56; }
+}
+
+.r2-road-done {
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 8px var(--path-color, #a855f7));
+}
+
+/* ===== Road type variants =====
+   Each hop rolls a "kind" in JS (straight / gentle / sweep / hold / switchback).
+   Most keep the default avenue look above; these two stand out as genuinely
+   different road types instead of just a different curve. */
+
+/* Straight stretches: a wide, brightly-marked highway run */
+.kind-straight .r2-road-asphalt { stroke-width: 106; }
+.kind-straight .r2-road-edge { stroke-width: 112; }
+.kind-straight .r2-road-dashes { stroke-width: 5; stroke-dasharray: 34 22; }
+
+/* Switchbacks: a slightly narrower mountain-pass turn with a solid amber centre line */
+.kind-switchback .r2-road-asphalt { stroke-width: 82; }
+.kind-switchback .r2-road-edge { stroke-width: 90; }
+.kind-switchback .r2-road-glow { stroke-width: 100; opacity: 0.85; }
+.kind-switchback .r2-road-dashes {
+  stroke: #ffd678;
+  stroke-width: 3.5;
+  stroke-dasharray: 20 12;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 4px rgba(255, 214, 120, 0.55));
+}
+
+.r2-road-text {
+  fill: var(--text2, #8888a0);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.28em;
+}
+
+.r2-lamp-bulb {
+  filter: drop-shadow(0 0 6px rgba(255, 214, 120, 0.8));
+}
+
+/* ===== Stops (markers on the road) ===== */
+
+.r2-stop { cursor: pointer; }
+
+.r2-stop .r2-stop-ring { transition: stroke-opacity 0.25s; }
+.r2-stop:hover .r2-stop-ring { stroke-opacity: 0.55; }
+
+.r2-stop.current .r2-stop-core {
+  animation: r2-stop-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes r2-stop-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ===== The car ===== */
+
+.r2-car { pointer-events: none; }
+
+.r2-car-inner {
+  animation: r2-car-idle 3.2s ease-in-out infinite;
+}
+
+@keyframes r2-car-idle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.r2-car .r2-beams {
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.r2-car.driving .r2-beams { opacity: 1; }
+
+.r2-car.driving .r2-car-inner {
+  animation: r2-car-rumble 0.18s linear infinite;
+}
+
+@keyframes r2-car-rumble {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(0.6px, -0.4px); }
+  75% { transform: translate(-0.6px, 0.4px); }
+}
+
+.r2-headlight {
+  filter: drop-shadow(0 0 4px rgba(255, 241, 178, 0.9));
+}
+
+/* ===== Milestone cards ===== */
+
+.r2-card {
+  position: absolute;
+  width: min(330px, 34vw);
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(15, 15, 22, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s, box-shadow 0.22s;
+  z-index: 2;
+}
+
+.r2-card.left  { transform: translate(calc(-100% - 64px), -50%); }
+.r2-card.right { transform: translate(64px, -50%); }
+
+.r2-card.left:hover  { transform: translate(calc(-100% - 64px), -50%) translateY(-4px); }
+.r2-card.right:hover { transform: translate(64px, -50%) translateY(-4px); }
+
+.r2-card:hover {
+  border-color: color-mix(in srgb, var(--path-color, #a855f7) 45%, transparent);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55), 0 0 30px color-mix(in srgb, var(--path-color, #a855f7) 18%, transparent);
+}
+
+.r2-card.current {
+  border-color: color-mix(in srgb, var(--path-color, #a855f7) 55%, transparent);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.5), 0 0 34px color-mix(in srgb, var(--path-color, #a855f7) 22%, transparent);
+}
+
+/* Connector stub pointing at the road */
+.r2-card::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 46px;
+  height: 1.5px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.25));
+}
+
+.r2-card.left::after  { left: 100%; }
+.r2-card.right::after { right: 100%; transform: scaleX(-1); }
+
+.r2-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.r2-card-num {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--text, #e8e8f0);
+}
+
+.r2-card-milestag {
+  font-size: 8.5px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: var(--path-color, #a855f7);
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--path-color, #a855f7) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--path-color, #a855f7) 30%, transparent);
+}
+
+.r2-card-subnodes {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text2, #8888a0);
+}
+
+.r2-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--text, #e8e8f0);
+  margin-bottom: 6px;
+}
+
+.r2-card-icon { font-size: 18px; }
+
+.r2-card-desc {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text2, #8888a0);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.r2-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.r2-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--status-color, #fff);
+}
+
+.r2-card-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--status-color, #fff);
+  box-shadow: 0 0 8px var(--status-color, #fff);
+}
+
+.r2-card-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: var(--text2, #8888a0);
+  transition: color 0.2s, gap 0.2s;
+}
+
+.r2-card:hover .r2-card-explore { color: var(--path-color, #a855f7); gap: 8px; }
+
+.r2-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text3, #55556a);
+}
+
+/* ===== Light-theme softening ===== */
+
+[data-theme="light"] .r2-root {
+  background:
+    radial-gradient(ellipse 90% 50% at 50% -10%, rgba(168, 85, 247, 0.08), transparent 60%),
+    var(--bg, #fcfcfc);
+}
+
+[data-theme="light"] .r2-hud {
+  background: linear-gradient(to bottom, rgba(252, 252, 252, 0.94) 30%, rgba(252, 252, 252, 0.6) 75%, transparent);
+}
+
+[data-theme="light"] .r2-dashboard,
+[data-theme="light"] .r2-card {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 14px 40px rgba(20, 20, 40, 0.12);
+}
+
+[data-theme="light"] .r2-tabs {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .r2-chip {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* The road itself stays night-time asphalt in both themes — roads are dark —
+   but lift the glow so it doesn't look muddy on a light canvas. */
+[data-theme="light"] .r2-road-asphalt { stroke: #23232e; }
+[data-theme="light"] .r2-road-text { fill: var(--text2, #55556a); }
+
+/* ===== Responsive ===== */
+
+@media (max-width: 900px) {
+  .r2-dashboard { gap: 12px; padding: 8px 12px; flex-wrap: wrap; justify-content: center; }
+  .r2-card { width: min(280px, 44vw); padding: 12px 14px; }
+  .r2-card.left  { transform: translate(calc(-100% - 40px), -50%); }
+  .r2-card.right { transform: translate(40px, -50%); }
+  .r2-card.left:hover  { transform: translate(calc(-100% - 40px), -50%) translateY(-4px); }
+  .r2-card.right:hover { transform: translate(40px, -50%) translateY(-4px); }
+  .r2-card::after { width: 24px; }
+  .r2-card-title { font-size: 14px; }
+  .r2-card-desc { font-size: 11px; }
+}
+
+@media (max-width: 640px) {
+  .r2-hud { padding: 10px 8px 12px; }
+  .r2-tab { font-size: 9px; padding: 6px 10px; }
+  .r2-card { width: 46vw; }
+  .r2-card-desc { display: none; }
+  .r2-card-subnodes { display: none; }
+}

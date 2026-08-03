@@ -21,8 +21,11 @@ import "./styles/mobile-foundation.css";
 // Product surfaces are loaded only when the user opens them. This keeps Monaco,
 // graphing libraries, editors, and simulators out of the landing-page download.
 const Sidebar = React.lazy(() => import("./components/Sidebar"));
+const SidebarModern = React.lazy(() => import("./components/SidebarModern"));
 const GlobalSearchPalette = React.lazy(() => import("./components/GlobalSearchPalette"));
 const RoadmapGraph = React.lazy(() => import("./components/RoadmapGraph"));
+const Roadmap2 = React.lazy(() => import("./components/Roadmap2"));
+const Roadmap2NodeView = React.lazy(() => import("./components/Roadmap2NodeView"));
 const RoadmapMobile = React.lazy(() => import("./pages/roadmap/RoadmapMobile"));
 const ModulePanel = React.lazy(() => import("./components/ModulePanel"));
 const ResourcePanel = React.lazy(() => import("./components/ResourcePanel"));
@@ -120,7 +123,10 @@ const injectDefaultIcons = (paths) => {
 };
 
 function MainApp() {
-  const { user, isAdmin, isLocked, signOut, geminiKey, aiProvider, azureEndpoint, azureKey } = useAuth();
+  const { user, isAdmin, isLocked, signOut, geminiKey, aiProvider, azureEndpoint, azureKey, sidebarConfig } = useAuth();
+  // 'modern' (redesigned rail) is the default; admins can switch back to the
+  // 'legacy' sidebar from the Admin Panel › Sidebar tab.
+  const ActiveSidebar = (sidebarConfig?.variant === "legacy") ? Sidebar : SidebarModern;
   const { theme, toggleTheme } = useTheme();
   // isMobile now comes from the centralized useIsMobile hook (Phase 0 of
   // the mobile redesign) instead of an inline `width <= 768` check.
@@ -397,6 +403,7 @@ function MainApp() {
   try { if (savedViewsStr) savedViews = JSON.parse(savedViewsStr); } catch (e) {}
 
   const [showCurriculumMap, setShowCurriculumMap] = useState(savedViews.showCurriculumMap ?? false);
+  const [showRoadmap2, setShowRoadmap2] = useState(savedViews.showRoadmap2 ?? false);
   const [showIDE, setShowIDE] = useState(savedViews.showIDE ?? false);
   const [showResources, setShowResources] = useState(savedViews.showResources ?? false);
   const [showProgress, setShowProgress] = useState(savedViews.showProgress ?? false);
@@ -465,7 +472,7 @@ function MainApp() {
   useEffect(() => {
     try {
       localStorage.setItem("genai_active_views", JSON.stringify({
-        showCurriculumMap, showIDE, showResources, showProgress, showPlayground,
+        showCurriculumMap, showRoadmap2, showIDE, showResources, showProgress, showPlayground,
         showDSAAnimator, showLearnBug, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
         showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
@@ -477,7 +484,7 @@ function MainApp() {
       console.warn("Failed to save genai_active_views to localStorage:", e);
     }
   }, [
-    showCurriculumMap, showIDE, showResources, showProgress, showPlayground,
+    showCurriculumMap, showRoadmap2, showIDE, showResources, showProgress, showPlayground,
     showDSAAnimator, showLearnBug, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
     showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
@@ -593,6 +600,7 @@ function MainApp() {
   const closeAllPanels = () => {
     setActiveToolHome(null);
     setShowCurriculumMap(false);
+    setShowRoadmap2(false);
     setShowIDE(false);
     setShowResources(false);
     setShowProgress(false);
@@ -705,6 +713,7 @@ function MainApp() {
       case "galaxy": setShowGalaxy(true); break;
       case "knowledge_graph": setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
+      case "roadmap2": setShowRoadmap2(true); break;
       case "progress": setShowProgress(true); break;
       case "manual": setActiveToolHome("manual"); break;
       case "reference": setActiveToolHome("reference"); break;
@@ -1221,12 +1230,13 @@ function MainApp() {
         setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
       <div className="app-layout-root">
-        <Sidebar
+        <ActiveSidebar
           activePath={activePath} setActivePath={p => { setActivePath(p); closeAllPanels(); }}
           paths={pathsData} onReset={handleResetData} isEditMode={isEditMode} setIsEditMode={setIsEditMode}
           onAddPath={() => { setEditData(null); setEditingPath(true); }}
           onEditPath={p => { setEditData({ ...p, id: activePath }); setEditingPath(true); }}
           showCurriculumMap={showCurriculumMap} setShowCurriculumMap={setShowCurriculumMap}
+          showRoadmap2={showRoadmap2} setShowRoadmap2={setShowRoadmap2}
           showIDE={showIDE} setShowIDE={setShowIDE}
           showResources={showResources} setShowResources={setShowResources}
           showProgress={showProgress} setShowProgress={setShowProgress}
@@ -1458,7 +1468,13 @@ function MainApp() {
                                                         <>
                                                           {!freshActiveNode && (
                                                             <>
-                                                              {isMobile && !isEditMode ? (
+                                                              {showRoadmap2 ? (
+                                                                <Roadmap2
+                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                  onNodeClick={handleNodeClick} getNodeState={getNodeState}
+                                                                  completedCount={completedCount}
+                                                                />
+                                                              ) : isMobile && !isEditMode ? (
                                                                 <RoadmapMobile
                                                                   path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
                                                                   onNodeClick={handleNodeClick} getNodeState={getNodeState}
@@ -1480,7 +1496,24 @@ function MainApp() {
                                                               )}
                                                             </>
                                                           )}
-            {freshActiveNode && !activeTopic && (!showModuleDetails || !isMobile) && (
+            {/* Roadmap 2.0 opens its own "Pit Stop" node view instead of the classic three-panel stack */}
+            {freshActiveNode && !activeTopic && showRoadmap2 && (
+                                                          <Roadmap2NodeView
+                                                            node={freshActiveNode}
+                                                            nodeIndex={pathData?.nodes?.findIndex(n => n.id === freshActiveNode.id)}
+                                                            path={pathData}
+                                                            nodeState={getNodeState(freshActiveNode.id)}
+                                                            activeModule={freshActiveModule}
+                                                            setActiveModule={setActiveModule}
+                                                            onMarkNodeState={(state) => handleMarkState(freshActiveNode.id, state)}
+                                                            onMarkModuleStatus={handleMarkModuleStatus}
+                                                            onToggleSubtopicStatus={handleToggleSubtopicStatus}
+                                                            onTopicSelect={handleTopicSelect}
+                                                            onVideoSelect={handleVideoSelect}
+                                                            onBack={() => { setActiveNode(null); setActiveModule(null); setActiveTopic(null); }}
+                                                          />
+                                                        )}
+            {freshActiveNode && !activeTopic && !showRoadmap2 && (!showModuleDetails || !isMobile) && (
                                                           <ModulePanel
                                                             node={freshActiveNode} activeModule={freshActiveModule}
                                                             setActiveModule={(mod) => {
@@ -1495,7 +1528,7 @@ function MainApp() {
                                                             isEditMode={isEditMode} activePath={activePath}
                                                           />
                                                         )}
-                                                        {freshActiveModule && freshActiveNode && !activeTopic && (showModuleDetails || !isMobile) && (
+                                                        {freshActiveModule && freshActiveNode && !activeTopic && !showRoadmap2 && (showModuleDetails || !isMobile) && (
                                                           <DetailPanel
                                                             node={freshActiveNode} module={freshActiveModule} pathColor={pathData.color}
                                                             onMarkDone={() => { handleMarkState(freshActiveNode.id, "done"); setActiveNode(null); }}
@@ -1514,7 +1547,7 @@ function MainApp() {
                                                             }}
                                                           />
                                                         )}
-                                                        {freshActiveModule && freshActiveNode && !activeTopic && !isMobile && (
+                                                        {freshActiveModule && freshActiveNode && !activeTopic && !showRoadmap2 && !isMobile && (
                                                           <ResourcePanel
                                                             module={freshActiveModule}
                                                             pathColor={pathData.color}
