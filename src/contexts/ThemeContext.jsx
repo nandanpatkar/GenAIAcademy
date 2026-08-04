@@ -233,7 +233,15 @@ const LS_KEY = 'genai_appearance';
 function loadFromLocalStorage() {
   try {
     const raw = localStorage.getItem(LS_KEY);
-    if (raw) return { ...THEME_DEFAULTS, ...JSON.parse(raw) };
+    if (raw) {
+      const merged = { ...THEME_DEFAULTS, ...JSON.parse(raw) };
+      // Migration: Reduce Motion defaults off — clear any stale persisted `true`.
+      if (merged.reduceMotion) {
+        merged.reduceMotion = false;
+        localStorage.setItem(LS_KEY, JSON.stringify(merged));
+      }
+      return merged;
+    }
   } catch (_) {}
   return { ...THEME_DEFAULTS };
 }
@@ -256,6 +264,8 @@ export const ThemeProvider = ({ children }) => {
           .single();
         if (data?.paths_data?.appearance) {
           const remote = { ...THEME_DEFAULTS, ...data.paths_data.appearance };
+          // Migration: Reduce Motion defaults off — clear any stale persisted `true`.
+          remote.reduceMotion = false;
           setAppearance(remote);
           localStorage.setItem(LS_KEY, JSON.stringify(remote));
         }
