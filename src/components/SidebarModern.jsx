@@ -12,6 +12,8 @@ import {
   resolveEffectiveLayout, resolveItemVisibility, SIDEBAR_ITEM_REGISTRY,
 } from "../config/sidebarRegistry";
 import { getActiveNavId, runNavClick, buildPathList } from "../config/sidebarNav";
+import { AI_PROVIDER_LIST, getProviderMeta } from "../config/aiProviders";
+import ProviderIcon from "./ProviderIcon";
 
 const ADMIN_GROUP_ITEMS = [
   { icon: Shield, label: "Admin Panel", id: "admin_management" },
@@ -61,21 +63,28 @@ export default function SidebarModern(props) {
   const {
     isAdmin, isAdminView, setIsAdminView, allowAimlForAll,
     sidebarConfig, persistSidebarConfig,
-    geminiKey, updateGeminiKey, aiProvider, updateAiProvider,
-    azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey,
+    aiProvider, updateAiProvider, providerConfigs, updateProviderConfig,
   } = useAuth();
 
-  const [localKey, setLocalKey] = useState(geminiKey || "");
   const [localProvider, setLocalProvider] = useState(aiProvider || "gemini");
-  const [localAzureEndpoint, setLocalAzureEndpoint] = useState(azureEndpoint || "");
-  const [localAzureKey, setLocalAzureKey] = useState(azureKey || "");
+  // Editable copy of the selected provider's fields: { endpoint, key, model }.
+  const [localFields, setLocalFields] = useState({});
 
   useEffect(() => {
-    setLocalKey(geminiKey || "");
     setLocalProvider(aiProvider || "gemini");
-    setLocalAzureEndpoint(azureEndpoint || "");
-    setLocalAzureKey(azureKey || "");
-  }, [geminiKey, aiProvider, azureEndpoint, azureKey]);
+  }, [aiProvider]);
+
+  // Load the stored fields whenever the chosen provider changes.
+  useEffect(() => {
+    setLocalFields({ ...(providerConfigs[localProvider] || {}) });
+  }, [localProvider, providerConfigs]);
+
+  const providerMeta = getProviderMeta(localProvider);
+  const setField = (name, value) => setLocalFields((prev) => ({ ...prev, [name]: value }));
+  const saveProviderConfig = () => {
+    updateProviderConfig(localProvider, localFields);
+    updateAiProvider(localProvider);
+  };
 
   const effectiveLayout = useMemo(() => resolveEffectiveLayout(sidebarConfig?.layout), [sidebarConfig?.layout]);
   const sidebarEditable = isAdmin && isEditMode && !isCollapsed;
@@ -556,33 +565,32 @@ export default function SidebarModern(props) {
                 <p className="sb-menu-note">Required for Atlas. Stored only for your signed-in account.</p>
 
                 <div className="sb-cred">
-                  <select value={localProvider} onChange={(e) => setLocalProvider(e.target.value)} className="sb-cred-field">
-                    <option value="gemini">Google Gemini</option>
-                    <option value="azure-openai">Azure OpenAI</option>
-                  </select>
-                  {localProvider === "gemini" && (
-                    <input type="password" placeholder="Paste Gemini key…" value={localKey} onChange={(e) => setLocalKey(e.target.value)} className="sb-cred-field mono" />
-                  )}
-                  {localProvider === "azure-openai" && (
-                    <>
-                      <input type="text" placeholder="Azure OpenAI endpoint" value={localAzureEndpoint} onChange={(e) => setLocalAzureEndpoint(e.target.value)} className="sb-cred-field mono" />
-                      <input type="password" placeholder="Azure OpenAI key" value={localAzureKey} onChange={(e) => setLocalAzureKey(e.target.value)} className="sb-cred-field mono" />
-                    </>
-                  )}
-                  <button
-                    className="sb-cred-save"
-                    onClick={() => {
-                      updateGeminiKey(localKey);
-                      updateAiProvider(localProvider);
-                      updateAzureEndpoint(localAzureEndpoint);
-                      updateAzureKey(localAzureKey);
-                    }}
-                  >
+                  <div className="sb-cred-provider">
+                    <ProviderIcon providerId={localProvider} size={16} />
+                    <select value={localProvider} onChange={(e) => setLocalProvider(e.target.value)} className="sb-cred-field">
+                      {AI_PROVIDER_LIST.map((p) => (
+                        <option key={p.id} value={p.id}>{p.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {providerMeta.fields.map((field) => (
+                    <input
+                      key={field.name}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      value={localFields[field.name] || ""}
+                      onChange={(e) => setField(field.name, e.target.value)}
+                      className="sb-cred-field mono"
+                    />
+                  ))}
+                  <button className="sb-cred-save" onClick={saveProviderConfig}>
                     Save config
                   </button>
                   <div className="sb-cred-foot">
                     <span>Keys stored locally.</span>
-                    <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Get key <ExternalLink size={10} /></a>
+                    {providerMeta.docsUrl && (
+                      <a href={providerMeta.docsUrl} target="_blank" rel="noopener noreferrer">Get key <ExternalLink size={10} /></a>
+                    )}
                   </div>
                 </div>
 
@@ -988,6 +996,8 @@ const styles = `
   .sb-modern .sb-menu-kicker { padding: 4px 10px 2px; color: var(--text3); font-size: 9px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; }
   .sb-modern .sb-menu-note { margin: 0; padding: 0 10px 8px; color: var(--text3); font-size: 10px; line-height: 1.45; }
   .sb-modern .sb-cred { display: flex; flex-direction: column; gap: 6px; padding: 0 8px 6px; }
+  .sb-modern .sb-cred-provider { display: flex; align-items: center; gap: 8px; }
+  .sb-modern .sb-cred-provider .sb-cred-field { flex: 1; }
   .sb-modern .sb-cred-field { width: 100%; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; background: var(--white-3); border: 1px solid var(--border); color: var(--text); font-size: 11px; outline: none; transition: border-color .16s; }
   .sb-modern .sb-cred-field:focus { border-color: color-mix(in srgb, var(--neon) 50%, transparent); }
   .sb-modern .sb-cred-field.mono { font-family: var(--mono, monospace); }

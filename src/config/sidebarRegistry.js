@@ -3,7 +3,7 @@ import {
   Terminal, Code2, Boxes, Sparkles, Layers, Box,
   BookOpen, BookMarked, Bookmark, GitBranch,
   HelpCircle, Users, HeartHandshake, CheckSquare, GraduationCap,
-  Database, Clapperboard, GitCommit, FileText, Globe, Car,
+  Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -14,6 +14,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
   home2: { icon: Rocket, label: "Home 2.0", description: "Mission-control view of the whole academy" },
   curriculum_map: { icon: Network, label: "Roadmaps", description: "See the full learning journey" },
   roadmap2: { icon: Car, label: "Roadmap 2.0", description: "Drive your study path down a highway" },
+  roadmap3: { icon: Plane, label: "Roadmap 3.0", description: "Scroll to fly through your study path as a world" },
   progress: { icon: CircleDashed, label: "Progress", description: "Track what you have completed" },
   galaxy: { icon: Orbit, label: "Explore Concepts", description: "Discover connected topics" },
   knowledge_graph: { icon: Share2, label: "Concept Connections", description: "See how ideas relate" },
@@ -37,7 +38,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
   interviewer: { icon: Users, label: "AI Interviewer", description: "Practice realistic interviews" },
   gemini_interviewer: { icon: Sparkles, label: "Gemini Interview", description: "Live data science voice interview" },
   emotional_support: { icon: HeartHandshake, label: "Emotional Support", description: "A calm space to talk things through", defaultVisibility: "admin" },
-  quiz: { icon: CheckSquare, label: "Quiz", description: "Test your understanding" },
+  quiz: { icon: CheckSquare, label: "Quiz", description: "Practice quizzes and certification exams" },
 
   community: { icon: Users, label: "Community", description: "Chat and connect with learners" },
   tasks: { icon: CheckSquare, label: "Notes", description: "Capture ideas and reminders" },
@@ -60,7 +61,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 // The out-of-the-box grouping/order, used whenever no admin customization
 // (sidebarConfig.layout) has been saved yet.
 export const DEFAULT_SIDEBAR_LAYOUT = [
-  { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "progress", "galaxy", "knowledge_graph"] },
+  { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "quiz"] },

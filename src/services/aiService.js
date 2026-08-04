@@ -1,27 +1,42 @@
+import { AI_PROVIDERS, getProviderMeta } from "../config/aiProviders";
+
 const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
 const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
 
 const GEMINI_MODEL = "gemini-flash-latest";
-let dynamicGeminiKey = "";
 let currentAiProvider = "gemini";
-let dynamicAzureEndpoint = "";
-let dynamicAzureKey = "";
+// Per-provider credentials, keyed by provider id:
+//   { gemini: { key }, "azure-openai": { endpoint, key, model }, glm: {...}, ... }
+let providerConfigs = {};
 
 // ─── External Controls ──────────────────────────────────────────────────────────
-export const setDynamicGeminiKey = (key) => {
-  dynamicGeminiKey = key || "";
-};
-
 export const setAiProvider = (provider) => {
   currentAiProvider = provider || "gemini";
 };
 
+// Preferred API: push the whole credential map (used by App.jsx / AuthContext).
+export const setProviderConfigs = (configs) => {
+  providerConfigs = configs && typeof configs === "object" ? configs : {};
+};
+
+export const setProviderConfig = (providerId, config) => {
+  if (!providerId) return;
+  providerConfigs = { ...providerConfigs, [providerId]: { ...(config || {}) } };
+};
+
+const getProviderConfig = (providerId) => providerConfigs[providerId] || {};
+
+// ─── Backward-compatible setters (legacy call sites) ─────────────────────────
+export const setDynamicGeminiKey = (key) => {
+  setProviderConfig("gemini", { ...getProviderConfig("gemini"), key: key || "" });
+};
+
 export const setAzureEndpoint = (endpoint) => {
-  dynamicAzureEndpoint = endpoint || "";
+  setProviderConfig("azure-openai", { ...getProviderConfig("azure-openai"), endpoint: endpoint || "" });
 };
 
 export const setAzureKey = (key) => {
-  dynamicAzureKey = key || "";
+  setProviderConfig("azure-openai", { ...getProviderConfig("azure-openai"), key: key || "" });
 };
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -112,7 +127,9 @@ const normalizeStudyData = (json) => {
 
 // ─── Internal: call Gemini ──────────────────────────────────────────────────
 const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
-  const apiKey = dynamicGeminiKey;
+  const cfg = getProviderConfig("gemini");
+  const apiKey = cfg.key || "";
+  const model = cfg.model || GEMINI_MODEL;
   if (!apiKey || apiKey.includes("your-api-key")) {
     throw new Error("Missing personal Gemini API key. Add it in Settings before using AI.");
   }
@@ -121,7 +138,7 @@ const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode
   const chatMessages = messages.filter(m => m.role !== 'system');
 
   try {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -161,28 +178,35 @@ const callGemini = async (messages, maxTokens = 800, temperature = 0.7, jsonMode
   }
 };
 
+// Ensures a JSON instruction is present in the chat when jsonMode is on, so
+// OpenAI-style providers that don't support response_format still return JSON.
+const ensureJsonInstruction = (chatMessages) => {
+  const sysMsg = chatMessages.find((m) => m.role === "system");
+  if (sysMsg) {
+    if (!sysMsg.content.toLowerCase().includes("json")) {
+      sysMsg.content += "\nIMPORTANT: Return ONLY valid JSON.";
+    }
+  } else {
+    chatMessages.unshift({ role: "system", content: "IMPORTANT: Return ONLY valid JSON." });
+  }
+  return chatMessages;
+};
+
 const callAzureOpenAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
-  const apiKey = dynamicAzureKey;
-  const endpoint = dynamicAzureEndpoint;
+  const cfg = getProviderConfig("azure-openai");
+  const apiKey = cfg.key || "";
+  const endpoint = cfg.endpoint || "";
+  const deployment = cfg.model || getProviderMeta("azure-openai").defaultModel || "gpt-4o";
   if (!apiKey || !endpoint) {
-    throw new Error("Missing Azure OpenAI Key or Endpoint. Update in Admin portal.");
+    throw new Error("Missing Azure OpenAI Key or Endpoint. Add them in Settings before using AI.");
   }
 
   // Ensure JSON instructions exist in system prompt if jsonMode is true
   let chatMessages = messages.map(m => ({ role: m.role === 'model' ? 'assistant' : m.role, content: m.content }));
-  if (jsonMode) {
-    const sysMsg = chatMessages.find(m => m.role === 'system');
-    if (sysMsg) {
-      if (!sysMsg.content.toLowerCase().includes("json")) {
-        sysMsg.content += "\nIMPORTANT: Return ONLY valid JSON.";
-      }
-    } else {
-      chatMessages.unshift({ role: 'system', content: 'IMPORTANT: Return ONLY valid JSON.' });
-    }
-  }
+  if (jsonMode) chatMessages = ensureJsonInstruction(chatMessages);
 
   try {
-    const url = `${endpoint.replace(/\/+$/, '')}/openai/deployments/gpt-4o/chat/completions?api-version=2024-02-15-preview`;
+    const url = `${endpoint.replace(/\/+$/, '')}/openai/deployments/${deployment}/chat/completions?api-version=2024-02-15-preview`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -210,12 +234,63 @@ const callAzureOpenAI = async (messages, maxTokens = 800, temperature = 0.7, jso
   }
 };
 
-// ─── Unified AI Caller: Fallback logic ──────────────────────────────────────
-export const callAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) => {
-  if (currentAiProvider === "azure-openai") {
-    return await callAzureOpenAI(messages, maxTokens, temperature, jsonMode);
+// Generic caller for any OpenAI-compatible /chat/completions endpoint.
+// Covers OpenAI, GLM (Zhipu), Kimi (Moonshot), Grok (xAI), Groq, DeepSeek, etc.
+const callOpenAICompatible = async (providerId, messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
+  const meta = getProviderMeta(providerId);
+  const cfg = getProviderConfig(providerId);
+  const apiKey = cfg.key || "";
+  const endpoint = (cfg.endpoint || meta.defaultEndpoint || "").replace(/\/+$/, "");
+  const model = cfg.model || meta.defaultModel;
+  if (!apiKey || !endpoint) {
+    throw new Error(`Missing ${meta.label} API key or Base URL. Add them in Settings before using AI.`);
   }
-  return await callGemini(messages, maxTokens, temperature, jsonMode);
+
+  let chatMessages = messages.map((m) => ({ role: m.role === "model" ? "assistant" : m.role, content: m.content }));
+  // Rely on a prompt-level JSON instruction rather than response_format so we
+  // stay compatible with providers that don't implement the OpenAI json_object mode.
+  if (jsonMode) chatMessages = ensureJsonInstruction(chatMessages);
+
+  try {
+    const response = await fetch(`${endpoint}/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: chatMessages,
+        max_tokens: maxTokens,
+        temperature,
+      }),
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      throw new Error(errData.error?.message || `${meta.label} Error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content;
+    if (!text) throw new Error(`${meta.label} returned an empty response. Check your key, model, or quota.`);
+    return text;
+  } catch (error) {
+    console.error(`${meta.label} call failed:`, error);
+    throw error;
+  }
+};
+
+// ─── Unified AI Caller: routes to the active provider by its adapter ─────────
+const dispatchProvider = async (providerId, messages, maxTokens, temperature, jsonMode) => {
+  const meta = getProviderMeta(providerId);
+  if (meta.adapter === "azure") return callAzureOpenAI(messages, maxTokens, temperature, jsonMode);
+  if (meta.adapter === "openai") return callOpenAICompatible(providerId, messages, maxTokens, temperature, jsonMode);
+  return callGemini(messages, maxTokens, temperature, jsonMode);
+};
+
+export const callAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) => {
+  return await dispatchProvider(currentAiProvider, messages, maxTokens, temperature, jsonMode);
 };
 
 // ─── Public: AI Tutor ────────────────────────────────────────────────────────
@@ -314,9 +389,7 @@ ${projectContext}${webContext}`;
     { role: "user", content: userMessage },
   ];
 
-  return provider === "azure-openai"
-    ? await callAzureOpenAI(messages, 1200, 0.65)
-    : await callGemini(messages, 1200, 0.65);
+  return await dispatchProvider(provider, messages, 1200, 0.65, false);
 };
 
 // ─── Public: Project Ideas ───────────────────────────────────────────────────

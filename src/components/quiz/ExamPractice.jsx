@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Icon } from "@iconify/react";
-import { Search, RefreshCw, ChevronRight, ArrowUpRight, Clock3, Layers3, Sparkles, SlidersHorizontal } from "lucide-react";
+import {
+  Search, RefreshCw, ChevronRight, ArrowUpRight, Layers3,
+  SlidersHorizontal, Cloud, ShieldCheck, BookOpenCheck,
+  Gauge, Route, CheckCircle2,
+} from "lucide-react";
 import ExamHub from "./examBank/ExamHub";
 import { getVendorMeta } from "./examBank/vendorMeta";
 
@@ -22,12 +26,18 @@ import { getVendorMeta } from "./examBank/vendorMeta";
  *   public/data/exam-list.json  → browse/search list (static, lazy-fetched)
  *   /api/exam?resource=*         → cache-first per-resource fetches (Supabase)
  */
-export default function ExamPractice({ onStartExam }) {
+export default function ExamPractice({ onStartExam, theme = "dark", onWorkspaceChange }) {
   const [allExams, setAllExams] = useState([]);
   const [examsLoading, setExamsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [vendorFilter, setVendorFilter] = useState("All tracks");
   const [selected, setSelected] = useState(null); // { slug, name, vendor }
+  const [showClaude, setShowClaude] = useState(false);
+
+  useEffect(() => {
+    onWorkspaceChange?.(showClaude);
+    return () => onWorkspaceChange?.(false);
+  }, [showClaude, onWorkspaceChange]);
 
   useEffect(() => {
     fetch("/data/exam-list.json")
@@ -57,6 +67,10 @@ export default function ExamPractice({ onStartExam }) {
 
   const vendors = useMemo(() => ["All tracks", ...new Set(allExams.map((e) => e.vendor))], [allExams]);
   const featured = filteredExams[0];
+  const awsStarter = allExams.find((exam) => exam.slug === "aws-cloud-practitioner") || allExams.find((exam) => exam.vendor.startsWith("AWS"));
+  const azureStarter = allExams.find((exam) => exam.slug === "azure-az-900") || allExams.find((exam) => exam.vendor === "Azure");
+  const gcpStarter = allExams.find((exam) => exam.slug === "gcp-cloud-digital-leader") || allExams.find((exam) => exam.vendor === "Google / GCP");
+  const databricksStarter = allExams.find((exam) => exam.slug === "databricks-engineer") || allExams.find((exam) => exam.vendor === "Databricks");
 
   const openExam = (exam) => setSelected(exam);
 
@@ -64,31 +78,85 @@ export default function ExamPractice({ onStartExam }) {
     return <ExamHub exam={selected} onBack={() => setSelected(null)} onStartExam={onStartExam} />;
   }
 
+  if (showClaude) {
+    return <ClaudeCertificationWorkspace theme={theme} onBack={() => setShowClaude(false)} />;
+  }
+
   return (
     <div className="quiz-bank-page">
       <section className="quiz-bank-hero">
         <div className="quiz-bank-hero-copy">
-          <div className="quiz-eyebrow"><span className="quiz-eyebrow-dot" /> PRACTICE LAB <span className="quiz-eyebrow-line" /> 110 EXAM TRACKS</div>
-          <h1>Train for the moment<br /><span>that matters.</span></h1>
-          <p>Choose a certification track, sharpen your weak spots, and turn every answer into momentum.</p>
+          <div className="quiz-eyebrow"><span className="quiz-eyebrow-dot" /> CLOUD CERTIFICATION ACADEMY <span className="quiz-eyebrow-line" /> {allExams.length || "110"} EXAM TRACKS</div>
+          <h1>Build cloud fluency.<br /><span>Prove what you know.</span></h1>
+          <p>One focused home for guided study, exam-style practice, flashcards, and the confidence to sit your certification.</p>
           <div className="quiz-hero-actions">
-            <button className="quiz-btn quiz-btn-primary" onClick={() => featured && openExam(featured)} disabled={!featured}>
-              {featured ? "Explore featured track" : "Loading tracks"} <ArrowUpRight size={16} />
+            <button className="quiz-btn quiz-btn-primary" onClick={() => awsStarter && openExam(awsStarter)} disabled={!awsStarter}>
+              Start with cloud foundations <ArrowUpRight size={16} />
             </button>
-            <span className="quiz-hero-note"><Sparkles size={14} /> Adaptive practice with AI support</span>
+            <a className="quiz-hero-link" href="#certification-paths">Explore learning paths <ChevronRight size={15} /></a>
           </div>
+          <div className="quiz-trust-row"><span><CheckCircle2 size={13} /> Exam-style questions</span><span><CheckCircle2 size={13} /> AI explanations</span><span><CheckCircle2 size={13} /> Progress review</span></div>
         </div>
         <div className="quiz-bank-hero-visual" aria-hidden="true">
-          <div className="quiz-orbit quiz-orbit-one" />
-          <div className="quiz-orbit quiz-orbit-two" />
-          <div className="quiz-hero-core"><span>Q</span><small>READY<br />WHEN<br />YOU ARE</small></div>
-          <div className="quiz-float-card quiz-float-card-top"><span className="quiz-float-icon is-green"><Layers3 size={14} /></span><div><strong>4</strong><small>learning paths</small></div></div>
-          <div className="quiz-float-card quiz-float-card-bottom"><span className="quiz-float-icon is-orange"><Clock3 size={14} /></span><div><strong>∞</strong><small>practice sessions</small></div></div>
+          <div className="quiz-cloud-grid" />
+          <div className="quiz-cloud-line quiz-cloud-line-a" />
+          <div className="quiz-cloud-line quiz-cloud-line-b" />
+          <div className="quiz-cloud-node quiz-cloud-node-aws"><Icon icon="logos:aws" width={42} /></div>
+          <div className="quiz-cloud-node quiz-cloud-node-core"><Cloud size={39} /><span>CLOUD<br />READY</span></div>
+          <div className="quiz-cloud-node quiz-cloud-node-azure"><Icon icon="logos:microsoft-azure" width={40} /></div>
+          <div className="quiz-cloud-node quiz-cloud-node-gcp"><Icon icon="logos:google-cloud" width={34} /></div>
+          <div className="quiz-cloud-node quiz-cloud-node-databricks"><Icon icon="simple-icons:databricks" width={31} /></div>
+          <div className="quiz-float-card quiz-float-card-top"><span className="quiz-float-icon is-green"><Gauge size={14} /></span><div><strong>84%</strong><small>practice readiness</small></div></div>
+          <div className="quiz-float-card quiz-float-card-bottom"><span className="quiz-float-icon is-orange"><ShieldCheck size={14} /></span><div><strong>4</strong><small>study modes</small></div></div>
+        </div>
+      </section>
+
+      <section className="quiz-learning-strip" aria-label="How certification preparation works">
+        <div><span>01</span><Route size={17} /><strong>Choose a path</strong><small>Match a credential to your role</small></div>
+        <i />
+        <div><span>02</span><BookOpenCheck size={17} /><strong>Learn the domains</strong><small>Study guides and flashcards</small></div>
+        <i />
+        <div><span>03</span><Gauge size={17} /><strong>Test readiness</strong><small>Timed, exam-style practice</small></div>
+      </section>
+
+      <section className="quiz-primary-paths" id="certification-paths">
+        <div className="quiz-section-heading"><span className="quiz-section-kicker">01 / FEATURED PATHS</span><h2>Pick the cloud you want to master</h2><p>Start broad, build practical depth, then move into role-based certification.</p></div>
+        <div className="quiz-path-grid">
+          <PathCard
+            theme="aws" vendor="AWS" icon="logos:aws" color="#ff9900" secondary="#8aa4bd" eyebrow="FOUNDATIONAL → PROFESSIONAL"
+            title="AWS certification path" description="Build from cloud concepts and shared responsibility into resilient architecture, operations, data, and generative AI."
+            modules={["Cloud foundations", "Architecture & security", "Role-based practice"]}
+            exam={awsStarter} examCount={allExams.filter((exam) => exam.vendor.startsWith("AWS")).length} onOpen={openExam}
+          />
+          <PathCard
+            theme="azure" vendor="Microsoft Azure" icon="logos:microsoft-azure" color="#36c3ff" secondary="#0078d4" eyebrow="FUNDAMENTALS → EXPERT"
+            title="Azure certification path" description="Connect Azure services to real job roles across administration, development, architecture, data, and AI."
+            modules={["Azure fundamentals", "Identity & governance", "Applied role skills"]}
+            exam={azureStarter} examCount={allExams.filter((exam) => exam.vendor === "Azure").length} onOpen={openExam}
+          />
+          <PathCard
+            theme="gcp" vendor="Google Cloud" icon="logos:google-cloud" color="#4285f4" secondary="#34a853" eyebrow="FOUNDATIONAL → PROFESSIONAL"
+            title="Google Cloud certification path" description="Turn Google Cloud’s data, AI, infrastructure, and security services into practical skills for modern cloud roles."
+            modules={["Cloud digital leader", "Data & AI systems", "Professional role skills"]}
+            exam={gcpStarter} examCount={allExams.filter((exam) => exam.vendor === "Google / GCP").length} onOpen={openExam}
+          />
+          <PathCard
+            theme="databricks" vendor="Databricks" icon="simple-icons:databricks" color="#ff3621" secondary="#ff8f7f" eyebrow="LAKEHOUSE → GENERATIVE AI"
+            title="Databricks certification path" description="Master the lakehouse from Apache Spark and data engineering through machine learning, analytics, administration, and GenAI."
+            modules={["Lakehouse foundations", "Data & ML workloads", "Platform specialization"]}
+            exam={databricksStarter} examCount={allExams.filter((exam) => exam.vendor === "Databricks").length} onOpen={openExam}
+          />
+          <PathCard
+            theme="claude" vendor="Claude" icon="simple-icons:anthropic" color="#d97757" secondary="#e9b9a7" eyebrow="ASSOCIATE → DEVELOPER"
+            title="Claude certification path" description="Build disciplined Claude skills from structured prompting and output evaluation through APIs, agents, tools, MCP, and production delivery."
+            modules={["Associate foundations", "Developer systems", "Practice & review"]}
+            countLabel="2 certifications" onAction={() => setShowClaude(true)}
+          />
         </div>
       </section>
 
       <section className="quiz-bank-toolbar">
-        <div className="quiz-section-heading"><span className="quiz-section-kicker">01 / EXAM BANK</span><h2>Find your next challenge</h2></div>
+        <div className="quiz-section-heading"><span className="quiz-section-kicker">02 / COMPLETE LIBRARY</span><h2>Explore every exam track</h2></div>
         <div className="quiz-bank-search-wrap"><Search size={17} /><input type="search" placeholder="Search exams, clouds, or roles" value={search} onChange={(e) => setSearch(e.target.value)} /><kbd>⌘ K</kbd></div>
       </section>
 
@@ -126,6 +194,33 @@ export default function ExamPractice({ onStartExam }) {
         </>
       )}
     </div>
+  );
+}
+
+function PathCard({ theme, vendor, icon, color, secondary, eyebrow, title, description, modules, exam, examCount, countLabel, onOpen, onAction }) {
+  return (
+    <article className={`quiz-path-card quiz-path-card--${theme}`} style={{ "--path-color": color, "--path-secondary": secondary }}>
+      <div className="quiz-path-art" aria-hidden="true"><i /><i /><i /><i /></div>
+      <div className="quiz-path-card-top"><span className="quiz-path-logo"><Icon icon={icon} width={43} /></span><span className="quiz-path-count">{countLabel || `${examCount || "—"} exam tracks`}</span></div>
+      <span className="quiz-path-eyebrow">{eyebrow}</span>
+      <h3>{title}</h3>
+      <p>{description}</p>
+      <div className="quiz-path-modules">{modules.map((module, index) => <span key={module}><i>{index + 1}</i>{module}</span>)}</div>
+      <button onClick={() => onAction ? onAction() : exam && onOpen(exam)} disabled={!onAction && !exam}>Begin {vendor} path <ArrowUpRight size={16} /></button>
+    </article>
+  );
+}
+
+function ClaudeCertificationWorkspace({ theme, onBack }) {
+  const childTheme = theme === "light" ? "light" : "dark";
+  return (
+    <section className="quiz-claude-workspace quiz-claude-workspace--embedded" aria-label="Claude certification workspace">
+      <button className="quiz-claude-back" onClick={onBack}>← Back to certification paths</button>
+      <div className="quiz-claude-frame-shell">
+        <div className="quiz-claude-frame-bar"><span><i /> Claude Certifications</span><small>Associate · Developer</small></div>
+        <iframe className="quiz-claude-frame" src={`/claude-certificate/index.html?theme=${childTheme}`} title="Claude Certifications — Associate and Developer courses" loading="eager" />
+      </div>
+    </section>
   );
 }
 

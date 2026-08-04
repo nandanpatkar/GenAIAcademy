@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../config/supabaseClient';
+import { AI_PROVIDERS } from '../config/aiProviders';
 
 const AuthContext = createContext({});
 
@@ -19,6 +20,27 @@ const AI_SETTINGS_COOKIES = {
 };
 
 const personalAiStorageKey = (name, userId) => `genai_${userId}_${name}`;
+
+// One localStorage blob holds every provider's credentials, keyed by provider id:
+//   { gemini: { key }, "azure-openai": { endpoint, key, model }, glm: {...}, ... }
+const providerConfigsStorageKey = (userId) => `genai_${userId}_provider_configs`;
+
+const readProviderConfigs = (userId) => {
+  try {
+    const raw = localStorage.getItem(providerConfigsStorageKey(userId));
+    if (raw) return JSON.parse(raw) || {};
+  } catch {
+    /* fall through to legacy migration */
+  }
+  // Migrate legacy per-field keys (gemini_key / azure_endpoint / azure_key).
+  const legacy = {};
+  const geminiKey = localStorage.getItem(personalAiStorageKey('gemini_key', userId));
+  const azureEndpoint = localStorage.getItem(personalAiStorageKey('azure_endpoint', userId));
+  const azureKey = localStorage.getItem(personalAiStorageKey('azure_key', userId));
+  if (geminiKey) legacy.gemini = { key: geminiKey };
+  if (azureEndpoint || azureKey) legacy['azure-openai'] = { endpoint: azureEndpoint || '', key: azureKey || '' };
+  return legacy;
+};
 
 function setAiSettingsCookie(name, value) {
   const secure = window.location.protocol === 'https:' ? '; Secure' : '';
@@ -41,19 +63,40 @@ export const AuthProvider = ({ children }) => {
   const [sidebarConfig, setSidebarConfig] = useState(null);
   // AI credentials are personal settings. They are intentionally scoped to
   // the signed-in user and never fall back to the Admin Panel's global row.
-  const [geminiKey, setGeminiKey] = useState("");
   const [aiProvider, setAiProvider] = useState("gemini");
-  const [azureEndpoint, setAzureEndpoint] = useState("");
-  const [azureKey, setAzureKey] = useState("");
+  // Generic credential map for every provider in the registry.
+  const [providerConfigs, setProviderConfigs] = useState({});
   const [isLocked, setIsLocked] = useState(false);
+
+  // Backward-compatible derived values for the two original providers, so
+  // existing consumers (App sync effect, older settings panels) keep working.
+  const geminiKey = providerConfigs.gemini?.key || "";
+  const azureEndpoint = providerConfigs["azure-openai"]?.endpoint || "";
+  const azureKey = providerConfigs["azure-openai"]?.key || "";
   const [loading, setLoading] = useState(true);
   const [isAdminView, setIsAdminView] = useState(() => localStorage.getItem('genai_isAdminView') !== 'false'); // Default to true if not set
 
 
-  const updateGeminiKey = (key) => {
-    setGeminiKey(key);
-    if (user?.id) localStorage.setItem(personalAiStorageKey('gemini_key', user.id), key);
-    setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, key);
+  // Mirror gemini/azure credentials into cookies so the same-origin Workspace
+  // Notes copilot (api/copilot.js) can read the visitor's own keys. Other
+  // providers are frontend-only (used by aiService) and don't need cookies.
+  const syncLegacyCookies = (configs, provider) => {
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, provider);
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, configs.gemini?.key || "");
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, configs["azure-openai"]?.endpoint || "");
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, configs["azure-openai"]?.key || "");
+  };
+
+  // Generic: merge a patch into one provider's config and persist everything.
+  const updateProviderConfig = (providerId, patch) => {
+    setProviderConfigs((prev) => {
+      const next = { ...prev, [providerId]: { ...(prev[providerId] || {}), ...(patch || {}) } };
+      if (user?.id) {
+        localStorage.setItem(providerConfigsStorageKey(user.id), JSON.stringify(next));
+      }
+      syncLegacyCookies(next, aiProvider);
+      return next;
+    });
   };
 
   const updateAiProvider = (provider) => {
@@ -62,17 +105,10 @@ export const AuthProvider = ({ children }) => {
     setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, provider);
   };
 
-  const updateAzureEndpoint = (endpoint) => {
-    setAzureEndpoint(endpoint);
-    if (user?.id) localStorage.setItem(personalAiStorageKey('azure_endpoint', user.id), endpoint);
-    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, endpoint);
-  };
-
-  const updateAzureKey = (key) => {
-    setAzureKey(key);
-    if (user?.id) localStorage.setItem(personalAiStorageKey('azure_key', user.id), key);
-    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, key);
-  };
+  // Backward-compatible helpers for the two original providers.
+  const updateGeminiKey = (key) => updateProviderConfig("gemini", { key });
+  const updateAzureEndpoint = (endpoint) => updateProviderConfig("azure-openai", { endpoint });
+  const updateAzureKey = (key) => updateProviderConfig("azure-openai", { key });
 
   // Same sentinel-row-upsert pattern AdminManagement's updateGlobalConfig uses —
   // always rewrites the whole paths_data blob, so every field it knows about
@@ -99,27 +135,20 @@ export const AuthProvider = ({ children }) => {
   // on logout prevents one browser user from being reused by another.
   useEffect(() => {
     if (!user?.id) {
-      setGeminiKey("");
       setAiProvider("gemini");
-      setAzureEndpoint("");
-      setAzureKey("");
+      setProviderConfigs({});
       Object.values(AI_SETTINGS_COOKIES).forEach((name) => setAiSettingsCookie(name, ""));
       return;
     }
 
-    const personalGeminiKey = localStorage.getItem(personalAiStorageKey('gemini_key', user.id)) || "";
     const personalProvider = localStorage.getItem(personalAiStorageKey('ai_provider', user.id)) || "gemini";
-    const personalAzureEndpoint = localStorage.getItem(personalAiStorageKey('azure_endpoint', user.id)) || "";
-    const personalAzureKey = localStorage.getItem(personalAiStorageKey('azure_key', user.id)) || "";
+    const personalConfigs = readProviderConfigs(user.id);
 
-    setGeminiKey(personalGeminiKey);
     setAiProvider(personalProvider);
-    setAzureEndpoint(personalAzureEndpoint);
-    setAzureKey(personalAzureKey);
-    setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, personalGeminiKey);
-    setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, personalProvider);
-    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, personalAzureEndpoint);
-    setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, personalAzureKey);
+    setProviderConfigs(personalConfigs);
+    // Persist any freshly-migrated configs back under the new storage key.
+    localStorage.setItem(providerConfigsStorageKey(user.id), JSON.stringify(personalConfigs));
+    syncLegacyCookies(personalConfigs, personalProvider);
   }, [user?.id]);
 
   useEffect(() => {
@@ -250,6 +279,9 @@ export const AuthProvider = ({ children }) => {
     updateAzureEndpoint,
     azureKey,
     updateAzureKey,
+    // Generic multi-provider credential store (GLM, Kimi, Grok, Groq, …).
+    providerConfigs,
+    updateProviderConfig,
     isLocked,
     adminSignInMock,
     signUp,

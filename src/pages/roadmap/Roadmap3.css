@@ -1,0 +1,502 @@
+/* Roadmap 3.0 — scroll-scrubbed flight through the learning world.
+   Chrome deliberately stays quiet: the visual identity comes from the world
+   itself, so everything here is a thin HUD over the render. Tokens follow
+   HomePage3's palette so 3.0 reads as one family. */
+
+.r3-root {
+  --r3-bg: #07101d;
+  --r3-surface: rgba(12, 22, 38, 0.86);
+  --r3-ink: #f8fafc;
+  --r3-muted: #b6c2d2;
+  --r3-border: rgba(148, 163, 184, 0.24);
+  --r3-accent: #a855f7;
+  --r3-length: 10;
+
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--r3-bg);
+  color: var(--r3-ink);
+  font-family: Inter, "Space Grotesk", system-ui, sans-serif;
+  isolation: isolate;
+}
+
+.r3-root *,
+.r3-root *::before,
+.r3-root *::after { box-sizing: border-box; }
+
+.r3-root button { font: inherit; cursor: pointer; touch-action: manipulation; }
+
+.r3-root button:focus-visible {
+  outline: 2px solid var(--r3-accent);
+  outline-offset: 3px;
+}
+
+/* ---------- fallbacks ---------- */
+
+.r3-fallback {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 40px;
+  text-align: center;
+  color: var(--r3-muted);
+}
+
+.r3-fallback h2 { margin: 0; font-size: 18px; color: var(--r3-ink); }
+.r3-fallback p { margin: 0; font-size: 13px; }
+
+/* ---------- progress + HUD ---------- */
+
+.r3-progress {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 6;
+  height: 2px;
+  background: rgba(148, 163, 184, 0.14);
+}
+
+.r3-progress span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--r3-accent), #22d3ee);
+}
+
+.r3-hud {
+  position: absolute;
+  z-index: 5;
+  top: max(10px, env(safe-area-inset-top));
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px clamp(14px, 3vw, 34px);
+  pointer-events: none;
+}
+
+.r3-hud > * { pointer-events: auto; }
+
+/* One scrolling line, never a wrapping block: with eight paths a wrapped row
+   grows tall enough to collide with the pinned copy panel at medium widths. */
+.r3-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  max-width: 62%;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.r3-tabs::-webkit-scrollbar { display: none; }
+
+.r3-tab { flex: 0 0 auto; }
+
+.r3-tab {
+  padding: 7px 13px;
+  border: 1px solid var(--r3-border);
+  border-radius: 999px;
+  background: var(--r3-surface);
+  backdrop-filter: blur(10px);
+  color: var(--r3-muted);
+  font-family: "Space Grotesk", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.r3-tab:hover { color: var(--r3-ink); border-color: rgba(148, 163, 184, 0.5); }
+
+.r3-tab.active {
+  border-color: color-mix(in srgb, var(--r3-accent) 70%, transparent);
+  background: color-mix(in srgb, var(--r3-accent) 18%, var(--r3-surface));
+  color: var(--r3-ink);
+}
+
+.r3-meters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 8px 14px;
+  border: 1px solid var(--r3-border);
+  border-radius: 14px;
+  background: var(--r3-surface);
+  backdrop-filter: blur(10px);
+}
+
+.r3-meter { display: grid; gap: 2px; }
+
+.r3-meter-value {
+  font-family: "Space Grotesk", monospace;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--r3-accent);
+}
+
+.r3-meter-value i { font-style: normal; font-size: 11px; opacity: 0.7; }
+
+.r3-meter-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8fa1b8;
+  white-space: nowrap;
+}
+
+.r3-fly {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--r3-accent) 55%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--r3-accent) 16%, transparent);
+  color: var(--r3-ink);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition: background 180ms ease;
+}
+
+.r3-fly:hover { background: color-mix(in srgb, var(--r3-accent) 30%, transparent); }
+
+/* ---------- the scroll driver ----------
+   Scroll never moves anything visible: the track is a tall empty column whose
+   only job is to give the flight somewhere to be scrubbed from. The stage
+   sticks to the viewport and the camera does all the moving. */
+
+.r3-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: color-mix(in srgb, var(--r3-accent) 55%, transparent) var(--r3-bg);
+}
+
+.r3-track {
+  position: relative;
+  width: 100%;
+  height: calc(var(--r3-length) * 100%);
+  min-height: calc(var(--r3-length) * 100%);
+}
+
+/* The track is `length` viewports tall, so one viewport is that fraction of it —
+   expressed this way the stage stays exactly the scroller's height without
+   depending on vh, which lies inside a panelled layout and on iOS. */
+.r3-stage {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: calc(100% / var(--r3-length));
+  overflow: hidden;
+}
+
+.r3-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.r3-canvas canvas { display: block; width: 100%; height: 100%; }
+
+/* Tilt-shift: only a band across the middle stays sharp, so the world reads as
+   a miniature rather than a full-size place. */
+.r3-tiltshift {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(5px) saturate(1.14);
+  -webkit-backdrop-filter: blur(5px) saturate(1.14);
+  mask-image: linear-gradient(180deg, #000 0%, #000 12%, transparent 34%, transparent 66%, #000 86%, #000 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 12%, transparent 34%, transparent 66%, #000 86%, #000 100%);
+}
+
+.r3-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 85% at 50% 45%, transparent 40%, rgba(4, 9, 18, 0.55) 100%),
+    linear-gradient(180deg, rgba(7, 16, 29, 0.72) 0%, transparent 22%, transparent 62%, rgba(7, 16, 29, 0.88) 100%);
+}
+
+/* ---------- pinned scene copy ---------- */
+
+.r3-copy {
+  position: absolute;
+  z-index: 3;
+  left: clamp(14px, 3vw, 46px);
+  bottom: calc(clamp(26px, 5vh, 62px) + env(safe-area-inset-bottom));
+  width: min(430px, calc(100% - 28px));
+  display: grid;
+  gap: 10px;
+  padding: 20px 22px;
+  border: 1px solid var(--r3-border);
+  border-left: 3px solid var(--r3-status, var(--r3-accent));
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(9, 17, 30, 0.78), rgba(7, 13, 24, 0.92));
+  backdrop-filter: blur(14px);
+  will-change: opacity, transform;
+  transition: opacity 90ms linear;
+}
+
+.r3-eyebrow {
+  font-family: "Space Grotesk", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--r3-accent);
+}
+
+.r3-title {
+  margin: 0;
+  font-size: clamp(24px, 3.4vw, 38px);
+  font-weight: 750;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  text-shadow: 0 6px 26px rgba(7, 16, 29, 0.7);
+}
+
+.r3-body {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--r3-muted);
+}
+
+.r3-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.r3-tags li {
+  padding: 5px 10px;
+  border: 1px solid var(--r3-border);
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.08);
+  font-size: 11px;
+  color: #cbd5e1;
+}
+
+.r3-copy-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--r3-border);
+}
+
+.r3-status,
+.r3-modules {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8fa1b8;
+}
+
+.r3-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--r3-status, var(--r3-accent));
+  box-shadow: 0 0 10px var(--r3-status, var(--r3-accent));
+}
+
+.r3-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  margin-left: auto;
+  padding: 0 16px;
+  border: 1px solid color-mix(in srgb, var(--r3-accent) 62%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--r3-accent) 22%, transparent);
+  color: var(--r3-ink);
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.r3-cta:hover {
+  background: color-mix(in srgb, var(--r3-accent) 40%, transparent);
+  transform: translateY(-1px);
+}
+
+/* ---------- scene rail ---------- */
+
+.r3-rail {
+  position: absolute;
+  z-index: 3;
+  right: clamp(10px, 2vw, 26px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+}
+
+.r3-rail-dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  border-radius: 50%;
+  background: rgba(7, 16, 29, 0.7);
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.r3-rail-dot.done { border-color: rgba(0, 255, 136, 0.7); background: rgba(0, 255, 136, 0.22); }
+
+.r3-rail-dot.active {
+  transform: scale(1.45);
+  border-color: var(--r3-accent);
+  background: var(--r3-accent);
+  box-shadow: 0 0 14px var(--r3-accent);
+}
+
+.r3-rail-label {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  border: 1px solid var(--r3-border);
+  border-radius: 8px;
+  background: rgba(7, 16, 29, 0.94);
+  color: var(--r3-ink);
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.r3-rail-dot:hover .r3-rail-label,
+.r3-rail-dot:focus-visible .r3-rail-label { opacity: 1; }
+
+/* ---------- hint / notes ---------- */
+
+.r3-hint {
+  position: absolute;
+  z-index: 3;
+  /* Bottom-centre, clear of the copy panel (bottom-left), the scene rail
+     (right-centre) and the app's own floating action button (bottom-right). */
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 1px solid var(--r3-border);
+  border-radius: 999px;
+  background: rgba(7, 16, 29, 0.7);
+  color: #8fa1b8;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: r3-breathe 3.4s ease-in-out infinite;
+}
+
+@keyframes r3-breathe {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.r3-reduced {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border: 1px solid var(--r3-border);
+  border-radius: 999px;
+  background: rgba(7, 16, 29, 0.9);
+  color: var(--r3-muted);
+  font-size: 11px;
+}
+
+/* ---------- phones ----------
+   The copy panel becomes a bottom sheet, the rail goes horizontal, and the
+   tilt-shift band widens because a tall viewport shows more of the world. */
+
+@media (max-width: 860px), (pointer: coarse) {
+  /* On phones the app shell hands this panel an auto-height flex box, which
+     collapses an absolutely-positioned scroller to zero (Roadmap 2.0 collapses
+     the same way). Floor the height so the flight still has somewhere to live. */
+  .r3-root { min-height: 100dvh; }
+
+  .r3-hud { flex-direction: column; align-items: stretch; gap: 8px; }
+  .r3-tabs { max-width: 100%; }
+  .r3-meters { align-self: flex-start; }
+
+  .r3-tiltshift {
+    mask-image: linear-gradient(180deg, #000 0%, #000 8%, transparent 28%, transparent 72%, #000 92%, #000 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 8%, transparent 28%, transparent 72%, #000 92%, #000 100%);
+  }
+
+  .r3-copy {
+    left: 10px;
+    right: 10px;
+    width: auto;
+    bottom: calc(58px + env(safe-area-inset-bottom));
+    padding: 16px 16px 14px;
+    gap: 8px;
+  }
+
+  .r3-body { font-size: 13px; }
+  .r3-tags { display: none; }
+  .r3-cta { width: 100%; margin-left: 0; justify-content: center; }
+
+  .r3-rail {
+    top: auto;
+    right: auto;
+    left: 50%;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    grid-auto-flow: column;
+    justify-items: center;
+  }
+
+  .r3-rail-label { display: none; }
+  .r3-hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .r3-hint { animation: none; opacity: 0.7; }
+  .r3-scroll { scroll-behavior: auto; }
+}

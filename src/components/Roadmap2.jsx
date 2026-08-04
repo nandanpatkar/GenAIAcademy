@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import { Layers, ArrowRight, Target, Flag, Car } from "lucide-react";
+import { ArrowRight, Target, Flag, Car } from "lucide-react";
 import "../styles/Roadmap2.css";
 
 // Same tab labels as the classic RoadmapGraph so both views feel like one family.
@@ -587,10 +587,6 @@ export default function Roadmap2({
                 <div className="r2-card-top">
                   <span className="r2-card-num">{String(i + 1).padStart(2, "0")}</span>
                   <span className="r2-card-milestag">MILE {i + 1}</span>
-                  <span className="r2-card-subnodes">
-                    <Layers size={10} />
-                    {node.modules?.length || 0} SUBNODES
-                  </span>
                 </div>
                 <div className="r2-card-title">
                   {node.icon && <span className="r2-card-icon">{node.icon}</span>}
@@ -602,9 +598,12 @@ export default function Roadmap2({
                     <span className="r2-card-status-dot" />
                     {st.label}
                   </span>
-                  <span className="r2-card-explore">
-                    {isCurrent ? <Car size={13} /> : null}
-                    EXPLORE <ArrowRight size={13} />
+                  <span className="r2-card-footer-right">
+                    <span className="r2-card-modcount">{node.modules?.length || 0} modules</span>
+                    <span className="r2-card-explore">
+                      {isCurrent ? <Car size={13} /> : null}
+                      EXPLORE <ArrowRight size={13} />
+                    </span>
                   </span>
                 </div>
               </div>

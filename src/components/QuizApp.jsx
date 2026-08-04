@@ -9,6 +9,7 @@ import ExamPractice from "./quiz/ExamPractice";
 import { askQuizBot } from "../services/aiService";
 import { supabase } from '../config/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import "../styles/QuizApp.css";
 
 const LETTERS = 'ABCDEFGHIJ';
@@ -23,9 +24,11 @@ export default function QuizApp({ onClose }) {
   const [wrongCount, setWrongCount] = useState(0);
   const [reviewFilter, setReviewFilter] = useState("all");
   const { user } = useAuth();
+  const { theme } = useTheme();
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
   const [quizHistory, setQuizHistory] = useState([]);
   const [activeTab, setActiveTab] = useState("examBank"); // examBank, setup, history
+  const [isCertificationWorkspaceOpen, setIsCertificationWorkspaceOpen] = useState(false);
   const [savedQuizzes, setSavedQuizzes] = useState([]);
   const [pausedSessions, setPausedSessions] = useState([]);
   const [activeSessionId, setActiveSessionId] = useState(null);
@@ -455,7 +458,7 @@ export default function QuizApp({ onClose }) {
   };
 
   return (
-    <div className="quiz-container">
+    <div className={`quiz-container ${quizState === "start" && activeTab === "examBank" && isCertificationWorkspaceOpen ? "quiz-container--claude" : ""}`}>
       {onClose && (
         <button onClick={onClose} style={{ position: 'absolute', top: 20, right: 20, background: 'transparent', border: 'none', color: 'var(--text2)', cursor: 'pointer' }}>
           <X size={24} />
@@ -463,7 +466,7 @@ export default function QuizApp({ onClose }) {
       )}
 
       {quizState === "start" && (
-        <div className="quiz-start-screen" style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className={`quiz-start-screen ${activeTab === "examBank" && isCertificationWorkspaceOpen ? "quiz-start-screen--claude" : ""}`} style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div className="quiz-topbar">
             <div className="quiz-topbar-brand"><span className="quiz-brand-mark"><TargetIcon size={18} /></span><span><strong>Quiz lab</strong><small>GenAI Academy</small></span></div>
             <div className="quiz-topbar-tabs">
@@ -475,13 +478,13 @@ export default function QuizApp({ onClose }) {
             </button>
             <button 
               className={`quiz-tab ${activeTab === "setup" ? 'active' : ''}`}
-              onClick={() => setActiveTab("setup")}
+              onClick={() => { setIsCertificationWorkspaceOpen(false); setActiveTab("setup"); }}
             >
               <span>02</span> Build a quiz
             </button>
             <button 
               className={`quiz-tab ${activeTab === "history" ? 'active' : ''}`}
-              onClick={() => setActiveTab("history")}
+              onClick={() => { setIsCertificationWorkspaceOpen(false); setActiveTab("history"); }}
             >
               <span>03</span> My progress
             </button>
@@ -489,7 +492,7 @@ export default function QuizApp({ onClose }) {
             <div className="quiz-topbar-status"><span className="quiz-status-pulse" />Practice mode</div>
           </div>
 
-          {activeTab === "examBank" && <ExamPractice onStartExam={startExamQuiz} />}
+          {activeTab === "examBank" && <ExamPractice onStartExam={startExamQuiz} theme={theme} onWorkspaceChange={setIsCertificationWorkspaceOpen} />}
 
           {activeTab !== "examBank" && (activeTab === "setup" ? (
             <>

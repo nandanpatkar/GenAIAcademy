@@ -28,6 +28,8 @@ import {
 import { askContextCopilot } from "../services/aiService";
 import { searchWeb } from "../services/webSearchService";
 import { useAuth } from "../contexts/AuthContext";
+import { AI_PROVIDER_LIST, getProviderMeta, isProviderConfigured } from "../config/aiProviders";
+import ProviderIcon from "./ProviderIcon";
 import "../styles/full-context-chatbot.css";
 import "../styles/full-context-chatbot-sources.css";
 import "../styles/full-context-chatbot-overrides.css";
@@ -146,14 +148,10 @@ export default function FullContextChatbot({
   user,
 }) {
   const {
-    geminiKey,
-    updateGeminiKey,
     aiProvider,
     updateAiProvider,
-    azureEndpoint,
-    updateAzureEndpoint,
-    azureKey,
-    updateAzureKey,
+    providerConfigs,
+    updateProviderConfig,
   } = useAuth();
   const storageKey = `${STORAGE_PREFIX}_${user?.id || "local"}`;
   const [isOpen, setIsOpen] = useState(false);
@@ -167,11 +165,10 @@ export default function FullContextChatbot({
   const [copiedId, setCopiedId] = useState(null);
   const [showCredentials, setShowCredentials] = useState(false);
   const [credentialProvider, setCredentialProvider] = useState(aiProvider || "gemini");
-  const [geminiDraft, setGeminiDraft] = useState(geminiKey || "");
-  const [azureEndpointDraft, setAzureEndpointDraft] = useState(azureEndpoint || "");
-  const [azureKeyDraft, setAzureKeyDraft] = useState(azureKey || "");
-  const [showGeminiKey, setShowGeminiKey] = useState(false);
-  const [showAzureKey, setShowAzureKey] = useState(false);
+  // Editable copy of the selected provider's fields: { endpoint, key, model }.
+  const [credentialFields, setCredentialFields] = useState({});
+  // Track which password fields are revealed, keyed by field name.
+  const [revealedFields, setRevealedFields] = useState({});
   const [fabPosition, setFabPosition] = useState(() => {
     try {
       const saved = JSON.parse(localStorage.getItem(FAB_POSITION_KEY) || "null");
@@ -196,11 +193,11 @@ export default function FullContextChatbot({
     setCredentialProvider(aiProvider || "gemini");
   }, [aiProvider]);
 
+  // Load the stored fields whenever the selected credential provider changes.
   useEffect(() => {
-    setGeminiDraft(geminiKey || "");
-    setAzureEndpointDraft(azureEndpoint || "");
-    setAzureKeyDraft(azureKey || "");
-  }, [geminiKey, azureEndpoint, azureKey]);
+    setCredentialFields({ ...(providerConfigs[credentialProvider] || {}) });
+    setRevealedFields({});
+  }, [credentialProvider, providerConfigs]);
 
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(chats.slice(0, 30)));
@@ -238,9 +235,8 @@ export default function FullContextChatbot({
   }, [chats, activeChatId, isLoading]);
 
   const activeChat = chats.find((chat) => chat.id === activeChatId) || chats[0];
-  const providerReady = activeChat?.provider === "azure-openai"
-    ? Boolean(azureEndpoint?.trim() && azureKey?.trim())
-    : Boolean(geminiKey?.trim());
+  const activeProviderId = activeChat?.provider || aiProvider || "gemini";
+  const providerReady = isProviderConfigured(activeProviderId, providerConfigs[activeProviderId] || {});
   const projectContext = useMemo(() => buildProjectContext({ pathsData, activePath, activeNode, activeModule, activeTopic }), [pathsData, activePath, activeNode, activeModule, activeTopic]);
   const currentPathTitle = pathsData?.[activePath]?.title || pathsData?.[activePath]?.name || activePath || "Workspace";
   const currentTopicTitle = normalizeTopic(activeTopic);
@@ -250,13 +246,13 @@ export default function FullContextChatbot({
     setShowCredentials(true);
   };
 
+  const setCredentialField = (name, value) => setCredentialFields((prev) => ({ ...prev, [name]: value }));
+
   const saveCredentials = () => {
-    if (credentialProvider === "gemini") {
-      updateGeminiKey(geminiDraft.trim());
-    } else {
-      updateAzureEndpoint(azureEndpointDraft.trim());
-      updateAzureKey(azureKeyDraft.trim());
-    }
+    const trimmed = Object.fromEntries(
+      Object.entries(credentialFields).map(([k, v]) => [k, typeof v === "string" ? v.trim() : v])
+    );
+    updateProviderConfig(credentialProvider, trimmed);
     updateAiProvider(credentialProvider);
     updateActiveChat({ provider: credentialProvider });
     setShowCredentials(false);
@@ -424,7 +420,7 @@ export default function FullContextChatbot({
                 {filteredChats.map((chat) => (
                   <button key={chat.id} className={`atlas-history-item ${chat.id === activeChatId ? "active" : ""}`} onClick={() => setActiveChatId(chat.id)}>
                     <span className="atlas-history-icon"><Clock3 size={13} /></span>
-                    <span className="atlas-history-copy"><strong>{chat.title}</strong><small>{chat.messages.length - 1} messages · {chat.provider === "azure-openai" ? "Azure" : "Gemini"}</small></span>
+                    <span className="atlas-history-copy"><strong>{chat.title}</strong><small>{chat.messages.length - 1} messages · {getProviderMeta(chat.provider).label}</small></span>
                     <span className="atlas-history-delete" onClick={(event) => { event.stopPropagation(); deleteChat(chat.id); }}><Trash2 size={13} /></span>
                   </button>
                 ))}
@@ -440,7 +436,7 @@ export default function FullContextChatbot({
                   <div><div className="atlas-header-kicker">PROJECT-AWARE ASSISTANT</div><h2>Atlas <span>·</span> think it through together</h2><div className="atlas-context-status"><i /> Full workspace context active</div></div>
                 </div>
                 <div className="atlas-header-actions">
-                  <div className="atlas-model-select"><Zap size={13} /><span>MODEL</span><select value={activeChat?.provider || "gemini"} onChange={(e) => updateActiveChat({ provider: e.target.value })}><option value="gemini">Gemini</option><option value="azure-openai">Azure OpenAI</option></select><ChevronDown size={13} /></div>
+                  <div className="atlas-model-select"><Zap size={13} /><span>MODEL</span><select value={activeChat?.provider || "gemini"} onChange={(e) => updateActiveChat({ provider: e.target.value })}>{AI_PROVIDER_LIST.map((p) => (<option key={p.id} value={p.id}>{p.label}</option>))}</select><ChevronDown size={13} /></div>
                   <button className={`atlas-web-toggle ${activeChat?.webEnabled ? "enabled" : ""}`} onClick={() => updateActiveChat({ webEnabled: !activeChat?.webEnabled })}><Globe2 size={14} /><span>{activeChat?.webEnabled ? "Web on" : "Web off"}</span></button>
                   <button className="atlas-credentials-button" onClick={openCredentials}><KeyRound size={14} /><span>Credentials</span></button>
                   <button className="atlas-icon-button atlas-fullscreen-toggle" onClick={() => setIsFullscreen((value) => !value)} aria-label={isFullscreen ? "Exit full screen" : "Open full screen"} title={isFullscreen ? "Exit full screen" : "Open full screen"}>{isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}</button>
@@ -453,13 +449,47 @@ export default function FullContextChatbot({
               {showCredentials && (
                 <div className="atlas-credentials-panel" role="dialog" aria-label="AI provider credentials">
                   <div className="atlas-credentials-heading"><div><span className="atlas-eyebrow"><KeyRound size={12} /> PERSONAL CREDENTIALS</span><h3>Connect your AI provider</h3><p>Your credentials are stored only for your signed-in account and used by Atlas for this workspace.</p></div><button className="atlas-icon-button" onClick={() => setShowCredentials(false)} aria-label="Close credentials"><X size={17} /></button></div>
-                  <div className="atlas-provider-tabs"><button className={credentialProvider === "gemini" ? "active" : ""} onClick={() => setCredentialProvider("gemini")}><span className="atlas-provider-logo gemini">G</span><span><strong>Google Gemini</strong><small>{geminiKey ? "Configured" : "Needs setup"}</small></span></button><button className={credentialProvider === "azure-openai" ? "active" : ""} onClick={() => setCredentialProvider("azure-openai")}><span className="atlas-provider-logo azure">A</span><span><strong>Azure OpenAI</strong><small>{azureEndpoint && azureKey ? "Configured" : "Needs setup"}</small></span></button></div>
-                  {credentialProvider === "gemini" ? (
-                    <label className="atlas-credential-field"><span>Gemini API key</span><div className="atlas-secret-field"><input type={showGeminiKey ? "text" : "password"} value={geminiDraft} onChange={(event) => setGeminiDraft(event.target.value)} placeholder="Paste your Gemini API key" autoComplete="off" /><button type="button" onClick={() => setShowGeminiKey((value) => !value)} aria-label={showGeminiKey ? "Hide Gemini API key" : "Show Gemini API key"}>{showGeminiKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div><small>Get one from Google AI Studio.</small></label>
-                  ) : (
-                    <div className="atlas-credential-fields"><label className="atlas-credential-field"><span>Azure endpoint</span><input value={azureEndpointDraft} onChange={(event) => setAzureEndpointDraft(event.target.value)} placeholder="https://your-resource.openai.azure.com" autoComplete="off" /></label><label className="atlas-credential-field"><span>Azure API key</span><div className="atlas-secret-field"><input type={showAzureKey ? "text" : "password"} value={azureKeyDraft} onChange={(event) => setAzureKeyDraft(event.target.value)} placeholder="Paste your Azure API key" autoComplete="off" /><button type="button" onClick={() => setShowAzureKey((value) => !value)} aria-label={showAzureKey ? "Hide Azure API key" : "Show Azure API key"}>{showAzureKey ? <EyeOff size={15} /> : <Eye size={15} />}</button></div></label></div>
-                  )}
-                  <div className="atlas-credentials-footer"><span><i /> Atlas will use {credentialProvider === "gemini" ? "Gemini" : "Azure OpenAI"} for new messages.</span><button className="atlas-credentials-save" onClick={saveCredentials}>Save & use provider <ArrowUpRight size={14} /></button></div>
+                  <div className="atlas-provider-tabs">
+                    {AI_PROVIDER_LIST.map((p) => (
+                      <button key={p.id} className={credentialProvider === p.id ? "active" : ""} onClick={() => setCredentialProvider(p.id)}>
+                        <ProviderIcon providerId={p.id} size={16} />
+                        <span><strong>{p.label}</strong><small>{isProviderConfigured(p.id, providerConfigs[p.id] || {}) ? "Configured" : "Needs setup"}</small></span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="atlas-credential-fields">
+                    {getProviderMeta(credentialProvider).fields.map((field) => (
+                      <label key={field.name} className="atlas-credential-field">
+                        <span>{field.label}</span>
+                        {field.type === "password" ? (
+                          <div className="atlas-secret-field">
+                            <input
+                              type={revealedFields[field.name] ? "text" : "password"}
+                              value={credentialFields[field.name] || ""}
+                              onChange={(event) => setCredentialField(field.name, event.target.value)}
+                              placeholder={field.placeholder}
+                              autoComplete="off"
+                            />
+                            <button type="button" onClick={() => setRevealedFields((prev) => ({ ...prev, [field.name]: !prev[field.name] }))} aria-label={revealedFields[field.name] ? `Hide ${field.label}` : `Show ${field.label}`}>
+                              {revealedFields[field.name] ? <EyeOff size={15} /> : <Eye size={15} />}
+                            </button>
+                          </div>
+                        ) : (
+                          <input
+                            type="text"
+                            value={credentialFields[field.name] || ""}
+                            onChange={(event) => setCredentialField(field.name, event.target.value)}
+                            placeholder={field.placeholder}
+                            autoComplete="off"
+                          />
+                        )}
+                      </label>
+                    ))}
+                    {getProviderMeta(credentialProvider).docsUrl && (
+                      <a className="atlas-credential-help" href={getProviderMeta(credentialProvider).docsUrl} target="_blank" rel="noopener noreferrer">Get an API key <ArrowUpRight size={12} /></a>
+                    )}
+                  </div>
+                  <div className="atlas-credentials-footer"><span><i /> Atlas will use {getProviderMeta(credentialProvider).label} for new messages.</span><button className="atlas-credentials-save" onClick={saveCredentials}>Save & use provider <ArrowUpRight size={14} /></button></div>
                 </div>
               )}
 

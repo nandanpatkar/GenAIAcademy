@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Icon } from "@iconify/react";
+import { ArrowLeft } from "lucide-react";
 import PracticeTab from "./PracticeTab";
 import StudyGuideTab from "./StudyGuideTab";
 import FlashcardsTab from "./FlashcardsTab";
 import VideosTab from "./VideosTab";
 import { safeFetchJson } from "./apiHelpers";
+import { getVendorMeta } from "./vendorMeta";
 
 const TABS = [
   { id: "practice", label: "Practice", key: "practice" },
@@ -28,6 +31,8 @@ const TABS = [
 export default function ExamHub({ exam, onBack, onStartExam }) {
   const [availability, setAvailability] = useState(null); // null while unknown
   const [activeTab, setActiveTab] = useState("practice");
+  const vendorMeta = getVendorMeta(exam.vendor);
+  const vendorTheme = exam.vendor.startsWith("AWS") ? "aws" : exam.vendor === "Azure" ? "azure" : exam.vendor === "Google / GCP" ? "gcp" : exam.vendor === "Databricks" ? "databricks" : "default";
 
   useEffect(() => {
     let cancelled = false;
@@ -40,21 +45,20 @@ export default function ExamHub({ exam, onBack, onStartExam }) {
   }, [exam.slug]);
 
   return (
-    <div>
+    <div className={`exam-hub exam-hub--${vendorTheme}`} style={{ "--hub-accent": vendorMeta.color }}>
       <button
-        className="quiz-btn"
-        style={{ background: "transparent", border: "none", color: "var(--text-muted)", padding: "0 0 16px", fontSize: 13 }}
+        className="exam-hub-back"
         onClick={onBack}
       >
-        ← Back to Exam Bank
+        <ArrowLeft size={15} /> Back to Exam Bank
       </button>
 
-      <div style={{ marginBottom: 20 }}>
-        <h2 style={{ margin: "0 0 4px" }}>{exam.name}</h2>
-        <p style={{ color: "var(--text-muted)", margin: 0 }}>{exam.vendor}</p>
+      <div className="exam-hub-heading">
+        <span className="exam-hub-provider-mark"><Icon icon={vendorMeta.icon} width={30} height={30} /></span>
+        <div><span className="exam-hub-eyebrow">CERTIFICATION WORKSPACE · {exam.vendor.replace(" (Amazon Web Services)", "")}</span><h2>{exam.name}</h2><p>Practice, revise, and build confidence in one focused provider-themed workspace.</p></div>
       </div>
 
-      <div style={{ display: "flex", gap: 8, marginBottom: 24, borderBottom: "1px solid var(--border)", paddingBottom: 12, flexWrap: "wrap" }}>
+      <div className="exam-hub-tabs" role="tablist" aria-label={`${exam.name} study modes`}>
         {TABS.map((tab) => {
           const active = activeTab === tab.id;
           // Only ever used as a subtle hint once resolved false — never gates the click.
@@ -62,15 +66,12 @@ export default function ExamHub({ exam, onBack, onStartExam }) {
           return (
             <button
               key={tab.id}
-              className="quiz-btn"
+              className={`exam-hub-tab ${active ? "active" : ""}`}
+              role="tab"
+              aria-selected={active}
               title={knownEmpty ? "May be limited for this exam — click to check" : undefined}
               style={{
-                background: active ? "var(--bg-secondary)" : "transparent",
-                color: "var(--text-primary)",
-                border: "none", padding: "10px 18px", borderRadius: 8,
-                fontWeight: active ? 600 : 400,
                 opacity: knownEmpty ? 0.6 : 1,
-                display: "flex", alignItems: "center", gap: 6,
               }}
               onClick={() => setActiveTab(tab.id)}
             >

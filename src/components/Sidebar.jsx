@@ -7,6 +7,8 @@ import { useTheme } from "../contexts/ThemeContext";
 import AppearanceSettings from "./AppearanceSettings";
 import BentoCard from "./BentoCard";
 import { DEFAULT_SIDEBAR_LAYOUT, resolveEffectiveLayout, resolveItemVisibility, SIDEBAR_ITEM_REGISTRY } from "../config/sidebarRegistry";
+import { AI_PROVIDER_LIST, getProviderMeta } from "../config/aiProviders";
+import ProviderIcon from "./ProviderIcon";
 
 const ADMIN_GROUP_ITEMS = [
   { icon: Shield, label: "Admin Panel", id: "admin_management" },
@@ -20,6 +22,7 @@ export default function Sidebar({
   activeNode, onReset, isEditMode, setIsEditMode, onAddPath, onEditPath,
   showCurriculumMap, setShowCurriculumMap,
   showRoadmap2, setShowRoadmap2,
+  showRoadmap3, setShowRoadmap3,
   showIDE, setShowIDE,
   showProjects, setShowProjects,
   showResources, setShowResources,
@@ -85,18 +88,24 @@ export default function Sidebar({
   });
   const [showAppearance, setShowAppearance] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, sidebarConfig, persistSidebarConfig, geminiKey, updateGeminiKey, aiProvider, updateAiProvider, azureEndpoint, updateAzureEndpoint, azureKey, updateAzureKey } = useAuth();
-  const [localKey, setLocalKey] = useState(geminiKey || "");
+  const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, sidebarConfig, persistSidebarConfig, aiProvider, updateAiProvider, providerConfigs, updateProviderConfig } = useAuth();
   const [localProvider, setLocalProvider] = useState(aiProvider || "gemini");
-  const [localAzureEndpoint, setLocalAzureEndpoint] = useState(azureEndpoint || "");
-  const [localAzureKey, setLocalAzureKey] = useState(azureKey || "");
+  const [localFields, setLocalFields] = useState({});
 
   useEffect(() => {
-    setLocalKey(geminiKey || "");
     setLocalProvider(aiProvider || "gemini");
-    setLocalAzureEndpoint(azureEndpoint || "");
-    setLocalAzureKey(azureKey || "");
-  }, [geminiKey, aiProvider, azureEndpoint, azureKey]);
+  }, [aiProvider]);
+
+  useEffect(() => {
+    setLocalFields({ ...(providerConfigs[localProvider] || {}) });
+  }, [localProvider, providerConfigs]);
+
+  const providerMeta = getProviderMeta(localProvider);
+  const setField = (name, value) => setLocalFields((prev) => ({ ...prev, [name]: value }));
+  const saveProviderConfig = () => {
+    updateProviderConfig(localProvider, localFields);
+    updateAiProvider(localProvider);
+  };
 
   // Every default/custom group + item comes from the shared registry so the Admin
   // Panel's visibility toggles and this component's drag-and-drop editor stay in sync.
@@ -253,6 +262,7 @@ export default function Sidebar({
     if (showResources) return "resources";
     if (showCurriculumMap) return "curriculum_map";
     if (showRoadmap2) return "roadmap2";
+    if (showRoadmap3) return "roadmap3";
     if (showAIInterviewer) return "interviewer";
     if (showGeminiInterviewer) return "gemini_interviewer";
     if (showEmotionalSupport) return "emotional_support";
@@ -293,6 +303,7 @@ export default function Sidebar({
 
     setShowCurriculumMap(false);
     if (setShowRoadmap2) setShowRoadmap2(false);
+    if (setShowRoadmap3) setShowRoadmap3(false);
     if (setShowIDE) setShowIDE(false);
     if (setShowProjects) setShowProjects(false);
     if (setShowResources) setShowResources(false);
@@ -357,6 +368,7 @@ export default function Sidebar({
       case "knowledge_graph": if (setShowKnowledgeGraph) setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
       case "roadmap2": if (setShowRoadmap2) setShowRoadmap2(true); break;
+      case "roadmap3": if (setShowRoadmap3) setShowRoadmap3(true); break;
       case "projects": if (onOpenToolHome) onOpenToolHome("projects"); else if (setShowProjects) setShowProjects(true); break;
       case "ide": if (onOpenToolHome) onOpenToolHome("coding"); else if (setShowIDE) setShowIDE(true); break;
       case "resources": if (onOpenToolHome) onOpenToolHome("resources"); else if (setShowResources) setShowResources(true); break;
@@ -834,33 +846,38 @@ export default function Sidebar({
             
             <div id="sidebar-gemini-key" style={{ padding: '4px 12px 12px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <select
-                  value={localProvider}
-                  onChange={(e) => setLocalProvider(e.target.value)}
-                  style={{
-                    width: '100%',
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid var(--border)',
-                    borderRadius: 6,
-                    padding: '8px 10px',
-                    fontSize: 11,
-                    color: 'var(--text)',
-                    outline: 'none',
-                    transition: 'all 0.2s',
-                    appearance: 'none',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <option value="gemini">Google Gemini</option>
-                  <option value="azure-openai">Azure OpenAI</option>
-                </select>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <ProviderIcon providerId={localProvider} size={16} />
+                  <select
+                    value={localProvider}
+                    onChange={(e) => setLocalProvider(e.target.value)}
+                    style={{
+                      flex: 1,
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid var(--border)',
+                      borderRadius: 6,
+                      padding: '8px 10px',
+                      fontSize: 11,
+                      color: 'var(--text)',
+                      outline: 'none',
+                      transition: 'all 0.2s',
+                      appearance: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {AI_PROVIDER_LIST.map((p) => (
+                      <option key={p.id} value={p.id}>{p.label}</option>
+                    ))}
+                  </select>
+                </div>
 
-                {localProvider === 'gemini' && (
-                  <input 
-                    type="password"
-                    placeholder="Paste Gemini Key..."
-                    value={localKey}
-                    onChange={(e) => setLocalKey(e.target.value)}
+                {providerMeta.fields.map((field) => (
+                  <input
+                    key={field.name}
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={localFields[field.name] || ""}
+                    onChange={(e) => setField(field.name, e.target.value)}
                     style={{
                       width: '100%',
                       background: 'rgba(255,255,255,0.03)',
@@ -876,59 +893,10 @@ export default function Sidebar({
                     onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
                     onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
                   />
-                )}
-                {localProvider === 'azure-openai' && (
-                  <>
-                    <input 
-                      type="text"
-                      placeholder="Azure OpenAI Endpoint"
-                      value={localAzureEndpoint}
-                      onChange={(e) => setLocalAzureEndpoint(e.target.value)}
-                      style={{
-                        width: '100%',
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1px solid var(--border)',
-                        borderRadius: 6,
-                        padding: '8px 10px',
-                        fontSize: 11,
-                        color: 'var(--text)',
-                        fontFamily: 'monospace',
-                        outline: 'none',
-                        transition: 'all 0.2s'
-                      }}
-                      onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
-                      onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
-                    />
-                    <input 
-                      type="password"
-                      placeholder="Azure OpenAI Key"
-                      value={localAzureKey}
-                      onChange={(e) => setLocalAzureKey(e.target.value)}
-                      style={{
-                        width: '100%',
-                        background: 'rgba(255,255,255,0.03)',
-                        border: '1px solid var(--border)',
-                        borderRadius: 6,
-                        padding: '8px 10px',
-                        fontSize: 11,
-                        color: 'var(--text)',
-                        fontFamily: 'monospace',
-                        outline: 'none',
-                        transition: 'all 0.2s'
-                      }}
-                      onFocus={(e) => e.target.style.borderColor = 'var(--neon)'}
-                      onBlur={(e) => e.target.style.borderColor = 'var(--border)'}
-                    />
-                  </>
-                )}
+                ))}
 
-                <motion.button 
-                  onClick={() => {
-                    updateGeminiKey(localKey);
-                    updateAiProvider(localProvider);
-                    updateAzureEndpoint(localAzureEndpoint);
-                    updateAzureKey(localAzureKey);
-                  }}
+                <motion.button
+                  onClick={saveProviderConfig}
                   whileHover={{ scale: 1.02, background: 'var(--neon)', color: '#000', boxShadow: '0 0 12px var(--neon)' }}
                   whileTap={{ scale: 0.98 }}
                   style={{
@@ -952,16 +920,16 @@ export default function Sidebar({
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 8 }}>
                 <p style={{ margin: 0, fontSize: 9, color: 'var(--text3)', opacity: 0.6 }}>Keys are stored locally.</p>
-                <a 
-                  href="https://aistudio.google.com/app/apikey" 
-                  target="_blank" 
+                <a
+                  href={providerMeta.docsUrl || "https://aistudio.google.com/app/apikey"}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  style={{ 
-                    fontSize: 9, 
-                    color: 'var(--neon)', 
-                    textDecoration: 'none', 
-                    display: 'flex', 
-                    alignItems: 'center', 
+                  style={{
+                    fontSize: 9,
+                    color: 'var(--neon)',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
                     gap: 4,
                     fontWeight: 700,
                     opacity: 0.8

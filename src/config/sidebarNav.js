@@ -50,6 +50,7 @@ export function getActiveNavId(p) {
   if (p.showResources) return "resources";
   if (p.showCurriculumMap) return "curriculum_map";
   if (p.showRoadmap2) return "roadmap2";
+  if (p.showRoadmap3) return "roadmap3";
   if (p.showAIInterviewer) return "interviewer";
   if (p.showGeminiInterviewer) return "gemini_interviewer";
   if (p.showEmotionalSupport) return "emotional_support";
@@ -91,6 +92,7 @@ export function runNavClick(id, p, ctx = {}) {
 
   p.setShowCurriculumMap(false);
   if (p.setShowRoadmap2) p.setShowRoadmap2(false);
+  if (p.setShowRoadmap3) p.setShowRoadmap3(false);
   if (p.setShowIDE) p.setShowIDE(false);
   if (p.setShowProjects) p.setShowProjects(false);
   if (p.setShowResources) p.setShowResources(false);
@@ -154,6 +156,7 @@ export function runNavClick(id, p, ctx = {}) {
     case "knowledge_graph": if (p.setShowKnowledgeGraph) p.setShowKnowledgeGraph(true); break;
     case "curriculum_map": p.setShowCurriculumMap(true); break;
     case "roadmap2": if (p.setShowRoadmap2) p.setShowRoadmap2(true); break;
+    case "roadmap3": if (p.setShowRoadmap3) p.setShowRoadmap3(true); break;
     case "projects": if (p.onOpenToolHome) p.onOpenToolHome("projects"); else if (p.setShowProjects) p.setShowProjects(true); break;
     case "ide": if (p.onOpenToolHome) p.onOpenToolHome("coding"); else if (p.setShowIDE) p.setShowIDE(true); break;
     case "resources": if (p.onOpenToolHome) p.onOpenToolHome("resources"); else if (p.setShowResources) p.setShowResources(true); break;
