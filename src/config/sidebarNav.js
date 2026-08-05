@@ -40,6 +40,8 @@ export function getActiveNavId(p) {
   if (p.showGalaxy) return "galaxy";
   if (p.showDSAAnimator) return "dsa_animator";
   if (p.showLearnBug) return "learnbug";
+  if (p.showSqlLab) return "sql_lab";
+  if (p.showConcurrencyLab) return "concurrency_lab";
   if (p.showAgentLibrary) return "agent_library";
   if (p.showAimlCompanion) return "aiml_companion";
   if (p.showLinks) return "links";
@@ -100,6 +102,8 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowPlayground) p.setShowPlayground(false);
   if (p.setShowDSAAnimator) p.setShowDSAAnimator(false);
   if (p.setShowLearnBug) p.setShowLearnBug(false);
+  if (p.setShowSqlLab) p.setShowSqlLab(false);
+  if (p.setShowConcurrencyLab) p.setShowConcurrencyLab(false);
   if (p.setShowAgentLibrary) p.setShowAgentLibrary(false);
   if (p.setShowAimlCompanion) p.setShowAimlCompanion(false);
   if (p.setShowLinks) p.setShowLinks(false);
@@ -165,6 +169,8 @@ export function runNavClick(id, p, ctx = {}) {
     case "genai_playground2": if (p.onOpenGenAIPlayground2) p.onOpenGenAIPlayground2(); break;
     case "dsa_animator": if (p.onOpenToolHome) p.onOpenToolHome("dsa"); else if (p.setShowDSAAnimator) p.setShowDSAAnimator(true); break;
     case "learnbug": if (p.onOpenToolHome) p.onOpenToolHome("visualize"); else if (p.setShowLearnBug) p.setShowLearnBug(true); break;
+    case "sql_lab": if (p.setShowSqlLab) p.setShowSqlLab(true); break;
+    case "concurrency_lab": if (p.setShowConcurrencyLab) p.setShowConcurrencyLab(true); break;
     case "agent_library": if (p.setShowAgentLibrary) p.setShowAgentLibrary(true); break;
     case "aiml_companion": if (p.setShowAimlCompanion) p.setShowAimlCompanion(true); break;
     case "links":

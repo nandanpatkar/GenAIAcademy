@@ -42,6 +42,8 @@ const SystemDesignSimulator = React.lazy(() => import("./pages/simulator/SystemD
 const AWSSystemDesignSimulator = React.lazy(() => import("./pages/simulator/AWSSystemDesignSimulator"));
 const DSAAnimator = React.lazy(() => import("./components/DSAAnimator"));
 const LearnBugEmbed = React.lazy(() => import("./components/LearnBugEmbed"));
+const SqlLab = React.lazy(() => import("./components/SqlLab"));
+const ConcurrencyLab = React.lazy(() => import("./components/ConcurrencyLab"));
 const AgentLibrary = React.lazy(() => import("./components/AgentLibrary"));
 const AimlCompanion = React.lazy(() => import("./components/AimlCompanion"));
 const LinksCompanion = React.lazy(() => import("./components/LinksCompanion"));
@@ -411,6 +413,8 @@ function MainApp() {
   const [showGenAIPlayground2, setShowGenAIPlayground2] = useState(false);
   const [showDSAAnimator, setShowDSAAnimator] = useState(savedViews.showDSAAnimator ?? false);
   const [showLearnBug, setShowLearnBug] = useState(savedViews.showLearnBug ?? false);
+  const [showSqlLab, setShowSqlLab] = useState(savedViews.showSqlLab ?? false);
+  const [showConcurrencyLab, setShowConcurrencyLab] = useState(savedViews.showConcurrencyLab ?? false);
   const [showAgentLibrary, setShowAgentLibrary] = useState(savedViews.showAgentLibrary ?? false);
   const [showAimlCompanion, setShowAimlCompanion] = useState(savedViews.showAimlCompanion ?? false);
   const [showLinks, setShowLinks] = useState(savedViews.showLinks ?? false);
@@ -473,7 +477,7 @@ function MainApp() {
     try {
       localStorage.setItem("genai_active_views", JSON.stringify({
         showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
-        showDSAAnimator, showLearnBug, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+        showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
         showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
@@ -485,7 +489,7 @@ function MainApp() {
     }
   }, [
     showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
-    showDSAAnimator, showLearnBug, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+    showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
     showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
@@ -613,6 +617,8 @@ function MainApp() {
     }
     setShowDSAAnimator(false);
     setShowLearnBug(false);
+    setShowSqlLab(false);
+    setShowConcurrencyLab(false);
     setShowAgentLibrary(false);
     setShowAimlCompanion(false);
     setShowLinks(false);
@@ -743,6 +749,8 @@ function MainApp() {
       case "quiz": setActiveToolHome("quiz"); break;
       case "leetcode": setShowLeetCode(true); break;
       case "agent_library": setShowAgentLibrary(true); break;
+      case "sql_lab": setShowSqlLab(true); break;
+      case "concurrency_lab": setShowConcurrencyLab(true); break;
       case "aiml_companion": setShowAimlCompanion(true); break;
       case "gemini_interviewer": setShowGeminiInterviewer(true); break;
       case "emotional_support": setShowEmotionalSupport(true); break;
@@ -1247,6 +1255,8 @@ function MainApp() {
           onOpenGenAIPlayground2={openGenAIPlayground2}
           showDSAAnimator={showDSAAnimator} setShowDSAAnimator={setShowDSAAnimator}
           showLearnBug={showLearnBug} setShowLearnBug={setShowLearnBug}
+          showSqlLab={showSqlLab} setShowSqlLab={setShowSqlLab}
+          showConcurrencyLab={showConcurrencyLab} setShowConcurrencyLab={setShowConcurrencyLab}
           showAgentLibrary={showAgentLibrary} setShowAgentLibrary={setShowAgentLibrary}
           showAimlCompanion={showAimlCompanion} setShowAimlCompanion={setShowAimlCompanion}
           showLinks={showLinks} setShowLinks={setShowLinks}
@@ -1341,6 +1351,8 @@ function MainApp() {
                           showEmotionalSupport ? <EmotionalSupportPage onClose={() => setShowEmotionalSupport(false)} /> :
                           showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
                             showLearnBug ? <LearnBugEmbed onClose={() => setShowLearnBug(false)} /> :
+                            showSqlLab ? <SqlLab onClose={() => setShowSqlLab(false)} /> :
+                            showConcurrencyLab ? <ConcurrencyLab onClose={() => setShowConcurrencyLab(false)} /> :
                             showAgentLibrary ? <AgentLibrary onClose={() => setShowAgentLibrary(false)} /> :
                             showAimlCompanion ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
@@ -1657,7 +1669,7 @@ function MainApp() {
       {/* Re-trigger Walkthrough Button (top-right, hidden until hover) — only on home/roadmap */}
       {!showWalkthrough && !sectionWalkthroughId &&
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
-        !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showAgentLibrary && !showAimlCompanion && !showLinks &&
+        !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showSqlLab && !showConcurrencyLab && !showAgentLibrary && !showAimlCompanion && !showLinks &&
         !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
         !showAIInterviewer && !showGeminiInterviewer && !showEmotionalSupport && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&

@@ -4,6 +4,7 @@ import {
   BookOpen, BookMarked, Bookmark, GitBranch,
   HelpCircle, Users, HeartHandshake, CheckSquare, GraduationCap,
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
+  DatabaseZap, Split,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -26,6 +27,8 @@ export const SIDEBAR_ITEM_REGISTRY = {
   simulator: { icon: Layers, label: "System Design", description: "Practice architecture decisions" },
   algo_visualizer: { icon: Box, label: "Algorithm Practice", description: "Learn algorithms step by step" },
   learnbug: { icon: Terminal, label: "Visualize", description: "Debug Python code with memory, structure, and timeline views" },
+  sql_lab: { icon: DatabaseZap, label: "SQL & Query Plans", description: "Run real Postgres in-browser and read EXPLAIN ANALYZE output" },
+  concurrency_lab: { icon: Split, label: "Concurrency Lab", description: "Step through thread interleavings and watch races happen" },
 
   manual: { icon: BookOpen, label: "Manual", description: "Follow guided lessons" },
   reference: { icon: BookMarked, label: "Quick Reference", description: "Look up key concepts" },
@@ -62,7 +65,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 // (sidebarConfig.layout) has been saved yet.
 export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
-  { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug"] },
+  { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab", "concurrency_lab"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },

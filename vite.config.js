@@ -145,6 +145,11 @@ export default defineConfig(({ mode }) => {
     build: {
       modulePreload: false,
     },
+    // PGlite ships its own .wasm / .data payload and must not be pre-bundled,
+    // otherwise esbuild rewrites the URLs it uses to locate them at runtime.
+    optimizeDeps: {
+      exclude: ["@electric-sql/pglite"],
+    },
     server: {
       proxy: {
         "/notion-api": {
