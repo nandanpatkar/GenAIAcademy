@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Claude Certifications — an interactive study workspace for professional certification courses."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+    <script>if(new URLSearchParams(location.search).get('theme')==='dark')document.documentElement.classList.add('theme-dark')</script>
+    <script>
+      const renameClaudeBrand = () => document.querySelectorAll('.appbar__brand').forEach((brand) => {
+        [brand, ...brand.querySelectorAll('*')].forEach((element) => {
+          [...element.childNodes].filter((node) => node.nodeType === 3).forEach((node) => {
+            node.textContent = node.textContent.replace('Lumina Academy', 'Claude Certifications');
+          });
+        });
+      });
+      new MutationObserver(renameClaudeBrand).observe(document.documentElement, { childList: true, subtree: true });
+    </script>
+    <title>Claude Certification Academy</title>
+    <script type="module" crossorigin src="/claude-certificate/assets/index-Ch3pAj1q.js"></script>
+    <link rel="stylesheet" crossorigin href="/claude-certificate/assets/index-eYEe4BFS.css">
+    <link rel="stylesheet" href="/claude-certificate/theme-overrides.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
