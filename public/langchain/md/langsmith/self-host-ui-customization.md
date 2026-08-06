@@ -1,0 +1,18 @@
+## Custom error support message
+
+By default, error messages in LangSmith direct users to the [Support Portal](https://support.langchain.com). You can replace this with your own support contact information.
+
+When set, all error and support messages throughout the UI will display your custom text instead of the default LangChain support email.
+
+
+> [!NOTE]
+>
+> The custom message is rendered as **plain text** only. HTML tags will not be interpreted and will display as literal text.
+
+
+```yaml Helm
+config:
+  customErrorSupportMessage: "For help, contact your internal IT team at helpdesk@example.com"
+```
+
+To revert to the default behavior, remove the setting or set it to an empty string.

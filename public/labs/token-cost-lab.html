@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Cost Lab — Beat the Bill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E1116; --ink-2:#1A1F27; --paper:#FBFAF7; --panel:#FFFFFF;
+  --line:#E3E0D8; --line-2:#D2CEC3; --muted:#6C7280; --muted-2:#9AA0A8;
+  --bad:#C0392B; --bad-bg:#FDF1EF; --good:#1E7A4C; --good-bg:#EFF7F1;
+  --accent:#2F3BB3; --accent-bg:#EEF0FC; --warn:#B4761A;
+  --gold:#C9992B; --xp:#7C3AED;
+  --code-bg:#12151B; --r:10px;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --disp:"Space Grotesk",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer}
+::selection{background:#DDE1FA}
+
+/* ambient bg */
+#ambient{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5}
+.app{display:flex;min-height:100vh;position:relative;z-index:1}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{width:300px;flex:0 0 300px;border-right:1px solid var(--line);background:#F6F4EF;height:100vh;position:sticky;top:0;display:flex;flex-direction:column;z-index:5}
+.brand{padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+.brand .ch{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.brand h1{font-family:var(--disp);font-size:19px;line-height:1.2;margin:6px 0 0;letter-spacing:-.02em;font-weight:700}
+.brand .sub{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+/* player card in sidebar */
+.player{padding:13px 16px;border-bottom:1px solid var(--line);background:#F1EFE8}
+.plrow{display:flex;align-items:center;gap:10px}
+.lvlbadge{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--xp),#9D5BF0);display:grid;place-items:center;color:#fff;font-family:var(--disp);font-weight:700;font-size:17px;flex:0 0 38px;box-shadow:0 2px 6px rgba(124,58,237,.35)}
+.plinfo{flex:1;min-width:0}
+.plinfo .rank{font-family:var(--disp);font-size:13.5px;font-weight:700;line-height:1.1}
+.plinfo .xpn{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.xpbar{height:5px;background:#E1DED6;border-radius:3px;margin-top:5px;overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--xp),#A56BF2);width:0;border-radius:3px;transition:width .6s cubic-bezier(.2,.7,.3,1)}
+
+.searchbox{padding:11px 16px 9px;border-bottom:1px solid var(--line)}
+.searchbox input{width:100%;padding:8px 10px;border:1px solid var(--line-2);border-radius:7px;font-family:var(--body);font-size:13px;background:#fff;color:var(--ink)}
+.searchbox input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.navscroll{overflow-y:auto;flex:1;padding-bottom:20px}
+.groupwrap{padding:11px 12px 4px}
+.grouphead{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);padding:0 8px 7px;font-weight:600}
+.gitem{display:flex;align-items:center;gap:9px;padding:5px 8px;border-radius:7px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.gbadge{width:16px;height:16px;border-radius:5px;display:grid;place-items:center;font-family:var(--mono);font-size:9.5px;color:#fff;font-weight:600;flex:0 0 16px}
+.divline{height:1px;background:var(--line);margin:7px 16px}
+.navlist{padding:4px 12px}
+.nav-i{display:flex;align-items:center;gap:9px;width:100%;padding:7px 9px;border:0;background:none;text-align:left;border-radius:7px;color:var(--ink-2);border-left:3px solid transparent;transition:background .12s}
+.nav-i:hover{background:#EDEAE2}
+.nav-i.on{background:#E7E9F9;border-left-color:var(--accent);color:var(--accent)}
+.nav-i .n{font-family:var(--mono);font-size:11px;color:var(--muted-2);flex:0 0 18px}
+.nav-i.on .n{color:var(--accent)}
+.nav-i .t{font-size:12.6px;font-weight:600;line-height:1.25;flex:1}
+.nav-i .status{width:16px;height:16px;flex:0 0 16px;display:grid;place-items:center;font-size:11px}
+.nav-i .status .done{color:var(--good);font-weight:700}
+.nav-i .status .lock{color:var(--muted-2)}
+.navfoot{padding:9px 16px;border-top:1px solid var(--line);font-size:10.5px;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+.navfoot a{color:var(--accent);text-decoration:none;font-weight:600}
+.kbdhint{font-family:var(--mono);font-size:9.5px;color:var(--muted-2)}
+
+/* ---------- MAIN ---------- */
+.main{flex:1;min-width:0;padding:0 0 90px;position:relative}
+.wrap{max-width:1180px;margin:0 auto;padding:0 34px}
+
+/* MISSION BAR (sticky top) */
+.mission{position:sticky;top:0;z-index:20;background:var(--ink);color:#fff;border-bottom:1px solid #000}
+.mission .wrap{display:flex;align-items:center;gap:22px;padding:10px 34px}
+.mgroup{display:flex;flex-direction:column;gap:1px}
+.mgroup .ml{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:#8B949E;font-weight:600}
+.mgroup .mv{font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.mv.cost{color:#FF8B7E}
+.mv.target{color:#67D998}
+.mv.score{color:#E8C15A}
+.mprog{flex:1;min-width:90px}
+.mprog .track{height:9px;background:#2A303A;border-radius:5px;overflow:hidden;position:relative}
+.mprog .track i{display:block;height:100%;background:linear-gradient(90deg,#1E7A4C,#48C07E);width:0;border-radius:5px;transition:width .7s cubic-bezier(.2,.7,.3,1)}
+.mprog .pct{font-family:var(--mono);font-size:10px;color:#8B949E;margin-top:3px;display:flex;justify-content:space-between}
+.mtabs{display:flex;gap:3px;background:#1A1F27;padding:3px;border-radius:9px}
+.mtab{border:0;background:none;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;color:#8B949E}
+.mtab.on{background:#fff;color:var(--ink)}
+.pager{display:flex;align-items:center;gap:7px}
+.pgbtn{width:29px;height:29px;border:1px solid #2A303A;background:#1A1F27;border-radius:7px;font-size:14px;color:#C9D1D9;display:grid;place-items:center}
+.pgbtn:hover:not(:disabled){background:#252C37}
+.pgbtn:disabled{opacity:.3;cursor:not-allowed}
+.pgnum{font-family:var(--mono);font-size:11px;color:#8B949E;min-width:46px;text-align:center}
+
+.mobnav{display:none}
+
+/* ---------- LESSON CARD ---------- */
+.card{margin-top:22px}
+.chapline{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:3px}
+.chead{background:var(--accent-bg);border:1px solid #D6DAF6;border-radius:var(--r);padding:19px 22px 20px;border-bottom:3px solid var(--accent)}
+.chead .kicker{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.chead .chip{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:5px;font-weight:600}
+.chip.cat{background:#fff;color:var(--accent);border:1px solid #D6DAF6}
+.chip.xp{background:#F1EBFD;color:var(--xp);border:1px solid #E2D3FA}
+.chead h2{font-family:var(--disp);font-size:29px;line-height:1.08;margin:0 0 9px;letter-spacing:-.025em;font-weight:700}
+.chead .story{font-family:var(--disp);font-size:15px;color:var(--accent);font-weight:600;font-style:italic;margin:0 0 6px}
+.chead .lede{font-size:15px;color:var(--ink-2);max-width:80ch;margin:0}
+
+/* step flow */
+.steps{display:flex;align-items:center;gap:0;margin:16px 0 4px;flex-wrap:wrap}
+.stepdot{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;color:var(--muted-2);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.stepdot .b{width:20px;height:20px;border-radius:50%;border:2px solid var(--line-2);display:grid;place-items:center;font-size:10px;color:var(--muted-2);background:#fff;transition:all .3s}
+.stepdot.done .b{background:var(--good);border-color:var(--good);color:#fff}
+.stepdot.active .b{border-color:var(--accent);color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+.stepdot.active{color:var(--accent)}
+.stepsep{width:22px;height:2px;background:var(--line);margin:0 7px}
+.stepsep.done{background:var(--good)}
+
+/* stage blocks that unlock */
+.stage{margin-top:16px;opacity:0;max-height:0;overflow:hidden;transition:opacity .5s,max-height .6s ease}
+.stage.show{opacity:1;max-height:4000px}
+.stage.locked-note{opacity:1;max-height:200px}
+
+/* run row */
+.runrow{display:flex;align-items:center;gap:14px;margin-top:16px;flex-wrap:wrap}
+.runbtn{background:var(--ink);color:#fff;border:0;border-radius:9px;padding:13px 24px;font-size:15px;font-weight:600;display:flex;align-items:center;gap:9px;box-shadow:0 3px 10px rgba(14,17,22,.2)}
+.runbtn:hover:not(:disabled){background:#25303F;transform:translateY(-1px)}
+.runbtn:disabled{opacity:.55;cursor:progress}
+.runbtn.big{padding:15px 34px;font-size:17px}
+.hint{font-size:13px;color:var(--muted);font-style:italic;flex:1;min-width:200px}
+.ghostbtn{border:1px solid var(--line-2);background:#fff;border-radius:8px;padding:10px 15px;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.ghostbtn:hover{background:#F0EEE8}
+
+/* split simulation */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+.side h4{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 8px;font-weight:600}
+.side.bad h4{color:var(--bad)}
+.side.good h4{color:var(--good)}
+.pane{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;height:100%}
+.side.bad .pane{border-color:#EFD6D2}
+.side.good .pane{border-color:#CFE5D8}
+.viz{min-height:150px;display:flex;flex-direction:column;justify-content:center}
+.vizcap{font-size:11.5px;color:var(--muted);margin-top:9px;font-family:var(--mono)}
+.mrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:15px 0 13px}
+.m .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.m .val{font-family:var(--disp);font-size:24px;font-weight:700;line-height:1.1;margin-top:2px;letter-spacing:-.02em}
+.m .val small{font-size:12px;font-weight:600;margin-left:1px}
+.side.bad .m .val{color:var(--bad)}
+.side.good .m .val{color:var(--good)}
+.bar{height:3px;background:#E8E5DE;border-radius:2px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:2px;transition:width .55s cubic-bezier(.2,.7,.3,1)}
+.side.bad .bar i{background:var(--bad)}
+.side.good .bar i{background:var(--good)}
+.term{background:var(--code-bg);border-radius:8px;padding:13px 14px;font-family:var(--mono);font-size:12px;line-height:1.75;min-height:116px}
+.tl{display:flex;gap:11px;opacity:0;transform:translateY(3px);animation:tin .3s forwards}
+@keyframes tin{to{opacity:1;transform:none}}
+.tl .ln{color:#4A5361;flex:0 0 17px;text-align:right;user-select:none}
+.tl .tx{color:#C9D1D9;white-space:pre-wrap;word-break:break-word}
+.tl.r .tx{color:#FF8B7E}.tl.g .tx{color:#67D998}.tl.y .tx{color:#E8B84B}.tl.d .tx{color:#8B949E}
+.cursor{display:inline-block;width:7px;height:14px;background:#67D998;vertical-align:-2px;animation:bl .9s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+
+/* what happened / code / impact */
+.lower{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:18px;align-items:start}
+.blk{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:17px 19px}
+.blk h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:0 0 11px;font-weight:600}
+.whath{font-size:14.5px;color:var(--ink-2);margin:0 0 14px;line-height:1.6}
+.buildlist{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.buildlist li{display:flex;gap:9px;align-items:flex-start;font-size:14px}
+.buildlist .dot{width:5px;height:5px;border-radius:50%;background:var(--good);margin-top:8px;flex:0 0 5px}
+.impact{background:var(--accent-bg);border-color:#D6DAF6}
+.impact .big{font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.savechip{display:inline-flex;align-items:center;gap:6px;margin-top:13px;background:#fff;border:1px solid #CFE5D8;border-radius:99px;padding:5px 12px;font-family:var(--mono);font-size:12px;font-weight:600;color:var(--good)}
+.techrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+.tech{font-family:var(--mono);font-size:11px;background:#F2F0EA;border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--ink-2)}
+.protip{margin-top:12px}
+.protipbtn{border:1px solid #E2D3FA;background:#F7F2FE;border-radius:8px;padding:8px 13px;font-size:12.5px;font-weight:600;color:var(--xp);display:inline-flex;gap:7px;align-items:center}
+.protipbody{margin-top:9px;font-size:13.5px;color:var(--ink-2);background:#FBF8FF;border:1px solid #EEE3FB;border-radius:8px;padding:12px 14px;line-height:1.55;display:none}
+.protipbody.show{display:block}
+
+/* code */
+.codeblk{margin-top:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.codehead{background:#F2F0EA;padding:9px 15px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;font-weight:600}
+.copybtn{margin-left:auto;border:1px solid var(--line-2);background:#fff;border-radius:6px;padding:3px 10px;font-family:var(--mono);font-size:10.5px;color:var(--ink-2);text-transform:none;letter-spacing:0}
+.copybtn:hover{background:#EDEAE2}
+pre.code{margin:0;background:var(--code-bg);color:#C9D1D9;padding:15px 17px;font-family:var(--mono);font-size:12.5px;line-height:1.68;overflow-x:auto}
+.code .k{color:#FF7B95}.code .s{color:#A5D6FF}.code .c{color:#7D8590;font-style:italic}.code .f{color:#D2A8FF}.code .n{color:#79C0FF}.code .cm{color:#FFA657}
+
+/* cliffhanger */
+.cliff{background:var(--ink);color:#fff;border-radius:var(--r);padding:22px 24px;margin-top:18px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.cliff .ct{flex:1;min-width:240px}
+.cliff .cl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8B949E;font-weight:600}
+.cliff .cx{font-family:var(--disp);font-size:18px;font-weight:600;letter-spacing:-.015em;line-height:1.35;margin-top:6px}
+.cliff .cx em{color:#67D998;font-style:normal}
+.cliff .nextbtn{background:#fff;color:var(--ink);border:0;border-radius:9px;padding:13px 22px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.cliff .nextbtn:hover{background:#E8E9F5}
+
+/* quiz */
+.quizcard{background:#FFFBF3;border:1px solid #EAD9B0;border-radius:var(--r);padding:18px 20px;margin-top:18px}
+.quizcard h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--warn);margin:0 0 10px;font-weight:600}
+.quizq{font-family:var(--disp);font-size:16px;font-weight:600;margin:0 0 13px}
+.quizopts{display:grid;gap:8px}
+.qopt{border:1px solid var(--line-2);background:#fff;border-radius:8px;padding:11px 14px;font-size:13.5px;text-align:left;color:var(--ink-2);display:flex;gap:10px;align-items:center}
+.qopt:hover{border-color:var(--warn)}
+.qopt .qk{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:600;flex:0 0 16px}
+.qopt.correct{border-color:var(--good);background:var(--good-bg);color:var(--good);font-weight:600}
+.qopt.wrong{border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
+.quizfb{margin-top:11px;font-size:13.5px;font-weight:600;min-height:20px}
+
+/* locked note */
+.locknote{background:#F6F4EF;border:1px dashed var(--line-2);border-radius:var(--r);padding:16px 20px;text-align:center;color:var(--muted);font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:9px}
+.locknote .lk{font-size:16px}
+
+/* toast + achievements */
+#toasts{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+.toast{background:var(--ink);color:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 8px 24px rgba(0,0,0,.28);display:flex;align-items:center;gap:13px;min-width:240px;max-width:340px;transform:translateX(120%);animation:tin2 .45s cubic-bezier(.2,.9,.3,1) forwards;border:1px solid #2A303A}
+@keyframes tin2{to{transform:none}}
+.toast.out{animation:tout .4s forwards}
+@keyframes tout{to{transform:translateX(120%);opacity:0}}
+.toast .ic{font-size:26px;flex:0 0 auto}
+.toast .tt{font-family:var(--disp);font-size:14px;font-weight:700;line-height:1.2}
+.toast .td{font-size:12px;color:#8B949E;margin-top:2px}
+.toast.gold{border-color:var(--gold)}
+.toast.gold .tt{color:#F0C14B}
+
+/* confetti canvas */
+#confetti{position:fixed;inset:0;z-index:190;pointer-events:none}
+
+/* celebration overlay */
+#celebrate{position:fixed;inset:0;z-index:180;background:rgba(14,17,22,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center}
+#celebrate.show{display:flex}
+.celbox{background:#fff;border-radius:18px;padding:34px 40px;text-align:center;max-width:440px;box-shadow:0 20px 60px rgba(0,0,0,.35);animation:pop .5s cubic-bezier(.2,1.2,.4,1)}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+.celbox .emoji{font-size:52px}
+.celbox h3{font-family:var(--disp);font-size:26px;margin:8px 0 4px;letter-spacing:-.02em}
+.celbox .big{font-family:var(--disp);font-size:40px;font-weight:700;color:var(--good);letter-spacing:-.03em;margin:6px 0}
+.celbox p{color:var(--muted);font-size:14px;margin:6px 0 18px}
+.celbox button{background:var(--ink);color:#fff;border:0;border-radius:10px;padding:12px 26px;font-size:14px;font-weight:600}
+
+/* ---------- OVERVIEW / CALC ---------- */
+.hero{padding:40px 0 26px;border-bottom:1px solid var(--line)}
+.hero .kick{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.hero h2{font-family:var(--disp);font-size:44px;line-height:1.04;letter-spacing:-.035em;margin:12px 0 14px;font-weight:700;max-width:20ch}
+.hero p{font-size:16px;color:var(--muted);max-width:62ch;margin:0}
+.hero .strike{color:var(--ink);font-weight:600}
+.startbtn{margin-top:22px;background:var(--ink);color:#fff;border:0;border-radius:11px;padding:15px 30px;font-size:16px;font-weight:700;display:inline-flex;gap:10px;align-items:center;box-shadow:0 4px 14px rgba(14,17,22,.22)}
+.startbtn:hover{background:#25303F;transform:translateY(-1px)}
+.calcgrid{display:grid;grid-template-columns:1fr 400px;gap:26px;margin-top:30px;align-items:start}
+.ctrl{margin-bottom:16px}
+.ctrl label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px}
+.ctrl label b{font-family:var(--mono);color:var(--accent);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--accent);height:20px}
+.selrow{display:flex;gap:6px;flex-wrap:wrap}
+.selrow button{border:1px solid var(--line-2);background:#fff;border-radius:7px;padding:5px 11px;font-size:12px;font-weight:600;color:var(--muted)}
+.selrow button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.billcard{background:var(--ink);color:#fff;border-radius:12px;padding:24px;position:sticky;top:74px}
+.billcard .lab{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8B949E;font-weight:600}
+.billcard .amt{font-family:var(--disp);font-size:40px;font-weight:700;letter-spacing:-.035em;line-height:1.05;margin:5px 0 2px}
+.billcard .amt.red{color:#FF8B7E}.billcard .amt.grn{color:#67D998}
+.billcard .sub{font-size:12.5px;color:#8B949E}
+.billsplit{height:1px;background:#2A303A;margin:19px 0}
+.saveline{display:flex;justify-content:space-between;align-items:baseline;margin-top:11px}
+.saveline .t{font-size:13px;color:#C9D1D9}.saveline .v{font-family:var(--mono);font-size:14px;color:#67D998;font-weight:600}
+.togglegrid{display:grid;gap:6px;margin-top:14px;max-height:240px;overflow-y:auto;padding-right:4px}
+.tg{display:flex;align-items:center;gap:9px;background:#1A1F27;border:1px solid #2A303A;border-radius:7px;padding:7px 10px;cursor:pointer}
+.tg:hover{border-color:#3C4553}.tg.on{border-color:#2F6B4C;background:#16241C}
+.tg .box{width:14px;height:14px;border-radius:4px;border:1.5px solid #4A5361;flex:0 0 14px;display:grid;place-items:center;font-size:9px;color:#0E1116}
+.tg.on .box{background:#67D998;border-color:#67D998}
+.tg .nm{font-size:12px;color:#C9D1D9;flex:1}.tg .pc{font-family:var(--mono);font-size:11px;color:#67D998}
+
+.sec{padding:36px 0;border-bottom:1px solid var(--line)}
+.sechead{font-family:var(--disp);font-size:25px;letter-spacing:-.025em;margin:0 0 6px;font-weight:700}
+.secsub{color:var(--muted);font-size:14.5px;margin:0 0 22px;max-width:66ch}
+.rcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:13px}
+.rc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.rc .num{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted-2);font-weight:600}
+.rc h5{font-family:var(--disp);font-size:16px;margin:6px 0 7px;letter-spacing:-.015em;font-weight:700}
+.rc p{font-size:13px;color:var(--muted);margin:0 0 10px;line-height:1.5}
+.rc .ids{display:flex;flex-wrap:wrap;gap:4px}
+.rc .id{font-family:var(--mono);font-size:10px;background:#F2F0EA;border-radius:4px;padding:2px 6px;color:var(--ink-2);border:1px solid var(--line)}
+.rc .id:hover{background:var(--accent);color:#fff;cursor:pointer;border-color:var(--accent)}
+.pipe{display:flex;gap:8px;overflow-x:auto;padding:4px 0 14px}
+.pstage{flex:0 0 148px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:13px;text-align:left}
+.pstage:hover{border-color:var(--accent)}
+.pstage.on{border-color:var(--accent);background:var(--accent-bg);box-shadow:0 0 0 1px var(--accent)}
+.pstage .pn{font-family:var(--mono);font-size:9.5px;color:var(--muted-2);letter-spacing:.1em;font-weight:600}
+.pstage .pt{font-family:var(--disp);font-size:13.5px;font-weight:700;margin:4px 0;line-height:1.25}
+.pstage .pd{font-size:11px;color:var(--muted);line-height:1.4}
+.pdetail{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:17px 19px;margin-top:4px}
+.pdetail h5{font-family:var(--disp);font-size:17px;margin:0 0 7px;letter-spacing:-.02em}
+.pdetail p{font-size:14px;color:var(--ink-2);margin:0 0 12px;max-width:80ch}
+.rmgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:14px}
+.rm{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:17px}
+.rm .wk{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;padding:3px 9px;border-radius:5px;display:inline-block}
+.rm.w1 .wk{background:#EFF7F1;color:var(--good)}.rm.w2 .wk{background:#FDF6E9;color:var(--warn)}.rm.w3 .wk{background:var(--accent-bg);color:var(--accent)}
+.rm h5{font-family:var(--disp);font-size:16.5px;margin:10px 0 6px;letter-spacing:-.02em}
+.rm ul{margin:0;padding-left:17px;font-size:13.5px;color:var(--ink-2)}
+.rm ul li{margin-bottom:5px}
+.rm .eff{font-size:12px;color:var(--muted);margin-top:11px;font-family:var(--mono)}
+.thepoint{background:var(--ink);color:#fff;border-radius:12px;padding:30px 32px;margin-top:26px}
+.thepoint .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:#8B949E;font-weight:600}
+.thepoint p{font-family:var(--disp);font-size:22px;line-height:1.38;margin:11px 0 0;letter-spacing:-.02em;max-width:52ch;font-weight:500}
+.thepoint em{color:#67D998;font-style:normal}
+
+/* achievements strip on overview */
+.achgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:11px;margin-top:6px}
+.ach{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;opacity:.45;filter:grayscale(1);transition:all .3s}
+.ach.unlocked{opacity:1;filter:none;border-color:var(--gold);box-shadow:0 2px 8px rgba(201,153,43,.18)}
+.ach .ai{font-size:28px}
+.ach .an{font-family:var(--disp);font-size:12.5px;font-weight:700;margin-top:5px;line-height:1.2}
+.ach .ad{font-size:10.5px;color:var(--muted);margin-top:3px}
+
+.hidden{display:none !important}
+@media(max-width:1080px){.lower{grid-template-columns:1fr}.calcgrid{grid-template-columns:1fr}.billcard{position:static}}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .mobnav{display:block;padding:10px 0}
+  .mobnav select{width:100%;padding:9px;border-radius:8px;border:1px solid var(--line-2);font-size:14px;font-family:inherit}
+  .split{grid-template-columns:1fr}
+  .mission .wrap{flex-wrap:wrap;gap:12px}
+  .wrap{padding:0 18px}.hero h2{font-size:32px}
+  .m .val{font-size:19px}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+</head>
+<body>
+<canvas id="ambient"></canvas>
+<canvas id="confetti"></canvas>
+<div id="toasts"></div>
+<div id="celebrate"><div class="celbox" id="celbox"></div></div>
+
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="ch">AI engineering lab</div>
+    <h1>Token Cost Lab</h1>
+    <div class="sub">Beat the bill · 20 challenges</div>
+  </div>
+  <div class="player">
+    <div class="plrow">
+      <div class="lvlbadge" id="lvlbadge">1</div>
+      <div class="plinfo">
+        <div class="rank" id="rankname">AI Engineer</div>
+        <div class="xpn"><span id="xpval">0</span> XP · <span id="xpnext">100 to next</span></div>
+        <div class="xpbar"><i id="xpfill"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="searchbox"><input id="q" type="search" placeholder="Search challenges…" aria-label="Search"></div>
+  <div class="navscroll">
+    <div class="groupwrap"><div class="grouphead">Cost categories</div><div id="groups"></div></div>
+    <div class="divline"></div>
+    <div class="navlist" id="nav"></div>
+  </div>
+  <div class="navfoot"><span>Interactive lab</span><span class="kbdhint">SPACE run · →← move</span></div>
+</aside>
+
+<main class="main">
+  <div class="mission">
+    <div class="wrap">
+      <div class="mgroup"><span class="ml">Monthly bill</span><span class="mv cost" id="m-cost">$120,000</span></div>
+      <div class="mgroup"><span class="ml">Target</span><span class="mv target" id="m-target">$30,000</span></div>
+      <div class="mprog">
+        <div class="track"><i id="m-progfill"></i></div>
+        <div class="pct"><span id="m-pctlabel">0% optimized</span><span id="m-solved">0 / 20 solved</span></div>
+      </div>
+      <div class="mgroup"><span class="ml">Score</span><span class="mv score" id="m-score">0</span></div>
+      <div class="mtabs">
+        <button class="mtab on" data-view="overview">Mission</button>
+        <button class="mtab" data-view="lesson">Challenges</button>
+        <button class="mtab" data-view="all">Reference</button>
+      </div>
+      <div class="pager" id="pager">
+        <button class="pgbtn" id="prev" aria-label="Previous">‹</button>
+        <span class="pgnum" id="pgnum">1 / 20</span>
+        <button class="pgbtn" id="next" aria-label="Next">›</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap"><div class="mobnav"><select id="mobsel" aria-label="Choose challenge"></select></div></div>
+
+  <section id="v-overview" class="wrap"></section>
+  <section id="v-lesson" class="wrap hidden"><div id="lesson"></div></section>
+  <section id="v-all" class="wrap hidden"></section>
+</main>
+</div>
+<script>
+const B = [
+{
+ n:1, g:1, title:"Excessive System Prompts", cat:"INPUT BLOAT",
+ lede:"A 2,400-token system prompt sent on every single call. You wrote it once. You pay for it forever.",
+ hint:"Same behaviour, 380 tokens instead of 2,400. The model never noticed.",
+ sim:"bars", save:"10–20%", tech:["Prompt Engineering","Templates","Few-shot pruning"],
+ build:["Audit the system prompt token count","Delete restated instructions","Move examples to few-shot only where needed","Version prompts like code"],
+ impact:"Cheaper on every call you will ever make",
+ bad:{ metrics:[["System tokens",2400,"",2400],["Per 1M calls",2.4,"B",2.4],["Wasted",84,"%",100]],
+   bars:[["Role definition",240],["Restated rules",620],["Verbose examples",980],["Formatting rules",380],["Actual task",180]],
+   caption:"2,400 tokens · every request · forever",
+   log:[["d","Loading system_prompt_v1.txt · 2,400 tokens"],["r","Same 2,400 tokens prepended to call #1"],["r","Same 2,400 tokens prepended to call #500,000"],["r","1.2B tokens billed before user typed a word"]]},
+ good:{ metrics:[["System tokens",380,"",380],["Per 1M calls",0.38,"B",0.38],["Wasted",6,"%",6]],
+   bars:[["Role definition",80],["Rules (deduped)",120],["1 tight example",120],["Actual task",60]],
+   caption:"380 tokens · same behaviour on evals",
+   log:[["y","Deduplicating overlapping instructions…"],["g","Removed 4 restated rules · −620 tokens"],["g","Cut 3 of 4 examples · −860 tokens"],["g","2,400 → 380 tokens · eval score unchanged (94%)"]]},
+ code:`<span class="c"># BEFORE — 2,400 tokens on every call</span>
+SYSTEM = <span class="s">"""You are a helpful assistant. You should always be
+helpful. When answering, be helpful and accurate...
+[47 more lines restating the same three ideas]"""</span>
+
+<span class="c"># AFTER — 380 tokens, same eval score</span>
+SYSTEM = <span class="s">"""Support agent for Acme Cloud.
+Answer from CONTEXT only. If absent, say you don't know.
+Format: 2-3 sentences, then bullet steps if procedural."""</span>
+
+<span class="c"># Measure it, don't guess it</span>
+<span class="k">import</span> tiktoken
+enc = tiktoken.<span class="f">get_encoding</span>(<span class="s">"cl100k_base"</span>)
+<span class="f">print</span>(<span class="f">len</span>(enc.<span class="f">encode</span>(SYSTEM)))  <span class="c"># 380</span>
+
+<span class="c"># Then gate it in CI so it can never creep back up</span>
+<span class="k">assert</span> <span class="f">len</span>(enc.<span class="f">encode</span>(SYSTEM)) &lt; <span class="n">500</span>, <span class="s">"system prompt regression"</span>`
+},
+{
+ n:2, g:1, title:"Long Chat History", cat:"INPUT BLOAT",
+ lede:"Turn 40 of a conversation replays turns 1 through 39. Cost grows quadratically while value grows linearly.",
+ hint:"Rolling summary plus last 6 turns. Context stays flat as the conversation grows.",
+ sim:"stack", save:"20–40%", tech:["Sliding Window","Summarization","Memory buffer"],
+ build:["Sliding window of last N turns","Rolling summary of everything older","Pin the system prompt outside the window","Flush summary to a store, not the prompt"],
+ impact:"Flat cost per turn no matter how long the chat runs",
+ bad:{ metrics:[["Turn",40,"",100],["Context tokens",41800,"",100],["Cost this turn",0.13,"$",100]],
+   stack:[["turn 1",900],["turn 10",9800],["turn 20",20400],["turn 30",31000],["turn 40",41800]],
+   caption:"context tokens by turn · unbounded growth",
+   log:[["d","Turn 40 · replaying full history"],["r","39 previous turns re-sent verbatim"],["r","41,800 input tokens for a 12-word question"],["r","Turn 80 would cost 4× this turn"]]},
+ good:{ metrics:[["Turn",40,"",100],["Context tokens",4200,"",10],["Cost this turn",0.013,"$",10]],
+   stack:[["turn 1",900],["turn 10",4100],["turn 20",4200],["turn 30",4200],["turn 40",4200]],
+   caption:"summary + last 6 turns · flat forever",
+   log:[["y","Turns 1–34 → rolling summary (620 tokens)"],["g","Keeping verbatim: last 6 turns (3,580 tokens)"],["g","Context 41,800 → 4,200 tokens"],["g","Turn 80 will still cost 4,200 tokens"]]},
+ code:`<span class="k">from</span> langchain.memory <span class="k">import</span> ConversationSummaryBufferMemory
+
+memory = <span class="f">ConversationSummaryBufferMemory</span>(
+    llm=cheap_llm,             <span class="c"># summarize with the SMALL model</span>
+    max_token_limit=<span class="n">4000</span>,     <span class="c"># hard ceiling on context</span>
+    return_messages=<span class="k">True</span>,
+)
+
+<span class="c"># Manual version — same idea, no framework</span>
+<span class="k">def</span> <span class="f">build_context</span>(history, keep=<span class="n">6</span>):
+    recent = history[-keep:]
+    older  = history[:-keep]
+    <span class="k">if</span> <span class="f">count_tokens</span>(older) &gt; <span class="n">800</span>:
+        summary = cheap_llm.<span class="f">invoke</span>(
+            <span class="s">f"Summarize in &lt;150 words, keep decisions and IDs:\\n{older}"</span>
+        )
+        <span class="k">return</span> [{<span class="s">"role"</span>:<span class="s">"system"</span>,<span class="s">"content"</span>:<span class="s">f"Earlier: {summary}"</span>}] + recent
+    <span class="k">return</span> history`
+},
+{
+ n:3, g:1, title:"Unfiltered RAG Context", cat:"INPUT BLOAT",
+ lede:"Vector search returns whatever is nearest. Nearest is not the same as correct, and you pay for every wrong chunk.",
+ hint:"Metadata filter first, then search. Same recall, one fifth of the tokens.",
+ sim:"grid", save:"40–70%", tech:["Metadata Filter","Hybrid Search","Namespace routing"],
+ build:["Tag every chunk at ingest: tenant, doc type, date","Pre-filter before vector search","Hybrid BM25 + dense for exact terms","Reject below a similarity floor"],
+ impact:"Right documents, a fraction of the context",
+ bad:{ metrics:[["Chunks in prompt",32,"",100],["Relevant",5,"",16],["Precision",16,"%",16]],
+   grid:{total:32,good:[3,9,14,21,27]},
+   caption:"32 chunks retrieved · green = actually relevant",
+   log:[["d","Query: 'Q3 refund policy for enterprise tier'"],["r","Vector search over 1 collection, no filters"],["r","Returned 2019 docs, sales decks, HR policy"],["r","32 chunks · 24,000 tokens · 5 were useful"]]},
+ good:{ metrics:[["Chunks in prompt",6,"",19],["Relevant",5,"",83],["Precision",83,"%",83]],
+   grid:{total:6,good:[0,1,2,3,4]},
+   caption:"filtered to 6 · pre-filter did the work",
+   log:[["y","Pre-filter: doc_type=policy, tier=enterprise, year>=2024"],["g","Search space 84,000 → 1,900 chunks"],["g","Hybrid BM25 + dense on filtered set"],["g","6 chunks · 4,400 tokens · precision 83%"]]},
+ code:`<span class="c"># Tag at INGEST — you cannot filter what you did not label</span>
+vectorstore.<span class="f">add_documents</span>(docs, metadatas=[{
+    <span class="s">"tenant_id"</span>: <span class="s">"acme"</span>,
+    <span class="s">"doc_type"</span>: <span class="s">"policy"</span>,
+    <span class="s">"tier"</span>:     <span class="s">"enterprise"</span>,
+    <span class="s">"year"</span>:     <span class="n">2025</span>,
+} <span class="k">for</span> d <span class="k">in</span> docs])
+
+<span class="c"># Filter BEFORE the vector math, not after</span>
+results = vectorstore.<span class="f">similarity_search</span>(
+    query,
+    k=<span class="n">6</span>,
+    filter={<span class="s">"tenant_id"</span>:<span class="s">"acme"</span>, <span class="s">"doc_type"</span>:<span class="s">"policy"</span>, <span class="s">"year"</span>:{<span class="s">"$gte"</span>:<span class="n">2024</span>}},
+)
+
+<span class="c"># And enforce a relevance floor — no floor means noise always wins</span>
+hits = [d <span class="k">for</span> d, score <span class="k">in</span>
+        vectorstore.<span class="f">similarity_search_with_score</span>(query, k=<span class="n">20</span>)
+        <span class="k">if</span> score &gt; <span class="n">0.78</span>][:<span class="n">6</span>]`
+},
+{
+ n:4, g:1, title:"Too Many Retrieved Documents", cat:"INPUT BLOAT",
+ lede:"k=20 feels safe. It is not safe — it is expensive, and it buries the answer in the middle where models read worst.",
+ hint:"Retrieve 20 for recall, re-rank, send 4. Accuracy goes up, cost goes down.",
+ sim:"grid", save:"30–60%", tech:["Top-K tuning","Cross-Encoder Rerank","Relevance floor"],
+ build:["Retrieve wide (k=20) for recall","Cross-encoder re-rank the candidates","Send only the top 3–5","Log which k actually gets cited"],
+ impact:"Higher accuracy and lower cost from the same index",
+ bad:{ metrics:[["Sent to model",20,"",100],["Precision",20,"%",20],["Answer accuracy",61,"%",61]],
+   grid:{total:20,good:[2,7,13,18]},
+   caption:"all 20 stuffed in · answer buried at position 13",
+   log:[["d","k=20 retrieved by cosine similarity"],["r","All 20 pasted into the prompt · 15,000 tokens"],["r","Signal at rank 13 — lost in the middle"],["r","Model answered from rank 2 (wrong doc)"]]},
+ good:{ metrics:[["Sent to model",4,"",20],["Precision",100,"%",100],["Answer accuracy",93,"%",93]],
+   grid:{total:4,good:[0,1,2,3]},
+   caption:"re-ranked · top 4 kept · 16 dropped",
+   log:[["y","Retrieved 20 · running cross-encoder rerank"],["g","Rank 13 promoted to rank 1 (score 0.94)"],["g","Dropped 16 below the 0.85 floor"],["g","4 chunks · 3,100 tokens · accuracy 61% → 93%"]]},
+ code:`<span class="k">from</span> sentence_transformers <span class="k">import</span> CrossEncoder
+
+reranker = <span class="f">CrossEncoder</span>(<span class="s">"BAAI/bge-reranker-base"</span>)
+
+<span class="c"># 1. Retrieve WIDE — cheap, recall matters here</span>
+candidates = vectorstore.<span class="f">similarity_search</span>(query, k=<span class="n">20</span>)
+
+<span class="c"># 2. Re-rank — a cross-encoder reads query+doc TOGETHER</span>
+pairs  = [(query, d.page_content) <span class="k">for</span> d <span class="k">in</span> candidates]
+scores = reranker.<span class="f">predict</span>(pairs)
+
+<span class="c"># 3. Send NARROW — this is what you actually pay for</span>
+ranked = <span class="f">sorted</span>(<span class="f">zip</span>(candidates, scores), key=<span class="k">lambda</span> x: -x[<span class="n">1</span>])
+final  = [d <span class="k">for</span> d, s <span class="k">in</span> ranked <span class="k">if</span> s &gt; <span class="n">0.85</span>][:<span class="n">4</span>]
+
+<span class="c"># The reranker costs ~15ms and saves ~11,000 tokens per call.</span>
+<span class="c"># That trade is not close.</span>`
+},
+{
+ n:5, g:1, title:"Large Document Chunks", cat:"INPUT BLOAT",
+ lede:"A 2,000-token chunk to answer a one-line question. You bought the whole chapter to read one sentence.",
+ hint:"Semantic chunks of 300–500 tokens. You retrieve the paragraph, not the chapter.",
+ sim:"bars", save:"20–40%", tech:["Semantic Chunking","Small chunks","Parent-doc retrieval"],
+ build:["Chunk on semantic boundaries, not character counts","Target 300–500 tokens with 15% overlap","Parent-document retrieval for wider context on demand","Store headings as chunk metadata"],
+ impact:"Precise retrieval without dragging whole chapters",
+ bad:{ metrics:[["Chunk size",2000,"",100],["Useful content",180,"",9],["Waste",91,"%",91]],
+   bars:[["Chunk 1 — 1 useful line",2000],["Chunk 2 — 0 useful",2000],["Chunk 3 — 2 useful lines",2000]],
+   caption:"6,000 tokens retrieved · ~340 actually used",
+   log:[["d","Fixed 2,000-token splitter, no overlap logic"],["r","Answer spans a heading boundary — split in half"],["r","3 chunks retrieved to reconstruct one paragraph"],["r","6,000 tokens for 340 tokens of signal"]]},
+ good:{ metrics:[["Chunk size",420,"",21],["Useful content",340,"",81],["Waste",19,"%",19]],
+   bars:[["Chunk A — full answer",420],["Chunk B — supporting",380]],
+   caption:"800 tokens retrieved · 340 used",
+   log:[["y","Semantic splitter · headings respected"],["g","Chunk boundaries at section breaks"],["g","15% overlap keeps split answers intact"],["g","6,000 → 800 tokens · answer fully contained"]]},
+ code:`<span class="k">from</span> langchain_text_splitters <span class="k">import</span> RecursiveCharacterTextSplitter
+
+<span class="c"># Split on STRUCTURE first, characters last</span>
+splitter = <span class="f">RecursiveCharacterTextSplitter</span>(
+    chunk_size=<span class="n">450</span>,
+    chunk_overlap=<span class="n">70</span>,          <span class="c"># ~15% — protects split answers</span>
+    separators=[<span class="s">"\\n## "</span>, <span class="s">"\\n### "</span>, <span class="s">"\\n\\n"</span>, <span class="s">"\\n"</span>, <span class="s">". "</span>, <span class="s">" "</span>],
+)
+
+<span class="c"># Keep the heading with the chunk — massive retrieval win, ~8 tokens</span>
+<span class="k">for</span> c <span class="k">in</span> chunks:
+    c.page_content = <span class="s">f"[{c.metadata['section']}] {c.page_content}"</span>
+
+<span class="c"># Small chunks to SEARCH, bigger parent to READ when you need it</span>
+<span class="k">from</span> langchain.retrievers <span class="k">import</span> ParentDocumentRetriever
+retriever = <span class="f">ParentDocumentRetriever</span>(
+    child_splitter=<span class="f">RecursiveCharacterTextSplitter</span>(chunk_size=<span class="n">400</span>),
+    parent_splitter=<span class="f">RecursiveCharacterTextSplitter</span>(chunk_size=<span class="n">2000</span>),
+)`
+},
+{
+ n:6, g:1, title:"Verbose User Prompts", cat:"INPUT BLOAT",
+ lede:"Users paste 4,000 words of email thread and ask 'what do you think?'. Your app forwards all of it, at your expense.",
+ hint:"Structured input fields beat a free-text box. The form does the compression.",
+ sim:"bars", save:"10–20%", tech:["Structured Prompts","Input schema","Client-side trim"],
+ build:["Replace the free-text box with typed fields","Strip signatures, quoted replies, disclaimers","Client-side token counter with a soft cap","Pre-summarize pastes over N tokens"],
+ impact:"Predictable input size per request type",
+ bad:{ metrics:[["Input tokens",4300,"",100],["Signal",240,"",6],["Cost/req",0.013,"$",100]],
+   bars:[["Quoted reply chain",1900],["Email signatures",480],["Legal disclaimer",620],["Pleasantries",380],["Actual question",240],["Formatting junk",680]],
+   caption:"4,300 tokens · 240 of them were the question",
+   log:[["d","User pasted a 14-message email thread"],["r","Includes 6 signatures + 3 legal disclaimers"],["r","No preprocessing — sent verbatim"],["r","4,300 tokens billed for a 240-token question"]]},
+ good:{ metrics:[["Input tokens",760,"",18],["Signal",240,"",32],["Cost/req",0.0023,"$",18]],
+   bars:[["Cleaned thread (last 2)",420],["Structured fields",100],["Actual question",240]],
+   caption:"760 tokens · same answer quality",
+   log:[["y","Stripping quoted replies, signatures, disclaimers"],["g","Kept last 2 messages only · −2,900 tokens"],["g","Form fields replaced 'context' free-text"],["g","4,300 → 760 tokens · answer identical"]]},
+ code:`<span class="k">import</span> re
+
+<span class="k">def</span> <span class="f">clean_paste</span>(text: <span class="k">str</span>) -&gt; <span class="k">str</span>:
+    <span class="c"># Drop quoted reply chains</span>
+    text = re.<span class="f">split</span>(<span class="s">r"\\nOn .{5,60} wrote:"</span>, text)[<span class="n">0</span>]
+    <span class="c"># Drop signature blocks</span>
+    text = re.<span class="f">split</span>(<span class="s">r"\\n--\\s*\\n|\\nSent from my "</span>, text)[<span class="n">0</span>]
+    <span class="c"># Drop boilerplate disclaimers</span>
+    text = re.<span class="f">sub</span>(<span class="s">r"(?is)this (e-?mail|message).{0,400}confidential.{0,400}"</span>, <span class="s">""</span>, text)
+    <span class="k">return</span> text.<span class="f">strip</span>()
+
+<span class="c"># Better: don't accept free text at all</span>
+<span class="k">class</span> <span class="f">TicketRequest</span>(BaseModel):
+    customer_tier: Literal[<span class="s">"free"</span>,<span class="s">"pro"</span>,<span class="s">"enterprise"</span>]
+    issue_type:    Literal[<span class="s">"billing"</span>,<span class="s">"bug"</span>,<span class="s">"howto"</span>]
+    question:      <span class="k">str</span> = Field(max_length=<span class="n">600</span>)
+
+<span class="c"># The schema IS the compression. Users can't bloat what they can't type.</span>`
+},
+{
+ n:7, g:1, title:"Unnecessary Tool Call Results", cat:"INPUT BLOAT",
+ lede:"Your API returns 180 fields. The model needs four. The other 176 come back into context on every single tool call.",
+ hint:"Project the fields before they reach the model. Tool output is your data, not the model's problem.",
+ sim:"bars", save:"20–50%", tech:["Tool Output Filtering","Field projection","Result truncation"],
+ build:["Whitelist fields per tool, never pass raw JSON","Cap array results at N items","Summarize long tool output with a cheap model","Return IDs and let the model ask for detail"],
+ impact:"Agents that stay affordable past step three",
+ bad:{ metrics:[["Tool result tokens",9400,"",100],["Fields returned",180,"",100],["Fields used",4,"",2]],
+   bars:[["Full order object",3100],["Nested customer obj",2400],["Audit trail array",2200],["Metadata blob",1400],["Fields actually used",300]],
+   caption:"raw API JSON piped straight into context",
+   log:[["d","tool: get_order(id=88213)"],["r","API returned 180 fields including audit history"],["r","Raw JSON dumped into the message array"],["r","9,400 tokens · agent needed status + total + eta + id"]]},
+ good:{ metrics:[["Tool result tokens",210,"",2],["Fields returned",5,"",3],["Fields used",4,"",80]],
+   bars:[["id, status, total, eta",210]],
+   caption:"projected response · 4 fields the agent asked for",
+   log:[["y","Applying field projection to tool output"],["g","Whitelist: id, status, total_amount, eta, currency"],["g","Audit array dropped (agent can request by id)"],["g","9,400 → 210 tokens · 98% reduction on this tool"]]},
+ code:`<span class="c"># The tool wrapper is where you control cost. Not the prompt.</span>
+
+FIELDS = {<span class="s">"id"</span>,<span class="s">"status"</span>,<span class="s">"total_amount"</span>,<span class="s">"currency"</span>,<span class="s">"eta"</span>}
+
+<span class="k">def</span> <span class="f">get_order</span>(order_id: <span class="k">str</span>) -&gt; <span class="k">dict</span>:
+    raw = api.<span class="f">fetch_order</span>(order_id)          <span class="c"># 180 fields</span>
+    <span class="k">return</span> {k: raw[k] <span class="k">for</span> k <span class="k">in</span> FIELDS <span class="k">if</span> k <span class="k">in</span> raw}  <span class="c"># 5 fields</span>
+
+<span class="c"># Cap arrays — an agent does not need 400 rows to reason</span>
+<span class="k">def</span> <span class="f">search_orders</span>(q, limit=<span class="n">5</span>):
+    rows = api.<span class="f">search</span>(q)
+    out  = [{<span class="s">"id"</span>:r[<span class="s">"id"</span>], <span class="s">"status"</span>:r[<span class="s">"status"</span>]} <span class="k">for</span> r <span class="k">in</span> rows[:limit]]
+    <span class="k">if</span> <span class="f">len</span>(rows) &gt; limit:
+        out.<span class="f">append</span>({<span class="s">"_note"</span>: <span class="s">f"{len(rows)-limit} more — refine the query"</span>})
+    <span class="k">return</span> out
+
+<span class="c"># Rule of thumb: if a tool result exceeds 500 tokens, it needs a projection.</span>`
+},
+{
+ n:8, g:2, title:"Verbose JSON / Structured Output", cat:"OUTPUT WASTE",
+ lede:"The model writes 'Certainly! Here is the JSON you requested:' then pretty-prints it with 4-space indentation. You paid for every space.",
+ hint:"Native JSON mode, short keys, no prose wrapper. Same data, a third of the output.",
+ sim:"bars", save:"10–30%", tech:["JSON Mode","Pydantic","Compact keys"],
+ build:["Use the provider's native JSON/structured mode","Short field names in the schema","Strip preamble with response_format","Validate with Pydantic instead of asking for explanations"],
+ impact:"Cheaper and more reliable machine output",
+ bad:{ metrics:[["Output tokens",840,"",100],["Payload",190,"",23],["Parse failures",7,"%",70]],
+   bars:[["Preamble prose",90],["Markdown fences",20],["Pretty-print whitespace",210],["Verbose key names",180],["Trailing explanation",140],["Actual data",200]],
+   caption:"840 output tokens for 200 tokens of data",
+   log:[["d","Prompt: 'return JSON with the extracted fields'"],["r","Model wrote 3 sentences before the JSON"],["r","Wrapped in triple-backtick json fences · 4-space indent"],["r","840 output tokens · 7% failed to parse"]]},
+ good:{ metrics:[["Output tokens",230,"",27],["Payload",190,"",83],["Parse failures",0,"%",0]],
+   bars:[["Compact JSON",230]],
+   caption:"230 output tokens · schema-enforced · 0 failures",
+   log:[["y","Switching to native structured output mode"],["g","Schema enforced — no preamble possible"],["g","Short keys: customer_full_name → name"],["g","840 → 230 tokens · parse failures 7% → 0%"]]},
+ code:`<span class="k">from</span> pydantic <span class="k">import</span> BaseModel, Field
+
+<span class="k">class</span> <span class="f">Extraction</span>(BaseModel):
+    name:   <span class="k">str</span>                <span class="c"># not "customer_full_name"</span>
+    amt:    <span class="k">float</span>              <span class="c"># not "total_transaction_amount"</span>
+    cur:    <span class="k">str</span> = Field(max_length=<span class="n">3</span>)
+    urgent: <span class="k">bool</span>
+
+<span class="c"># Native structured output — the model CANNOT add prose</span>
+resp = client.messages.<span class="f">create</span>(
+    model=<span class="s">"claude-sonnet-4-6"</span>,
+    max_tokens=<span class="n">400</span>,
+    tools=[{<span class="s">"name"</span>:<span class="s">"extract"</span>, <span class="s">"input_schema"</span>: Extraction.<span class="f">model_json_schema</span>()}],
+    tool_choice={<span class="s">"type"</span>:<span class="s">"tool"</span>,<span class="s">"name"</span>:<span class="s">"extract"</span>},
+    messages=[{<span class="s">"role"</span>:<span class="s">"user"</span>,<span class="s">"content"</span>: doc}],
+)
+data = Extraction(**resp.content[<span class="n">0</span>].input)
+
+<span class="c"># Short keys are not premature optimization at 1M calls/month.</span>
+<span class="c"># 12 chars saved × 8 fields × 1M calls = ~24M tokens.</span>`
+},
+{
+ n:9, g:2, title:"Large Output Length", cat:"OUTPUT WASTE",
+ lede:"max_tokens=4096 on a yes/no classifier. Output tokens cost 3–5× input, and the model will happily fill the space you give it.",
+ hint:"Cap max_tokens per task type. The classifier gets 5, the essay gets 2,000.",
+ sim:"gauge", save:"20–60%", tech:["max_tokens","Stop sequences","Task-typed limits"],
+ build:["Set max_tokens per route, never globally","Stop sequences on structured formats","Ask for 'one word' and enforce it with a cap","Track p95 output length per endpoint"],
+ impact:"Output cost matches the job, not the ceiling",
+ bad:{ metrics:[["max_tokens",4096,"",100],["Actual output",312,"",8],["Output $/1M req",4680,"$",100]],
+   gauge:{cap:4096,used:312,label:"4096 ceiling · model rambles to fill it"},
+   caption:"one global max_tokens for every route",
+   log:[["d","Route: /classify · returns one of 4 labels"],["r","max_tokens=4096 (copied from the essay route)"],["r","Model wrote 312 tokens of justification"],["r","4 tokens of signal · 308 tokens of prose"]]},
+ good:{ metrics:[["max_tokens",8,"",1],["Actual output",4,"",50],["Output $/1M req",60,"$",2]],
+   gauge:{cap:8,used:4,label:"8 ceiling · one label, nothing else"},
+   caption:"per-route caps · classifier can't ramble",
+   log:[["y","Setting per-route max_tokens"],["g","/classify → 8 · /summarize → 220 · /draft → 1200"],["g","Stop sequence on '\\n' for single-label routes"],["g","312 → 4 output tokens · 98.7% cheaper on this route"]]},
+ code:`<span class="c"># One global max_tokens is a bug, not a config.</span>
+
+ROUTES = {
+    <span class="s">"classify"</span>:  {<span class="s">"max_tokens"</span>: <span class="n">8</span>,    <span class="s">"stop"</span>: [<span class="s">"\\n"</span>]},
+    <span class="s">"extract"</span>:   {<span class="s">"max_tokens"</span>: <span class="n">400</span>,  <span class="s">"stop"</span>: [<span class="s">"}"</span>]},
+    <span class="s">"summarize"</span>: {<span class="s">"max_tokens"</span>: <span class="n">220</span>,  <span class="s">"stop"</span>: []},
+    <span class="s">"draft"</span>:     {<span class="s">"max_tokens"</span>: <span class="n">1200</span>, <span class="s">"stop"</span>: []},
+}
+
+cfg = ROUTES[route]
+resp = client.messages.<span class="f">create</span>(
+    model=model,
+    max_tokens=cfg[<span class="s">"max_tokens"</span>],
+    stop_sequences=cfg[<span class="s">"stop"</span>],
+    messages=msgs,
+)
+
+<span class="c"># Then verify you sized it right — don't guess, measure p95</span>
+<span class="c">#   SELECT route, percentile_cont(0.95) WITHIN GROUP (ORDER BY out_tokens)</span>
+<span class="c">#   FROM llm_calls GROUP BY route;</span>
+<span class="c"># Set max_tokens ≈ p99. Truncation at p95 means you sized it too tight.</span>`
+},
+{
+ n:10, g:3, title:"Redundant Repeated Requests", cat:"REPEATED WORK",
+ lede:"A retry storm, a double-clicked button, and a cron job that overlaps itself. You paid three times for one answer.",
+ hint:"Idempotency keys. The second identical request returns the first answer for free.",
+ sim:"flow", save:"10–30%", tech:["Request Hashing","Deduplication","Idempotency keys"],
+ build:["Hash (prompt + params) into an idempotency key","In-flight registry so duplicates await the first call","Exponential backoff instead of tight retries","Debounce the client button"],
+ impact:"You pay once for each distinct question",
+ bad:{ metrics:[["Requests sent",4,"",100],["Distinct",1,"",25],["Wasted spend",75,"%",75]],
+   flow:[["User double-click","BILLED"],["Client retry (timeout)","BILLED"],["Cron overlap","BILLED"],["Original call","BILLED"]],
+   caption:"4 identical calls · 4 invoices · 1 answer",
+   log:[["d","POST /ask · body hash a3f9c1…"],["r","t+0.0s call #1 sent"],["r","t+0.3s user double-clicked · call #2 sent"],["r","t+8.0s client timeout retry · call #3 sent"],["r","3 duplicate answers · 3× the bill"]]},
+ good:{ metrics:[["Requests sent",1,"",25],["Distinct",1,"",100],["Wasted spend",0,"%",0]],
+   flow:[["User double-click","DEDUPED"],["Client retry (timeout)","DEDUPED"],["Cron overlap","DEDUPED"],["Original call","BILLED"]],
+   caption:"1 call billed · 3 joined the in-flight promise",
+   log:[["y","Computing idempotency key from prompt+params"],["g","Key a3f9c1 already in flight — awaiting result"],["g","Calls #2 #3 #4 returned the same response object"],["g","1 billed call · 0 duplicate spend"]]},
+ code:`<span class="k">import</span> hashlib, json, asyncio
+
+_inflight: <span class="k">dict</span>[<span class="k">str</span>, asyncio.Future] = {}
+
+<span class="k">def</span> <span class="f">idem_key</span>(payload: <span class="k">dict</span>) -&gt; <span class="k">str</span>:
+    blob = json.<span class="f">dumps</span>(payload, sort_keys=<span class="k">True</span>)
+    <span class="k">return</span> hashlib.<span class="f">sha256</span>(blob.<span class="f">encode</span>()).<span class="f">hexdigest</span>()[:<span class="n">16</span>]
+
+<span class="k">async def</span> <span class="f">call_llm</span>(payload):
+    key = <span class="f">idem_key</span>(payload)
+
+    <span class="c"># Someone already asked this — wait for THEIR answer, don't buy your own</span>
+    <span class="k">if</span> key <span class="k">in</span> _inflight:
+        <span class="k">return await</span> _inflight[key]
+
+    fut = asyncio.<span class="f">get_event_loop</span>().<span class="f">create_future</span>()
+    _inflight[key] = fut
+    <span class="k">try</span>:
+        result = <span class="k">await</span> client.messages.<span class="f">create</span>(**payload)
+        fut.<span class="f">set_result</span>(result)
+        <span class="k">return</span> result
+    <span class="k">finally</span>:
+        _inflight.<span class="f">pop</span>(key, <span class="k">None</span>)
+
+<span class="c"># Also: retry with backoff, never in a tight loop.</span>
+<span class="c"># A tight retry loop is a denial-of-wallet attack on yourself.</span>`
+},
+{
+ n:11, g:3, title:"No Caching Mechanism", cat:"REPEATED WORK",
+ lede:"Forty percent of your traffic is the same twenty questions. Without a cache you buy every answer again, all day, every day.",
+ hint:"Exact cache catches repeats. Semantic cache catches rephrasings. Together they eat most of your traffic.",
+ sim:"flow", save:"30–80%", tech:["Redis Cache","Semantic Cache","Prompt caching"],
+ build:["Exact-match cache keyed on the full payload hash","Semantic cache with a 0.95 similarity threshold","Provider prompt caching for static system blocks","TTL tied to how fast the source data changes"],
+ impact:"The most repeated questions become almost free",
+ bad:{ metrics:[["Cache hit rate",0,"%",0],["LLM calls / 10k",10000,"",100],["Cost / 10k req",127,"$",100]],
+   flow:[["'reset my password'","LLM CALL"],["'how do I reset password'","LLM CALL"],["'password reset help'","LLM CALL"],["'forgot my password'","LLM CALL"]],
+   caption:"every request hits the model · 0% hit rate",
+   log:[["d","10,000 requests · no cache layer"],["r","Top query asked 1,840 times today"],["r","Each occurrence billed as a fresh generation"],["r","10,000 LLM calls · $127"]]},
+ good:{ metrics:[["Cache hit rate",68,"%",68],["LLM calls / 10k",3200,"",32],["Cost / 10k req",41,"$",32]],
+   flow:[["'reset my password'","LLM CALL"],["'how do I reset password'","SEMANTIC HIT"],["'password reset help'","SEMANTIC HIT"],["'forgot my password'","EXACT HIT"]],
+   caption:"68% served from cache · ~4ms instead of ~2s",
+   log:[["y","L1 exact cache + L2 semantic cache online"],["g","Exact hits: 41% · semantic hits (>0.95): 27%"],["g","Cached responses served in 4ms vs 2,100ms"],["g","10,000 → 3,200 billed calls · $127 → $41"]]},
+ code:`<span class="k">import</span> redis, numpy as np
+r = redis.<span class="f">Redis</span>()
+
+<span class="k">def</span> <span class="f">ask</span>(q: <span class="k">str</span>):
+    <span class="c"># L1 — exact match. Free, instant, catches ~40% of real traffic.</span>
+    key = <span class="s">"llm:"</span> + hashlib.<span class="f">sha256</span>(q.<span class="f">encode</span>()).<span class="f">hexdigest</span>()
+    <span class="k">if</span> (hit := r.<span class="f">get</span>(key)):
+        <span class="k">return</span> hit.<span class="f">decode</span>()
+
+    <span class="c"># L2 — semantic. Catches the rephrasings L1 misses.</span>
+    vec  = <span class="f">embed</span>(q)
+    near = vstore.<span class="f">similarity_search_with_score</span>(q, k=<span class="n">1</span>)
+    <span class="k">if</span> near <span class="k">and</span> near[<span class="n">0</span>][<span class="n">1</span>] &gt; <span class="n">0.95</span>:
+        <span class="k">return</span> near[<span class="n">0</span>][<span class="n">0</span>].metadata[<span class="s">"answer"</span>]
+
+    <span class="c"># Miss — pay for it once, then remember it</span>
+    ans = llm.<span class="f">invoke</span>(q)
+    r.<span class="f">setex</span>(key, <span class="n">3600</span>, ans)
+    vstore.<span class="f">add_texts</span>([q], metadatas=[{<span class="s">"answer"</span>: ans}])
+    <span class="k">return</span> ans
+
+<span class="c"># Threshold discipline: 0.95 is safe, 0.90 starts serving wrong answers.</span>
+<span class="c"># Never semantic-cache anything personalized or time-sensitive.</span>`
+},
+{
+ n:12, g:4, title:"Wrong Model for Simple Tasks", cat:"WRONG MODEL",
+ lede:"Your frontier model is classifying support tickets into four buckets. That is a jet engine on a bicycle.",
+ hint:"Same accuracy on the easy 70% for a fraction of the price. Save the big model for the hard 30%.",
+ sim:"bars", save:"20–60%", tech:["Model Selection","Small/fast tiers","Task-model mapping"],
+ build:["Map every route to the cheapest model that passes eval","Run the eval before you downgrade, not after","Escalate on low confidence, not by default","Re-run the eval whenever a new small model ships"],
+ impact:"You pay frontier prices only for frontier problems",
+ bad:{ metrics:[["Cost / 1M calls",15000,"$",100],["Accuracy",96,"%",96],["Right-sized",0,"%",0]],
+   bars:[["Classify (frontier)",4200],["Extract (frontier)",3800],["Route (frontier)",2600],["Summarize (frontier)",2400],["Complex reason (frontier)",2000]],
+   caption:"every task on the most expensive tier",
+   log:[["d","All 5 routes point at the frontier model"],["r","Ticket classification: 4 labels, 96% accuracy"],["r","Small model scores 95% on the same eval set"],["r","Paying 12× for 1 point of accuracy you don't need"]]},
+ good:{ metrics:[["Cost / 1M calls",4100,"$",27],["Accuracy",95,"%",95],["Right-sized",100,"%",100]],
+   bars:[["Classify (small)",350],["Extract (small)",320],["Route (small)",210],["Summarize (mid)",1220],["Complex reason (frontier)",2000]],
+   caption:"right model per route · 1 point of accuracy traded",
+   log:[["y","Running eval suite across 3 model tiers"],["g","classify: small 95% vs frontier 96% → small"],["g","summarize: mid 93% vs frontier 94% → mid"],["g","complex_reason: keeps frontier (small drops to 71%)"],["g","$15,000 → $4,100 per 1M calls"]]},
+ code:`<span class="c"># Don't guess which model is good enough. Measure it.</span>
+
+TIERS = {<span class="s">"small"</span>:<span class="s">"claude-haiku-4-5"</span>, <span class="s">"mid"</span>:<span class="s">"claude-sonnet-5"</span>, <span class="s">"large"</span>:<span class="s">"claude-opus-4-8"</span>}
+
+<span class="k">def</span> <span class="f">pick_cheapest_passing</span>(task, eval_set, floor=<span class="n">0.93</span>):
+    <span class="k">for</span> tier <span class="k">in</span> (<span class="s">"small"</span>, <span class="s">"mid"</span>, <span class="s">"large"</span>):
+        score = <span class="f">run_eval</span>(TIERS[tier], task, eval_set)
+        <span class="f">print</span>(<span class="s">f"{task}/{tier}: {score:.2%}"</span>)
+        <span class="k">if</span> score &gt;= floor:
+            <span class="k">return</span> TIERS[tier]
+    <span class="k">return</span> TIERS[<span class="s">"large"</span>]
+
+ROUTE_MODEL = {t: <span class="f">pick_cheapest_passing</span>(t, EVALS[t]) <span class="k">for</span> t <span class="k">in</span> TASKS}
+
+<span class="c"># Escalate only when the small model is unsure</span>
+<span class="k">def</span> <span class="f">answer</span>(q):
+    out = <span class="f">call</span>(TIERS[<span class="s">"small"</span>], q)
+    <span class="k">if</span> out.confidence &lt; <span class="n">0.8</span>:
+        <span class="k">return</span> <span class="f">call</span>(TIERS[<span class="s">"large"</span>], q)   <span class="c"># ~12% of traffic</span>
+    <span class="k">return</span> out`
+},
+{
+ n:13, g:4, title:"Inefficient Routing / No Model Tiering", cat:"WRONG MODEL",
+ lede:"Every request goes to the same endpoint regardless of difficulty. A router that costs one cheap call can save thousands.",
+ hint:"Classify difficulty first, then dispatch. 72% of traffic never needs the expensive model.",
+ sim:"flow", save:"20–60%", tech:["LLM Router","Rule-based routing","Confidence escalation"],
+ build:["Rules first — regex and length beat a model for obvious cases","Cheap classifier for the ambiguous middle","Confidence-based escalation path","Log every routing decision for tuning"],
+ impact:"Traffic finds the cheapest model that can handle it",
+ bad:{ metrics:[["Frontier traffic",100,"%",100],["Blended $/1k",12.4,"$",100],["Routing logic",0,"",0]],
+   flow:[["'hi'","→ FRONTIER"],["'reset password'","→ FRONTIER"],["'what's my balance'","→ FRONTIER"],["'analyze this contract'","→ FRONTIER"]],
+   caption:"one endpoint · no difficulty signal",
+   log:[["d","All traffic → single frontier endpoint"],["r","'hi' costs the same as a contract analysis"],["r","No difficulty signal collected anywhere"],["r","Blended cost $12.40 per 1,000 requests"]]},
+ good:{ metrics:[["Frontier traffic",28,"%",28],["Blended $/1k",4.6,"$",37],["Routing logic",100,"",100]],
+   flow:[["'hi'","→ RULE · CANNED"],["'reset password'","→ SMALL"],["'what's my balance'","→ SMALL + TOOL"],["'analyze this contract'","→ FRONTIER"]],
+   caption:"3-tier router · 72% never touches frontier",
+   log:[["y","Tier 0 rules → tier 1 classifier → tier 2 dispatch"],["g","19% resolved by rules alone (0 LLM tokens)"],["g","53% handled by the small model"],["g","28% escalated to frontier · blended $12.40 → $4.60"]]},
+ code:`<span class="k">import</span> re
+
+<span class="c"># Tier 0 — rules. Free. Handles the embarrassingly easy ~19%.</span>
+GREETING = re.<span class="f">compile</span>(<span class="s">r"^(hi|hey|hello|thanks|thank you|ok)\\W*$"</span>, re.I)
+
+<span class="k">def</span> <span class="f">route</span>(q: <span class="k">str</span>) -&gt; <span class="k">str</span>:
+    <span class="k">if</span> GREETING.<span class="f">match</span>(q.<span class="f">strip</span>()):
+        <span class="k">return</span> <span class="s">"canned"</span>                      <span class="c"># 0 tokens</span>
+    <span class="k">if</span> <span class="f">len</span>(q) &lt; <span class="n">60</span> <span class="k">and</span> <span class="s">"?"</span> <span class="k">in</span> q:
+        <span class="k">return</span> <span class="s">"small"</span>
+
+    <span class="c"># Tier 1 — a ~30 token classifier call decides the rest</span>
+    verdict = haiku.<span class="f">invoke</span>(
+        <span class="s">f"Reply with exactly one word: SIMPLE or COMPLEX.\\nQ: {q}"</span>,
+        max_tokens=<span class="n">3</span>,
+    ).strip()
+    <span class="k">return</span> <span class="s">"small"</span> <span class="k">if</span> verdict == <span class="s">"SIMPLE"</span> <span class="k">else</span> <span class="s">"frontier"</span>
+
+<span class="c"># The router costs ~$0.00002 per call.</span>
+<span class="c"># It saves ~$0.008 every time it says SIMPLE. 400x return.</span>
+<span class="c"># Log every decision — you tune the router with data, not vibes.</span>`
+},
+{
+ n:14, g:1, title:"No Prompt Compression", cat:"INPUT BLOAT",
+ lede:"Natural language is redundant by design. A compressor can drop half the tokens and the model still answers the same.",
+ hint:"LLMLingua at 2x on the context block. Answer quality holds, input halves.",
+ sim:"bars", save:"20–50%", tech:["LLMLingua","Prompt compression","Stopword pruning"],
+ build:["Compress the retrieved context, never the instructions","Start at 2x ratio and eval before going higher","Skip compression on code, numbers, and IDs","A/B the compressed pipeline against the raw one"],
+ impact:"Half the input tokens with the same answers",
+ bad:{ metrics:[["Prompt tokens",12000,"",100],["Compression",1,"x",10],["Answer quality",91,"%",91]],
+   bars:[["Retrieved context",8400],["Chat history",2100],["System + task",1500]],
+   caption:"raw prompt · every filler word billed",
+   log:[["d","Prompt assembled · 12,000 tokens"],["r","Context block is 70% of it and mostly prose"],["r","No compression stage in the pipeline"],["r","12,000 tokens sent · 12,000 tokens billed"]]},
+ good:{ metrics:[["Prompt tokens",5400,"",45],["Compression",2.2,"x",70],["Answer quality",90,"%",90]],
+   bars:[["Context (compressed 2.4x)",3500],["History (compressed 2x)",1050],["System + task (untouched)",850]],
+   caption:"compressed · quality 91% → 90%",
+   log:[["y","Running LLMLingua-2 on context + history"],["g","Context 8,400 → 3,500 (2.4x)"],["g","Instructions left untouched — never compress those"],["g","12,000 → 5,400 tokens · quality 91% → 90%"]]},
+ code:`<span class="k">from</span> llmlingua <span class="k">import</span> PromptCompressor
+
+compressor = <span class="f">PromptCompressor</span>(
+    model_name=<span class="s">"microsoft/llmlingua-2-xlm-roberta-large-meetingbank"</span>,
+    use_llmlingua2=<span class="k">True</span>,
+)
+
+result = compressor.<span class="f">compress_prompt</span>(
+    context=retrieved_chunks,       <span class="c"># compress THIS</span>
+    instruction=system_prompt,      <span class="c"># never compress THIS</span>
+    question=user_query,            <span class="c"># never compress THIS</span>
+    rate=<span class="n">0.45</span>,                     <span class="c"># keep 45% ≈ 2.2x</span>
+    force_tokens=[<span class="s">"\\n"</span>, <span class="s">"?"</span>, <span class="s">"."</span>],
+)
+
+<span class="f">print</span>(result[<span class="s">"origin_tokens"</span>], <span class="s">"→"</span>, result[<span class="s">"compressed_tokens"</span>])
+
+<span class="c"># Rules that keep this safe:</span>
+<span class="c">#  · Compress context and history. Never instructions or schemas.</span>
+<span class="c">#  · Never compress code, SQL, IDs, currency, or legal text.</span>
+<span class="c">#  · Eval at every ratio. 2x is usually free; 5x usually is not.</span>`
+},
+{
+ n:15, g:1, title:"No Context Compression", cat:"INPUT BLOAT",
+ lede:"You retrieved the right document. You still sent all six pages of it to answer a question about one paragraph.",
+ hint:"Extract only the sentences that answer the query, then send those.",
+ sim:"grid", save:"20–50%", tech:["Contextual Compression","Extractive filter","LLMLingua"],
+ build:["Contextual compression retriever over your base retriever","Extractive filter with a cheap model","Drop chunks that score zero against the query","Cache compressed contexts by (query, doc) pair"],
+ impact:"Only the sentences that answer the question",
+ bad:{ metrics:[["Context tokens",9800,"",100],["Relevant sentences",11,"",100],["Signal density",4,"%",4]],
+   grid:{total:36,good:[4,5,11,19,20,28]},
+   caption:"36 retrieved passages · full text of each sent",
+   log:[["d","6 documents retrieved, full text each"],["r","9,800 tokens of context"],["r","~400 tokens actually answer the question"],["r","Model must find the signal itself, every call"]]},
+ good:{ metrics:[["Context tokens",2100,"",21],["Relevant sentences",11,"",100],["Signal density",19,"%",19]],
+   grid:{total:8,good:[0,1,2,3,4,5]},
+   caption:"compressed · only query-relevant spans kept",
+   log:[["y","ContextualCompressionRetriever · extractive mode"],["g","Cheap model pulls answering spans per document"],["g","2 documents scored 0 relevance — dropped entirely"],["g","9,800 → 2,100 tokens · all 11 key sentences kept"]]},
+ code:`<span class="k">from</span> langchain.retrievers <span class="k">import</span> ContextualCompressionRetriever
+<span class="k">from</span> langchain.retrievers.document_compressors <span class="k">import</span> (
+    LLMChainExtractor, EmbeddingsFilter, DocumentCompressorPipeline
+)
+
+<span class="c"># Stage 1 — cheap embedding filter drops the obvious noise</span>
+cheap_filter = <span class="f">EmbeddingsFilter</span>(embeddings=embeddings, similarity_threshold=<span class="n">0.76</span>)
+
+<span class="c"># Stage 2 — small model extracts only the answering spans</span>
+extractor = LLMChainExtractor.<span class="f">from_llm</span>(haiku)   <span class="c"># NOT the frontier model</span>
+
+pipeline = <span class="f">DocumentCompressorPipeline</span>(transformers=[cheap_filter, extractor])
+
+retriever = <span class="f">ContextualCompressionRetriever</span>(
+    base_compressor=pipeline,
+    base_retriever=vectorstore.<span class="f">as_retriever</span>(search_kwargs={<span class="s">"k"</span>:<span class="n">12</span>}),
+)
+
+<span class="c"># Compression costs a few small-model calls.</span>
+<span class="c"># It saves thousands of frontier-model input tokens. Always run the math.</span>`
+},
+{
+ n:16, g:1, title:"No Conversation Summarization", cat:"INPUT BLOAT",
+ lede:"Long-running agents accumulate context forever. Without summarization, session cost climbs until the window blows.",
+ hint:"Compact at 70% of the window. The agent keeps its memory, the prompt stays bounded.",
+ sim:"stack", save:"20–40%", tech:["Conversation Summary","Memory store","Auto-compaction"],
+ build:["Trigger compaction at a token threshold, not a turn count","Summarize with the cheap model","Preserve decisions, IDs, and open tasks verbatim","Persist full history outside the prompt"],
+ impact:"Sessions that run for hours without cost blowup",
+ bad:{ metrics:[["Session tokens",128000,"",100],["Session cost",4.6,"$",100],["Window used",97,"%",97]],
+   stack:[["step 10",14000],["step 25",38000],["step 40",71000],["step 55",104000],["step 68",128000]],
+   caption:"agent session · context climbing to the ceiling",
+   log:[["d","Agent session · step 68 of a research task"],["r","Every tool result and thought still in context"],["r","128,000 tokens · 97% of the window"],["r","$4.60 for one session · next step will overflow"]]},
+ good:{ metrics:[["Session tokens",34000,"",27],["Session cost",1.2,"$",26],["Window used",26,"%",26]],
+   stack:[["step 10",14000],["step 25",31000],["step 40",18000],["step 55",33000],["step 68",34000]],
+   caption:"auto-compaction at 70% · sawtooth, never overflow",
+   log:[["y","Threshold hit at step 27 · compacting"],["g","Steps 1–24 → 900-token summary (decisions + IDs kept)"],["g","Compacted again at step 48 and step 61"],["g","128,000 → 34,000 tokens · $4.60 → $1.20 per session"]]},
+ code:`MAX_CTX, COMPACT_AT = <span class="n">128_000</span>, <span class="n">0.70</span>
+
+<span class="k">def</span> <span class="f">maybe_compact</span>(msgs):
+    <span class="k">if</span> <span class="f">count_tokens</span>(msgs) &lt; MAX_CTX * COMPACT_AT:
+        <span class="k">return</span> msgs
+
+    keep, old = msgs[-<span class="n">8</span>:], msgs[:-<span class="n">8</span>]
+    summary = haiku.<span class="f">invoke</span>(<span class="s">f"""</span>
+<span class="s">Compress this agent transcript to under 400 words.</span>
+<span class="s">MUST preserve verbatim: decisions made, IDs/filenames touched,</span>
+<span class="s">open TODOs, and any user constraints.</span>
+<span class="s">Discard: reasoning chatter, retries, raw tool dumps.</span>
+<span class="s">{old}"""</span>)
+
+    <span class="k">return</span> [{<span class="s">"role"</span>:<span class="s">"system"</span>,<span class="s">"content"</span>:<span class="s">f"[SESSION SO FAR]\\n{summary}"</span>}] + keep
+
+<span class="c"># Compact on TOKENS, not on turn count — turns vary wildly in size.</span>
+<span class="c"># Always keep the last N turns verbatim; summaries lose the working state.</span>`
+},
+{
+ n:17, g:1, title:"Inefficient RAG Pipeline", cat:"INPUT BLOAT",
+ lede:"A vague query embedded straight into a single-vector search. Bad retrieval means more chunks, more tokens, worse answers.",
+ hint:"Rewrite the query, search hybrid, re-rank, then send. Four cheap stages replace one expensive guess.",
+ sim:"flow", save:"30–70%", tech:["Query Rewrite","Hybrid Search","Rerank"],
+ build:["Rewrite vague queries into standalone search queries","Hybrid BM25 + dense retrieval","Cross-encoder re-rank the merged results","Measure retrieval separately from generation"],
+ impact:"Fewer chunks, better answers, lower bill",
+ bad:{ metrics:[["Chunks needed",18,"",100],["Retrieval recall",54,"%",54],["Context tokens",13500,"",100]],
+   flow:[["Query: 'what about the new one?'","EMBED AS-IS"],["Dense search only","k=18"],["No rerank","SEND ALL"],["Recall 54%","ANSWER WEAK"]],
+   caption:"one-shot retrieval · compensating with volume",
+   log:[["d","User: 'what about the new one?'"],["r","Embedded verbatim — no coreference resolution"],["r","Dense-only search misses the exact product SKU"],["r","Compensated with k=18 · 13,500 tokens · recall 54%"]]},
+ good:{ metrics:[["Chunks needed",5,"",28],["Retrieval recall",92,"%",92],["Context tokens",3800,"",28]],
+   flow:[["Rewritten: 'CloudSync Pro v4 pricing'","REWRITE"],["BM25 + dense merged","HYBRID"],["Cross-encoder rerank","TOP 5"],["Recall 92%","ANSWER STRONG"]],
+   caption:"4-stage pipeline · fewer chunks, better recall",
+   log:[["y","Stage 1: rewriting query with chat context"],["g","'the new one' → 'CloudSync Pro v4 pricing 2025'"],["g","Stage 2: BM25 caught the exact SKU dense missed"],["g","Stage 3: rerank → top 5 · recall 54% → 92%"],["g","13,500 → 3,800 tokens with BETTER answers"]]},
+ code:`<span class="c"># Stage 1 — rewrite. Vague queries retrieve vague documents.</span>
+standalone = haiku.<span class="f">invoke</span>(<span class="s">f"""</span>
+<span class="s">Rewrite as a standalone search query. Resolve pronouns from history.</span>
+<span class="s">History: {last_3_turns}</span>
+<span class="s">Query: {q}</span>
+<span class="s">Rewritten:"""</span>, max_tokens=<span class="n">40</span>)
+
+<span class="c"># Stage 2 — hybrid. Dense finds meaning, BM25 finds exact strings.</span>
+<span class="k">from</span> langchain.retrievers <span class="k">import</span> EnsembleRetriever
+hybrid = <span class="f">EnsembleRetriever</span>(
+    retrievers=[bm25_retriever, dense_retriever],
+    weights=[<span class="n">0.4</span>, <span class="n">0.6</span>],
+)
+candidates = hybrid.<span class="f">invoke</span>(standalone)
+
+<span class="c"># Stage 3 — rerank and cut</span>
+final = <span class="f">rerank</span>(standalone, candidates)[:<span class="n">5</span>]
+
+<span class="c"># Stage 4 — measure retrieval SEPARATELY from generation.</span>
+<span class="c"># If recall@5 is below 0.85, fix retrieval. Do not add chunks.</span>`
+},
+{
+ n:18, g:5, title:"No Token Budget / Guardrails", cat:"NO CONTROL",
+ lede:"One malformed input, one loop in an agent, one user pasting a book. Without a ceiling, a bug becomes an invoice.",
+ hint:"Hard caps per request, per user, per day. The bug still happens — it just costs ₹80 instead of ₹80,000.",
+ sim:"gauge", save:"20–50%", tech:["Token Limits","Truncation","Guardrails"],
+ build:["Pre-flight token count with a hard reject","Per-user daily token quota","Max steps and max tokens per agent run","Circuit breaker on spend rate"],
+ impact:"A runaway bug costs pennies, not a quarter's budget",
+ bad:{ metrics:[["Runaway steps",340,"",100],["Tokens burned",4200000,"",100],["Cost of one bug",1840,"$",100]],
+   gauge:{cap:100,used:100,label:"no ceiling · agent looped for 6 hours"},
+   caption:"one agent loop · unbounded",
+   log:[["d","Agent task started 02:14 · no step limit"],["r","Tool returned an error the agent kept retrying"],["r","Step 340 at 08:22 · still looping"],["r","4.2M tokens · $1,840 · discovered from the invoice"]]},
+ good:{ metrics:[["Runaway steps",12,"",4],["Tokens burned",96000,"",2],["Cost of one bug",42,"$",2]],
+   gauge:{cap:100,used:12,label:"capped at 12 steps · alert fired at step 10"},
+   caption:"same bug · caught in 90 seconds",
+   log:[["y","Guardrails: max_steps=12, max_tokens/run=100k"],["g","Same retry loop began at step 4"],["g","Alert fired at step 10 (83% of budget)"],["g","Hard stop at step 12 · $1,840 → $42"]]},
+ code:`<span class="k">class</span> <span class="f">BudgetExceeded</span>(Exception): <span class="k">pass</span>
+
+<span class="k">class</span> <span class="f">TokenGuard</span>:
+    <span class="k">def</span> <span class="f">__init__</span>(self, max_per_req=<span class="n">30_000</span>, max_per_run=<span class="n">100_000</span>, max_steps=<span class="n">12</span>):
+        self.max_per_req, self.max_per_run = max_per_req, max_per_run
+        self.max_steps, self.used, self.steps = max_steps, <span class="n">0</span>, <span class="n">0</span>
+
+    <span class="k">def</span> <span class="f">check</span>(self, prompt_tokens):
+        <span class="k">if</span> prompt_tokens &gt; self.max_per_req:
+            <span class="k">raise</span> <span class="f">BudgetExceeded</span>(<span class="s">f"prompt {prompt_tokens} &gt; cap"</span>)
+        <span class="k">if</span> self.used + prompt_tokens &gt; self.max_per_run:
+            <span class="k">raise</span> <span class="f">BudgetExceeded</span>(<span class="s">"run budget exhausted"</span>)
+        <span class="k">if</span> self.steps &gt;= self.max_steps:
+            <span class="k">raise</span> <span class="f">BudgetExceeded</span>(<span class="s">"step limit"</span>)
+        <span class="k">if</span> self.used &gt; self.max_per_run * <span class="n">0.8</span>:
+            <span class="f">alert</span>(<span class="s">"run at 80% of token budget"</span>)
+
+<span class="c"># Per-user daily quota in Redis — one line, saves you from one user</span>
+<span class="k">def</span> <span class="f">check_quota</span>(user_id, tokens, daily=<span class="n">2_000_000</span>):
+    key = <span class="s">f"quota:{user_id}:{date.today()}"</span>
+    <span class="k">if</span> r.<span class="f">incrby</span>(key, tokens) &gt; daily:
+        <span class="k">raise</span> <span class="f">BudgetExceeded</span>(<span class="s">"daily quota"</span>)
+    r.<span class="f">expire</span>(key, <span class="n">86400</span>)`
+},
+{
+ n:19, g:5, title:"No Observability / Token Monitoring", cat:"NO CONTROL",
+ lede:"You find out about the cost spike from the invoice, three weeks after the deploy that caused it.",
+ hint:"Per-route token metrics. The spike shows up in minutes, attributed to the commit that caused it.",
+ sim:"timeline", save:"20–50%", tech:["LangSmith","Prometheus","Cost dashboards"],
+ build:["Log tokens in, tokens out, model, route, user, latency per call","Dashboard cost per route and per feature","Alert on cost-per-request deviation, not total spend","Tag every call with the deploy SHA"],
+ impact:"You see the spike the day it ships",
+ bad:{ metrics:[["Time to detect",21,"d",100],["Attribution",0,"%",0],["Overspend",38000,"$",100]],
+   timeline:[["Day 0","Deploy raises k 6→20",false],["Day 1–20","Cost climbs quietly",false],["Day 21","Invoice arrives",true],["Day 24","Root cause found",true]],
+   caption:"no telemetry · the invoice is the monitoring",
+   log:[["d","Deploy 4f8a2c shipped Tuesday"],["r","Retrieval k changed 6 → 20 in an unrelated PR"],["r","No token metrics · nothing alerted"],["r","Found on the invoice 21 days later · $38,000 over"]]},
+ good:{ metrics:[["Time to detect",14,"m",1],["Attribution",100,"%",100],["Overspend",180,"$",1]],
+   timeline:[["T+0","Deploy 4f8a2c ships",false],["T+9m","tokens_in p50 +212%",true],["T+14m","Alert → SHA 4f8a2c",true],["T+31m","Rolled back",true]],
+   caption:"per-route metrics · detected before lunch",
+   log:[["y","Emitting tokens_in/out per route + deploy SHA"],["g","T+9m: input tokens p50 up 212% on /chat"],["g","T+14m: alert names commit 4f8a2c"],["g","T+31m: reverted · $38,000 → $180"]]},
+ code:`<span class="k">from</span> prometheus_client <span class="k">import</span> Counter, Histogram
+
+TOK = <span class="f">Counter</span>(<span class="s">"llm_tokens_total"</span>, <span class="s">"tokens"</span>, [<span class="s">"route"</span>,<span class="s">"model"</span>,<span class="s">"kind"</span>,<span class="s">"sha"</span>])
+CST = <span class="f">Counter</span>(<span class="s">"llm_cost_usd_total"</span>, <span class="s">"usd"</span>, [<span class="s">"route"</span>,<span class="s">"model"</span>])
+LAT = <span class="f">Histogram</span>(<span class="s">"llm_latency_seconds"</span>, <span class="s">"latency"</span>, [<span class="s">"route"</span>,<span class="s">"model"</span>])
+
+<span class="k">def</span> <span class="f">record</span>(route, model, usage, seconds):
+    TOK.<span class="f">labels</span>(route,model,<span class="s">"in"</span>,DEPLOY_SHA).<span class="f">inc</span>(usage.input_tokens)
+    TOK.<span class="f">labels</span>(route,model,<span class="s">"out"</span>,DEPLOY_SHA).<span class="f">inc</span>(usage.output_tokens)
+    CST.<span class="f">labels</span>(route,model).<span class="f">inc</span>(<span class="f">price</span>(model,usage))
+    LAT.<span class="f">labels</span>(route,model).<span class="f">observe</span>(seconds)
+
+<span class="c"># The alert that actually catches regressions:</span>
+<span class="c"># alert on tokens PER REQUEST, not total tokens.</span>
+<span class="c"># Total spend rising = growth. Cost-per-request rising = a bug.</span>
+
+<span class="c"># PromQL:</span>
+<span class="c">#   rate(llm_tokens_total{kind="in"}[15m])</span>
+<span class="c">#     / rate(llm_requests_total[15m])</span>
+<span class="c">#     &gt; 1.5 * avg_over_time(...[7d])</span>`
+},
+{
+ n:20, g:5, title:"No Cost Governance / Policies", cat:"NO CONTROL",
+ lede:"Six teams, one API key, no budgets. Nobody owns the number, so nobody can lower it.",
+ hint:"Per-team keys, per-team budgets, automatic throttling. Cost becomes someone's KPI.",
+ sim:"timeline", save:"20–40%", tech:["Budgets","Quotas","Alerts","Approvals"],
+ build:["One API key per team, never one shared key","Monthly budget per key with automatic throttling","Approval gate for new frontier-model routes","Weekly cost review with per-team attribution"],
+ impact:"Every rupee has an owner and a ceiling",
+ bad:{ metrics:[["Teams on 1 key",6,"",100],["Attributable spend",0,"%",0],["Budget overrun",240,"%",100]],
+   timeline:[["Q1","Budget set: $20k/mo",false],["Q2","Actual: $34k",true],["Q3","Actual: $68k",true],["Q3 review","Nobody knows whose",true]],
+   caption:"shared key · no attribution · no ceiling",
+   log:[["d","Single org-wide API key across 6 teams"],["r","No per-team tagging on any call"],["r","Spend 240% over budget by Q3"],["r","Cost review ended without an owner assigned"]]},
+ good:{ metrics:[["Teams on 1 key",1,"",17],["Attributable spend",100,"%",100],["Budget overrun",4,"%",4]],
+   timeline:[["Q1","6 keys · 6 budgets",false],["Q2","Team C hits 80% → alert",false],["Q2","Team C throttled to small tier",false],["Q3","Org 4% over · owned",false]],
+   caption:"per-team keys · alerts at 80% · auto-throttle at 100%",
+   log:[["y","Issuing per-team keys with monthly budgets"],["g","Every call tagged team + feature + environment"],["g","Team C hit 80% on day 19 → alert → tuned prompts"],["g","Org overrun 240% → 4% · every dollar attributed"]]},
+ code:`<span class="c"># Governance is boring code that saves more than any clever prompt.</span>
+
+BUDGETS = {<span class="s">"search"</span>:<span class="n">8000</span>, <span class="s">"support"</span>:<span class="n">5000</span>, <span class="s">"data"</span>:<span class="n">3000</span>}  <span class="c"># USD/month</span>
+
+<span class="k">def</span> <span class="f">enforce</span>(team, est_cost):
+    spent = <span class="f">month_to_date</span>(team)
+    pct   = (spent + est_cost) / BUDGETS[team]
+
+    <span class="k">if</span> pct &gt; <span class="n">1.0</span>:
+        <span class="k">return</span> <span class="s">"small"</span>          <span class="c"># throttle to cheap tier, don't hard-fail</span>
+    <span class="k">if</span> pct &gt; <span class="n">0.8</span>:
+        <span class="f">alert</span>(team, <span class="s">f"{pct:.0%} of monthly budget"</span>)
+    <span class="k">return</span> <span class="s">"requested"</span>
+
+<span class="c"># Tag EVERY call. Untagged spend is unfixable spend.</span>
+client.messages.<span class="f">create</span>(
+    model=model,
+    metadata={<span class="s">"user_id"</span>: user_id},
+    extra_headers={<span class="s">"x-team"</span>: team, <span class="s">"x-feature"</span>: feature, <span class="s">"x-env"</span>: env},
+    messages=msgs,
+)
+
+<span class="c"># Approval gate: a PR that adds a frontier-model route</span>
+<span class="c"># requires a projected-cost comment. Ship the policy, not the plea.</span>`
+}
+];
+
+/* fix savings for the calculator: which token stream + realistic mid-band multiplier */
+/* Multipliers are deliberately conservative: fixes that touch the same token
+   stream overlap in the real world, so stacking them at full strength would
+   overstate the result. These land the all-on case in the 75-85% band that
+   matches published enterprise case studies. */
+const FIX = [
+ {n:1, s:.06, t:"in"}, {n:2, s:.13, t:"in"}, {n:3, s:.26, t:"in"}, {n:4, s:.20, t:"in"},
+ {n:5, s:.11, t:"in"}, {n:6, s:.06, t:"in"}, {n:7, s:.13, t:"in"}, {n:8, s:.14, t:"out"},
+ {n:9, s:.30, t:"out"},{n:10,s:.07, t:"both"},{n:11,s:.30, t:"both"},{n:12,s:.24, t:"price"},
+ {n:13,s:.18, t:"price"},{n:14,s:.14, t:"in"},{n:15,s:.12, t:"in"},{n:16,s:.11, t:"in"},
+ {n:17,s:.18, t:"in"},{n:18,s:.05, t:"both"},{n:19,s:.06, t:"both"},{n:20,s:.06, t:"both"}
+];
+
+const MODELS = [
+ {k:"small",  n:"Small / fast",  in:0.80, out:4.00},
+ {k:"mid",    n:"Mid tier",      in:3.00, out:15.00},
+ {k:"large",  n:"Frontier tier", in:15.00,out:75.00}
+];
+
+const ROOT = [
+ {t:"Too much input",  d:"You send more than the model needs to answer. The biggest bucket by far — and where compounding pays best.", ids:[1,2,3,4,5,6,7,14,15,16,17]},
+ {t:"Too much output", d:"You let the model write more than the job requires. Output tokens cost 3–5× input, so this bites harder than it looks.", ids:[8,9]},
+ {t:"Repeated work",   d:"You buy the same answer more than once. Pure waste — there is no quality tradeoff to argue about here.", ids:[10,11]},
+ {t:"Wrong model",     d:"You pay frontier prices for work a small model does at the same accuracy. Fixable in an afternoon with an eval set.", ids:[12,13]},
+ {t:"No control",      d:"Nothing stops a bug, and nobody owns the number. These don't cut cost directly — they stop it from exploding.", ids:[18,19,20]}
+];
+
+const PIPE = [
+ {t:"Request Ingestion", d:"API gateway, auth, dedupe", body:"Every request gets an idempotency key here, before a single token is spent. Rate limits and per-user quotas live at this edge. The cheapest LLM call is the one you never make.", ids:[10,18]},
+ {t:"Prompt Optimizer",  d:"Templates, system prompt", body:"Versioned prompt templates with a token budget enforced in CI. The system prompt is measured on every build so it cannot quietly grow back to 2,400 tokens.", ids:[1,6,8]},
+ {t:"Context Manager",   d:"History pruning, summary", body:"Sliding window over recent turns plus a rolling summary of everything older. Compaction triggers on token count, not turn count, so long agent sessions stay bounded.", ids:[2,16]},
+ {t:"RAG Optimization",  d:"Rewrite, filter, rerank", body:"Query rewrite → metadata pre-filter → hybrid search → cross-encoder rerank → top-k cut. Four cheap stages that replace one expensive guess, and the single biggest cost lever in most RAG apps.", ids:[3,4,5,17]},
+ {t:"Compression Layer", d:"Prompt + context compression", body:"LLMLingua on the context block and history only. Instructions, schemas, code, and IDs are never compressed. Typically 2x on the largest part of the prompt.", ids:[14,15]},
+ {t:"Model Router",      d:"Right model, right cost", body:"Rules handle the obvious cases for free, a tiny classifier handles the ambiguous middle, and only what genuinely needs frontier reasoning gets it. Usually 70%+ of traffic never reaches the expensive tier.", ids:[12,13]},
+ {t:"LLM Execution",     d:"Capped output, tool filtering", body:"Per-route max_tokens and stop sequences. Tool results are projected to whitelisted fields before they re-enter context — this is where agent costs are won or lost.", ids:[7,9]},
+ {t:"Caching Layer",     d:"Exact + semantic cache", body:"L1 exact-hash cache, L2 semantic cache at a 0.95 threshold, plus provider prompt caching for static blocks. Hit rates of 40–70% are normal on real support traffic.", ids:[11]},
+ {t:"Observability",     d:"Metrics, alerts, budgets", body:"Tokens per route per deploy SHA, alerting on cost-per-request rather than total spend. Per-team keys and budgets make the number someone's actual responsibility.", ids:[19,20]}
+];
+
+const ROADMAP = [
+ {w:"Week 1", cls:"w1", t:"Free wins — no eval needed", items:["Cap max_tokens per route (#9)","Trim the system prompt (#1)","Exact-match cache (#11)","Idempotency keys (#10)","Token guardrails + quotas (#18)","Token metrics per route (#19)"], eff:"~3 days · typically 40–55% off"},
+ {w:"Week 2", cls:"w2", t:"Retrieval — the biggest lever", items:["Metadata pre-filter (#3)","Cross-encoder rerank, k=20→4 (#4)","Semantic chunking, 450 tokens (#5)","Query rewrite + hybrid search (#17)","Tool output field projection (#7)"], eff:"~1 week · another 30–50% on RAG apps"},
+ {w:"Week 3+", cls:"w3", t:"Needs an eval set first", items:["Model tiering per route (#12)","Difficulty router (#13)","Prompt compression (#14, #15)","Conversation summarization (#2, #16)","Semantic cache (#11)","Per-team budgets (#20)"], eff:"ongoing · build evals before you touch these"}
+];
+
+
+/* ============================================================
+   GAME METADATA — wraps the 20 lessons with story + engagement
+   predict: the "right" answer bucket (10/30/50/70) for the prediction game,
+            chosen from the midpoint of each lesson's real savings band.
+   ============================================================ */
+const CHAPTERS = [
+  {ch:1, name:"The Input Avalanche"},   // input bloat 1-7
+  {ch:2, name:"The Runaway Pen"},        // output 8-9
+  {ch:3, name:"Paying Twice"},           // repeated 10-11
+  {ch:4, name:"The Overkill Tax"},       // wrong model 12-13
+  {ch:5, name:"Squeezing the Prompt"},   // compression 14-17
+  {ch:6, name:"Nobody's Watching"},      // control 18-20
+];
+
+const GAME = {
+ 1:{story:"Case 01 · The 2,400-Token Ghost", predict:10,
+    whit:"The model behaved identically on 380 tokens as on 2,400. Every token above what the task needs is pure margin you hand back to your provider — on every call, forever.",
+    tip:"Gate prompt length in CI. Add an assert on the token count so a helpful teammate can't quietly grow it back to 2,400 next sprint.",
+    cliff:"A fat system prompt is a fixed tax. Next up is a cost that <em>compounds</em> — it doubles every few turns and nobody notices until the window explodes.",
+    quiz:null},
+ 2:{story:"Case 02 · The Conversation That Ate Itself", predict:30,
+    whit:"Replaying the whole history every turn makes cost grow with the square of conversation length while value grows linearly. A summary plus a short window flattens the curve.",
+    tip:"Summarize with the CHEAP model, never the frontier one. The summary quality barely moves, and you stop paying premium rates to compress your own logs.",
+    cliff:"You've tamed history. But the context you <em>retrieve</em> is a bigger monster — most of what your vector search returns is noise you pay full price for.",
+    quiz:{q:"Why does long chat history cost grow faster than the conversation's value?",
+      opts:["Tokens get more expensive over time","Each turn replays all prior turns — cost is quadratic, value is linear","The model slows down","Longer chats use a bigger model"],
+      a:1, fb:"Right — every new turn re-sends the whole past, so total tokens scale with turn count squared."}},
+ 3:{story:"Case 03 · The Retrieval That Returned Everything", predict:50,
+    whit:"Vector search returns what's nearest, not what's relevant. A metadata pre-filter shrinks the search space first, so the same recall arrives in a fraction of the tokens.",
+    tip:"You can't filter what you didn't label. Tag tenant, doc type, and date at INGEST time — retrofitting metadata onto an existing index is painful.",
+    cliff:"Filtering helped. But even filtered results have a ranking problem — and stuffing 20 chunks in actually makes the answer <em>worse</em>, not just pricier.",
+    quiz:null},
+ 4:{story:"Case 04 · Lost in the Middle", predict:50,
+    whit:"Sending k=20 buries the real answer in the middle, where models read worst. Retrieve wide for recall, re-rank, then send only the top few — accuracy goes UP as cost goes down.",
+    tip:"A cross-encoder reads query and document together, so it's far more accurate than the bi-encoder used for retrieval. ~15ms to save ~11,000 tokens is not a close call.",
+    cliff:"Fewer, better chunks. But each chunk is still bloated — you bought a whole chapter to read one sentence. Time to fix how documents get split.",
+    quiz:null},
+ 5:{story:"Case 05 · The Chapter for One Sentence", predict:30,
+    whit:"A 2,000-token chunk to answer one line means you retrieve the paragraph AND its neighbours. Semantic chunks of 300–500 tokens retrieve the answer, not the chapter.",
+    tip:"Keep the heading inside each chunk (~8 tokens). It massively improves retrieval relevance because the section title is often the strongest signal of what the chunk is about.",
+    cliff:"Retrieval is lean now. But your users are the next problem — they paste entire email threads and ask 'what do you think?'",
+    quiz:{q:"What's the main downside of 2,000-token chunks in RAG?",
+      opts:["They're too small to be useful","You retrieve far more text than the answer needs, and answers span boundaries","They can't be embedded","They break the model"],
+      a:1, fb:"Exactly — big chunks drag in irrelevant text and split answers across boundaries."}},
+ 6:{story:"Case 06 · The 4,000-Word Question", predict:10,
+    whit:"Users paste signatures, disclaimers, and quoted replies. Your app forwards all of it at your expense. Structured fields and a cleaning pass strip the noise before it costs anything.",
+    tip:"The best compression is a form. If users pick from typed fields instead of a free-text box, they physically cannot bloat the prompt.",
+    cliff:"Your inputs are clean. Now flip to the other side of the bill — the tokens the model <em>writes back</em>, which cost you 3-5x more than input.",
+    quiz:null},
+ 7:{story:"Case 07 · The 180-Field Tool Call", predict:30,
+    whit:"APIs return everything; the model needs four fields. Unfiltered tool output re-enters context on every agent step. Project to a whitelist and agents stay affordable past step three.",
+    tip:"If any tool result exceeds ~500 tokens, it needs a projection. Return IDs and let the model ask for detail — don't pre-load the audit history it'll never read.",
+    cliff:"Input is fully under control. Chapter 2 opens on a different villain: the model that won't stop <em>talking</em>.",
+    quiz:null},
+ 8:{story:"Case 08 · Certainly! Here Is Your JSON", predict:10,
+    whit:"'Certainly! Here's the JSON:' plus markdown fences plus 4-space indent — all billed as output, which is the expensive side. Native structured mode makes preamble impossible.",
+    tip:"Short keys aren't premature optimization at scale. 12 chars saved × 8 fields × 1M calls ≈ 24M tokens. And structured mode kills your parse-failure rate as a bonus.",
+    cliff:"You capped the wrapper. But the real output monster is a single config line copied across every route: <em>max_tokens</em>.",
+    quiz:null},
+ 9:{story:"Case 09 · The Classifier That Wrote an Essay", predict:30,
+    whit:"max_tokens=4096 on a yes/no task lets the model ramble to fill the space. Per-route caps mean the classifier gets 8 tokens and the essay route gets 2,000.",
+    tip:"Size max_tokens to your p99 output length, not a round number. If you see truncation at p95, you set it too tight — measure, don't guess.",
+    cliff:"Output is lean. Chapter 3: the purest waste of all — paying for the <em>same answer</em> more than once.",
+    quiz:{q:"Why is a high global max_tokens costly even when answers are short?",
+      opts:["It reserves GPU memory you're billed for","Models tend to fill the space they're given, and output tokens cost 3-5x input","It changes the model tier","It disables caching"],
+      a:1, fb:"Right — give room to ramble and models use it, on the expensive output side."}},
+ 10:{story:"Case 10 · Billed Three Times for One Click", predict:10,
+    whit:"A double-click, a retry, and an overlapping cron all bought the same answer. An idempotency key makes the duplicates await the first call instead of paying again.",
+    tip:"A tight retry loop is a denial-of-wallet attack on yourself. Always back off exponentially, and hash (prompt+params) so identical in-flight requests share one result.",
+    cliff:"Duplicates handled. But the biggest repeated-work win is bigger: 40% of your traffic is the same 20 questions, and you're buying every one fresh.",
+    quiz:null},
+ 11:{story:"Case 11 · The Same 20 Questions, All Day", predict:50,
+    whit:"An exact cache catches repeats; a semantic cache catches rephrasings. Together they serve most support traffic in ~4ms instead of ~2s, and stop re-billing the popular questions.",
+    tip:"0.95 similarity is the safe semantic-cache threshold. Drop to 0.90 and you start serving confidently wrong answers. Never semantic-cache anything personalized or time-sensitive.",
+    cliff:"You've stopped paying twice. Chapter 4 asks a sharper question: are you using a <em>jet engine on a bicycle</em>?",
+    quiz:null},
+ 12:{story:"Case 12 · A Jet Engine on a Bicycle", predict:50,
+    whit:"The frontier model classifying tickets into four buckets scores 96% where a small model scores 95%. You're paying 12x for one point of accuracy you don't need.",
+    tip:"Run the eval BEFORE you downgrade, not after. Map each route to the cheapest model that clears your accuracy floor, and re-run whenever a new small model ships.",
+    cliff:"Right model per task. But you still send every request to one endpoint — a router that costs one cheap call can redirect 70% of traffic away from the expensive tier.",
+    quiz:{q:"What's the fix for using an expensive model on trivial tasks?",
+      opts:["Prompt it to be brief","Run an eval and route each task to the cheapest model that passes","Lower its temperature","Cache the output"],
+      a:1, fb:"Exactly — measure per-task accuracy and pick the cheapest model that clears the bar."}},
+ 13:{story:"Case 13 · One Door for Every Request", predict:30,
+    whit:"'hi' costs the same as a contract analysis when everything hits one endpoint. Rules handle the obvious cases free, a tiny classifier handles the middle, only hard work reaches frontier.",
+    tip:"The router costs ~$0.00002 and saves ~$0.008 every time it says SIMPLE — a 400x return. Log every routing decision; you tune the router with data, not vibes.",
+    cliff:"Traffic is routed. Chapter 5 is about squeezing the prompts that remain — compressing language itself without losing the answer.",
+    quiz:null},
+ 14:{story:"Case 14 · The Redundant Language Tax", predict:30,
+    whit:"Natural language is redundant by design. A compressor drops ~half the context tokens and the model still answers the same — as long as you never compress the instructions.",
+    tip:"Compress context and history only. Never compress instructions, schemas, code, SQL, IDs, or legal text — and eval at every ratio. 2x is usually free; 5x usually isn't.",
+    cliff:"Prompt compressed. But even the right document is too long — you sent six pages to answer a question about one paragraph.",
+    quiz:null},
+ 15:{story:"Case 15 · Six Pages for One Paragraph", predict:30,
+    whit:"You retrieved the right doc, then sent all of it. Contextual compression extracts only the sentences that answer the query — and drops documents that score zero entirely.",
+    tip:"Do the extraction with a cheap model. You spend a few small-model calls to save thousands of frontier input tokens — always run that math before deciding it's not worth it.",
+    cliff:"Context is distilled. Long agent sessions are next — they accumulate memory forever until the window blows at step 68.",
+    quiz:null},
+ 16:{story:"Case 16 · The Session That Never Forgot", predict:30,
+    whit:"Long-running agents keep every thought and tool result in context. Auto-compaction at 70% of the window turns runaway growth into a bounded sawtooth.",
+    tip:"Compact on TOKEN count, not turn count — turns vary wildly in size. Always keep the last few turns verbatim; a summary loses the live working state the agent needs.",
+    cliff:"Every token lever is pulled. Chapter 6 is the scariest: none of it matters if <em>nobody's watching the meter</em>.",
+    quiz:{q:"When should an agent compact its conversation?",
+      opts:["Every 10 turns exactly","When token count crosses a threshold, e.g. 70% of the window","Only at the end","When the user asks"],
+      a:1, fb:"Right — trigger on tokens, since turns vary wildly in size."}},
+ 17:{story:"Case 17 · The Vague Query Trap", predict:50,
+    whit:"'What about the new one?' embedded as-is retrieves vague results, so you compensate with volume. Rewrite → hybrid → rerank gives better recall with a third of the chunks.",
+    tip:"Measure retrieval separately from generation. If recall@5 is below 0.85, fix retrieval — don't paper over bad retrieval by stuffing in more chunks.",
+    cliff:"Your pipeline is tuned. But one malformed input or agent loop can still torch your budget overnight — unless there's a ceiling.",
+    quiz:null},
+ 18:{story:"Case 18 · The $1,840 Overnight Loop", predict:30,
+    whit:"An agent retried an error 340 times over six hours. Hard caps — per request, per run, per day — mean the same bug costs ₹80 instead of ₹80,000, caught in 90 seconds.",
+    tip:"A per-user daily quota in Redis is about five lines of code and saves you from the single user (or bug) that would otherwise drain the account. Alert at 80%, hard-stop at 100%.",
+    cliff:"Runaway spend is capped. But can you even <em>see</em> a cost spike — or do you find out from the invoice three weeks later?",
+    quiz:null},
+ 19:{story:"Case 19 · Found Out From the Invoice", predict:30,
+    whit:"A PR bumped retrieval k from 6 to 20 and nothing alerted for 21 days. Per-route token metrics tagged with the deploy SHA turn a $38,000 surprise into a $180 revert before lunch.",
+    tip:"Alert on tokens PER REQUEST, not total tokens. Rising total spend is just growth; rising cost-per-request is a bug — and only the second one should page you.",
+    cliff:"You can see everything now. One last piece: turning all of this into policy so it never regresses — and so every rupee has an owner.",
+    quiz:null},
+ 20:{story:"Case 20 · Six Teams, One Key, No Owner", predict:30,
+    whit:"A shared key across six teams with no budgets means nobody owns the number, so nobody can lower it. Per-team keys, budgets, and auto-throttling make cost someone's actual KPI.",
+    tip:"Tag every call with team, feature, and environment. Untagged spend is unfixable spend — you can't optimize what you can't attribute to a decision someone made.",
+    cliff:"That's all 20. You've rebuilt the whole cost architecture — from a single fat prompt to full governance. Time to see what you saved.",
+    quiz:{q:"What makes cost governance actually work across teams?",
+      opts:["One shared API key for simplicity","Per-team keys, budgets, and tagging so every dollar has an owner","Asking teams to be careful","Using only the cheapest model"],
+      a:1, fb:"Exactly — attribution plus budgets turns cost into an owned, measurable KPI."}}
+};
+
+/* Achievements: unlock on milestones */
+const ACHIEVEMENTS = [
+  {id:"first",  icon:"🎯", name:"First Blood",       desc:"Solve your first challenge",      test:s=>s.solved.size>=1},
+  {id:"input",  icon:"📉", name:"Input Slayer",      desc:"Clear all 7 input-bloat cases",   test:s=>[1,2,3,4,5,6,7,14,15,16,17].every(n=>s.solved.has(n))},
+  {id:"rag",    icon:"🔍", name:"RAG Expert",        desc:"Solve the 4 retrieval cases",     test:s=>[3,4,5,17].every(n=>s.solved.has(n))},
+  {id:"cache",  icon:"⚡", name:"Cache Master",       desc:"Solve both repeated-work cases",  test:s=>[10,11].every(n=>s.solved.has(n))},
+  {id:"router", icon:"🧭", name:"The Router",        desc:"Solve both model-tiering cases",  test:s=>[12,13].every(n=>s.solved.has(n))},
+  {id:"oracle", icon:"🔮", name:"Deep Diver",        desc:"Open 5 hidden pro tips",         test:s=>s.tipsOpened>=5},
+  {id:"scholar",icon:"🎓", name:"Straight A's",      desc:"Ace every pop quiz",              test:s=>s.quizPassed>=6},
+  {id:"half",   icon:"🌗", name:"Halfway There",     desc:"Reach 50% optimization",         test:s=>s.solved.size>=10},
+  {id:"master", icon:"🏆", name:"Cost Assassin",     desc:"Solve all 20 challenges",         test:s=>s.solved.size>=20},
+];
+
+const RANKS = [
+  {xp:0,   name:"AI Engineer"},
+  {xp:100, name:"Cost Analyst"},
+  {xp:250, name:"Optimization Adept"},
+  {xp:450, name:"Efficiency Architect"},
+  {xp:700, name:"Token Whisperer"},
+  {xp:1000,name:"Cost Assassin"},
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const G = [
+  {id:1,name:"Input Bloat",color:"#C0392B"},
+  {id:2,name:"Output Waste",color:"#B4761A"},
+  {id:3,name:"Repeated Work",color:"#1E7A4C"},
+  {id:4,name:"Wrong Model",color:"#2F3BB3"},
+  {id:5,name:"No Control",color:"#6B3FA0"}
+];
+const chapterOf = n => n<=7?0 : n<=9?1 : n<=11?2 : n<=13?3 : n<=17?4 : 5;
+
+/* state */
+const S = {
+  solved:new Set(), ran:new Set(),
+  quizAnswered:{}, quizPassed:0,
+  tipsOpened:0, tippedOn:new Set(),
+  xp:0, score:0,
+  achieved:new Set(),
+  step:{}   // per-lesson unlock step: 0 ready, 1 ran, 2 explained, 3 done
+};
+const BILL_START=120000, BILL_TARGET=30000;
+
+const $  = s=>document.querySelector(s);
+const $$ = s=>[...document.querySelectorAll(s)];
+const fmt = n=> n>=1e9?(n/1e9).toFixed(2)+"B" : n>=1e6?(n/1e6).toFixed(1)+"M" : n>=1e3?(n/1e3).toFixed(0)+"K" : Math.round(n);
+const usd = n=> "$"+(n>=1e6?(n/1e6).toFixed(2)+"M" : n>=1000?Math.round(n).toLocaleString() : n.toFixed(2));
+const esc = s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* ---------- SOUND (WebAudio, subtle, optional) ---------- */
+let AC=null, soundOn=true;
+function beep(type){
+  if(!soundOn) return;
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    const t=AC.currentTime, o=AC.createOscillator(), g=AC.createGain();
+    o.connect(g); g.connect(AC.destination);
+    const cfg={
+      tick:{f:660,d:.05,v:.05,tp:"sine"},
+      cash:{f:880,d:.14,v:.08,tp:"triangle"},
+      win:{f:520,d:.28,v:.09,tp:"sine"},
+      err:{f:180,d:.14,v:.07,tp:"square"},
+      unlock:{f:440,d:.08,v:.05,tp:"sine"}
+    }[type]||{f:440,d:.06,v:.05,tp:"sine"};
+    o.type=cfg.tp; o.frequency.setValueAtTime(cfg.f,t);
+    if(type==="cash"||type==="win") o.frequency.exponentialRampToValueAtTime(cfg.f*1.6,t+cfg.d);
+    if(type==="err") o.frequency.exponentialRampToValueAtTime(cfg.f*.6,t+cfg.d);
+    g.gain.setValueAtTime(cfg.v,t); g.gain.exponentialRampToValueAtTime(.0001,t+cfg.d);
+    o.start(t); o.stop(t+cfg.d);
+  }catch(e){}
+}
+
+/* ---------- animated number counter ---------- */
+function animateNumber(el, from, to, dur, formatter){
+  const start=performance.now();
+  function frame(now){
+    const p=clamp((now-start)/dur,0,1);
+    const eased=1-Math.pow(1-p,3);
+    el.textContent=formatter(from+(to-from)*eased);
+    if(p<1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- current bill from solved set ---------- */
+function currentBill(){
+  let fIn=1,fOut=1,fReq=1,fPrice=1;
+  S.solved.forEach(n=>{
+    const f=FIX.find(x=>x.n===n); if(!f) return;
+    if(f.t==="in")fIn*=(1-f.s); if(f.t==="out")fOut*=(1-f.s);
+    if(f.t==="both")fReq*=(1-f.s); if(f.t==="price")fPrice*=(1-f.s);
+  });
+  // map the abstract fix multipliers onto the mission bill (60% input, 25% output weighted)
+  const inShare=.6, outShare=.25, bothShare=.1, priceShare=.05;
+  const factor = inShare*fIn*fReq + outShare*fOut*fReq + bothShare*fReq + priceShare*fPrice;
+  const raw = BILL_START*factor;
+  // normalize so all-20 lands near target
+  return raw;
+}
+
+/* per-lesson standalone monthly cost, for the prediction stakes line.
+   Derived from each fix's savings magnitude so bigger fixes read as bigger
+   line items — deterministic, no randomness. */
+function lineItemCost(n){
+  const f=FIX.find(x=>x.n===n);
+  const base=2400, span=17000;               // $2.4k – ~$19k range
+  const mag=f?f.s:0.2;
+  return Math.round((base+span*mag)/100)*100; // round to nearest $100
+}
+
+/* ---------- XP / rank / mission ---------- */
+let lastBill=BILL_START;
+function refreshMission(animate){
+  const bill=currentBill();
+  const solvedN=S.solved.size;
+  const pct=clamp((BILL_START-bill)/(BILL_START-BILL_TARGET)*100,0,100);
+  $("#m-progfill").style.width=pct+"%";
+  $("#m-pctlabel").textContent=Math.round(pct)+"% optimized";
+  $("#m-solved").textContent=solvedN+" / 20 solved";
+  $("#m-target").textContent=usd(BILL_TARGET);
+  $("#m-score").textContent=S.score.toLocaleString();
+  const costEl=$("#m-cost");
+  if(animate){ animateNumber(costEl,lastBill,bill,900,usd); beep("cash"); }
+  else costEl.textContent=usd(bill);
+  lastBill=bill;
+
+  // XP + rank
+  $("#xpval").textContent=S.xp;
+  let rank=RANKS[0], nextXp=RANKS[1]?RANKS[1].xp:9999, lvl=1;
+  RANKS.forEach((r,i)=>{ if(S.xp>=r.xp){ rank=r; lvl=i+1; nextXp=RANKS[i+1]?RANKS[i+1].xp:r.xp; } });
+  $("#rankname").textContent=rank.name;
+  $("#lvlbadge").textContent=lvl;
+  const prevXp=rank.xp, span=Math.max(1,nextXp-prevXp);
+  $("#xpfill").style.width=clamp((S.xp-prevXp)/span*100,0,100)+"%";
+  $("#xpnext").textContent = S.xp>=RANKS[RANKS.length-1].xp ? "MAX" : (nextXp-S.xp)+" to next";
+
+  checkAchievements();
+}
+
+function addXP(n){ S.xp+=n; }
+function addScore(n){ S.score+=n; }
+
+/* ---------- toasts ---------- */
+function toast(icon,title,desc,gold){
+  const t=document.createElement("div");
+  t.className="toast"+(gold?" gold":"");
+  t.innerHTML=`<div class="ic">${icon}</div><div><div class="tt">${esc(title)}</div><div class="td">${esc(desc)}</div></div>`;
+  $("#toasts").appendChild(t);
+  setTimeout(()=>{ t.classList.add("out"); setTimeout(()=>t.remove(),420); }, 3200);
+}
+
+/* ---------- achievements ---------- */
+function checkAchievements(){
+  ACHIEVEMENTS.forEach(a=>{
+    if(!S.achieved.has(a.id) && a.test(S)){
+      S.achieved.add(a.id);
+      toast(a.icon,"Achievement unlocked",a.name,true);
+      beep("win");
+      renderAchStrip();
+    }
+  });
+}
+
+/* ---------- confetti ---------- */
+const confCanvas=$("#confetti"), cctx=confCanvas&&confCanvas.getContext&&confCanvas.getContext("2d");
+let confParts=[], confRAF=null;
+function sizeConf(){ confCanvas.width=innerWidth; confCanvas.height=innerHeight; }
+sizeConf(); addEventListener("resize",sizeConf);
+function confetti(n){
+  if(!cctx) return;
+  const colors=["#1E7A4C","#48C07E","#2F3BB3","#C9992B","#FF8B7E","#7C3AED"];
+  for(let i=0;i<n;i++){
+    confParts.push({x:innerWidth/2+(Math.random()-.5)*200, y:innerHeight/2,
+      vx:(Math.random()-.5)*11, vy:-Math.random()*13-4, g:.35,
+      c:colors[i%colors.length], s:5+Math.random()*6, r:Math.random()*6, vr:(Math.random()-.5)*.4, life:1});
+  }
+  if(!confRAF) confLoop();
+}
+function confLoop(){
+  cctx.clearRect(0,0,confCanvas.width,confCanvas.height);
+  confParts.forEach(p=>{
+    p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.r+=p.vr; p.life-=.008;
+    cctx.save(); cctx.translate(p.x,p.y); cctx.rotate(p.r); cctx.globalAlpha=Math.max(0,p.life);
+    cctx.fillStyle=p.c; cctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6); cctx.restore();
+  });
+  confParts=confParts.filter(p=>p.life>0 && p.y<confCanvas.height+40);
+  if(confParts.length){ confRAF=requestAnimationFrame(confLoop); } else { confRAF=null; cctx.clearRect(0,0,confCanvas.width,confCanvas.height); }
+}
+
+/* ---------- ambient background ---------- */
+const amb=$("#ambient"), actx=amb&&amb.getContext&&amb.getContext("2d");
+let dots=[];
+function sizeAmb(){ amb.width=innerWidth; amb.height=innerHeight;
+  dots=Array.from({length:Math.min(46,Math.floor(innerWidth/32))},()=>({
+    x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+    vx:(Math.random()-.5)*.18, vy:(Math.random()-.5)*.18, r:1+Math.random()*1.6})); }
+sizeAmb(); addEventListener("resize",sizeAmb);
+function ambLoop(){
+  actx.clearRect(0,0,amb.width,amb.height);
+  dots.forEach(d=>{ d.x+=d.vx; d.y+=d.vy;
+    if(d.x<0||d.x>amb.width)d.vx*=-1; if(d.y<0||d.y>amb.height)d.vy*=-1;
+    actx.fillStyle="rgba(47,59,179,0.10)"; actx.beginPath(); actx.arc(d.x,d.y,d.r,0,7); actx.fill(); });
+  for(let i=0;i<dots.length;i++)for(let j=i+1;j<dots.length;j++){
+    const a=dots[i],b=dots[j],dx=a.x-b.x,dy=a.y-b.y,dist=Math.hypot(dx,dy);
+    if(dist<120){ actx.strokeStyle=`rgba(47,59,179,${.06*(1-dist/120)})`; actx.beginPath(); actx.moveTo(a.x,a.y); actx.lineTo(b.x,b.y); actx.stroke(); }
+  }
+  requestAnimationFrame(ambLoop);
+}
+const reduceMotion = (typeof matchMedia==="function") && matchMedia("(prefers-reduced-motion:reduce)").matches;
+if(actx && !reduceMotion) ambLoop();
+
+/* ============================================================
+   SIM RENDERERS  (zero-state aware, animated by paintLive)
+   ============================================================ */
+function vizHTML(b, side, live){
+  const d=b[side], c=side==="bad"?"var(--bad)":"var(--good)", dim=side==="bad"?"#F3D4CE":"#CFE5D8";
+  if(b.sim==="bars"){
+    const max=Math.max(...d.bars.map(x=>x[1]));
+    return `<div style="display:grid;gap:7px">`+d.bars.map(([lab,v],i)=>`
+      <div><div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:2px"><span>${esc(lab)}</span><span style="font-family:var(--mono)">${fmt(v)}</span></div>
+      <div style="height:9px;background:#F0EEE8;border-radius:3px;overflow:hidden"><div data-bar style="height:100%;background:${c};border-radius:3px;width:${live?(v/max*100):0}%;transition:width .6s ${i*60}ms cubic-bezier(.2,.7,.3,1)"></div></div></div>`).join("")+`</div>`;
+  }
+  if(b.sim==="grid"){
+    const {total,good}=d.grid;
+    return `<div style="display:flex;flex-wrap:wrap;gap:5px">`+Array.from({length:total},(_,i)=>{
+      const rel=good.includes(i), bg=live?(rel?"#1E7A4C":(side==="bad"?"#F3B8AE":"#EDEBE4")):"#F0EEE8";
+      return `<div data-cell style="width:38px;height:26px;border-radius:5px;background:${bg};transition:background .35s ${i*22}ms"></div>`;
+    }).join("")+`</div>`;
+  }
+  if(b.sim==="stack"){
+    const max=Math.max(...d.stack.map(x=>x[1]));
+    return `<div style="display:flex;align-items:flex-end;gap:9px;height:132px">`+d.stack.map(([lab,v],i)=>`
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%">
+      <div style="font-family:var(--mono);font-size:10px;color:${c};margin-bottom:3px">${fmt(v)}</div>
+      <div data-stack style="width:100%;background:${c};border-radius:4px 4px 0 0;height:${live?(v/max*88):0}%;transition:height .55s ${i*80}ms cubic-bezier(.2,.7,.3,1)"></div>
+      <div style="font-size:9.5px;color:var(--muted);margin-top:5px;font-family:var(--mono)">${esc(lab)}</div></div>`).join("")+`</div>`;
+  }
+  if(b.sim==="flow"){
+    return `<div style="display:grid;gap:6px">`+d.flow.map(([lab,tag],i)=>{
+      const hot=/BILLED|LLM CALL|FRONTIER|SEND ALL|EMBED AS-IS|k=18|ANSWER WEAK/.test(tag);
+      const col=side==="bad"?(hot?"var(--bad)":"var(--muted)"):(hot?"var(--warn)":"var(--good)");
+      const bg=side==="bad"?(hot?"#FDF1EF":"#F7F6F2"):(hot?"#FDF6E9":"#EFF7F1");
+      return `<div data-flow style="display:flex;align-items:center;gap:9px;background:${bg};border:1px solid ${side==="bad"?"#EFD6D2":"#CFE5D8"};border-radius:7px;padding:8px 11px;opacity:${live?1:.25};transition:opacity .3s ${i*110}ms">
+        <span style="font-size:12.5px;flex:1;color:var(--ink-2)">${esc(lab)}</span>
+        <span style="font-family:var(--mono);font-size:10px;font-weight:600;color:${col};letter-spacing:.05em">${esc(tag)}</span></div>`;
+    }).join("")+`</div>`;
+  }
+  if(b.sim==="gauge"){
+    const {cap,used,label}=d.gauge, pct=Math.min(100,used/cap*100);
+    return `<div><div style="height:34px;background:#F0EEE8;border-radius:7px;overflow:hidden;position:relative;border:1px solid ${side==="bad"?"#EFD6D2":"#CFE5D8"}">
+      <div data-gaugefill style="height:100%;background:${c};width:${live?pct:0}%;transition:width .7s cubic-bezier(.2,.7,.3,1)"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 12px;font-family:var(--mono);font-size:11.5px;color:var(--ink);mix-blend-mode:luminosity">${fmt(used)} used of ${fmt(cap)} ceiling</div></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:9px">${esc(label)}</div>
+      <div style="display:flex;gap:4px;margin-top:11px">${Array.from({length:24},(_,i)=>`<div data-tick style="flex:1;height:20px;border-radius:3px;background:${live&&(i/24*100)<pct?c:"#F0EEE8"};transition:background .3s ${i*18}ms"></div>`).join("")}</div></div>`;
+  }
+  if(b.sim==="timeline"){
+    return `<div style="display:grid;gap:0">`+d.timeline.map(([when,what,hot],i)=>`
+      <div data-tl style="display:flex;gap:12px;align-items:flex-start;opacity:${live?1:.2};transition:opacity .3s ${i*130}ms">
+      <div style="font-family:var(--mono);font-size:10.5px;color:var(--muted);flex:0 0 78px;padding-top:3px;text-align:right">${esc(when)}</div>
+      <div style="flex:0 0 11px;display:flex;flex-direction:column;align-items:center;align-self:stretch">
+        <div style="width:9px;height:9px;border-radius:50%;background:${hot?c:dim};margin-top:6px;flex:0 0 9px"></div>
+        ${i<d.timeline.length-1?`<div style="width:1px;flex:1;background:${dim};min-height:16px"></div>`:""}</div>
+      <div style="font-size:13px;color:${hot?c:"var(--ink-2)"};font-weight:${hot?600:400};padding-bottom:11px">${esc(what)}</div></div>`).join("")+`</div>`;
+  }
+  return "";
+}
+function metricsHTML(b, side, live){
+  return b[side].metrics.map(([lab,val,unit,pct])=>{
+    const shown=typeof val==="number"&&val%1!==0?val:Math.round(val);
+    const pre=unit==="$"?"$":"", post=unit&&unit!=="$"?unit:"";
+    return `<div class="m"><div class="lab">${esc(lab)}</div>
+      <div class="val" data-mval="${val}" data-pre="${pre}" data-post="${post}">${pre}${live?(typeof shown==="number"?shown.toLocaleString():shown):"0"}<small>${post}</small></div>
+      <div class="bar"><i style="width:${live?pct:0}%"></i></div></div>`;
+  }).join("");
+}
+function termHTML(b, side, live){
+  if(!live) return `<div class="tl"><span class="ln">01</span><span class="tx" style="color:#4A5361">$ waiting — press Run<span class="cursor"></span></span></div>`;
+  return b[side].log.map(([kind,txt],i)=>`<div class="tl ${kind}" style="animation-delay:${i*260}ms"><span class="ln">${String(i+1).padStart(2,"0")}</span><span class="tx">${esc(txt)}</span></div>`).join("");
+}
+
+/* flip an already-painted lesson from zero to final by mutating nodes */
+function paintLive(b){
+  ["bad","good"].forEach(side=>{
+    const pane=$(".side."+side+" .pane"); if(!pane) return;
+    const d=b[side];
+    [...pane.querySelectorAll(".mrow .bar i")].forEach((el,i)=>{ if(d.metrics[i]) el.style.width=d.metrics[i][3]+"%"; });
+    // animate metric numbers counting up
+    [...pane.querySelectorAll(".mrow .val")].forEach((el,i)=>{
+      const m=d.metrics[i]; if(!m) return;
+      const to=+m[1], pre=el.dataset.pre||"", post=el.dataset.post||"";
+      animateNumber(el, 0, to, 700, v=>{
+        const disp = to%1!==0 ? (Math.round(v*100)/100) : Math.round(v);
+        return pre+disp.toLocaleString()+`<small>${post}</small>`;
+      });
+      // animateNumber sets textContent; re-inject small tag via innerHTML each frame is costly,
+      // so instead set innerHTML directly:
+      el.innerHTML = pre+"0"+`<small>${post}</small>`;
+      countUp(el, to, pre, post);
+    });
+    const viz=pane.querySelector(".viz");
+    if(viz){
+      if(b.sim==="bars"){ const max=Math.max(...d.bars.map(x=>x[1])); [...viz.querySelectorAll("[data-bar]")].forEach((el,i)=>{ if(d.bars[i]) el.style.width=(d.bars[i][1]/max*100)+"%"; }); }
+      if(b.sim==="stack"){ const max=Math.max(...d.stack.map(x=>x[1])); [...viz.querySelectorAll("[data-stack]")].forEach((el,i)=>{ if(d.stack[i]) el.style.height=(d.stack[i][1]/max*88)+"%"; }); }
+      if(b.sim==="grid"){ [...viz.querySelectorAll("[data-cell]")].forEach((el,i)=>{ const rel=d.grid.good.includes(i); el.style.background=rel?"#1E7A4C":(side==="bad"?"#F3B8AE":"#EDEBE4"); }); }
+      if(b.sim==="flow"){ [...viz.querySelectorAll("[data-flow]")].forEach(el=>el.style.opacity=1); }
+      if(b.sim==="gauge"){ const {cap,used}=d.gauge,pct=Math.min(100,used/cap*100); const f=viz.querySelector("[data-gaugefill]"); if(f)f.style.width=pct+"%"; [...viz.querySelectorAll("[data-tick]")].forEach((el,i)=>{ if((i/24*100)<pct) el.style.background=side==="bad"?"var(--bad)":"var(--good)"; }); }
+      if(b.sim==="timeline"){ [...viz.querySelectorAll("[data-tl]")].forEach(el=>el.style.opacity=1); }
+    }
+    const term=pane.querySelector(".term");
+    if(term){ term.innerHTML="";
+      d.log.forEach(([kind,txt],i)=>setTimeout(()=>{ if(!term.isConnected)return;
+        const row=document.createElement("div"); row.className="tl "+kind;
+        row.innerHTML=`<span class="ln">${String(i+1).padStart(2,"0")}</span><span class="tx">${esc(txt)}</span>`;
+        term.appendChild(row); if(i<3) beep("tick");
+      }, i*260));
+    }
+  });
+}
+function countUp(el,to,pre,post){
+  const start=performance.now(), dur=700;
+  function f(now){ const p=clamp((now-start)/dur,0,1), e=1-Math.pow(1-p,3), v=to*e;
+    const disp= to%1!==0 ? (Math.round(v*100)/100) : Math.round(v);
+    el.innerHTML=pre+disp.toLocaleString()+`<small>${post}</small>`;
+    if(p<1) requestAnimationFrame(f);
+  } requestAnimationFrame(f);
+}
+
+/* ============================================================
+   LESSON RENDER (progressive reveal)
+   ============================================================ */
+let cur=0, view="overview";
+
+function stepOf(n){ return S.step[n]||0; }
+function setStep(n,v){ S.step[n]=Math.max(stepOf(n),v); }
+
+function renderLesson(){
+  const b=B[cur], g=G[b.g-1], gm=GAME[b.n];
+  const live=S.ran.has(b.n), st=stepOf(b.n);
+  const chap=CHAPTERS[chapterOf(b.n)];
+
+  $("#lesson").innerHTML=`
+  <div class="card">
+    <div class="chapline">Chapter ${chap.ch} · ${esc(chap.name)}</div>
+    <div class="chead" style="border-bottom-color:${g.color};background:${g.color}0D;border-color:${g.color}33">
+      <div class="kicker">
+        <span class="chip cat" style="color:${g.color};border-color:${g.color}44">${String(b.n).padStart(2,"0")} · ${esc(b.cat)}</span>
+        <span class="chip xp">+25 XP</span>
+        ${S.solved.has(b.n)?'<span class="chip" style="background:#EFF7F1;color:var(--good);border:1px solid #CFE5D8">✓ SOLVED</span>':''}
+      </div>
+      <div class="story">${esc(gm.story)}</div>
+      <h2>${esc(b.title)}</h2>
+      <p class="lede">${esc(b.lede)}</p>
+    </div>
+
+    <div class="steps" id="steps"></div>
+
+    <!-- STAGE 1: RUN + SIMULATION -->
+    <div class="stage show" id="stage-run">
+      <div class="runrow">
+        <button class="runbtn big" id="run">▶ Run the simulation</button>
+        <button class="ghostbtn" id="replay" style="display:none">↻ Replay</button>
+        <span class="hint">${esc(b.hint)}</span>
+      </div>
+      <div class="split" style="margin-top:14px">
+        <div class="side bad"><h4>Naive — no fix</h4><div class="pane">
+          <div class="viz" id="viz-bad">${vizHTML(b,"bad",live)}</div>
+          <div class="vizcap">${esc(b.bad.caption)}</div>
+          <div class="mrow">${metricsHTML(b,"bad",live)}</div>
+          <div class="term">${termHTML(b,"bad",live)}</div>
+        </div></div>
+        <div class="side good"><h4>Optimized — fix applied</h4><div class="pane">
+          <div class="viz" id="viz-good">${vizHTML(b,"good",live)}</div>
+          <div class="vizcap">${esc(b.good.caption)}</div>
+          <div class="mrow">${metricsHTML(b,"good",live)}</div>
+          <div class="term">${termHTML(b,"good",live)}</div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- STAGE 3: WHAT HAPPENED + CODE -->
+    <div class="stage" id="stage-explain">
+      <div class="lower">
+        <div>
+          <div class="blk">
+            <h4>What actually happened</h4>
+            <p class="whath">${esc(gm.whit)}</p>
+            <h4 style="margin-top:4px">What you build</h4>
+            <ul class="buildlist">${b.build.map(x=>`<li><span class="dot"></span><span>${esc(x)}</span></li>`).join("")}</ul>
+            <div class="techrow">${b.tech.map(t=>`<span class="tech">${esc(t)}</span>`).join("")}</div>
+            <div class="protip"><button class="protipbtn" id="tipbtn">💡 Pro tip <span style="opacity:.6">(press H)</span></button>
+              <div class="protipbody" id="tipbody">${esc(gm.tip)}</div></div>
+          </div>
+        </div>
+        <div class="blk impact">
+          <h4>Business impact</h4>
+          <div class="big">${esc(b.impact)}</div>
+          <div class="savechip">↓ ${esc(b.save)} cost reduction</div>
+        </div>
+      </div>
+      <div class="codeblk" style="margin-top:18px">
+        <div class="codehead"><span>Working implementation · python</span><button class="copybtn" id="cp">Copy</button></div>
+        <pre class="code"><code id="codebody">${b.code}</code></pre>
+      </div>
+      ${gm.quiz?`
+      <div class="quizcard" id="quizcard">
+        <h4>⚡ Quick check</h4>
+        <div class="quizq">${esc(gm.quiz.q)}</div>
+        <div class="quizopts" id="quizopts">${gm.quiz.opts.map((o,i)=>`<button class="qopt" data-i="${i}"><span class="qk">${String.fromCharCode(65+i)}</span><span>${esc(o)}</span></button>`).join("")}</div>
+        <div class="quizfb" id="quizfb"></div>
+      </div>`:""}
+    </div>
+
+    <!-- STAGE 4: CLIFFHANGER -->
+    <div class="stage" id="stage-cliff">
+      <div class="cliff">
+        <div class="ct"><div class="cl">${cur<19?"Next challenge":"Mission complete"}</div>
+          <div class="cx">${gm.cliff}</div></div>
+        ${cur<19?`<button class="nextbtn" id="cliffnext">Next case →</button>`:`<button class="nextbtn" id="cliffsummary">See your results 🎉</button>`}
+      </div>
+    </div>
+  </div>`;
+
+  // restore visible stages based on step (run stage is always shown)
+  if(st>=2)               reveal("stage-explain", false);
+  if(st>=3)               reveal("stage-cliff", false);
+  renderSteps();
+  wireLesson(b,gm);
+}
+
+function reveal(id, withSound){
+  const el=$("#"+id); if(!el||el.classList.contains("show")) return;
+  el.classList.add("show");
+  if(withSound){ beep("unlock"); }
+}
+
+function renderSteps(){
+  const b=B[cur], st=stepOf(b.n);
+  const labels=["Problem","Simulate","Learn","Solved"];
+  $("#steps").innerHTML=labels.map((l,i)=>{
+    const done=st>i, active=st===i;
+    return `${i>0?`<div class="stepsep ${st>=i?"done":""}"></div>`:""}<div class="stepdot ${done?"done":""} ${active?"active":""}"><div class="b">${done?"✓":i+1}</div>${l}</div>`;
+  }).join("");
+}
+
+function wireLesson(b,gm){
+  // PREDICTION
+  // RUN
+  const runBtn=$("#run");
+  if(runBtn) runBtn.onclick=()=>runSim(b,gm);
+  const rep=$("#replay"); if(rep) rep.onclick=()=>{ S.ran.delete(b.n); runSim(b,gm,true); };
+
+  // PRO TIP
+  const tb=$("#tipbtn"); if(tb) tb.onclick=()=>{
+    const body=$("#tipbody"); body.classList.toggle("show"); beep("tick");
+    if(body.classList.contains("show") && !S.tippedOn.has(b.n)){ S.tippedOn.add(b.n); S.tipsOpened++; checkAchievements(); }
+  };
+
+  // COPY
+  const cp=$("#cp"); if(cp) cp.onclick=()=>navigator.clipboard.writeText($("#codebody").innerText).then(()=>{ cp.textContent="Copied"; beep("tick"); setTimeout(()=>cp.textContent="Copy",1500); });
+
+  // QUIZ
+  if(gm.quiz){
+    $$("#quizopts .qopt").forEach(opt=>opt.onclick=()=>{
+      if(S.quizAnswered[b.n]!==undefined) return;
+      const i=+opt.dataset.i, correct=gm.quiz.a;
+      S.quizAnswered[b.n]=i;
+      if(i===correct){ opt.classList.add("correct"); $("#quizfb").innerHTML=`<span style="color:var(--good)">✓ ${esc(gm.quiz.fb)}</span>`; S.quizPassed++; addScore(2); addXP(10); beep("win"); toast("🎓","Quiz passed","+10 XP · +2 score"); }
+      else { opt.classList.add("wrong"); $$("#quizopts .qopt")[correct].classList.add("correct"); $("#quizfb").innerHTML=`<span style="color:var(--bad)">Not quite. ${esc(gm.quiz.fb)}</span>`; beep("err"); }
+      refreshMission(false);
+    });
+    if(S.quizAnswered[b.n]!==undefined){
+      const i=S.quizAnswered[b.n], correct=gm.quiz.a, opts=$$("#quizopts .qopt");
+      opts[i].classList.add(i===correct?"correct":"wrong");
+      if(i!==correct) opts[correct].classList.add("correct");
+      $("#quizfb").innerHTML=i===correct?`<span style="color:var(--good)">✓ ${esc(gm.quiz.fb)}</span>`:`<span style="color:var(--bad)">${esc(gm.quiz.fb)}</span>`;
+    }
+  }
+
+  // CLIFF
+  const cn=$("#cliffnext"); if(cn) cn.onclick=()=>go(cur+1);
+  const cs=$("#cliffsummary"); if(cs) cs.onclick=()=>showSummary();
+}
+
+function runSim(b,gm,isReplay){
+  const runBtn=$("#run");
+  S.ran.delete(b.n);
+  // repaint run stage at zero
+  $("#viz-bad").innerHTML=vizHTML(b,"bad",false);
+  $("#viz-good").innerHTML=vizHTML(b,"good",false);
+  $(".side.bad .mrow").innerHTML=metricsHTML(b,"bad",false);
+  $(".side.good .mrow").innerHTML=metricsHTML(b,"good",false);
+  $(".side.bad .term").innerHTML=termHTML(b,"bad",false);
+  $(".side.good .term").innerHTML=termHTML(b,"good",false);
+  runBtn.disabled=true; runBtn.textContent="running…";
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    S.ran.add(b.n);
+    paintLive(b);
+    setStep(b.n,1); renderSteps();
+    setTimeout(()=>{
+      runBtn.textContent="✓ Simulation complete";
+      $("#replay").style.display="inline-flex";
+      reveal("stage-explain", true);
+      // solving the lesson (first run only)
+      if(!S.solved.has(b.n)) solveLesson(b,gm);
+      setStep(b.n,3); renderSteps();
+      setTimeout(()=>reveal("stage-cliff", true), 500);
+    }, 1500);
+  }));
+}
+
+function solveLesson(b,gm){
+  S.solved.add(b.n);
+  addXP(25); addScore(5);
+  // mark nav
+  const navItem=$$(".nav-i")[cur]; if(navItem){ const stt=navItem.querySelector(".status"); if(stt) stt.innerHTML='<span class="done">✓</span>'; }
+  refreshMission(true);   // animates the bill downward + cash sound
+  const bill=currentBill();
+  celebrate(b,bill);
+  confetti(90);
+  toast("✅","Challenge solved","+25 XP · +5 score");
+}
+
+/* ---------- celebration overlay ---------- */
+function celebrate(b,bill){
+  const before=lastBill; // lastBill already updated in refreshMission; recompute saved
+  const savedPct=b.save;
+  const box=$("#celbox");
+  box.innerHTML=`
+    <div class="emoji">🎉</div>
+    <h3>${esc(b.title)} — solved!</h3>
+    <div class="big">↓ ${esc(b.save)}</div>
+    <p>Monthly bill now <b style="color:var(--good)">${usd(bill)}</b> · ${S.solved.size} / 20 done</p>
+    <button id="celclose">Keep going →</button>`;
+  $("#celebrate").classList.add("show");
+  beep("win");
+  $("#celclose").onclick=()=>$("#celebrate").classList.remove("show");
+  setTimeout(()=>{ const c=$("#celebrate"); if(c) c.classList.remove("show"); }, 2600);
+}
+
+/* ---------- session summary ---------- */
+function showSummary(){
+  const bill=currentBill();
+  const box=$("#celbox");
+  const savedYr=(BILL_START-bill)*12;
+  box.innerHTML=`
+    <div class="emoji">🏆</div>
+    <h3>Optimization complete</h3>
+    <p style="margin-top:2px">You took the monthly bill from</p>
+    <div style="font-family:var(--disp);font-size:22px;font-weight:700"><span style="color:var(--bad)">${usd(BILL_START)}</span> → <span style="color:var(--good)">${usd(bill)}</span></div>
+    <div class="big" style="font-size:30px;margin-top:8px">${usd(savedYr)} / year saved</div>
+    <p>${S.solved.size} solved · ${S.xp} XP · score ${S.score} · ${S.achieved.size} achievements</p>
+    <button id="celclose">Back to mission</button>`;
+  $("#celebrate").classList.add("show");
+  confetti(180); beep("win");
+  $("#celclose").onclick=()=>{ $("#celebrate").classList.remove("show"); setView("overview"); };
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+function buildNav(){
+  $("#groups").innerHTML=G.map(g=>`<div class="gitem"><span class="gbadge" style="background:${g.color}">${g.id}</span>${g.name}</div>`).join("");
+  $("#nav").innerHTML=B.map((b,i)=>`<button class="nav-i" data-i="${i}">
+    <span class="n">${String(b.n).padStart(2,"0")}</span><span class="t">${esc(b.title)}</span>
+    <span class="status">${S.solved.has(b.n)?'<span class="done">✓</span>':'<span class="lock">○</span>'}</span></button>`).join("");
+  $("#mobsel").innerHTML=B.map((b,i)=>`<option value="${i}">${String(b.n).padStart(2,"0")} · ${b.title}</option>`).join("");
+  $$(".nav-i").forEach(el=>el.onclick=()=>go(+el.dataset.i));
+  $("#mobsel").onchange=e=>go(+e.target.value);
+  $("#q").oninput=e=>{ const t=e.target.value.toLowerCase();
+    $$(".nav-i").forEach(el=>{ const b=B[+el.dataset.i]; const hay=(b.title+" "+b.cat+" "+b.tech.join(" ")+" "+b.lede).toLowerCase(); el.classList.toggle("hidden",!!t&&!hay.includes(t)); });
+  };
+}
+function go(i){
+  cur=clamp(i,0,B.length-1);
+  setView("lesson"); renderLesson();
+  $$(".nav-i").forEach(el=>el.classList.toggle("on",+el.dataset.i===cur));
+  $("#mobsel").value=cur;
+  $("#pgnum").textContent=(cur+1)+" / 20";
+  $("#prev").disabled=cur===0; $("#next").disabled=cur===B.length-1;
+  window.scrollTo({top:0,behavior:"instant"});
+}
+function setView(v){
+  view=v;
+  $$(".mtab").forEach(t=>t.classList.toggle("on",t.dataset.view===v));
+  $("#v-overview").classList.toggle("hidden",v!=="overview");
+  $("#v-lesson").classList.toggle("hidden",v!=="lesson");
+  $("#v-all").classList.toggle("hidden",v!=="all");
+  $("#pager").style.visibility=v==="lesson"?"visible":"hidden";
+}
+
+/* ============================================================
+   OVERVIEW + REFERENCE  (built once)
+   ============================================================ */
+function buildOverview(){
+  $("#v-overview").innerHTML=`
+    <div class="hero">
+      <div class="kick">Enterprise token &amp; cost economics · the game</div>
+      <h2>Can you beat the $120,000 bill?</h2>
+      <p>Twenty engineering mistakes are inflating this LLM bill. Solve each challenge to drive the monthly cost down toward <span class="strike">$30,000</span> — run the simulation, learn the fix, earn XP.</p>
+      <button class="startbtn" id="startbtn">▶ Start Challenge 01</button>
+    </div>
+
+    <div class="sec">
+      <h3 class="sechead">Your achievements</h3>
+      <p class="secsub">Unlock badges as you clear categories, dig into pro tips, and ace quizzes.</p>
+      <div class="achgrid" id="achgrid"></div>
+    </div>
+
+    <div class="sec">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+        <h3 class="sechead">Sandbox calculator</h3>
+        <label style="font-size:12.5px;color:var(--muted);display:flex;gap:7px;align-items:center"><input type="checkbox" id="soundtoggle" checked> sound effects</label>
+      </div>
+      <p class="secsub">Prefer to explore freely? Move the sliders and toggle any of the 20 fixes to see the math directly.</p>
+      <div class="calcgrid">
+        <div>
+          <div class="ctrl"><label>Requests per day <b id="l-req">50,000</b></label><input type="range" id="s-req" min="100" max="500000" step="100" value="50000"></div>
+          <div class="ctrl"><label>Input tokens / request <b id="l-in">6,000</b></label><input type="range" id="s-in" min="200" max="60000" step="100" value="6000"></div>
+          <div class="ctrl"><label>Output tokens / request <b id="l-out">800</b></label><input type="range" id="s-out" min="50" max="8000" step="50" value="800"></div>
+          <div class="ctrl"><label>Model <b id="l-model">Frontier tier</b></label><div class="selrow" id="modelsel"></div></div>
+        </div>
+        <div class="billcard">
+          <div class="lab">Monthly bill — no optimization</div><div class="amt red" id="bill-before">$0</div><div class="sub" id="tok-before">—</div>
+          <div class="billsplit"></div>
+          <div class="lab">With selected fixes</div><div class="amt grn" id="bill-after">$0</div><div class="sub" id="tok-after">—</div>
+          <div class="saveline"><span class="t">You keep</span><span class="v" id="saved">$0 / mo · 0%</span></div>
+          <div class="saveline"><span class="t">Per year</span><span class="v" id="savedyr">$0</span></div>
+          <div class="togglegrid" id="toggles"></div>
+          <button class="copybtn" style="margin-top:12px;width:100%;padding:7px;color:#C9D1D9;background:#1A1F27;border-color:#2A303A" id="toggleall">Turn all fixes on</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec" style="border-bottom:0">
+      <h3 class="sechead">Twenty challenges, five root causes</h3>
+      <p class="secsub">Every mistake is one of five failure modes. Click any number to jump into that challenge.</p>
+      <div class="rcgrid" id="rootcauses"></div>
+    </div>`;
+  renderAchStrip();
+  $("#startbtn").onclick=()=>go(0);
+  $("#soundtoggle").onchange=e=>{ soundOn=e.target.checked; };
+  buildCalc(); buildRoots();
+}
+
+function renderAchStrip(){
+  const el=$("#achgrid"); if(!el) return;
+  el.innerHTML=ACHIEVEMENTS.map(a=>`<div class="ach ${S.achieved.has(a.id)?"unlocked":""}">
+    <div class="ai">${a.icon}</div><div class="an">${esc(a.name)}</div><div class="ad">${esc(a.desc)}</div></div>`).join("");
+}
+
+/* calculator */
+let model="large";
+function calc(){
+  const req=+$("#s-req").value,tin=+$("#s-in").value,tout=+$("#s-out").value;
+  $("#l-req").textContent=req.toLocaleString(); $("#l-in").textContent=tin.toLocaleString(); $("#l-out").textContent=tout.toLocaleString();
+  const m=MODELS.find(x=>x.k===model); $("#l-model").textContent=m.n;
+  const mo=30, inTot=req*tin*mo, outTot=req*tout*mo, before=inTot/1e6*m.in+outTot/1e6*m.out;
+  let fIn=1,fOut=1,fReq=1,fPrice=1;
+  calcActive.forEach(n=>{ const f=FIX.find(x=>x.n===n); if(f.t==="in")fIn*=(1-f.s); if(f.t==="out")fOut*=(1-f.s); if(f.t==="both")fReq*=(1-f.s); if(f.t==="price")fPrice*=(1-f.s); });
+  const inA=inTot*fIn*fReq, outA=outTot*fOut*fReq, after=(inA/1e6*m.in+outA/1e6*m.out)*fPrice;
+  $("#bill-before").textContent=usd(before); $("#bill-after").textContent=usd(after);
+  $("#tok-before").textContent=fmt(inTot+outTot)+" tokens / month"; $("#tok-after").textContent=fmt(inA+outA)+" tokens / month";
+  const saved=before-after,pct=before>0?saved/before*100:0;
+  $("#saved").textContent=usd(saved)+" / mo · "+pct.toFixed(0)+"%"; $("#savedyr").textContent=usd(saved*12);
+}
+const calcActive=new Set();
+function buildCalc(){
+  $("#modelsel").innerHTML=MODELS.map(m=>`<button data-k="${m.k}" class="${m.k===model?"on":""}">${m.n}</button>`).join("");
+  $$("#modelsel button").forEach(el=>el.onclick=()=>{ model=el.dataset.k; $$("#modelsel button").forEach(x=>x.classList.toggle("on",x.dataset.k===model)); calc(); });
+  $("#toggles").innerHTML=B.map(b=>`<div class="tg" data-n="${b.n}"><span class="box">✓</span><span class="nm">${String(b.n).padStart(2,"0")} ${esc(b.title)}</span><span class="pc">${esc(b.save)}</span></div>`).join("");
+  $$(".tg").forEach(el=>el.onclick=()=>{ const n=+el.dataset.n; calcActive.has(n)?calcActive.delete(n):calcActive.add(n); el.classList.toggle("on",calcActive.has(n)); calc(); });
+  $("#toggleall").onclick=()=>{ const all=calcActive.size===B.length; calcActive.clear(); if(!all)B.forEach(b=>calcActive.add(b.n)); $$(".tg").forEach(el=>el.classList.toggle("on",calcActive.has(+el.dataset.n))); $("#toggleall").textContent=all?"Turn all fixes on":"Turn all fixes off"; calc(); };
+  ["s-req","s-in","s-out"].forEach(id=>$("#"+id).oninput=calc); calc();
+}
+function buildRoots(){
+  $("#rootcauses").innerHTML=ROOT.map((r,i)=>`<div class="rc"><div class="num">ROOT CAUSE ${i+1}</div><h5>${esc(r.t)}</h5><p>${esc(r.d)}</p><div class="ids">${r.ids.map(n=>`<span class="id" data-n="${n}">${String(n).padStart(2,"0")}</span>`).join("")}</div></div>`).join("");
+  $$("#rootcauses .id").forEach(el=>el.onclick=()=>go(+el.dataset.n-1));
+}
+
+/* reference view */
+function buildAll(){
+  $("#v-all").innerHTML=`
+    <div class="sec">
+      <h3 class="sechead">The reference table</h3>
+      <p class="secsub">Every challenge, its fix, and the realistic savings band. Click a row to open it.</p>
+      <div class="tblwrap" style="border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff">
+        <table class="t20" style="width:100%;border-collapse:collapse;font-size:13.4px"><thead><tr>
+          <th style="background:#F2F0EA;text-align:left;padding:10px 13px;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)">#</th>
+          <th style="background:#F2F0EA;text-align:left;padding:10px 13px;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)">Challenge</th>
+          <th style="background:#F2F0EA;text-align:left;padding:10px 13px;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)">The fix</th>
+          <th style="background:#F2F0EA;text-align:left;padding:10px 13px;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line)">Savings</th>
+        </tr></thead><tbody id="t20body"></tbody></table>
+      </div>
+    </div>
+    <div class="sec">
+      <h3 class="sechead">The optimization pipeline</h3>
+      <p class="secsub">The architecture all twenty fixes live inside. Click a stage to see which challenges it removes.</p>
+      <div class="pipe" id="pipe"></div><div class="pdetail" id="pdetail"></div>
+    </div>
+    <div class="sec" style="border-bottom:0">
+      <h3 class="sechead">What to build first</h3>
+      <p class="secsub">Ordered by effort-to-impact, not list position. Week one alone typically cuts 40–55%.</p>
+      <div class="rmgrid" id="roadmap"></div>
+      <div class="thepoint"><div class="lab">The point</div>
+        <p>Not one of these twenty is solved by switching to a cheaper model. Every one is an architecture problem — <em>what you send, how often you send it, and who you send it to.</em></p></div>
+    </div>`;
+  $("#t20body").innerHTML=B.map((b,i)=>`<tr data-i="${i}" style="cursor:pointer">
+    <td style="padding:10px 13px;border-bottom:1px solid #EFEDE7;font-family:var(--mono);color:var(--muted-2);font-size:12px">${String(b.n).padStart(2,"0")}</td>
+    <td style="padding:10px 13px;border-bottom:1px solid #EFEDE7;font-weight:600">${esc(b.title)} ${S.solved.has(b.n)?'<span style="color:var(--good)">✓</span>':''}</td>
+    <td style="padding:10px 13px;border-bottom:1px solid #EFEDE7;color:var(--good)">${esc(b.build[0])}</td>
+    <td style="padding:10px 13px;border-bottom:1px solid #EFEDE7;font-family:var(--mono);color:var(--good);font-weight:600;white-space:nowrap">${esc(b.save)}</td></tr>`).join("");
+  $$("#t20body tr").forEach(el=>{ el.onclick=()=>go(+el.dataset.i); el.onmouseenter=()=>el.style.background="#FAF9F5"; el.onmouseleave=()=>el.style.background=""; });
+
+  $("#pipe").innerHTML=PIPE.map((p,i)=>`<button class="pstage ${i===0?"on":""}" data-i="${i}"><div class="pn">STAGE ${String(i+1).padStart(2,"0")}</div><div class="pt">${esc(p.t)}</div><div class="pd">${esc(p.d)}</div></button>`).join("");
+  $$(".pstage").forEach(el=>el.onclick=()=>{ $$(".pstage").forEach(x=>x.classList.remove("on")); el.classList.add("on"); showStage(+el.dataset.i); });
+  showStage(0);
+
+  $("#roadmap").innerHTML=ROADMAP.map(r=>`<div class="rm ${r.cls}"><span class="wk">${esc(r.w)}</span><h5>${esc(r.t)}</h5><ul>${r.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><div class="eff">${esc(r.eff)}</div></div>`).join("");
+}
+function showStage(i){
+  const p=PIPE[i];
+  $("#pdetail").innerHTML=`<h5>${esc(p.t)}</h5><p>${esc(p.body)}</p>
+    <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600">Challenges this stage removes</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">${p.ids.map(n=>`<span class="id" data-n="${n}" style="font-family:var(--mono);font-size:11.5px;background:#F2F0EA;border:1px solid var(--line);border-radius:6px;padding:4px 9px;cursor:pointer">${String(n).padStart(2,"0")} · ${esc(B[n-1].title)}</span>`).join("")}</div>`;
+  $$("#pdetail .id").forEach(el=>el.onclick=()=>go(+el.dataset.n-1));
+}
+
+/* ============================================================
+   INIT + keyboard
+   ============================================================ */
+$$(".mtab").forEach(t=>t.onclick=()=>{ setView(t.dataset.view); window.scrollTo({top:0,behavior:"instant"}); });
+$("#prev").onclick=()=>go(cur-1);
+$("#next").onclick=()=>go(cur+1);
+document.addEventListener("keydown",e=>{
+  if(/input|select|textarea/i.test(e.target.tagName)) return;
+  if(view==="lesson"){
+    if(e.key==="ArrowLeft") go(cur-1);
+    if(e.key==="ArrowRight") go(cur+1);
+    if(e.key===" "){ e.preventDefault(); const r=$("#run"); if(r&&!r.disabled) r.click(); }
+    if(e.key==="r"||e.key==="R"){ const rp=$("#replay"); if(rp&&rp.style.display!=="none") rp.click(); }
+    if(e.key==="h"||e.key==="H"){ const tb=$("#tipbtn"); if(tb) tb.click(); }
+    if(e.key==="c"||e.key==="C"){ const cp=$("#cp"); if(cp) cp.click(); }
+  }
+});
+
+buildNav();
+buildOverview();
+buildAll();
+setView("overview");
+refreshMission(false);
+$("#pgnum").textContent="1 / 20";
+$("#prev").disabled=true;
+
+/* expose a small debug surface (used by tests; harmless in prod) */
+window.__TCL={S,B,GAME,go,refreshMission,currentBill,get cur(){return cur;}};
+
+</script>
+</body>
+</html>

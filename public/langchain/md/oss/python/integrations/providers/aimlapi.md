@@ -1,0 +1,41 @@
+>[AI/ML API](https://aimlapi.com/app/?utm_source=langchain&utm_medium=github&utm_campaign=integration) provides a single API for accessing 300+ hosted foundation models (DeepSeek, Gemini, GPT, and more) with enterprise-grade uptime and throughput.
+
+## Installation and setup
+
+- Install the AI/ML API integration package.
+
+  ```bash
+  pip install langchain-aimlapi
+  ```
+
+- Create an account at [aimlapi.com](https://aimlapi.com/app/?utm_source=langchain&utm_medium=github&utm_campaign=integration) and generate an API key.
+- Authenticate by setting the `AIMLAPI_API_KEY` environment variable.
+
+```python
+
+os.environ["AIMLAPI_API_KEY"] = "aimlapi_..."
+```
+
+## Chat models
+
+See a [usage example](https://docs.aimlapi.com/).
+
+```python
+from langchain_aimlapi import ChatAIMLAPI
+```
+
+## LLMs
+
+See a [usage example](lc:oss/python/integrations/llms/aimlapi).
+
+```python
+from langchain_aimlapi import AIMLAPILLM
+```
+
+## Embedding models
+
+See a [usage example](https://docs.aimlapi.com/).
+
+```python
+from langchain_aimlapi import AIMLAPIEmbeddings
+```
