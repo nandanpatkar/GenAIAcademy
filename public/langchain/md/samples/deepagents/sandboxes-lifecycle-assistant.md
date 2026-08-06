@@ -1,0 +1,35 @@
+> [!NOTE] Where this runs in the docs
+>
+> [Sandboxes](lc:oss/python/deepagents/sandboxes)
+
+```python sandboxes-lifecycle-assistant.py
+from deepagents import create_deep_agent
+from deepagents.backends.langsmith import LangSmithSandbox
+from langchain_core.runnables import RunnableConfig
+from langsmith.sandbox import SandboxClient
+
+client = SandboxClient()
+
+
+async def agent(config: RunnableConfig):
+    assistant_id = config["configurable"]["assistant_id"]  # [!code highlight]
+    sandbox_name = f"assistant-{assistant_id}"
+    existing = [
+        sb
+        for sb in client.list_sandboxes()
+        if getattr(sb, "name", None) == sandbox_name
+    ]
+    if existing:
+        ls_sandbox = existing[0]
+    else:
+        ls_sandbox = client.create_sandbox(name=sandbox_name)
+    return create_deep_agent(
+        model="google_genai:gemini-3.6-flash",
+        backend=LangSmithSandbox(sandbox=ls_sandbox),
+    )
+
+
+if __name__ == "__main__":
+    assert callable(agent)
+    print("✓ deepagents-sandbox-lifecycle-factory-assistant-py validated")
+```

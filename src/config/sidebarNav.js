@@ -80,6 +80,8 @@ export function getActiveNavId(p) {
   // The LangChain product id doubles as the nav id, so the four Agents
   // subsections highlight without any extra mapping.
   if (p.showLangChainDocs) return p.langChainProduct || "langchain";
+  // Strands is one nav item over five in-viewer products, so it does not.
+  if (p.showStrandsDocs) return "strands";
   if (!p.activeNode) return "overview";
   return null;
 }
@@ -143,6 +145,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowReference) p.setShowReference(false);
   if (p.setShowAgentCore) p.setShowAgentCore(false);
   if (p.setShowLangChainDocs) p.setShowLangChainDocs(false);
+  if (p.setShowStrandsDocs) p.setShowStrandsDocs(false);
   if (p.setShowOnboarding) p.setShowOnboarding(false);
 
   switch (id) {
@@ -170,9 +173,13 @@ export function runNavClick(id, p, ctx = {}) {
     case "langgraph":
     case "deepagents":
     case "langsmith":
+    case "langchain_samples":
       // One viewer, entered scoped to the library the reader picked.
       if (p.setLangChainProduct) p.setLangChainProduct(id);
       if (p.setShowLangChainDocs) p.setShowLangChainDocs(true);
+      break;
+    case "strands":
+      if (p.setShowStrandsDocs) p.setShowStrandsDocs(true);
       break;
     case "nosignups": if (p.setShowNoSignups) p.setShowNoSignups(true); break;
     case "free_system_design": window.open("https://freesystemdesign.com/", "_blank", "noopener,noreferrer"); break;

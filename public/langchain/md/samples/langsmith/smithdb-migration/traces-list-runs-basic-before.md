@@ -1,0 +1,20 @@
+```bash traces-list-runs-basic-before.sh
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_ID=$(curl -s "https://api.smith.langchain.com/api/v1/sessions?name=default&limit=1" \
+  -H "x-api-key: $LANGSMITH_API_KEY" | jq -r '.[0].id')
+[ -n "$PROJECT_ID" ] && [ "$PROJECT_ID" != "null" ] || { echo "error: could not resolve project id for \"default\"" >&2; exit 1; }
+TRACE_ID="<trace-id>"
+TRACE_ID=$(curl -s -X POST "https://api.smith.langchain.com/api/v1/runs/query" \
+  -H "x-api-key: $LANGSMITH_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "$(jq -n --arg pid "$PROJECT_ID" '{"session": [$pid], "is_root": true, "limit": 1}')" \
+  | jq -r '(.runs // [])[0].trace_id')
+
+curl -s -X POST "https://api.smith.langchain.com/api/v1/runs/query" \
+  -H "x-api-key: $LANGSMITH_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "$(jq -n --arg pid "$PROJECT_ID" --arg tid "$TRACE_ID" '{"session": [$pid], "trace": $tid}')" \
+  | jq '.runs // []'
+```

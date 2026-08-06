@@ -1,0 +1,665 @@
+import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import {
+  Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight, List,
+  ExternalLink, FileText, Clock, Layers, PanelLeft, Loader2, AlertCircle,
+  BookOpen, Braces, Play, Users, GitBranch, Tag,
+} from "lucide-react";
+import {
+  STRANDS_PRODUCTS, STRANDS_ALL_PAGES, STRANDS_TOTAL_PAGES, STRANDS_SOURCE_URL,
+} from "../data/strandsDocsData";
+import { makeLangChainComponents, extractToc, langChainUrlTransform } from "./LangChainMarkdown";
+import { useTheme } from "../contexts/ThemeContext";
+import "../styles/LangChainDocs.css";
+import "../styles/StrandsDocs.css";
+
+/* The Strands Agents documentation, read in-app.
+ *
+ * Same shape as the LangChain viewer next door — a product-scoped nav rail, a
+ * measured reading column, an "on this page" rail — and deliberately the same
+ * markup. scripts/build_strands_docs.py lowers the Strands archive onto the
+ * exact contract LangChainMarkdown already renders (`> [!NOTE]` callouts,
+ * `lc:` cross-references), so this file reuses that renderer and that
+ * stylesheet, then overrides the palette and the one construct Strands adds:
+ * `(( tab "Python" ))` language tabs, whose bodies are markdown rather than
+ * bare code and so render through a nested pass.
+ *
+ * The sidebar enters here at the user guide; the switcher at the top of the
+ * rail crosses into the API reference, examples, community catalog and the
+ * samples cookbook, because the prose links across all five constantly.
+ *
+ * Page bodies are fetched from public/strands/md/ on demand and cached for the
+ * session — 431 pages is far too much to bundle.
+ */
+
+const LS_RECENT = "strands_docs_recent";
+const LS_LANG = "strands_docs_language";
+
+/* Only a language choice is worth remembering across pages. Deploy targets
+   ("AWS Lambda", "Terraform") are a property of the one page they appear on;
+   persisting those would silently reset every Python/TypeScript strip. */
+const STICKY_LABELS = new Set(["Python", "TypeScript"]);
+
+const GLYPHS = { book: BookOpen, braces: Braces, play: Play, users: Users, github: GitBranch };
+
+/* The mark ships in two polarities; the build renames them by the background
+   they are drawn for, so neither ever disappears into the page. */
+const brandMark = (dark) =>
+  dark ? "/strands/images/mark-on-dark.svg" : "/strands/images/mark-on-light.svg";
+
+const PAGE_BY_SLUG = STRANDS_ALL_PAGES.reduce((acc, page) => {
+  acc[page.slug] = page;
+  return acc;
+}, {});
+
+/* Nav order, flattened per product, for prev/next. */
+const ORDER_BY_PRODUCT = {};
+STRANDS_PRODUCTS.forEach((product) => {
+  const slugs = [];
+  const walk = (items) => items.forEach((item) => {
+    if (item.slug) slugs.push(item.slug);
+    else if (item.items) walk(item.items);
+  });
+  product.tabs.forEach((tab) => walk(tab.items));
+  ORDER_BY_PRODUCT[product.id] = slugs;
+});
+
+const PRODUCT_BY_ID = STRANDS_PRODUCTS.reduce((acc, product) => {
+  acc[product.id] = product;
+  return acc;
+}, {});
+
+/* Which branch of the tree holds a given page — used to open the branch the
+   reader lands on, including when they arrive from a cross-reference. */
+const BRANCH_BY_SLUG = {};
+STRANDS_PRODUCTS.forEach((product) => {
+  product.tabs.forEach((tab, tabIndex) => {
+    const walk = (items, trail) => items.forEach((item, index) => {
+      if (item.slug) {
+        BRANCH_BY_SLUG[item.slug] = { product: product.id, tab: tabIndex, groups: trail };
+      } else if (item.items) {
+        const key = `${product.id}:${tabIndex}:${trail.length}:${index}:${item.group}`;
+        walk(item.items, [...trail, key]);
+      }
+    });
+    walk(tab.items, []);
+  });
+});
+
+const cache = new Map();
+
+/* ── language tab strip ───────────────────────────────────────────────────
+   The build emits `(( tab "Python" ))` runs as a ```sa-tabs fence holding
+   [{label, body}]. Bodies are full markdown — most pairs open with a sentence
+   of their own before the sample — so each is rendered through the same
+   component map, which is why it arrives as a prop. */
+
+function StrandsTabs({ tabs, components }) {
+  const [active, setActive] = useState(() => {
+    try {
+      const saved = localStorage.getItem(LS_LANG);
+      const index = tabs.findIndex((tab) => tab.label === saved);
+      return index > -1 ? index : 0;
+    } catch { return 0; }
+  });
+
+  const current = tabs[Math.min(active, tabs.length - 1)] || tabs[0];
+  if (!current) return null;
+
+  const pick = (index) => {
+    setActive(index);
+    const { label } = tabs[index];
+    if (!STICKY_LABELS.has(label)) return;
+    try { localStorage.setItem(LS_LANG, label); } catch { /* ignore */ }
+  };
+
+  return (
+    <div className="lc-tabs sa-tabs">
+      <div className="lc-tabs-strip" role="tablist">
+        {tabs.map((tab, index) => (
+          <button
+            key={`${tab.label}-${index}`}
+            type="button"
+            role="tab"
+            aria-selected={index === active}
+            className={`lc-tab${index === active ? " lc-tab--on" : ""}`}
+            onClick={() => pick(index)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <div className="sa-tab-body">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={components}
+          urlTransform={langChainUrlTransform}
+        >
+          {current.body}
+        </ReactMarkdown>
+      </div>
+    </div>
+  );
+}
+
+export default function StrandsDocs({ product: initialProduct = "guide", onClose }) {
+  const { theme } = useTheme();
+  const dark = theme !== "light";
+
+  const [productId, setProductId] = useState(initialProduct);
+  const [activeSlug, setActiveSlug] = useState(null);
+  const [openGroups, setOpenGroups] = useState({});
+  const [openTabs, setOpenTabs] = useState({});
+  const [query, setQuery] = useState("");
+  const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [toc, setToc] = useState([]);
+  const [activeHeading, setActiveHeading] = useState(null);
+  const [railOpen, setRailOpen] = useState(false);
+  const [recent, setRecent] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(LS_RECENT) || "[]"); } catch { return []; }
+  });
+
+  const bodyRef = useRef(null);
+  const searchRef = useRef(null);
+  const pendingHash = useRef(null);
+
+  const product = PRODUCT_BY_ID[productId] || STRANDS_PRODUCTS[0];
+  const activePage = activeSlug ? PAGE_BY_SLUG[activeSlug] : null;
+
+  useEffect(() => { setProductId(initialProduct); setActiveSlug(null); }, [initialProduct]);
+
+  /* ── navigation ── */
+
+  const openPage = useCallback((slug, hash) => {
+    if (!PAGE_BY_SLUG[slug]) return;
+    pendingHash.current = hash || null;
+    setActiveSlug(slug);
+    setRailOpen(false);
+    setQuery("");
+
+    const branch = BRANCH_BY_SLUG[slug];
+    if (branch) {
+      setProductId(branch.product);
+      setOpenTabs((prev) => ({ ...prev, [`${branch.product}:${branch.tab}`]: true }));
+      setOpenGroups((prev) => {
+        const next = { ...prev };
+        branch.groups.forEach((key) => { next[key] = true; });
+        return next;
+      });
+    }
+
+    setRecent((prev) => {
+      const next = [slug, ...prev.filter((item) => item !== slug)].slice(0, 6);
+      try { localStorage.setItem(LS_RECENT, JSON.stringify(next)); } catch { /* ignore */ }
+      return next;
+    });
+  }, []);
+
+  /* ⌘K / Ctrl-K focuses search. */
+  useEffect(() => {
+    const onKey = (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        searchRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  /* ── page body ── */
+
+  useEffect(() => {
+    if (!activePage) { setContent(""); setToc([]); setError(null); return undefined; }
+    let alive = true;
+
+    const apply = (text) => {
+      if (!alive) return;
+      setContent(text);
+      setToc(extractToc(text));
+      setLoading(false);
+      if (bodyRef.current) bodyRef.current.scrollTop = 0;
+      if (pendingHash.current) {
+        const id = pendingHash.current;
+        pendingHash.current = null;
+        requestAnimationFrame(() => {
+          document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+    };
+
+    if (cache.has(activePage.slug)) { setError(null); apply(cache.get(activePage.slug)); return undefined; }
+
+    setLoading(true);
+    setError(null);
+    fetch(activePage.file)
+      .then((response) => {
+        if (!response.ok) throw new Error(`Could not load this page (${response.status})`);
+        return response.text();
+      })
+      .then((text) => { cache.set(activePage.slug, text); apply(text); })
+      .catch((err) => { if (alive) { setError(err.message); setLoading(false); } });
+
+    return () => { alive = false; };
+  }, [activePage]);
+
+  /* ── scroll spy for the "on this page" rail ── */
+
+  useEffect(() => {
+    if (!toc.length || !bodyRef.current) return undefined;
+    const targets = toc.map((item) => document.getElementById(item.id)).filter(Boolean);
+    if (!targets.length) return undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting);
+        if (visible.length) setActiveHeading(visible[0].target.id);
+      },
+      { root: bodyRef.current, rootMargin: "0px 0px -70% 0px", threshold: 0 }
+    );
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, [toc, content]);
+
+  /* ── search ──
+     Tags are part of the haystack: the frontmatter carries them for exactly
+     this ("mcp", "tool-authoring"), and they are the words a reader reaches
+     for when they do not know the page's title. */
+
+  const results = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    if (!needle) return null;
+    return STRANDS_ALL_PAGES
+      .map((page) => {
+        const title = page.title.toLowerCase();
+        let score = 0;
+        if (title === needle) score = 100;
+        else if (title.startsWith(needle)) score = 80;
+        else if (title.includes(needle)) score = 60;
+        else if (page.slug.includes(needle.replace(/\s+/g, "-"))) score = 40;
+        else if ((page.tags || []).some((tag) => tag.includes(needle))) score = 30;
+        else if ((page.desc || "").toLowerCase().includes(needle)) score = 20;
+        if (score && page.product === productId) score += 5;
+        return score ? { ...page, score } : null;
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title))
+      .slice(0, 50);
+  }, [query, productId]);
+
+  /* ── prev / next within the product ── */
+
+  const order = ORDER_BY_PRODUCT[productId] || [];
+  const position = activeSlug ? order.indexOf(activeSlug) : -1;
+  const prevPage = position > 0 ? PAGE_BY_SLUG[order[position - 1]] : null;
+  const nextPage = position > -1 && position < order.length - 1
+    ? PAGE_BY_SLUG[order[position + 1]] : null;
+
+  /* The tab strip renders its bodies with this same map, so `pre` closes over
+     a holder that is filled in once the map exists. */
+  const components = useMemo(() => {
+    const base = makeLangChainComponents({
+      dark,
+      onDocLink: openPage,
+      resolveDoc: (slug) => Boolean(PAGE_BY_SLUG[slug]),
+    });
+    const holder = {};
+    const map = {
+      ...base,
+      pre(props) {
+        const child = Array.isArray(props.children) ? props.children[0] : props.children;
+        const className = child?.props?.className || "";
+        const lang = (/language-(\S+)/.exec(className) || [, "text"])[1];
+        if (lang === "sa-tabs") {
+          const raw = child?.props?.children;
+          const code = String(Array.isArray(raw) ? raw.join("") : (raw ?? ""));
+          try {
+            return <StrandsTabs tabs={JSON.parse(code)} components={holder.map} />;
+          } catch { /* fall through to the plain code block */ }
+        }
+        return base.pre(props);
+      },
+    };
+    holder.map = map;
+    return map;
+  }, [dark, openPage]);
+
+  const recentPages = recent.map((slug) => PAGE_BY_SLUG[slug]).filter(Boolean);
+
+  /* ── rail tree ── */
+
+  const renderItems = (items, tabKey, depth, trail) => items.map((item, index) => {
+    if (item.slug) {
+      const page = PAGE_BY_SLUG[item.slug];
+      if (!page) return null;
+      const current = item.slug === activeSlug;
+      return (
+        <button
+          key={item.slug}
+          type="button"
+          className={`lc-nav-page${current ? " lc-nav-page--on" : ""}`}
+          style={{ paddingLeft: 14 + depth * 12 }}
+          aria-current={current ? "page" : undefined}
+          onClick={() => openPage(item.slug)}
+        >
+          <span>{item.title}</span>
+        </button>
+      );
+    }
+
+    const key = `${tabKey}:${trail.length}:${index}:${item.group}`;
+    const open = openGroups[key] ?? item.expanded;
+    return (
+      <div key={key} className="lc-nav-group">
+        <button
+          type="button"
+          className="lc-nav-group-head"
+          style={{ paddingLeft: 12 + depth * 12 }}
+          aria-expanded={open}
+          onClick={() => setOpenGroups((prev) => ({ ...prev, [key]: !open }))}
+        >
+          {open ? <ChevronDown size={12} /> : <ChevronRight size={12} />}
+          <span>{item.group}</span>
+          {item.tag ? <em className="lc-tag">{item.tag}</em> : null}
+        </button>
+        {open ? renderItems(item.items, tabKey, depth + 1, [...trail, key]) : null}
+      </div>
+    );
+  });
+
+  const sections = useMemo(() => {
+    const out = [];
+    product.tabs.forEach((tab, index) => {
+      const label = tab.section || "";
+      const last = out[out.length - 1];
+      if (last && last.label === label) last.tabs.push({ ...tab, index });
+      else out.push({ label, tabs: [{ ...tab, index }] });
+    });
+    return out;
+  }, [product]);
+
+  return (
+    <div
+      className={`lc-root sa-root${railOpen ? " lc-root--rail" : ""}`}
+      data-theme={dark ? "dark" : "light"}
+    >
+      {/* ── left rail ── */}
+      <nav className="lc-rail" aria-label="Strands Agents documentation">
+        <div className="lc-rail-head">
+          <div className="lc-brand">
+            <img src={brandMark(dark)} alt="" />
+            <div>
+              <strong>Strands Agents</strong>
+              <span>Python docs · {STRANDS_TOTAL_PAGES} pages</span>
+            </div>
+            {onClose ? (
+              <button type="button" className="lc-icon-btn lc-rail-close" onClick={onClose} title="Close">
+                <X size={15} />
+              </button>
+            ) : null}
+          </div>
+
+          <div className="lc-switch">
+            {STRANDS_PRODUCTS.map((item) => {
+              const Glyph = GLYPHS[item.glyph] || BookOpen;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`lc-switch-btn${item.id === productId ? " lc-switch-btn--on" : ""}`}
+                  style={{ "--pc": item.accent }}
+                  onClick={() => { setProductId(item.id); setActiveSlug(null); setQuery(""); }}
+                  title={item.blurb}
+                >
+                  <Glyph size={14} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="lc-search">
+            <Search size={13} />
+            <input
+              ref={searchRef}
+              value={query}
+              placeholder="Search docs…"
+              onChange={(event) => setQuery(event.target.value)}
+              aria-label="Search Strands Agents documentation"
+            />
+            {query
+              ? <button type="button" className="lc-icon-btn" onClick={() => setQuery("")}><X size={13} /></button>
+              : <kbd>⌘K</kbd>}
+          </div>
+        </div>
+
+        <div className="lc-rail-body">
+          {results ? (
+            <div className="lc-results">
+              <p className="lc-rail-label">{results.length} result{results.length === 1 ? "" : "s"}</p>
+              {results.map((page) => (
+                <button key={page.slug} type="button" className="lc-result" onClick={() => openPage(page.slug)}>
+                  <span className="lc-result-title">{page.title}</span>
+                  <span className="lc-result-meta">{PRODUCT_BY_ID[page.product]?.label} · {page.tab}</span>
+                </button>
+              ))}
+              {!results.length ? <p className="lc-empty">Nothing matched “{query}”.</p> : null}
+            </div>
+          ) : (
+            sections.map((section, sectionIndex) => (
+              <div key={`${section.label}-${sectionIndex}`} className="lc-nav-section">
+                {section.label ? <p className="lc-rail-label">{section.label}</p> : null}
+                {section.tabs.map((tab) => {
+                  const tabKey = `${productId}:${tab.index}`;
+                  const open = openTabs[tabKey] ?? (section.tabs.length === 1 && !section.label);
+                  return (
+                    <div key={tabKey} className="lc-nav-tab">
+                      <button
+                        type="button"
+                        className={`lc-nav-tab-head${open ? " lc-nav-tab-head--on" : ""}`}
+                        aria-expanded={open}
+                        onClick={() => setOpenTabs((prev) => ({ ...prev, [tabKey]: !open }))}
+                      >
+                        {open ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
+                        <span>{tab.tab}</span>
+                      </button>
+                      {open ? renderItems(tab.items, tabKey, 0, []) : null}
+                    </div>
+                  );
+                })}
+              </div>
+            ))
+          )}
+        </div>
+      </nav>
+
+      {railOpen ? <div className="lc-scrim" onClick={() => setRailOpen(false)} /> : null}
+
+      {/* ── reading pane ── */}
+      <section className="lc-main">
+        <header className="lc-topbar">
+          <button type="button" className="lc-icon-btn lc-rail-toggle" onClick={() => setRailOpen((value) => !value)} title="Toggle navigation">
+            <PanelLeft size={15} />
+          </button>
+
+          <nav className="lc-crumb" aria-label="Breadcrumb">
+            <span style={{ "--pc": product.accent }}>{product.label}</span>
+            {activePage ? (
+              <>
+                <ChevronRight size={11} />
+                <span>{activePage.tab}</span>
+                <ChevronRight size={11} />
+                <strong>{activePage.title}</strong>
+              </>
+            ) : null}
+          </nav>
+
+          <div className="lc-topbar-end">
+            {activePage ? (
+              <a className="lc-btn" href={activePage.source} target="_blank" rel="noopener noreferrer">
+                <ExternalLink size={12} />
+                <span>{activePage.source.includes("github.com") ? "github.com" : "strandsagents.com"}</span>
+              </a>
+            ) : null}
+            {onClose ? (
+              <button type="button" className="lc-icon-btn" onClick={onClose} title="Close"><X size={15} /></button>
+            ) : null}
+          </div>
+        </header>
+
+        <div className="lc-scroll" ref={bodyRef}>
+          {!activePage ? (
+            <Landing product={product} recentPages={recentPages} onOpen={openPage} dark={dark} />
+          ) : (
+            <>
+              <article className="lc-article">
+                <p className="lc-eyebrow">{product.label} · {activePage.tab}</p>
+                <h1>{activePage.title}</h1>
+                {activePage.desc ? <p className="lc-lede">{activePage.desc}</p> : null}
+                {activePage.tags?.length ? (
+                  <p className="sa-tags">
+                    <Tag size={11} />
+                    {activePage.tags.map((tag) => (
+                      <button key={tag} type="button" className="sa-tag" onClick={() => setQuery(tag)}>
+                        {tag}
+                      </button>
+                    ))}
+                  </p>
+                ) : null}
+
+                {loading ? (
+                  <p className="lc-status"><Loader2 size={15} className="lc-spin" /> Loading…</p>
+                ) : error ? (
+                  <p className="lc-status lc-status--error"><AlertCircle size={15} /> {error}</p>
+                ) : (
+                  <div className="lc-prose">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={components}
+                      urlTransform={langChainUrlTransform}
+                    >
+                      {content}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </article>
+
+              <nav className="lc-pager" aria-label="Page navigation">
+                {prevPage ? (
+                  <button type="button" onClick={() => openPage(prevPage.slug)}>
+                    <ArrowLeft size={13} />
+                    <span><em>Previous</em>{prevPage.title}</span>
+                  </button>
+                ) : <span />}
+                {nextPage ? (
+                  <button type="button" className="lc-pager-next" onClick={() => openPage(nextPage.slug)}>
+                    <span><em>Next</em>{nextPage.title}</span>
+                    <ArrowRight size={13} />
+                  </button>
+                ) : <span />}
+              </nav>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* ── on this page ── */}
+      {activePage && toc.length > 1 ? (
+        <aside className="lc-toc" aria-label="On this page">
+          <p className="lc-rail-label"><List size={12} /> On this page</p>
+          {toc.map((item) => (
+            <a
+              key={item.id + item.label}
+              href={`#${item.id}`}
+              className={`lc-toc-link lc-toc-link--h${item.level}${activeHeading === item.id ? " lc-toc-link--on" : ""}`}
+              onClick={(event) => {
+                event.preventDefault();
+                document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+            >
+              {item.label}
+            </a>
+          ))}
+        </aside>
+      ) : null}
+    </div>
+  );
+}
+
+/* ── product landing ─────────────────────────────────────────────────────── */
+
+function Landing({ product, recentPages, onOpen, dark }) {
+  const count = ORDER_BY_PRODUCT[product.id]?.length || 0;
+  const offSite = product.id === "samples";
+
+  return (
+    <div className="lc-landing">
+      <header className="lc-hero" style={{ "--pc": product.accent }}>
+        <img className="sa-hero-mark" src={brandMark(dark)} alt="" />
+        <div>
+          <p className="lc-eyebrow">Strands Agents documentation · Python</p>
+          <h1>{product.label}</h1>
+          <p className="lc-lede">{product.blurb}</p>
+          <p className="lc-hero-meta">
+            <FileText size={12} /> {count} pages
+            <span className="lc-dot" />
+            <a
+              href={offSite ? "https://github.com/strands-agents" : STRANDS_SOURCE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {offSite ? "github.com/strands-agents" : "strandsagents.com"} <ExternalLink size={10} />
+            </a>
+          </p>
+        </div>
+      </header>
+
+      {recentPages.length ? (
+        <section className="lc-landing-block">
+          <p className="lc-rail-label"><Clock size={12} /> Recently read</p>
+          <div className="lc-chip-row">
+            {recentPages.map((page) => (
+              <button key={page.slug} type="button" className="lc-chip" onClick={() => onOpen(page.slug)}>
+                {page.title}
+              </button>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {product.tabs.map((tab, index) => {
+        const pages = [];
+        const walk = (items) => items.forEach((item) => {
+          if (item.slug) pages.push(item);
+          else if (item.items) walk(item.items);
+        });
+        walk(tab.items);
+        if (!pages.length) return null;
+
+        return (
+          <section className="lc-landing-block" key={`${tab.tab}-${index}`}>
+            <p className="lc-rail-label">
+              <Layers size={12} />
+              {tab.section ? `${tab.section} · ${tab.tab}` : tab.tab}
+              <em>{pages.length}</em>
+            </p>
+            <div className="lc-grid">
+              {pages.slice(0, 9).map((page) => {
+                const full = PAGE_BY_SLUG[page.slug];
+                return (
+                  <button key={page.slug} type="button" className="lc-tile" onClick={() => onOpen(page.slug)}>
+                    <span className="lc-tile-title">{page.title}</span>
+                    {full?.desc ? <span className="lc-tile-desc">{full.desc}</span> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}

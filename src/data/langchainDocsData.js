@@ -1,14 +1,14 @@
 // Auto-generated index of the LangChain Python documentation.
 //
 // Source: https://docs.langchain.com/ (Python only — the JS navigation is dropped at build time).
-// 1001 pages. Bodies live under public/langchain/md/ and are fetched on
+// 1233 pages. Bodies live under public/langchain/md/ and are fetched on
 // demand by LangChainDocs; diagrams live under public/langchain/images/.
 //
 // Regenerate with `npm run build:langchain` rather than hand-editing.
 
 export const LANGCHAIN_SOURCE_URL = "https://docs.langchain.com/";
 
-export const LANGCHAIN_TOTAL_PAGES = 1001;
+export const LANGCHAIN_TOTAL_PAGES = 1233;
 
 export const LANGCHAIN_PRODUCTS = [
  {
@@ -5287,6 +5287,997 @@ export const LANGCHAIN_PRODUCTS = [
      {
       "slug": "langsmith/engine-self-hosted",
       "title": "Self-hosted"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "langchain_samples",
+  "label": "Samples & Repo",
+  "blurb": "The runnable code behind the docs, plus the docs repo's own guides.",
+  "icon": "/langchain/images/images/brand/engine-icon-light.png",
+  "accent": "#8A4FBF",
+  "tabs": [
+   {
+    "section": "Code samples",
+    "tab": "LangChain",
+    "items": [
+     {
+      "slug": "samples/langchain/agent-invocation-thread-and-context",
+      "title": "Agent Invocation Thread and Context"
+     },
+     {
+      "slug": "samples/langchain/agent-invocation-thread-id",
+      "title": "Agent Invocation Thread ID"
+     },
+     {
+      "slug": "samples/langchain/agents-core-components",
+      "title": "Agents Core Components"
+     },
+     {
+      "slug": "samples/langchain/agents-harness",
+      "title": "Agents Harness"
+     },
+     {
+      "slug": "samples/langchain/agents-streaming-progress",
+      "title": "Agents Streaming Progress"
+     },
+     {
+      "slug": "samples/langchain/deep-agent-from-scratch",
+      "title": "Deep Agent From Scratch"
+     },
+     {
+      "slug": "samples/langchain/graph-api-using-tasks-original",
+      "title": "Graph API Using Tasks Original"
+     },
+     {
+      "slug": "samples/langchain/graph-api-using-tasks-task",
+      "title": "Graph API Using Tasks Task"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-create-agent-inmemory",
+      "title": "Long Term Memory Create Agent InMemory"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-create-agent-postgres",
+      "title": "Long Term Memory Create Agent Postgres"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-read-tool-inmemory",
+      "title": "Long Term Memory Read Tool InMemory"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-read-tool-postgres",
+      "title": "Long Term Memory Read Tool Postgres"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-storage-inmemory",
+      "title": "Long Term Memory Storage InMemory"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-storage-postgres",
+      "title": "Long Term Memory Storage Postgres"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-write-tool-inmemory",
+      "title": "Long Term Memory Write Tool InMemory"
+     },
+     {
+      "slug": "samples/langchain/long-term-memory-write-tool-postgres",
+      "title": "Long Term Memory Write Tool Postgres"
+     },
+     {
+      "slug": "samples/langchain/mcp-multimodal-tool-content",
+      "title": "MCP Multimodal Tool Content"
+     },
+     {
+      "slug": "samples/langchain/middleware-dynamic-model-selection",
+      "title": "Middleware Dynamic Model Selection"
+     },
+     {
+      "slug": "samples/langchain/middleware-dynamic-prompt",
+      "title": "Middleware Dynamic Prompt"
+     },
+     {
+      "slug": "samples/langchain/middleware-tool-call-monitoring",
+      "title": "Middleware Tool Call Monitoring"
+     },
+     {
+      "slug": "samples/langchain/migrate-langgraph-supervisor",
+      "title": "Migrate LangGraph Supervisor"
+     },
+     {
+      "slug": "samples/langchain/nostream-tag",
+      "title": "Nostream Tag"
+     },
+     {
+      "slug": "samples/langchain/openai-prompt-cache-breakpoint-chat-completions",
+      "title": "OpenAI Prompt Cache Breakpoint Chat Completions"
+     },
+     {
+      "slug": "samples/langchain/openai-prompt-cache-breakpoint-extras",
+      "title": "OpenAI Prompt Cache Breakpoint Extras"
+     },
+     {
+      "slug": "samples/langchain/openai-prompt-cache-breakpoint-responses",
+      "title": "OpenAI Prompt Cache Breakpoint Responses"
+     },
+     {
+      "slug": "samples/langchain/openai-prompt-cache-options",
+      "title": "OpenAI Prompt Cache Options"
+     },
+     {
+      "slug": "samples/langchain/openai-prompt-cache-write-tokens",
+      "title": "OpenAI Prompt Cache Write Tokens"
+     },
+     {
+      "slug": "samples/langchain/rag-full-snippet",
+      "title": "RAG Full Snippet"
+     },
+     {
+      "slug": "samples/langchain/rag",
+      "title": "RAG"
+     },
+     {
+      "slug": "samples/langchain/return-a-string",
+      "title": "Return a String"
+     },
+     {
+      "slug": "samples/langchain/short-term-memory-checkpointer-inmemory",
+      "title": "Short Term Memory Checkpointer InMemory"
+     },
+     {
+      "slug": "samples/langchain/sql-agent",
+      "title": "SQL Agent"
+     },
+     {
+      "slug": "samples/langchain/store-list-namespace",
+      "title": "Store List Namespace"
+     },
+     {
+      "slug": "samples/langchain/streaming-agent-progress",
+      "title": "Streaming Agent Progress"
+     },
+     {
+      "slug": "samples/langchain/streaming-reasoning-tokens",
+      "title": "Streaming Reasoning Tokens"
+     },
+     {
+      "slug": "samples/langchain/tool-error-handling",
+      "title": "Tool Error Handling"
+     },
+     {
+      "slug": "samples/langchain/tool-return-command",
+      "title": "Tool Return Command"
+     },
+     {
+      "slug": "samples/langchain/tool-return-direct",
+      "title": "Tool Return Direct"
+     },
+     {
+      "slug": "samples/langchain/tool-return-object",
+      "title": "Tool Return Object"
+     },
+     {
+      "slug": "samples/langchain/tool-runtime-context-thread",
+      "title": "Tool Runtime Context Thread"
+     },
+     {
+      "slug": "samples/langchain/tool-update-state",
+      "title": "Tool Update State"
+     },
+     {
+      "group": "Skills Pandas Patterns",
+      "expanded": false,
+      "items": [
+       {
+        "slug": "samples/langchain/skills/pandas-patterns/SKILL",
+        "title": "Pandas Patterns"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "section": "Code samples",
+    "tab": "LangGraph",
+    "items": [
+     {
+      "slug": "samples/langgraph/agentic-rag-tutorial",
+      "title": "Agentic RAG Tutorial"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-functional-api-interrupt-stream",
+      "title": "LangGraph Functional API Interrupt Stream"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-functional-api-stream-custom-data",
+      "title": "LangGraph Functional API Stream Custom Data"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-graph-api-multiple-schemas",
+      "title": "LangGraph Graph API Multiple Schemas"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-graph-api-reducers",
+      "title": "LangGraph Graph API Reducers"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-graph-api-resume-v2",
+      "title": "LangGraph Graph API Resume v2"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-graph-api-stream-private-channel",
+      "title": "LangGraph Graph API Stream Private Channel"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-interrupts-approval",
+      "title": "LangGraph Interrupts Approval"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-interrupts-hitl-stream",
+      "title": "LangGraph Interrupts HITL Stream"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-interrupts-multiple",
+      "title": "LangGraph Interrupts Multiple"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-interrupts-resume-v2",
+      "title": "LangGraph Interrupts Resume v2"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-interrupts-review",
+      "title": "LangGraph Interrupts Review"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-interrupts-validate-conditional-edge",
+      "title": "LangGraph Interrupts Validate Conditional Edge"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-interrupts-validate",
+      "title": "LangGraph Interrupts Validate"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-sql-agent",
+      "title": "LangGraph SQL Agent"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-subgraphs-interrupt-v2",
+      "title": "LangGraph Subgraphs Interrupt v2"
+     },
+     {
+      "slug": "samples/langgraph/langgraph-thinking-hitl-v2",
+      "title": "LangGraph Thinking HITL v2"
+     },
+     {
+      "slug": "samples/langgraph/workflows-agents-tool-runtime-state-context",
+      "title": "Workflows Agents Tool Runtime State Context"
+     }
+    ]
+   },
+   {
+    "section": "Code samples",
+    "tab": "Deep Agents",
+    "items": [
+     {
+      "slug": "samples/deepagents/acp-quickstart",
+      "title": "ACP Quickstart"
+     },
+     {
+      "slug": "samples/deepagents/async-subagents-configure",
+      "title": "Async Subagents Configure"
+     },
+     {
+      "slug": "samples/deepagents/async-subagents-descriptions",
+      "title": "Async Subagents Descriptions"
+     },
+     {
+      "slug": "samples/deepagents/async-subagents-http-transport",
+      "title": "Async Subagents HTTP Transport"
+     },
+     {
+      "slug": "samples/deepagents/async-subagents-hybrid",
+      "title": "Async Subagents Hybrid"
+     },
+     {
+      "slug": "samples/deepagents/async-subagents-troubleshooting-polling",
+      "title": "Async Subagents Troubleshooting Polling"
+     },
+     {
+      "slug": "samples/deepagents/content-builder",
+      "title": "Content Builder"
+     },
+     {
+      "slug": "samples/deepagents/context-engineering",
+      "title": "Context Engineering"
+     },
+     {
+      "slug": "samples/deepagents/customization-backend-readonly-skills",
+      "title": "Customization Backend Readonly Skills"
+     },
+     {
+      "slug": "samples/deepagents/customization-backends",
+      "title": "Customization Backends"
+     },
+     {
+      "slug": "samples/deepagents/customization-hitl-basic",
+      "title": "Customization HITL Basic"
+     },
+     {
+      "slug": "samples/deepagents/customization-interpreters",
+      "title": "Customization Interpreters"
+     },
+     {
+      "slug": "samples/deepagents/customization-mcp",
+      "title": "Customization MCP"
+     },
+     {
+      "slug": "samples/deepagents/customization-memory",
+      "title": "Customization Memory"
+     },
+     {
+      "slug": "samples/deepagents/customization-middleware",
+      "title": "Customization Middleware"
+     },
+     {
+      "slug": "samples/deepagents/customization-overview",
+      "title": "Customization Overview"
+     },
+     {
+      "slug": "samples/deepagents/customization-profiles",
+      "title": "Customization Profiles"
+     },
+     {
+      "slug": "samples/deepagents/customization-skills-usage",
+      "title": "Customization Skills Usage"
+     },
+     {
+      "slug": "samples/deepagents/customization-structured-output",
+      "title": "Customization Structured Output"
+     },
+     {
+      "slug": "samples/deepagents/customization-subagent-basic",
+      "title": "Customization Subagent Basic"
+     },
+     {
+      "slug": "samples/deepagents/customization-system-prompt",
+      "title": "Customization System Prompt"
+     },
+     {
+      "slug": "samples/deepagents/customization-tools",
+      "title": "Customization Tools"
+     },
+     {
+      "slug": "samples/deepagents/data-analysis-backend-langsmith",
+      "title": "Data Analysis Backend LangSmith"
+     },
+     {
+      "slug": "samples/deepagents/data-analysis",
+      "title": "Data Analysis"
+     },
+     {
+      "slug": "samples/deepagents/deep-research-agent-gemini",
+      "title": "Deep Research Agent Gemini"
+     },
+     {
+      "slug": "samples/deepagents/deep-research-run-stream",
+      "title": "Deep Research Run Stream"
+     },
+     {
+      "slug": "samples/deepagents/deep-research-run-sync",
+      "title": "Deep Research Run Sync"
+     },
+     {
+      "slug": "samples/deepagents/deep-research",
+      "title": "Deep Research"
+     },
+     {
+      "slug": "samples/deepagents/deepagents-production-invoke",
+      "title": "Deepagents Production Invoke"
+     },
+     {
+      "slug": "samples/deepagents/dynamic-subagents",
+      "title": "Dynamic Subagents"
+     },
+     {
+      "slug": "samples/deepagents/event-streaming-interleave",
+      "title": "Event Streaming Interleave"
+     },
+     {
+      "slug": "samples/deepagents/event-streaming-lifecycle",
+      "title": "Event Streaming Lifecycle"
+     },
+     {
+      "slug": "samples/deepagents/event-streaming-messages",
+      "title": "Event Streaming Messages"
+     },
+     {
+      "slug": "samples/deepagents/event-streaming-nested",
+      "title": "Event Streaming Nested"
+     },
+     {
+      "slug": "samples/deepagents/event-streaming-raw-protocol",
+      "title": "Event Streaming Raw Protocol"
+     },
+     {
+      "slug": "samples/deepagents/event-streaming-subagents",
+      "title": "Event Streaming Subagents"
+     },
+     {
+      "slug": "samples/deepagents/event-streaming-tool-calls",
+      "title": "Event Streaming Tool Calls"
+     },
+     {
+      "slug": "samples/deepagents/frontend-overview-backend",
+      "title": "Frontend Overview Backend"
+     },
+     {
+      "slug": "samples/deepagents/frontend-sandbox",
+      "title": "Frontend Sandbox"
+     },
+     {
+      "slug": "samples/deepagents/frontend-todo-list-setup",
+      "title": "Frontend Todo List Setup"
+     },
+     {
+      "slug": "samples/deepagents/interpreters",
+      "title": "Interpreters"
+     },
+     {
+      "slug": "samples/deepagents/models-configure-params",
+      "title": "Models Configure Params"
+     },
+     {
+      "slug": "samples/deepagents/models-provider-profiles",
+      "title": "Models Provider Profiles"
+     },
+     {
+      "slug": "samples/deepagents/models-runtime-configurable",
+      "title": "Models Runtime Configurable"
+     },
+     {
+      "slug": "samples/deepagents/multimodal",
+      "title": "Multimodal"
+     },
+     {
+      "slug": "samples/deepagents/overview-excluded-tools",
+      "title": "Overview Excluded Tools"
+     },
+     {
+      "slug": "samples/deepagents/overview-quickstart",
+      "title": "Overview Quickstart"
+     },
+     {
+      "slug": "samples/deepagents/overview-tools",
+      "title": "Overview Tools"
+     },
+     {
+      "slug": "samples/deepagents/permissions",
+      "title": "Permissions"
+     },
+     {
+      "slug": "samples/deepagents/profiles-harness-register",
+      "title": "Profiles Harness Register"
+     },
+     {
+      "slug": "samples/deepagents/profiles-load-config",
+      "title": "Profiles Load Config"
+     },
+     {
+      "slug": "samples/deepagents/profiles-plugin-register",
+      "title": "Profiles Plugin Register"
+     },
+     {
+      "slug": "samples/deepagents/profiles-provider-register",
+      "title": "Profiles Provider Register"
+     },
+     {
+      "slug": "samples/deepagents/quickstart-provider-anthropic",
+      "title": "Quickstart Provider Anthropic"
+     },
+     {
+      "slug": "samples/deepagents/quickstart-provider-google",
+      "title": "Quickstart Provider Google"
+     },
+     {
+      "slug": "samples/deepagents/quickstart-provider-openai",
+      "title": "Quickstart Provider OpenAI"
+     },
+     {
+      "slug": "samples/deepagents/quickstart",
+      "title": "Quickstart"
+     },
+     {
+      "slug": "samples/deepagents/rag-deep-baseline",
+      "title": "RAG Deep Baseline"
+     },
+     {
+      "slug": "samples/deepagents/rag-deep-full",
+      "title": "RAG Deep Full"
+     },
+     {
+      "slug": "samples/deepagents/rag-deep",
+      "title": "RAG Deep"
+     },
+     {
+      "slug": "samples/deepagents/rubric-code-generation",
+      "title": "Rubric Code Generation"
+     },
+     {
+      "slug": "samples/deepagents/rubric-configure",
+      "title": "Rubric Configure"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-as-tool",
+      "title": "Sandboxes as Tool"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-basic-daytona",
+      "title": "Sandboxes Basic Daytona"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-basic-langsmith",
+      "title": "Sandboxes Basic LangSmith"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-download-langsmith",
+      "title": "Sandboxes Download LangSmith"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-execute-langsmith",
+      "title": "Sandboxes Execute LangSmith"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-lifecycle-assistant",
+      "title": "Sandboxes Lifecycle Assistant"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-lifecycle-thread",
+      "title": "Sandboxes Lifecycle Thread"
+     },
+     {
+      "slug": "samples/deepagents/sandboxes-upload-langsmith",
+      "title": "Sandboxes Upload LangSmith"
+     },
+     {
+      "slug": "samples/deepagents/skills-sandbox",
+      "title": "Skills Sandbox"
+     },
+     {
+      "slug": "samples/deepagents/skills",
+      "title": "Skills"
+     },
+     {
+      "slug": "samples/deepagents/streaming",
+      "title": "Streaming"
+     },
+     {
+      "slug": "samples/deepagents/subagent-stream-progress",
+      "title": "Subagent Stream Progress"
+     },
+     {
+      "slug": "samples/deepagents/subagents",
+      "title": "Subagents"
+     },
+     {
+      "slug": "samples/deepagents/subagents",
+      "title": "Subagents"
+     },
+     {
+      "slug": "samples/deepagents/tools-mcp",
+      "title": "Tools MCP"
+     },
+     {
+      "slug": "samples/deepagents/tools",
+      "title": "Tools"
+     },
+     {
+      "group": "Skills LangGraph Docs",
+      "expanded": false,
+      "items": [
+       {
+        "slug": "samples/deepagents/skills/langgraph-docs/SKILL",
+        "title": "LangGraph Docs"
+       }
+      ]
+     },
+     {
+      "group": "Skills Write Timestamp",
+      "expanded": false,
+      "items": [
+       {
+        "slug": "samples/deepagents/skills/write-timestamp/SKILL",
+        "title": "Write Timestamp"
+       },
+       {
+        "slug": "samples/deepagents/skills/write-timestamp/write_timestamp",
+        "title": "Write Timestamp"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "section": "Code samples",
+    "tab": "LangSmith",
+    "items": [
+     {
+      "slug": "samples/langsmith/evaluate-rag-reference",
+      "title": "Evaluate RAG Reference"
+     },
+     {
+      "slug": "samples/langsmith/evaluate-rag-tutorial",
+      "title": "Evaluate RAG Tutorial"
+     },
+     {
+      "group": "SmithDB Migration",
+      "expanded": false,
+      "items": [
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-basic-after",
+        "title": "Experiment Runs Query Basic After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-basic-before",
+        "title": "Experiment Runs Query Basic Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-basic",
+        "title": "Experiment Runs Query Basic"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-pagination-after",
+        "title": "Experiment Runs Query Pagination After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-pagination-before",
+        "title": "Experiment Runs Query Pagination Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-pagination",
+        "title": "Experiment Runs Query Pagination"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-after",
+        "title": "Experiment Runs Query Sort After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-after",
+        "title": "Experiment Runs Query Sort After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-before",
+        "title": "Experiment Runs Query Sort Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-before",
+        "title": "Experiment Runs Query Sort Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/feedback-create-after",
+        "title": "Feedback Create After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/feedback-create-before",
+        "title": "Feedback Create Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/feedback-create",
+        "title": "Feedback Create"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-add-to-queue-after",
+        "title": "Runs Add to Queue After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-add-to-queue-before",
+        "title": "Runs Add to Queue Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-add-to-queue",
+        "title": "Runs Add to Queue"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-geturl-after",
+        "title": "Runs Geturl After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-geturl",
+        "title": "Runs Geturl"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-boolean-filters-after",
+        "title": "Runs Query Boolean Filters After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-boolean-filters-before",
+        "title": "Runs Query Boolean Filters Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-boolean-filters",
+        "title": "Runs Query Boolean Filters"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-fetch-by-id-after",
+        "title": "Runs Query Fetch By ID After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-fetch-by-id-before",
+        "title": "Runs Query Fetch By ID Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-fetch-by-id",
+        "title": "Runs Query Fetch By ID"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-errors-after",
+        "title": "Runs Query Filter Errors After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-errors-before",
+        "title": "Runs Query Filter Errors Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-errors",
+        "title": "Runs Query Filter Errors"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-metadata-after",
+        "title": "Runs Query Filter Metadata After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-metadata-before",
+        "title": "Runs Query Filter Metadata Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-metadata",
+        "title": "Runs Query Filter Metadata"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-root-after",
+        "title": "Runs Query Filter Root After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-root-before",
+        "title": "Runs Query Filter Root Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-root",
+        "title": "Runs Query Filter Root"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-time-range-after",
+        "title": "Runs Query Filter Time Range After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-time-range-before",
+        "title": "Runs Query Filter Time Range Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-filter-time-range",
+        "title": "Runs Query Filter Time Range"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-list-all-after",
+        "title": "Runs Query List All After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-list-all-before",
+        "title": "Runs Query List All Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-list-all",
+        "title": "Runs Query List All"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-after",
+        "title": "Runs Query List Root as Traces After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-before",
+        "title": "Runs Query List Root as Traces Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-list-root-as-traces",
+        "title": "Runs Query List Root as Traces"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-pagination-after",
+        "title": "Runs Query Pagination After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-pagination-before",
+        "title": "Runs Query Pagination Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-pagination",
+        "title": "Runs Query Pagination"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-scoped-filters-after",
+        "title": "Runs Query Scoped Filters After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-scoped-filters-before",
+        "title": "Runs Query Scoped Filters Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-scoped-filters",
+        "title": "Runs Query Scoped Filters"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-selecting-fields-after",
+        "title": "Runs Query Selecting Fields After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-selecting-fields-before",
+        "title": "Runs Query Selecting Fields Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-query-selecting-fields",
+        "title": "Runs Query Selecting Fields"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-retrieve-basic-after",
+        "title": "Runs Retrieve Basic After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-retrieve-by-id-after",
+        "title": "Runs Retrieve By ID After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-retrieve-child-runs",
+        "title": "Runs Retrieve Child Runs"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-retrieve-not-found-after",
+        "title": "Runs Retrieve Not Found After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-retrieve-not-found-before",
+        "title": "Runs Retrieve Not Found Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/runs-retrieve-not-found",
+        "title": "Runs Retrieve Not Found"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-list-traces-basic-after",
+        "title": "Threads List Traces Basic After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-list-traces-basic-before",
+        "title": "Threads List Traces Basic Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-list-traces-basic",
+        "title": "Threads List Traces Basic"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-after",
+        "title": "Threads List Traces Selecting Fields After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-before",
+        "title": "Threads List Traces Selecting Fields Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields",
+        "title": "Threads List Traces Selecting Fields"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-query-filter-status-after",
+        "title": "Threads Query Filter Status After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-query-filter-status-before",
+        "title": "Threads Query Filter Status Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-query-filter-status",
+        "title": "Threads Query Filter Status"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-query-list-all-after",
+        "title": "Threads Query List All After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-query-list-all-before",
+        "title": "Threads Query List All Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/threads-query-list-all",
+        "title": "Threads Query List All"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-list-runs-basic-after",
+        "title": "Traces List Runs Basic After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-list-runs-basic-before",
+        "title": "Traces List Runs Basic Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-list-runs-basic",
+        "title": "Traces List Runs Basic"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-list-runs-filter-after",
+        "title": "Traces List Runs Filter After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-list-runs-filter-before",
+        "title": "Traces List Runs Filter Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-list-runs-filter",
+        "title": "Traces List Runs Filter"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-query-filters-after",
+        "title": "Traces Query Filters After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-query-filters-before",
+        "title": "Traces Query Filters Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-query-filters",
+        "title": "Traces Query Filters"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-query-totals-after",
+        "title": "Traces Query Totals After"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-query-totals-before",
+        "title": "Traces Query Totals Before"
+       },
+       {
+        "slug": "samples/langsmith/smithdb-migration/traces-query-totals",
+        "title": "Traces Query Totals"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "section": "langchain-ai/docs",
+    "tab": "Repository",
+    "items": [
+     {
+      "slug": "repo/README",
+      "title": "Read me"
+     },
+     {
+      "slug": "repo/AGENTS",
+      "title": "Writing guide"
+     },
+     {
+      "slug": "repo/IDE_SETUP",
+      "title": "IDE setup"
+     },
+     {
+      "slug": "repo/github/CONTRIBUTING",
+      "title": "Contributing"
+     },
+     {
+      "slug": "repo/github/brand-guidelines",
+      "title": "Brand guidelines"
+     },
+     {
+      "slug": "repo/github/copilot-instructions",
+      "title": "Copilot instructions"
+     },
+     {
+      "slug": "repo/idea",
+      "title": "Proposal: langchain deploy"
+     },
+     {
+      "slug": "repo/docs/superpowers/specs/2026-07-08-threads-traces-migration-guide-design",
+      "title": "Spec: threads and traces migration"
      }
     ]
    }
@@ -14338,5 +15329,2093 @@ export const LANGCHAIN_ALL_PAGES = [
   "product": "langsmith",
   "tab": "Engine",
   "source": "https://docs.langchain.com/langsmith/engine-self-hosted"
+ },
+ {
+  "slug": "samples/langchain/agent-invocation-thread-and-context",
+  "title": "Agent Invocation Thread and Context",
+  "desc": "Used on Agents.",
+  "file": "/langchain/md/samples/langchain/agent-invocation-thread-and-context.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/agent-invocation-thread-and-context.py"
+ },
+ {
+  "slug": "samples/langchain/agent-invocation-thread-id",
+  "title": "Agent Invocation Thread ID",
+  "desc": "Used on Agents.",
+  "file": "/langchain/md/samples/langchain/agent-invocation-thread-id.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/agent-invocation-thread-id.py"
+ },
+ {
+  "slug": "samples/langchain/agents-core-components",
+  "title": "Agents Core Components",
+  "desc": "Agents docs: core component examples (intro, model, tools, system prompt, structured output, name).",
+  "file": "/langchain/md/samples/langchain/agents-core-components.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/agents-core-components.py"
+ },
+ {
+  "slug": "samples/langchain/agents-harness",
+  "title": "Agents Harness",
+  "desc": "Agents docs: harness examples (execution environment, context management, middleware).",
+  "file": "/langchain/md/samples/langchain/agents-harness.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/agents-harness.py"
+ },
+ {
+  "slug": "samples/langchain/agents-streaming-progress",
+  "title": "Agents Streaming Progress",
+  "desc": "Used on Agents.",
+  "file": "/langchain/md/samples/langchain/agents-streaming-progress.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/agents-streaming-progress.py"
+ },
+ {
+  "slug": "samples/langchain/deep-agent-from-scratch",
+  "title": "Deep Agent From Scratch",
+  "desc": "Build a data analysis agent from scratch using create_agent and Deep Agents middleware.",
+  "file": "/langchain/md/samples/langchain/deep-agent-from-scratch.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/deep-agent-from-scratch.py"
+ },
+ {
+  "slug": "samples/langchain/graph-api-using-tasks-original",
+  "title": "Graph API Using Tasks Original",
+  "desc": "Used on Graph API.",
+  "file": "/langchain/md/samples/langchain/graph-api-using-tasks-original.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/graph-api-using-tasks-original.py"
+ },
+ {
+  "slug": "samples/langchain/graph-api-using-tasks-task",
+  "title": "Graph API Using Tasks Task",
+  "desc": "Used on Graph API.",
+  "file": "/langchain/md/samples/langchain/graph-api-using-tasks-task.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/graph-api-using-tasks-task.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-create-agent-inmemory",
+  "title": "Long Term Memory Create Agent InMemory",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-create-agent-inmemory.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-create-agent-inmemory.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-create-agent-postgres",
+  "title": "Long Term Memory Create Agent Postgres",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-create-agent-postgres.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-create-agent-postgres.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-read-tool-inmemory",
+  "title": "Long Term Memory Read Tool InMemory",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-read-tool-inmemory.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-read-tool-inmemory.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-read-tool-postgres",
+  "title": "Long Term Memory Read Tool Postgres",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-read-tool-postgres.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-read-tool-postgres.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-storage-inmemory",
+  "title": "Long Term Memory Storage InMemory",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-storage-inmemory.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-storage-inmemory.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-storage-postgres",
+  "title": "Long Term Memory Storage Postgres",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-storage-postgres.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-storage-postgres.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-write-tool-inmemory",
+  "title": "Long Term Memory Write Tool InMemory",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-write-tool-inmemory.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-write-tool-inmemory.py"
+ },
+ {
+  "slug": "samples/langchain/long-term-memory-write-tool-postgres",
+  "title": "Long Term Memory Write Tool Postgres",
+  "desc": "Used on Long-term memory.",
+  "file": "/langchain/md/samples/langchain/long-term-memory-write-tool-postgres.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/long-term-memory-write-tool-postgres.py"
+ },
+ {
+  "slug": "samples/langchain/mcp-multimodal-tool-content",
+  "title": "MCP Multimodal Tool Content",
+  "desc": "Used on Model Context Protocol (MCP).",
+  "file": "/langchain/md/samples/langchain/mcp-multimodal-tool-content.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/mcp-multimodal-tool-content.py"
+ },
+ {
+  "slug": "samples/langchain/middleware-dynamic-model-selection",
+  "title": "Middleware Dynamic Model Selection",
+  "desc": "Used on Custom middleware.",
+  "file": "/langchain/md/samples/langchain/middleware-dynamic-model-selection.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/middleware-dynamic-model-selection.py"
+ },
+ {
+  "slug": "samples/langchain/middleware-dynamic-prompt",
+  "title": "Middleware Dynamic Prompt",
+  "desc": "Used on Custom middleware.",
+  "file": "/langchain/md/samples/langchain/middleware-dynamic-prompt.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/middleware-dynamic-prompt.py"
+ },
+ {
+  "slug": "samples/langchain/middleware-tool-call-monitoring",
+  "title": "Middleware Tool Call Monitoring",
+  "desc": "Used on Custom middleware.",
+  "file": "/langchain/md/samples/langchain/middleware-tool-call-monitoring.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/middleware-tool-call-monitoring.py"
+ },
+ {
+  "slug": "samples/langchain/migrate-langgraph-supervisor",
+  "title": "Migrate LangGraph Supervisor",
+  "desc": "Migrate from langgraph-supervisor to the subagents pattern.",
+  "file": "/langchain/md/samples/langchain/migrate-langgraph-supervisor.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/migrate-langgraph-supervisor.py"
+ },
+ {
+  "slug": "samples/langchain/nostream-tag",
+  "title": "Nostream Tag",
+  "desc": "Example of using nostream tag to exclude LLM output from the stream.",
+  "file": "/langchain/md/samples/langchain/nostream-tag.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/nostream-tag.py"
+ },
+ {
+  "slug": "samples/langchain/openai-prompt-cache-breakpoint-chat-completions",
+  "title": "OpenAI Prompt Cache Breakpoint Chat Completions",
+  "desc": "Used on ChatOpenAI integration.",
+  "file": "/langchain/md/samples/langchain/openai-prompt-cache-breakpoint-chat-completions.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/openai-prompt-cache-breakpoint-chat-completions.py"
+ },
+ {
+  "slug": "samples/langchain/openai-prompt-cache-breakpoint-extras",
+  "title": "OpenAI Prompt Cache Breakpoint Extras",
+  "desc": "Used on ChatOpenAI integration.",
+  "file": "/langchain/md/samples/langchain/openai-prompt-cache-breakpoint-extras.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/openai-prompt-cache-breakpoint-extras.py"
+ },
+ {
+  "slug": "samples/langchain/openai-prompt-cache-breakpoint-responses",
+  "title": "OpenAI Prompt Cache Breakpoint Responses",
+  "desc": "Used on ChatOpenAI integration.",
+  "file": "/langchain/md/samples/langchain/openai-prompt-cache-breakpoint-responses.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/openai-prompt-cache-breakpoint-responses.py"
+ },
+ {
+  "slug": "samples/langchain/openai-prompt-cache-options",
+  "title": "OpenAI Prompt Cache Options",
+  "desc": "Used on ChatOpenAI integration.",
+  "file": "/langchain/md/samples/langchain/openai-prompt-cache-options.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/openai-prompt-cache-options.py"
+ },
+ {
+  "slug": "samples/langchain/openai-prompt-cache-write-tokens",
+  "title": "OpenAI Prompt Cache Write Tokens",
+  "desc": "Used on ChatOpenAI integration.",
+  "file": "/langchain/md/samples/langchain/openai-prompt-cache-write-tokens.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/openai-prompt-cache-write-tokens.py"
+ },
+ {
+  "slug": "samples/langchain/rag-full-snippet",
+  "title": "RAG Full Snippet",
+  "desc": "Defines the rag-full-snippet-agent-setup-py snippet.",
+  "file": "/langchain/md/samples/langchain/rag-full-snippet.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/rag-full-snippet.py"
+ },
+ {
+  "slug": "samples/langchain/rag",
+  "title": "RAG",
+  "desc": "Defines the rag-load-documents-py snippet.",
+  "file": "/langchain/md/samples/langchain/rag.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/rag.py"
+ },
+ {
+  "slug": "samples/langchain/return-a-string",
+  "title": "Return a String",
+  "desc": "Used on Tools.",
+  "file": "/langchain/md/samples/langchain/return-a-string.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/return-a-string.py"
+ },
+ {
+  "slug": "samples/langchain/short-term-memory-checkpointer-inmemory",
+  "title": "Short Term Memory Checkpointer InMemory",
+  "desc": "Used on Short-term memory.",
+  "file": "/langchain/md/samples/langchain/short-term-memory-checkpointer-inmemory.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/short-term-memory-checkpointer-inmemory.py"
+ },
+ {
+  "slug": "samples/langchain/sql-agent",
+  "title": "SQL Agent",
+  "desc": "Build a SQL agent with LangChain tools and optional human-in-the-loop review.",
+  "file": "/langchain/md/samples/langchain/sql-agent.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/sql-agent.py"
+ },
+ {
+  "slug": "samples/langchain/store-list-namespace",
+  "title": "Store List Namespace",
+  "desc": "Used on Stores.",
+  "file": "/langchain/md/samples/langchain/store-list-namespace.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/store-list-namespace.py"
+ },
+ {
+  "slug": "samples/langchain/streaming-agent-progress",
+  "title": "Streaming Agent Progress",
+  "desc": "Used on Streaming.",
+  "file": "/langchain/md/samples/langchain/streaming-agent-progress.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/streaming-agent-progress.py"
+ },
+ {
+  "slug": "samples/langchain/streaming-reasoning-tokens",
+  "title": "Streaming Reasoning Tokens",
+  "desc": "Used on Streaming.",
+  "file": "/langchain/md/samples/langchain/streaming-reasoning-tokens.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/streaming-reasoning-tokens.py"
+ },
+ {
+  "slug": "samples/langchain/tool-error-handling",
+  "title": "Tool Error Handling",
+  "desc": "Used on Tools.",
+  "file": "/langchain/md/samples/langchain/tool-error-handling.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/tool-error-handling.py"
+ },
+ {
+  "slug": "samples/langchain/tool-return-command",
+  "title": "Tool Return Command",
+  "desc": "Used on Tools.",
+  "file": "/langchain/md/samples/langchain/tool-return-command.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/tool-return-command.py"
+ },
+ {
+  "slug": "samples/langchain/tool-return-direct",
+  "title": "Tool Return Direct",
+  "desc": "Used on Tools.",
+  "file": "/langchain/md/samples/langchain/tool-return-direct.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/tool-return-direct.py"
+ },
+ {
+  "slug": "samples/langchain/tool-return-object",
+  "title": "Tool Return Object",
+  "desc": "Used on Tools.",
+  "file": "/langchain/md/samples/langchain/tool-return-object.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/tool-return-object.py"
+ },
+ {
+  "slug": "samples/langchain/tool-runtime-context-thread",
+  "title": "Tool Runtime Context Thread",
+  "desc": "Used on Tools.",
+  "file": "/langchain/md/samples/langchain/tool-runtime-context-thread.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/tool-runtime-context-thread.py"
+ },
+ {
+  "slug": "samples/langchain/tool-update-state",
+  "title": "Tool Update State",
+  "desc": "Used on Tools.",
+  "file": "/langchain/md/samples/langchain/tool-update-state.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/tool-update-state.py"
+ },
+ {
+  "slug": "samples/langchain/skills/pandas-patterns/SKILL",
+  "title": "Pandas Patterns",
+  "desc": "Use pd.read_csv() for CSV files. Always check df.info() and df.describe() first.",
+  "file": "/langchain/md/samples/langchain/skills/pandas-patterns/SKILL.md",
+  "product": "langchain_samples",
+  "tab": "LangChain",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langchain/skills/pandas-patterns/SKILL.md"
+ },
+ {
+  "slug": "samples/langgraph/agentic-rag-tutorial",
+  "title": "Agentic RAG Tutorial",
+  "desc": "Build a custom RAG agent with LangGraph \u2014 docs code samples.",
+  "file": "/langchain/md/samples/langgraph/agentic-rag-tutorial.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/agentic-rag-tutorial.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-functional-api-interrupt-stream",
+  "title": "LangGraph Functional API Interrupt Stream",
+  "desc": "Used on Functional API.",
+  "file": "/langchain/md/samples/langgraph/langgraph-functional-api-interrupt-stream.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-functional-api-interrupt-stream.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-functional-api-stream-custom-data",
+  "title": "LangGraph Functional API Stream Custom Data",
+  "desc": "Used on Use the Functional API.",
+  "file": "/langchain/md/samples/langgraph/langgraph-functional-api-stream-custom-data.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-functional-api-stream-custom-data.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-graph-api-multiple-schemas",
+  "title": "LangGraph Graph API Multiple Schemas",
+  "desc": "Used on Graph API.",
+  "file": "/langchain/md/samples/langgraph/langgraph-graph-api-multiple-schemas.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-graph-api-multiple-schemas.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-graph-api-reducers",
+  "title": "LangGraph Graph API Reducers",
+  "desc": "Used on Graph API.",
+  "file": "/langchain/md/samples/langgraph/langgraph-graph-api-reducers.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-graph-api-reducers.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-graph-api-resume-v2",
+  "title": "LangGraph Graph API Resume v2",
+  "desc": "Used on Graph API.",
+  "file": "/langchain/md/samples/langgraph/langgraph-graph-api-resume-v2.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-graph-api-resume-v2.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-graph-api-stream-private-channel",
+  "title": "LangGraph Graph API Stream Private Channel",
+  "desc": "Used on Graph API.",
+  "file": "/langchain/md/samples/langgraph/langgraph-graph-api-stream-private-channel.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-graph-api-stream-private-channel.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-interrupts-approval",
+  "title": "LangGraph Interrupts Approval",
+  "desc": "Used on Interrupts.",
+  "file": "/langchain/md/samples/langgraph/langgraph-interrupts-approval.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-interrupts-approval.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-interrupts-hitl-stream",
+  "title": "LangGraph Interrupts HITL Stream",
+  "desc": "Used on Interrupts.",
+  "file": "/langchain/md/samples/langgraph/langgraph-interrupts-hitl-stream.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-interrupts-hitl-stream.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-interrupts-multiple",
+  "title": "LangGraph Interrupts Multiple",
+  "desc": "Used on Interrupts.",
+  "file": "/langchain/md/samples/langgraph/langgraph-interrupts-multiple.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-interrupts-multiple.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-interrupts-resume-v2",
+  "title": "LangGraph Interrupts Resume v2",
+  "desc": "Used on Interrupts.",
+  "file": "/langchain/md/samples/langgraph/langgraph-interrupts-resume-v2.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-interrupts-resume-v2.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-interrupts-review",
+  "title": "LangGraph Interrupts Review",
+  "desc": "Used on Interrupts.",
+  "file": "/langchain/md/samples/langgraph/langgraph-interrupts-review.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-interrupts-review.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-interrupts-validate-conditional-edge",
+  "title": "LangGraph Interrupts Validate Conditional Edge",
+  "desc": "Used on Interrupts.",
+  "file": "/langchain/md/samples/langgraph/langgraph-interrupts-validate-conditional-edge.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-interrupts-validate-conditional-edge.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-interrupts-validate",
+  "title": "LangGraph Interrupts Validate",
+  "desc": "Used on Interrupts.",
+  "file": "/langchain/md/samples/langgraph/langgraph-interrupts-validate.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-interrupts-validate.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-sql-agent",
+  "title": "LangGraph SQL Agent",
+  "desc": "Build a custom SQL agent with LangGraph.",
+  "file": "/langchain/md/samples/langgraph/langgraph-sql-agent.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-sql-agent.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-subgraphs-interrupt-v2",
+  "title": "LangGraph Subgraphs Interrupt v2",
+  "desc": "Used on Subgraphs.",
+  "file": "/langchain/md/samples/langgraph/langgraph-subgraphs-interrupt-v2.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-subgraphs-interrupt-v2.py"
+ },
+ {
+  "slug": "samples/langgraph/langgraph-thinking-hitl-v2",
+  "title": "LangGraph Thinking HITL v2",
+  "desc": "Used on Thinking in LangGraph.",
+  "file": "/langchain/md/samples/langgraph/langgraph-thinking-hitl-v2.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/langgraph-thinking-hitl-v2.py"
+ },
+ {
+  "slug": "samples/langgraph/workflows-agents-tool-runtime-state-context",
+  "title": "Workflows Agents Tool Runtime State Context",
+  "desc": "Used on Workflows + agents.",
+  "file": "/langchain/md/samples/langgraph/workflows-agents-tool-runtime-state-context.md",
+  "product": "langchain_samples",
+  "tab": "LangGraph",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langgraph/workflows-agents-tool-runtime-state-context.py"
+ },
+ {
+  "slug": "samples/deepagents/acp-quickstart",
+  "title": "ACP Quickstart",
+  "desc": "Used on Agent Client Protocol (ACP).",
+  "file": "/langchain/md/samples/deepagents/acp-quickstart.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/acp-quickstart.py"
+ },
+ {
+  "slug": "samples/deepagents/async-subagents-configure",
+  "title": "Async Subagents Configure",
+  "desc": "Async subagents: configure supervisor with async subagent specs.",
+  "file": "/langchain/md/samples/deepagents/async-subagents-configure.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/async-subagents-configure.py"
+ },
+ {
+  "slug": "samples/deepagents/async-subagents-descriptions",
+  "title": "Async Subagents Descriptions",
+  "desc": "Async subagents: good and bad subagent descriptions.",
+  "file": "/langchain/md/samples/deepagents/async-subagents-descriptions.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/async-subagents-descriptions.py"
+ },
+ {
+  "slug": "samples/deepagents/async-subagents-http-transport",
+  "title": "Async Subagents HTTP Transport",
+  "desc": "Async subagents: HTTP transport subagent spec.",
+  "file": "/langchain/md/samples/deepagents/async-subagents-http-transport.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/async-subagents-http-transport.py"
+ },
+ {
+  "slug": "samples/deepagents/async-subagents-hybrid",
+  "title": "Async Subagents Hybrid",
+  "desc": "Async subagents: hybrid ASGI and HTTP deployment.",
+  "file": "/langchain/md/samples/deepagents/async-subagents-hybrid.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/async-subagents-hybrid.py"
+ },
+ {
+  "slug": "samples/deepagents/async-subagents-troubleshooting-polling",
+  "title": "Async Subagents Troubleshooting Polling",
+  "desc": "Async subagents: prevent polling immediately after launch.",
+  "file": "/langchain/md/samples/deepagents/async-subagents-troubleshooting-polling.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/async-subagents-troubleshooting-polling.py"
+ },
+ {
+  "slug": "samples/deepagents/content-builder",
+  "title": "Content Builder",
+  "desc": "Content builder agent with brand memory, skills, subagents, and image generation.",
+  "file": "/langchain/md/samples/deepagents/content-builder.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/content-builder.py"
+ },
+ {
+  "slug": "samples/deepagents/context-engineering",
+  "title": "Context Engineering",
+  "desc": "Context engineering page code samples.",
+  "file": "/langchain/md/samples/deepagents/context-engineering.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/context-engineering.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-backend-readonly-skills",
+  "title": "Customization Backend Readonly Skills",
+  "desc": "Backends: read-only skills from a shared StoreBackend.",
+  "file": "/langchain/md/samples/deepagents/customization-backend-readonly-skills.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-backend-readonly-skills.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-backends",
+  "title": "Customization Backends",
+  "desc": "Customization: virtual filesystem backend examples.",
+  "file": "/langchain/md/samples/deepagents/customization-backends.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-backends.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-hitl-basic",
+  "title": "Customization HITL Basic",
+  "desc": "Customization: human-in-the-loop interrupt_on example.",
+  "file": "/langchain/md/samples/deepagents/customization-hitl-basic.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-hitl-basic.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-interpreters",
+  "title": "Customization Interpreters",
+  "desc": "Customization: code interpreter middleware example.",
+  "file": "/langchain/md/samples/deepagents/customization-interpreters.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-interpreters.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-mcp",
+  "title": "Customization MCP",
+  "desc": "Customization page: MCP tools example.",
+  "file": "/langchain/md/samples/deepagents/customization-mcp.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-mcp.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-memory",
+  "title": "Customization Memory",
+  "desc": "Customization: memory configuration examples (StateBackend, StoreBackend, FilesystemBackend).",
+  "file": "/langchain/md/samples/deepagents/customization-memory.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-memory.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-middleware",
+  "title": "Customization Middleware",
+  "desc": "Customization: custom middleware example.",
+  "file": "/langchain/md/samples/deepagents/customization-middleware.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-middleware.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-overview",
+  "title": "Customization Overview",
+  "desc": "Customization page: overview, prompt assembly, and GP subagent profile examples.",
+  "file": "/langchain/md/samples/deepagents/customization-overview.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-overview.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-profiles",
+  "title": "Customization Profiles",
+  "desc": "Customization: harness profiles example.",
+  "file": "/langchain/md/samples/deepagents/customization-profiles.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-profiles.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-skills-usage",
+  "title": "Customization Skills Usage",
+  "desc": "Customization: wiring skills with different backends.",
+  "file": "/langchain/md/samples/deepagents/customization-skills-usage.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-skills-usage.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-structured-output",
+  "title": "Customization Structured Output",
+  "desc": "Customization: structured output with response_format.",
+  "file": "/langchain/md/samples/deepagents/customization-structured-output.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-structured-output.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-subagent-basic",
+  "title": "Customization Subagent Basic",
+  "desc": "Customization: subagent configuration example.",
+  "file": "/langchain/md/samples/deepagents/customization-subagent-basic.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-subagent-basic.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-system-prompt",
+  "title": "Customization System Prompt",
+  "desc": "Customization: system prompt example.",
+  "file": "/langchain/md/samples/deepagents/customization-system-prompt.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-system-prompt.py"
+ },
+ {
+  "slug": "samples/deepagents/customization-tools",
+  "title": "Customization Tools",
+  "desc": "Customization: custom tools example.",
+  "file": "/langchain/md/samples/deepagents/customization-tools.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/customization-tools.py"
+ },
+ {
+  "slug": "samples/deepagents/data-analysis-backend-langsmith",
+  "title": "Data Analysis Backend LangSmith",
+  "desc": "Data analysis tutorial: LangSmith sandbox backend.",
+  "file": "/langchain/md/samples/deepagents/data-analysis-backend-langsmith.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/data-analysis-backend-langsmith.py"
+ },
+ {
+  "slug": "samples/deepagents/data-analysis",
+  "title": "Data Analysis",
+  "desc": "Data analysis agent tutorial samples.",
+  "file": "/langchain/md/samples/deepagents/data-analysis.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/data-analysis.py"
+ },
+ {
+  "slug": "samples/deepagents/deep-research-agent-gemini",
+  "title": "Deep Research Agent Gemini",
+  "desc": "Deep research agent: Gemini model initialization snippet.",
+  "file": "/langchain/md/samples/deepagents/deep-research-agent-gemini.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/deep-research-agent-gemini.py"
+ },
+ {
+  "slug": "samples/deepagents/deep-research-run-stream",
+  "title": "Deep Research Run Stream",
+  "desc": "Deep research agent: streaming run snippet.",
+  "file": "/langchain/md/samples/deepagents/deep-research-run-stream.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/deep-research-run-stream.py"
+ },
+ {
+  "slug": "samples/deepagents/deep-research-run-sync",
+  "title": "Deep Research Run Sync",
+  "desc": "Deep research agent: synchronous run snippet.",
+  "file": "/langchain/md/samples/deepagents/deep-research-run-sync.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/deep-research-run-sync.py"
+ },
+ {
+  "slug": "samples/deepagents/deep-research",
+  "title": "Deep Research",
+  "desc": "Deep research agent with custom tools and subagent delegation.",
+  "file": "/langchain/md/samples/deepagents/deep-research.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/deep-research.py"
+ },
+ {
+  "slug": "samples/deepagents/deepagents-production-invoke",
+  "title": "Deepagents Production Invoke",
+  "desc": "Used on Going to production.",
+  "file": "/langchain/md/samples/deepagents/deepagents-production-invoke.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/deepagents-production-invoke.py"
+ },
+ {
+  "slug": "samples/deepagents/dynamic-subagents",
+  "title": "Dynamic Subagents",
+  "desc": "Dynamic subagents: interpreter orchestration examples for the dynamic subagents docs page.",
+  "file": "/langchain/md/samples/deepagents/dynamic-subagents.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/dynamic-subagents.py"
+ },
+ {
+  "slug": "samples/deepagents/event-streaming-interleave",
+  "title": "Event Streaming Interleave",
+  "desc": "Event streaming: synchronous interleave consumption.",
+  "file": "/langchain/md/samples/deepagents/event-streaming-interleave.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/event-streaming-interleave.py"
+ },
+ {
+  "slug": "samples/deepagents/event-streaming-lifecycle",
+  "title": "Event Streaming Lifecycle",
+  "desc": "Event streaming: track subagent lifecycle.",
+  "file": "/langchain/md/samples/deepagents/event-streaming-lifecycle.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/event-streaming-lifecycle.py"
+ },
+ {
+  "slug": "samples/deepagents/event-streaming-messages",
+  "title": "Event Streaming Messages",
+  "desc": "Event streaming: coordinator and subagent messages.",
+  "file": "/langchain/md/samples/deepagents/event-streaming-messages.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/event-streaming-messages.py"
+ },
+ {
+  "slug": "samples/deepagents/event-streaming-nested",
+  "title": "Event Streaming Nested",
+  "desc": "Event streaming: nested subagent work.",
+  "file": "/langchain/md/samples/deepagents/event-streaming-nested.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/event-streaming-nested.py"
+ },
+ {
+  "slug": "samples/deepagents/event-streaming-raw-protocol",
+  "title": "Event Streaming Raw Protocol",
+  "desc": "Event streaming: raw protocol events with namespace routing.",
+  "file": "/langchain/md/samples/deepagents/event-streaming-raw-protocol.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/event-streaming-raw-protocol.py"
+ },
+ {
+  "slug": "samples/deepagents/event-streaming-subagents",
+  "title": "Event Streaming Subagents",
+  "desc": "Event streaming: stream subagents projection.",
+  "file": "/langchain/md/samples/deepagents/event-streaming-subagents.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/event-streaming-subagents.py"
+ },
+ {
+  "slug": "samples/deepagents/event-streaming-tool-calls",
+  "title": "Event Streaming Tool Calls",
+  "desc": "Event streaming: coordinator and subagent tool calls.",
+  "file": "/langchain/md/samples/deepagents/event-streaming-tool-calls.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/event-streaming-tool-calls.py"
+ },
+ {
+  "slug": "samples/deepagents/frontend-overview-backend",
+  "title": "Frontend Overview Backend",
+  "desc": "Frontend overview: coordinator-worker backend setup.",
+  "file": "/langchain/md/samples/deepagents/frontend-overview-backend.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/frontend-overview-backend.py"
+ },
+ {
+  "slug": "samples/deepagents/frontend-sandbox",
+  "title": "Frontend Sandbox",
+  "desc": "Used on Sandbox.",
+  "file": "/langchain/md/samples/deepagents/frontend-sandbox.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/frontend-sandbox.py"
+ },
+ {
+  "slug": "samples/deepagents/frontend-todo-list-setup",
+  "title": "Frontend Todo List Setup",
+  "desc": "Frontend todo list: enable TodoListMiddleware on create_deep_agent.",
+  "file": "/langchain/md/samples/deepagents/frontend-todo-list-setup.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/frontend-todo-list-setup.py"
+ },
+ {
+  "slug": "samples/deepagents/interpreters",
+  "title": "Interpreters",
+  "desc": "Interpreters: QuickJS middleware examples for the interpreters docs page.",
+  "file": "/langchain/md/samples/deepagents/interpreters.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/interpreters.py"
+ },
+ {
+  "slug": "samples/deepagents/models-configure-params",
+  "title": "Models Configure Params",
+  "desc": "Models: configure model parameters.",
+  "file": "/langchain/md/samples/deepagents/models-configure-params.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/models-configure-params.py"
+ },
+ {
+  "slug": "samples/deepagents/models-provider-profiles",
+  "title": "Models Provider Profiles",
+  "desc": "Models: provider profile registration.",
+  "file": "/langchain/md/samples/deepagents/models-provider-profiles.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/models-provider-profiles.py"
+ },
+ {
+  "slug": "samples/deepagents/models-runtime-configurable",
+  "title": "Models Runtime Configurable",
+  "desc": "Models: select a model at runtime with middleware.",
+  "file": "/langchain/md/samples/deepagents/models-runtime-configurable.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/models-runtime-configurable.py"
+ },
+ {
+  "slug": "samples/deepagents/multimodal",
+  "title": "Multimodal",
+  "desc": "Deep Agents multimodal inputs, tool outputs, and summarization examples.",
+  "file": "/langchain/md/samples/deepagents/multimodal.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/multimodal.py"
+ },
+ {
+  "slug": "samples/deepagents/overview-excluded-tools",
+  "title": "Overview Excluded Tools",
+  "desc": "Overview page: harness profile with excluded filesystem tools.",
+  "file": "/langchain/md/samples/deepagents/overview-excluded-tools.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/overview-excluded-tools.py"
+ },
+ {
+  "slug": "samples/deepagents/overview-quickstart",
+  "title": "Overview Quickstart",
+  "desc": "Overview page: minimal get_weather quickstart.",
+  "file": "/langchain/md/samples/deepagents/overview-quickstart.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/overview-quickstart.py"
+ },
+ {
+  "slug": "samples/deepagents/overview-tools",
+  "title": "Overview Tools",
+  "desc": "Overview page: tools parameter example.",
+  "file": "/langchain/md/samples/deepagents/overview-tools.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/overview-tools.py"
+ },
+ {
+  "slug": "samples/deepagents/permissions",
+  "title": "Permissions",
+  "desc": "Declarative filesystem permission rules for Deep Agents.",
+  "file": "/langchain/md/samples/deepagents/permissions.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/permissions.py"
+ },
+ {
+  "slug": "samples/deepagents/profiles-harness-register",
+  "title": "Profiles Harness Register",
+  "desc": "Profiles: register a harness profile.",
+  "file": "/langchain/md/samples/deepagents/profiles-harness-register.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/profiles-harness-register.py"
+ },
+ {
+  "slug": "samples/deepagents/profiles-load-config",
+  "title": "Profiles Load Config",
+  "desc": "Profiles: load harness profile from a YAML config file.",
+  "file": "/langchain/md/samples/deepagents/profiles-load-config.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/profiles-load-config.py"
+ },
+ {
+  "slug": "samples/deepagents/profiles-plugin-register",
+  "title": "Profiles Plugin Register",
+  "desc": "Profiles: plugin entry-point registration callables.",
+  "file": "/langchain/md/samples/deepagents/profiles-plugin-register.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/profiles-plugin-register.py"
+ },
+ {
+  "slug": "samples/deepagents/profiles-provider-register",
+  "title": "Profiles Provider Register",
+  "desc": "Profiles: register a provider profile.",
+  "file": "/langchain/md/samples/deepagents/profiles-provider-register.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/profiles-provider-register.py"
+ },
+ {
+  "slug": "samples/deepagents/quickstart-provider-anthropic",
+  "title": "Quickstart Provider Anthropic",
+  "desc": "Quickstart: Anthropic built-in web search.",
+  "file": "/langchain/md/samples/deepagents/quickstart-provider-anthropic.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/quickstart-provider-anthropic.py"
+ },
+ {
+  "slug": "samples/deepagents/quickstart-provider-google",
+  "title": "Quickstart Provider Google",
+  "desc": "Quickstart: Google built-in web search.",
+  "file": "/langchain/md/samples/deepagents/quickstart-provider-google.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/quickstart-provider-google.py"
+ },
+ {
+  "slug": "samples/deepagents/quickstart-provider-openai",
+  "title": "Quickstart Provider OpenAI",
+  "desc": "Quickstart: OpenAI built-in web search.",
+  "file": "/langchain/md/samples/deepagents/quickstart-provider-openai.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/quickstart-provider-openai.py"
+ },
+ {
+  "slug": "samples/deepagents/quickstart",
+  "title": "Quickstart",
+  "desc": "Quickstart: build a research agent with a search tool.",
+  "file": "/langchain/md/samples/deepagents/quickstart.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/quickstart.py"
+ },
+ {
+  "slug": "samples/deepagents/rag-deep-baseline",
+  "title": "RAG Deep Baseline",
+  "desc": "Deep Agents RAG tutorial: baseline agent without retrieval.",
+  "file": "/langchain/md/samples/deepagents/rag-deep-baseline.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/rag-deep-baseline.py"
+ },
+ {
+  "slug": "samples/deepagents/rag-deep-full",
+  "title": "RAG Deep Full",
+  "desc": "Complete Deep Agents RAG tutorial script.",
+  "file": "/langchain/md/samples/deepagents/rag-deep-full.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/rag-deep-full.py"
+ },
+ {
+  "slug": "samples/deepagents/rag-deep",
+  "title": "RAG Deep",
+  "desc": "Deep Agents RAG tutorial: index docs, search tool, agent, and run.",
+  "file": "/langchain/md/samples/deepagents/rag-deep.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/rag-deep.py"
+ },
+ {
+  "slug": "samples/deepagents/rubric-code-generation",
+  "title": "Rubric Code Generation",
+  "desc": "Deep Agents: code generation with RubricMiddleware and a test suite grader tool.",
+  "file": "/langchain/md/samples/deepagents/rubric-code-generation.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/rubric-code-generation.py"
+ },
+ {
+  "slug": "samples/deepagents/rubric-configure",
+  "title": "Rubric Configure",
+  "desc": "Deep Agents: configure RubricMiddleware and invoke with a rubric.",
+  "file": "/langchain/md/samples/deepagents/rubric-configure.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/rubric-configure.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-as-tool",
+  "title": "Sandboxes as Tool",
+  "desc": "Used on Sandboxes.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-as-tool.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-as-tool.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-basic-daytona",
+  "title": "Sandboxes Basic Daytona",
+  "desc": "Defines the deepagents-sandbox-basic-daytona-py snippet.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-basic-daytona.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-basic-daytona.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-basic-langsmith",
+  "title": "Sandboxes Basic LangSmith",
+  "desc": "Defines the deepagents-sandbox-basic-langsmith-py snippet.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-basic-langsmith.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-basic-langsmith.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-download-langsmith",
+  "title": "Sandboxes Download LangSmith",
+  "desc": "Used on Sandboxes.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-download-langsmith.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-download-langsmith.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-execute-langsmith",
+  "title": "Sandboxes Execute LangSmith",
+  "desc": "Used on Sandboxes.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-execute-langsmith.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-execute-langsmith.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-lifecycle-assistant",
+  "title": "Sandboxes Lifecycle Assistant",
+  "desc": "Used on Sandboxes.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-lifecycle-assistant.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-lifecycle-assistant.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-lifecycle-thread",
+  "title": "Sandboxes Lifecycle Thread",
+  "desc": "Used on Sandboxes.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-lifecycle-thread.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-lifecycle-thread.py"
+ },
+ {
+  "slug": "samples/deepagents/sandboxes-upload-langsmith",
+  "title": "Sandboxes Upload LangSmith",
+  "desc": "Used on Sandboxes.",
+  "file": "/langchain/md/samples/deepagents/sandboxes-upload-langsmith.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/sandboxes-upload-langsmith.py"
+ },
+ {
+  "slug": "samples/deepagents/skills-sandbox",
+  "title": "Skills Sandbox",
+  "desc": "Used on Skills.",
+  "file": "/langchain/md/samples/deepagents/skills-sandbox.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/skills-sandbox.py"
+ },
+ {
+  "slug": "samples/deepagents/skills",
+  "title": "Skills",
+  "desc": "Skills: agent setup, runtime loading, permissions, and subagents.",
+  "file": "/langchain/md/samples/deepagents/skills.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/skills.py"
+ },
+ {
+  "slug": "samples/deepagents/streaming",
+  "title": "Streaming",
+  "desc": "Deep Agents: legacy agent.stream subgraph streaming samples.",
+  "file": "/langchain/md/samples/deepagents/streaming.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/streaming.py"
+ },
+ {
+  "slug": "samples/deepagents/subagent-stream-progress",
+  "title": "Subagent Stream Progress",
+  "desc": "Subagents: stream coordinator and delegated subagent progress.",
+  "file": "/langchain/md/samples/deepagents/subagent-stream-progress.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/subagent-stream-progress.py"
+ },
+ {
+  "slug": "samples/deepagents/subagents",
+  "title": "Subagents",
+  "desc": "Subagents page code samples.",
+  "file": "/langchain/md/samples/deepagents/subagents.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/subagents.py"
+ },
+ {
+  "slug": "samples/deepagents/subagents",
+  "title": "Subagents",
+  "desc": "From the docs repo's code samples: src/code-samples/deepagents/subagents.yaml.",
+  "file": "/langchain/md/samples/deepagents/subagents.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/subagents.yaml"
+ },
+ {
+  "slug": "samples/deepagents/tools-mcp",
+  "title": "Tools MCP",
+  "desc": "Deep Agents tools page: MCP example.",
+  "file": "/langchain/md/samples/deepagents/tools-mcp.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/tools-mcp.py"
+ },
+ {
+  "slug": "samples/deepagents/tools",
+  "title": "Tools",
+  "desc": "Deep Agents tools page examples.",
+  "file": "/langchain/md/samples/deepagents/tools.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/tools.py"
+ },
+ {
+  "slug": "samples/deepagents/skills/langgraph-docs/SKILL",
+  "title": "LangGraph Docs",
+  "desc": "Use fetch_url to read: https://docs.langchain.com/llms.txt",
+  "file": "/langchain/md/samples/deepagents/skills/langgraph-docs/SKILL.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/skills/langgraph-docs/SKILL.md"
+ },
+ {
+  "slug": "samples/deepagents/skills/write-timestamp/SKILL",
+  "title": "Write Timestamp",
+  "desc": "1. The script is available in the sandbox at /skills/write-timestamp/write_timestamp.py after sync.",
+  "file": "/langchain/md/samples/deepagents/skills/write-timestamp/SKILL.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/skills/write-timestamp/SKILL.md"
+ },
+ {
+  "slug": "samples/deepagents/skills/write-timestamp/write_timestamp",
+  "title": "Write Timestamp",
+  "desc": "Write the current UTC date and time to a file (runs inside the sandbox).",
+  "file": "/langchain/md/samples/deepagents/skills/write-timestamp/write_timestamp.md",
+  "product": "langchain_samples",
+  "tab": "Deep Agents",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/deepagents/skills/write-timestamp/write_timestamp.py"
+ },
+ {
+  "slug": "samples/langsmith/evaluate-rag-reference",
+  "title": "Evaluate RAG Reference",
+  "desc": "Consolidated RAG evaluation script for the LangSmith tutorial.",
+  "file": "/langchain/md/samples/langsmith/evaluate-rag-reference.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/evaluate-rag-reference.py"
+ },
+ {
+  "slug": "samples/langsmith/evaluate-rag-tutorial",
+  "title": "Evaluate RAG Tutorial",
+  "desc": "Evaluate a RAG application with LangSmith.",
+  "file": "/langchain/md/samples/langsmith/evaluate-rag-tutorial.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/evaluate-rag-tutorial.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-basic-after",
+  "title": "Experiment Runs Query Basic After",
+  "desc": "Defines the experiment-runs-query-basic-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-basic-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-basic-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-basic-before",
+  "title": "Experiment Runs Query Basic Before",
+  "desc": "Defines the experiment-runs-query-basic-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-basic-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-basic-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-basic",
+  "title": "Experiment Runs Query Basic",
+  "desc": "Defines the experiment-runs-query-basic-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-basic.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-basic.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-pagination-after",
+  "title": "Experiment Runs Query Pagination After",
+  "desc": "Defines the experiment-runs-query-pagination-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-pagination-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-pagination-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-pagination-before",
+  "title": "Experiment Runs Query Pagination Before",
+  "desc": "Defines the experiment-runs-query-pagination-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-pagination-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-pagination-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-pagination",
+  "title": "Experiment Runs Query Pagination",
+  "desc": "Defines the experiment-runs-query-pagination-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-pagination.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-pagination.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-after",
+  "title": "Experiment Runs Query Sort After",
+  "desc": "Defines the experiment-runs-query-sort-after-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-sort-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-sort-after.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-after",
+  "title": "Experiment Runs Query Sort After",
+  "desc": "Defines the experiment-runs-query-sort-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-sort-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-sort-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-before",
+  "title": "Experiment Runs Query Sort Before",
+  "desc": "Defines the experiment-runs-query-sort-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-sort-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-sort-before.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/experiment-runs-query-sort-before",
+  "title": "Experiment Runs Query Sort Before",
+  "desc": "Defines the experiment-runs-query-sort-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/experiment-runs-query-sort-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/experiment-runs-query-sort-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/feedback-create-after",
+  "title": "Feedback Create After",
+  "desc": "Defines the feedback-create-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/feedback-create-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/feedback-create-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/feedback-create-before",
+  "title": "Feedback Create Before",
+  "desc": "Defines the feedback-create-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/feedback-create-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/feedback-create-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/feedback-create",
+  "title": "Feedback Create",
+  "desc": "Defines the feedback-create-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/feedback-create.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/feedback-create.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-add-to-queue-after",
+  "title": "Runs Add to Queue After",
+  "desc": "Defines the runs-add-to-queue-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-add-to-queue-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-add-to-queue-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-add-to-queue-before",
+  "title": "Runs Add to Queue Before",
+  "desc": "Defines the runs-add-to-queue-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-add-to-queue-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-add-to-queue-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-add-to-queue",
+  "title": "Runs Add to Queue",
+  "desc": "Defines the runs-add-to-queue-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-add-to-queue.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-add-to-queue.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-geturl-after",
+  "title": "Runs Geturl After",
+  "desc": "Defines the runs-geturl-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-geturl-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-geturl-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-geturl",
+  "title": "Runs Geturl",
+  "desc": "Defines the runs-geturl-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-geturl.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-geturl.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-boolean-filters-after",
+  "title": "Runs Query Boolean Filters After",
+  "desc": "Defines the runs-query-boolean-filters-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-boolean-filters-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-boolean-filters-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-boolean-filters-before",
+  "title": "Runs Query Boolean Filters Before",
+  "desc": "Defines the runs-query-boolean-filters-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-boolean-filters-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-boolean-filters-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-boolean-filters",
+  "title": "Runs Query Boolean Filters",
+  "desc": "Defines the runs-query-boolean-filters-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-boolean-filters.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-boolean-filters.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-fetch-by-id-after",
+  "title": "Runs Query Fetch By ID After",
+  "desc": "Defines the runs-query-fetch-by-id-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-fetch-by-id-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-fetch-by-id-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-fetch-by-id-before",
+  "title": "Runs Query Fetch By ID Before",
+  "desc": "Defines the runs-query-fetch-by-id-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-fetch-by-id-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-fetch-by-id-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-fetch-by-id",
+  "title": "Runs Query Fetch By ID",
+  "desc": "Defines the runs-query-fetch-by-id-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-fetch-by-id.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-fetch-by-id.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-errors-after",
+  "title": "Runs Query Filter Errors After",
+  "desc": "Defines the runs-query-filter-errors-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-errors-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-errors-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-errors-before",
+  "title": "Runs Query Filter Errors Before",
+  "desc": "Defines the runs-query-filter-errors-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-errors-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-errors-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-errors",
+  "title": "Runs Query Filter Errors",
+  "desc": "Defines the runs-query-filter-errors-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-errors.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-errors.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-metadata-after",
+  "title": "Runs Query Filter Metadata After",
+  "desc": "Defines the runs-query-filter-metadata-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-metadata-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-metadata-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-metadata-before",
+  "title": "Runs Query Filter Metadata Before",
+  "desc": "Defines the runs-query-filter-metadata-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-metadata-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-metadata-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-metadata",
+  "title": "Runs Query Filter Metadata",
+  "desc": "Defines the runs-query-filter-metadata-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-metadata.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-metadata.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-root-after",
+  "title": "Runs Query Filter Root After",
+  "desc": "Defines the runs-query-filter-root-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-root-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-root-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-root-before",
+  "title": "Runs Query Filter Root Before",
+  "desc": "Defines the runs-query-filter-root-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-root-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-root-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-root",
+  "title": "Runs Query Filter Root",
+  "desc": "Defines the runs-query-filter-root-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-root.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-root.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-time-range-after",
+  "title": "Runs Query Filter Time Range After",
+  "desc": "Defines the runs-query-filter-time-range-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-time-range-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-time-range-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-time-range-before",
+  "title": "Runs Query Filter Time Range Before",
+  "desc": "Defines the runs-query-filter-time-range-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-time-range-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-time-range-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-filter-time-range",
+  "title": "Runs Query Filter Time Range",
+  "desc": "Defines the runs-query-filter-time-range-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-filter-time-range.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-filter-time-range.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-list-all-after",
+  "title": "Runs Query List All After",
+  "desc": "Defines the runs-query-list-all-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-list-all-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-list-all-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-list-all-before",
+  "title": "Runs Query List All Before",
+  "desc": "Defines the runs-query-list-all-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-list-all-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-list-all-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-list-all",
+  "title": "Runs Query List All",
+  "desc": "Defines the runs-query-list-all-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-list-all.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-list-all.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-after",
+  "title": "Runs Query List Root as Traces After",
+  "desc": "Defines the runs-query-list-root-as-traces-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-before",
+  "title": "Runs Query List Root as Traces Before",
+  "desc": "Defines the runs-query-list-root-as-traces-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-list-root-as-traces-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-list-root-as-traces",
+  "title": "Runs Query List Root as Traces",
+  "desc": "Defines the runs-query-list-root-as-traces-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-list-root-as-traces.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-list-root-as-traces.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-pagination-after",
+  "title": "Runs Query Pagination After",
+  "desc": "Defines the runs-query-pagination-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-pagination-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-pagination-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-pagination-before",
+  "title": "Runs Query Pagination Before",
+  "desc": "Defines the runs-query-pagination-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-pagination-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-pagination-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-pagination",
+  "title": "Runs Query Pagination",
+  "desc": "Defines the runs-query-pagination-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-pagination.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-pagination.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-scoped-filters-after",
+  "title": "Runs Query Scoped Filters After",
+  "desc": "Defines the runs-query-scoped-filters-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-scoped-filters-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-scoped-filters-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-scoped-filters-before",
+  "title": "Runs Query Scoped Filters Before",
+  "desc": "Defines the runs-query-scoped-filters-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-scoped-filters-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-scoped-filters-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-scoped-filters",
+  "title": "Runs Query Scoped Filters",
+  "desc": "Defines the runs-query-scoped-filters-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-scoped-filters.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-scoped-filters.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-selecting-fields-after",
+  "title": "Runs Query Selecting Fields After",
+  "desc": "Defines the runs-query-selecting-fields-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-selecting-fields-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-selecting-fields-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-selecting-fields-before",
+  "title": "Runs Query Selecting Fields Before",
+  "desc": "Defines the runs-query-selecting-fields-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-selecting-fields-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-selecting-fields-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-query-selecting-fields",
+  "title": "Runs Query Selecting Fields",
+  "desc": "Defines the runs-query-selecting-fields-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-query-selecting-fields.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-query-selecting-fields.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-retrieve-basic-after",
+  "title": "Runs Retrieve Basic After",
+  "desc": "Defines the runs-retrieve-basic-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-retrieve-basic-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-retrieve-basic-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-retrieve-by-id-after",
+  "title": "Runs Retrieve By ID After",
+  "desc": "Defines the runs-retrieve-by-id-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-retrieve-by-id-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-retrieve-by-id-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-retrieve-child-runs",
+  "title": "Runs Retrieve Child Runs",
+  "desc": "Defines the runs-retrieve-child-runs-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-retrieve-child-runs.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-retrieve-child-runs.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-retrieve-not-found-after",
+  "title": "Runs Retrieve Not Found After",
+  "desc": "Defines the runs-retrieve-not-found-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-retrieve-not-found-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-retrieve-not-found-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-retrieve-not-found-before",
+  "title": "Runs Retrieve Not Found Before",
+  "desc": "Defines the runs-retrieve-not-found-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-retrieve-not-found-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-retrieve-not-found-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/runs-retrieve-not-found",
+  "title": "Runs Retrieve Not Found",
+  "desc": "Defines the runs-retrieve-not-found-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/runs-retrieve-not-found.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/runs-retrieve-not-found.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-list-traces-basic-after",
+  "title": "Threads List Traces Basic After",
+  "desc": "Defines the threads-list-traces-basic-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-list-traces-basic-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-list-traces-basic-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-list-traces-basic-before",
+  "title": "Threads List Traces Basic Before",
+  "desc": "Defines the threads-list-traces-basic-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-list-traces-basic-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-list-traces-basic-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-list-traces-basic",
+  "title": "Threads List Traces Basic",
+  "desc": "Defines the threads-list-traces-basic-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-list-traces-basic.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-list-traces-basic.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-after",
+  "title": "Threads List Traces Selecting Fields After",
+  "desc": "Defines the threads-list-traces-selecting-fields-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-before",
+  "title": "Threads List Traces Selecting Fields Before",
+  "desc": "Defines the threads-list-traces-selecting-fields-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields",
+  "title": "Threads List Traces Selecting Fields",
+  "desc": "Defines the threads-list-traces-selecting-fields-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-list-traces-selecting-fields.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-query-filter-status-after",
+  "title": "Threads Query Filter Status After",
+  "desc": "Defines the threads-query-filter-status-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-query-filter-status-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-query-filter-status-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-query-filter-status-before",
+  "title": "Threads Query Filter Status Before",
+  "desc": "Defines the threads-query-filter-status-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-query-filter-status-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-query-filter-status-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-query-filter-status",
+  "title": "Threads Query Filter Status",
+  "desc": "Defines the threads-query-filter-status-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-query-filter-status.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-query-filter-status.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-query-list-all-after",
+  "title": "Threads Query List All After",
+  "desc": "Defines the threads-query-list-all-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-query-list-all-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-query-list-all-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-query-list-all-before",
+  "title": "Threads Query List All Before",
+  "desc": "Defines the threads-query-list-all-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-query-list-all-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-query-list-all-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/threads-query-list-all",
+  "title": "Threads Query List All",
+  "desc": "Defines the threads-query-list-all-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/threads-query-list-all.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/threads-query-list-all.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-list-runs-basic-after",
+  "title": "Traces List Runs Basic After",
+  "desc": "Defines the traces-list-runs-basic-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-list-runs-basic-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-list-runs-basic-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-list-runs-basic-before",
+  "title": "Traces List Runs Basic Before",
+  "desc": "Defines the traces-list-runs-basic-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-list-runs-basic-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-list-runs-basic-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-list-runs-basic",
+  "title": "Traces List Runs Basic",
+  "desc": "Defines the traces-list-runs-basic-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-list-runs-basic.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-list-runs-basic.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-list-runs-filter-after",
+  "title": "Traces List Runs Filter After",
+  "desc": "Defines the traces-list-runs-filter-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-list-runs-filter-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-list-runs-filter-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-list-runs-filter-before",
+  "title": "Traces List Runs Filter Before",
+  "desc": "Defines the traces-list-runs-filter-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-list-runs-filter-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-list-runs-filter-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-list-runs-filter",
+  "title": "Traces List Runs Filter",
+  "desc": "Defines the traces-list-runs-filter-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-list-runs-filter.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-list-runs-filter.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-query-filters-after",
+  "title": "Traces Query Filters After",
+  "desc": "Defines the traces-query-filters-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-query-filters-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-query-filters-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-query-filters-before",
+  "title": "Traces Query Filters Before",
+  "desc": "Defines the traces-query-filters-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-query-filters-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-query-filters-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-query-filters",
+  "title": "Traces Query Filters",
+  "desc": "Defines the traces-query-filters-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-query-filters.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-query-filters.py"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-query-totals-after",
+  "title": "Traces Query Totals After",
+  "desc": "Defines the traces-query-totals-after-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-query-totals-after.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-query-totals-after.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-query-totals-before",
+  "title": "Traces Query Totals Before",
+  "desc": "Defines the traces-query-totals-before-sh snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-query-totals-before.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-query-totals-before.sh"
+ },
+ {
+  "slug": "samples/langsmith/smithdb-migration/traces-query-totals",
+  "title": "Traces Query Totals",
+  "desc": "Defines the traces-query-totals-before-py snippet.",
+  "file": "/langchain/md/samples/langsmith/smithdb-migration/traces-query-totals.md",
+  "product": "langchain_samples",
+  "tab": "LangSmith",
+  "source": "https://github.com/langchain-ai/docs/blob/main/src/code-samples/langsmith/smithdb-migration/traces-query-totals.py"
+ },
+ {
+  "slug": "repo/README",
+  "title": "Read me",
+  "desc": "How the docs site is built, run, and contributed to.",
+  "file": "/langchain/md/repo/README.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/README.md"
+ },
+ {
+  "slug": "repo/AGENTS",
+  "title": "Writing guide",
+  "desc": "The house style every docs page is held to.",
+  "file": "/langchain/md/repo/AGENTS.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/AGENTS.md"
+ },
+ {
+  "slug": "repo/IDE_SETUP",
+  "title": "IDE setup",
+  "desc": "Editor configuration for working on the docs.",
+  "file": "/langchain/md/repo/IDE_SETUP.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/IDE_SETUP.md"
+ },
+ {
+  "slug": "repo/github/CONTRIBUTING",
+  "title": "Contributing",
+  "desc": "How to open a pull request against the docs.",
+  "file": "/langchain/md/repo/github/CONTRIBUTING.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/.github/CONTRIBUTING.md"
+ },
+ {
+  "slug": "repo/github/brand-guidelines",
+  "title": "Brand guidelines",
+  "desc": "Naming and capitalization rules for the LangChain products.",
+  "file": "/langchain/md/repo/github/brand-guidelines.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/.github/brand-guidelines.md"
+ },
+ {
+  "slug": "repo/github/copilot-instructions",
+  "title": "Copilot instructions",
+  "desc": "The repo's instructions for AI assistants.",
+  "file": "/langchain/md/repo/github/copilot-instructions.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/.github/copilot-instructions.md"
+ },
+ {
+  "slug": "repo/idea",
+  "title": "Proposal: langchain deploy",
+  "desc": "A design proposal for TypeScript-native agent deployment.",
+  "file": "/langchain/md/repo/idea.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/idea.md"
+ },
+ {
+  "slug": "repo/docs/superpowers/specs/2026-07-08-threads-traces-migration-guide-design",
+  "title": "Spec: threads and traces migration",
+  "desc": "Design notes for the threads/traces migration guide.",
+  "file": "/langchain/md/repo/docs/superpowers/specs/2026-07-08-threads-traces-migration-guide-design.md",
+  "product": "langchain_samples",
+  "tab": "Repository",
+  "source": "https://github.com/langchain-ai/docs/blob/main/docs/superpowers/specs/2026-07-08-threads-traces-migration-guide-design.md"
  }
 ];

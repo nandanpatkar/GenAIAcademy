@@ -5,7 +5,7 @@ import {
   HelpCircle, Users, HeartHandshake, CheckSquare, GraduationCap,
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
-  Bot, Workflow, Blocks, Activity,
+  Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -42,6 +42,8 @@ export const SIDEBAR_ITEM_REGISTRY = {
   langgraph: { icon: Workflow, label: "LangGraph", description: "Stateful graphs, durable execution, and time travel" },
   deepagents: { icon: Blocks, label: "Deep Agents", description: "Long-horizon agents with skills, sandboxes, and subagents" },
   langsmith: { icon: Activity, label: "LangSmith", description: "Trace, evaluate, deploy, and monitor agents" },
+  langchain_samples: { icon: FileCode2, label: "LangChain Samples", description: "The runnable code behind the docs, plus the repo's own guides" },
+  strands: { icon: Waypoints, label: "Strands Agents", description: "The Strands Python SDK: agent loop, tools, evals, and deployment" },
 
   manual: { icon: BookOpen, label: "Manual", description: "Follow guided lessons" },
   reference: { icon: BookMarked, label: "Quick Reference", description: "Look up key concepts" },
@@ -81,7 +83,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab", "concurrency_lab"] },
   { id: "labs", label: "Labs", itemIds: ["lab_enterprise_ai_agents", "lab_chunking_bench", "lab_token_cost", "lab_agent_anatomy", "lab_agent_bottlenecks"] },
-  { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "aws_agentcore", "agent_library"] },
+  { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "agent_library"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
@@ -101,6 +103,8 @@ const AGENT_ITEM_IDS = [
   "langgraph",
   "deepagents",
   "langsmith",
+  "langchain_samples",
+  "strands",
   "aws_agentcore",
   "agent_library",
 ];

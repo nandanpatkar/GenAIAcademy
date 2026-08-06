@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Build the LangChain (Python) docs index from the docs.langchain.com export.
 
-Reads two inputs that live outside this repo:
+Reads two inputs:
 
   LangChain-website/          Mintlify MDX exported to .md, snippets pre-inlined
-  Langchain/src/docs.json     the real Mintlify navigation config
+  Langchain/                  the langchain-ai/docs checkout, for three things:
+                              src/docs.json      the real Mintlify nav config
+                              src/code-samples/  the runnable samples the docs embed
+                              its own README and contributor guides
 
 and emits:
 
@@ -34,6 +37,7 @@ Run:  python3 scripts/build_langchain_docs.py
 """
 import json
 import os
+import posixpath
 import re
 import shutil
 import sys
@@ -48,7 +52,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOWNLOADS = os.path.dirname(ROOT)
 
 SRC = os.path.join(DOWNLOADS, "genai-roadmap-src", "LangChain-website")
-DOCS_JSON = os.path.join(DOWNLOADS, "Claude Certeficate", "Langchain", "src", "docs.json")
+REPO = os.path.join(ROOT, "Langchain")
+DOCS_JSON = os.path.join(REPO, "src", "docs.json")
+CODE_SAMPLES = os.path.join(REPO, "src", "code-samples")
+
+REPO_URL = "https://github.com/langchain-ai/docs"
+REPO_BLOB = REPO_URL + "/blob/main/"
 
 OUT_MD = os.path.join(ROOT, "public", "langchain", "md")
 OUT_IMG = os.path.join(ROOT, "public", "langchain", "images")
@@ -94,6 +103,12 @@ PRODUCTS = OrderedDict([
         "icon": "observability-icon-light.png",
         "accent": "#006DDD",
     }),
+    ("langchain_samples", {
+        "label": "Samples & Repo",
+        "blurb": "The runnable code behind the docs, plus the docs repo's own guides.",
+        "icon": "engine-icon-light.png",
+        "accent": "#8A4FBF",
+    }),
 ])
 
 # (menu, tab) -> product. Tabs not listed fall back to MENU_PRODUCT.
@@ -126,6 +141,7 @@ report = {
     "images_copied": 0, "images_missing": [], "images_heavy": [],
     "unresolved_links": [], "snippets_spliced": 0, "snippets_inplace": 0,
     "redirects": 0, "externals": 0,
+    "samples": 0, "samples_linked": 0, "repo_docs_missing": [],
     "bytes_md": 0, "bytes_img": 0,
 }
 
@@ -785,6 +801,214 @@ def iter_pages(node):
             yield from iter_pages(item["items"])
 
 
+# ── the samples and repo product ────────────────────────────────────────────
+#
+# `src/code-samples/<product>/**` holds the runnable programs the docs embed.
+# Each one carries `# :snippet-start: <name>` markers, the docs pages import
+# `/snippets/code-samples/<name>.mdx`, and those two facts together give every
+# sample a backlink to the pages it appears on. The docs only ever show the
+# marked region; this product ships the whole file, which is the part a reader
+# actually needs to run it.
+
+SAMPLE_LANGS = {".py": "python", ".sh": "bash", ".yaml": "yaml", ".yml": "yaml"}
+
+# Files that are test scaffolding or package metadata rather than samples.
+SAMPLE_SKIP = {"conftest.py", "package.json", "package-lock.json", ".npmrc"}
+
+# Directive lines the extraction pipeline reads and the reader should not see.
+DIRECTIVE_LINE_RE = re.compile(
+    r"^\s*(?:#|//)\s*(?::(?:snippet-start|snippet-end|remove-start|remove-end|"
+    r"replace-start|replace-end|codegroup-tab|codegroup-fence-mods):|KEEP MODEL\s*$)")
+
+SNIPPET_START_RE = re.compile(r":snippet-start:\s*(\S+)")
+SNIPPET_IMPORT_RE = re.compile(r"/snippets/code-samples/([A-Za-z0-9_./-]+)\.mdx")
+
+# The repo's own guides, in reading order. CLAUDE.md is byte-identical to
+# AGENTS.md and pull_request_template.md is a form, so neither is listed.
+REPO_DOCS = [
+    ("README.md", "Read me", "How the docs site is built, run, and contributed to."),
+    ("AGENTS.md", "Writing guide", "The house style every docs page is held to."),
+    ("IDE_SETUP.md", "IDE setup", "Editor configuration for working on the docs."),
+    (".github/CONTRIBUTING.md", "Contributing", "How to open a pull request against the docs."),
+    (".github/brand-guidelines.md", "Brand guidelines", "Naming and capitalization rules for the LangChain products."),
+    (".github/copilot-instructions.md", "Copilot instructions", "The repo's instructions for AI assistants."),
+    ("idea.md", "Proposal: langchain deploy", "A design proposal for TypeScript-native agent deployment."),
+    ("docs/superpowers/specs/2026-07-08-threads-traces-migration-guide-design.md",
+     "Spec: threads and traces migration", "Design notes for the threads/traces migration guide."),
+]
+
+SAMPLE_ACRONYMS = {
+    "api": "API", "sql": "SQL", "rag": "RAG", "hitl": "HITL", "llm": "LLM",
+    "openai": "OpenAI", "sdk": "SDK", "cli": "CLI", "ui": "UI", "js": "JS",
+    "mcp": "MCP", "ttl": "TTL", "csv": "CSV", "url": "URL", "id": "ID",
+    "v2": "v2", "v3": "v3", "db": "DB", "otel": "OTel", "ai": "AI",
+    "langgraph": "LangGraph", "langchain": "LangChain", "langsmith": "LangSmith",
+    "smithdb": "SmithDB", "acp": "ACP", "http": "HTTP", "json": "JSON",
+    "oauth": "OAuth", "inmemory": "InMemory", "postgres": "Postgres",
+}
+SAMPLE_STOPWORDS = {"and", "with", "to", "in", "for", "the", "of", "as", "a", "an", "on", "or"}
+
+
+def sample_title(stem):
+    words = [word for word in re.split(r"[-_\s]+", stem) if word]
+    out = []
+    for index, word in enumerate(words):
+        lowered = word.lower()
+        if lowered in SAMPLE_ACRONYMS:
+            out.append(SAMPLE_ACRONYMS[lowered])
+        elif index and lowered in SAMPLE_STOPWORDS:
+            out.append(lowered)
+        else:
+            out.append(word[:1].upper() + word[1:])
+    return " ".join(out)
+
+
+def snippet_usage(slug_by_archive):
+    """snippet name -> the docs slugs whose page imports it.
+
+    Only the Python build's pages count. A sample whose only consumers are
+    JavaScript pages still ships; it simply has no backlinks to offer.
+    """
+    uses = {}
+    src_root = os.path.join(REPO, "src")
+    for base, _dirs, files in os.walk(src_root):
+        if os.path.join("src", "code-samples") in base or os.path.join("src", "snippets") in base:
+            continue
+        for fname in files:
+            if not fname.endswith(".mdx"):
+                continue
+            rel = os.path.relpath(os.path.join(base, fname), src_root)[:-4]
+            target = resolve_link(normalize_slug("/" + rel), slug_by_archive)
+            if not target:
+                continue
+            for match in SNIPPET_IMPORT_RE.finditer(read_text(os.path.join(base, fname))):
+                uses.setdefault(match.group(1), set()).add(target)
+    return uses
+
+
+def sample_body(path, ext, uses):
+    """A sample page: where it is used, then the whole file."""
+    raw = read_text(path)
+    names = SNIPPET_START_RE.findall(raw)
+
+    if ext == ".md":            # a SKILL.md or a repo guide — already prose
+        body = strip_frontmatter(raw)[1]
+    else:
+        kept = [line for line in raw.split("\n") if not DIRECTIVE_LINE_RE.match(line)]
+        code = "\n".join(kept).strip("\n")
+        body = "```%s %s\n%s\n```\n" % (SAMPLE_LANGS[ext], os.path.basename(path), code)
+
+    targets = sorted({slug for name in names for slug in uses.get(name, ())})
+    if targets:
+        links = ", ".join("[%s](lc:%s)" % (PAGE_TITLES.get(slug, slug), slug)
+                          for slug in targets[:8])
+        report["samples_linked"] += 1
+        body = ("> [!NOTE] Where this runs in the docs\n>\n> %s\n\n%s" % (links, body))
+    return body, names, targets
+
+
+def build_samples(products, slug_by_archive):
+    """Fill the Samples & Repo product; returns its pages, bodies included."""
+    if not os.path.isdir(CODE_SAMPLES):
+        report["samples_missing"] = CODE_SAMPLES
+        return []
+
+    uses = snippet_usage(slug_by_archive)
+    pages, tabs = [], []
+
+    def make_page(path, slug, title, tab_label, desc=""):
+        ext = os.path.splitext(path)[1]
+        body, names, targets = sample_body(path, ext, uses)
+        rel = os.path.relpath(path, REPO).replace(os.sep, "/")
+        page = {
+            "kind": "page", "slug": slug, "archive": slug, "path": path, "tag": None,
+            "body": body, "title": title, "navTitle": title,
+            "desc": desc or first_sentence(strip_frontmatter(read_text(path))[1] if ext == ".md" else "")
+                    or (docstring_line(path) if ext == ".py" else "")
+                    or ("Used on %s." % PAGE_TITLES.get(targets[0], targets[0]) if targets else "")
+                    or ("Defines the %s snippet." % names[0] if names else "")
+                    or "From the docs repo's code samples: %s." % rel,
+            "source": REPO_BLOB + rel,
+            "tabLabel": tab_label,
+        }
+        pages.append(page)
+        return page
+
+    for product_id in ("langchain", "langgraph", "deepagents", "langsmith"):
+        folder = os.path.join(CODE_SAMPLES, product_id)
+        if not os.path.isdir(folder):
+            continue
+        flat, groups = [], OrderedDict()
+        for base, dirs, files in os.walk(folder):
+            dirs.sort()
+            for fname in sorted(files):
+                ext = os.path.splitext(fname)[1]
+                if fname in SAMPLE_SKIP or (ext not in SAMPLE_LANGS and ext != ".md"):
+                    continue
+                path = os.path.join(base, fname)
+                rel = os.path.relpath(path, folder).replace(os.sep, "/")
+                slug = "samples/%s/%s" % (product_id, os.path.splitext(rel)[0])
+                sub = os.path.dirname(rel)
+                # A skill is a directory with a SKILL.md in it; the directory
+                # name is what it is called, "SKILL" is not.
+                stem = (os.path.basename(sub) if fname == "SKILL.md" and sub
+                        else os.path.splitext(fname)[0])
+                page = make_page(path, slug, sample_title(stem),
+                                 PRODUCTS[product_id]["label"])
+                entry = {"kind": "page", "slug": slug, "navTitle": page["title"], "tag": None}
+                if sub:
+                    groups.setdefault(sub, []).append(entry)
+                else:
+                    flat.append(entry)
+
+        items = flat + [{"kind": "group", "label": sample_title(sub.replace("/", " ")),
+                         "tag": None, "expanded": False, "items": entries}
+                        for sub, entries in groups.items()]
+        if items:
+            tabs.append({"section": "Code samples", "tab": PRODUCTS[product_id]["label"],
+                         "items": items})
+
+    repo_items = []
+    for rel, title, desc in REPO_DOCS:
+        path = os.path.join(REPO, rel)
+        if not os.path.exists(path):
+            report["repo_docs_missing"].append(rel)
+            continue
+        slug = "repo/" + os.path.splitext(rel)[0].replace(os.sep, "/").lstrip(".")
+        make_page(path, slug, title, "Repository", desc)
+        repo_items.append({"kind": "page", "slug": slug, "navTitle": title, "tag": None})
+    if repo_items:
+        tabs.append({"section": "langchain-ai/docs", "tab": "Repository", "items": repo_items})
+
+    products["langchain_samples"]["tabs"] = tabs
+    report["samples"] = len(pages)
+    return pages
+
+
+def docstring_line(path):
+    """First line of a module docstring, when the sample opens with one."""
+    match = re.match(r'\A(?:#[^\n]*\n)*\s*(?:"""|\'\'\')\s*(.+)', read_text(path))
+    return match.group(1).strip().rstrip('"\'').strip() if match else ""
+
+
+def rewrite_repo_links(body, slug):
+    """Repo guides link to sibling files and code; resolve those to GitHub.
+
+    They are ordinary GitHub markdown, so an unqualified `src/oss/index.mdx`
+    means a path in the checkout, not a page in this build.
+    """
+    def sub(match):
+        label, href = match.group(1), match.group(2).strip()
+        if not href or href.startswith(("http://", "https://", "mailto:", "#")):
+            return match.group(0)
+        base = REPO_BLOB + posixpath.dirname(slug[len("repo/"):]) + "/"
+        joined = posixpath.normpath(posixpath.join(base, href.split("#")[0]))
+        anchor = "#" + href.split("#", 1)[1] if "#" in href else ""
+        return "[%s](%s%s)" % (label, joined.replace(":/", "://", 1), anchor)
+
+    return re.sub(r"(?<!!)\[([^\]]*)\]\(([^)\s]*)\)", sub, body)
+
+
 # ── main ────────────────────────────────────────────────────────────────────
 
 def main():
@@ -886,6 +1110,25 @@ def main():
         report["bytes_md"] += len(body.encode("utf-8"))
         report["pages"] += 1
 
+    # The Samples & Repo product is built last: its backlink notes and titles
+    # need PAGE_TITLES and slug_by_archive complete, and its bodies are whole
+    # files rather than exported MDX, so they skip the pipeline above.
+    for page in build_samples(products, slug_by_archive):
+        body = page.pop("body")
+        if page["slug"].startswith("repo/"):
+            body = rewrite_repo_links(body, page["slug"])
+        body = tidy(body)
+        page["product"] = "langchain_samples"
+        page["file"] = "/langchain/md/%s.md" % page["slug"]
+        all_pages.append(page)
+
+        dest = os.path.join(OUT_MD, page["slug"] + ".md")
+        os.makedirs(os.path.dirname(dest), exist_ok=True)
+        with open(dest, "w", encoding="utf-8") as handle:
+            handle.write(body)
+        report["bytes_md"] += len(body.encode("utf-8"))
+        report["pages"] += 1
+
     # Product icons are chrome, not page content, so nothing in the markdown
     # references them and the sweep above would never pick them up.
     for meta in PRODUCTS.values():
@@ -921,6 +1164,7 @@ def main():
              len(report["images_heavy"]), len(set(report["images_missing"]))))
     print("snippets        %d spliced, %d kept in place"
           % (report["snippets_spliced"], report["snippets_inplace"]))
+    print("samples         %d shipped, %d with docs backlinks" % (report["samples"], report["samples_linked"]))
     print("redirects       %d forwarded, %d link out" % (report["redirects"], report["externals"]))
     print("links           %d unresolved" % len(report["unresolved_links"]))
     if report["unknown_components"]:

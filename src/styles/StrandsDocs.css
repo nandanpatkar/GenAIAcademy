@@ -1,0 +1,120 @@
+/* ── Strands Agents documentation viewer ──────────────────────────────────
+   The Strands viewer reuses LangChainDocs.css wholesale: the build lowers both
+   corpora onto one markdown contract, so both viewers emit the same `lc-`
+   markup and only differ in palette. This file is loaded after it and does two
+   things — re-point the design tokens at the Strands brand, and add the one
+   construct Strands has that LangChain does not (language tab strips whose
+   bodies are prose, not just code).
+
+   Every colour is taken from the real site's own config rather than eyeballed:
+
+     site/src/styles/custom.css
+       --sl-color-accent      #00cc5f
+       --sl-color-accent-high #00FF77 (dark) / #00B353 (light)
+       --sl-color-accent-low  #0a2e12 (dark) / #d4f5e0 (light)
+       --sl-color-black       #0E0E0E (dark canvas) / #ffffff (light canvas)
+       --cl-accent-text       #067a39 on light, where the raw green fails AA
+   ──────────────────────────────────────────────────────────────────────── */
+
+.lc-root.sa-root {
+  --lc-canvas: #ffffff;
+  --lc-panel: #fbfcfb;
+  --lc-panel-2: #f2f7f4;
+  --lc-ink: #0e0e0e;
+  --lc-ink-2: #45514a;
+  --lc-ink-3: #6d7a72;
+  --lc-line: #e2e9e5;
+  --lc-line-2: #edf3ef;
+  /* #00cc5f itself sits at ~1.9:1 on white; the site's own text green is used
+     for anything that has to be read rather than merely seen. */
+  --lc-accent: #067a39;
+  --lc-accent-soft: rgba(0, 204, 95, 0.11);
+  --lc-brand: #0e0e0e;
+
+  --lc-inline-bg: #edf3ef;
+  --lc-inline-ink: #0b5c2c;
+}
+
+.lc-root.sa-root[data-theme="dark"] {
+  --lc-canvas: #0e0e0e;
+  --lc-panel: #141614;
+  --lc-panel-2: #1a1d1b;
+  --lc-ink: #ffffff;
+  --lc-ink-2: #bcc7c0;
+  --lc-ink-3: #8b978f;
+  --lc-line: #262b28;
+  --lc-line-2: #1c201e;
+  --lc-accent: #00ff77;
+  --lc-accent-soft: rgba(0, 255, 119, 0.12);
+
+  --lc-inline-bg: #0a2e12;      /* --sl-color-accent-low */
+  --lc-inline-ink: #b6ffd5;
+}
+
+/* The switcher carries five entries rather than four, and lucide glyphs rather
+   than product logos, so the sizing rule for <img> does not apply. */
+.sa-root .lc-switch-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--pc, var(--lc-accent));
+}
+.sa-root[data-theme="dark"] .lc-switch-btn svg { color: var(--lc-accent); }
+/* Five buttons on a two-column grid leaves an odd one out; letting the last
+   span both columns keeps the block rectangular. */
+.sa-root .lc-switch-btn:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+.sa-root .lc-brand img,
+.sa-root .sa-hero-mark {
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* ── frontmatter tags ──────────────────────────────────────────────────────
+   Strands pages carry topic tags ("mcp", "tool-authoring"). They double as a
+   search shortcut: clicking one runs it through the rail's search box. */
+
+.sa-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: -6px 0 22px;
+  color: var(--lc-ink-3);
+}
+.sa-tags svg { flex-shrink: 0; opacity: 0.7; }
+.sa-tag {
+  padding: 2px 9px;
+  border: 1px solid var(--lc-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--lc-ink-3);
+  font-family: var(--lc-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.sa-tag:hover { border-color: var(--lc-accent); color: var(--lc-accent); }
+
+/* ── language tab strips ───────────────────────────────────────────────────
+   LangChain's strips hold one code block each, so that container is painted in
+   the code background. A Strands tab body is markdown — usually a sentence and
+   then a sample — so it takes the page background instead, and the code block
+   inside brings its own. */
+
+.sa-root .lc-tabs.sa-tabs { background: var(--lc-canvas); }
+
+.sa-tab-body { padding: 15px 17px 1px; }
+.sa-tab-body > *:last-child { margin-bottom: 15px; }
+/* A tab holding nothing but a sample should read as a captioned code block
+   rather than a code block floating inside a box. */
+.sa-tab-body > .lc-code:only-child {
+  margin: -15px -17px -1px;
+  border: 0;
+  border-radius: 0;
+}
+.sa-tab-body .lc-code { margin-bottom: 15px; }
+/* Nested strips (a Python/TypeScript pair inside a platform pair) would
+   otherwise stack two rounded borders with no space between them. */
+.sa-tab-body .lc-tabs { margin-bottom: 15px; }
