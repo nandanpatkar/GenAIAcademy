@@ -166,6 +166,9 @@
   border-color: var(--lc-accent);
   color: var(--lc-ink);
 }
+/* An odd product count leaves the last button beside an empty cell; spanning
+   both columns keeps the block rectangular. */
+.lc-switch-btn:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .lc-switch-btn--on {
   border-color: var(--lc-accent);
   background: var(--lc-accent-soft);

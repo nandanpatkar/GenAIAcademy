@@ -1,5 +1,5 @@
 {
- "pages": 1001,
+ "pages": 1233,
  "missing_slugs": [],
  "unknown_components": {
   "Tool": 1,
@@ -28,7 +28,7 @@
   "SandboxName": 1,
   "CATEGORY": 1
  },
- "images_copied": 454,
+ "images_copied": 455,
  "images_missing": [
   "./images/cicd-new-lgp-revision.png",
   "./images/cicd-studio-cli.png",
@@ -415,8 +415,11 @@
  "snippets_inplace": 80,
  "redirects": 18,
  "externals": 17,
- "bytes_md": 19196527,
- "bytes_img": 70123327,
+ "samples": 232,
+ "samples_linked": 130,
+ "repo_docs_missing": [],
+ "bytes_md": 19733660,
+ "bytes_img": 70128152,
  "unresolved_link_count": 115,
  "unresolved_link_targets": 86
 }

@@ -1,0 +1,281 @@
+The [Vercel AI SDK](https://sdk.vercel.ai/) is a TypeScript toolkit for building AI-powered applications. It defines a [Language Model Specification](https://github.com/vercel/ai/tree/main/packages/provider/src/language-model/v3) that standardizes how applications interact with LLMs across providers. The Strands Agents SDK includes a `VercelModel` adapter that wraps any Language Model Specification v3 (`LanguageModelV3`) provider for use as a Strands model provider.
+
+This means you can bring models from the entire Vercel AI SDK ecosystem - including `@ai-sdk/openai`, `@ai-sdk/anthropic`, `@ai-sdk/amazon-bedrock`, `@ai-sdk/google`, and [many more](https://sdk.vercel.ai/docs/foundations/providers-and-models) - directly into Strands agents.
+
+## Installation
+
+Install the Strands SDK along with the Vercel AI SDK provider package for the model you want to use:
+
+```bash
+# OpenAI
+npm install @strands-agents/sdk @ai-sdk/openai
+
+# Amazon Bedrock
+npm install @strands-agents/sdk @ai-sdk/amazon-bedrock
+
+# Anthropic
+npm install @strands-agents/sdk @ai-sdk/anthropic
+
+# Google Generative AI
+npm install @strands-agents/sdk @ai-sdk/google
+```
+
+The `@ai-sdk/provider` package (which defines the `LanguageModelV3` interface) is listed as an optional peer dependency of `@strands-agents/sdk` and will be installed automatically with any `@ai-sdk/*` provider.
+
+For community providers like Ollama, install the community package directly:
+
+```bash
+npm install @strands-agents/sdk ai-sdk-ollama
+```
+
+## Usage
+
+Create a `LanguageModelV3` instance from any Vercel provider and wrap it with `VercelModel`:
+
+### OpenAI
+
+```typescript
+import { Agent } from '@strands-agents/sdk'
+import { VercelModel } from '@strands-agents/sdk/models/vercel'
+import { openai } from '@ai-sdk/openai'
+
+const agent = new Agent({
+  model: new VercelModel({ provider: openai('gpt-4o') }),
+})
+
+const result = await agent.invoke('Hello!')
+console.log(result)
+```
+
+### Amazon Bedrock
+
+```typescript
+import { Agent } from '@strands-agents/sdk'
+import { VercelModel } from '@strands-agents/sdk/models/vercel'
+import { bedrock } from '@ai-sdk/amazon-bedrock'
+
+const agent = new Agent({
+  model: new VercelModel({
+    provider: bedrock('us.anthropic.claude-sonnet-4-20250514-v1:0'),
+  }),
+})
+
+const result = await agent.invoke('Hello!')
+console.log(result)
+```
+
+### Anthropic
+
+```typescript
+import { Agent } from '@strands-agents/sdk'
+import { VercelModel } from '@strands-agents/sdk/models/vercel'
+import { anthropic } from '@ai-sdk/anthropic'
+
+const agent = new Agent({
+  model: new VercelModel({ provider: anthropic('claude-sonnet-4-20250514') }),
+})
+
+const result = await agent.invoke('Hello!')
+console.log(result)
+```
+
+### Google Generative AI
+
+```typescript
+import { Agent } from '@strands-agents/sdk'
+import { VercelModel } from '@strands-agents/sdk/models/vercel'
+import { google } from '@ai-sdk/google'
+
+const agent = new Agent({
+  model: new VercelModel({ provider: google('gemini-2.5-flash') }),
+})
+
+const result = await agent.invoke('Hello!')
+console.log(result)
+```
+
+### Ollama
+
+```typescript
+import { Agent } from '@strands-agents/sdk'
+import { VercelModel } from '@strands-agents/sdk/models/vercel'
+import { ollama } from 'ai-sdk-ollama'
+
+const agent = new Agent({
+  model: new VercelModel({ provider: ollama('llama3.1') }),
+})
+
+const result = await agent.invoke('Hello!')
+console.log(result)
+```
+
+Note
+
+> [!NOTE]
+>
+> Ollama must be [installed](https://ollama.com/download) and running locally with your desired model pulled (e.g., `ollama pull llama3.1`).
+>
+> The [Vercel AI SDK recommends two community Ollama providers](https://ai-sdk.dev/providers/community-providers/ollama): `ollama-ai-provider-v2` as a basic option for simple text generation, and `ai-sdk-ollama` as a more advanced option with reliable tool calling and guaranteed complete responses. We choose `ai-sdk-ollama` to ensure Strands agents can fully leverage tool calling and operate without limitations.
+
+## Configuration
+
+`VercelModel` accepts configuration directly alongside the `provider` option. These include all [LanguageModelV3CallOptions](https://github.com/vercel/ai/tree/main/packages/provider/src/language-model/v3) settings (temperature, topP, topK, penalties, stop sequences, seed, etc.) plus the base Strands model config fields.
+
+```typescript
+const model = new VercelModel({
+  provider: openai('gpt-4o'),
+  maxTokens: 1000,
+  temperature: 0.7,
+  topP: 0.9,
+})
+
+const agent = new Agent({ model })
+const result = await agent.invoke('Write a short poem')
+console.log(result)
+```
+
+| Parameter | Description | Example |
+| --- | --- | --- |
+| `modelId` | Override the model ID (defaults to the provider’s model ID) | `'gpt-4o'` |
+| `maxTokens` | Maximum tokens to generate | `1000` |
+| `temperature` | Controls randomness | `0.7` |
+| `topP` | Nucleus sampling | `0.9` |
+| `topK` | Top-k sampling | `40` |
+| `presencePenalty` | Encourages new topics | `0.5` |
+| `frequencyPenalty` | Reduces repetition | `0.5` |
+| `stopSequences` | Custom stop sequences | `['END']` |
+| `seed` | Deterministic generation | `42` |
+
+When new fields are added to the Language Model Specification, they become available in the config automatically.
+
+## Streaming
+
+The adapter supports streaming text, reasoning content, and tool use:
+
+```typescript
+const agent = new Agent({
+  model: new VercelModel({ provider: openai('gpt-4o') }),
+})
+
+for await (const event of agent.stream('Tell me a story')) {
+  if (
+    event.type === 'modelContentBlockDeltaEvent' &&
+    event.delta.type === 'textDelta'
+  ) {
+    process.stdout.write(event.delta.text)
+  }
+}
+```
+
+## Structured Output
+
+The adapter supports structured output through the underlying provider’s native capabilities. Define a Zod schema, pass it as `structuredOutputSchema`, and read validated output from `result.structuredOutput`:
+
+```typescript
+import { Agent } from '@strands-agents/sdk'
+import { VercelModel } from '@strands-agents/sdk/models/vercel'
+import { openai } from '@ai-sdk/openai'
+import { z } from 'zod'
+
+const MovieReview = z.object({
+  title: z.string().describe('Movie title'),
+  rating: z.number().min(1).max(10).describe('Rating from 1-10'),
+  genre: z.string().describe('Primary genre'),
+  sentiment: z.enum(['positive', 'negative', 'neutral']).describe('Overall sentiment'),
+  summary: z.string().describe('Brief summary of the review'),
+})
+
+const agent = new Agent({
+  model: new VercelModel({ provider: openai('gpt-4o') }),
+  structuredOutputSchema: MovieReview,
+})
+
+const result = await agent.invoke(
+  `Just watched "The Matrix" - what an incredible sci-fi masterpiece!
+   The groundbreaking visual effects and philosophical themes make this
+   a must-watch. Keanu Reeves delivers a solid performance. 9/10!`
+)
+
+const review = result.structuredOutput as z.infer<typeof MovieReview>
+console.log(`Movie: ${review.title}`)
+console.log(`Rating: ${review.rating}/10`)
+console.log(`Sentiment: ${review.sentiment}`)
+```
+
+For schema patterns, error handling, and per-invocation overrides, see [Structured Output](lc:user-guide/concepts/agents/structured-output).
+
+## Supported features
+
+The `VercelModel` adapter handles:
+
+-   Streaming text, reasoning, and tool use (both incremental and complete tool call events)
+-   Message formatting: text, images, documents, video, tool use/results, and reasoning blocks
+-   Tool specification and tool choice mapping
+-   Usage and token tracking including cache read/write tokens
+-   Error classification: maps provider errors to `ModelThrottledError`, `ContextWindowOverflowError`, and `ModelError`
+
+## Compatible providers
+
+Any package that implements the `LanguageModelV3` interface works with `VercelModel`. This includes both official Vercel AI SDK providers and community providers.
+
+### [Official providers](https://sdk.vercel.ai/docs/foundations/providers-and-models)
+
+| Provider | Package |
+| --- | --- |
+| OpenAI | `@ai-sdk/openai` |
+| Amazon Bedrock | `@ai-sdk/amazon-bedrock` |
+| Anthropic | `@ai-sdk/anthropic` |
+| Google Generative AI | `@ai-sdk/google` |
+| Google Vertex | `@ai-sdk/google-vertex` |
+| Azure OpenAI | `@ai-sdk/azure` |
+| Mistral | `@ai-sdk/mistral` |
+| Cohere | `@ai-sdk/cohere` |
+| xAI Grok | `@ai-sdk/xai` |
+| DeepSeek | `@ai-sdk/deepseek` |
+| Groq | `@ai-sdk/groq` |
+
+### [Community providers](https://ai-sdk.dev/providers/community-providers)
+
+| Provider | Package |
+| --- | --- |
+| Ollama | `ai-sdk-ollama` |
+
+## Troubleshooting
+
+### Missing peer dependency
+
+If you see warnings about `@ai-sdk/provider`, install it explicitly:
+
+```bash
+npm install @ai-sdk/provider
+```
+
+### Authentication errors
+
+Authentication is handled by the underlying Vercel provider package. Refer to the specific provider’s documentation for credential setup - for example, `@ai-sdk/openai` reads `OPENAI_API_KEY` from the environment, and `@ai-sdk/amazon-bedrock` uses the standard AWS credential chain.
+
+## References
+
+-   [Vercel AI SDK](https://sdk.vercel.ai/)
+-   [Language Model Specification v3](https://github.com/vercel/ai/tree/main/packages/provider/src/language-model/v3)
+-   [Vercel AI SDK Providers](https://sdk.vercel.ai/docs/foundations/providers-and-models)
+
+## Related pages
+
+- [Google](lc:user-guide/concepts/model-providers/google) (1 shared tag)
+- [Multimodal Correctness Evaluator](lc:user-guide/evals-sdk/evaluators/multimodal_correctness_evaluator) (1 shared tag)
+- [Multimodal Faithfulness Evaluator](lc:user-guide/evals-sdk/evaluators/multimodal_faithfulness_evaluator) (1 shared tag)
+- [Multimodal Instruction Following Evaluator](lc:user-guide/evals-sdk/evaluators/multimodal_instruction_following_evaluator) (1 shared tag)
+- [Multimodal Output Evaluator](lc:user-guide/evals-sdk/evaluators/multimodal_output_evaluator) (1 shared tag)
+- [Multimodal Overall Quality Evaluator](lc:user-guide/evals-sdk/evaluators/multimodal_overall_quality_evaluator) (1 shared tag)
+- [OpenAI](lc:user-guide/concepts/model-providers/openai) (1 shared tag)
+- [Writer](lc:user-guide/concepts/model-providers/writer) (1 shared tag)
+- [Amazon Nova](lc:user-guide/concepts/model-providers/amazon-nova) (1 shared tag)
+- [Amazon Bedrock](lc:user-guide/concepts/model-providers/amazon-bedrock) (1 shared tag)
+
+
+## Implementation
+
+### TypeScript
+
+- [harness-sdk/strands-ts/src/models/vercel.ts](https://github.com/strands-agents/harness-sdk/blob/main/strands-ts/src/models/vercel.ts)

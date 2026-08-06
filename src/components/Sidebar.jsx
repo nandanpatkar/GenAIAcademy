@@ -75,6 +75,7 @@ export default function Sidebar({
   activeReferenceTopic, setActiveReferenceTopic,
   showAgentCore, setShowAgentCore,
   showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
+  showStrandsDocs, setShowStrandsDocs,
   showOnboarding, setShowOnboarding,
   activeToolHome, onOpenToolHome,
   onOpenGenAIPlayground2
@@ -297,6 +298,7 @@ export default function Sidebar({
     if (showReference) return "reference";
     if (showAgentCore) return "aws_agentcore";
     if (showLangChainDocs) return langChainProduct || "langchain";
+    if (showStrandsDocs) return "strands";
     if (!activeNode) return "overview";
     return null;
   };
@@ -359,6 +361,7 @@ export default function Sidebar({
     if (setShowReference) setShowReference(false);
     if (setShowAgentCore) setShowAgentCore(false);
     if (setShowLangChainDocs) setShowLangChainDocs(false);
+    if (setShowStrandsDocs) setShowStrandsDocs(false);
     if (setShowOnboarding) setShowOnboarding(false);
 
     switch (id) {
@@ -384,8 +387,12 @@ export default function Sidebar({
       case "langgraph":
       case "deepagents":
       case "langsmith":
+      case "langchain_samples":
         if (setLangChainProduct) setLangChainProduct(id);
         if (setShowLangChainDocs) setShowLangChainDocs(true);
+        break;
+      case "strands":
+        if (setShowStrandsDocs) setShowStrandsDocs(true);
         break;
       case "aws_agentcore":
         if (setShowAgentCore) setShowAgentCore(true);
