@@ -4,7 +4,8 @@ import {
   BookOpen, BookMarked, Bookmark, GitBranch,
   HelpCircle, Users, HeartHandshake, CheckSquare, GraduationCap,
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
-  DatabaseZap, Split,
+  DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
+  Bot, Workflow, Blocks, Activity,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -29,6 +30,18 @@ export const SIDEBAR_ITEM_REGISTRY = {
   learnbug: { icon: Terminal, label: "Visualize", description: "Debug Python code with memory, structure, and timeline views" },
   sql_lab: { icon: DatabaseZap, label: "SQL & Query Plans", description: "Run real Postgres in-browser and read EXPLAIN ANALYZE output" },
   concurrency_lab: { icon: Split, label: "Concurrency Lab", description: "Step through thread interleavings and watch races happen" },
+  lab_enterprise_ai_agents: { icon: ShieldCheck, label: "Enterprise AI Agent Problems", description: "Explore 30 production AI scenarios" },
+  lab_chunking_bench: { icon: Braces, label: "Chunking Bench — How RAG Cuts, Embeds and Retrieves a Document", description: "Compare RAG chunking strategies" },
+  lab_token_cost: { icon: ReceiptText, label: "Token Cost Lab — Beat the Bill", description: "Simulate and reduce token costs" },
+  lab_agent_anatomy: { icon: Network, label: "Agent Anatomy Lab", description: "Build an agent stage by stage" },
+  lab_agent_bottlenecks: { icon: PanelLeft, label: "20 AI Agent Bottlenecks, Live", description: "Run agent failure and recovery simulations" },
+
+  // Agents — the LangChain Python docs, one entry per library, plus the two
+  // agent surfaces that already existed elsewhere in the sidebar.
+  langchain: { icon: Bot, label: "LangChain", description: "Build agents with models, tools, and middleware" },
+  langgraph: { icon: Workflow, label: "LangGraph", description: "Stateful graphs, durable execution, and time travel" },
+  deepagents: { icon: Blocks, label: "Deep Agents", description: "Long-horizon agents with skills, sandboxes, and subagents" },
+  langsmith: { icon: Activity, label: "LangSmith", description: "Trace, evaluate, deploy, and monitor agents" },
 
   manual: { icon: BookOpen, label: "Manual", description: "Follow guided lessons" },
   reference: { icon: BookMarked, label: "Quick Reference", description: "Look up key concepts" },
@@ -67,10 +80,29 @@ export const SIDEBAR_ITEM_REGISTRY = {
 export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab", "concurrency_lab"] },
-  { id: "library", label: "Library", itemIds: ["manual", "reference", "aws_agentcore", "resources", "blog", "links", "github"] },
+  { id: "labs", label: "Labs", itemIds: ["lab_enterprise_ai_agents", "lab_chunking_bench", "lab_token_cost", "lab_agent_anatomy", "lab_agent_bottlenecks"] },
+  { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "aws_agentcore", "agent_library"] },
+  { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
-  { id: "more_tools", label: "More tools", itemIds: ["agent_library", "projects", "aws_simulator", "dsa_animator", "k8s_games", "git_visualizer", "flow_design", "notion", "nosignups", "free_system_design"] },
+  { id: "more_tools", label: "More tools", itemIds: ["projects", "aws_simulator", "dsa_animator", "k8s_games", "git_visualizer", "flow_design", "notion", "nosignups", "free_system_design"] },
+];
+
+const LAB_ITEM_IDS = [
+  "lab_enterprise_ai_agents",
+  "lab_chunking_bench",
+  "lab_token_cost",
+  "lab_agent_anatomy",
+  "lab_agent_bottlenecks",
+];
+
+const AGENT_ITEM_IDS = [
+  "langchain",
+  "langgraph",
+  "deepagents",
+  "langsmith",
+  "aws_agentcore",
+  "agent_library",
 ];
 
 // Merges a saved custom layout with the default one so that any item id that
@@ -79,6 +111,38 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
 export const resolveEffectiveLayout = (savedLayout) => {
   const source = savedLayout && savedLayout.length ? savedLayout : DEFAULT_SIDEBAR_LAYOUT;
   const groups = source.map((group) => ({ ...group, itemIds: [...group.itemIds] }));
+
+  // Migrate the original single Labs destination into a real sidebar subsection.
+  // Lab choices stay together even for users with an older saved sidebar layout.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => id !== "labs" && !LAB_ITEM_IDS.includes(id));
+  });
+  let labsGroup = groups.find((group) => group.id === "labs");
+  if (!labsGroup) {
+    labsGroup = { id: "labs", label: "Labs", itemIds: [] };
+    const libraryIndex = groups.findIndex((group) => group.id === "library");
+    groups.splice(libraryIndex === -1 ? groups.length : libraryIndex, 0, labsGroup);
+  }
+  labsGroup.label = "Labs";
+  labsGroup.itemIds.push(...LAB_ITEM_IDS);
+
+  // Same migration for the Agents subsection. Without this, anyone with a saved
+  // layout (which is everyone who has ever customized the sidebar) would get the
+  // LangChain entries appended to "More tools" as orphans, and would keep
+  // aws_agentcore / agent_library in their old groups — so the section would
+  // look right on a fresh profile and wrong everywhere else.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => !AGENT_ITEM_IDS.includes(id));
+  });
+  let agentsGroup = groups.find((group) => group.id === "agents");
+  if (!agentsGroup) {
+    agentsGroup = { id: "agents", label: "Agents", itemIds: [] };
+    const libraryIndex = groups.findIndex((group) => group.id === "library");
+    groups.splice(libraryIndex === -1 ? groups.length : libraryIndex, 0, agentsGroup);
+  }
+  agentsGroup.label = "Agents";
+  agentsGroup.itemIds.push(...AGENT_ITEM_IDS);
+
   const covered = new Set(groups.flatMap((group) => group.itemIds));
   const orphanIds = Object.keys(SIDEBAR_ITEM_REGISTRY).filter((id) => !covered.has(id));
   if (orphanIds.length) {

@@ -1,0 +1,92 @@
+> [!WARNING]
+>
+> **You are currently on a page documenting the use of AI/ML API models as text completion models. Many of the latest and most popular AI/ML API models are [chat completion models](lc:oss/python/langchain/models).**
+>
+> You may be looking for the [AI/ML API chat docs](https://docs.aimlapi.com/).
+
+
+This page helps you get started with AI/ML API text completion models.
+
+## Overview
+
+### Integration details
+
+| Class | Package | Local | Serializable | JS support | Downloads | Version |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| `AIMLAPILLM` | `langchain-aimlapi` | ❌ | beta | ❌ | ![PyPI - Downloads](https://img.shields.io/pypi/dm/langchain-aimlapi?style=flat-square&label=%20) | ![PyPI - Version](https://img.shields.io/pypi/v/langchain-aimlapi?style=flat-square&label=%20) |
+
+### Model features
+
+| [Tool calling](lc:oss/python/langchain/tools) | [Structured output](lc:oss/python/langchain/structured-output) | [Image input](lc:oss/python/langchain/messages#multimodal) | Audio input | Video input | [Token-level streaming](lc:oss/python/langchain/streaming) | Native async | [Token usage](lc:oss/python/langchain/models#token-usage) | [Logprobs](lc:oss/python/langchain/models#log-probabilities) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+## Setup
+
+To access AI/ML API models you'll need to create an account, get an API key, and install the `langchain-aimlapi` integration package.
+
+### Credentials
+
+Head to [aimlapi.com](https://aimlapi.com/app/?utm_source=langchain&utm_medium=github&utm_campaign=integration) to sign up and generate an API key. Once you've done this set the `AIMLAPI_API_KEY` environment variable:
+
+```python
+
+if not os.getenv("AIMLAPI_API_KEY"):
+    os.environ["AIMLAPI_API_KEY"] = getpass.getpass("Enter your AI/ML API key: ")
+```
+
+To enable automated tracing of your model calls, set your [LangSmith](lc:langsmith/observability) API key:
+
+```python
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_API_KEY"] = getpass.getpass("Enter your LangSmith API key: ")
+```
+
+### Installation
+
+The LangChain AI/ML API integration lives in the `langchain-aimlapi` package:
+
+```python
+pip install -qU langchain-aimlapi
+```
+
+## Instantiation
+
+Now we can instantiate our model object and generate text completions:
+
+```python
+from langchain_aimlapi import AIMLAPILLM
+
+llm = AIMLAPILLM(
+    model="gpt-3.5-turbo-instruct",
+    temperature=0.5,
+    max_tokens=256,
+)
+```
+
+## Invocation
+
+```python
+response = llm.invoke("Explain the bubble sort algorithm in Python.")
+print(response)
+```
+
+```text
+Bubble sort is a simple sorting algorithm that repeatedly steps through a list, compares adjacent items, and swaps them when they are out of order. The process repeats until the entire list is sorted. While easy to understand and implement, bubble sort is inefficient on large datasets because it has quadratic time complexity.
+```
+
+## Streaming invocation
+
+You can also stream responses token-by-token:
+
+```python
+llm = AIMLAPILLM(
+    model="gpt-3.5-turbo-instruct",
+)
+
+stream = llm.stream_events("List top 5 programming languages in 2025 with reasons.", version="v3")
+for token in stream.text:
+    print(token, end="", flush=True)
+```
+
+---

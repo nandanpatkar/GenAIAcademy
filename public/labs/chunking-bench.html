@@ -1,0 +1,2929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chunking Bench — how RAG cuts, embeds and retrieves a document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#08131C;
+  --panel:#0D1E2B;
+  --panel-2:#112635;
+  --raise:#16303F;
+  --rule:rgba(140,190,225,.14);
+  --rule-hi:rgba(140,190,225,.28);
+  --paper:#F6F2E8;
+  --paper-2:#EAE4D6;
+  --ink:#151F28;
+  --ink-2:#5A6773;
+  --amber:#FFB020;
+  --cyan:#5FD0E8;
+  --rose:#FF6B84;
+  --text:#DBE8F2;
+  --text-dim:#7C95AA;
+  --text-faint:#4E6577;
+  --c1:#2FBFA0; --c2:#7C86FF; --c3:#FF7BA9; --c4:#FFB020;
+  --c5:#8CD44A; --c6:#4FB6F5; --c7:#FF8A5B; --c8:#C07BF0;
+  --doc-fs:15.5px;
+  --sans:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; height:100vh; min-height:0; overflow:hidden; display:flex; flex-direction:column;
+  background:var(--ground); color:var(--text);
+  font-family:var(--sans); font-size:14.5px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 520px at 14% -10%, rgba(60,120,165,.16), transparent 70%),
+    radial-gradient(700px 420px at 96% 6%, rgba(255,176,32,.05), transparent 65%);
+  background-attachment:fixed;
+}
+::selection{background:var(--amber); color:#10202C}
+
+/* ---------- chrome ---------- */
+.top{
+  display:flex; align-items:center; gap:22px;
+  padding:13px 22px; border-bottom:1px solid var(--rule); flex-wrap:wrap;
+  background:rgba(8,19,28,.82); flex:0 0 auto; z-index:40;
+}
+.brand{display:flex; align-items:baseline; gap:11px; margin-right:auto}
+.brand .mark{
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; font-weight:600;
+  color:#0B1A24; background:var(--amber); padding:3px 7px 2px; border-radius:2px;
+}
+.brand h1{
+  margin:0; font-size:17px; font-weight:600; letter-spacing:-.015em;
+}
+.brand .sub{
+  font-family:var(--mono); font-size:11px; color:var(--text-dim); letter-spacing:.04em;
+}
+.kbd-hint{font-family:var(--mono); font-size:10.5px; color:var(--text-dim); letter-spacing:.03em}
+.kbd-hint b{
+  color:var(--text); font-weight:500; border:1px solid var(--rule-hi);
+  border-bottom-width:2px; border-radius:3px; padding:1px 5px; margin:0 2px; background:var(--panel-2);
+}
+.toggles{display:flex; gap:8px}
+.tg{
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--text-dim); background:transparent; border:1px solid var(--rule);
+  padding:6px 11px; border-radius:3px; cursor:pointer; transition:.16s;
+}
+.tg:hover{color:var(--text); border-color:var(--rule-hi)}
+.tg[aria-pressed="true"]{color:#0B1A24; background:var(--amber); border-color:var(--amber); font-weight:600}
+.tg:focus-visible{outline:2px solid var(--cyan); outline-offset:2px}
+
+/* ---------- stage ---------- */
+.stage{
+  display:grid;
+  grid-template-columns:172px minmax(380px,1.02fr) 288px minmax(360px,.96fr);
+  flex:1 1 auto; min-height:340px; overflow:hidden;
+}
+.col{overflow:hidden; min-height:0; height:100%; display:flex; flex-direction:column; border-right:1px solid var(--rule)}
+.col:last-child{border-right:0}
+.col-head{
+  display:flex; align-items:center; gap:8px;
+  padding:11px 15px 10px; border-bottom:1px solid var(--rule); flex:0 0 auto;
+}
+.col-head .eyebrow{
+  font-family:var(--mono); font-size:10px; letter-spacing:.19em; text-transform:uppercase;
+  color:var(--text-dim);
+}
+.col-head .count{
+  margin-left:auto; font-family:var(--mono); font-size:10.5px; color:var(--amber); letter-spacing:.05em;
+}
+.scroll{overflow-y:auto; overflow-x:hidden; flex:1 1 auto; min-height:0; scrollbar-width:thin; scrollbar-color:var(--raise) transparent}
+.scroll::-webkit-scrollbar{width:9px}
+.scroll::-webkit-scrollbar-thumb{background:var(--raise); border-radius:9px; border:3px solid var(--ground)}
+.scroll::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- files ---------- */
+.files{padding:8px 8px 20px}
+.file{
+  display:block; width:100%; text-align:left; background:transparent; border:0;
+  border-left:2px solid transparent; padding:9px 10px; cursor:pointer;
+  color:var(--text-dim); font-family:var(--mono); font-size:11.5px; line-height:1.35;
+  transition:.14s; border-radius:0 3px 3px 0;
+}
+.file:hover{background:var(--panel); color:var(--text)}
+.file[aria-current="true"]{background:var(--panel-2); color:var(--text); border-left-color:var(--amber)}
+.file .fname{display:block; letter-spacing:-.01em}
+.file .fmeta{display:block; font-size:9.5px; color:var(--text-dim); margin-top:3px; letter-spacing:.05em}
+.file[aria-current="true"] .fmeta{color:var(--amber)}
+.folder{
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--text-dim); padding:12px 12px 7px;
+}
+.folder:first-child{padding-top:6px}
+
+/* ---------- document sheet ---------- */
+.docwrap{padding:20px 22px 60px; display:flex; flex-direction:column; gap:18px; align-items:center}
+.sheet{
+  width:100%; max-width:620px; background:var(--paper); color:var(--ink);
+  border-radius:2px; padding:34px 38px 30px; position:relative;
+  box-shadow:0 22px 46px -22px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.06);
+  font-family:var(--serif); font-size:var(--doc-fs); line-height:1.74;
+}
+.sheet::after{
+  content:attr(data-page); position:absolute; right:16px; bottom:10px;
+  font-family:var(--mono); font-size:9px; letter-spacing:.14em; color:#A99F8A;
+}
+.sheet.plain{font-family:var(--mono); font-size:calc(var(--doc-fs) * .82); line-height:1.65}
+.sheet h1{font-size:1.42em; line-height:1.28; margin:0 0 10px; font-weight:600; letter-spacing:-.01em}
+.sheet h2{font-size:1.08em; margin:20px 0 7px; font-weight:600}
+.sheet h3{font-size:.96em; margin:15px 0 5px; font-weight:600}
+.sheet p{margin:0 0 11px}
+.sheet .eyebrow-b{
+  font-family:var(--mono); font-size:.63em; letter-spacing:.2em; text-transform:uppercase;
+  color:#9A8F79; margin:0 0 14px; padding-bottom:9px; border-bottom:1px solid var(--paper-2);
+}
+.sheet .kv{font-family:var(--mono); font-size:.73em; margin:0 0 4px; color:#3A4652}
+.sheet .mdh{font-family:var(--mono); font-weight:600; margin:16px 0 7px}
+.sheet .mdh.l1{font-size:1.14em} .sheet .mdh.l2{font-size:.92em; color:#33414F}
+.sheet .code{
+  font-family:var(--mono); font-size:.78em; line-height:1.62; background:#ECE6D8;
+  border-left:2px solid #C9BFA8; padding:9px 12px; margin:0 0 12px; white-space:pre-wrap;
+  border-radius:0 2px 2px 0;
+}
+.sheet .code .ln{display:block; min-height:1.62em}
+.sheet table{border-collapse:collapse; width:100%; margin:6px 0 12px; font-family:var(--mono); font-size:.75em}
+.sheet caption{
+  caption-side:top; text-align:left; font-family:var(--mono); font-size:.63em;
+  letter-spacing:.14em; text-transform:uppercase; color:#9A8F79; padding-bottom:6px;
+}
+.sheet th{text-align:left; font-weight:600; border-bottom:1.5px solid #C9BFA8; padding:5px 7px 5px 0}
+.sheet td{border-bottom:1px solid #DFD8C7; padding:5px 7px 5px 0; vertical-align:top}
+.sheet tr:last-child td{border-bottom:0}
+.sheet .ref{font-size:.82em; line-height:1.62; margin:0 0 9px; padding-left:36px; text-indent:-36px; color:#2C3843}
+.sheet .ref .rn{font-family:var(--mono); font-weight:600; margin-right:10px; color:#8A7F68}
+.sheet .foot{font-size:.8em; color:#5D5646; font-style:italic; margin-top:4px}
+
+/* ---------- chunk paint ---------- */
+.pt{border-radius:2px; padding:1px 0; transition:background .18s, box-shadow .18s}
+.pt[data-c="0"]{background:color-mix(in srgb, var(--c1) 26%, transparent); box-shadow:inset 0 -2px 0 var(--c1)}
+.pt[data-c="1"]{background:color-mix(in srgb, var(--c2) 26%, transparent); box-shadow:inset 0 -2px 0 var(--c2)}
+.pt[data-c="2"]{background:color-mix(in srgb, var(--c3) 26%, transparent); box-shadow:inset 0 -2px 0 var(--c3)}
+.pt[data-c="3"]{background:color-mix(in srgb, var(--c4) 30%, transparent); box-shadow:inset 0 -2px 0 var(--c4)}
+.pt[data-c="4"]{background:color-mix(in srgb, var(--c5) 26%, transparent); box-shadow:inset 0 -2px 0 var(--c5)}
+.pt[data-c="5"]{background:color-mix(in srgb, var(--c6) 26%, transparent); box-shadow:inset 0 -2px 0 var(--c6)}
+.pt[data-c="6"]{background:color-mix(in srgb, var(--c7) 26%, transparent); box-shadow:inset 0 -2px 0 var(--c7)}
+.pt[data-c="7"]{background:color-mix(in srgb, var(--c8) 26%, transparent); box-shadow:inset 0 -2px 0 var(--c8)}
+.pt.ov{
+  background-image:repeating-linear-gradient(135deg, rgba(21,31,40,.30) 0 3px, transparent 3px 7px);
+}
+.dim .pt{opacity:.24}
+.dim .pt.focus{opacity:1}
+.pt.focus{outline:2px solid var(--amber); outline-offset:1px; border-radius:2px}
+.pt.pinned{outline:2px solid var(--cyan); outline-offset:2px}
+/* measuring mode: the first chunk lights up so viewers see the span grow/shrink */
+#doc.measuring .pt{opacity:.28}
+#doc.measuring .pt.pinned,#doc.measuring .pt.focus{opacity:1;
+  background:color-mix(in srgb, var(--amber) 34%, transparent) !important;
+  outline:2px solid var(--amber); outline-offset:1px; border-radius:2px}
+#measureBox{position:fixed; z-index:120; pointer-events:none; opacity:0; transform:translateY(-4px);
+  transition:.12s; background:var(--panel); border:1px solid var(--amber); border-radius:5px;
+  padding:8px 12px; font-family:var(--mono); font-size:12px; color:var(--text);
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.7)}
+#measureBox.on{opacity:1; transform:none}
+#measureBox .mv{color:var(--amber); font-weight:600; font-size:15px}
+#measureBox .mh{display:block; color:var(--text-dim); font-size:9.5px; letter-spacing:.05em; margin-top:3px; text-transform:uppercase}
+#doc.retr .pt{opacity:.13}
+#doc.retr .pt.hit{opacity:1}
+/* hovering a chunk card must win over the retrieval dimming, whether or
+   not that chunk was one of the hits — order matters on the last two */
+#doc.retr.dim .pt.hit{opacity:.2}
+#doc.retr.dim .pt.focus2{opacity:.62}
+#doc.retr.dim .pt.focus,
+#doc.retr.dim .pt.pinned{opacity:1}
+#doc.retr .pt.pinned{opacity:1}
+.pt.hit{outline:2px solid var(--amber); outline-offset:2px; border-radius:2px}
+.cut.rank b{left:-11px; padding:2px 5px; font-size:9.5px}
+.pt.focus2{outline:1px dashed rgba(95,208,232,.75); outline-offset:1px}
+
+/* cut markers */
+.cut{position:relative; display:inline-block; width:0; height:0; vertical-align:baseline}
+.cut i{
+  position:absolute; left:-1px; top:-1.05em; height:1.75em; width:2px;
+  background:var(--amber); border-radius:1px; box-shadow:0 0 7px rgba(255,176,32,.85);
+}
+.cut b{
+  position:absolute; left:-8px; top:-2.35em; font-family:var(--mono); font-size:8.5px; font-weight:600;
+  color:#0B1A24; background:var(--amber); padding:1px 4px; border-radius:2px; line-height:1.4;
+}
+.cut.labelled b{left:-6px; top:-2.5em; font-size:8px; letter-spacing:.02em; white-space:nowrap;
+  background:var(--cyan); color:#062028; box-shadow:0 0 6px rgba(95,208,232,.35)}
+.cut.labelled i{background:var(--cyan); box-shadow:0 0 6px rgba(95,208,232,.6)}
+.cut.sev i{background:var(--rose); box-shadow:0 0 8px rgba(255,107,132,.9)}
+.cut.sev b{background:var(--rose); color:#2A0910}
+.cut.b i{background:var(--cyan); top:-.35em; height:1.6em; opacity:.9; box-shadow:0 0 6px rgba(95,208,232,.7)}
+.cut.b b{top:1.05em; background:var(--cyan); color:#062028}
+.animate .cut i{animation:drop .34s cubic-bezier(.2,.8,.2,1) backwards}
+.animate .cut b{animation:fade .4s ease .1s backwards}
+@keyframes drop{from{transform:scaleY(0); opacity:0} to{transform:scaleY(1); opacity:1}}
+@keyframes fade{from{opacity:0; transform:translateY(-3px)} to{opacity:1}}
+
+/* ---------- strategy list ---------- */
+.strat-group{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.19em; text-transform:uppercase;
+  color:var(--text-dim); padding:15px 15px 6px; display:flex; align-items:center; gap:9px;
+}
+.strat-group::after{content:""; flex:1; height:1px; background:var(--rule)}
+.strat{
+  width:100%; text-align:left; background:transparent; border:0; border-left:2px solid transparent;
+  padding:8px 14px; cursor:pointer; color:var(--text-dim); transition:.14s; display:block;
+}
+.strat:hover{background:var(--panel); color:var(--text)}
+.strat[aria-current="true"]{background:var(--panel-2); border-left-color:var(--amber); color:var(--text)}
+.strat.pinned{border-left-color:var(--cyan)}
+.strat-row{display:flex; align-items:baseline; gap:8px}
+.strat .nm{font-size:13px; font-weight:500; letter-spacing:-.01em}
+.strat[aria-current="true"] .nm{font-weight:600}
+.strat .n{margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--text-dim); flex:0 0 auto}
+.strat[aria-current="true"] .n{color:var(--amber)}
+.strat.pinned .n{color:var(--cyan)}
+.strat .bl{font-size:11px; color:var(--text-dim); margin-top:2px; display:none; line-height:1.45}
+.strat[aria-current="true"] .bl{display:block}
+
+.params{padding:4px 14px 14px; background:var(--panel-2); border-left:2px solid var(--amber)}
+.prm{display:grid; grid-template-columns:76px 1fr 52px; align-items:center; gap:8px; margin-top:9px}
+.prm label{font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--text-dim); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.prm input[type=range]{width:100%; min-width:0; accent-color:var(--amber); height:4px}
+.prm .val{font-family:var(--mono); font-size:12px; font-weight:600; color:var(--amber); text-align:right; white-space:nowrap}
+.when{
+  margin-top:12px; padding-top:10px; border-top:1px solid var(--rule);
+  font-size:11px; line-height:1.5; color:var(--text-dim);
+}
+.when strong{color:var(--text); font-weight:600; display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; margin-bottom:4px}
+
+/* ---------- right: chunks ---------- */
+.stats{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--rule);
+  border-bottom:1px solid var(--rule); flex:0 0 auto;
+}
+.stat{background:var(--ground); padding:9px 12px}
+.stat .k{font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-dim)}
+.stat .v{font-family:var(--mono); font-size:17px; font-weight:600; letter-spacing:-.02em; margin-top:1px}
+.stat.warn .v{color:var(--rose)}
+.stat.good .v{color:var(--c1)}
+
+.chunks{padding:12px 14px 60px; display:flex; flex-direction:column; gap:9px}
+.chunk{
+  border:1px solid var(--rule); border-left:3px solid var(--cc,var(--c1)); border-radius:3px;
+  background:var(--panel); overflow:hidden; transition:.16s;
+}
+.chunk:hover{border-color:var(--rule-hi); background:var(--panel-2)}
+.chunk.open{background:var(--panel-2); border-color:var(--rule-hi)}
+.chunk-head{display:flex; align-items:center; gap:9px; padding:8px 11px; cursor:pointer; width:100%; background:none; border:0; text-align:left; flex-wrap:wrap}
+.chunk-head:focus-visible{outline:2px solid var(--cyan); outline-offset:-2px}
+.chunk-id{font-family:var(--mono); font-size:10px; font-weight:600; color:var(--cc,var(--c1)); letter-spacing:.06em}
+.chunk-label{font-family:var(--mono); font-size:10px; font-weight:600; letter-spacing:.02em;
+  color:#0B1A24; background:var(--cc,var(--c1)); padding:2px 8px; border-radius:3px; white-space:nowrap}
+.chunk-tags{display:flex; gap:5px; margin-left:auto; align-items:center}
+.tag{
+  font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; color:var(--text-dim);
+  border:1px solid var(--rule); padding:1px 5px; border-radius:2px;
+}
+.tag.hot{color:var(--amber); border-color:rgba(255,176,32,.45)}
+.tag.bad{color:var(--rose); border-color:rgba(255,107,132,.45)}
+.tag.ok{color:var(--c1); border-color:rgba(47,191,160,.4)}
+.chunk-body{padding:0 11px 10px; font-family:var(--serif); font-size:13.5px; line-height:1.6; color:#C6D6E2}
+.chunk-body .ctx{
+  display:block; font-family:var(--mono); font-size:10.5px; line-height:1.5; color:var(--amber);
+  background:rgba(255,176,32,.07); border-left:2px solid var(--amber);
+  padding:6px 8px; margin:0 0 8px; border-radius:0 2px 2px 0; font-style:normal;
+}
+.chunk-body .win{color:var(--text-dim)}
+.chunk-body .mono{font-family:var(--mono); font-size:11px; white-space:pre-wrap}
+.chunk-note{
+  font-family:var(--mono); font-size:10px; color:var(--cyan); padding:0 11px 9px;
+  display:flex; gap:6px; align-items:flex-start; line-height:1.5;
+}
+.chunk-note::before{content:"↳"; opacity:.7}
+
+/* embedding */
+.emb{border-top:1px solid var(--rule); padding:10px 11px 12px; background:rgba(0,0,0,.18)}
+.emb-head{display:flex; align-items:center; gap:8px; margin-bottom:8px}
+.emb-head .t{font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-dim)}
+.emb-head .d{margin-left:auto; font-family:var(--mono); font-size:9.5px; color:var(--cyan)}
+.vec{display:grid; grid-template-columns:repeat(6,1fr); gap:3px 6px; font-family:var(--mono); font-size:11px}
+.vec span{color:#8FB4CB; text-align:right; letter-spacing:-.02em}
+.vec span.neg{color:#B58AA8}
+.heat{display:flex; gap:1px; height:26px; margin-top:9px; align-items:center}
+.heat i{flex:1; background:var(--cyan); border-radius:.5px; min-height:1px; opacity:.85}
+.emb-foot{
+  display:flex; gap:14px; margin-top:9px; font-family:var(--mono); font-size:10px; color:var(--text-dim);
+  flex-wrap:wrap;
+}
+.emb-foot b{color:var(--text); font-weight:500}
+
+/* compare */
+.cmp[hidden],.scroll[hidden]{display:none}
+.cmp{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); flex:1 1 auto; overflow:hidden}
+.cmp > div{background:var(--ground); overflow-y:auto; padding:0}
+.cmp-h{
+  position:sticky; top:0; background:var(--panel); border-bottom:1px solid var(--rule);
+  padding:8px 12px; font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; z-index:2;
+}
+.cmp-h.a{color:var(--amber)} .cmp-h.b{color:var(--cyan)}
+.cmp .chunks{padding:10px 10px 40px; gap:6px}
+.cmp .chunk-body{font-size:11.5px; padding-bottom:8px}
+
+/* code panel */
+.codepanel{
+  border-top:1px solid var(--rule); background:#061019; flex:0 0 auto; max-height:38%;
+  overflow:auto; display:none;
+}
+.codepanel.on{display:block}
+.codepanel .ch{
+  display:flex; align-items:center; gap:8px; padding:8px 13px; border-bottom:1px solid var(--rule);
+  position:sticky; top:0; background:#061019;
+}
+.codepanel .ch span{font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-dim)}
+.codepanel .ch em{margin-left:auto; font-family:var(--mono); font-size:9.5px; color:var(--cyan); font-style:normal}
+.codepanel pre{
+  margin:0; padding:12px 15px 16px; font-family:var(--mono); font-size:11.5px; line-height:1.65;
+  color:#9FBDD2; white-space:pre-wrap; tab-size:2;
+}
+.codepanel .kw{color:var(--c2)} .codepanel .str{color:var(--c5)}
+.codepanel .cm{color:#4C6373; font-style:italic} .codepanel .fn{color:var(--amber)}
+.codepanel .num{color:var(--c7)}
+
+
+/* ---------- retrieval drawer ---------- */
+.drawer{flex:1 1 44vh; min-height:300px; max-height:52vh; border-top:1px solid var(--rule-hi);
+  background:var(--panel); display:flex; flex-direction:column}
+.drawer[hidden]{display:none}
+.qbar{display:flex; align-items:center; gap:11px; padding:11px 15px 9px}
+.qlab{font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--text-dim)}
+.qbar input[type=text]{flex:1; min-width:120px; background:var(--ground); border:1px solid var(--rule-hi);
+  border-radius:3px; color:var(--text); font-family:var(--sans); font-size:14.5px; padding:9px 12px}
+.qbar input[type=text]:focus{outline:none; border-color:var(--amber)}
+.qbar input[type=text]::placeholder{color:var(--text-faint)}
+.ktop{font-family:var(--mono); font-size:10px; color:var(--text-dim); display:flex; align-items:center; gap:8px;
+  letter-spacing:.1em; text-transform:uppercase}
+.ktop input{width:78px; accent-color:var(--amber)}
+.ktop b{color:var(--amber); width:14px; font-size:12px}
+.tg.primary{background:var(--amber); color:#0B1A24; border-color:var(--amber); font-weight:600}
+.tg.primary:hover{color:#0B1A24}
+.qpresets{display:flex; gap:7px; padding:0 15px 11px; flex-wrap:wrap}
+.chip{font-family:var(--mono); font-size:10.5px; color:var(--text-dim); background:var(--panel-2);
+  border:1px solid var(--rule); border-radius:20px; padding:4px 12px; cursor:pointer; transition:.14s}
+.chip:hover{color:var(--text); border-color:var(--amber)}
+.chip.on{color:#0B1A24; background:var(--amber); border-color:var(--amber)}
+.dgrid{display:grid; grid-template-columns:minmax(260px,.82fr) minmax(400px,1.3fr) minmax(300px,.92fr);
+  gap:1px; background:var(--rule); flex:1 1 auto; min-height:0; border-top:1px solid var(--rule)}
+.dpanel{background:var(--ground); display:flex; flex-direction:column; min-height:0}
+.dh{padding:8px 13px; border-bottom:1px solid var(--rule); font-family:var(--mono); font-size:10px;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--text-dim); flex:0 0 auto}
+.dbody{flex:1 1 auto; overflow:auto; min-height:0; padding:9px 11px}
+.dbody.map{display:flex; align-items:center; justify-content:center; padding:2px}
+
+.vmap{width:100%; height:100%}
+.vmap .ring{fill:none; stroke:var(--rule); stroke-dasharray:2 5}
+.vmap .cutring{fill:none; stroke:var(--amber); stroke-dasharray:5 4; opacity:.5}
+.vmap .cutlbl{fill:var(--amber); font-family:var(--mono); font-size:10px; letter-spacing:.06em}
+.vmap .miss{stroke:var(--rule-hi); stroke-width:1; stroke-dasharray:2 4}
+.vmap .miss.worst{stroke:var(--rose); opacity:.8; stroke-dasharray:3 3; stroke-width:1.4}
+.vmap .hitline{stroke:var(--amber); opacity:.8}
+.vmap .node{fill:var(--raise); stroke:var(--ground); stroke-width:1.5; cursor:pointer}
+.vmap .node.on{stroke:var(--paper)}
+.vmap .nlbl{fill:#08131C; font-family:var(--mono); font-size:9.5px; font-weight:700; pointer-events:none}
+.vmap .misslbl{fill:var(--rose); font-family:var(--mono); font-size:10px}
+.vmap .qmark circle{fill:var(--ground); stroke:var(--amber); stroke-width:2}
+.vmap .qmark path{stroke:var(--amber); stroke-width:2; fill:none}
+.vmap .qlbl{fill:var(--amber); font-family:var(--mono); font-size:10.5px; letter-spacing:.09em}
+
+.rrow{width:100%; text-align:left; background:none; border:0; border-left:2px solid transparent;
+  padding:6px 8px; cursor:pointer; display:block; border-radius:0 3px 3px 0}
+.rrow:hover{background:var(--panel-2)}
+.rrow.on{border-left-color:var(--amber)}
+.rrow.pinned{border-left-color:var(--cyan); background:var(--panel-2)}
+.rrow.pinned .rk::after{content:' ·pin'; color:var(--cyan); font-size:9px}
+.rrow .rk{font-family:var(--mono); font-size:10.5px; color:var(--text-dim); width:28px; display:inline-block}
+.rrow.on .rk{color:var(--amber); font-weight:600}
+.rbarwrap{display:inline-block; width:calc(100% - 84px); height:9px; background:var(--panel-2);
+  border-radius:2px; vertical-align:middle; overflow:hidden}
+.rbar{display:block; height:100%; background:var(--cc); opacity:.45}
+.rrow.on .rbar{opacity:1}
+.rsim{font-family:var(--mono); font-size:11px; color:var(--text); width:46px; display:inline-block; text-align:right}
+.rtxt{display:block; font-family:var(--mono); font-size:10.5px; color:var(--text-dim); margin:3px 0 0 30px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.raxis{display:flex; justify-content:space-between; font-family:var(--mono); font-size:9.5px;
+  color:var(--text-dim); padding:7px 8px 0; margin:7px 0 0 30px; border-top:1px solid var(--rule)}
+
+.dot{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:11px}
+.dot th{text-align:right; font-weight:500; color:var(--text-dim); padding:3px 5px;
+  border-bottom:1px solid var(--rule); font-size:9.5px; letter-spacing:.06em}
+.dot td{text-align:right; padding:2.5px 5px; color:#9FBDD2}
+.dot td.dim{text-align:left; color:var(--text-dim)}
+.dot .hi{color:var(--amber)}
+.dot .lo{color:var(--text-dim)}
+.dot .p{font-weight:600}
+.dot tfoot td{border-top:1px solid var(--rule); padding-top:6px; font-size:10px}
+.dot tfoot tr.tot td{color:var(--text); font-weight:600; font-size:11px}
+.dotnote{font-size:11.5px; line-height:1.6; color:var(--text-dim); margin:11px 0 0}
+.scorepill{font-family:var(--mono); font-size:9.5px; padding:1px 6px; border-radius:2px;
+  background:var(--amber); color:#0B1A24; font-weight:600}
+.scorepill.cold{background:transparent; color:var(--text-dim); border:1px solid var(--rule)}
+
+.meta{border-top:1px solid var(--rule); padding:10px 11px; background:rgba(0,0,0,.12)}
+.meta .t{font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--text-dim); display:block; margin-bottom:7px}
+.meta pre{margin:0; font-family:var(--mono); font-size:11px; line-height:1.6; color:#9FBDD2; white-space:pre-wrap}
+.meta .jk{color:var(--cyan)} .meta .jv{color:var(--c5)} .meta .jn{color:var(--c7)}
+
+/* legend */
+.legend{
+  display:flex; align-items:center; gap:16px; padding:8px 15px; border-top:1px solid var(--rule);
+  font-family:var(--mono); font-size:10px; color:var(--text-dim); flex:0 0 auto; flex-wrap:wrap;
+}
+.legend i{display:inline-block; width:16px; height:9px; border-radius:2px; margin-right:5px; vertical-align:-1px}
+.legend .l-ov{background:repeating-linear-gradient(135deg,#8fa6b5 0 3px,#2a3f4e 3px 7px)}
+.legend .l-cut{background:var(--amber)}
+.legend .l-sev{background:var(--rose)}
+.legend .l-b{background:var(--cyan)}
+.legend .l-hit{background:transparent; border:2px solid var(--amber); height:7px}
+
+.empty{padding:34px 18px; text-align:center; color:var(--text-dim); font-size:12px; line-height:1.6}
+.empty b{display:block; color:var(--text); font-size:13px; margin-bottom:5px; font-weight:600}
+.empty.invite{padding:56px 26px}
+.empty.invite b{font-size:15px; margin-bottom:9px}
+.empty.invite::before{content:"←"; display:block; font-size:26px; color:var(--amber); margin-bottom:14px; animation:nudge 1.6s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)} 50%{transform:translateX(-7px)}}
+
+/* the chunk that just landed, emphasised in the PDF while a build runs */
+.pt.latest{background:color-mix(in srgb, var(--amber) 42%, transparent) !important;
+  box-shadow:inset 0 -2px 0 var(--amber), 0 0 0 2px rgba(255,176,32,.55) !important; border-radius:2px}
+.animate .pt.latest{animation:landPt .34s ease backwards}
+@keyframes landPt{from{background:rgba(255,176,32,.85)} to{}}
+/* newest card during a build: a clear, single drop-in with an amber frame
+   that fades once it has landed, so only the new card moves */
+.chunk.fresh{border-color:var(--amber); box-shadow:0 0 0 1px rgba(255,176,32,.45)}
+.chunk.dropping{animation:dropIn .42s cubic-bezier(.16,.9,.3,1) both}
+@keyframes dropIn{
+  0%{opacity:0; transform:translateY(-14px) scale(.97)}
+  60%{opacity:1}
+  100%{opacity:1; transform:none}
+}
+
+.buildrow{display:flex; align-items:center; gap:9px; font-family:var(--mono); font-size:10.5px;
+  letter-spacing:.04em; color:var(--amber); padding:3px 0 2px}
+.buildrow.done{color:var(--text-dim)}
+.dot-pulse{width:8px; height:8px; border-radius:50%; background:var(--amber); flex:0 0 auto;
+  animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1; transform:scale(1)} 50%{opacity:.4; transform:scale(.7)}}
+.skipbtn{margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.05em;
+  color:var(--text-dim); background:transparent; border:1px solid var(--rule); border-radius:3px;
+  padding:3px 9px; cursor:pointer; transition:.14s}
+.skipbtn:hover{color:var(--text); border-color:var(--amber)}
+.strat.building .n{color:var(--amber)}
+.col.flash{animation:flashcol .5s ease}
+@keyframes flashcol{0%,100%{background:transparent} 30%{background:rgba(255,176,32,.09)}}
+
+.animate .chunk:not(.dropping){animation:rise .34s cubic-bezier(.2,.8,.2,1) backwards}
+@keyframes rise{from{opacity:0; transform:translateX(14px)} to{opacity:1; transform:none}}
+
+/* ---------- drawing board ---------- */
+#board{position:fixed; inset:0; z-index:200}
+#board[hidden]{display:none}
+#boardCanvas{position:absolute; inset:0; width:100%; height:100%; cursor:crosshair; touch-action:none}
+#board.erasing #boardCanvas{cursor:cell}
+#boardBar{position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+  display:flex; align-items:center; gap:6px; padding:8px 10px; z-index:201;
+  background:rgba(13,30,43,.96); border:1px solid var(--rule-hi); border-radius:10px;
+  box-shadow:0 14px 40px -12px rgba(0,0,0,.8); backdrop-filter:blur(8px)}
+#boardBar .bb-title{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--amber); margin-right:6px; padding-left:4px}
+.bb-sep{width:1px; height:22px; background:var(--rule-hi); margin:0 3px}
+.bb-tool,.bb-btn{font-family:var(--sans); font-size:14px; min-width:32px; height:32px; padding:0 8px;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  background:transparent; border:1px solid var(--rule); border-radius:6px; color:var(--text-dim); transition:.13s}
+.bb-tool:hover,.bb-btn:hover{color:var(--text); border-color:var(--rule-hi)}
+.bb-tool.on{color:#0B1A24; background:var(--amber); border-color:var(--amber)}
+.bb-btn{font-family:var(--mono); font-size:11px; letter-spacing:.05em}
+.bb-color{width:26px; height:26px; border-radius:50%; border:2px solid transparent; cursor:pointer;
+  background:var(--sw); box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.bb-color.on{border-color:var(--text); transform:scale(1.12)}
+.tg[aria-pressed="true"]#tgDraw,#tgDraw[aria-pressed="true"]{color:#0B1A24; background:var(--amber); border-color:var(--amber)}
+
+/* ---------- agentic LLM overlay ---------- */
+#llmOverlay{position:fixed; inset:0; z-index:150; display:none; align-items:center; justify-content:center;
+  background:rgba(6,16,25,.82); backdrop-filter:blur(3px)}
+#llmOverlay.on{display:flex}
+.llm-card{width:min(560px,90vw); background:var(--panel); border:1px solid var(--rule-hi); border-radius:12px;
+  padding:26px 30px 24px; box-shadow:0 30px 80px -20px rgba(0,0,0,.85); position:relative}
+.llm-card h3{margin:0 0 4px; font-size:16px; font-weight:600; letter-spacing:-.01em}
+.llm-card .sub{font-family:var(--mono); font-size:11px; color:var(--text-dim); letter-spacing:.04em; margin-bottom:20px}
+.llm-flow{display:flex; align-items:center; gap:14px; margin:8px 0 20px}
+.llm-node{flex:1; text-align:center; padding:14px 8px; border:1px solid var(--rule); border-radius:8px;
+  font-family:var(--mono); font-size:11px; color:var(--text-dim); background:var(--ground); transition:.3s}
+.llm-node .ic{font-size:22px; display:block; margin-bottom:6px}
+.llm-node.active{border-color:var(--amber); color:var(--text); box-shadow:0 0 0 1px var(--amber), 0 0 24px -6px rgba(255,176,32,.5)}
+.llm-node.done{border-color:var(--c1); color:var(--c1)}
+.llm-arrow{color:var(--text-dim); font-size:18px; flex:0 0 auto}
+.llm-arrow.lit{color:var(--amber)}
+.llm-status{font-family:var(--mono); font-size:12px; color:var(--amber); min-height:20px; display:flex; align-items:center; gap:8px}
+.llm-status .dot-pulse{width:7px; height:7px}
+.llm-bar{height:4px; background:var(--panel-2); border-radius:3px; overflow:hidden; margin-top:14px}
+.llm-bar i{display:block; height:100%; width:0; background:var(--amber); transition:width .3s linear}
+.llm-skip{position:absolute; top:14px; right:16px; font-family:var(--mono); font-size:10px; letter-spacing:.06em;
+  color:var(--text-dim); background:transparent; border:1px solid var(--rule); border-radius:4px; padding:4px 9px; cursor:pointer}
+.llm-skip:hover{color:var(--text); border-color:var(--amber)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important}
+}
+@media (max-width:1180px){
+  body{height:auto; overflow:auto}
+  .stage{grid-template-columns:1fr; height:auto; min-height:0; overflow:visible}
+  .col{border-right:0; border-bottom:1px solid var(--rule); max-height:none; height:auto}
+  .scroll{overflow:visible}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .drawer{height:auto; max-height:none; flex:0 0 auto}
+  .dgrid{grid-template-columns:1fr}
+  .dbody{max-height:60vh}
+}
+/* short windows: when the stage floor + drawer can't both fit, let the
+   whole page scroll rather than clipping the drawer off the bottom */
+@media (min-width:1181px) and (max-height:780px){
+  body{height:auto; min-height:100vh; overflow-y:auto}
+  .stage{min-height:420px}
+  .drawer{flex:0 0 auto; height:340px; max-height:none}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <span class="mark">GENAI LABS</span>
+    <h1>Chunking Bench</h1>
+    <span class="sub">/ cut it, embed it, then watch the query find it</span>
+  </div>
+  <div class="kbd-hint"><b>↑</b><b>↓</b> strategy <b>1</b>–<b>4</b> file <b>C</b> compare <b>K</b> code <b>R</b> retrieve</div>
+  <div class="toggles">
+    <button class="tg" id="tgDraw" aria-pressed="false" title="draw over the screen with a pen/tablet">✎ Draw</button>
+    <button class="tg" id="tgSpeed" title="build animation speed">Speed 1×</button>
+    <button class="tg" id="tgSize" title="document text size">Aa</button>
+    <button class="tg primary" id="tgRetrieve" aria-pressed="false">Retrieve</button>
+    <button class="tg" id="tgCompare" aria-pressed="false">Compare</button>
+    <button class="tg" id="tgCode" aria-pressed="false">LangChain code</button>
+  </div>
+</header>
+
+<main class="stage">
+  <section class="col" aria-label="Files">
+    <div class="col-head"><span class="eyebrow">Corpus</span></div>
+    <div class="scroll"><div class="files" id="files"></div></div>
+  </section>
+
+  <section class="col" aria-label="Document">
+    <div class="col-head">
+      <span class="eyebrow">Source</span>
+      <span class="count" id="docMeta"></span>
+    </div>
+    <div class="scroll"><div class="docwrap" id="doc"></div></div>
+    <div class="legend">
+      <span><i class="l-cut"></i>chunk boundary</span>
+      <span><i class="l-sev"></i>cut inside a sentence</span>
+      <span><i class="l-ov"></i>overlap region</span>
+      <span id="legendB" hidden><i class="l-b"></i>strategy B boundary</span>
+      <span id="legendR" hidden><i class="l-hit"></i>retrieved for your query</span>
+    </div>
+  </section>
+
+  <section class="col" aria-label="Strategies">
+    <div class="col-head">
+      <span class="eyebrow">Strategy</span>
+      <span class="count" id="stratCount"></span>
+    </div>
+    <div class="scroll"><div id="strats"></div></div>
+  </section>
+
+  <section class="col" aria-label="Chunks and embeddings">
+    <div class="col-head">
+      <span class="eyebrow">Chunks → embeddings</span>
+      <span class="count" id="outMeta"></span>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="scroll" id="outScroll"><div class="chunks" id="out"></div></div>
+    <div class="cmp" id="cmp" hidden></div>
+    <div class="codepanel" id="codepanel">
+      <div class="ch"><span>LangChain / LlamaIndex</span><em id="codeName"></em></div>
+      <pre id="codeBody"></pre>
+    </div>
+  </section>
+</main>
+
+<div id="board" hidden>
+  <canvas id="boardCanvas"></canvas>
+  <div id="boardBar">
+    <span class="bb-title">✎ Board</span>
+    <button class="bb-tool on" data-tool="pen" title="pen">✎</button>
+    <button class="bb-tool" data-tool="marker" title="highlighter">▬</button>
+    <button class="bb-tool" data-tool="eraser" title="eraser">⌫</button>
+    <span class="bb-sep"></span>
+    <button class="bb-color on" data-color="#FFB020" style="--sw:#FFB020"></button>
+    <button class="bb-color" data-color="#FF5B7F" style="--sw:#FF5B7F"></button>
+    <button class="bb-color" data-color="#5FD0E8" style="--sw:#5FD0E8"></button>
+    <button class="bb-color" data-color="#5BE08A" style="--sw:#5BE08A"></button>
+    <button class="bb-color" data-color="#FFFFFF" style="--sw:#FFFFFF"></button>
+    <span class="bb-sep"></span>
+    <button class="bb-tool" data-size="2" title="thin">·</button>
+    <button class="bb-tool on" data-size="4" title="medium">•</button>
+    <button class="bb-tool" data-size="8" title="thick">⬤</button>
+    <span class="bb-sep"></span>
+    <button class="bb-btn" id="boardUndo" title="undo">↶</button>
+    <button class="bb-btn" id="boardClear" title="clear all">clear</button>
+    <button class="bb-btn" id="boardClose" title="close board">✕</button>
+  </div>
+</div>
+
+<div id="llmOverlay">
+  <div class="llm-card">
+    <button class="llm-skip" id="llmSkip">skip →</button>
+    <h3 id="llmTitle">Agentic chunking</h3>
+    <div class="sub" id="llmSub">the model reads the whole document before it decides any boundary</div>
+    <div class="llm-flow">
+      <div class="llm-node" id="llmDoc"><span class="ic">📄</span>document</div>
+      <div class="llm-arrow" id="llmA1">→</div>
+      <div class="llm-node" id="llmModel"><span class="ic">🧠</span>LLM reads it</div>
+      <div class="llm-arrow" id="llmA2">→</div>
+      <div class="llm-node" id="llmOut"><span class="ic">✂️</span>chooses cuts</div>
+    </div>
+    <div class="llm-status" id="llmStatus"></div>
+    <div class="llm-bar"><i id="llmBar"></i></div>
+  </div>
+</div>
+
+<section class="drawer" id="drawer" hidden aria-label="Retrieval">
+  <div class="qbar">
+    <span class="qlab">Query</span>
+    <input id="q" type="text" placeholder="Ask this document a question…" autocomplete="off" spellcheck="false">
+    <label class="ktop">top-k <input id="topk" type="range" min="1" max="10" step="1" value="3"><b id="topkv">3</b></label>
+    <button class="tg primary" id="runQ">Search index</button>
+    <button class="tg" id="clearQ">Clear</button>
+    <button class="tg" id="closeQ">Close</button>
+  </div>
+  <div class="qpresets" id="qpresets"></div>
+  <div class="dgrid">
+    <div class="dpanel"><div class="dh">Every chunk, ranked by cosine</div><div class="dbody" id="ranked"></div></div>
+    <div class="dpanel"><div class="dh">Vector space · distance from centre = 1 − cosine</div><div class="dbody map" id="vmap"></div></div>
+    <div class="dpanel"><div class="dh">Why #1 wins and the far one loses</div><div class="dbody" id="dotmath"></div></div>
+  </div>
+</section>
+
+<script>
+const PRIMER_BLOCKS = [
+  /* ---------------- page 1 ---------------- */
+  {t:'eyebrow', page:1, text:'Retrieval Systems Group — Working Note 07 · revision 3'},
+  {t:'h1', page:1, text:'Retrieval-Augmented Generation: how chunk shape decides answer quality'},
+  {t:'p', page:1, text:'This note collects what we learned rebuilding the support index three times in one year. It is organised around a single claim: retrieval quality is decided long before the query arrives, at the moment the document is cut into pieces. Everything downstream — the embedder, the reranker, the prompt — can only work with the pieces it was given.'},
+  {t:'h2', page:1, text:'3.1 Granularity is the whole game'},
+  {t:'p', page:1, text:'A retriever can only return what the index already contains. Store a document as one vector and every query collapses onto a single point in embedding space, so the model receives the entire document or nothing at all. Chunking exists to give the index a useful granularity: small enough that one vector describes one idea, large enough that the idea still stands on its own.'},
+  {t:'p', page:1, text:'The failure mode is easy to miss during evaluation. A chunk that ends mid-sentence still produces a perfectly valid embedding, and the vector store will happily return it near the top. The damage surfaces downstream, when the generator receives a fragment whose subject was truncated two hundred characters earlier and answers confidently from the remains.'},
+  {t:'p', page:1, text:'We measure this directly. Counting how many chunk boundaries land inside a sentence turns an invisible indexing bug into a number you can watch move while you tune. On our corpus a fixed-size splitter severed eighteen percent of sentences; a recursive splitter at the same nominal size severed none.'},
+
+  /* ---------------- page 2 ---------------- */
+  {t:'h2', page:2, text:'3.2 Overlap buys insurance, not precision'},
+  {t:'p', page:2, text:'Overlap repeats the tail of one chunk at the head of the next. It costs storage and it inflates the number of near-duplicate neighbours a query has to rank, but it buys one guarantee: no sentence lives only at a boundary. For prose with long chains of pronouns, ten to twenty percent overlap recovers most of what a hard cut destroys.'},
+  {t:'p', page:2, text:'Duplicated text also raises the similarity between adjacent chunks. The top results start to crowd around one region of the document, retrieval diversity falls even as recall climbs, and reranking turns from a nice-to-have into a requirement. If two neighbouring chunks score within a few points of each other on every query you try, you are paying for overlap you do not need.'},
+  {t:'p', page:2, text:'Our rule of thumb: begin at zero overlap, measure how often the answer sits at a boundary, and add overlap only until that number stops falling. Teams that start at fifty percent almost never come back down, because nothing in the metrics punishes them for it except the storage bill.'},
+  {t:'h2', page:2, text:'3.3 Structure beats arithmetic'},
+  {t:'p', page:2, text:'Fixed-size splitting treats a document as a stream of characters. Almost no document is one. Headings mark topic changes, paragraphs mark finished thoughts, and tables hold data that loses all meaning the moment a row is severed from its header. Splitters that read structure before they count characters win consistently on the same corpus.'},
+
+  /* ---------------- page 3 ---------------- */
+  {t:'p', page:3, text:'Semantic splitting pushes the argument further. Rather than trusting the author to format anything, it embeds each sentence and cuts where consecutive sentences drift apart. The boundaries it finds tend to land where a human editor would have placed them, and it degrades gracefully on documents with no formatting at all.'},
+  {t:'p', page:3, text:'The cost is predictability. Semantic chunks vary in size by a factor of two or three across one document, which makes context budgeting harder and makes a hard token cap necessary anyway. Treat the semantic splitter as a proposal and the token cap as the law.'},
+  {t:'table', page:3, caption:'Table 3 — recall@5 on the internal support corpus', head:['Strategy','Chunks','Recall@5','Failure note'], rows:[
+    ['Fixed 512 chars','412','0.61','severs 18% of sentences'],
+    ['Recursive 512','386','0.74','respects paragraph breaks'],
+    ['Semantic p95','291','0.81','chunk size varies 2.4x'],
+    ['Sentence window','1,908','0.83','small index, large answers'],
+    ['Contextual','386','0.88','one LLM call per chunk']
+  ]},
+  {t:'foot', page:3, text:'Measured on 1,240 questions against a 9 MB corpus of support articles, same embedder and same reranker throughout.'},
+
+  /* ---------------- page 4 : METADATA ---------------- */
+  {t:'h2', page:4, text:'3.4 What travels alongside the vector'},
+  {t:'p', page:4, text:'A vector on its own is unusable. Every chunk you write to the store carries a metadata record, and that record decides three things you cannot add later: what you can filter on, what you can cite, and what you can re-index without rebuilding the world.'},
+  {t:'p', page:4, text:'Filtering is the obvious one. If tenant, language and effective date are not on the record, every query searches every tenant and you discover the problem in an audit rather than in testing. Metadata filters are applied before or during the vector search, so a field that is missing is a query you cannot express.'},
+  {t:'p', page:4, text:'The character offsets matter more than teams expect. Storing the start and end position of the chunk inside its source document is what lets you draw a highlight over the original PDF instead of showing the user a floating paragraph. It is four bytes of storage and it is the difference between an answer and a citation.'},
+  {t:'code', page:4, lines:[
+    '{',
+    '  "id":        "c7f3a91b02de",        // stable hash of source + span',
+    '  "text":      "Overlap repeats the tail of ...",',
+    '  "embedding": [0.0134, -0.0271, ...], // 1536 floats',
+    '  "metadata": {',
+    '    "source":   "rag-primer.pdf",',
+    '    "page":     2,',
+    '    "section":  "3.2 Overlap buys insurance, not precision",',
+    '    "span":     [1284, 1701],          // char offsets into the source',
+    '    "tokens":   96,',
+    '    "strategy": "recursive/450/60",',
+    '    "ingested": "2026-07-04T09:12:00Z"',
+    '  }',
+    '}'
+  ]},
+  {t:'foot', page:4, text:'Record the splitter and its parameters too. When recall drops after a re-index, the first question is always which strategy produced the chunks that regressed.'},
+
+  /* ---------------- page 5 : CITATIONS ---------------- */
+  {t:'h2', page:5, text:'3.5 Citing a chunk back to its source'},
+  {t:'p', page:5, text:'A citation is a promise that the sentence in the answer can be found in the source. Chunking either keeps that promise or quietly breaks it. If the chunk boundary falls inside the sentence being cited, the quoted span exists in no single record, and the footnote you render points at half of it.'},
+  {t:'p', page:5, text:'Three fields carry a citation: the source identifier, the page or section label a human can navigate to, and the character span that lets the interface highlight the exact text. The first two are what the reader sees. The third is what makes the highlight land in the right place when the document is re-paginated.'},
+  {t:'p', page:5, text:'Parent-document and sentence-window strategies complicate this usefully. The vector that matched is a child, but the text you cite is the parent, so the record needs both spans. Cite the parent to the reader and keep the child span for evaluation, otherwise you cannot tell which sentence actually earned the match.'},
+  {t:'p', page:5, text:'Where a chunk has been rewritten before embedding — a generated context line, a proposition extracted by a model — store the original text and the rewritten text separately. Never cite a reader back to a sentence the model wrote. The rewritten form belongs to the index; the original belongs to the answer.'},
+
+  /* ---------------- page 6 : REFERENCES ---------------- */
+  {t:'h2', page:6, text:'References'},
+  {t:'ref', page:6, n:'[1]', text:'Lewis, P. et al. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS, 2020. Introduces the retriever-generator architecture this note assumes throughout.'},
+  {t:'ref', page:6, n:'[2]', text:'Chen, T. et al. Dense X Retrieval: What Retrieval Granularity Should We Use? 2023. The proposition-level indexing result behind section 3.1.'},
+  {t:'ref', page:6, n:'[3]', text:'Günther, M. et al. Late Chunking: Contextual Chunk Embeddings Using Long-Context Embedding Models. Jina AI, 2024. Embed the whole document first, pool token vectors into chunks afterwards.'},
+  {t:'ref', page:6, n:'[4]', text:'Anthropic. Introducing Contextual Retrieval. 2024. Prepending a generated situating line before embedding reduced failed retrievals substantially on their benchmarks.'},
+  {t:'ref', page:6, n:'[5]', text:'LangChain. Text Splitters — recursive, token, semantic and language-aware implementations. Documentation, retrieved 2026.'},
+  {t:'ref', page:6, n:'[6]', text:'LlamaIndex. SentenceWindowNodeParser and the small-to-big retrieval pattern. Documentation, retrieved 2026.'},
+  {t:'foot', page:6, text:'Internal working note. Figures are from our own corpus and are not directly comparable to published benchmarks.'}
+];
+
+/* Example queries, written so each one clearly targets a different region
+   of its document — the point is to watch WHICH chunks light up. */
+const QUERIES = {
+  primer: [
+    'how much overlap should I use?',
+    'what breaks when a chunk ends mid sentence?',
+    'what metadata should I store with each vector?',
+    'why do character offsets matter for citations?',
+    'what does the reader see in a footnote?',
+    'why does overlap reduce retrieval diversity?'
+  ],
+  readme: [
+    'how do I install it?',
+    'which chunking strategy should I start with?',
+    'what license is it under?'
+  ],
+  invoice: [
+    'how much did reranking cost?',
+    'what is the total amount due?',
+    'when does the billing period end?'
+  ],
+  code: [
+    'how is the chunk id generated?',
+    'how does it embed every chunk?',
+    'where does the sliding window step happen?'
+  ]
+};
+/* =========================================================================
+   Chunking Bench — sample corpus
+   Each document is a list of blocks. Blocks flatten to a single character
+   stream (that is what a splitter actually sees) while keeping enough
+   structure for the structure-aware strategies to read.
+   ========================================================================= */
+
+const DOCS = [
+{
+  id: 'primer',
+  name: 'rag-primer.pdf',
+  meta: '6 pages · report',
+  folder: 'corpus/',
+  kind: 'pdf',
+  blocks: PRIMER_BLOCKS
+},
+{
+  id: 'readme',
+  name: 'README.md',
+  meta: 'markdown · 8 headers',
+  folder: 'corpus/',
+  kind: 'md',
+  blocks: [
+    {t:'mdh1', page:1, text:'# rag-ingest'},
+    {t:'p', page:1, text:'A small ingestion pipeline that turns a folder of documents into a queryable vector index. No orchestration framework, no background workers, one command.'},
+    {t:'mdh2', page:1, text:'## Install'},
+    {t:'code', page:1, lines:['pip install rag-ingest','export EMBED_MODEL=text-embedding-3-small']},
+    {t:'mdh2', page:1, text:'## Usage'},
+    {t:'p', page:1, text:'Point the command at a directory. Every supported file is loaded, split, embedded and written to the store in a single pass.'},
+    {t:'code', page:1, lines:['rag-ingest ./docs \\','  --strategy recursive \\','  --chunk-size 512 \\','  --overlap 64']},
+    {t:'mdh2', page:1, text:'## Choosing a strategy'},
+    {t:'p', page:1, text:'Start with recursive splitting at 512 tokens. Move to semantic splitting when your documents mix topics inside one section, and move to contextual retrieval when chunks keep losing the subject they refer to.'},
+    {t:'mdh2', page:1, text:'## Metadata'},
+    {t:'p', page:1, text:'Every chunk is written with its source path, page number, section heading and character span. The span is what lets a reader click a citation and land on the exact sentence inside the original file.'},
+    {t:'mdh2', page:1, text:'## Citations'},
+    {t:'p', page:1, text:'Pass --cite to footnote each claim in the answer with the chunk id it came from. Footnotes resolve to a source path plus a character range, so they survive the document being re-paginated.'},
+    {t:'mdh2', page:1, text:'## Troubleshooting'},
+    {t:'p', page:1, text:'If recall is poor, check the severed sentence count before you reach for a different embedder. A splitter that cuts inside sentences will outweigh any model you throw at the problem, in the wrong direction.'},
+    {t:'mdh2', page:1, text:'## License'},
+    {t:'p', page:1, text:'Released under the MIT license. Do what you like, keep the notice.'}
+  ]
+},
+{
+  id: 'invoice',
+  name: 'statement-q3.pdf',
+  meta: 'layout · table',
+  folder: 'corpus/',
+  kind: 'pdf',
+  blocks: [
+    {t:'eyebrow', page:1, text:'Northwind Analytics — Quarterly statement'},
+    {t:'h1', page:1, text:'Usage statement, Q3'},
+    {t:'kv', page:1, text:'Account: NW-40128    Period: 01 Jul — 30 Sep    Issued: 04 Oct'},
+    {t:'kv', page:1, text:'Billing contact: platform-billing@northwind.example'},
+    {t:'p', page:1, text:'Charges below cover embedding, storage and retrieval on the managed index. Usage is metered hourly and rounded up to the nearest thousand tokens at the end of each day.'},
+    {t:'table', page:1, caption:'Line items', head:['Item','Quantity','Unit','Amount'], rows:[
+      ['Embedding tokens','48,210,000','0.02 / 1M','964.20'],
+      ['Index storage','142 GB-months','0.11 / GB','15.62'],
+      ['Retrieval queries','2,104,880','0.40 / 1M','841.95'],
+      ['Reranking calls','318,400','1.10 / 1M','350.24'],
+      ['Support plan','1 quarter','flat','500.00']
+    ]},
+    {t:'kv', page:1, text:'Subtotal 2,672.01    Credits -180.00    Total due 2,492.01'},
+    {t:'foot', page:1, text:'A row split away from its header is unreadable to a retriever: "318,400 | 1.10 / 1M | 350.24" answers no question anyone would ask.'}
+  ]
+},
+{
+  id: 'code',
+  name: 'ingest_pipeline.py',
+  meta: 'python · 3 defs',
+  folder: 'corpus/',
+  kind: 'code',
+  blocks: [
+    {t:'code', page:1, lines:[
+      'import hashlib',
+      'from dataclasses import dataclass',
+      '',
+      '',
+      '@dataclass',
+      'class Chunk:',
+      '    text: str',
+      '    source: str',
+      '    start: int',
+      '',
+      '    def uid(self) -> str:',
+      '        raw = f"{self.source}:{self.start}"',
+      '        return hashlib.sha1(raw.encode()).hexdigest()[:12]',
+      '',
+      '',
+      'def load(path):',
+      '    """Read a file and return its plain text."""',
+      '    with open(path, encoding="utf-8") as fh:',
+      '        return fh.read()',
+      '',
+      '',
+      'def split(text, size=512, overlap=64):',
+      '    """Slide a fixed window across the text."""',
+      '    step = size - overlap',
+      '    out = []',
+      '    for i in range(0, len(text), step):',
+      '        piece = text[i:i + size]',
+      '        if piece.strip():',
+      '            out.append(Chunk(piece, "doc", i))',
+      '    return out',
+      '',
+      '',
+      'def embed_all(chunks, client):',
+      '    """Embed every chunk in one batched request."""',
+      '    vectors = client.embed([c.text for c in chunks])',
+      '    return list(zip(chunks, vectors))'
+    ]}
+  ]
+}
+];
+
+/* =========================================================================
+   Flattening: blocks -> segments -> one character stream
+   ========================================================================= */
+
+function flatten(doc){
+  const segs = [];
+  let full = '';
+  const push = (text, ref) => {
+    const start = full.length;
+    full += text;
+    segs.push({ text, start, end: full.length, ...ref });
+  };
+  doc.blocks.forEach((b, bi) => {
+    if (bi) full += '\n\n';
+    if (b.t === 'code'){
+      b.lines.forEach((ln, li) => {
+        if (li) full += '\n';
+        push(ln, { block: bi, line: li });
+      });
+    } else if (b.t === 'table'){
+      const rows = [b.head, ...b.rows];
+      rows.forEach((row, ri) => {
+        if (ri) full += '\n';
+        row.forEach((cell, ci) => {
+          if (ci) full += ' | ';
+          push(cell, { block: bi, row: ri, cell: ci });
+        });
+      });
+    } else {
+      push(b.text, { block: bi });
+    }
+  });
+  return { segs, full, doc };
+}
+
+/* ---------- tokenizer: a BPE-shaped approximation ---------- */
+const WORD_RE = /[A-Za-z0-9_]+|[^\sA-Za-z0-9_]/g;
+
+function tokenize(text, base){
+  base = base || 0;
+  const out = [];
+  let m;
+  WORD_RE.lastIndex = 0;
+  while ((m = WORD_RE.exec(text)) !== null){
+    const w = m[0];
+    if (w.length <= 5 || !/[A-Za-z]/.test(w)){
+      out.push({ s: base + m.index, e: base + m.index + w.length });
+    } else {
+      // long words break into sub-word pieces, the way byte-pair encoders do
+      for (let i = 0; i < w.length; i += 4){
+        const len = Math.min(4, w.length - i);
+        out.push({ s: base + m.index + i, e: base + m.index + i + len });
+      }
+    }
+  }
+  return out;
+}
+
+function countTokens(text){ return tokenize(text).length; }
+
+/* ---------- sentence scanner ---------- */
+function sentences(full){
+  const out = [];
+  let start = 0;
+  for (let i = 0; i < full.length; i++){
+    const ch = full[i];
+    const isEnd = (ch === '.' || ch === '!' || ch === '?') &&
+                  (i + 1 >= full.length || /[\s")\]]/.test(full[i + 1])) &&
+                  !/\d/.test(full[i + 1] || ' ');
+    const isBreak = ch === '\n' && full[i + 1] === '\n';
+    if (isEnd || isBreak || i === full.length - 1){
+      let e = i + 1;
+      while (e < full.length && /[\s")\]]/.test(full[e]) && full[e] !== '\n') e++;
+      const text = full.slice(start, e);
+      if (text.trim()) out.push({ s: start, e, text });
+      start = e;
+      if (isBreak){
+        while (start < full.length && full[start] === '\n') start++;
+      }
+    }
+  }
+  return out;
+}
+
+/* ---------- deterministic embeddings ---------- */
+const EMBED_DIM = 1536;
+const STOP = new Set(('the a an of to in and or is are was were be been it its this that for on with as at by from not no but if then than so such can may will would'.split(' ')));
+
+function hash32(str, seed){
+  let h = (seed || 2166136261) >>> 0;
+  for (let i = 0; i < str.length; i++){
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h >>> 0;
+}
+
+/** Hashed bag-of-words projection. Deterministic, and texts that share
+ *  vocabulary really do land closer together — so the cosine numbers on
+ *  screen behave the way a real embedder behaves. */
+const SIGN = (() => {
+  const s = new Int8Array(EMBED_DIM);
+  for (let i = 0; i < EMBED_DIM; i++) s[i] = ((hash32('dim' + i, 11) >>> 9) & 1) ? 1 : -1;
+  return s;
+})();
+
+function l2(v){
+  let n = 0;
+  for (let i = 0; i < EMBED_DIM; i++) n += v[i] * v[i];
+  n = Math.sqrt(n) || 1;
+  for (let i = 0; i < EMBED_DIM; i++) v[i] /= n;
+  return v;
+}
+
+/** Two feature groups, each normalised, then mixed:
+ *  lexical (which words) carries topic, character trigrams carry the
+ *  smooth background similarity every real embedder has. The signed
+ *  projection at the end stands in for a learned output layer. */
+/* Term salience across the whole corpus. A real embedder learns that
+   "metadata" carries more signal than "document"; this recovers the same
+   effect so retrieval lands where a viewer expects it to. */
+let IDF = null;
+function getIDF(){
+  if (IDF) return IDF;
+  const perSentence = [];
+  for (const d of DOCS){
+    const f = flatten(d);
+    for (const st of sentences(f.full))
+      perSentence.push(new Set(st.text.toLowerCase().match(/[a-z0-9]+/g) || []));
+  }
+  const N = perSentence.length || 1;
+  const df = new Map();
+  perSentence.forEach(set => set.forEach(t => df.set(t, (df.get(t) || 0) + 1)));
+  IDF = new Map();
+  df.forEach((c, t) => IDF.set(t, Math.log(1 + N / c) / 3));
+  IDF._default = Math.log(1 + N) / 3;
+  return IDF;
+}
+
+const LEX_W = 0.70;
+function embed(text){
+  const lex = new Float32Array(EMBED_DIM);
+  const chr = new Float32Array(EMBED_DIM);
+  const low = text.toLowerCase();
+  const idf = getIDF();
+  for (const w of (low.match(/[a-z0-9]+/g) || [])){
+    const weight = (STOP.has(w) ? 0.3 : 1) * (idf.get(w) ?? idf._default);
+    for (let k = 0; k < 3; k++) lex[hash32(w, 0x9E3779B1 + k * 0x85EBCA77) % EMBED_DIM] += weight;
+  }
+  const flat = ' ' + low.replace(/[^a-z0-9]+/g, ' ') + ' ';
+  for (let i = 0; i + 3 <= flat.length; i++) chr[hash32(flat.slice(i, i + 3), 0x27D4EB2F) % EMBED_DIM] += 1;
+  l2(lex); l2(chr);
+  const v = new Float32Array(EMBED_DIM);
+  // BASE reproduces anisotropy: real embeddings all sit inside a narrow
+  // cone, which is why two unrelated sentences still score around 0.35
+  // rather than 0. Without it the numbers on screen would mislead.
+  for (let i = 0; i < EMBED_DIM; i++)
+    v[i] = SIGN[i] * (LEX_W * lex[i] + (1 - LEX_W) * chr[i]) + 0.60 * BASE[i];
+  return l2(v);
+}
+const BASE = l2((() => {
+  const b = new Float32Array(EMBED_DIM);
+  for (let i = 0; i < EMBED_DIM; i++) b[i] = ((hash32('base' + i, 3) % 2000) - 1000) / 1000;
+  return b;
+})());
+
+function cosine(a, b){
+  let d = 0;
+  for (let i = 0; i < EMBED_DIM; i++) d += a[i] * b[i];
+  return d;
+}
+/* =========================================================================
+   The 20 strategies.
+   Each run(ctx) returns [{s, e, meta}] over the flattened character stream.
+   ctx = { full, segs, doc, sents, p (live parameter values) }
+   ========================================================================= */
+
+const HEAD_T = new Set(['h1','h2','h3','mdh1','mdh2','eyebrow']);
+
+function blockRanges(ctx){
+  const map = new Map();
+  ctx.segs.forEach(sg => {
+    const cur = map.get(sg.block);
+    if (!cur) map.set(sg.block, { s: sg.start, e: sg.end, block: sg.block });
+    else cur.e = sg.end;
+  });
+  return [...map.values()].map(r => ({ ...r, t: ctx.doc.blocks[r.block].t, page: ctx.doc.blocks[r.block].page }));
+}
+
+function trimTo(full, s, e){
+  while (s < e && /\s/.test(full[s])) s++;
+  while (e > s && /\s/.test(full[e - 1])) e--;
+  return { s, e };
+}
+
+function headingAt(ctx, pos){
+  let best = null;
+  for (const b of blockRanges(ctx)){
+    if (b.s <= pos && HEAD_T.has(b.t)) best = ctx.doc.blocks[b.block].text.replace(/^#+\s*/, '');
+  }
+  return best || ctx.doc.name;
+}
+
+// Name the structural level a chunk actually landed on, by inspecting its
+// real boundaries against the document — the recursive splitter descends
+// paragraph → line → sentence → word, and this reads back which it reached.
+function structuralLevel(ctx, c){
+  const blocks = blockRanges(ctx);
+  const startBlk = blocks.find(b => c.s >= b.s && c.s < b.e);
+  // starts exactly on a heading block → a heading/section chunk
+  if (startBlk && HEAD_T.has(startBlk.t) && Math.abs(c.s - startBlk.s) <= 2) return 'heading';
+  // spans a whole paragraph block (start and end align with one block)
+  const paraBlk = blocks.find(b => Math.abs(c.s - b.s) <= 2 && Math.abs(c.e - b.e) <= 2);
+  if (paraBlk && !HEAD_T.has(paraBlk.t)) return 'paragraph';
+  // ends on a sentence boundary → a sentence-level split
+  const endsOnSentence = ctx.sents.some(st => Math.abs(c.e - st.e) <= 2);
+  const startsOnSentence = ctx.sents.some(st => Math.abs(c.s - st.s) <= 2);
+  if (endsOnSentence && startsOnSentence) return 'sentence';
+  if (endsOnSentence) return 'sentence';
+  // otherwise it was cut at a word (or mid-word) boundary
+  const endsOnWord = /\s/.test(ctx.full[c.e] || ' ') || c.e >= ctx.full.length;
+  return endsOnWord ? 'words' : 'characters';
+}
+
+function keywords(text, n){
+  const freq = new Map();
+  (text.toLowerCase().match(/[a-z][a-z-]{3,}/g) || []).forEach(w => {
+    if (STOP.has(w)) return;
+    freq.set(w, (freq.get(w) || 0) + 1);
+  });
+  return [...freq.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, n || 3).map(x => x[0]);
+}
+
+/* ---------- recursive splitter, LangChain-shaped ---------- */
+function rSplit(text, offset, seps, size, overlap){
+  let sep = '';
+  let rest = [];
+  for (let i = 0; i < seps.length; i++){
+    if (seps[i] === '' || text.indexOf(seps[i]) !== -1){ sep = seps[i]; rest = seps.slice(i + 1); break; }
+  }
+  let pieces = [];
+  if (sep === ''){
+    for (let i = 0; i < text.length; i += size) pieces.push({ text: text.slice(i, i + size), off: offset + i });
+  } else {
+    let idx = 0;
+    text.split(sep).forEach(p => { pieces.push({ text: p, off: offset + idx }); idx += p.length + sep.length; });
+  }
+  const fine = [];
+  for (const p of pieces){
+    if (!p.text.length) continue;
+    if (p.text.length > size && rest.length) fine.push(...rSplitPieces(p.text, p.off, rest, size));
+    else fine.push(p);
+  }
+  return mergePieces(fine, size, overlap);
+}
+function rSplitPieces(text, offset, seps, size){
+  const chunks = rSplit(text, offset, seps, size, 0);
+  return chunks.map(c => ({ text: text.slice(c.s - offset, c.e - offset), off: c.s }));
+}
+function mergePieces(pieces, size, overlap){
+  const out = [];
+  let cur = [], len = 0;
+  const emit = () => {
+    if (!cur.length) return;
+    out.push({ s: cur[0].off, e: cur[cur.length - 1].off + cur[cur.length - 1].text.length });
+  };
+  for (const p of pieces){
+    if (cur.length && len + p.text.length > size){
+      emit();
+      const keep = []; let klen = 0;
+      for (let i = cur.length - 1; i >= 0; i--){
+        if (klen + cur[i].text.length > overlap) break;
+        keep.unshift(cur[i]); klen += cur[i].text.length;
+      }
+      cur = keep; len = klen;
+    }
+    cur.push(p); len += p.text.length;
+  }
+  emit();
+  return out;
+}
+
+/* ---------- semantic helpers ---------- */
+/** LangChain's SemanticChunker embeds sentence i together with its
+ *  neighbours (buffer_size=1) before measuring distance — without that
+ *  buffer the signal is far too spiky to cut on. */
+function sentenceVectors(ctx){
+  if (!ctx._sv){
+    const n = ctx.sents.length;
+    ctx._sv = ctx.sents.map((s, i) => {
+      const a = Math.max(0, i - 1), z = Math.min(n - 1, i + 1);
+      return embed(ctx.sents.slice(a, z + 1).map(x => x.text).join(' '));
+    });
+  }
+  return ctx._sv;
+}
+function rawSentenceVectors(ctx){
+  if (!ctx._rsv) ctx._rsv = ctx.sents.map(s => embed(s.text));
+  return ctx._rsv;
+}
+function adjacentDistances(ctx){
+  const v = sentenceVectors(ctx);
+  const d = [];
+  for (let i = 1; i < v.length; i++) d.push(1 - cosine(v[i - 1], v[i]));
+  return d;
+}
+function groupByBreaks(ctx, breakSet){
+  const out = [];
+  let start = 0;
+  for (let i = 1; i <= ctx.sents.length; i++){
+    if (i === ctx.sents.length || breakSet.has(i)){
+      out.push({ s: ctx.sents[start].s, e: ctx.sents[i - 1].e });
+      start = i;
+    }
+  }
+  return out;
+}
+
+/* ========================================================================= */
+
+const STRATEGIES = [
+/* ---------------------------------------------------------------- naive */
+{
+  id:'fixed', group:'Naive · counts characters', name:'Fixed-size (characters)',
+  blurb:'Cut every N characters. No idea what a word is.',
+  when:'Only for uniform machine-generated text. It is the baseline everything else is measured against.',
+  params:[{k:'size',label:'chunk size',min:120,max:1200,step:20,def:420,unit:'ch'}],
+  run(ctx){
+    const out = [];
+    for (let i = 0; i < ctx.full.length; i += ctx.p.size)
+      out.push({ s:i, e: Math.min(i + ctx.p.size, ctx.full.length) });
+    return out;
+  },
+  code:`from langchain_text_splitters import CharacterTextSplitter
+
+splitter = CharacterTextSplitter(
+    separator="",          # no separator = pure character count
+    chunk_size=420,
+    chunk_overlap=0,
+)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'fixed-ov', group:'Naive · counts characters', name:'Fixed-size + overlap',
+  blurb:'Same cut, but each chunk repeats the tail of the one before it.',
+  when:'A cheap safety net when you cannot inspect the corpus. Watch the duplicate text pile up in the index.',
+  params:[
+    {k:'size',label:'chunk size',min:120,max:1200,step:20,def:420,unit:'ch'},
+    {k:'overlap',label:'overlap',min:0,max:300,step:10,def:80,unit:'ch'}
+  ],
+  run(ctx){
+    const step = Math.max(20, ctx.p.size - ctx.p.overlap), out = [];
+    for (let i = 0; i < ctx.full.length; i += step){
+      out.push({ s:i, e: Math.min(i + ctx.p.size, ctx.full.length) });
+      if (i + ctx.p.size >= ctx.full.length) break;
+    }
+    return out;
+  },
+  code:`from langchain_text_splitters import CharacterTextSplitter
+
+splitter = CharacterTextSplitter(
+    separator="",
+    chunk_size=420,
+    chunk_overlap=80,      # tail of chunk N repeats at head of N+1
+)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'token', group:'Naive · counts characters', name:'Token-based',
+  blurb:'Cut every N tokens, so chunks fit the context budget exactly.',
+  when:'When the model context, not readability, is the binding constraint. Sizes become predictable.',
+  params:[
+    {k:'tokens',label:'tokens',min:24,max:400,step:8,def:120,unit:'tok'},
+    {k:'overlap',label:'overlap',min:0,max:80,step:4,def:16,unit:'tok'}
+  ],
+  run(ctx){
+    const tk = tokenize(ctx.full), step = Math.max(4, ctx.p.tokens - ctx.p.overlap), out = [];
+    for (let i = 0; i < tk.length; i += step){
+      const last = Math.min(i + ctx.p.tokens, tk.length) - 1;
+      out.push({ s: tk[i].s, e: tk[last].e, meta:{ label: `tokens ${i + 1}–${last + 1}`, unit: 'token' } });
+      if (last >= tk.length - 1) break;
+    }
+    return out;
+  },
+  code:`from langchain_text_splitters import TokenTextSplitter
+
+splitter = TokenTextSplitter(
+    encoding_name="cl100k_base",
+    chunk_size=120,
+    chunk_overlap=16,
+)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'sliding', group:'Naive · counts characters', name:'Sliding window',
+  blurb:'Heavy overlap — the window advances by a fraction of its width.',
+  when:'Transcripts and chat logs, where the answer often straddles a boundary. Expect 2–3x more vectors.',
+  params:[
+    {k:'window',label:'window',min:40,max:300,step:10,def:120,unit:'tok'},
+    {k:'stride',label:'step',min:10,max:90,step:5,def:35,unit:'%'}
+  ],
+  run(ctx){
+    const tk = tokenize(ctx.full);
+    const step = Math.max(2, Math.round(ctx.p.window * ctx.p.stride / 100)), out = [];
+    for (let i = 0; i < tk.length; i += step){
+      const last = Math.min(i + ctx.p.window, tk.length) - 1;
+      out.push({ s: tk[i].s, e: tk[last].e });
+      if (last >= tk.length - 1) break;
+    }
+    return out;
+  },
+  code:`from langchain_text_splitters import TokenTextSplitter
+
+# window 120 tokens, advance 42 -> ~65% of every chunk is repeated
+splitter = TokenTextSplitter(chunk_size=120, chunk_overlap=78)
+chunks = splitter.split_text(text)`
+},
+
+/* --------------------------------------------------------- structural */
+{
+  id:'sentence', group:'Structure · reads the document', name:'Sentence',
+  blurb:'Group whole sentences. Nothing is ever cut mid-thought.',
+  when:'Dense prose where every sentence carries a fact. Chunk sizes vary a lot.',
+  params:[
+    {k:'n',label:'sentences',min:1,max:10,step:1,def:3,unit:''},
+    {k:'ov',label:'overlap',min:0,max:3,step:1,def:1,unit:'sent'}
+  ],
+  run(ctx){
+    const step = Math.max(1, ctx.p.n - ctx.p.ov), out = [];
+    for (let i = 0; i < ctx.sents.length; i += step){
+      const last = Math.min(i + ctx.p.n, ctx.sents.length) - 1;
+      const label = last === i ? `sentence ${i + 1}` : `sentences ${i + 1}–${last + 1}`;
+      out.push({ s: ctx.sents[i].s, e: ctx.sents[last].e, meta:{ label, unit: 'sentence' } });
+      if (last >= ctx.sents.length - 1) break;
+    }
+    return out;
+  },
+  code:`from langchain_text_splitters import NLTKTextSplitter
+
+# splits on sentence boundaries, then packs them up to chunk_size
+splitter = NLTKTextSplitter(chunk_size=600, chunk_overlap=120)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'paragraph', group:'Structure · reads the document', name:'Paragraph',
+  blurb:'One paragraph, one chunk — the author already decided where ideas end.',
+  when:'Well-edited prose. Short paragraphs get merged so you do not index one-line stubs.',
+  params:[{k:'min',label:'merge under',min:0,max:120,step:5,def:25,unit:'tok'}],
+  run(ctx){
+    const out = [];
+    let pend = null;
+    for (const b of blockRanges(ctx)){
+      const t = trimTo(ctx.full, b.s, b.e);
+      if (t.e <= t.s) continue;
+      if (pend) { pend.e = t.e; }
+      else pend = { s:t.s, e:t.e };
+      if (countTokens(ctx.full.slice(pend.s, pend.e)) >= ctx.p.min){ out.push(pend); pend = null; }
+    }
+    if (pend) out.push(pend);
+    return out.map((c, i) => ({ ...c, meta:{ label: `paragraph ${i + 1}`, unit: 'paragraph' } }));
+  },
+  code:`from langchain_text_splitters import CharacterTextSplitter
+
+splitter = CharacterTextSplitter(
+    separator="\\n\\n",     # the paragraph break
+    chunk_size=900,
+    chunk_overlap=0,
+    keep_separator=False,
+)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'recursive', group:'Structure · reads the document', name:'Recursive character',
+  blurb:'Try paragraphs, then lines, then sentences, then words — first split that fits wins.',
+  when:'The sane default. Start here on any new corpus and only move if retrieval quality asks you to.',
+  params:[
+    {k:'size',label:'chunk size',min:150,max:1200,step:25,def:450,unit:'ch'},
+    {k:'overlap',label:'overlap',min:0,max:250,step:10,def:60,unit:'ch'}
+  ],
+  run(ctx){
+    const chunks = rSplit(ctx.full, 0, ['\n\n','\n','. ',' ',''], ctx.p.size, ctx.p.overlap)
+      .map(c => trimTo(ctx.full, c.s, c.e)).filter(c => c.e > c.s);
+    return chunks.map(c => ({ ...c, meta: { label: structuralLevel(ctx, c), unit: 'level' } }));
+  },
+  code:`from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    separators=["\\n\\n", "\\n", ". ", " ", ""],
+    chunk_size=450,
+    chunk_overlap=60,
+)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'md', group:'Structure · reads the document', name:'Markdown headers',
+  blurb:'Split on # and ##. Each chunk keeps its heading trail as metadata.',
+  when:'Docs sites, READMEs, wikis. The heading is free context you would otherwise pay an LLM to write.',
+  params:[{k:'level',label:'deepest level',min:1,max:2,step:1,def:2,unit:'#'}],
+  run(ctx){
+    const blocks = blockRanges(ctx);
+    const isHead = b => (b.t === 'mdh1') || (b.t === 'mdh2' && ctx.p.level >= 2);
+    if (!blocks.some(isHead))
+      return [{ s:0, e: ctx.full.length, meta:{ note:'No markdown headers in this file — the splitter returns the whole document as one chunk. This is the quiet failure mode of structure-aware splitting.' } }];
+    const out = [];
+    let cur = null, path = [];
+    for (const b of blocks){
+      if (isHead(b)){
+        if (cur) out.push(cur);
+        const txt = ctx.doc.blocks[b.block].text;
+        const lvl = b.t === 'mdh1' ? 1 : 2;
+        path = path.slice(0, lvl - 1); path[lvl - 1] = txt.replace(/^#+\s*/, '');
+        cur = { s:b.s, e:b.e, meta:{ path: path.filter(Boolean).join(' › ') } };
+      } else if (cur){ cur.e = b.e; }
+      else cur = { s:b.s, e:b.e, meta:{ path:'(preamble)' } };
+    }
+    if (cur) out.push(cur);
+    return out;
+  },
+  code:`from langchain_text_splitters import MarkdownHeaderTextSplitter
+
+splitter = MarkdownHeaderTextSplitter(
+    headers_to_split_on=[("#", "h1"), ("##", "h2")],
+    strip_headers=False,
+)
+docs = splitter.split_text(markdown)
+# docs[0].metadata -> {"h1": "rag-ingest", "h2": "Usage"}`
+},
+{
+  id:'section', group:'Structure · reads the document', name:'Section / heading tree',
+  blurb:'Any heading starts a new section; oversized sections fall back to recursive.',
+  when:'HTML, PDFs with real headings, knowledge bases. Keeps a whole topic in one vector when it fits.',
+  params:[{k:'max',label:'max size',min:200,max:1600,step:50,def:800,unit:'ch'}],
+  run(ctx){
+    const blocks = blockRanges(ctx);
+    const secs = [];
+    let cur = null;
+    for (const b of blocks){
+      if (HEAD_T.has(b.t)){
+        if (cur) secs.push(cur);
+        cur = { s:b.s, e:b.e, meta:{ path: ctx.doc.blocks[b.block].text.replace(/^#+\s*/, '') } };
+      } else if (cur) cur.e = b.e;
+      else cur = { s:b.s, e:b.e, meta:{ path:'(body)' } };
+    }
+    if (cur) secs.push(cur);
+    const out = [];
+    for (const sc of secs){
+      if (sc.e - sc.s <= ctx.p.max){
+        out.push({ ...sc, meta:{ ...sc.meta, label: 'section: ' + sc.meta.path } });
+        continue;
+      }
+      const parts = rSplit(ctx.full.slice(sc.s, sc.e), sc.s, ['\n\n','\n','. ',' ',''], ctx.p.max, 0);
+      parts.forEach((c, pi) => out.push({ ...trimTo(ctx.full, c.s, c.e),
+        meta:{ path: sc.meta.path, split:true, label: `"${sc.meta.path}" part ${pi + 1}/${parts.length}` } }));
+    }
+    return out.filter(c => c.e > c.s);
+  },
+  code:`from langchain_text_splitters import HTMLHeaderTextSplitter, RecursiveCharacterTextSplitter
+
+sections = HTMLHeaderTextSplitter(
+    headers_to_split_on=[("h1", "title"), ("h2", "section")]
+).split_text(html)
+
+# sections that blow past the budget get a second pass
+chunks = RecursiveCharacterTextSplitter(chunk_size=800).split_documents(sections)`
+},
+{
+  id:'page', group:'Structure · reads the document', name:'Page / layout aware',
+  blurb:'One chunk per physical page, straight from the PDF loader.',
+  when:'Scanned or laid-out PDFs where page number is the citation unit. Cheap, and easy to cite back.',
+  params:[],
+  run(ctx){
+    const byPage = new Map();
+    blockRanges(ctx).forEach(b => {
+      const pg = b.page || 1;
+      if (!byPage.has(pg)) byPage.set(pg, { s:b.s, e:b.e, meta:{ page:pg } });
+      else byPage.get(pg).e = b.e;
+    });
+    return [...byPage.values()];
+  },
+  code:`from langchain_community.document_loaders import PyPDFLoader
+
+# one Document per page, page number already in metadata
+pages = PyPDFLoader("rag-primer.pdf").load()
+# pages[1].metadata -> {"source": "rag-primer.pdf", "page": 1}`
+},
+{
+  id:'table', group:'Structure · reads the document', name:'Table aware',
+  blurb:'Tables never get cut. Rows can carry a copy of the header with them.',
+  when:'Invoices, specs, financial reports. A row without its header is unanswerable.',
+  params:[{k:'rows',label:'rows / chunk',min:0,max:5,step:1,def:0,unit:''}],
+  run(ctx){
+    const out = [];
+    for (const b of blockRanges(ctx)){
+      const blk = ctx.doc.blocks[b.block];
+      if (blk.t !== 'table'){
+        const t = trimTo(ctx.full, b.s, b.e);
+        if (t.e > t.s) out.push({ ...t, meta:{ kind:'prose' } });
+        continue;
+      }
+      const rowSegs = {};
+      ctx.segs.filter(sg => sg.block === b.block).forEach(sg => {
+        rowSegs[sg.row] = rowSegs[sg.row] || { s: sg.start, e: sg.end };
+        rowSegs[sg.row].e = sg.end;
+      });
+      const rows = Object.keys(rowSegs).map(Number).sort((a, z) => a - z);
+      if (ctx.p.rows === 0){
+        out.push({ s: rowSegs[rows[0]].s, e: rowSegs[rows[rows.length - 1]].e,
+                   meta:{ kind:'table', note:'Whole table kept as one chunk — header and rows stay together.' } });
+      } else {
+        const headText = blk.head.join(' | ');
+        for (let i = 1; i < rows.length; i += ctx.p.rows){
+          const last = Math.min(i + ctx.p.rows, rows.length) - 1;
+          out.push({ s: rowSegs[rows[i]].s, e: rowSegs[rows[last]].e,
+                     meta:{ kind:'table', prefix: headText, note:'Header row copied onto every slice so each row still answers a question.' } });
+        }
+      }
+    }
+    return out;
+  },
+  code:`from langchain_community.document_loaders import UnstructuredPDFLoader
+
+els = UnstructuredPDFLoader("statement-q3.pdf", mode="elements").load()
+
+tables = [e for e in els if e.metadata["category"] == "Table"]
+prose  = [e for e in els if e.metadata["category"] != "Table"]
+# split prose normally, pass tables through untouched`
+},
+{
+  id:'code', group:'Structure · reads the document', name:'Code aware',
+  blurb:'Split on top-level def / class, never inside a function body.',
+  when:'Source repositories. A half function embeds as noise and retrieves as garbage.',
+  params:[],
+  run(ctx){
+    const out = [];
+    let hasCode = false;
+    for (const b of blockRanges(ctx)){
+      const blk = ctx.doc.blocks[b.block];
+      if (blk.t !== 'code'){
+        const t = trimTo(ctx.full, b.s, b.e);
+        if (t.e > t.s) out.push({ ...t, meta:{ kind:'prose' } });
+        continue;
+      }
+      hasCode = true;
+      const segs = ctx.segs.filter(sg => sg.block === b.block).sort((a, z) => a.line - z.line);
+      let cur = null;
+      segs.forEach(sg => {
+        const top = /^(def |class |@)/.test(sg.text);
+        if (top && cur && /\S/.test(ctx.full.slice(cur.s, cur.e))){
+          const t = trimTo(ctx.full, cur.s, cur.e);
+          if (t.e > t.s) out.push({ ...t, meta:{ kind:'code' } });
+          cur = null;
+        }
+        if (!cur) cur = { s: sg.start, e: sg.end };
+        else cur.e = sg.end;
+      });
+      if (cur){ const t = trimTo(ctx.full, cur.s, cur.e); if (t.e > t.s) out.push({ ...t, meta:{ kind:'code' } }); }
+    }
+    if (!hasCode && out.length) out[0].meta = { ...out[0].meta, note:'No code in this file — the language splitter degrades to plain paragraph splitting.' };
+    return out;
+  },
+  code:`from langchain_text_splitters import RecursiveCharacterTextSplitter, Language
+
+splitter = RecursiveCharacterTextSplitter.from_language(
+    language=Language.PYTHON,
+    chunk_size=800,
+    chunk_overlap=0,
+)
+# separators become ["\\nclass ", "\\ndef ", "\\n\\tdef ", "\\n\\n", "\\n", " ", ""]
+chunks = splitter.split_text(source)`
+},
+
+/* ----------------------------------------------------------- semantic */
+{
+  id:'semantic', group:'Semantic · reads the meaning', name:'Semantic (std-dev)',
+  blurb:'Embed every sentence, cut where the topic actually shifts.',
+  when:'Long unformatted text — transcripts, OCR, scraped pages. Ignores formatting entirely.',
+  params:[{k:'k',label:'sensitivity',min:2,max:25,step:1,def:10,unit:'σ/10'}],
+  run(ctx){
+    const d = adjacentDistances(ctx);
+    if (!d.length) return [{ s:0, e: ctx.full.length }];
+    const mean = d.reduce((a, b) => a + b, 0) / d.length;
+    const sd = Math.sqrt(d.reduce((a, b) => a + (b - mean) ** 2, 0) / d.length) || 1e-6;
+    const thr = mean + (ctx.p.k / 10) * sd;
+    const brk = new Set();
+    d.forEach((v, i) => { if (v > thr) brk.add(i + 1); });
+    return groupByBreaks(ctx, brk).map(c => ({ ...c, meta:{ note:'Boundary chosen because the next sentence moved away from this one in embedding space.' } }));
+  },
+  code:`from langchain_experimental.text_splitter import SemanticChunker
+from langchain_openai import OpenAIEmbeddings
+
+splitter = SemanticChunker(
+    OpenAIEmbeddings(),
+    breakpoint_threshold_type="standard_deviation",
+    breakpoint_threshold_amount=1.0,
+)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'semantic-p', group:'Semantic · reads the meaning', name:'Semantic (percentile)',
+  blurb:'Same idea, but the cut threshold is a percentile of the distances in this document.',
+  when:'Mixed corpora. Percentile adapts per document instead of using one global number.',
+  params:[{k:'pct',label:'percentile',min:60,max:98,step:1,def:88,unit:'%'}],
+  run(ctx){
+    const d = adjacentDistances(ctx);
+    if (!d.length) return [{ s:0, e: ctx.full.length }];
+    const sorted = [...d].sort((a, b) => a - b);
+    const thr = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * ctx.p.pct / 100))];
+    const brk = new Set();
+    d.forEach((v, i) => { if (v >= thr && v > 0) brk.add(i + 1); });
+    return groupByBreaks(ctx, brk).map(c => ({ ...c, meta:{ note:'Cut at the ' + ctx.p.pct + 'th percentile of sentence-to-sentence distance in this document.' } }));
+  },
+  code:`from langchain_experimental.text_splitter import SemanticChunker
+
+splitter = SemanticChunker(
+    OpenAIEmbeddings(),
+    breakpoint_threshold_type="percentile",
+    breakpoint_threshold_amount=88,   # cut the top 12% of distances
+)
+chunks = splitter.split_text(text)`
+},
+{
+  id:'proposition', group:'Semantic · reads the meaning', name:'Proposition',
+  blurb:'An LLM rewrites the text into standalone facts. One fact, one vector.',
+  when:'Fact-heavy reference material where precision beats context. Expensive: one LLM pass per document.',
+  params:[],
+  run(ctx){
+    const out = [];
+    for (const st of ctx.sents){
+      const rel = /(,\s+(and|but|so|which|while)\s+)|(;\s+)|(\s+—\s+)/g;
+      let last = st.s, m;
+      rel.lastIndex = 0;
+      while ((m = rel.exec(st.text)) !== null){
+        const cut = st.s + m.index + m[0].length;
+        if (cut - last > 40){ out.push({ s:last, e:cut, meta:{ atomic:true } }); last = cut; }
+      }
+      if (st.e - last > 10) out.push({ s:last, e:st.e, meta:{ atomic:true } });
+    }
+    return out.map(c => trimTo(ctx.full, c.s, c.e)).filter(c => c.e > c.s).map((c, i) => ({ ...c, meta:{ atomic:true } }));
+  },
+  code:`from langchain import hub
+from langchain_openai import ChatOpenAI
+
+# hub prompt returns a JSON list of standalone, self-contained statements
+chain = hub.pull("wfh/proposal-indexing") | ChatOpenAI(model="gpt-4o-mini")
+
+propositions = chain.invoke({"input": paragraph})
+# ["Overlap repeats the tail of one chunk at the head of the next.", ...]`
+},
+{
+  id:'agentic', group:'Semantic · reads the meaning', name:'Agentic',
+  blurb:'A model reads the document and decides each boundary, under a size budget.',
+  when:'Small high-value corpora — contracts, policies. Highest quality per chunk, highest cost per document.',
+  params:[{k:'budget',label:'token budget',min:40,max:400,step:20,def:160,unit:'tok'}],
+  run(ctx){
+    const v = sentenceVectors(ctx), out = [];
+    let start = 0, acc = null, toks = 0;
+    for (let i = 0; i < ctx.sents.length; i++){
+      const st = ctx.sents[i];
+      const t = countTokens(st.text);
+      const sim = acc ? cosine(acc, v[i]) : 1;
+      if (i > start && (toks + t > ctx.p.budget || sim < 0.54)){
+        const text = ctx.full.slice(ctx.sents[start].s, ctx.sents[i - 1].e);
+        out.push({ s: ctx.sents[start].s, e: ctx.sents[i - 1].e,
+                   meta:{ reason: 'Kept together: both sentences develop ' + (keywords(text, 2).join(' and ') || 'one idea') + '. Cut here because the next sentence changes subject.' } });
+        start = i; acc = null; toks = 0;
+      }
+      acc = acc ? mixVec(acc, v[i]) : v[i];
+      toks += t;
+    }
+    if (start < ctx.sents.length){
+      const text = ctx.full.slice(ctx.sents[start].s, ctx.sents[ctx.sents.length - 1].e);
+      out.push({ s: ctx.sents[start].s, e: ctx.sents[ctx.sents.length - 1].e,
+                 meta:{ reason: 'Final group — covers ' + (keywords(text, 2).join(' and ') || 'the closing point') + '.' } });
+    }
+    return out;
+  },
+  code:`SYSTEM = """You are splitting a document for retrieval.
+Return the index of every sentence that should START a new chunk.
+Keep a chunk under 160 tokens. Never split a definition from its term."""
+
+boundaries = ChatOpenAI(model="gpt-4o").invoke(
+    [("system", SYSTEM), ("user", numbered_sentences)]
+)
+chunks = apply_boundaries(sentences, boundaries)`
+},
+
+/* ------------------------------------------------- retrieval-time shape */
+{
+  id:'parent', group:'Retrieval-time · index one thing, return another', name:'Parent document',
+  blurb:'Embed small children for precision, return the whole parent for context.',
+  when:'The single highest-leverage upgrade for most pipelines. Small vectors, large answers.',
+  params:[{k:'child',label:'child size',min:80,max:400,step:20,def:180,unit:'ch'}],
+  run(ctx){
+    const out = [];
+    for (const b of blockRanges(ctx)){
+      const par = trimTo(ctx.full, b.s, b.e);
+      if (par.e <= par.s) continue;
+      rSplit(ctx.full.slice(par.s, par.e), par.s, ['. ',' ',''], ctx.p.child, 0).forEach(c => {
+        const t = trimTo(ctx.full, c.s, c.e);
+        if (t.e > t.s) out.push({ ...t, meta:{ parent: par, note:'Embedded as a child. On a hit, the retriever returns the full parent block instead.' } });
+      });
+    }
+    return out;
+  },
+  code:`from langchain.retrievers import ParentDocumentRetriever
+
+retriever = ParentDocumentRetriever(
+    vectorstore=store,                       # holds the small children
+    docstore=InMemoryStore(),                # holds the big parents
+    child_splitter=RecursiveCharacterTextSplitter(chunk_size=180),
+    parent_splitter=RecursiveCharacterTextSplitter(chunk_size=1500),
+)
+retriever.add_documents(docs)`
+},
+{
+  id:'window', group:'Retrieval-time · index one thing, return another', name:'Sentence window',
+  blurb:'Embed one sentence, retrieve it with its neighbours attached.',
+  when:'Q&A over dense technical prose. Sharp matching, and the answer still arrives with context.',
+  params:[{k:'w',label:'window',min:1,max:4,step:1,def:1,unit:'sent'}],
+  run(ctx){
+    return ctx.sents.map((st, i) => {
+      const a = Math.max(0, i - ctx.p.w), z = Math.min(ctx.sents.length - 1, i + ctx.p.w);
+      return { s: st.s, e: st.e, meta:{ window:{ s: ctx.sents[a].s, e: ctx.sents[z].e },
+        note:'One sentence is embedded. ' + (z - a) + ' neighbouring sentences ride along at retrieval time.' } };
+    });
+  },
+  code:`from llama_index.core.node_parser import SentenceWindowNodeParser
+
+parser = SentenceWindowNodeParser.from_defaults(
+    window_size=1,                       # 1 sentence each side
+    window_metadata_key="window",
+    original_text_metadata_key="original_text",
+)
+nodes = parser.get_nodes_from_documents(docs)
+# embed node.text, but feed node.metadata["window"] to the LLM`
+},
+{
+  id:'late', group:'Retrieval-time · index one thing, return another', name:'Late chunking',
+  blurb:'Embed the whole document first, then pool the token vectors into chunks.',
+  when:'When pronouns and references break your chunks. Each vector already knows the document around it.',
+  params:[{k:'size',label:'chunk size',min:150,max:900,step:25,def:400,unit:'ch'}],
+  run(ctx){
+    return rSplit(ctx.full, 0, ['\n\n','\n','. ',' ',''], ctx.p.size, 0)
+      .map(c => trimTo(ctx.full, c.s, c.e)).filter(c => c.e > c.s)
+      .map(c => ({ ...c, meta:{ late:true, note:'Vector pooled from a full-document forward pass — "it" and "this" still point at the right thing.' } }));
+  },
+  code:`# long-context embedder, one pass over the WHOLE document
+tok = model.tokenize(full_text, return_offsets_mapping=True)
+token_vecs = model(**tok).last_hidden_state[0]     # [n_tokens, dim]
+
+# only now decide the boundaries, and mean-pool inside each one
+for start, end in char_spans:
+    lo, hi = token_span_for(tok, start, end)
+    chunk_vec = token_vecs[lo:hi].mean(dim=0)      # context-aware vector`
+},
+{
+  id:'contextual', group:'Retrieval-time · index one thing, return another', name:'Contextual retrieval',
+  blurb:'An LLM writes one situating line per chunk and prepends it before embedding.',
+  when:'When chunks are correct but ambiguous. Roughly a 35% drop in failed retrievals, at one cheap call per chunk.',
+  params:[{k:'size',label:'chunk size',min:150,max:900,step:25,def:400,unit:'ch'}],
+  run(ctx){
+    return rSplit(ctx.full, 0, ['\n\n','\n','. ',' ',''], ctx.p.size, 0)
+      .map(c => trimTo(ctx.full, c.s, c.e)).filter(c => c.e > c.s)
+      .map(c => {
+        const kw = keywords(ctx.full.slice(c.s, c.e), 3);
+        return { ...c, meta:{
+          prefix: 'From ' + ctx.doc.name + ', section "' + headingAt(ctx, c.s) + '". This passage covers ' + (kw.join(', ') || 'the surrounding topic') + '.',
+          note:'The italic line is generated, prepended, and embedded with the chunk — the stored text is unchanged.'
+        }};
+      });
+  },
+  code:`PROMPT = """Here is the whole document:
+<document>{doc}</document>
+
+Here is one chunk of it:
+<chunk>{chunk}</chunk>
+
+Write 1-2 sentences that situate this chunk inside the document,
+so it can be retrieved on its own. Answer with the context only."""
+
+context = claude.messages.create(...)          # cached document = cheap
+embedding = embed(context + "\\n\\n" + chunk)   # store chunk, embed both`
+}
+];
+
+function mixVec(a, b){
+  const o = new Float32Array(EMBED_DIM);
+  let n = 0;
+  for (let i = 0; i < EMBED_DIM; i++){ o[i] = a[i] * 0.65 + b[i] * 0.35; n += o[i] * o[i]; }
+  n = Math.sqrt(n) || 1;
+  for (let i = 0; i < EMBED_DIM; i++) o[i] /= n;
+  return o;
+}
+/* =========================================================================
+   Retrieval: embed a query, score every chunk, and show the geometry
+   ========================================================================= */
+
+/** Two principal components by power iteration. Only used to spread the
+ *  points out by angle — the radius carries the real information. */
+function pca2(vecs){
+  const D = EMBED_DIM, n = vecs.length;
+  const mean = new Float32Array(D);
+  vecs.forEach(v => { for (let i = 0; i < D; i++) mean[i] += v[i] / n; });
+  const X = vecs.map(v => { const r = new Float32Array(D); for (let i = 0; i < D; i++) r[i] = v[i] - mean[i]; return r; });
+  const pcs = [];
+  for (let c = 0; c < 2; c++){
+    let w = new Float32Array(D);
+    for (let i = 0; i < D; i++) w[i] = ((hash32('pc' + c + '_' + i, 5) % 2000) - 1000) / 1000;
+    for (let it = 0; it < 24; it++){
+      const nw = new Float32Array(D);
+      for (const x of X){
+        let d = 0;
+        for (let i = 0; i < D; i++) d += x[i] * w[i];
+        for (let i = 0; i < D; i++) nw[i] += d * x[i];
+      }
+      for (const p of pcs){
+        let d = 0;
+        for (let i = 0; i < D; i++) d += nw[i] * p[i];
+        for (let i = 0; i < D; i++) nw[i] -= d * p[i];
+      }
+      let nn = 0;
+      for (let i = 0; i < D; i++) nn += nw[i] * nw[i];
+      nn = Math.sqrt(nn) || 1;
+      for (let i = 0; i < D; i++) nw[i] /= nn;
+      w = nw;
+    }
+    pcs.push(w);
+  }
+  return { mean, pcs };
+}
+
+function runRetrieval(ctx, chunks, query, k){
+  const q = embed(query);
+  const vecs = chunks.map(c => vectorFor(ctx, c));
+  const rows = chunks.map((c, i) => ({ i, sim: cosine(q, vecs[i]), vec: vecs[i] }));
+  const ranked = [...rows].sort((a, b) => b.sim - a.sim);
+  const { mean, pcs } = pca2(vecs.concat([q]));
+  const proj = v => {
+    let a = 0, b = 0;
+    for (let i = 0; i < EMBED_DIM; i++){ const d = v[i] - mean[i]; a += d * pcs[0][i]; b += d * pcs[1][i]; }
+    return Math.atan2(b, a);
+  };
+  rows.forEach(r => { r.angle = proj(r.vec) + (hash32('j' + r.i, 2) % 60 - 30) / 600; });
+  const hits = new Map();
+  ranked.slice(0, k).forEach((r, rank) => hits.set(r.i, rank + 1));
+  return { query, q, rows, ranked, k, hits };
+}
+
+/* ---------------- the map ---------------- */
+function vectorMapSVG(R){
+  const W = 620, H = 400, CX = 310, CY = 198, R0 = 30, R1 = 152;
+  const ds = R.rows.map(r => 1 - r.sim);
+  const dmin = Math.min(...ds), dmax = Math.max(...ds), span = (dmax - dmin) || 1;
+  const pt = r => {
+    const rad = R0 + ((1 - r.sim) - dmin) / span * (R1 - R0);
+    return { x: CX + Math.cos(r.angle) * rad, y: CY + Math.sin(r.angle) * rad, rad };
+  };
+  const cutSim = R.ranked[Math.min(R.k, R.ranked.length) - 1]?.sim ?? 0;
+  const nextSim = R.ranked[R.k]?.sim ?? cutSim;
+  const cutR = R0 + ((1 - (cutSim + nextSim) / 2) - dmin) / span * (R1 - R0);
+  const worst = R.ranked[R.ranked.length - 1];
+
+  let g = '';
+  for (const rr of [0.34, 0.67, 1]) g += `<circle cx="${CX}" cy="${CY}" r="${(R0 + (R1 - R0) * rr).toFixed(1)}" class="ring"/>`;
+  g += `<circle cx="${CX}" cy="${CY}" r="${cutR.toFixed(1)}" class="cutring"/>`;
+  g += `<text x="${CX}" y="${(CY - cutR - 7).toFixed(1)}" class="cutlbl" text-anchor="middle">top-${R.k} cut-off · cos ${cutSim.toFixed(3)}</text>`;
+
+  // misses first, so hits draw on top
+  R.rows.filter(r => !R.hits.has(r.i)).forEach(r => {
+    const p = pt(r);
+    g += `<line x1="${CX}" y1="${CY}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" class="miss${r === worst ? ' worst' : ''}"/>`;
+  });
+  R.rows.filter(r => R.hits.has(r.i)).forEach(r => {
+    const p = pt(r);
+    g += `<line x1="${CX}" y1="${CY}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" class="hitline" style="stroke-width:${(0.8 + r.sim * 2.6).toFixed(2)}"/>`;
+  });
+  R.rows.forEach(r => {
+    const p = pt(r), on = R.hits.has(r.i);
+    g += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${on ? 8 : 5}" class="node${on ? ' on' : ''}" style="${on ? `fill:var(--c${(r.i % 8) + 1})` : ''}" data-node="${r.i}"><title>chunk ${r.i} · cos ${r.sim.toFixed(4)}</title></circle>`;
+    if (on) g += `<text x="${p.x.toFixed(1)}" y="${(p.y + 3.2).toFixed(1)}" class="nlbl" text-anchor="middle">${R.hits.get(r.i)}</text>`;
+  });
+  if (worst){
+    const p = pt(worst);
+    g += `<text x="${p.x.toFixed(1)}" y="${(p.y - 12).toFixed(1)}" class="misslbl" text-anchor="middle">chunk ${worst.i} · cos ${worst.sim.toFixed(3)} — too far, never retrieved</text>`;
+  }
+  g += `<g class="qmark"><circle cx="${CX}" cy="${CY}" r="13"/><path d="M${CX - 7} ${CY}h14M${CX} ${CY - 7}v14"/></g>`;
+  g += `<text x="${CX}" y="${CY + 30}" class="qlbl" text-anchor="middle">your query vector</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" class="vmap" role="img" aria-label="vector space map">${g}</svg>`;
+}
+
+/* ---------------- ranked bars ---------------- */
+function rankedListHTML(ctx, chunks, R){
+  return R.ranked.map((r, rank) => {
+    const on = rank < R.k;
+    const txt = ctx.full.slice(chunks[r.i].s, chunks[r.i].e).replace(/\s+/g, ' ').slice(0, 74);
+    return `<button class="rrow${on ? ' on' : ''}${S.pin === r.i ? ' pinned' : ''}" data-node="${r.i}">
+      <span class="rk">${on ? '#' + (rank + 1) : '—'}</span>
+      <span class="rbarwrap"><span class="rbar" style="width:${(r.sim * 100).toFixed(1)}%;--cc:var(--c${(r.i % 8) + 1})"></span></span>
+      <span class="rsim">${r.sim.toFixed(3)}</span>
+      <span class="rtxt">c${String(r.i).padStart(2, '0')} · ${esc(txt)}…</span>
+    </button>`;
+  }).join('') + `<div class="raxis"><span>cos 0</span><span>0.5</span><span>1.0</span></div>`;
+}
+
+/* ---------------- the arithmetic ---------------- */
+function dotMathHTML(R){
+  const best = R.ranked[0], worst = R.ranked[R.ranked.length - 1];
+  if (!best) return '';
+  const dims = [...Array(EMBED_DIM).keys()]
+    .sort((a, b) => Math.abs(R.q[b] * best.vec[b]) - Math.abs(R.q[a] * best.vec[a]))
+    .slice(0, 8).sort((a, b) => a - b);
+  let partB = 0, partW = 0;
+  dims.forEach(d => { partB += R.q[d] * best.vec[d]; partW += R.q[d] * worst.vec[d]; });
+  const rows = dims.map(d => {
+    const pb = R.q[d] * best.vec[d], pw = R.q[d] * worst.vec[d];
+    return `<tr>
+      <td class="dim">${String(d).padStart(4, '0')}</td>
+      <td>${R.q[d] >= 0 ? '+' : ''}${R.q[d].toFixed(3)}</td>
+      <td class="hi">${best.vec[d] >= 0 ? '+' : ''}${best.vec[d].toFixed(3)}</td>
+      <td class="hi p">${pb >= 0 ? '+' : ''}${pb.toFixed(4)}</td>
+      <td class="lo">${worst.vec[d] >= 0 ? '+' : ''}${worst.vec[d].toFixed(3)}</td>
+      <td class="lo p">${pw >= 0 ? '+' : ''}${pw.toFixed(4)}</td>
+    </tr>`;
+  }).join('');
+  return `<table class="dot">
+    <thead><tr><th>dim</th><th>query</th><th class="hi">c${String(best.i).padStart(2,'0')}</th><th class="hi">×</th><th class="lo">c${String(worst.i).padStart(2,'0')}</th><th class="lo">×</th></tr></thead>
+    <tbody>${rows}</tbody>
+    <tfoot>
+      <tr><td colspan="3">these 8 dimensions</td><td class="hi p">${partB.toFixed(4)}</td><td></td><td class="lo p">${partW.toFixed(4)}</td></tr>
+      <tr class="tot"><td colspan="3">all ${EMBED_DIM} summed = cosine</td><td class="hi p">${best.sim.toFixed(4)}</td><td></td><td class="lo p">${worst.sim.toFixed(4)}</td></tr>
+    </tfoot>
+  </table>
+  <p class="dotnote">The winning chunk shares vocabulary with the query, so its components point the same way and every product lands positive. The far chunk's components point somewhere else — the products cancel out and the sum stays low. That sum is the only thing the vector store ranks on.</p>`;
+}
+/* =========================================================================
+   UI layer
+   ========================================================================= */
+
+const S = {
+  docId: DOCS[0].id,
+  stratId: null,      // nothing selected until the viewer clicks a strategy
+  pinned: null,
+  compare: false,
+  code: false,
+  open: null,
+  params: {},
+  focus: null,
+  pin: null,        // chunk clicked from the map/ranked list, highlight stays
+  ret: null,        // active retrieval result
+  topk: 3,
+  fs: 1,           // index into DOC_SIZES
+  reveal: 0,       // how many chunks of the current strategy are shown so far
+  running: false,  // a build animation is in flight
+  speed: 3,        // index into SPEEDS — animation pacing multiplier
+  measureFocus: null  // chunk highlighted while dragging a size slider
+};
+const SPEEDS = [
+  { label: '0.1×', mult: 10.0 },
+  { label: '0.2×', mult: 5.0 },
+  { label: '0.3×', mult: 3.33 },
+  { label: '0.5×', mult: 2.0 },
+  { label: '1×',   mult: 1.0 },
+  { label: '2×',   mult: 0.5 },
+  { label: '4×',   mult: 0.25 }
+];
+let revealTimer = null;
+const DOC_SIZES = [14, 15.5, 17.5, 20];
+
+STRATEGIES.forEach(st => {
+  S.params[st.id] = {};
+  st.params.forEach(p => { S.params[st.id][p.k] = p.def; });
+});
+
+const ctxCache = new Map();
+function getCtx(docId){
+  if (!ctxCache.has(docId)){
+    const doc = DOCS.find(d => d.id === docId);
+    const f = flatten(doc);
+    ctxCache.set(docId, { ...f, sents: sentences(f.full) });
+  }
+  return ctxCache.get(docId);
+}
+
+function runStrategy(st, ctx){
+  const c = { ...ctx, p: S.params[st.id] };
+  c._sv = ctx._sv;
+  let out;
+  try { out = st.run(c) || []; } catch (err){ console.error(st.id, err); out = []; }
+  ctx._sv = c._sv;
+  return out
+    .map(x => ({ s: Math.max(0, x.s | 0), e: Math.min(ctx.full.length, x.e | 0), meta: x.meta || {} }))
+    .filter(x => x.e > x.s && ctx.full.slice(x.s, x.e).trim().length)
+    .sort((a, b) => a.s - b.s || a.e - b.e);
+}
+
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/* ---------------------------------------------------------------- files */
+function renderFiles(){
+  const host = document.getElementById('files');
+  host.innerHTML = '<div class="folder">corpus/</div>' + DOCS.map((d, i) => `
+    <button class="file" data-doc="${d.id}" aria-current="${d.id === S.docId}">
+      <span class="fname">${esc(d.name)}</span>
+      <span class="fmeta">${i + 1} · ${esc(d.meta)}</span>
+    </button>`).join('');
+  host.querySelectorAll('[data-doc]').forEach(b =>
+    b.onclick = () => { stopReveal(); S.stratId = null; S.reveal = 0; S.docId = b.dataset.doc; S.open = null; S.ret = null; renderAll(); if (!document.getElementById('drawer').hidden) clearSearch(); });
+}
+
+/* ----------------------------------------------------------- strategies */
+function renderStrats(counts){
+  const host = document.getElementById('strats');
+  let html = '', group = null;
+  STRATEGIES.forEach(st => {
+    if (st.group !== group){ group = st.group; html += `<div class="strat-group">${esc(group)}</div>`; }
+    const on = st.id === S.stratId;
+    const building = on && S.running;
+    const nlabel = building ? `${S.reveal}/${counts[st.id] ?? '·'}` : (counts[st.id] ?? '·');
+    html += `<button class="strat${S.compare && st.id === S.pinned ? ' pinned' : ''}${building ? ' building' : ''}" data-strat="${st.id}" aria-current="${on}">
+      <span class="strat-row">
+        <span class="nm">${esc(st.name)}</span>
+        <span class="n">${nlabel}</span>
+      </span>
+      <span class="bl">${esc(st.blurb)}</span>
+    </button>`;
+    if (on){
+      if (S.running){
+        html += `<div class="params"><div class="buildrow"><span class="dot-pulse"></span><span class="bprog">cutting the document · ${S.reveal} of ${counts[st.id]}</span><button class="skipbtn" id="skipBuild">skip →</button></div></div>`;
+      } else {
+        html += `<div class="params">
+          <div class="buildrow done">built ${counts[st.id]} chunks<button class="skipbtn" id="replayBuild">↻ replay</button></div>
+          ${st.params.map(p => `<div class="prm">
+              <label for="p-${p.k}">${esc(p.label)}</label>
+              <input id="p-${p.k}" type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${S.params[st.id][p.k]}" data-param="${p.k}">
+              <span class="val" data-val="${p.k}">${S.params[st.id][p.k]}${p.unit ? ' ' + p.unit : ''}</span>
+            </div>`).join('')}
+          <div class="when"><strong>Reach for it when</strong>${esc(st.when)}</div>
+        </div>`;
+      }
+    }
+  });
+  host.innerHTML = html;
+  host.querySelectorAll('[data-strat]').forEach(b =>
+    b.onclick = () => { startStrategy(b.dataset.strat); });
+  const skip = host.querySelector('#skipBuild');
+  if (skip) skip.onclick = e => { e.stopPropagation(); finishReveal(); };
+  const replay = host.querySelector('#replayBuild');
+  if (replay) replay.onclick = e => { e.stopPropagation(); startStrategy(S.stratId); };
+  host.querySelectorAll('[data-param]').forEach(inp => {
+    const st = STRATEGIES.find(x => x.id === S.stratId);
+    const p = st.params.find(x => x.k === inp.dataset.param);
+    // params that control how big one chunk is — dragging these shows a
+    // live "measuring" highlight so the viewer sees the selection grow
+    const isSize = /size|tokens|window/.test(p.k);
+    inp.oninput = () => {
+      S.params[st.id][p.k] = +inp.value;
+      host.querySelector(`[data-val="${p.k}"]`).textContent = inp.value + (p.unit ? ' ' + p.unit : '');
+      document.body.classList.remove('animate');
+      S.open = null;
+      if (isSize){ S.running = false; S.reveal = 0; S.measure = 0; }
+      renderOutput();
+      if (isSize) showMeasure(inp, p);
+    };
+    inp.onchange = () => { document.body.classList.add('animate'); hideMeasure(); };
+    inp.onpointerup = () => hideMeasure();
+    inp.onblur = () => hideMeasure();
+  });
+}
+
+// live readout of how big chunk 0 is while a size slider is being dragged
+function showMeasure(inp, p){
+  const ctx = getCtx(S.docId);
+  const st = STRATEGIES.find(x => x.id === S.stratId);
+  const chunks = runStrategy(st, ctx);
+  if (!chunks.length) return;
+  const c = chunks[0];
+  const chars = c.e - c.s, toks = countTokens(ctx.full.slice(c.s, c.e));
+  // focus chunk 0 so its span lights up in the document
+  S.measureFocus = 0;
+  document.getElementById('doc').classList.add('measuring');
+  paintMeasure(ctx, chunks);
+  let box = document.getElementById('measureBox');
+  if (!box){
+    box = document.createElement('div'); box.id = 'measureBox'; document.body.appendChild(box);
+  }
+  const r = inp.getBoundingClientRect();
+  box.innerHTML = `<span class="mv">${chars}</span> chars&nbsp;·&nbsp;<span class="mv">${toks}</span> tokens<span class="mh">chunk 00 · drag to resize</span>`;
+  box.style.left = Math.min(window.innerWidth - 190, r.left) + 'px';
+  box.style.top = (r.bottom + 8) + 'px';
+  box.classList.add('on');
+}
+function hideMeasure(){
+  const box = document.getElementById('measureBox');
+  if (box) box.classList.remove('on');
+  const doc = document.getElementById('doc');
+  if (doc) doc.classList.remove('measuring');
+  S.measureFocus = null;
+  renderOutput();
+}
+function paintMeasure(ctx, chunks){
+  // paint with chunk 0 marked as the measured span
+  S.focus = 0; S.pin = 0;
+  paint(ctx, chunks, null, null);
+  S.pin = null;
+}
+
+/* ------------------------------------------------------------- document */
+function renderDocSkeleton(ctx){
+  const host = document.getElementById('doc');
+  const pages = [...new Set(ctx.doc.blocks.map(b => b.page || 1))];
+  const segIdx = new Map();
+  ctx.segs.forEach((sg, i) => {
+    const key = sg.block + ':' + (sg.line ?? sg.row ?? '') + ':' + (sg.cell ?? '');
+    segIdx.set(key, i);
+  });
+  const seg = (b, extra) => {
+    const key = b + ':' + (extra?.line ?? extra?.row ?? '') + ':' + (extra?.cell ?? '');
+    return segIdx.get(key);
+  };
+
+  host.innerHTML = pages.map(pg => {
+    const blocks = ctx.doc.blocks.map((b, i) => ({ b, i })).filter(x => (x.b.page || 1) === pg);
+    const inner = blocks.map(({ b, i }) => {
+      const S_ = j => `<span data-seg="${j}"></span>`;
+      switch (b.t){
+        case 'eyebrow': return `<p class="eyebrow-b">${S_(seg(i))}</p>`;
+        case 'h1': return `<h1>${S_(seg(i))}</h1>`;
+        case 'h2': return `<h2>${S_(seg(i))}</h2>`;
+        case 'h3': return `<h3>${S_(seg(i))}</h3>`;
+        case 'mdh1': return `<p class="mdh l1">${S_(seg(i))}</p>`;
+        case 'mdh2': return `<p class="mdh l2">${S_(seg(i))}</p>`;
+        case 'kv': return `<p class="kv">${S_(seg(i))}</p>`;
+        case 'foot': return `<p class="foot">${S_(seg(i))}</p>`;
+        case 'ref': return `<p class="ref"><span class="rn">${esc(b.n)}</span>${S_(seg(i))}</p>`;
+        case 'code': return `<div class="code">${b.lines.map((_, li) => `<span class="ln" data-seg="${seg(i, { line: li })}"></span>`).join('')}</div>`;
+        case 'table': {
+          const head = b.head.map((_, ci) => `<th><span data-seg="${seg(i, { row: 0, cell: ci })}"></span></th>`).join('');
+          const body = b.rows.map((r, ri) => `<tr>${r.map((_, ci) => `<td><span data-seg="${seg(i, { row: ri + 1, cell: ci })}"></span></td>`).join('')}</tr>`).join('');
+          return `<table>${b.caption ? `<caption>${esc(b.caption)}</caption>` : ''}<thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+        }
+        default: return `<p>${S_(seg(i))}</p>`;
+      }
+    }).join('');
+    return `<article class="sheet${ctx.doc.kind === 'code' ? ' plain' : ''}" data-page="${ctx.doc.kind === 'pdf' ? 'page ' + pg + ' / ' + pages.length : ctx.doc.name}">${inner}</article>`;
+  }).join('');
+}
+
+function paint(ctx, chunks, chunksB, hits){
+  const L = ctx.full.length;
+  const owner = new Int32Array(L).fill(-1);
+  const depth = new Uint8Array(L);
+  for (let ci = chunks.length - 1; ci >= 0; ci--)
+    for (let i = chunks[ci].s; i < chunks[ci].e; i++) owner[i] = ci;
+  for (let ci = 0; ci < chunks.length; ci++)
+    for (let i = chunks[ci].s; i < chunks[ci].e; i++) if (depth[i] < 250) depth[i]++;
+
+  const inSentence = pos => ctx.sents.some(st => pos > st.s + 1 && pos < st.e - 1 && /\S/.test(ctx.full[pos] || ''));
+  // a boundary can land in the gap between two blocks, where there is no
+  // text to hang a marker on — snap it onto the next visible character
+  const snap = pos => {
+    for (const sg of ctx.segs){
+      if (pos >= sg.start && pos < sg.end) return pos;
+      if (pos < sg.start) return sg.start;
+    }
+    return null;
+  };
+  const marks = new Map();
+  const addMark = (pos, n, sev, b, rank, label) => {
+    const p = snap(pos);
+    if (p !== null && !marks.has(p)) marks.set(p, { n, sev, b, rank, label });
+  };
+  // a compact label shown on the left-side marker (sentence numbers, ¶, H, W…)
+  const shortLabel = (c) => {
+    const m = c.meta || {};
+    if (!m.label) return null;
+    if (m.unit === 'token') return m.label.replace('tokens ', 'tok ');
+    if (m.unit === 'sentence') return m.label.replace('sentences ', 'S').replace('sentence ', 'S');
+    if (m.unit === 'paragraph') return m.label.replace('paragraph ', '¶');
+    if (m.unit === 'level'){
+      return { heading:'H', paragraph:'¶', sentence:'S', words:'W', characters:'C' }[m.label] || m.label[0].toUpperCase();
+    }
+    if (m.label.startsWith('section:')) return '§';
+    if (/part \d/.test(m.label)) return '§' + (m.label.match(/part (\d)/) || [,''])[1];
+    return null;
+  };
+  if (hits){
+    chunks.forEach((c, i) => { if (hits.has(i)) addMark(c.s, '#' + hits.get(i), false, false, true); });
+  } else {
+    chunks.forEach((c, i) => { if (i > 0 || shortLabel(c)) addMark(c.s, i, i > 0 && inSentence(c.s), false, false, shortLabel(c)); });
+    if (chunksB) chunksB.forEach((c, i) => { if (i > 0) addMark(c.s, i, false, true); });
+  }
+
+  const breaks = new Set(marks.keys());
+  chunks.forEach(c => { breaks.add(c.s); breaks.add(c.e); });
+  let fs = -1, fe = -1, gs = -1, ge = -1;
+  if (S.focus !== null && chunks[S.focus]){
+    fs = chunks[S.focus].s; fe = chunks[S.focus].e;
+    const m = chunks[S.focus].meta;
+    const sec = m.window || m.parent;
+    if (sec){ gs = sec.s; ge = sec.e; breaks.add(gs); breaks.add(ge); }
+    breaks.add(fs); breaks.add(fe);
+  }
+
+  document.querySelectorAll('#doc [data-seg]').forEach(el => {
+    const sg = ctx.segs[+el.dataset.seg];
+    if (!sg) return;
+    let html = '', i = sg.start;
+    while (i < sg.end){
+      if (marks.has(i)){
+        const mk = marks.get(i);
+        const lbl = mk.label ? esc(mk.label) : `${mk.b ? 'B' : ''}${mk.n}`;
+        html += `<span class="cut${mk.sev ? ' sev' : ''}${mk.b ? ' b' : ''}${mk.rank ? ' rank' : ''}${mk.label ? ' labelled' : ''}"><i></i><b>${lbl}</b></span>`;
+      }
+      let j = i + 1;
+      while (j < sg.end && owner[j] === owner[i] && depth[j] === depth[i] && !breaks.has(j)) j++;
+      const txt = esc(ctx.full.slice(i, j));
+      if (owner[i] < 0) html += txt;
+      else {
+        const cls = ['pt'];
+        if (depth[i] > 1) cls.push('ov');
+        if (hits && hits.has(owner[i])) cls.push('hit');
+        if (S.running && owner[i] === chunks.length - 1) cls.push('latest');
+        if (fs >= 0 && i >= fs && j <= fe) cls.push(S.pin === owner[i] ? 'pinned' : 'focus');
+        if (gs >= 0 && i >= gs && j <= ge && !(i >= fs && j <= fe)) cls.push('focus2');
+        const isHead = chunks[owner[i]] && i === chunks[owner[i]].s;
+        html += `<span class="${cls.join(' ')}" data-c="${owner[i] % 8}" data-ci="${owner[i]}"${isHead ? ` data-cstart="${owner[i]}"` : ''}>${txt}</span>`;
+      }
+      i = j;
+    }
+    if (marks.has(sg.end) && sg.end === ctx.full.length) html += '';
+    el.innerHTML = html;
+  });
+}
+
+/* --------------------------------------------------------------- output */
+function stats(ctx, chunks){
+  const lens = chunks.map(c => countTokens(ctx.full.slice(c.s, c.e)));
+  const sum = lens.reduce((a, b) => a + b, 0);
+  const chars = chunks.reduce((a, c) => a + (c.e - c.s), 0);
+  const cov = new Uint8Array(ctx.full.length);
+  chunks.forEach(c => { for (let i = c.s; i < c.e; i++) cov[i] = 1; });
+  let covered = 0;
+  for (let i = 0; i < cov.length; i++) covered += cov[i];
+  const dup = chars ? Math.max(0, (chars - covered) / chars) : 0;
+  const inSentence = pos => ctx.sents.some(st => pos > st.s + 1 && pos < st.e - 1);
+  const sev = chunks.filter((c, i) => i > 0 && inSentence(c.s)).length;
+  return {
+    n: chunks.length,
+    avg: chunks.length ? Math.round(sum / chunks.length) : 0,
+    dup: Math.round(dup * 100),
+    sev
+  };
+}
+
+function renderStats(st){
+  if (!st){
+    document.getElementById('stats').innerHTML = `
+      <div class="stat"><div class="k">chunks</div><div class="v">—</div></div>
+      <div class="stat"><div class="k">avg tokens</div><div class="v">—</div></div>
+      <div class="stat"><div class="k">duplicated</div><div class="v">—</div></div>
+      <div class="stat"><div class="k">sentences cut</div><div class="v">—</div></div>`;
+    return;
+  }
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="k">chunks</div><div class="v">${st.n}</div></div>
+    <div class="stat"><div class="k">avg tokens</div><div class="v">${st.avg}</div></div>
+    <div class="stat ${st.dup > 0 ? 'good' : ''}"><div class="k">duplicated</div><div class="v">${st.dup}%</div></div>
+    <div class="stat ${st.sev > 0 ? 'warn' : 'good'}"><div class="k">sentences cut</div><div class="v">${st.sev}</div></div>`;
+}
+
+function pageAt(ctx, pos){
+  for (const sg of ctx.segs) if (pos >= sg.start && pos < sg.end) return ctx.doc.blocks[sg.block].page || 1;
+  return ctx.doc.blocks[ctx.doc.blocks.length - 1].page || 1;
+}
+function chunkId(ctx, c){
+  return (hash32(ctx.doc.name + ':' + c.s, 1).toString(16) + hash32(c.e + ':' + ctx.doc.name, 2).toString(16)).slice(0, 12);
+}
+function metaRecord(ctx, c, st){
+  const text = ctx.full.slice(c.s, c.e);
+  const prm = st.params.map(p => S.params[st.id][p.k]).join('/');
+  const rec = {
+    id: chunkId(ctx, c),
+    text: text.replace(/\s+/g, ' ').slice(0, 42).replace(/"/g, "'") + '…',
+    embedding: '[' + EMBED_DIM + ' floats]',
+    metadata: {
+      source: ctx.doc.name,
+      page: pageAt(ctx, c.s),
+      section: headingAt(ctx, c.s).replace(/^#+\s*/, '').slice(0, 46).replace(/"/g, "'"),
+      span: [c.s, c.e],
+      tokens: countTokens(text),
+      strategy: st.id + (prm ? '/' + prm : '')
+    }
+  };
+  if (c.meta.parent) rec.metadata.parent_span = [c.meta.parent.s, c.meta.parent.e];
+  if (c.meta.window) rec.metadata.window_span = [c.meta.window.s, c.meta.window.e];
+  if (c.meta.prefix) rec.metadata.embedded_with_context = true;
+  if (c.meta.late) rec.metadata.pooled_from_full_document = true;
+  if (c.meta.kind) rec.metadata.element = c.meta.kind;
+  return rec;
+}
+function jsonHTML(obj){
+  return esc(JSON.stringify(obj, null, 2)).replace(/("[^"]*")(\s*:)?|(-?\d+\.?\d*)/g,
+    (m, str, colon, num) => str ? (colon ? `<span class="jk">${str}</span>${colon}` : `<span class="jv">${str}</span>`)
+                                : `<span class="jn">${m}</span>`);
+}
+
+function embTextFor(ctx, c){
+  const t = ctx.full.slice(c.s, c.e);
+  return c.meta.prefix ? c.meta.prefix + '\n\n' + t : t;
+}
+function vectorFor(ctx, c){
+  let v = embed(embTextFor(ctx, c));
+  if (c.meta.late){
+    if (!ctx._docVec) ctx._docVec = embed(ctx.full);
+    v = mixVec(v, ctx._docVec);
+  }
+  return v;
+}
+
+function chunkCard(ctx, c, i, chunks, compact, st){
+  const text = ctx.full.slice(c.s, c.e);
+  const toks = countTokens(text);
+  const overlaps = i > 0 && c.s < chunks[i - 1].e;
+  const m = c.meta;
+  const tags = [];
+  if (S.ret){
+    const row = S.ret.rows[i];
+    const rank = S.ret.hits.get(i);
+    if (row) tags.push(`<span class="scorepill${rank ? '' : ' cold'}">${rank ? '#' + rank + ' · ' : ''}${row.sim.toFixed(3)}</span>`);
+  }
+  tags.push(`<span class="tag${m.unit === 'token' ? ' hot' : ''}">${toks} tok</span>`);
+  tags.push(`<span class="tag">${c.e - c.s} ch</span>`);
+  if (overlaps) tags.push(`<span class="tag hot">overlap</span>`);
+  if (m.kind === 'table') tags.push(`<span class="tag ok">table</span>`);
+  if (m.kind === 'code') tags.push(`<span class="tag ok">code</span>`);
+  if (m.atomic) tags.push(`<span class="tag ok">fact</span>`);
+  if (m.late) tags.push(`<span class="tag ok">doc-aware</span>`);
+  if (m.path && !m.label) tags.push(`<span class="tag">${esc(m.path.slice(0, 22))}</span>`);
+  if (m.page) tags.push(`<span class="tag">p.${m.page}</span>`);
+
+  let body = '';
+  if (m.prefix) body += `<em class="ctx">${esc(m.prefix)}</em>`;
+  if (m.window){
+    const pre = ctx.full.slice(m.window.s, c.s), post = ctx.full.slice(c.e, m.window.e);
+    body += `<span class="win">${esc(pre)}</span><strong>${esc(text)}</strong><span class="win">${esc(post)}</span>`;
+  } else if (m.parent){
+    body += `<strong>${esc(text)}</strong>`;
+  } else if (m.kind === 'code' || ctx.doc.kind === 'code'){
+    body = `<span class="mono">${esc(text)}</span>`;
+  } else {
+    body += esc(text);
+  }
+
+  const open = S.open === i && !compact;
+  let meta = '';
+  if (open && st) meta = `<div class="meta"><span class="t">record written to the vector store</span><pre>${jsonHTML(metaRecord(ctx, c, st))}</pre></div>`;
+  let emb = '';
+  if (open){
+    const v = vectorFor(ctx, c);
+    const head = [...v.slice(0, 24)];
+    const bars = [];
+    for (let k = 0; k < 72; k++){
+      let s = 0;
+      for (let q = k * 21; q < (k + 1) * 21; q++) s += Math.abs(v[q]);
+      bars.push(s);
+    }
+    const max = Math.max(...bars) || 1;
+    const prev = i > 0 ? cosine(v, vectorFor(ctx, chunks[i - 1])) : null;
+    const next = i < chunks.length - 1 ? cosine(v, vectorFor(ctx, chunks[i + 1])) : null;
+    emb = `<div class="emb">
+      <div class="emb-head"><span class="t">embedding</span><span class="d">${EMBED_DIM}-d · showing 24</span></div>
+      <div class="vec">${head.map(x => `<span class="${x < 0 ? 'neg' : ''}">${x.toFixed(3)}</span>`).join('')}</div>
+      <div class="heat">${bars.map(b => `<i style="height:${Math.max(4, (b / max) * 100)}%"></i>`).join('')}</div>
+      <div class="emb-foot">
+        <span>‖v‖ <b>1.000</b></span>
+        ${prev !== null ? `<span>cos → prev <b>${prev.toFixed(3)}</b></span>` : ''}
+        ${next !== null ? `<span>cos → next <b>${next.toFixed(3)}</b></span>` : ''}
+        ${m.prefix ? `<span><b>context line included in the vector</b></span>` : ''}
+        <span style="opacity:.6">local stand-in embedder — same geometry, no network</span>
+      </div>
+    </div>`;
+  }
+
+  const note = (m.note || m.reason) && !compact ? `<div class="chunk-note">${esc(m.note || m.reason)}</div>` : '';
+  const labelPill = m.label ? `<span class="chunk-label">${esc(m.label)}</span>` : '';
+  return `<div class="chunk${open ? ' open' : ''}${S.ret && S.ret.hits.has(i) ? ' isHit' : ''}" style="--cc:var(--c${(i % 8) + 1})" data-i="${i}">
+    <button class="chunk-head" data-toggle="${i}">
+      <span class="chunk-id">CHUNK ${String(i).padStart(2, '0')}</span>
+      ${labelPill}
+      <span class="chunk-tags">${tags.join('')}</span>
+    </button>
+    <div class="chunk-body">${body}</div>${note}${meta}${emb}</div>`;
+}
+
+function wireCard(el, ctx, chunks){
+  const i = +el.dataset.i;
+  const head = el.querySelector('[data-toggle]');
+  if (head) head.onclick = () => {
+    const opening = S.open !== i;
+    S.open = opening ? i : null;
+    renderOutput();
+    if (opening) scrollToChunkInDoc(i);
+  };
+  el.onmouseenter = () => setFocus(i);
+  el.onmouseleave = () => setFocus(null);
+}
+
+function renderOutput(){
+  const ctx = getCtx(S.docId);
+  const st = S.stratId ? STRATEGIES.find(x => x.id === S.stratId) : null;
+
+  // nothing chosen yet — plain document, empty right panel, clear invitation
+  if (!st){
+    paint(ctx, [], null, null);
+    document.getElementById('doc').classList.remove('dim', 'retr');
+    renderStats(null);
+    document.getElementById('docMeta').textContent =
+      `${ctx.full.length} chars · ${countTokens(ctx.full)} tokens · ${ctx.sents.length} sentences`;
+    document.getElementById('outMeta').textContent = 'no strategy yet';
+    document.getElementById('legendB').hidden = true;
+    document.getElementById('legendR').hidden = true;
+    const scroll = document.getElementById('outScroll'), cmp = document.getElementById('cmp');
+    scroll.hidden = false; cmp.hidden = true;
+    document.getElementById('out').innerHTML =
+      `<div class="empty invite"><b>Pick a strategy</b>Choose one from the middle column. Its chunks will be cut from the document on the left and land here one by one, so you can watch the pattern form.</div>`;
+    return;
+  }
+
+  const allChunks = runStrategy(st, ctx);
+  // while a build is actively running, show only the revealed prefix;
+  // once finished, always show every chunk (so slider changes re-render fully)
+  const shown = S.running ? S.reveal : allChunks.length;
+  const chunks = allChunks.slice(0, Math.max(0, shown));
+  const stB = S.compare && S.pinned ? STRATEGIES.find(x => x.id === S.pinned) : null;
+  const chunksB = stB ? runStrategy(stB, ctx) : null;
+
+  if (S.ret && S.ret.query) S.ret = runRetrieval(ctx, chunks, S.ret.query, S.topk);
+  const hits = S.ret ? S.ret.hits : null;
+  // a re-render destroys whatever was hovered, so mouseleave will never
+  // arrive — drop the focus here or the document stays dimmed for good.
+  // A pinned chunk (clicked from the map/list) is the exception: keep it.
+  if (S.pin != null && chunks[S.pin]){ S.focus = S.pin; }
+  else { S.focus = null; S.pin = null; }
+  document.getElementById('doc').classList.toggle('dim', S.focus != null);
+  LAST = { ctx, chunks, chunksB, hits };
+
+  paint(ctx, chunks, chunksB, hits);
+  renderStats(stats(ctx, chunks));
+  if (S.ret) renderRetrieval(ctx, chunks);
+  document.getElementById('doc').classList.toggle('retr', !!hits);
+  document.getElementById('docMeta').textContent =
+    `${ctx.full.length} chars · ${countTokens(ctx.full)} tokens · ${ctx.sents.length} sentences`;
+  document.getElementById('outMeta').textContent = st.name;
+  document.getElementById('legendB').hidden = !chunksB;
+  document.getElementById('legendR').hidden = !hits;
+
+  const out = document.getElementById('out');
+  const cmp = document.getElementById('cmp');
+  const scroll = document.getElementById('outScroll');
+
+  if (chunksB){
+    scroll.hidden = true; cmp.hidden = false;
+    const sa = stats(ctx, chunks), sb = stats(ctx, chunksB);
+    cmp.innerHTML = `
+      <div><div class="cmp-h a">A · ${esc(st.name)} — ${sa.n} chunks, ${sa.avg} tok, ${sa.sev} cut</div>
+        <div class="chunks">${chunks.map((c, i) => chunkCard(ctx, c, i, chunks, true, st)).join('')}</div></div>
+      <div><div class="cmp-h b">B · ${esc(stB.name)} — ${sb.n} chunks, ${sb.avg} tok, ${sb.sev} cut</div>
+        <div class="chunks">${chunksB.map((c, i) => chunkCard(ctx, c, i, chunksB, true, stB)).join('')}</div></div>`;
+  } else {
+    scroll.hidden = false; cmp.hidden = true;
+    // During a running build we APPEND only the newest card so the cards
+    // already on screen stay put — re-rendering the whole list every tick is
+    // what made the animation look fake. A full render happens otherwise.
+    const wantAppend = S.running && chunks.length > 0 &&
+                       out.dataset.strat === S.stratId &&
+                       out.querySelectorAll('.chunk').length === chunks.length - 1;
+    if (wantAppend){
+      const i = chunks.length - 1;
+      out.querySelectorAll('.chunk.fresh, .chunk.dropping').forEach(el => el.classList.remove('fresh', 'dropping'));
+      out.insertAdjacentHTML('beforeend', chunkCard(ctx, chunks[i], i, chunks, false, st));
+      const fresh = out.querySelector(`.chunk[data-i="${i}"]`);
+      if (fresh){
+        fresh.classList.add('fresh', 'dropping');
+        wireCard(fresh, ctx, chunks);
+        fresh.addEventListener('animationend', () => fresh.classList.remove('dropping'), { once: true });
+        if (fresh.scrollIntoView) fresh.scrollIntoView({ block: 'nearest' });
+      }
+    } else {
+      out.dataset.strat = S.stratId || '';
+      out.innerHTML = chunks.length
+        ? chunks.map((c, i) => chunkCard(ctx, c, i, chunks, false, st)).join('')
+        : (S.stratId
+            ? `<div class="empty"><b>No chunks</b>This strategy found nothing to split in this file. Try another document.</div>`
+            : '');
+      if (S.running && chunks.length){
+        const fresh = out.querySelector(`.chunk[data-i="${chunks.length - 1}"]`);
+        if (fresh){ fresh.classList.add('fresh'); if (fresh.scrollIntoView) fresh.scrollIntoView({ block: 'nearest' }); }
+      }
+      out.querySelectorAll('.chunk').forEach(el => wireCard(el, ctx, chunks));
+    }
+  }
+
+  const badge = document.querySelector('.strat[aria-current="true"] .n');
+  if (badge) badge.textContent = S.running ? `${chunks.length}/${allChunks.length}` : chunks.length;
+
+  document.getElementById('codeName').textContent = st.name;
+  document.getElementById('codeBody').innerHTML = hi(st.code);
+}
+
+let LAST = null;
+function setFocus(i){
+  S.focus = i;
+  const docEl = document.getElementById('doc');
+  docEl.classList.toggle('dim', i !== null);
+  if (LAST) paint(LAST.ctx, LAST.chunks, LAST.chunksB, LAST.hits);
+}
+function scrollToChunkInDoc(i){
+  // target the chunk's HEAD span (its exact start offset). A chunk can paint
+  // many scattered spans — token/sentence chunks especially — so scrolling to
+  // "the first span with this index" could land far from the chunk body.
+  const span = document.querySelector(`#doc [data-cstart="${i}"]`)
+            || document.querySelector(`#doc [data-ci="${i}"]`);
+  if (!span) return;
+  const scroller = span.closest('.scroll');
+  if (!scroller){ if (span.scrollIntoView) span.scrollIntoView({ block:'center', behavior:'smooth' }); return; }
+  const sRect = scroller.getBoundingClientRect();
+  const eRect = span.getBoundingClientRect();
+  const target = scroller.scrollTop + (eRect.top - sRect.top) - (scroller.clientHeight * 0.32);
+  if (typeof scroller.scrollTo === 'function') scroller.scrollTo({ top: Math.max(0, target), behavior: 'auto' });
+  else scroller.scrollTop = Math.max(0, target);
+}
+
+function renderRetrieval(ctx, chunks){
+  const R = S.ret;
+  document.getElementById('ranked').innerHTML = rankedListHTML(ctx, chunks, R);
+  document.getElementById('vmap').innerHTML = vectorMapSVG(R);
+  document.getElementById('dotmath').innerHTML = dotMathHTML(R);
+  document.querySelectorAll('[data-node]').forEach(el => {
+    const i = +el.dataset.node;
+    el.onclick = () => {
+      if (S.pin === i){ S.pin = null; S.open = null; renderOutput(); return; }
+      S.pin = i; S.open = i;
+      renderOutput();                 // paints doc + rebuilds ranked/map with pin marked
+      scrollToChunkInDoc(i);          // bring it into view in the visible panel
+    };
+    el.onmouseenter = () => setFocus(i);
+    el.onmouseleave = () => setFocus(S.pin ?? null);
+  });
+}
+
+function renderPresets(){
+  const host = document.getElementById('qpresets');
+  const list = QUERIES[S.docId] || [];
+  host.innerHTML = list.map(q => `<button class="chip${S.ret && S.ret.query === q ? ' on' : ''}">${esc(q)}</button>`).join('');
+  host.querySelectorAll('.chip').forEach((b, i) => b.onclick = () => {
+    document.getElementById('q').value = list[i];
+    search(list[i]);
+  });
+}
+
+function search(query){
+  query = (query || '').trim();
+  if (!query){ clearSearch(); return; }
+  if (!S.stratId){ flashPickHint(); return; }
+  finishReveal();
+  const ctx = getCtx(S.docId);
+  const st = STRATEGIES.find(x => x.id === S.stratId);
+  S.ret = runRetrieval(ctx, runStrategy(st, ctx), query, S.topk);
+  S.open = null;
+  S.pin = null;
+  openDrawer(true);
+  renderPresets();
+  renderOutput();
+}
+function clearSearch(){
+  S.ret = null;
+  S.pin = null;
+  S.focus = null;
+  document.getElementById('doc').classList.remove('retr');
+  ['ranked','vmap','dotmath'].forEach(id => document.getElementById(id).innerHTML =
+    '<div class="empty"><b>No query yet</b>Type a question above, or pick one of the examples, to watch which chunks the index returns.</div>');
+  renderPresets();
+  renderOutput();
+}
+function openDrawer(on){
+  document.getElementById('drawer').hidden = !on;
+  document.getElementById('tgRetrieve').setAttribute('aria-pressed', on);
+  if (on) renderPresets();
+}
+
+/* python-ish highlighter — one pass, so it never re-matches its own markup */
+const HI_RE = /(#[^\n]*)|("""[\s\S]*?"""|"[^"\n]*"|'[^'\n]*')|\b(from|import|def|class|return|for|in|with|as|if|not|None|True|False)\b|\b(\d+(?:\.\d+)?)\b/g;
+function hi(src){
+  return esc(src).replace(HI_RE, (m, cm, str, kw, num) => {
+    const cls = cm ? 'cm' : str ? 'str' : kw ? 'kw' : 'num';
+    return `<span class="${cls}">${m}</span>`;
+  });
+}
+
+/* ------------------------------------------------------------------ app */
+/* =========================================================================
+   Staged build — the deck starts empty; clicking a strategy reveals its
+   chunks one at a time so the viewer watches the pattern form.
+   ========================================================================= */
+function stopReveal(){
+  if (revealTimer){ clearTimeout(revealTimer); revealTimer = null; }
+  S.running = false;
+}
+
+// each strategy family gets its own base pacing, so the animation itself
+// reads differently — steadier for naive splitters, slower and more
+// deliberate for the semantic/agentic ones that "think" about each boundary.
+// Long strategies (many chunks) speed up gently so they don't drag on.
+function stepDelay(st, i, total){
+  const g = st.group || '';
+  let base = 340;
+  if (g.startsWith('Naive')) base = 340;
+  else if (g.startsWith('Structure')) base = 460;
+  else if (g.startsWith('Semantic')) base = 620;       // slower — feels considered
+  else if (g.startsWith('Retrieval')) base = 480;
+  // ease down for strategies that produce a lot of chunks
+  if (total > 30) base *= 0.55;
+  else if (total > 18) base *= 0.75;
+  return Math.round(base * SPEEDS[S.speed].mult);
+}
+
+// strategies where a model reads/processes the document before any chunk
+// exists — show the pre-processing overlay so the viewer sees that step
+const LLM_STRATEGIES = {
+  agentic:     { title: 'Agentic chunking', sub: 'a model reads the whole document, then decides every boundary itself', steps: ['Feeding the document to the model', 'Model reading and reasoning over it', 'Model returns the boundaries'] },
+  proposition: { title: 'Proposition chunking', sub: 'a model rewrites the text into standalone facts before indexing', steps: ['Feeding the document to the model', 'Model extracting standalone propositions', 'Returning one fact per chunk'] },
+  contextual:  { title: 'Contextual retrieval', sub: 'a model writes a situating line for each chunk before embedding', steps: ['Feeding document + chunk to the model', 'Model writing the context line', 'Prepending it, then embedding'] },
+  semantic:    { title: 'Semantic chunking', sub: 'every sentence is embedded first, then cut where meaning drifts', steps: ['Embedding every sentence', 'Measuring sentence-to-sentence distance', 'Cutting at the drift points'] },
+  'semantic-p':{ title: 'Semantic chunking', sub: 'every sentence is embedded first, then cut at a distance percentile', steps: ['Embedding every sentence', 'Ranking the distances', 'Cutting the top percentile'] },
+  late:        { title: 'Late chunking', sub: 'the whole document is embedded first, then pooled into chunks', steps: ['Embedding the full document in one pass', 'Pooling token vectors per chunk', 'Emerging context-aware chunks'] }
+};
+
+function startStrategy(id){
+  stopReveal();
+  hideMeasure();
+  S.stratId = id;
+  S.open = null; S.focus = null; S.pin = null; S.ret = null;
+  const drawer = document.getElementById('drawer');
+  if (drawer && !drawer.hidden){ document.getElementById('q').value = ''; clearSearch(); }
+
+  S.reveal = 0;
+  renderStrats(lastCounts);
+  renderOutput();                    // clear document + right panel first
+
+  const info = LLM_STRATEGIES[id];
+  if (info && SPEEDS[S.speed].mult >= 0.5){   // skip the overlay when running fast
+    runLLMOverlay(info, () => runBuild(id));
+  } else {
+    runBuild(id);
+  }
+}
+
+function runBuild(id){
+  const ctx = getCtx(S.docId);
+  const st = STRATEGIES.find(x => x.id === id);
+  const total = runStrategy(st, ctx).length;
+
+  S.reveal = 0;
+  S.running = total > 1;
+  renderStrats(lastCounts);
+  renderOutput();
+
+  const tick = () => {
+    S.reveal++;
+    renderOutput();
+    updateBuildLabel(total);
+    scrollToChunkInDoc(S.reveal - 1);
+    if (S.reveal >= total){ stopReveal(); renderStrats(lastCounts); return; }
+    revealTimer = setTimeout(tick, stepDelay(st, S.reveal, total));
+  };
+  if (total <= 1){ S.reveal = total; renderOutput(); }
+  else revealTimer = setTimeout(tick, Math.round(300 * SPEEDS[S.speed].mult));
+}
+
+/* the pre-processing overlay: document → model → boundaries */
+let llmTimer = null;
+function runLLMOverlay(info, done){
+  const ov = document.getElementById('llmOverlay');
+  const bar = document.getElementById('llmBar');
+  const status = document.getElementById('llmStatus');
+  const nodes = ['llmDoc', 'llmModel', 'llmOut'].map(id => document.getElementById(id));
+  const arrows = ['llmA1', 'llmA2'].map(id => document.getElementById(id));
+  document.getElementById('llmTitle').textContent = info.title;
+  document.getElementById('llmSub').textContent = info.sub;
+  nodes.forEach(n => n.classList.remove('active', 'done'));
+  arrows.forEach(a => a.classList.remove('lit'));
+  bar.style.width = '0';
+  ov.classList.add('on');
+
+  const finish = () => { if (llmTimer) clearTimeout(llmTimer); llmTimer = null; ov.classList.remove('on'); done(); };
+  document.getElementById('llmSkip').onclick = finish;
+
+  const dur = 900 * SPEEDS[S.speed].mult;   // scales with the speed control
+  const stages = [
+    () => { nodes[0].classList.add('active'); status.innerHTML = `<span class="dot-pulse"></span>${info.steps[0]}`; bar.style.width = '18%'; },
+    () => { nodes[0].classList.add('done'); nodes[0].classList.remove('active'); arrows[0].classList.add('lit'); nodes[1].classList.add('active'); status.innerHTML = `<span class="dot-pulse"></span>${info.steps[1]}`; bar.style.width = '62%'; },
+    () => { nodes[1].classList.add('done'); nodes[1].classList.remove('active'); arrows[1].classList.add('lit'); nodes[2].classList.add('active'); status.innerHTML = `<span class="dot-pulse"></span>${info.steps[2]}`; bar.style.width = '90%'; },
+    () => { nodes[2].classList.add('done'); nodes[2].classList.remove('active'); status.textContent = 'Done — now placing the chunks'; bar.style.width = '100%'; }
+  ];
+  let k = 0;
+  const step = () => {
+    if (k >= stages.length){ llmTimer = setTimeout(finish, dur * 0.5); return; }
+    stages[k++]();
+    llmTimer = setTimeout(step, dur);
+  };
+  step();
+}
+
+function updateBuildLabel(total){
+  const prog = document.querySelector('.strat.building .bprog');
+  if (prog) prog.textContent = `cutting the document · ${S.reveal} of ${total}`;
+}
+
+// let the viewer skip the animation and jump to the finished result
+function finishReveal(){
+  if (!S.stratId) return;
+  if (llmTimer){ clearTimeout(llmTimer); llmTimer = null; }
+  const ov = document.getElementById('llmOverlay');
+  if (ov) ov.classList.remove('on');
+  stopReveal();
+  const ctx = getCtx(S.docId);
+  S.reveal = runStrategy(STRATEGIES.find(x => x.id === S.stratId), ctx).length;
+  renderStrats(lastCounts);
+  renderOutput();
+}
+
+function flashPickHint(){
+  const col = document.querySelectorAll('.stage .col')[2];
+  if (!col) return;
+  col.classList.remove('flash'); void col.offsetWidth; col.classList.add('flash');
+}
+
+let lastCounts = {};
+
+function renderAll(){
+  const ctx = getCtx(S.docId);
+  const counts = {};
+  STRATEGIES.forEach(st => { counts[st.id] = runStrategy(st, ctx).length; });
+  lastCounts = counts;
+  renderFiles();
+  renderStrats(counts);
+  renderDocSkeleton(ctx);
+  document.body.classList.add('animate');
+  renderOutput();
+  const cur = document.querySelector('.strat[aria-current="true"]');
+  if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
+}
+
+function init(){
+  document.getElementById('stratCount').textContent = STRATEGIES.length + ' strategies';
+
+  const tgC = document.getElementById('tgCompare');
+  const tgK = document.getElementById('tgCode');
+  tgC.onclick = () => {
+    if (!S.stratId){ flashPickHint(); return; }
+    finishReveal();
+    S.compare = !S.compare;
+    if (S.compare && !S.pinned) S.pinned = S.stratId === 'recursive' ? 'fixed' : 'recursive';
+    tgC.setAttribute('aria-pressed', S.compare);
+    S.open = null; renderAll();
+  };
+  tgK.onclick = () => {
+    if (!S.stratId){ flashPickHint(); return; }
+    S.code = !S.code;
+    tgK.setAttribute('aria-pressed', S.code);
+    document.getElementById('codepanel').classList.toggle('on', S.code);
+  };
+
+  const tgR = document.getElementById('tgRetrieve');
+  const qIn = document.getElementById('q');
+  tgR.onclick = () => {
+    if (!S.stratId){ flashPickHint(); return; }
+    finishReveal();
+    const on = document.getElementById('drawer').hidden;
+    openDrawer(on);
+    if (on) qIn.focus();
+  };
+  document.getElementById('closeQ').onclick = () => openDrawer(false);
+  document.getElementById('clearQ').onclick = () => { qIn.value = ''; clearSearch(); };
+  document.getElementById('runQ').onclick = () => search(qIn.value);
+  qIn.onkeydown = e => { if (e.key === 'Enter') search(qIn.value); };
+  const tk = document.getElementById('topk');
+  tk.oninput = () => {
+    S.topk = +tk.value;
+    document.getElementById('topkv').textContent = tk.value;
+    if (S.ret) renderOutput();
+  };
+
+  const tgSpeed = document.getElementById('tgSpeed');
+  tgSpeed.textContent = 'Speed ' + SPEEDS[S.speed].label;
+  tgSpeed.onclick = () => {
+    S.speed = (S.speed + 1) % SPEEDS.length;
+    tgSpeed.textContent = 'Speed ' + SPEEDS[S.speed].label;
+  };
+
+  const tgS = document.getElementById('tgSize');
+  tgS.onclick = () => {
+    S.fs = (S.fs + 1) % DOC_SIZES.length;
+    document.documentElement.style.setProperty('--doc-fs', DOC_SIZES[S.fs] + 'px');
+    tgS.textContent = ['A', 'Aa', 'Aa+', 'Aa++'][S.fs];
+  };
+
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT'){
+      if (e.key === 'Escape') e.target.blur();
+      return;
+    }
+    const idx = STRATEGIES.findIndex(x => x.id === S.stratId);
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+      e.preventDefault();
+      const base = idx < 0 ? (e.key === 'ArrowDown' ? -1 : 0) : idx;
+      const n = (base + (e.key === 'ArrowDown' ? 1 : STRATEGIES.length - 1) + STRATEGIES.length) % STRATEGIES.length;
+      startStrategy(STRATEGIES[n].id);
+      const cur = document.querySelector('.strat[aria-current="true"]');
+      if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
+    } else if (/^[1-9]$/.test(e.key) && DOCS[+e.key - 1]){
+      stopReveal(); S.stratId = null; S.reveal = 0;
+      S.docId = DOCS[+e.key - 1].id; S.open = null; renderAll();
+    } else if (e.key.toLowerCase() === 'c'){ tgC.click(); }
+    else if (e.key.toLowerCase() === 'k'){ tgK.click(); }
+    else if (e.key.toLowerCase() === 'p'){ S.pinned = S.stratId; if (S.compare) renderAll(); }
+    else if (e.key.toLowerCase() === 'r'){ tgR.click(); }
+    else if (e.key.toLowerCase() === 'd'){ document.getElementById('tgDraw').click(); }
+    else if (e.key === ' ' && S.running){ e.preventDefault(); finishReveal(); }
+    else if (e.key === 'Escape' && S.ret){ clearSearch(); }
+  });
+
+  initBoard();
+
+  renderAll();
+  clearSearch();
+}
+
+/* =========================================================================
+   Drawing board — a full-screen canvas you draw on with a pen/tablet while
+   presenting. Pen / highlighter / eraser, colours, sizes, undo, clear.
+   ========================================================================= */
+function initBoard(){
+  const board = document.getElementById('board');
+  const canvas = document.getElementById('boardCanvas');
+  if (!canvas) return;
+  let ctx = null;
+  try { ctx = canvas.getContext && canvas.getContext('2d'); } catch (e){ ctx = null; }
+  if (!ctx) return;      // no canvas support (headless test env)
+  const tgDraw = document.getElementById('tgDraw');
+  let tool = 'pen', color = '#FFB020', size = 4;
+  let drawing = false, last = null;
+  let strokes = [];        // completed strokes for undo
+  let current = null;
+
+  function fit(){
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    redraw();
+  }
+  function redraw(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const s of strokes) drawStroke(s);
+  }
+  function drawStroke(s){
+    if (s.pts.length < 1) return;
+    ctx.save();
+    if (s.tool === 'eraser'){ ctx.globalCompositeOperation = 'destination-out'; ctx.strokeStyle = 'rgba(0,0,0,1)'; ctx.lineWidth = s.size * 6; }
+    else if (s.tool === 'marker'){ ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = s.color; ctx.globalAlpha = 0.32; ctx.lineWidth = s.size * 5; }
+    else { ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = s.color; ctx.lineWidth = s.size; }
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(s.pts[0].x, s.pts[0].y);
+    for (let i = 1; i < s.pts.length; i++) ctx.lineTo(s.pts[i].x, s.pts[i].y);
+    if (s.pts.length === 1){ ctx.lineTo(s.pts[0].x + 0.1, s.pts[0].y + 0.1); }
+    ctx.stroke();
+    ctx.restore();
+  }
+  const pos = e => ({ x: e.clientX, y: e.clientY });
+  canvas.addEventListener('pointerdown', e => {
+    drawing = true; canvas.setPointerCapture(e.pointerId);
+    current = { tool, color, size, pts: [pos(e)] };
+    last = pos(e);
+    strokes.push(current); redraw();
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (!drawing) return;
+    // coalesced events give smooth lines from a tablet
+    const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+    for (const ev of evs) current.pts.push(pos(ev));
+    redraw();
+  });
+  const stop = () => { drawing = false; current = null; };
+  canvas.addEventListener('pointerup', stop);
+  canvas.addEventListener('pointercancel', stop);
+  canvas.addEventListener('pointerleave', () => { if (drawing) stop(); });
+
+  window.addEventListener('resize', fit);
+
+  const setTool = t => {
+    tool = t;
+    board.classList.toggle('erasing', t === 'eraser');
+    document.querySelectorAll('.bb-tool[data-tool]').forEach(b => b.classList.toggle('on', b.dataset.tool === t));
+  };
+  document.querySelectorAll('.bb-tool[data-tool]').forEach(b => b.onclick = () => setTool(b.dataset.tool));
+  document.querySelectorAll('.bb-color').forEach(b => b.onclick = () => {
+    color = b.dataset.color;
+    document.querySelectorAll('.bb-color').forEach(x => x.classList.toggle('on', x === b));
+    if (tool === 'eraser') setTool('pen');
+  });
+  document.querySelectorAll('.bb-tool[data-size]').forEach(b => b.onclick = () => {
+    size = +b.dataset.size;
+    document.querySelectorAll('.bb-tool[data-size]').forEach(x => x.classList.toggle('on', x === b));
+  });
+  document.getElementById('boardUndo').onclick = () => { strokes.pop(); redraw(); };
+  document.getElementById('boardClear').onclick = () => { strokes = []; redraw(); };
+  const closeBoard = () => { board.hidden = true; tgDraw.setAttribute('aria-pressed', 'false'); };
+  document.getElementById('boardClose').onclick = closeBoard;
+
+  tgDraw.onclick = () => {
+    const opening = board.hidden;
+    board.hidden = !opening;
+    tgDraw.setAttribute('aria-pressed', opening ? 'true' : 'false');
+    if (opening) fit();
+  };
+}
+
+if (typeof document !== 'undefined') document.addEventListener('DOMContentLoaded', init);
+if (typeof window !== 'undefined') Object.assign(window, { S, STRATEGIES, DOCS, runStrategy, getCtx, stopReveal, startStrategy, finishReveal, renderAll });
+if (typeof module !== 'undefined') module.exports = { DOCS, STRATEGIES, QUERIES, flatten, sentences, runStrategy, getCtx, S, stats, embed, cosine, countTokens, runRetrieval, pca2 };
+
+</script>
+</body>
+</html>

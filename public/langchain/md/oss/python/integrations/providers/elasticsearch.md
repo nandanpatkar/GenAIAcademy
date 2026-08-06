@@ -1,0 +1,110 @@
+> [Elasticsearch](https://www.elastic.co/elasticsearch/) is a distributed, RESTful search and analytics engine.
+> It provides a distributed, multi-tenant-capable full-text search engine with an HTTP web interface and schema-free
+> JSON documents.
+
+## Installation and setup
+
+### Setup Elasticsearch
+
+There are two ways to get started with Elasticsearch:
+
+#### Install Elasticsearch on your local machine
+
+The easiest way to run Elasticsearch locally for development and testing is using the [start-local](https://github.com/elastic/start-local) script. This script sets up Elasticsearch using Docker with a simple one-line command.
+
+```bash
+curl -fsSL https://elastic.co/start-local | sh
+```
+
+This creates an `elastic-start-local` folder. To start Elasticsearch:
+
+```bash
+cd elastic-start-local
+./start.sh
+```
+
+Elasticsearch will be available at `http://localhost:9200`. The password for the `elastic` user and API key are automatically generated and stored in the `.env` file in the `elastic-start-local` folder.
+
+If you only need Elasticsearch without Kibana, you can use the `--esonly` option:
+
+```bash
+curl -fsSL https://elastic.co/start-local | sh -s -- --esonly
+```
+
+
+> [!NOTE]
+>
+> The start-local setup is for local testing only and should not be used in production. For production installations, refer to the official [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html).
+
+
+#### Deploy Elasticsearch on elastic cloud
+
+`Elastic Cloud` is a managed Elasticsearch service. Signup for a [free trial](https://cloud.elastic.co/registration?utm_source=langchain&utm_content=documentation).
+
+### Install client
+
+```lc-tabs
+[
+ {
+  "label": "pip",
+  "lang": "bash",
+  "code": "pip install elasticsearch\npip install langchain-elasticsearch"
+ },
+ {
+  "label": "uv",
+  "lang": "bash",
+  "code": "uv add elasticsearch\nuv add langchain-elasticsearch"
+ }
+]
+```
+
+## Embedding models
+
+See a [usage example](lc:oss/python/integrations/embeddings/elasticsearch).
+
+```python
+from langchain_elasticsearch import ElasticsearchEmbeddings
+```
+
+## Vector store
+
+See a [usage example](lc:oss/python/integrations/vectorstores/elasticsearch).
+
+```python
+from langchain_elasticsearch import ElasticsearchStore
+```
+
+## Retrievers
+
+### ElasticsearchRetriever
+
+The `ElasticsearchRetriever` enables flexible access to all Elasticsearch features
+through the Query DSL.
+
+See a [usage example](lc:oss/python/integrations/retrievers/elasticsearch_retriever).
+
+```python
+from langchain_elasticsearch import ElasticsearchRetriever
+```
+
+## LLM cache
+
+```python
+from langchain_elasticsearch import ElasticsearchCache
+```
+
+## Byte store
+
+See a [usage example](lc:oss/python/integrations/stores/elasticsearch).
+
+```python
+from langchain_elasticsearch import ElasticsearchEmbeddingsCache
+```
+
+## Chain
+
+It is a chain for interacting with Elasticsearch Database.
+
+```python
+from langchain_classic.chains.elasticsearch_database import ElasticsearchDatabaseChain
+```

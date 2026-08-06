@@ -31,3 +31,23 @@ AFFiNE/
 # viewer (scripts/build_agentcore_samples.py). The generated output that
 # actually ships lives in public/agentcore-samples/.
 agentcore-samples-main/
+
+# Upstream sources used only as build input for the LangChain docs viewer
+# (scripts/build_langchain_docs.py) — together about 1.1 GB. The generated
+# output that actually ships lives in public/langchain/ and IS committed,
+# because without it a fresh clone cannot rebuild the Agents section.
+# Leading slashes matter: an unanchored `Langchain/` also matches
+# `public/langchain/` on a case-insensitive filesystem, which would silently
+# drop the shipped docs.
+/LangChain-website/
+/Langchain/
+/Claude Certeficate/
+
+# Third-party clone (github.com/Garvit244/Leetcode) carrying its own git
+# history. Git can only store it as a submodule pointer, which clones as an
+# empty folder, so it is excluded rather than committed broken.
+/Leetcode/
+
+# Local tool state, not project code
+/.freebuff/
+/supabase/.temp/

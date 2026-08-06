@@ -32,6 +32,7 @@ export default function Sidebar({
   showLearnBug, setShowLearnBug,
   showSqlLab, setShowSqlLab,
   showConcurrencyLab, setShowConcurrencyLab,
+  showLabs, setShowLabs, activeLabId, setActiveLabId,
   showAgentLibrary, setShowAgentLibrary,
   showBlog, setShowBlog,
   showAdminManagement, setShowAdminManagement,
@@ -73,6 +74,7 @@ export default function Sidebar({
   showReference, setShowReference,
   activeReferenceTopic, setActiveReferenceTopic,
   showAgentCore, setShowAgentCore,
+  showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
   showOnboarding, setShowOnboarding,
   activeToolHome, onOpenToolHome,
   onOpenGenAIPlayground2
@@ -84,6 +86,8 @@ export default function Sidebar({
   const [expandedGroups, setExpandedGroups] = useState({
     learn: true,
     practice: true,
+    labs: true,
+    agents: true,
     library: false,
     career: false,
     community: false,
@@ -257,6 +261,7 @@ export default function Sidebar({
     if (showLearnBug) return "learnbug";
     if (showSqlLab) return "sql_lab";
     if (showConcurrencyLab) return "concurrency_lab";
+    if (showLabs) return activeLabId || "lab_enterprise_ai_agents";
     if (showAgentLibrary) return "agent_library";
     if (showAimlCompanion) return "aiml_companion";
     if (showLinks) return "links";
@@ -291,6 +296,7 @@ export default function Sidebar({
     if (showManual) return "manual";
     if (showReference) return "reference";
     if (showAgentCore) return "aws_agentcore";
+    if (showLangChainDocs) return langChainProduct || "langchain";
     if (!activeNode) return "overview";
     return null;
   };
@@ -319,6 +325,7 @@ export default function Sidebar({
     if (setShowLearnBug) setShowLearnBug(false);
     if (setShowSqlLab) setShowSqlLab(false);
     if (setShowConcurrencyLab) setShowConcurrencyLab(false);
+    if (setShowLabs) setShowLabs(false);
     if (setShowAgentLibrary) setShowAgentLibrary(false);
     if (setShowAimlCompanion) setShowAimlCompanion(false);
     if (setShowLinks) setShowLinks(false);
@@ -351,6 +358,7 @@ export default function Sidebar({
     if (setShowManual) setShowManual(false);
     if (setShowReference) setShowReference(false);
     if (setShowAgentCore) setShowAgentCore(false);
+    if (setShowLangChainDocs) setShowLangChainDocs(false);
     if (setShowOnboarding) setShowOnboarding(false);
 
     switch (id) {
@@ -372,6 +380,13 @@ export default function Sidebar({
         if (setActiveManualPhase) setActiveManualPhase(null);
         if (onOpenToolHome) onOpenToolHome("manual"); else if (setShowManual) setShowManual(true);
         break;
+      case "langchain":
+      case "langgraph":
+      case "deepagents":
+      case "langsmith":
+        if (setLangChainProduct) setLangChainProduct(id);
+        if (setShowLangChainDocs) setShowLangChainDocs(true);
+        break;
       case "aws_agentcore":
         if (setShowAgentCore) setShowAgentCore(true);
         break;
@@ -391,6 +406,14 @@ export default function Sidebar({
       case "learnbug": if (onOpenToolHome) onOpenToolHome("visualize"); else if (setShowLearnBug) setShowLearnBug(true); break;
       case "sql_lab": if (setShowSqlLab) setShowSqlLab(true); break;
       case "concurrency_lab": if (setShowConcurrencyLab) setShowConcurrencyLab(true); break;
+      case "lab_enterprise_ai_agents":
+      case "lab_chunking_bench":
+      case "lab_token_cost":
+      case "lab_agent_anatomy":
+      case "lab_agent_bottlenecks":
+        if (setActiveLabId) setActiveLabId(id);
+        if (setShowLabs) setShowLabs(true);
+        break;
       case "agent_library": if (setShowAgentLibrary) setShowAgentLibrary(true); break;
       case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
       case "links": 

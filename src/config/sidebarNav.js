@@ -42,6 +42,7 @@ export function getActiveNavId(p) {
   if (p.showLearnBug) return "learnbug";
   if (p.showSqlLab) return "sql_lab";
   if (p.showConcurrencyLab) return "concurrency_lab";
+  if (p.showLabs) return p.activeLabId || "lab_enterprise_ai_agents";
   if (p.showAgentLibrary) return "agent_library";
   if (p.showAimlCompanion) return "aiml_companion";
   if (p.showLinks) return "links";
@@ -76,6 +77,9 @@ export function getActiveNavId(p) {
   if (p.showManual) return "manual";
   if (p.showReference) return "reference";
   if (p.showAgentCore) return "aws_agentcore";
+  // The LangChain product id doubles as the nav id, so the four Agents
+  // subsections highlight without any extra mapping.
+  if (p.showLangChainDocs) return p.langChainProduct || "langchain";
   if (!p.activeNode) return "overview";
   return null;
 }
@@ -105,6 +109,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowLearnBug) p.setShowLearnBug(false);
   if (p.setShowSqlLab) p.setShowSqlLab(false);
   if (p.setShowConcurrencyLab) p.setShowConcurrencyLab(false);
+  if (p.setShowLabs) p.setShowLabs(false);
   if (p.setShowAgentLibrary) p.setShowAgentLibrary(false);
   if (p.setShowAimlCompanion) p.setShowAimlCompanion(false);
   if (p.setShowLinks) p.setShowLinks(false);
@@ -137,6 +142,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowManual) p.setShowManual(false);
   if (p.setShowReference) p.setShowReference(false);
   if (p.setShowAgentCore) p.setShowAgentCore(false);
+  if (p.setShowLangChainDocs) p.setShowLangChainDocs(false);
   if (p.setShowOnboarding) p.setShowOnboarding(false);
 
   switch (id) {
@@ -160,6 +166,14 @@ export function runNavClick(id, p, ctx = {}) {
     case "aws_agentcore":
       if (p.setShowAgentCore) p.setShowAgentCore(true);
       break;
+    case "langchain":
+    case "langgraph":
+    case "deepagents":
+    case "langsmith":
+      // One viewer, entered scoped to the library the reader picked.
+      if (p.setLangChainProduct) p.setLangChainProduct(id);
+      if (p.setShowLangChainDocs) p.setShowLangChainDocs(true);
+      break;
     case "nosignups": if (p.setShowNoSignups) p.setShowNoSignups(true); break;
     case "free_system_design": window.open("https://freesystemdesign.com/", "_blank", "noopener,noreferrer"); break;
     case "knowledge_graph": if (p.setShowKnowledgeGraph) p.setShowKnowledgeGraph(true); break;
@@ -176,6 +190,14 @@ export function runNavClick(id, p, ctx = {}) {
     case "learnbug": if (p.onOpenToolHome) p.onOpenToolHome("visualize"); else if (p.setShowLearnBug) p.setShowLearnBug(true); break;
     case "sql_lab": if (p.setShowSqlLab) p.setShowSqlLab(true); break;
     case "concurrency_lab": if (p.setShowConcurrencyLab) p.setShowConcurrencyLab(true); break;
+    case "lab_enterprise_ai_agents":
+    case "lab_chunking_bench":
+    case "lab_token_cost":
+    case "lab_agent_anatomy":
+    case "lab_agent_bottlenecks":
+      if (p.setActiveLabId) p.setActiveLabId(id);
+      if (p.setShowLabs) p.setShowLabs(true);
+      break;
     case "agent_library": if (p.setShowAgentLibrary) p.setShowAgentLibrary(true); break;
     case "aiml_companion": if (p.setShowAimlCompanion) p.setShowAimlCompanion(true); break;
     case "links":

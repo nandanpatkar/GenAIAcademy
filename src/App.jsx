@@ -44,6 +44,7 @@ const DSAAnimator = React.lazy(() => import("./components/DSAAnimator"));
 const LearnBugEmbed = React.lazy(() => import("./components/LearnBugEmbed"));
 const SqlLab = React.lazy(() => import("./components/SqlLab"));
 const ConcurrencyLab = React.lazy(() => import("./components/ConcurrencyLab"));
+const LabsHub = React.lazy(() => import("./components/LabsHub"));
 const AgentLibrary = React.lazy(() => import("./components/AgentLibrary"));
 const AimlCompanion = React.lazy(() => import("./components/AimlCompanion"));
 const LinksCompanion = React.lazy(() => import("./components/LinksCompanion"));
@@ -64,6 +65,7 @@ const FreeSystemDesign = React.lazy(() => import("./components/FreeSystemDesign"
 const ManualViewer = React.lazy(() => import("./components/ManualViewer"));
 const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"));
 const AgentCoreViewer = React.lazy(() => import("./components/AgentCoreViewer"));
+const LangChainDocs = React.lazy(() => import("./components/LangChainDocs"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
 const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
@@ -84,6 +86,15 @@ const Community = React.lazy(() => import("./components/Community/Community"));
 const AppWalkthrough = React.lazy(() => import("./components/AppWalkthrough"));
 const FeatureHome = React.lazy(() => import("./components/FeatureHome"));
 const GenAIPlayground2 = React.lazy(() => import("./pages/playground2/GenAIPlayground2"));
+
+const LAB_IDS = new Set([
+  "lab_enterprise_ai_agents",
+  "lab_chunking_bench",
+  "lab_token_cost",
+  "lab_agent_anatomy",
+  "lab_agent_bottlenecks",
+]);
+const DEFAULT_LAB_ID = "lab_enterprise_ai_agents";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -416,6 +427,11 @@ function MainApp() {
   const [showLearnBug, setShowLearnBug] = useState(savedViews.showLearnBug ?? false);
   const [showSqlLab, setShowSqlLab] = useState(savedViews.showSqlLab ?? false);
   const [showConcurrencyLab, setShowConcurrencyLab] = useState(savedViews.showConcurrencyLab ?? false);
+  const [showLabs, setShowLabs] = useState(savedViews.showLabs ?? false);
+  const [activeLabId, setActiveLabId] = useState(() => {
+    const savedLabId = typeof window !== "undefined" ? localStorage.getItem("genai_active_lab") : null;
+    return LAB_IDS.has(savedLabId) ? savedLabId : DEFAULT_LAB_ID;
+  });
   const [showAgentLibrary, setShowAgentLibrary] = useState(savedViews.showAgentLibrary ?? false);
   const [showAimlCompanion, setShowAimlCompanion] = useState(savedViews.showAimlCompanion ?? false);
   const [showLinks, setShowLinks] = useState(savedViews.showLinks ?? false);
@@ -441,6 +457,8 @@ function MainApp() {
   const [showReference, setShowReference] = useState(savedViews.showReference ?? false);
   const [activeReferenceTopic, setActiveReferenceTopic] = useState(null);
   const [showAgentCore, setShowAgentCore] = useState(savedViews.showAgentCore ?? false);
+  const [showLangChainDocs, setShowLangChainDocs] = useState(savedViews.showLangChainDocs ?? false);
+  const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
   const [showInterviewPrep, setShowInterviewPrep] = useState(savedViews.showInterviewPrep ?? false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
   const [showProjects, setShowProjects] = useState(savedViews.showProjects ?? false);
@@ -479,24 +497,26 @@ function MainApp() {
     try {
       localStorage.setItem("genai_active_views", JSON.stringify({
         showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
-        showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+        showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
         showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
         showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
-        showKnowledgeGraph, showReference, showAgentCore
+        showKnowledgeGraph, showReference, showAgentCore,
+        showLangChainDocs, langChainProduct
       }));
     } catch (e) {
       console.warn("Failed to save genai_active_views to localStorage:", e);
     }
   }, [
     showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
-    showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+    showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
     showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
     showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
-    showKnowledgeGraph, showReference, showAgentCore
+    showKnowledgeGraph, showReference, showAgentCore,
+    showLangChainDocs, langChainProduct
   ]);
 
   useEffect(() => {
@@ -506,6 +526,10 @@ function MainApp() {
       console.warn("Failed to save genai_hub_config to localStorage:", e);
     }
   }, [hubConfig]);
+
+  useEffect(() => {
+    localStorage.setItem("genai_active_lab", activeLabId);
+  }, [activeLabId]);
 
   // Walkthrough: auto-show for first-time users
   const [showWalkthrough, setShowWalkthrough] = useState(() => {
@@ -621,6 +645,7 @@ function MainApp() {
     setShowLearnBug(false);
     setShowSqlLab(false);
     setShowConcurrencyLab(false);
+    setShowLabs(false);
     setShowAgentLibrary(false);
     setShowAimlCompanion(false);
     setShowLinks(false);
@@ -654,6 +679,7 @@ function MainApp() {
     setShowManual(false);
     setShowReference(false);
     setShowAgentCore(false);
+    setShowLangChainDocs(false);
     setShowLeetCode(false);
     setShowOnboarding(false);
     setInterviewDeepLinkId(null);
@@ -754,6 +780,7 @@ function MainApp() {
       case "agent_library": setShowAgentLibrary(true); break;
       case "sql_lab": setShowSqlLab(true); break;
       case "concurrency_lab": setShowConcurrencyLab(true); break;
+      case "labs": setShowLabs(true); break;
       case "aiml_companion": setShowAimlCompanion(true); break;
       case "gemini_interviewer": setShowGeminiInterviewer(true); break;
       case "emotional_support": setShowEmotionalSupport(true); break;
@@ -1260,6 +1287,8 @@ function MainApp() {
           showLearnBug={showLearnBug} setShowLearnBug={setShowLearnBug}
           showSqlLab={showSqlLab} setShowSqlLab={setShowSqlLab}
           showConcurrencyLab={showConcurrencyLab} setShowConcurrencyLab={setShowConcurrencyLab}
+          showLabs={showLabs} setShowLabs={setShowLabs}
+          activeLabId={activeLabId} setActiveLabId={setActiveLabId}
           showAgentLibrary={showAgentLibrary} setShowAgentLibrary={setShowAgentLibrary}
           showAimlCompanion={showAimlCompanion} setShowAimlCompanion={setShowAimlCompanion}
           showLinks={showLinks} setShowLinks={setShowLinks}
@@ -1291,6 +1320,8 @@ function MainApp() {
           showReference={showReference} setShowReference={setShowReference}
           activeReferenceTopic={activeReferenceTopic} setActiveReferenceTopic={setActiveReferenceTopic}
           showAgentCore={showAgentCore} setShowAgentCore={setShowAgentCore}
+          showLangChainDocs={showLangChainDocs} setShowLangChainDocs={setShowLangChainDocs}
+          langChainProduct={langChainProduct} setLangChainProduct={setLangChainProduct}
           showOnboarding={showOnboarding}
           setShowOnboarding={(v) => { if (v) setOnboardingMode("panel"); setShowOnboarding(v); }}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
@@ -1357,6 +1388,7 @@ function MainApp() {
                             showLearnBug ? <LearnBugEmbed onClose={() => setShowLearnBug(false)} /> :
                             showSqlLab ? <SqlLab onClose={() => setShowSqlLab(false)} /> :
                             showConcurrencyLab ? <ConcurrencyLab onClose={() => setShowConcurrencyLab(false)} /> :
+                            showLabs ? <LabsHub activeLabId={activeLabId} /> :
                             showAgentLibrary ? <AgentLibrary onClose={() => setShowAgentLibrary(false)} /> :
                             showAimlCompanion ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
@@ -1408,6 +1440,7 @@ function MainApp() {
                                                         showManual ? <ManualViewer activePhase={activeManualPhase} onSelectPhase={setActiveManualPhase} onClose={() => setShowManual(false)} /> :
                                                         showReference ? <ReferenceViewer activeTopic={activeReferenceTopic} onSelectTopic={setActiveReferenceTopic} onClose={() => setShowReference(false)} /> :
                                                         showAgentCore ? <ErrorBoundary><AgentCoreViewer onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
+                                                        showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showQuiz ? <QuizApp /> :
