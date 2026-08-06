@@ -1,0 +1,7 @@
+strands-agents 
+duckduckgo-search
+strands-agents-tools
+uv
+bedrock-agentcore
+ddgs
+bedrock-agentcore-starter-toolkit==0.1.19

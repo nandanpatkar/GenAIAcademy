@@ -32,6 +32,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 
   manual: { icon: BookOpen, label: "Manual", description: "Follow guided lessons" },
   reference: { icon: BookMarked, label: "Quick Reference", description: "Look up key concepts" },
+  aws_agentcore: { icon: Layers, label: "AWS Agent Core", description: "The full Amazon Bedrock AgentCore developer guide" },
   resources: { icon: BookOpen, label: "Resources", description: "Browse learning materials" },
   blog: { icon: BookMarked, label: "Blog", description: "Read curated research" },
   links: { icon: Bookmark, label: "Saved Links", description: "Keep useful bookmarks" },
@@ -66,7 +67,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab", "concurrency_lab"] },
-  { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
+  { id: "library", label: "Library", itemIds: ["manual", "reference", "aws_agentcore", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
   { id: "more_tools", label: "More tools", itemIds: ["agent_library", "projects", "aws_simulator", "dsa_animator", "k8s_games", "git_visualizer", "flow_design", "notion", "nosignups", "free_system_design"] },

@@ -72,6 +72,7 @@ export default function Sidebar({
   activeManualPhase, setActiveManualPhase,
   showReference, setShowReference,
   activeReferenceTopic, setActiveReferenceTopic,
+  showAgentCore, setShowAgentCore,
   showOnboarding, setShowOnboarding,
   activeToolHome, onOpenToolHome,
   onOpenGenAIPlayground2
@@ -289,6 +290,7 @@ export default function Sidebar({
     if (showLeetCode) return "leetcode";
     if (showManual) return "manual";
     if (showReference) return "reference";
+    if (showAgentCore) return "aws_agentcore";
     if (!activeNode) return "overview";
     return null;
   };
@@ -348,6 +350,7 @@ export default function Sidebar({
     if (setShowLeetCode) setShowLeetCode(false);
     if (setShowManual) setShowManual(false);
     if (setShowReference) setShowReference(false);
+    if (setShowAgentCore) setShowAgentCore(false);
     if (setShowOnboarding) setShowOnboarding(false);
 
     switch (id) {
@@ -365,9 +368,12 @@ export default function Sidebar({
         if (setActiveReferenceTopic) setActiveReferenceTopic(null);
         if (onOpenToolHome) onOpenToolHome("reference"); else if (setShowReference) setShowReference(true);
         break;
-      case "manual": 
+      case "manual":
         if (setActiveManualPhase) setActiveManualPhase(null);
         if (onOpenToolHome) onOpenToolHome("manual"); else if (setShowManual) setShowManual(true);
+        break;
+      case "aws_agentcore":
+        if (setShowAgentCore) setShowAgentCore(true);
         break;
       case "nosignups": if (setShowNoSignups) setShowNoSignups(true); break;
       case "free_system_design": window.open("https://freesystemdesign.com/", "_blank", "noopener,noreferrer"); break;

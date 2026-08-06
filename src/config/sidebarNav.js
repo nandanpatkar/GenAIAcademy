@@ -75,6 +75,7 @@ export function getActiveNavId(p) {
   if (p.showLeetCode) return "leetcode";
   if (p.showManual) return "manual";
   if (p.showReference) return "reference";
+  if (p.showAgentCore) return "aws_agentcore";
   if (!p.activeNode) return "overview";
   return null;
 }
@@ -135,6 +136,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowLeetCode) p.setShowLeetCode(false);
   if (p.setShowManual) p.setShowManual(false);
   if (p.setShowReference) p.setShowReference(false);
+  if (p.setShowAgentCore) p.setShowAgentCore(false);
   if (p.setShowOnboarding) p.setShowOnboarding(false);
 
   switch (id) {
@@ -154,6 +156,9 @@ export function runNavClick(id, p, ctx = {}) {
     case "manual":
       if (p.setActiveManualPhase) p.setActiveManualPhase(null);
       if (p.onOpenToolHome) p.onOpenToolHome("manual"); else if (p.setShowManual) p.setShowManual(true);
+      break;
+    case "aws_agentcore":
+      if (p.setShowAgentCore) p.setShowAgentCore(true);
       break;
     case "nosignups": if (p.setShowNoSignups) p.setShowNoSignups(true); break;
     case "free_system_design": window.open("https://freesystemdesign.com/", "_blank", "noopener,noreferrer"); break;

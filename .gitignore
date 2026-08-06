@@ -26,3 +26,8 @@ dsa_data_*.txt
 
 # Ignore AFFiNE embedded repo
 AFFiNE/
+
+# Upstream samples repo used only as build input for the AgentCore samples
+# viewer (scripts/build_agentcore_samples.py). The generated output that
+# actually ships lives in public/agentcore-samples/.
+agentcore-samples-main/

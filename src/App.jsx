@@ -63,6 +63,7 @@ const NoSignups = React.lazy(() => import("./components/NoSignups"));
 const FreeSystemDesign = React.lazy(() => import("./components/FreeSystemDesign"));
 const ManualViewer = React.lazy(() => import("./components/ManualViewer"));
 const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"));
+const AgentCoreViewer = React.lazy(() => import("./components/AgentCoreViewer"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
 const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
@@ -439,6 +440,7 @@ function MainApp() {
   const [activeManualPhase, setActiveManualPhase] = useState(null);
   const [showReference, setShowReference] = useState(savedViews.showReference ?? false);
   const [activeReferenceTopic, setActiveReferenceTopic] = useState(null);
+  const [showAgentCore, setShowAgentCore] = useState(savedViews.showAgentCore ?? false);
   const [showInterviewPrep, setShowInterviewPrep] = useState(savedViews.showInterviewPrep ?? false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
   const [showProjects, setShowProjects] = useState(savedViews.showProjects ?? false);
@@ -482,7 +484,7 @@ function MainApp() {
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
         showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
-        showKnowledgeGraph, showReference
+        showKnowledgeGraph, showReference, showAgentCore
       }));
     } catch (e) {
       console.warn("Failed to save genai_active_views to localStorage:", e);
@@ -494,7 +496,7 @@ function MainApp() {
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
     showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
-    showKnowledgeGraph, showReference
+    showKnowledgeGraph, showReference, showAgentCore
   ]);
 
   useEffect(() => {
@@ -651,6 +653,7 @@ function MainApp() {
     setShowProjects(false);
     setShowManual(false);
     setShowReference(false);
+    setShowAgentCore(false);
     setShowLeetCode(false);
     setShowOnboarding(false);
     setInterviewDeepLinkId(null);
@@ -1287,6 +1290,7 @@ function MainApp() {
           activeManualPhase={activeManualPhase} setActiveManualPhase={setActiveManualPhase}
           showReference={showReference} setShowReference={setShowReference}
           activeReferenceTopic={activeReferenceTopic} setActiveReferenceTopic={setActiveReferenceTopic}
+          showAgentCore={showAgentCore} setShowAgentCore={setShowAgentCore}
           showOnboarding={showOnboarding}
           setShowOnboarding={(v) => { if (v) setOnboardingMode("panel"); setShowOnboarding(v); }}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
@@ -1403,6 +1407,7 @@ function MainApp() {
                                                         showFreeSystemDesign ? <FreeSystemDesign onClose={() => setShowFreeSystemDesign(false)} /> :
                                                         showManual ? <ManualViewer activePhase={activeManualPhase} onSelectPhase={setActiveManualPhase} onClose={() => setShowManual(false)} /> :
                                                         showReference ? <ReferenceViewer activeTopic={activeReferenceTopic} onSelectTopic={setActiveReferenceTopic} onClose={() => setShowReference(false)} /> :
+                                                        showAgentCore ? <ErrorBoundary><AgentCoreViewer onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showQuiz ? <QuizApp /> :
