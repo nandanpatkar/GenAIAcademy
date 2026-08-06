@@ -43,7 +43,6 @@ html.theme-dark {
   --warning: #efbd70;
   --warning-container: #493414;
   --on-warning-container: #ffe1ad;
-  --font-sans: "Manrope", "Inter", sans-serif;
   --radius: 6px;
   --radius-lg: 12px;
   --radius-xl: 18px;
@@ -58,13 +57,6 @@ html.theme-dark {
 .theme-dark .appbar {
   background: rgba(23,22,20,.88);
   border-bottom-color: rgba(235,220,205,.12);
-}
-.theme-dark .appbar__brand,
-.theme-dark .page-head__title,
-.theme-dark .course-hero__title,
-.theme-dark .reader__title,
-.theme-dark .results__score {
-  font-family: "Newsreader", Georgia, serif;
 }
 .theme-dark .page-head__title,
 .theme-dark .course-hero__title,
@@ -103,6 +95,85 @@ html.theme-dark {
 .theme-dark .mode-card__mark { box-shadow: inset 0 0 0 1px rgba(217,119,87,.16); }
 .theme-dark :focus-visible { outline-color: #e68b6d; }
 .theme-dark ::selection { background: #553126; color: #fff1ea; }
+
+/* ==========================================================================
+   Amazon Connect — dark mode
+   The light theme already gives this track its own AWS console palette via
+   `[data-track="amazon-connect"]` in tokens.css (Squid Ink primary, Smile
+   Orange marker). Without a dark variant, that block's own `--background` /
+   `--surface` values (light) would still win over the generic dark tokens
+   above wherever a `data-track="amazon-connect"` element sits — the app root,
+   a library shelf, or an individual course card all carry that attribute
+   independently — so Amazon Connect content stayed stuck in light mode no
+   matter the toggle. This mirrors the light block color-for-color, moved to
+   Cloudscape's dark surfaces, with Smile Orange kept as the one accent that
+   doesn't change between light and dark.
+   ========================================================================== */
+html.theme-dark [data-track='amazon-connect'] {
+  --primary: #ff9900;
+  --primary-container: #ec7211;
+  --on-primary: #1a1200;
+  --on-primary-container: #ffe4b8;
+  --primary-fixed: #3d2c12;
+  --primary-fixed-dim: #5a3f14;
+  --on-primary-fixed: #ffcf8a;
+  --on-primary-fixed-variant: #ffb84d;
+  --surface-tint: #ff9900;
+
+  --accent-rgb: 255, 153, 0;
+  --outline-rgb: 90, 107, 125;
+
+  --background: #0f1b2a;
+  --surface: #0f1b2a;
+  --surface-bright: #1a2836;
+  --surface-dim: #0a141f;
+  --surface-container-lowest: #0a141f;
+  --surface-container-low: #141f2c;
+  --surface-container: #1a2836;
+  --surface-container-high: #223244;
+  --surface-container-highest: #2b3d51;
+  --surface-variant: #1a2836;
+  --inverse-surface: #f2f3f5;
+  --inverse-on-surface: #16191f;
+
+  --on-background: #e9ebed;
+  --on-surface: #e9ebed;
+  --on-surface-variant: #aab7c4;
+  --outline: #5a6b7d;
+  --outline-variant: #33475c;
+
+  --secondary: #aab7c4;
+  --secondary-container: #223244;
+  --on-secondary-container: #d1d9e0;
+  --tertiary: #d1d9e0;
+  --tertiary-fixed: #223244;
+  --on-tertiary-fixed: #e9ebed;
+
+  /* Smile Orange, unchanged from light — progress fills, the current-item
+     marker, and (below) the accents the generic dark rules would otherwise
+     tint terracotta to match the Claude tracks. */
+  --marker: #ff9900;
+  --marker-strong: #ffac31;
+  --marker-rgb: 255, 153, 0;
+
+  --appbar-bg: rgba(15, 27, 42, 0.88);
+}
+
+/* Same elements the generic dark rules tint terracotta above, repainted
+   Smile Orange for anything tagged as Amazon Connect — including a single
+   course card sitting on an otherwise-default-track shelf. Higher specificity
+   than the generic rules (one more attribute selector), so these win without
+   relying on source order. */
+html.theme-dark .course-card[data-track='amazon-connect']:hover,
+html.theme-dark .course-card[data-track='amazon-connect']:focus-within {
+  border-color: rgba(255, 153, 0, 0.55);
+}
+html.theme-dark .course-card[data-track='amazon-connect'] .course-card__mark {
+  box-shadow: inset 0 0 0 1px rgba(255, 153, 0, 0.24);
+}
+html.theme-dark [data-track='amazon-connect'] .course-hero::after {
+  background: radial-gradient(circle at 100% 0%, rgba(255, 153, 0, 0.14), transparent 55%);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .theme-dark *, .theme-dark *::before, .theme-dark *::after {

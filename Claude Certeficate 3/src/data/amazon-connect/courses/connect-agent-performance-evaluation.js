@@ -1,0 +1,1967 @@
+/*
+ * Amazon Connect — Agent Performance Evaluation
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne/AMAZON CONNECT AGENT PERFORMANCE EVALUATION.txt
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-agent-performance-evaluation",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Agent Performance Evaluation",
+  "provider": "Amazon Web Services",
+  "level": "Intermediate",
+  "category": "Agent experience",
+  "description": "Building evaluation forms and scoring criteria, automating evaluations, running calibration sessions, and analyzing and communicating results.",
+  "examFormat": "18 topics · ~25 min · 12 review questions",
+  "sourceFiles": [
+    "conne/AMAZON CONNECT AGENT PERFORMANCE EVALUATION.txt"
+  ],
+  "modules": [
+    {
+      "id": "connect-agent-performance-evaluation-t1",
+      "number": 1,
+      "title": "Introduction to Evaluation Form Setup and Automation",
+      "shortTitle": "Introduction to Evaluation Form Setup and Au…",
+      "summary": "Imagine you are a supervisor at a customer service contact center. Your team has just handled a surge of contacts after a product launch, and now…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [
+        "Design structured evaluation forms with logically organized sections and well-crafted questions.",
+        "Establish weighted scoring criteria that aligns with business priorities.",
+        "Configure optional questions and scoring exclusions based on evaluation requirements.",
+        "Select appropriate automation methods (metrics, rules, or generative AI) based on question type and evaluation requirements."
+      ],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Section introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Imagine you are a supervisor at a customer service contact center. Your team has just handled a surge of contacts after a product launch, and now you need to evaluate how well your agents performed. How do you make sure every evaluation is fair, consistent, and actually helps agents improve? That is where a well-designed evaluation form comes in."
+            },
+            {
+              "type": "p",
+              "text": "In this section, you will learn how to structure forms with clear sections and questions, set up different types of answers, and establish scoring criteria that focuses on what truly matters to your business. You will explore how Amazon Connect can automatically review customer interactions, saving you time and making evaluations more consistent. Automated evaluations are like having a smart assistant that reviews conversations and completes evaluation forms for you. By the end of this module, you will understand exactly how these automations work and how to set them up for your team."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t2",
+      "number": 2,
+      "title": "Form Structure Development",
+      "shortTitle": "Form Structure Development",
+      "summary": "Every effective evaluation begins with a solid framework. A well-structured evaluation form makes the assessment process smoother and yields more…",
+      "duration": "~5 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t2-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Every effective evaluation begins with a solid framework. A well-structured evaluation form makes the assessment process smoother and yields more accurate evaluations of agent performance."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "1 of 7"
+            },
+            {
+              "type": "p",
+              "text": "Getting started with evaluation forms in Amazon Connect There are a few steps that you will need to take to create a well structured evaluation form in Amazon Connect. To learn more, choose the arrow buttons to display each of the following six steps."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have learned about the steps it takes to create an evaluation form in Amazon Connect. Review the following demonstration to see those steps in action."
+            },
+            {
+              "type": "p",
+              "text": "Demonstration on creating an evaluation form in Amazon Connect."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Transcript: Create evaluation form in Amazon Connect"
+            },
+            {
+              "type": "p",
+              "text": "Welcome to this demonstration on creating an evaluation form in Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "First, you will need to log into your Amazon Connect admin workspace by navigating to your instance URL, such as https://yourinstancename.my.connect.aws. You will either need the Admin security profile or make sure your security profile includes the \"Analytics and Optimization - Evaluation forms - Create\" permission."
+            },
+            {
+              "type": "p",
+              "text": "Once logged in, navigate to the evaluation forms area. In the navigation menu, choose on Analytics and optimization, then choose Evaluation forms."
+            },
+            {
+              "type": "p",
+              "text": "To start a new form, choose Create new form."
+            },
+            {
+              "type": "p",
+              "text": "Next, in Set form title, for Title enter the name for your evaluation form. In this demonstration I will enter Demo Form, then choose OK."
+            },
+            {
+              "type": "p",
+              "text": "On the evaluation form page, in the Section title, enter Section One. Then, select the Scoring and weights tab."
+            },
+            {
+              "type": "p",
+              "text": "Now, in the Scoring and weights tab, choose Enable scoring."
+            },
+            {
+              "type": "p",
+              "text": "In the Score weights section, you can choose between two different scoring based evaluation models: Sections and subsections or Questions. Choose Questions."
+            },
+            {
+              "type": "p",
+              "text": "When using the question-based evaluation model, you have the option to exclude certain questions that might not be relevant. This feature is particularly valuable because not all questions apply to every type of contact being evaluated with this form. By excluding optional questions, you ensure they do not affect the overall score, which provides a more accurate assessment of performance for different contact scenarios. Choose Exclude optional questions from scoring."
+            },
+            {
+              "type": "p",
+              "text": "Next, choose the Sections and questions tab."
+            },
+            {
+              "type": "p",
+              "text": "On the Sections and questions tab, choose Add question."
+            },
+            {
+              "type": "p",
+              "text": "Now, in Question title enter your question. I will enter the question title, Did the agent greet the customer properly?. Then, choose Instructions to evaluators - optional."
+            },
+            {
+              "type": "p",
+              "text": "Optionally, you can provide detailed instructions to the evaluators. The instructions entered are also used to for a generative AI evaluation. I will enter Did the agent greet the customer with one of the required greetings? Thank you for calling AnyCompany."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "My name is [AgentName] how may I help you?",
+                "You have reached AnyCompany customer support. My name is [AgentName], how may I assist you?."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Next, in the Answers tab, in the first answer enter Yes, and in the second answer enter No. Then, choose the Scoring tab."
+            },
+            {
+              "type": "p",
+              "text": "In the Scoring tab, for the answer Yes, choose 10/10, and for the answer No, choose 0 (automatic fail) and Entire form. Then, choose the Automation tab."
+            },
+            {
+              "type": "p",
+              "text": "Use the radio buttons to choose which automation to apply to this evaluation. In this demonstration, I will leave Option 1: No automation chosen. Then, choose the Display options tab."
+            },
+            {
+              "type": "p",
+              "text": "Use the radio buttons to choose how to display the answer options. In this demonstration I will leave Radio buttons chosen. You can choose Preview to show how the evaluation form will be presented before having to the form. Then, choose the Conditionally enable question tab."
+            },
+            {
+              "type": "p",
+              "text": "For questions that are marked optional, you can set the conditions here. Now, choose Create."
+            },
+            {
+              "type": "p",
+              "text": "Notice the message showing the Form \"Demo Form\" is successfully created. To make the form usable for evaluations, you must activate the form, choose Activate."
+            },
+            {
+              "type": "p",
+              "text": "On the Evaluation forms page, notice the message Version 1 is successfully activated. In the Evaluation forms table you can see the new form was created. Notice the information about the form such as Title, Last version, Active version, and a link to search for Evaluated contacts."
+            },
+            {
+              "type": "p",
+              "text": "This concludes the demonstration on creating an evaluation form in Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "Evaluation forms serve as a valuable tool for supervisors to standardize assessment of agent-customer interactions, uncover agent training needs, and implement performance improvement measures. Evaluation form automation capabilities can allow the system to answer evaluation questions automatically, eliminating manual work. This automation empowers supervisors to evaluate a greater volume of customer contacts, providing broader insights into challenges and emerging trends."
+            },
+            {
+              "type": "p",
+              "text": "Using automation instead of manually evaluating contacts results in more effective management and improved operational efficiency across the contact center."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Create the evaluation form"
+            },
+            {
+              "type": "p",
+              "text": "Log in to Amazon Connect with a user account that has the following security profile permission: Analytics and Optimization - Evaluation forms - manage form definitions - Create. Navigate to Analytics and optimization, choose Evaluation forms, then choose Create new form. Give your form a descriptive title that clearly identifies its purpose, such as Sales Call Evaluation or Technical Support Quality Assessment."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Set up logical sections"
+            },
+            {
+              "type": "p",
+              "text": "Add sections that group related questions together. Consider organizing your form with sections like Greeting, Problem resolution, and Closing. This organization helps evaluators focus on one aspect of the interaction at a time, making the evaluation more systematic."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Create specific, observable questions"
+            },
+            {
+              "type": "p",
+              "text": "Add questions that focus on specific, observable behaviors or actions. Avoid vague questions like, \"Was the agent good?\" Instead, ask \"Did the agent identify themselves by name at the beginning of the call?\" Use action-oriented language, avoid subjective terms, and include clear criteria."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Add clear instructions for each question"
+            },
+            {
+              "type": "p",
+              "text": "For each question, provide clear instructions that explain exactly what evaluators should look for when answering."
+            },
+            {
+              "type": "p",
+              "text": "For example: Question: \"Did the agent verify the customer's identity?\" Instructions: \"The agent must ask for at least two pieces of identifying information (account number, address, last four digits of SSN) before discussing account details.\""
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Choose appropriate question types"
+            },
+            {
+              "type": "p",
+              "text": "Choose from the following three main question types:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Single selection: Evaluators choose from options like Yes \"or\" No or Good, Fair, \"or\" Poor.",
+                "Text field: Evaluators provide written feedback."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t2-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Number: Evaluators enter a score within a defined range (1-10)",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Set up conditional questions"
+            },
+            {
+              "type": "p",
+              "text": "Create questions that appear only when specific conditions are met. For example, questions about refund policy explanations should only appear if the customer requested a refund. To set this up, create a base question (for example, \"Did the customer request a refund?\"), then create follow-up questions that are conditionally enabled based on the answer to the base question."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t3",
+      "number": 3,
+      "title": "Scoring Criteria Setup",
+      "shortTitle": "Scoring Criteria Setup",
+      "summary": "Not all aspects of a customer interaction are equally important. A well-designed scoring system helps ensure your evaluations focus on what…",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t3-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Not all aspects of a customer interaction are equally important. A well-designed scoring system helps ensure your evaluations focus on what matters most to your business and customers."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Assigning scores to answers",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Calculating Final Scores"
+            },
+            {
+              "type": "p",
+              "text": "In most customer interactions, certain elements have more impact than others. With weighting, you can assign different levels of importance to different questions or sections."
+            },
+            {
+              "type": "p",
+              "text": "To set up scoring, do the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "1. Enable scoring for your evaluation form.",
+                "2. Choose your Weight distribution mode, as follows:",
+                "Weight by section: Distribute importance across major categories.",
+                "Weight by question: Assign specific weights to individual questions.",
+                "3. Assign percentage weights (total always adds up to 100%).",
+                "For example, you might set up a technical support evaluation form with the following section weights:"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Contact wrap-up (20%)",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Your technical support evaluation form could have a technical troubleshooting section, you might weight questions as follows:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Did the agent verify that the solution worked? (10%)",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "This approach helps ensure that performance in the most critical aspects has a greater impact on the overall evaluation."
+            },
+            {
+              "type": "p",
+              "text": "Your evaluation process is now ready to deliver consistent, objective assessments. Remember that the most effective evaluation forms evolve over time. Regularly review your questions, scoring metrics, and overall structure to ensure they continue to reflect your organization's quality standards and customer service objectives."
+            },
+            {
+              "type": "p",
+              "text": "The time invested in creating a well-structured evaluation form will pay dividends in the form of agent growth, improved customer satisfaction, and more efficient quality-monitoring processes."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Assigning scores to answers",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Calculating Final Scores"
+            },
+            {
+              "type": "p",
+              "text": "Not every question applies to every interaction. By using optional questions, you can maintain comprehensive evaluation forms while making sure agents are not penalized for questions that do not apply to their specific interaction."
+            },
+            {
+              "type": "p",
+              "text": "To make a question optional, do the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Navigate to the question.",
+                "Select the Enable \"Not Applicable\" checkbox.",
+                "Save your changes."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "When an evaluator marks a question as \"Not Applicable,\" the question is removed from the scoring calculation and does not count toward the final score. The weights of the remaining questions are automatically recalculated proportionally."
+            },
+            {
+              "type": "p",
+              "text": "For example, you have four questions weighted as follows:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Question 4: 20%",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "If Question 4 is marked \"Not Applicable,\" its 20% weight is redistributed as follows:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Assigning scores to answers",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Calculating Final Scores"
+            },
+            {
+              "type": "p",
+              "text": "Each answer option can be assigned a specific score, making it possible for you to create nuanced evaluations that reflect varying degrees of performance."
+            },
+            {
+              "type": "p",
+              "text": "To assign scores to answers, do the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Navigate to the Scoring tab for your question.",
+                "Enter the Score value for each possible answer.",
+                "Ensure your scoring scale is consistent across similar questions.",
+                "For example:",
+                "For a Yes or No question: Yes = 10 points, No = 0 points"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For more nuanced questions: Excellent = 10 points, Good = 7 points, Satisfactory = 5 points, Needs Improvement = 2 points, Poor = 0 points"
+            },
+            {
+              "type": "p",
+              "text": "Choose a scoring range that aligns with your overall approach, as follows:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "0-100 scale: Very granular but might be unnecessarily complex",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Calculating Final Scores"
+            },
+            {
+              "type": "p",
+              "text": "The final evaluation score combines individual question scores based on their assigned weights. This weighted average provides a comprehensive assessment of agent performance."
+            },
+            {
+              "type": "p",
+              "text": "The formula for calculating the final score is as follows:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Final score = Sum of (Question score X Question weight)",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For example:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "7.5",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Consider creating score ranges that correspond to performance levels, as follows:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t3-s11",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Below 6.0: Requires immediate attention",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Now that you have reviewed calculating final scores, move on to the rest of the content."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t4",
+      "number": 4,
+      "title": "Understanding Evaluation Automation Options",
+      "shortTitle": "Understanding Evaluation Automation Options",
+      "summary": "Imagine you manage a busy contact center with hundreds of contacts coming in every day. How could you possibly listen to and evaluate every single…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t4-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Imagine you manage a busy contact center with hundreds of contacts coming in every day. How could you possibly listen to and evaluate every single interaction? You would need an army of people. This is where automated evaluations can help. Amazon Connect offers different types of automation to support your evaluation workflow. Each type is designed to address specific evaluation needs and provides different levels of human oversight."
+            },
+            {
+              "type": "p",
+              "text": "The two types of automation offered in Amazon Connect are as follows."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Assisted evaluations"
+            },
+            {
+              "type": "p",
+              "text": "Automation does not have to mean replacing human judgment. In assisted evaluations, Amazon Connect provides automated answers to questions on evaluation forms while human evaluators are reviewing interactions. Think of it as having a smart assistant who suggests answers, but the evaluator still has the final say."
+            },
+            {
+              "type": "p",
+              "text": "For example, when an evaluator is reviewing a call where the agent needs to verify the customer's identity, the automated system can scan the call transcript and suggest Yes to the question Did the agent properly verify the customer's identity? The evaluator can review this suggestion and either accept it or change it based on their own judgment."
+            },
+            {
+              "type": "p",
+              "text": "This approach is particularly helpful for the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "You want to speed up evaluations but maintain human oversight.",
+                "You are evaluating complex situations that might need human interpretation.",
+                "You are training new evaluators who need guidance on proper assessments."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The biggest advantage here is that evaluators do not have to start from scratch. The automation gives them a head start, making the process faster while still keeping humans in control. This leads to more consistent evaluations while still allowing for human judgment when needed."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Fully automated evaluations"
+            },
+            {
+              "type": "p",
+              "text": "With fully automated evaluations, Amazon Connect can automatically fill out all questions on an evaluation form and submit the completed evaluation without any human intervention."
+            },
+            {
+              "type": "p",
+              "text": "For example, your evaluations could be configured to automatically evaluate 100% of customer interactions, checking if agents followed the required greeting script, maintained proper hold times, and resolved customer issues efficiently."
+            },
+            {
+              "type": "p",
+              "text": "This approach works best for the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "You need to evaluate a large volume of contacts.",
+                "You want consistent application of objective standards.",
+                "You are tracking straightforward compliance requirements."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Even with fully automated evaluations, human evaluators can still review, edit, and resubmit evaluations if needed. This provides a safety net for catching any potential issues with the automated assessments."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t4-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Choosing the right approach",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The type of automation you choose depends on your specific needs. Review the following table for a comparison of assisted and fully automated evaluations."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t4-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Maximum coverage",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers flexible evaluation automation options so you can customize quality assurance to balance efficiency with judgment. Assisted evaluations provide AI-powered suggestions while fully automated evaluations help scale your program effectively. These tools transform how you monitor customer interactions. You could start with a hybrid approach by automating objective elements but maintaining human oversight for nuanced interactions. This strategy focuses your quality team's expertise where it matters most while ensuring consistent coverage across your contact center."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t5",
+      "number": 5,
+      "title": "Automation Methods",
+      "shortTitle": "Automation Methods",
+      "summary": "Amazon Connect offers three different methods to power automated evaluations. Each method has specific strengths that make it suitable for…",
+      "duration": "~4 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t5-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers three different methods to power automated evaluations. Each method has specific strengths that make it suitable for different types of evaluation questions."
+            },
+            {
+              "type": "p",
+              "text": "The three options for automation offered in Amazon Connect are as follows."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Rules-Based Automation",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Generative AI Automation"
+            },
+            {
+              "type": "p",
+              "text": "Metrics are measurable aspects of a contact center interaction. Think of metrics as the numbers and statistics that tell you what happened during a customer interaction. Amazon Connect can automatically answer questions based on these numerical values."
+            },
+            {
+              "type": "p",
+              "text": "For example, if your evaluation form asks how long the customer was on hold, Amazon Connect can automatically fill in the exact hold time from the contact record data."
+            },
+            {
+              "type": "p",
+              "text": "Common metrics used in automated evaluations include the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Silence time",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Metrics-based automation works best for questions that have clear numerical answers. There is no interpretation needed, just facts and figures."
+            },
+            {
+              "type": "p",
+              "text": "For instance, if your company policy states that holds should never exceed 2 minutes, you could have an evaluation question that asks, \"Did the agent keep hold times under 2 minutes?\" The system would automatically answer based on the actual hold time data."
+            },
+            {
+              "type": "p",
+              "text": "The main limitation of metrics is that they only work for questions with numerical answers. They cannot tell you if an agent was empathetic or if they resolved the customer's issue correctly."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed metrics-based automation, move on to the next tab to learn about rules-based automation."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Choosing the right method",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Each automation method has specific strengths that make it suitable for different types of evaluation questions."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Generative AI",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Describe how the agent demonstrated empathy."
+            },
+            {
+              "type": "p",
+              "text": "For the most effective evaluations, many contact centers use a combination of all three methods on a single evaluation form, such as the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Setting up automation in Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Now that you understand what automated evaluations can do and the different ways they work, you can learn how to set them up in Amazon Connect. You have seen how to create an evaluation form and the different types of automation available. Now you can create your own generative AI evaluation form. For step by step instructions, see Amazon Connect Contact Lens: Agent Evaluation Forms Workshop."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Review and refine your automation",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For successful automation, there are several steps you should consider when creating and maintaining your automation, as follows:"
+            },
+            {
+              "type": "ol",
+              "items": [
+                "Start small and expand gradually.",
+                "Create clear evaluation criteria.",
+                "Regularly validate automation accuracy.",
+                "Combine automation types strategically.",
+                "Update your automation as business needs change."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "You have now seen how Amazon Connect offers different ways to automate evaluations. Mix and match these approaches based on your specific questions. Start small, test your results, and expand automation gradually. Your agents and evaluators will thank you for the time saved and the consistent feedback delivered."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Rules-Based Automation",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Generative AI Automation"
+            },
+            {
+              "type": "p",
+              "text": "Rules-based automation uses Amazon Connect Contact Lens categories (predefined rules) to automatically answer single-selection questions on your evaluation form."
+            },
+            {
+              "type": "p",
+              "text": "For example, you could create a rule to detect if agents use the proper greeting, \"Thank you for calling AnyCompany. My name is [agent name]. How may I help you today?\" Then, evaluation questions about proper greetings would be automatically answered based on whether that greeting was detected."
+            },
+            {
+              "type": "p",
+              "text": "Common applications for rules-based automation include the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Mandatory disclaimers",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Rules work by scanning the transcript for specific phrases, patterns, or keywords. They are perfect for black-and-white questions where something either happened or did not happen."
+            },
+            {
+              "type": "p",
+              "text": "The key consideration with rules is that they only work well for detecting specific phrases or patterns. They cannot understand context or make judgment calls about the quality of an interaction."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed rules-based automation, move on to the next tab to learn about generative AI automation."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Generative AI Automation"
+            },
+            {
+              "type": "p",
+              "text": "Generative AI represents the most advanced form of evaluation automation. It can understand and analyze conversations more like a human would, going beyond basic metrics or keyword matching."
+            },
+            {
+              "type": "p",
+              "text": "With generative AI, Amazon Connect can answer both single-selection questions (Yes or No, multiple choice) and text field questions that require written responses."
+            },
+            {
+              "type": "p",
+              "text": "For example, if your evaluation form asks, \"Did the agent show empathy toward the customer's situation?\" generative AI can analyze the full conversation. It will evaluate context, tone, and specific responses to determine if empathy was demonstrated."
+            },
+            {
+              "type": "p",
+              "text": "Generative AI is particularly useful for evaluating the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t5-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Quality of explanations and information provided",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When using generative AI, you provide evaluation criteria in natural language, and the AI interprets those instructions to evaluate the conversation. Along with answers, generative AI provides context, justification, and references to specific parts of the transcript."
+            },
+            {
+              "type": "p",
+              "text": "Contact Lens generative AI can currently evaluate information contained within Amazon Connect transcripts."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed generative AI automation, move on to the next tab to learn about choosing the right method."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t6",
+      "number": 6,
+      "title": "Knowledge Check",
+      "shortTitle": "Knowledge Check",
+      "summary": "Course content.",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [],
+      "reviewQuestions": [
+        {
+          "id": "connect-agent-performance-evaluation-t6-q1",
+          "question": "A contact center manager is creating an evaluation form in Amazon Connect Contact Lens. Which approach would create the MOST effective structure for assessing agent performance?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Group similar questions into sections with clear headings."
+            },
+            {
+              "id": "B",
+              "text": "Add all questions in a single, continuous list."
+            },
+            {
+              "id": "C",
+              "text": "Include only questions that can be answered with yes or no."
+            },
+            {
+              "id": "D",
+              "text": "Place the most difficult questions at the beginning of the form."
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Grouping similar questions into sections with clear headings creates a logical flow and makes the evaluation form more efficient to navigate and complete. This structured approach helps evaluators focus on specific aspects of agent performance."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t6-q2",
+          "question": "A financial services company wants to prioritize compliance requirements in their Amazon Connect evaluation form. How should they configure the scoring system to reflect this priority?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Assign equal weights to all questions regardless of category."
+            },
+            {
+              "id": "B",
+              "text": "Apply higher weights to compliance-related questions."
+            },
+            {
+              "id": "C",
+              "text": "Use binary scoring for all evaluation questions."
+            },
+            {
+              "id": "D",
+              "text": "Remove scoring entirely and use comments only."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Assigning equal weights to all questions does not reflect the company's priority on compliance requirements and treats all aspects of performance with the same importance."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t6-q3",
+          "question": "An insurance company's quality team needs to evaluate calls that span multiple products (auto, home, life, and commercial). Some evaluation criteria are specific to certain products but don't apply to others. Which approach that might not apply to every call is MOST appropriate?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Make all questions mandatory to ensure complete evaluations."
+            },
+            {
+              "id": "B",
+              "text": "Configure specialized questions as optional and exclude them from scoring when not applicable."
+            },
+            {
+              "id": "C",
+              "text": "Include specialized questions but mark agents as failing when questions do not apply."
+            },
+            {
+              "id": "D",
+              "text": "Use a separate evaluation form for each type of technical support call."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Marking agents as failing when questions do not apply would unfairly penalize them for circumstances beyond their control, leading to inaccurate performance measurement."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t6-q4",
+          "question": "Which Amazon Connect automation method would be MOST effective for evaluating whether an agent correctly verified a customer's identity according to a specific protocol?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Generative AI to interpret nuanced agent-customer conversation"
+            },
+            {
+              "id": "B",
+              "text": "Metrics-based automation tied to average handling time"
+            },
+            {
+              "id": "C",
+              "text": "Rules-based automation checking for specific verification phrases"
+            },
+            {
+              "id": "D",
+              "text": "Sentiment analysis of customer responses"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "Metrics-based automation tied to average handling time has no relation to whether the agent correctly verified the customer's identity according to protocol."
+        }
+      ]
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t7",
+      "number": 7,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "Every contact center can benefit from these automation tools. Start by identifying your most time-consuming evaluation questions, then apply the…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t7-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Every contact center can benefit from these automation tools. Start by identifying your most time-consuming evaluation questions, then apply the right automation method. Remember to balance efficiency with quality. Automation works best when supporting human expertise, not replacing it."
+            },
+            {
+              "type": "p",
+              "text": "Your evaluation program will deliver better insights with less effort when you use these powerful capabilities. Your agents will receive more consistent feedback, your evaluators will save time, and your customers will enjoy better service. The journey to contact center excellence is now within reach."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t8",
+      "number": 8,
+      "title": "Introduction to Calibration Techniques",
+      "shortTitle": "Introduction to Calibration Techniques",
+      "summary": "Have you ever played a game where everyone seems to be following different rules? That is exactly how agents feel when different evaluators grade…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [
+        "Configure properly structured calibration sessions including participant selection and role designation.",
+        "Implement calibration processes to ensure evaluator alignment and consistency.",
+        "Analyze calibration reports to identify patterns in evaluation inconsistencies.",
+        "Apply calibration insights to improve evaluation forms and processes."
+      ],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t8-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Section introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Have you ever played a game where everyone seems to be following different rules? That is exactly how agents feel when different evaluators grade their performance inconsistently. Calibration sessions solve this problem by helping ensure that all evaluators apply the same standards when assessing agent performance."
+            },
+            {
+              "type": "p",
+              "text": "In this section, you will learn how to set up and conduct effective calibration sessions, analyze the results, and use those insights to improve your overall evaluation process. By establishing proper calibration processes, you will create an environment where evaluations are fair, consistent, and meaningful for everyone involved."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t9",
+      "number": 9,
+      "title": "Setting Up Calibration Sessions",
+      "shortTitle": "Setting Up Calibration Sessions",
+      "summary": "Calibration is a structured process where multiple managers independently evaluate the same customer contact using the same evaluation form, with…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t9-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Calibration is a structured process where multiple managers independently evaluate the same customer contact using the same evaluation form, with the goal of ensuring consistency, fairness, and accuracy in how agent performance is assessed."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t9-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Performing calibration evaluations",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When you participate in a calibration session, your goal is to evaluate the interaction objectively and independently. You should also follow the established criteria exactly as you would in your regular evaluation work. Optionally, evaluation responses could be compared against the expert (Quality manager) responses during calibration sessions to benchmark evaluation accuracy."
+            },
+            {
+              "type": "p",
+              "text": "The following checklist outlines important steps to consider when performing calibration evaluations. Select each option as you complete them."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t9-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Access your calibration assignment",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Check your email for a notification about the calibration assignment."
+            },
+            {
+              "type": "p",
+              "text": "Note the due date for completing your evaluation."
+            },
+            {
+              "type": "p",
+              "text": "Choose the URL provided in the email to access the contact details."
+            },
+            {
+              "type": "p",
+              "text": "On the navigation panel, locate the Calibration evaluations assigned to you section."
+            },
+            {
+              "type": "p",
+              "text": "Choose the evaluation to open it."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t9-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Review the contact thoroughly",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Listen to the entire call or read the full transcript before scoring."
+            },
+            {
+              "type": "p",
+              "text": "Take notes on specific moments that influence your scoring decisions."
+            },
+            {
+              "type": "p",
+              "text": "Review any relevant reference materials or evaluation criteria before scoring."
+            },
+            {
+              "type": "p",
+              "text": "Focus exclusively on this specific interaction, not the agent's past performance."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t9-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Completing the evaluation form",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Answer all questions based strictly on the established criteria."
+            },
+            {
+              "type": "p",
+              "text": "Provide detailed notes explaining your reasoning for each score."
+            },
+            {
+              "type": "p",
+              "text": "Support your scores with concrete examples from the interaction."
+            },
+            {
+              "type": "p",
+              "text": "Remember that automation is disabled on calibration sessions."
+            },
+            {
+              "type": "p",
+              "text": "Be particularly attentive to scoring definitions for each question."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t9-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Maintaining objectivity",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Focus exclusively on what happened in this specific interaction."
+            },
+            {
+              "type": "p",
+              "text": "Reference specific evaluation criteria when making decisions."
+            },
+            {
+              "type": "p",
+              "text": "Support your scores with concrete examples from the interaction."
+            },
+            {
+              "type": "p",
+              "text": "Consider the entire interaction before finalizing scores."
+            },
+            {
+              "type": "p",
+              "text": "Avoid letting the agent's past performance influence your scoring."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t9-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Submitting your evaluation",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Review all your answers for consistency before submitting."
+            },
+            {
+              "type": "p",
+              "text": "Consider saving your work and reviewing it after a short break."
+            },
+            {
+              "type": "p",
+              "text": "Submit your completed evaluation by the deadline."
+            },
+            {
+              "type": "p",
+              "text": "Prepare specific examples to discuss in the calibration meeting."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t10",
+      "number": 10,
+      "title": "Interpreting Calibration Results",
+      "shortTitle": "Interpreting Calibration Results",
+      "summary": "After all evaluators have completed their assessments, the calibration session must be finalized to generate reports that reveal patterns and…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t10-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "After all evaluators have completed their assessments, the calibration session must be finalized to generate reports that reveal patterns and opportunities for improvement."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a calibration report. Review the following calibration report example. To familiarize yourself with the report and how to make sense of the data, choose the numbered marker."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t10-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Finalizing the calibration",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Before results can be analyzed, the calibration manager must finalize the session as follows:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Verify all participants have submitted their evaluations.",
+                "Access the calibration session details and choose Finalize.",
+                "Confirm finalization.",
+                "Generate reports, available for download in CSV format."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t10-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "The following image shows the Finalise botton highlighted",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Finalize calibration session screenshot."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t10-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Calibration report",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "After a session has been finalized, you can download a calibration report in csv format. This report contains the answers of participants that have submitted evaluations. You can use this report to evaluate consistency among evaluators in their responses. The sample report in the following image shows the data available. To learn more, choose each of the numbered markers."
+            },
+            {
+              "type": "p",
+              "text": "Below is an example calibration report downloaded from Amazon Connect:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t10-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Taking action on insights",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Apply insights to the following areas:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Evaluator coaching: Provide targeted training for evaluators showing consistent deviations.",
+                "Evaluation form improvements: Rewrite questions with high average deviation to be more specific.",
+                "Process adjustments: Consider increasing calibration frequency for problematic areas.",
+                "Training development: Create refresher courses on frequently misaligned criteria."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t11",
+      "number": 11,
+      "title": "Knowledge Check",
+      "shortTitle": "Knowledge Check",
+      "summary": "Course content.",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [],
+      "reviewQuestions": [
+        {
+          "id": "connect-agent-performance-evaluation-t11-q1",
+          "question": "A quality assurance (QA) manager needs to establish a calibration session in Amazon Connect. Which group of participants would create the MOST effective calibration team?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Only senior supervisors from different departments"
+            },
+            {
+              "id": "B",
+              "text": "A mix of evaluators, supervisors, and QA specialists with designated roles"
+            },
+            {
+              "id": "C",
+              "text": "Customer service agents who will be receiving evaluations"
+            },
+            {
+              "id": "D",
+              "text": "IT personnel who manage Amazon Connect"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "A mix of evaluators, supervisors, and QA specialists with designated roles creates a balanced calibration team with diverse perspectives. It ensures representation from those who conduct evaluations and those who oversee the process."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t11-q2",
+          "question": "What is the primary purpose of the calibration process in Amazon Connect Contact Lens evaluations?",
+          "options": [
+            {
+              "id": "A",
+              "text": "To identify and terminate low-performing agents"
+            },
+            {
+              "id": "B",
+              "text": "To help ensure consistency and alignment between different evaluators"
+            },
+            {
+              "id": "C",
+              "text": "To reduce the total number of evaluations required"
+            },
+            {
+              "id": "D",
+              "text": "To automatically score all evaluations without human input"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Calibration does not reduce the total number of evaluations required. It actually requires additional evaluations to ensure consistency."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t11-q3",
+          "question": "When analyzing calibration reports in Amazon Connect, which pattern would MOST clearly indicate a need for evaluator training?",
+          "options": [
+            {
+              "id": "A",
+              "text": "One evaluator consistently scoring all agents higher than other evaluators"
+            },
+            {
+              "id": "B",
+              "text": "All evaluators giving identical scores to every agent"
+            },
+            {
+              "id": "C",
+              "text": "Evaluators taking different amounts of time to complete evaluations"
+            },
+            {
+              "id": "D",
+              "text": "Random variation in scores between evaluators"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Random variation in scores between evaluators is expected to some degree and does not necessarily indicate a systematic problem requiring training."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t11-q4",
+          "question": "How should a contact center manager BEST apply insights from Amazon Connect calibration reports showing inconsistent scoring on customer greeting evaluations?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Immediately terminate the evaluators who score differently."
+            },
+            {
+              "id": "B",
+              "text": "Revise the evaluation form to clarify greeting criteria and provide specific examples."
+            },
+            {
+              "id": "C",
+              "text": "Eliminate the greeting section from all future evaluations."
+            },
+            {
+              "id": "D",
+              "text": "Implement automated scoring for all evaluation questions."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Revising the evaluation form to clarify greeting criteria and provide specific examples addresses the root cause of inconsistency by making expectations clearer for all evaluators."
+        }
+      ]
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t12",
+      "number": 12,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "You have now learned the essential techniques for establishing an effective calibration process in your contact center. Remember that calibration…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t12-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You have now learned the essential techniques for establishing an effective calibration process in your contact center. Remember that calibration is not a one-time event but an ongoing commitment to evaluation excellence. Regular calibration sessions create a virtuous cycle. As evaluators become more aligned, your quality program gains credibility with agents and leadership alike. When evaluations are consistent, coaching becomes more impactful, performance metrics become more reliable, and ultimately, your customer experience improves."
+            },
+            {
+              "type": "p",
+              "text": "By implementing the calibration techniques covered in this section, you are making a powerful statement about your commitment to fairness and quality in your contact center. Your agents will notice the difference, and your customers will benefit from the consistent excellence that results."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t13",
+      "number": 13,
+      "title": "Introduction to Results Analysis and Agent Notification",
+      "shortTitle": "Introduction to Results Analysis and Agent N…",
+      "summary": "Imagine you are a supervisor who just spent hours evaluating your contact center agents. You have collected valuable data about how well they are…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [
+        "Interpret evaluation charts and dashboards to understand individual and team performance trends.",
+        "Compare agent performance across different time periods and between team members.",
+        "Implement effective processes for notifying agents about completed evaluations.",
+        "Develop strategies for improving agent performance based on evaluation data."
+      ],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t13-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Section introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Imagine you are a supervisor who just spent hours evaluating your contact center agents. You have collected valuable data about how well they are handling customer calls, but now what? How do you make sense of all those scores and use them to help your team improve?"
+            },
+            {
+              "type": "p",
+              "text": "In this section, you will explore how to analyze evaluation results, understand agent performance trends, and effectively share feedback with your team. Whether you are trying to recognize top performers or help struggling agents improve, these tools and techniques will help you turn evaluation data into meaningful action."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t14",
+      "number": 14,
+      "title": "Understanding Individual Performance Assessments",
+      "shortTitle": "Understanding Individual Performance Assessm…",
+      "summary": "The contact details evaluations scorecard in Amazon Connect provides a visual snapshot of how an agent performed across different evaluation…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t14-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The contact details evaluations scorecard in Amazon Connect provides a visual snapshot of how an agent performed across different evaluation criteria for a single contact. This helps you pinpoint specific areas for coaching."
+            },
+            {
+              "type": "p",
+              "text": "To learn more about the components of an Amazon Connect evaluation scorecard, choose each of the numbered markers."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect evaluations form scorecard example."
+            },
+            {
+              "type": "p",
+              "text": "After the agent has reviewed the performance evaluation, they can acknowledge their review of the evaluation and write an optional note. This acknowledgement enables managers to track whether agents are reviewing the feedback provided on their performance evaluations."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t15",
+      "number": 15,
+      "title": "Analyzing Team Performance",
+      "shortTitle": "Analyzing Team Performance",
+      "summary": "Although the Contact details view focuses on a single interaction, the Agent performance evaluations dashboard helps you see the bigger picture.…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t15-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Although the Contact details view focuses on a single interaction, the Agent performance evaluations dashboard helps you see the bigger picture. This allows you to view performance across multiple evaluations and time periods."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t15-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Agent performance evaluations dashboard overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Agent performance evaluations dashboard provides a comprehensive view of agent performance across multiple evaluations. Unlike the Contact details view, this dashboard helps you see trends and patterns across your entire team or specific agent cohorts."
+            },
+            {
+              "type": "p",
+              "text": "Key features of the dashboard include the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t15-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Sample average evaluation score trend dashboard widget",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about various performance evaluation scenarios to consider, review the following tabs."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t15-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Comparing Agent Cohorts",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Individual Agent Performance"
+            },
+            {
+              "type": "p",
+              "text": "One of the most powerful features of the dashboard is the ability to compare performance across different time periods. This helps you answer questions like the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t15-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "How do busy seasons affect quality scores?",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To compare performance over time, do the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Select the time range you want to analyze (today, this week, this month, and others).",
+                "Choose a compare to period (previous week, same period last month, and others).",
+                "Review the performance metrics side by side."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For example, if you implemented new training on handling difficult customers, you could compare scores post training to the day before. This makes it possible for you to see if the training had a positive impact on evaluation scores in the relevant sections."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t15-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Comparing Agent Cohorts",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Individual Agent Performance"
+            },
+            {
+              "type": "p",
+              "text": "Another valuable aspect of the dashboard is the ability to compare different groups or cohorts of agents, such as the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t15-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Full-time compared to part-time agents",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "This comparison helps you identify which groups might need additional support or training, and which groups have best practices worth sharing with others."
+            },
+            {
+              "type": "p",
+              "text": "For instance, if you notice that your weekend team consistently scores lower on compliance questions than your weekday team, you may want to understand the cause. This insight might lead you to investigate whether weekend agents received the same training or need additional support."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Individual Agent Performance"
+            },
+            {
+              "type": "p",
+              "text": "Although team views are helpful, you will often want to drill down to individual agent performance by doing the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Navigate to the agent-level view in the dashboard.",
+                "Choose the specific agent you want to review.",
+                "View their evaluation score trends over time.",
+                "Compare their performance to team averages or other benchmarks.",
+                "The individual agent view helps you do the following:",
+                "Track progress over time for each agent.",
+                "Identify specific strengths to recognize and reinforce.",
+                "Pinpoint particular areas where an agent needs coaching.",
+                "Prepare for more effective one-on-one performance discussions."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Using these insights, you can create personalized coaching plans that address each agent's specific needs rather than using a one-size-fits-all approach."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t16",
+      "number": 16,
+      "title": "Agent Notification and Acknowledgement",
+      "shortTitle": "Agent Notification and Acknowledgement",
+      "summary": "When an evaluation is completed, it is crucial that agents receive notification promptly. Feedback is most effective when delivered close to the…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t16-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When an evaluation is completed, it is crucial that agents receive notification promptly. Feedback is most effective when delivered close to the event being evaluated, and a proper acknowledgment process ensures the feedback loop is complete."
+            },
+            {
+              "type": "p",
+              "text": "To learn more, choose the arrow buttons to display each of the following four steps."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t16-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "1 of 4",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Set up automated email notifications"
+            },
+            {
+              "type": "p",
+              "text": "Create rules that automatically send email notifications when evaluations are completed by doing the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Navigate to the rules section of your Amazon Connect instance.",
+                "Create a new rule for evaluation notifications."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Specify conditions for sending notifications (for example, all completed evaluations, or only those below a certain score)."
+            },
+            {
+              "type": "p",
+              "text": "Customize the email template with relevant information."
+            },
+            {
+              "type": "p",
+              "text": "Activate the rule."
+            },
+            {
+              "type": "p",
+              "text": "Agent evaluation acknowledgement and comment entry screen."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t16-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Follow up with coaching when needed",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "After you have completed the evaluation process, it might be best to consider follow up coaching to improve your results and agent experience. Consider the following tasks that can aid in performance management:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Schedule coaching sessions for scores below the threshold.",
+                "Conduct regular performance reviews using aggregated evaluation data.",
+                "Recognize and share best practices from high-performing agents.",
+                "Track improvement over time after coaching interventions."
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Customize notifications based on performance"
+            },
+            {
+              "type": "p",
+              "text": "Create different notification approaches based on the following performance levels:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "High scores (90% and higher): Send congratulatory messages highlighting specific strengths.",
+                "Average scores (70-89%): Send standard notification with balanced feedback.",
+                "Low scores (below 70%): Send notifications that include a request for a coaching session."
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Ensure agent access to evaluations"
+            },
+            {
+              "type": "p",
+              "text": "Agents can access their evaluations through multiple paths, such as the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t16-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "By searching for the contact using the contact ID and evaluation form name",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Track acknowledgement"
+            },
+            {
+              "type": "p",
+              "text": "After the agent has reviewed their evaluation, they should formally acknowledge it by doing the following:"
+            },
+            {
+              "type": "p",
+              "text": "The agent reviews the complete evaluation."
+            }
+          ]
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t16-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "They choose \"acknowledge\"",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "They can add optional comments or reflections."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t17",
+      "number": 17,
+      "title": "Knowledge Check",
+      "shortTitle": "Knowledge Check",
+      "summary": "Course content.",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [],
+      "reviewQuestions": [
+        {
+          "id": "connect-agent-performance-evaluation-t17-q1",
+          "question": "A customer service director is reviewing Amazon Connect evaluation dashboards. Which performance trend would MOST likely indicate a successful training initiative focused on empathy skills?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Decrease in average handling time across all agents"
+            },
+            {
+              "id": "B",
+              "text": "Increase in scores specifically in the empathy section over the past 3 months"
+            },
+            {
+              "id": "C",
+              "text": "Higher number of evaluations completed per agent"
+            },
+            {
+              "id": "D",
+              "text": "Lower absenteeism rates among customer service agents"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "A higher number of evaluations completed for each agent indicates evaluation volume but does not provide insight into whether empathy skills have improved."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t17-q2",
+          "question": "When comparing agent performance in Amazon Connect evaluations across different time periods, which approach provides the MOST meaningful insights?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Examining only the most recent evaluation for each agent"
+            },
+            {
+              "id": "B",
+              "text": "Looking exclusively at agents with the lowest scores"
+            },
+            {
+              "id": "C",
+              "text": "Analyzing trend lines for individual agents across multiple evaluations"
+            },
+            {
+              "id": "D",
+              "text": "Comparing only agents who handle the same call types"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "Analyzing trend lines for individual agents across multiple evaluations shows performance over time, revealing whether agents are improving, declining, or maintaining consistent performance levels."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t17-q3",
+          "question": "Which notification method in Amazon Connect would be MOST effective to help ensure agents receive timely feedback on their evaluated interactions?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Manual email sent by supervisors whenever they have time"
+            },
+            {
+              "id": "B",
+              "text": "Automated notifications with evaluation results integrated into the agent workspace"
+            },
+            {
+              "id": "C",
+              "text": "Annual performance review that includes all evaluations"
+            },
+            {
+              "id": "D",
+              "text": "Posting evaluation scores on a public leader board visible to all agents"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Automated notifications with evaluation results integrated into the agent workspace provide timely feedback directly in the agent's working environment, increasing visibility and actionability of the feedback."
+        },
+        {
+          "id": "connect-agent-performance-evaluation-t17-q4",
+          "question": "Amazon Connect evaluation data is showing agents consistently scoring low on call resolution. Which strategy would be MOST effective for improving performance?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Reducing the weight of resolution questions in the evaluation form"
+            },
+            {
+              "id": "B",
+              "text": "Implementing a targeted training program focused on resolution skills and knowledge gaps"
+            },
+            {
+              "id": "C",
+              "text": "Extending average handling time targets to give agents more time"
+            },
+            {
+              "id": "D",
+              "text": "Replacing all low-scoring agents with new hires"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Reducing the weight of resolution questions artificially improves scores without addressing the actual performance problem."
+        }
+      ]
+    },
+    {
+      "id": "connect-agent-performance-evaluation-t18",
+      "number": 18,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "You have now equipped yourself with powerful tools to transform raw evaluation data into meaningful coaching opportunities and performance…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-agent-performance-evaluation-t18-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You have now equipped yourself with powerful tools to transform raw evaluation data into meaningful coaching opportunities and performance improvements."
+            },
+            {
+              "type": "p",
+              "text": "Remember that the true value of evaluations is not in the scores themselves, but in how you use them to drive positive change. The most effective supervisors do not just collect data, they tell stories with it, celebrate successes, and guide improvements with empathy and purpose."
+            },
+            {
+              "type": "p",
+              "text": "As you implement these practices, keep the following key principles in mind:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Be timely: Share feedback as soon as possible after evaluations are completed.",
+                "Be specific: Focus on concrete behaviors rather than general impressions.",
+                "Be balanced: Recognize strengths alongside areas for improvement.",
+                "Be actionable: Make sure agents know exactly which steps to take to improve."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "By learning these evaluation analysis and feedback techniques, you're building a contact center culture that values continuous improvement and meaningful coaching. Your agents will appreciate the clarity and fairness this brings to performance management, and your customers will benefit from the consistently improving service experience."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

@@ -1,0 +1,2480 @@
+Lesson 2 of 12
+Amazon Connect Streams Architecture
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore Streams architecture layers and their roles.
+
+Lesson introduction
+
+Amazon Connect empowers organizations to create personalized experiences in their contact center. Organizations can capture contact information, such as name, phone number, email address, or the reason for the contact. Interaction information, such as the channel, start time, and duration, is automatically collected and associated with the contact. 
+
+Displaying contact information to agents reduces the time spent to solve the contact inquiry. Contact data is either displayed in the Contact Control Panel (CCP) or passed through integration to the organization's customer relationship management (CRM) system. In Amazon Connect, contact data is stored as key-value pairs called contact attributes. Some examples of contact attributes are customer name, authentication status, or chatbot intent.
+
+Amazon Connect Streams is a JavaScript library that developers use to build custom agent experiences within web applications. The library provides access to features such as real-time voice call and chat events and actions, agent assist, and case management functionality.
+
+Streams architecture layers
+
+Amazon Connect Streams provides a multi-layered approach to application integrations, so developers can build integrations that meet diverse functional and business requirements.
+
+The core component that handles Streams requests is the Amazon Connect Computer Telephony Integration (CTI) service. This service performs required actions and raises events through multiple API layers. Requests and events examples include agents answering or completing a call, supervisors changing agent states, or agents logging out of CCP.
+
+Amazon Connect Streams architecture diagram showing Amazon Connect CTI service and three browser-side integration layers.
+Amazon Connect designed the Streams architecture on three browser-side integration layers: 
+
+Connect SharedWorker layer
+CCP layer
+Application integration layer
+Events and action requests flow between the external customized agent applications and Amazon Connect service through this three-layer communication conduit.
+
+Developers have access to Amazon Connect functionality through the application integration layer. 
+
+Application integration layer
+
+In the application layer, developers have access to the methods and events that integrate the Amazon Connect functionality within external web applications. CRM systems are the most common applications using integration code that extends existing functionality to include telephony events.
+
+To learn more, choose each of the five numbered markers.
+
+Process flow diagram of the application integration layer from CCP, migrating through layers with details in numbered markers.
+
+
+
+
+
+
+
+
+
+
+CCP layer
+
+CCP is the built-in interface that Amazon Connect agents use to handle contacts and interactions. The CCP layer has two primary functions:
+
+Authenticates the agents logged into the system
+Acts as a middle layer between the external application and the Amazon Connect platform
+When an agent uses a CCP function, such as answering a call, the CCP sends a request to the Connect SharedWorker.
+
+Connect SharedWorker layer
+
+SharedWorkers are special web workers accessed by multiple browser contexts like browser tabs, windows, or iframes. The Connect SharedWorker layer is the component that helps synchronize data across different parts of the service. This layer is an HTML5 SharedWorker whose primary functions are long polling agent states, incremental polling agent configuration data, and handling API requests. 
+
+When an agent answers an incoming call using the CCP, the Connect SharedWorker gets the CCP request to answer the call. The SharedWorker makes an Asynchronous JavaScript and XML (AJAX) request to the Amazon Connect Computer Telephony Integration (Amazon Connect CTI) service. Following this request, the CTI service connects the two call parties: the agent and the contact. The Connect SharedWorker then updates the application pages to display the agent's connected status. 
+
+For more details on the architecture of the three browser-side integration layers, navigate to the Architecture(opens in a new tab) section of the Amazon Connect Streams GitHub documentation.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+Efua Owusu, an agent at AnyCompany Travel, uses a Contact Control Panel (CCP) integrated with the customer relationship management (CRM) system. Which integration layer component sends requests to the Amazon Connect Computer Telephony Integration (Amazon Connect CTI) service when Efua answers a call?
+
+The application integration layer
+
+Correctly unselected
+The Contact Control Panel (CCP)
+
+Incorrectly selected
+The Connect SharedWorker
+
+Incorrectly unselected
+The Amazon Connect Streams API
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+When an agent performs an action in the CCP, such as answering a call, the CCP sends a request to the Connect SharedWorker. The Connect SharedWorker makes Asynchronous JavaScript and XML (AJAX) requests to the Amazon Connect Computer Telephony Integration (Amazon Connect CTI) service.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you explored the high-level Amazon Connect Streams API architecture and the benefits of using Streams for CRM integrations. In the next lesson, you will explore how to use the AWS SDK and Streams.
+
+Lesson 3 of 12
+Core API
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore Streams Core API events and methods.
+
+Lesson introduction
+
+Amazon Connect Streams provides a range of action and event subscription methods to help build custom functionality. The functionality is grouped in Core APIs, Agent APIs, Contact APIs and Connection APIs. In this lesson, you will look further into the Core APIs. At the end of the lesson, you will have access to download sample code showcasing the functionality covered in this lesson.
+
+Getting started with Streams APIs
+
+Streams has a pre-built version of the AWS SDK included in the ./src/aws-client.js file. The SDK is a set of libraries that facilitate the interaction with the services of Amazon Web Services (AWS), such as Amazon Connect, through code. 
+
+Importing libraries
+
+When developing custom agent applications with Streams, import the Streams library before the SDK. This prevents version conflicts and verifies the global AWS object is bound to the intended SDK version. It avoids compatibility issues and simplifies dependency management.
+
+For instructions on how to download Amazon Connect Streams, navigate to Downloading Streams from Github(opens in a new tab) in the Amazon Connect Streams Documentation. After downloading and installing Streams, you can start interacting with its APIs and events subscription within your application code.
+
+Prerequisites
+
+For security purposes, all application domains that use Streams integration must be added to the Amazon Connect instance. Make sure you provide the application domain URLs to the contact center cloud administrator. By adding them to the Approved domains configuration in the instance, the applications will get the right permissions to access Amazon Connect functionality.
+
+The first step to using the Streams API is to allow-list the pages you wish to embed. Each domain entry identifies the protocol scheme, host, and port. Any pages hosted behind the same protocol scheme, host, and port will be accepted to embed the CCP components required to use the Streams library.
+
+Screenshot of the Amazon Connect Approved domains dashboard.
+Typically, it is the responsibility of cloud administrators to perform this configuration. For detailed instructions on how to allow-list your pages, navigate to Use an Allowlist for Integrated Applications (opens in a new tab)in the Amazon Connect Administrator Guide.
+
+Core API
+
+The Core API includes a set of action methods and event subscriptions that help you customize Streams integration within your web application.
+
+Scenario
+
+Mary Major is a senior software developer at AnyCompany. AnyCompany uses Amazon Connect for their contact center. Mary's task is to build an integration of the Amazon Connect CCP in one of the applications used by the agents.
+
+The new application must include video calls so agents can have more personal interactions with customers. Additionally, the application must include settings to offer agents audio and video configuration options directly from the softphone interface. The main functional requirement is to display contact information when agents switch between multiple chat conversations. Because some agents work from home, they need an option to select their preferred phone type. The phone type options are softphone or desk phone to receive calls on their mobile devices. Mary will use the following five steps to perform the custom CCP development process.
+
+Step 1: Creating the base files
+
+Mary begins to write a JavaScript code for the custom CCP application. She creates two files: index.html and index.js. In the index.html file, she defines a container for CCP.
+
+
+
+Code
+<div> element with id="container-div".
+
+Step 2: Initializing the CCP 
+
+Next, Mary follows the Downloading Streams from Github(opens in a new tab) instructions and embeds StreamsJS library in her code. She adds a script tag pointing to a file called index.js, which contains the JS code. The index.js includes the CCP initialization code using connect.core.initCCP(). To meet the requirements, Mary provides the following parameters to initCCP() action method:
+
+ccpUrl: This is the URL of the CCP. To access the CCP, the page agents use   https://the-instance-name.my.connect.aws/connect/ccp-v2. Mary finds the instance name by reviewing the Amazon Connect Administrator Guide. For more information, navigate to Find Your Amazon Connect Instance Name(opens in a new tab) in the Amazon Connect Administrator Guide.
+loginPopup: This parameter is optional and defaults to true. Mary does not change the default value to pop up the login page for agents to sign in.
+loginPopupAutoClose: This parameter is optional and defaults to false. Mary sets this to true in conjunction with the loginPopup parameter to automatically close the login popup window when the authentication step has completed.
+
+
+Code
+<!-- Create div container for the CCP -->
+
+<div id="container-div" style="float:left; width: 400px; height: 800px;"></div>
+
+The file also contains the reference to the libraries she needs to include for this code to work.
+
+
+
+Code
+<!-- Embed StreamsJS and include index.js -->
+
+<script type="text/javascript" src="./connect-streams-min.js"></script>
+
+<script type="module" src="./index.js"></script>
+
+Step 3: Subscribing to an onload event 
+
+To confirm CCP functionality is initialized when the page loads, Mary writes code to subscribe to the onload event. This event is published when the window loads. The following sample code shows how to initialize the CCP functionality.
+
+
+
+Code
+// Add the call to init() as an onload so it will only run once the page is loaded
+
+window.onload = (event) => {
+
+    console.log("window.onload")
+
+    // Connect information: Replace with your Connect Instance
+
+    const ccpUrl = "https://my-instance-name.my.connect.aws/connect/ccp-v2";
+
+    try {
+
+        connect.core.initCCP(
+
+            document.getElementById("container-div"), {
+
+            ccpUrl: ccpUrl,     // REQUIRED
+
+            loginPopup: true,                // optional, defaults to `true`
+
+            loginPopupAutoClose: true,        // optional, defaults to `false`
+
+            loginOptions: {                 // optional, if provided opens login in new window
+
+                autoClose: true,              // optional, defaults to `false`
+
+                height: 600,                  // optional, defaults to 578
+
+                width: 400,                   // optional, defaults to 433
+
+                top: 0,                       // optional, defaults to 0
+
+                left: 0                       // optional, defaults to 0
+
+            }, 
+
+    } catch (error) {
+
+        console.error("CCP initialization error", error);
+
+    }
+
+};
+
+Step 4: Configuring the softphone object 
+
+This softphone object specifies the following softphone settings for the CCP.
+
+allowFramedSoftphone: Mary sets the allowFramedSoftphone to true. This way, the CCP widget is hosted in her application.
+allowFramedVideoCall: Mary sets this to true. As a result, the CCP widget can handle video calling. Mary knows that not all agents use video, but she does not need to worry about this setting. Agent permissions are controlled with the configuration of their security profiles.
+
+
+Code
+   softphone: {
+
+       allowFramedSoftphone: true, //optional, defaults to 'false'
+
+       allowFramedVideoCall: true //optional, defaults to 'false'
+
+   },
+
+Step 5: Configuring page options
+
+The pageOptions object is optional. Mary uses this configuration option to specify which sections the CCP displays in the settings tab. 
+
+enableAudioDeviceSettings: Mary sets this to true to provide agents with the option to configure audio input and output devices for their local machine. 
+enableVideoDeviceSettings: Mary sets this to true, and the settings tab will display a section for configuring video input devices for the agent's local machine.
+enablePhoneTypeSettings: Mary keeps the default value to true. As a result, the settings tab will display a section for configuring the agent's phone type and desk phone number.
+
+
+Code
+  pageOptions: {
+
+      enableAudioDeviceSettings: true, //optional, defaults to 'false'
+
+      enableVideoDeviceSettings: true, //optional, defaults to 'false'
+
+      enablePhoneTypeSettings: true //optional, defaults to 'true'
+
+  }
+
+Throughout the day, Mary designs and implements the new CCP. She integrates the pre-built CCP to confirm that API requests are funneled through it and that agent and contact updates are published seamlessly.
+
+The new CCP is shaping up nicely, and Mary can't wait to see it in action. With the added functionality and user-friendly interface, AnyCompany's agents are equipped to provide exceptional customer service. As a result, they can strengthen the company's reputation in the market.
+
+The following attachment contains sample files that showcase Mary's work. To download the file attachment, choose anywhere inside the following box.
+
+core-api-index.zip
+1.4 KB
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A developer built a custom Contact Control Panel (CCP) that integrates with the company's customer relationship management (CRM) system. After initializing the CCP, the developer noticed the login page does not automatically open. Which parameter should the developer check in initCCP?
+
+ccpUrl
+
+Correctly unselected
+loginOptions
+
+Correctly unselected
+loginPopupAutoClose
+
+Incorrectly selected
+loginPopup
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+When the loginPopup initialization parameter value is true, during the initialization of CCP, a login window popups up to collect authentication credentials. If this value is set to false the login popup does not automatically open. This should be the value the developer checks to troubleshot the issue.
+
+
+The loginPopupAutoClose set to true in conjunction with the loginPopup parameter, automatically closes the login window after the authentication step has completed.
+
+The ccpUrl is the CCP widget URL. This parameter does not affect the login page. The loginOptions parameter specifies the size of the CCP widget, and the autoclose flag.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you discovered the Amazon Connect Streams Core APIs. In the next lesson, you will explore the Agent APIs that provide you with the ability to manage agent states.
+
+Lesson 4 of 12
+Agent API
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore Streams Agent API methods and events.
+
+Lesson introduction
+
+Amazon Connect Streams provides a range of action and events subscription methods to help build custom functionality. Agent APIs provide developers with the flexibility to customize the control of agent states. At the end of the lesson, you will have access to download sample code showcasing the functionality covered in this lesson.
+
+Agent API
+
+The Agent API offers event subscription and action methods that help control agent-specific states and actions.
+
+Scenario
+
+John Stiles is a member of Mary’s team. He is also a software developer working for AnyCompany. AnyCompany has been using Amazon Connect and wants to enhance the agent experience by tailoring the CCP to their specific needs. John's task is to create a user-friendly interface for a different group of agents. This group uses an application that does not have space to display the full CCP widget. The agents need a small toolbar where they can signal when they are ready for work, to go on break, or logout.
+
+John is not familiar with Amazon Connect Streams APIs, but Mary is happy to share her code so John can progress faster in his task.
+
+John looks at the code from the index.html file. First, he will hide the default CCP container style="display:none;" and create a new <div> container id="customCCPDiv" for his custom CCP. He plans to include buttons for setting agent states, answering calls, and disconnecting contacts. John will use the following nine steps to perform the custom CCP development process.
+
+Step 1: Creating a custom CCP container 
+
+To hide the standard pre-built CCP widget, John uses the following code in his HTML file.
+
+
+
+Code
+<div id="container-div" style="display: none;">
+
+    <!--Amazon CCP is hiding in here-->
+
+</div>
+
+Additionally, John creates a different container as a placeholder for the future custom user experience he might need to build further.
+
+
+
+Code
+<div id="customCCPDiv" style="width: 320px; min-width: 200px; height: 465px; min-height: 400px; border-style: outset; border-color: gray; border-width: thin;">
+
+    <!-- custom user experience goes here -->
+
+</div>
+
+Step 2: Initializing the CCP and subscribing to an onload event
+
+John modifies the code in index.js file to initialize the CCP and pass the "customCCPDiv" container id. To confirm CCP initialization when the page loads, John writes code to subscribe to the onload event.
+
+
+
+Code
+// Add the call to init() as an onload so it will only run once the page is loaded
+
+window.onload = (event) => {
+
+    console.log("window.onload")
+
+    // Connect information: Replace with your Connect Instance
+
+    const ccpUrl = "https://my-instance-name.my.connect.aws/connect/ccp-v2";
+
+    try {
+
+        connect.core.initCCP(
+
+            document.getElementById("customCCPDiv"), {
+
+            ccpUrl: ccpUrl,     // REQUIRED
+
+            loginPopup: true,                // optional, defaults to `true`
+
+            loginPopupAutoClose: true,        // optional, defaults to `false`
+
+            loginOptions: {                 // optional, if provided opens login in new window
+
+                autoClose: true,              // optional, defaults to `false`
+
+                height: 600,                  // optional, defaults to 578
+
+                width: 400,                   // optional, defaults to 433
+
+                top: 0,                       // optional, defaults to 0
+
+                left: 0                       // optional, defaults to 0
+
+            }, 
+
+    } catch (error) {
+
+        console.error("CCP initialization error", error);
+
+    }
+
+};
+
+Step 3: Subscribing to agent events 
+
+Next, John focuses on the index.js file, where he needs to implement event listeners for the visual components he's creating. He knows that the code needs to handle agent events, such as data refresh, agent state changes, and both routable and non-routable state events.
+
+John creates code that subscribes to the following Agent events:
+
+
+
+Code
+// Subscribe to Agent events
+
+connect.agent(function(agent) {
+
+    agent.onRefresh(handleAgentRefresh);
+
+    agent.onStateChange(handleAgentStateChange);
+
+    agent.onRoutable(handleRoutable);
+
+    agent.onNotRoutable(handleNotRoutable);
+
+    agent.onOffline(handleAgentOffline);
+
+    agent.onSoftphoneError(handleSoftphoneError);
+
+    agent.onWebSocketConnectionLost(handleWebSocketConnectionLost);
+
+    agent.onWebSocketConnectionGained(handleWebSocketConnectionGained);
+
+    agent.onAfterCallWork(handleAfterCallWork);
+
+}
+
+Step 4: Creating an onRefresh handler for troubleshooting 
+
+John wants to write functions for logging softphone and websocket connection errors. This code will help him troubleshoot in case the agents encounter issues.
+
+John subscribes to the onRefresh event.
+
+The agent.onRefresh() event is raised whenever new agent data is available, such as agent state and configuration changes. To handle this event, John creates the handleAgentRefresh() function.
+
+
+
+Code
+agent.onRefresh(handleAgentRefresh);
+
+function handleAgentRefresh(agent) {
+
+   console.debug("CDEBUG >> handleAgentRefresh()");
+
+   logInfoEvent("[agent.onRefresh] Agent data refreshed. Agent status is " + 
+
+agent.getStatus().name);
+
+}
+
+Step 5: Intercepting agent state changes
+
+The agent.onStateChange() event is invoked when the agent's state changes. The agentStateChange object contains the following properties:
+
+agent: Contains the Agent API object
+oldState: Stores the name of the agent's previous state
+newState: Stores the name of the agent's new state
+John creates a handleAgentStateChange function to handle this event.
+
+
+
+Code
+agent.onStateChange(handleAgentStateChange);
+
+function handleAgentStateChange(agent) {
+
+   console.debug("CDEBUG >> handleAgentStateChange()");
+
+   logInfoEvent("[agent.onStateChange] Agent state changed. New Agent status is " + agent.newState + ". Old Agent status is " + agent.oldState);
+
+}
+
+Step 6: Intercepting the agent status events
+
+The agent.onRoutable() event is invoked when the agent becomes available to handle contacts. By becoming available, agents can receive incoming contacts. 
+
+John creates a function called handleRoutable() to handle this event.
+
+"'
+
+Code
+agent.onRoutable(handleRoutable);
+
+function handleRoutable(agent) {
+
+   console.debug("CDEBUG >> handleRoutable()");
+
+   logInfoEvent("[agent.onRoutable] Agent is routable. Agent status is " + agent.getStatus().name);
+
+   displayAgentStatus(agent.getStatus().name);
+
+ } 
+
+The agent.onNotRoutable() event is raised when the agent changes state to any of the custom states configured in the system, such as Lunch or Break. A not routable state signifies that agents are online, but should not be routed incoming contacts.
+
+John creates the handleNotRoutable() function to handle this event.
+
+
+
+Code
+agent.onNotRoutable(handleNotRoutable);
+
+function handleNotRoutable(agent) {
+
+   console.debug("CDEBUG >> handleNotRoutable()");
+
+   logInfoEvent("[agent.onNotRoutable] Agent is online, but not routable. Agent status is " + agent.getStatus().name);
+
+   displayAgentStatus(agent.getStatus().name);
+
+}
+
+The agent.onOffline() event is invoked when the agent goes offline. To handle this event, John creates the handleAgentOffline() function.
+
+
+
+Code
+agent.onOffline(handleAgentOffline);
+
+function handleAgentOffline(agent) {
+
+   console.debug("CDEBUG >> handleAgentOffline()");
+
+   logInfoEvent("[agent.onOffline] Agent is offline. Agent status is " + agent.getStatus().name);
+
+   displayAgentStatus(agent.getStatus().name);
+
+}
+
+The agent.onSoftphoneError() event is invoked when the the system detects an error state specific to softphone functionality. For this event, John creates a handler function caller handleSoftphoneError().
+
+
+
+Code
+agent.onSoftphoneError(handleSoftphoneError);
+
+function handleSoftphoneError(agent) {
+
+   console.debug("CDEBUG >> handleSoftphoneError()");
+
+}
+
+Step 7: Intercepting errors
+
+John wants to write functions for logging softphone and web socket connection errors. This code will help him troubleshoot the errors in case the agents encounter issues.
+
+agent.onWebSocketConnectionLost() is an event raised when the system detects web socket connection errors. The handler for this event is a function called handleWebSocketConnectionLost().
+
+
+
+Code
+agent.onWebSocketConnectionLost(handleWebSocketConnectionLost);
+
+function handleWebSocketConnectionLost(agent) {
+
+   console.debug("CDEBUG >> handleWebSocketConnectionLost()");
+
+}
+
+Step 8: Creating event listeners for the agent status buttons
+
+John starts writing code functions to set the agent state based on the selected button.
+
+
+
+Code
+// Event listeners for the 3 "buttons" of the Webpage
+
+document.getElementById ('goAvailableDiv').addEventListener("click", goAvailable, false);
+
+document.getElementById ('goBreakDiv').addEventListener("click", goBreak, false);
+
+document.getElementById ('goOfflineDiv').addEventListener("click", goOffline, false);
+
+The agent.getAgentStates() method returns the list of available agent states. The states are returned as a list of AgentState API objects. 
+
+
+agentStateARN
+This is the agent state Amazon Resource Name (ARN).
+
+
+type
+The agent state type represented as a AgentStateType enum type value. The available types are as follows:
+
+AgentStateType.INIT: The agent state hasn't been initialized yet.
+AgentStateType.ROUTABLE: The agent is in a state where they can be routed contacts.
+AgentStateType.NOT_ROUTABLE: The agent is in a state where they cannot be routed contacts.
+AgentStateType.OFFLINE: The agent is offline.
+
+name
+This is the name of the agent state to be displayed in the user interface (UI).
+
+The agent.setState() method sets the agent's current availability state. 
+
+Step 9: Creating the agent status actions
+
+In this step, John creates the functions that change the agent status to Available, Break, and Offline.
+
+
+
+Code
+// Set the agent Available
+
+function goAvailable() {
+
+    var routableState = agent.getAgentStates().filter(function (state) {
+
+        return state.type === connect.AgentStateType.ROUTABLE;
+
+    })[0];
+
+    agent.setState(routableState, {
+
+        success: function () {
+
+            logInfoMsg("Set agent status to Available (routable) via Streams")
+
+        },
+
+        failure: function () {
+
+            logInfoMsg("Failed to set agent status to Available (routable) via Streams")
+
+        }
+
+    });
+
+}
+
+
+
+// Set the agent Break
+
+function goBreak() {
+
+    var notroutableState =agent.getAgentStates().filter(function (state) {
+
+        return state.type === connect.AgentStateType.NOT_ROUTABLE;
+
+    })[1];
+
+    agent.setState(notroutableState, {
+
+        success: function () {
+
+            logInfoMsg("Set agent status to Break (not routable) via Streams")
+
+        },
+
+        failure: function () {
+
+            logInfoMsg("Failed to set agent status to Break (not routable) via Streams")
+
+        }
+
+    });
+
+}
+
+
+
+// Set the agent Offline
+
+function goOffline() {
+
+    var offlineState = agent.getAgentStates().filter(function (state) {
+
+        return state.type === connect.AgentStateType.OFFLINE;
+
+    })[0];
+
+    agent.setState(offlineState, {
+
+        success: function () {
+
+            logInfoMsg("Set agent status to Offline via Streams")
+
+        },
+
+        failure: function () {
+
+            logInfoMsg("Failed to set agent status to Offline via Streams")
+
+        }
+
+    });
+
+}
+
+John is ready to start testing his code in a test page. After he confirms the code works, he will embed it in the agent application’s webpage and design the look and feel of the new agent status buttons.
+
+
+Agent status - Offline
+
+Agent status - Available (Routable)
+
+Agent status - Break (NotRoutable)
+The test HTML page John created shows that as the page loads, the initial state of the agent is Offline. The logs show the current agent Offline status and confirm the code subscribes for agent events. 
+
+Screenshot of test HTML page showing agent status as Offline on load with logs indicating subscriptions to agent events.
+To download the sample files attachment, choose anywhere inside the following box.
+
+agent-api-index.zip
+2.8 KB
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+John Stiles is implementing the functionality to set the agent's status in the custom Customer Control Panel (CCP). He needs to retrieve the list of available agent states that can be selected when the agent is not handling a live contact. Which method should John use to accomplish this?
+
+agent.getAgentStates()
+
+Incorrectly unselected
+agent.setState()
+
+Correctly unselected
+agent.onStateChange()
+
+Incorrectly selected
+agent.onRefresh()
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+John uses agent.getAgentStates() to retrieve the list of available agent states. agent.getAgentStates() gets the list of AgentState API objects. These are the agent states that can be selected when the agent is not handling a live contact.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you discovered the Amazon Connect Streams Agent APIs. In the next lesson, you will explore the Contact APIs.
+
+Agent status - Available (Routable)
+
+Agent status - Break (NotRoutable)
+John chooses the Go Available button. The Log Messages panel confirms the Available agent status action was sent. The Event Messages window shows the log confirming an agent state onRoutable event was successfully received.
+
+Agent status - Break (NotRoutable)
+John chooses the Go Break button. The Log Messages panel confirms the Break agent status action was sent. The Event Messages window shows the log confirming an agent state onNotRoutable event was successfully received.
+
+Lesson 5 of 12
+Contact API
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore Streams Contact API events and methods.
+
+Lesson introduction
+
+Amazon Connect Streams provides a range of action and events subscription methods to help build custom functionality. Contact APIs provide developers with the flexibility to react to contact events. For example, when a call is answered, the code can display contact information. At the end of the lesson, you will have access to download sample code showcasing the functionality covered in this lesson.
+
+Contact API
+
+The Contact API provides event subscription and action methods to manage contact states and actions. It triggers events such as onIncoming when a contact is presented, onAccepted when accepted, and onEnded when the interaction ends.
+
+Scenario
+
+John continues his task of tailoring the CCP to AnyCompany’s specific needs. The same group of agents need a user-friendly interface to interact with contacts. Agents need to perform tasks such as accept and end call. John looks at the code from the index.html file. He plans to include buttons for answering, ending, and closing calls. John will use the following seven steps to perform the custom CCP development process. . 
+
+Step 1: Subscribing to contact events 
+
+John focuses on the index.js file, where he needs to implement event listeners for the visual components he's creating. He knows that the code needs to handle contact events, such as incoming, accepted, and ended contact events.
+
+John creates code that subscribes to the following contact events:
+
+onIncoming: Raised when the routing engine presents a queued callback contact to the agent
+onAccepted: Raised when the agent accepts the contact
+onConnecting: Raised when a contact comes in but before the agent accepts it
+onConnected: Raised when an outbound call initiated by the agent is connected to the contact
+onEnded: Raised when the conversation was disconnected by the agent or the contact was missed because of the agent not accepting the contact
+onDestroy: Raised when the contact object is destroyed
+onRefresh: Raised when the contact is updated, such as when the contact attribute values changed
+onACW: Raised after the connection closed but before the contact is destroyed
+
+
+Code
+// Subscribe to Contact events
+
+connect.contact(function(contact) {
+
+    contact.onIncoming(handleContactIncoming);
+
+    contact.onAccepted(handleContactAccepted);
+
+    contact.onConnecting(handleContactConnecting);
+
+    contact.onConnected(handleContactConnected);
+
+    contact.onEnded(handleContactEnded);
+
+    contact.onRefresh(handleContactRefresh);
+
+    contact.onACW(handleContactACW);
+
+}
+
+Step 2: Intercepting the contact state events
+
+The contact.onConnecting() event is invoked when a contact is connecting. This means a contact is presented to the agent. After the agent accepts the contact, the onAccepted event is raised. To handle this event, John creates a handleContactConnecting placeholder function with all the logging methods in place. This will help John troubleshoot his code when he is testing.
+
+
+
+Code
+contact.onConnecting(handleContactConnecting);
+
+function handleContactConnecting(contact) {
+
+    console.debug('CDEBUG >> ContactEvents.handleContactConnecting() - Contact connecting to agent');
+
+    logInfoEvent("[contact.onConnecting] Contact is connecting");
+
+    if (contact) {
+
+        logInfoEvent("[contact.onConnecting] Contact is connecting. Contact state is " + contact.getStatus().type);
+
+    } else {
+
+        logInfoEvent("[contact.onConnecting] Contact is connecting. Null contact passed to event handler");
+
+    }
+
+}
+
+The contact.onConnected() event is invoked when the agent and contact are connected. The handler function for this event is handleContactConnected.
+
+
+
+Code
+contact.onConnected(handleContactConnected);
+
+function handleContactConnected(contact) {
+
+    console.debug('CDEBUG >> ContactEvents.handleContactConnected() - Contact connected to agent');
+
+    if (contact) {
+
+        logInfoEvent("[contact.onConnected] Contact connected to agent. Contact state is " + contact.getStatus().type);
+
+    } else {
+
+        logInfoEvent("[contact.onConnected] Contact connected to agent. Null contact passed to event handler");
+
+    }
+
+}
+
+The contact.onAccepted() event is invoked when a callback is accepted by the agent. 
+
+
+
+Code
+contact.onAccepted(handleContactAccepted);
+
+function handleContactConnecting(contact) {
+
+    console.debug('CDEBUG >> ContactEvents.handleContactConnecting() - Contact connecting to agent');
+
+    logInfoEvent("[contact.onAccepted] Contact is accepted");
+
+    if (contact) {
+
+        logInfoEvent("[contact.onAccepted] Contact is accepted. Contact state is " + contact.getStatus().type);
+
+    } else {
+
+        logInfoEvent("[contact.onAccepted] Contact is accepted. Null contact passed to event handler");
+
+    }
+
+}
+
+The contact.onEnded() event is invoked when a contact ends. This can be because of the conversation being ended by the agent or because of the contact disconnecting. For additional details, John will use the contact.getState() in his handleContactEnded function. The log entry will contain the state of the contact.
+
+
+
+Code
+contact.onEnded(handleContactEnded);
+
+function handleContactEnded(contact) {
+
+    console.debug('CDEBUG >> ContactEvents.handleContactEnded');
+
+    logInfoEvent("[contact.onEnded] Contact ended");
+
+    if (contact) {
+
+        logInfoEvent("[contact.onEnded] Contact ended. Contact state is " + contact.getStatus().type);
+
+    } else {
+
+        logInfoEvent("[contact.onEnded] Contact ended. Null contact passed to event handler");
+
+    }
+
+}
+
+Step 3: Creating event listeners for interacting with contacts
+
+John begins to write code functions to interact with the contact based on the selected button. The buttons he is creating handlers for are answer, hang-up, and clear contact.
+
+
+
+Code
+// Event listeners for the 3 "buttons" of the Webpage
+
+document.getElementById ('answerDiv').addEventListener("click", acceptContact, false);
+
+document.getElementById ('hangupDiv').addEventListener("click", disconnectContact, false);
+
+document.getElementById ('clearDiv').addEventListener("click", clearContact, false);
+
+Step 4: Creating the accept contact action
+
+John uses the contact.accept() method so agents can accept incoming contacts. Optional success and failure callback functions can be provided to determine if the operation was successful. 
+
+
+
+Code
+// Accept the contact
+
+function acceptContact() {
+
+    logInfoMsg("Accept contact");
+
+    contact.accept({
+
+        success: function () {
+
+            logInfoMsg("Accepted contact via Streams");
+
+        },
+
+        failure: function () {
+
+            logInfoMsg("Failed to accept contact via Streams");
+
+        }
+
+    });   
+
+}
+
+Step 5: Retrieving the agent connection to disconnect the contact
+
+There is no current method available in the Contact API that disconnects the agent from the contact. To achieve this, John needs to explore the Connection API.
+
+By using the contact.getAgentConnection() method, John gets access to the agent connection object. He can then use the connection object to disconnect the contact.
+
+The contact.getAgentConnection().destroy() method disconnects the agent from the conversation. 
+
+
+
+Code
+// Disconnect the current contact
+
+function disconnectContact() {
+
+    contact.getAgentConnection().destroy({
+
+        success: function () {
+
+            logInfoMsg("Disconnected contact via Streams");
+
+        },
+
+        failure: function () {
+
+            logInfoMsg("Failed to disconnect contact via Streams");
+
+        }
+
+    });
+
+}
+
+Step 6: Creating the clear contact action
+
+The contact.clear() method clears a contact when it is no longer actively being worked on. Agents usually clear the contact to make themselves available for the next contact when they finish their after contact work (ACW). Optional success and failure callbacks can be provided to determine if the operation was successful. 
+
+
+
+Code
+// To destroy the contact when agent is in ACW
+
+function clearContact() {
+
+    contact.clear({
+
+        success: function () {
+
+            logInfoMsg("Cleared contact via Streams");
+
+        },
+
+        failure: function () {
+
+            logInfoMsg("Failed to clear contact via Streams");
+
+        }
+
+    });
+
+}
+
+Step 7: Displaying contact attributes
+
+John continues to implement AnyCompany’s requirements. He writes code to display information to agents, such as the caller name, phone number, and queue name. Contact attributes are set in flows using the Set contact attributes flow block.
+
+Mateo meets with John to agree on the data displayed in the CCP. John writes code to retrieve the contact attributes using the contact.getAttributes() method and display them alongside the caller phone number.
+
+To get the caller number, John first needs access to the current connection information. The contact.getActiveInitialConnection() method gets the initial connection of the contact. If the initial connection is no longer active, the return value is NULL. 
+
+By using the contact.getActiveInitialConnection().getEndpoint().phoneNumber, John gets the caller number for this connection. 
+
+
+
+Code
+logInfoMsg("Subscribing to events for contact");
+
+if (contact.getActiveInitialConnection()
+
+    && contact.getActiveInitialConnection().getEndpoint()) {
+
+    logInfoMsg("New contact is from " + contact.getActiveInitialConnection().getEndpoint().phoneNumber);
+
+} else {
+
+    logInfoMsg("This is an existing contact for this agent");
+
+}
+
+The contact.getAttributes() method retrieves a list of attributes associated with the contact. Each value in the map has the following structure:
+
+{ name: string, value: string }
+
+The contact.getQueue() method retrieves the queue associated with the contact. This object has the following fields:
+
+name: Stores the queue name
+queueARN: Stores the ARN of the queue
+queueId: Stores the alias for queueARN
+By using the following code, John logs this information for better troubleshooting.
+
+
+
+Code
+logInfoMsg("Contact is from queue " + contact.getQueue().name);
+
+logInfoMsg("Hello " + contact.getAttributes().firstName.value + " " + contact.getAttributes().lastName.value + ". Thank you for contacting AnyCompany");
+
+For more information about Amazon Connect queues, navigate to Concepts: Standard Queues and Agent Queues (opens in a new tab)in the Amazon Connect Administrator Guide.
+
+After a quick break, John is ready to start testing his code in a test page. After he confirms the code works, he will embed it in the agent application’s webpage. He will also design the look and feel of the new contact action buttons. To follow John's testing of his new webpage, choose each of the following tabs.
+
+
+Retrieving contact attributes for an incoming contact (onConnecting event)
+
+Agent answers an incoming contact (onConnected event)
+
+Agent hangs up on an active contact (onEnded event)
+
+Agent closes an ended contact after completing ACW (onDestroy event)
+As a call is connecting, the incoming event contains three attributes. The first attribute contains a message that helps the agent greet the customer. The greeting includes the customer's name.
+
+
+
+The second attribute contains the name of the queue the call arrived on. The third attribute shows the caller's phone number. The Log Messages panel displays the value of the contact attributes received with the contact event. The Event Messages panel displays the contact and agent handler function logs. The first log shows the contact state as onConnecting.
+
+Screenshot of agent application view showing Log and Message transactions, first three Log Message attributes highlighted. End of tab.
+To download the sample file attachment, choose anywhere inside the following box.
+
+contact-api-index.zip
+139.7 KB
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+Mateo Jackson is developing a custom Customer Control Panel (CCP) for AnyCompany's agents. Which Streams Contact API method should Mateo use to display the caller's phone number and queue name for each incoming contact?
+
+contact.getActiveInitialConnection().getEndpoint().phoneNumber and contact.getQueue().name
+
+Incorrectly unselected
+contact.getCallerNumber() and contact.getQueueName()
+
+Correctly unselected
+contact.getAttributes().phoneNumber.value and contact.getQueueId()
+
+Correctly unselected
+contact.getInitialConnection().getPhoneNumber() and contact.getQueueARN()
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+Mateo uses contact.getActiveInitialConnection().getEndpoint().phoneNumber to get the caller's phone number and contact.getQueue().name to get the queue name for the incoming contact.  
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you discovered the Amazon Connect Streams Contact APIs. In the next lesson, you will learn how to embed Amazon Connect Customer Profiles functionality in your application.
+
+Agent answers an incoming contact (onConnected event)
+
+Agent hangs up on an active contact (onEnded event)
+
+Agent closes an ended contact after completing ACW (onDestroy event)
+In his next test, John placed a call. When the call is presented, John chooses the Answer Incoming button. The Log Messages panel shows the contact was accepted using the handler function John created for this event. The Event Messages panel shows an onConnected event handled by the code.
+
+Agent hangs up on an active contact (onEnded event)
+
+Agent closes an ended contact after completing ACW (onDestroy event)
+John is testing the Hang-up button next. When he chooses the button, the Log Messages panel shows the confirmation of a Disconnected method being invoked by the code. The Event Messages panel shows the confirmation of an onEnded event received by the application.
+
+Agent closes an ended contact after completing ACW (onDestroy event)
+The test user configuration is set to automatically have ACW time when the call ends. To clear that state, John will test his Close Contact button next. As soon as he chooses the button, the Log Messages panel shows that the Cleared contact method was processed successfully. The Event Messages panel shows a log entry that confirms an onDestroy event was successfully received, and the contact state ended.
+
+Lesson 6 of 12
+Customer Profiles
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore embedding Customer Profiles functionality in a webpage.
+
+Lesson introduction
+
+The Amazon Connect agent workspace equips agents with customer information and guidance to resolve issues efficiently. Often, agents handle multiple applications during interactions, leading to delays and frustration. Developers can use Streams to customize the workspace, integrating tools like Customer Profiles into their applications to streamline agent workflows.
+
+Customer Profiles
+
+Customer Profiles give agents real-time access to updated customer information for personalized interactions. By integrating data from sources like CRM systems or custom databases, organizations provide agents with a comprehensive view of customer details in one place. This includes contact history, sentiment, product orders, and mobile app interactions.
+
+Prerequisites
+
+For instructions on how to configure Customer Profiles, navigate to Enable Customer Profiles for Your Instance(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Scenario
+
+Mary receives a new set of requirements from AnyCompany's business team. AnyCompany agents use multiple systems to find customer-relevant details about order status, purchase history, and previous interactions. Mary meets with her colleague, John, who helped her build a custom CCP. Mary reviews the requirements and decides to add Customer Profiles functionality to create a unified view of customer data for the agents.
+
+John shares his code with Mary as she begins to explore the options to embed Customer Profiles in AnyCompany’s agent application using Streams.
+
+The first option is to initialize the built-in Customer Profiles widget. The second option is to use the Customer Profiles JavaScript library (CustomerProfilesJS) to build a custom widget. For instructions on how to use the Customer Profiles JavaScript library, navigate to Customer Profiles JavaScript Library(opens in a new tab).
+
+The following two sections cover the details of each option. At the end of the lesson, you will find sample code for the functionality covered in the lesson.
+
+Option 1: Built-in Customer Profiles widget
+
+Mary meets with John, and they agree to first test Customer Profiles functionality with minimal development work. They want to make sure the new capabilities meet AnyCompany’s requirements. Mary will use the following two steps to complete the implementation option.  
+
+Step 1: Creating Customer Profiles container
+
+Mary checks the code in the index.html file. She creates a new <div> container id="customerprofiles-container" for the Customer Profiles widget.
+
+
+
+Code
+<!-- Create div container for Customer Profiles -->
+
+<div id="customerprofiles-container" style="width: 400px; height: 600px;"></div>
+
+Step 2: Initializing the CCP and Customer Profiles
+
+Mary modifies the index.js file to initialize both the CCP and Customer Profiles apps, using connect.agentApp.initApp(name, containerId, appUrl, config). To discover the details of each parameter for this function, expand each of the following four categories.
+
+
+name
+The first parameter represents the name of the app that uniquely identifies this integration.
+
+
+
+CCP: The value of the first initApp function is ccp.
+
+Customer Profiles: The value of the second app is customerprofiles.
+
+
+containerId
+The second parameter is the identifier for the HTML Document Object Model (DOM) that contains the app inline frame (iframe).
+
+
+
+CCP: The value is set to the customCCPDiv DOM object.
+
+Customer Profiles: The value is set to the customerprofiles-container DOM object.
+
+
+appUrl
+The string URL of the app. This is the page that navigates to the app.
+
+
+
+CCP: This value uses a relative path connectUrl + "/ccp-v2/" 
+
+Customer Profiles: Similar to the CCP, the value uses a relative path connectUrl + "/customerprofiles-v2/" 
+
+
+config
+This is an optional parameter that provides additional configuration settings for CCP. Such settings include the following:
+
+ccpParams: These are optional parameters that mirror the configuration options for initCCP. The allowFramedSoftphone setting defaults to true.
+style: This is an optional string that supplies inline styling for the iframe.
+CCP: The value is set to { style: "width:400px; height:600px;" }.
+
+Customer Profiles: The value is set to { style: "width:400px; height:600px;" }.
+
+Both iframes are the same size.
+
+To confirm CCP and Customer Profiles initialization when the page loads, Mary writes code to subscribe to the onload event. The following code sample shows the first step Mary takes to initialize the two apps.
+
+
+
+Code
+// Add the call to init() as an onload so it will only run once the page is loaded
+
+window.onload = (event) => {
+
+    console.log("window.onload")
+
+    // Connect information: Replace with your Connect Instance
+
+    const connectUrl = "https://my-instance-name.my.connect.aws/connect";
+
+    try {
+
+        connect.agentApp.initApp(
+
+            "ccp", 
+
+            document.getElementById("customCCPDiv"), 
+
+            connectUrl + "/ccp-v2/",
+
+            { style: "width:400px; height:600px;" }
+
+        );
+
+        connect.agentApp.initApp(
+
+            "customerprofiles", 
+
+            document.getElementById("customerprofiles-container"), 
+
+            connectUrl + "/customerprofiles-v2/",
+
+            { style: "width:400px; height:600px;" }
+
+        ); 
+
+    } catch (error) {
+
+        console.error("initialization error", error);
+
+    }
+
+};
+
+Mary and John run a first test and can see both CCP and Customer Profiles initializing successfully in their test webpage.
+
+Option 2: Building a custom widget for Customer Profiles
+
+Mary receives an updated request from AnyCompany's business team. They want the new UI to match the brand's look and feel. Agents need access to customer information when they receive a contact. At this point, Mary knows she must try the second option for embedding Customer Profiles functionality in their application. Mary will use the following five steps to complete the implementation option.  
+
+Step 1: Creating a Customer Profiles container
+
+Mary looks at the code from the index.html file. She creates a new <div> container id="customer-profiles-widget" for the Customer Profiles widget. In this new widget, Mary adds a Search button and a panel where the agents can see the search results.
+
+
+
+Code
+<!-- Add Search button and results container -->
+
+<div id="customer-profiles-widget">
+
+    <div id="cp-div">
+
+        <h2>Customer Profiles</h2>
+
+        <input type="text" id="search-input" placeholder="Search for a profile">
+
+        <button id="search-button">Search</button>
+
+        <div id="search-results-container">
+
+            <div id="search-results"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+Step 2: Importing CustomerProfilesJS
+
+First, Mary downloads the Customer Profiles JavaScript library by following the instructions in the Usage section on GitHub; for more information, navigate to Usage(opens in a new tab). Then, she updates the index.html file to embed CustomerProfilesJS in the script tag.
+
+
+
+Code
+<!-- Embed CustomerProfilesJS  -->
+
+<script type="text/javascript" src="./amazon-connect-customer-profiles-min.js"></script>
+
+Step 3: Initializing the CCP
+
+The softphone widget must be initialized. Mary had no requirement to customize the look and feel of the standard soft phone. CCP is used for handling contacts.
+
+
+
+Code
+// Add the call to init() as an onload so it will only run once the page is loaded
+
+window.onload = (event) => {
+
+    console.log("window.onload")
+
+    // Connect information: Replace with your Connect Instance
+
+    const ccpUrl = "https://my-instance-name.my.connect.aws/connect/ccp-v2";
+
+    try {
+
+        connect.core.initCCP(
+
+            document.getElementById("customCCPDiv"), {
+
+            ccpUrl: ccpUrl,     // REQUIRED
+
+            loginPopup: true,                // optional, defaults to `true`
+
+            loginPopupAutoClose: true,        // optional, defaults to `false`
+
+            loginOptions: {                 // optional, if provided opens login in new window
+
+                autoClose: true,              // optional, defaults to `false`
+
+                height: 600,                  // optional, defaults to 578
+
+                width: 400,                   // optional, defaults to 433
+
+                top: 0,                       // optional, defaults to 0
+
+                left: 0                       // optional, defaults to 0
+
+            }, 
+
+    } catch (error) {
+
+        console.error("CCP initialization error", error);
+
+    }
+
+};
+
+Step 4: Initializing Customer Profiles client
+
+Next, Mary modifies the index.js file to initialize the Customer Profiles client. She initializes the search key value with the caller phone number.
+
+
+
+Code
+// Initialize CustomerProfilesJS
+
+const customerProfilesClient = new connect.CustomerProfilesClient("https://my-instance-name.my.connect.aws/connect");
+
+// Set the search key value to the caller number
+
+const searchValue = contact.getActiveInitialConnection().getEndpoint().phoneNumber;
+
+Step 5: Adding search profiles capabilities
+
+Finally, Mary completes the task by implementing SearchProfiles (opens in a new tab)API logic to retrieve and display customer information. The SearchProfiles API input parameters include the Customer Profiles DomainName(opens in a new tab). For more information about how to find your Customer Profile domain, navigate to Enable Customer Profiles for Your Instance (opens in a new tab)in the Amazon Connect Administrator Guide.
+
+
+
+Code
+// Search for profiles
+
+var searchResults = document.getElementById('search-results');
+
+const domainName = 'CustomerProfiles-Domain-Name'; // Replace with your domain name
+
+
+
+const searchTerm = document.getElementById ('search-input').value; // Set the initial search term, or get it from a form input
+
+try {
+
+    const searchResponse = await customerProfilesClient.searchProfiles({
+
+        DomainName: domainName,
+
+        KeyName: "_phone",
+
+        Values: [searchTerm]
+
+    });
+
+    logInfoEvent("Searching for profiles" + searchResponse);
+
+    searchResults.innerHTML = '';
+
+    if (searchResponse.data && searchResponse.data.Items && searchResponse.data.Items.length === 0) {
+
+        searchResults.innerHTML = '<p>No profiles found.</p>';
+
+    } else if (searchResponse.data && searchResponse.data.Items) {
+
+        searchResponse.data.Items.forEach(item => {
+
+            const profileDiv = document.createElement('div');
+
+            profileDiv.innerHTML = `
+
+                <div style="height: 350px;  border-style: outset; border-color: gray; border-width: thin;">
+
+                <h3>${item.FirstName} ${item.LastName}</h3>
+
+                <p><b>Phone</b>: ${item.PhoneNumber}</p>
+
+                <p><b>Email</b>: ${item.EmailAddress}</p>
+
+                <p><b>Address</b>: ${item.Address.Address1}, ${item.Address.City}, ${item.Address.Country}</p>
+
+                <p><b>Current Order</b>: ${contact.getAttributes().CurrentOrder.value}</p>
+
+                <p><b>Product Purchase History</b>: ${contact.getAttributes().PurchaseHistory.value}</p>
+
+                <p><b>Contact History</b>: ${contact.getAttributes().ContactHistory.value}</p>
+
+            `;
+
+            searchResults.appendChild(profileDiv);
+
+        });
+
+    } else {
+
+        searchResults.innerHTML = '<p>An error occurred while searching for profiles</p>';
+
+    }
+
+} catch (error) {
+
+    console.error('Error searching for profiles:', error);
+
+    searchResults.innerHTML = '<p>An error occurred while searching for profiles</p>';
+
+}
+
+After a quick break, Mary is ready to start testing her code in a test page. After she confirms that the code works, she can embed it in the agent application’s webpage. Then, she can design the look and feel of the new Customer Profiles widget.
+
+As soon as she receives the test call, Mary sees the pre-populated contact phone number and the result of the search displayed in her widget.
+
+Screenshot of Test web page showing the custom CCP Customer Profiles widget.
+Mary places a test call.
+
+She receives the test call and sees the pre-populated contact phone number. The result of the search displays in her new widget.
+
+To download the sample code attachment, choose anywhere inside the following box.
+
+customer-profiles-functionalty-sample-code.zip
+142.3 KB
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A developer must create a widget that gives agents the ability to search for a customer profile by phone number. The widget must have the same look and feel as their existing agent application. Which step is required for the search code to run successfully?
+
+Implement the onAccepted event handler.
+
+Correctly unselected
+Initialize the Amazon Connect Customer Profiles client.
+
+Incorrectly unselected
+Use connect.agentApp.initApp.
+
+Incorrectly selected
+Implement the onConnecting event handler.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+The Customer Profiles search functionality requires the Customer Profiles client to be initialized.
+
+
+
+The initApp is required when the built-in Customer Profiles widget is used. The onAccepted and onConnecting events are raised by the Contact API and are not related to the Customer Profiles search functionality.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned about the options for Customer Profiles. Continue to the next lesson to learn about Amazon Q in Connect.
+
+Lesson 7 of 12
+Amazon Q in Connect
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore Streams library methods for Amazon Q in Connect functionality.
+
+Lesson introduction
+
+Amazon Connect agent workspace provides built-in agent assist capabilities using Amazon Q in Connect. Developers can use Streams to embed similar functionality in other web applications. In this lesson, you will learn how to extend the agent assist capabilities to other applications used by agents.
+
+Amazon Q in Connect
+
+(opens in a new tab)(opens in a new tab)Amazon Q in Connect uses generative AI to deliver agents' suggested responses and actions to address customer questions, improving issue resolution and customer satisfaction. Knowledge articles can be spread across separate repositories. Agents waste time trying to navigate these different sources of information while the customer waits for an answer.
+
+Amazon Q in Connect uses the real-time conversation with the customer and relevant knowledge articles to automatically recommend actions for agents to assist customers. With Amazon Q, agents can use natural language to search across connected knowledge sources to receive generated responses, recommended actions, and links to additional information.
+
+Prerequisites
+
+(opens in a new tab)For instructions on how to configure Amazon Q in Connect, navigate to Enable Amazon Q in Connect for Your Instance(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Scenario
+
+AnyCompany is launching a new product and has hired agents to support additional customer demand. There is not enough time to cover all the training courses. AnyCompany realizes that the newly hired agents cannot answer queries related to refunds and order returns. Mary meets with Mateo Jackson, AnyCompany head of customer experience, to find a solution. They explore Amazon Q in Connect and decide to test the generative AI capabilities to provide agents with real-time assistance.
+
+Mary reviews the requirements to integrate the agent application with Amazon Q in Connect to detect customer intent and generate recommendations based on knowledge content. Mary begins to explore the options to embed Amazon Q in Connect into AnyCompany’s agent application using Streams. The first option is to initialize the built-in Amazon Q in Connect widget. The second option is to use the Amazon Q in Connect JavaScript library (QConnectJS) to build a custom widget. For more information, navigate to Amazon-Q-Connectjs(opens in a new tab). 
+
+Option 1: Built-in Amazon Q in Connect widget
+
+Mary wants to test Amazon Q in Connect with minimal development work to confirm that the capabilities meet AnyCompany’s requirements. Mary will use the following two steps to complete the implementation option. 
+
+Step 1: Creating Amazon Q in Connect container
+
+Mary looks at the code from the index.html file. She creates a new <div> container id="amazonQ-container" for the Amazon Q in Connect widget.
+
+
+
+Code
+<!-- Create div container for Amazon Q -->
+
+<div id="amazonQ-container" style="width: 400px; height: 600px;"></div>
+
+Step 2: Initializing the CCP and Amazon Q in Connect
+
+Mary modifies the "index.js" file to initialize the CCP and Amazon Q in Connect using connect.agentApp.initApp(name, containerId, appUrl, config). Similar to the Customer Profile configuration, Mary initializes each application separately.
+
+
+name
+For the name of the application, Mary uses the ccp value for CCP, and the wisdom value for Amazon Q in Connect.
+
+
+containerId
+For the container identifiers, Mary uses the DOM object customCCPDiv for CCP, and amazonQ-container for Amazon Q in Connect.
+
+
+appUrl
+The value of the appUrl uses a relative path: connectUrl + "/ccp-v2/" for CCP, and connectUrl + "/wisdom-v2/" for Amazon Q in Connect.
+
+
+
+The URL specified in this parameter identifies the app widget you want to load in the iframe.
+
+
+config
+The only configuration parameter in this test is the widget size. The value for both widgets is set to { style: "width:400px; height:600px;" }.
+
+To confirm CCP and Amazon Q in Connect initialization when the page loads, Mary writes code to subscribe to the onload event. The following code snippet shows the initApp function call with the parameters for CCP and Amazon Q in Connect.
+
+
+
+Code
+// Add the call to init() as an onload so it will only run once the page is loaded
+
+window.onload = (event) => {
+
+    console.log("window.onload")
+
+    // Connect information: Replace with your Connect Instance
+
+    const connectUrl = "https://my-instance-name.my.connect.aws/connect";
+
+    try {
+
+        connect.agentApp.initApp(
+
+            "ccp", 
+
+            document.getElementById("customCCPDiv"), 
+
+            connectUrl + "/ccp-v2/",
+
+            { style: "width:400px; height:600px;" }
+
+        );
+
+        connect.agentApp.initApp(
+
+            "wisdom", 
+
+            document.getElementById("amazonQ-container"), 
+
+            connectUrl + "/wisdom-v2/",
+
+            { style: "width:400px; height:600px;" }
+
+        ); 
+
+    } catch (error) {
+
+        console.error("initialization error", error);
+
+    }
+
+};
+
+Option 2: Building a custom widget for Amazon Q in Connect
+
+Mary receives a request from AnyCompany's business team to customize the UI to match the brand look and feel. Agents need to receive recommendations in real time when interacting with contacts. Mary will use the following five steps to complete the implementation option. 
+
+Step 1: Creating an Amazon Q in Connect container
+
+Mary looks at the code from the index.html file. She creates a new <div> container id="amazon-q-widget" for the Customer Profiles widget.
+
+
+
+Code
+<!-- Add Search button and results container -->
+
+<div id="amazon-q-widget">
+
+    <div id="QiC-div">
+
+        <h2>Amazon Q </h2>
+
+        <input type="text" id="search-Qinput" placeholder="Search Amazon Q">
+
+        <button id="search-Qbutton">Search</button>
+
+        <div id="search-Qresults-container">
+
+            <div id="search-Qresults"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+Step 2: Importing QConnectJS
+
+First, Mary downloads the Amazon Q in Connect JavaScript library by following the instructions in the Usage section on GitHub. Then, she updates the index.html file to embed QConnectJS in the script tag.
+
+
+
+Code
+<!-- Embed QConnectJS -->
+
+<script type="text/javascript" src="./amazon-q-connectjs-min.js"></script>
+
+Step 3: Initializing the CCP
+
+In this step, Mary defines the parameters that initialize the standard CCP functionality. This includes login options and the size of the widget.
+
+
+
+Code
+// Add the call to init() as an onload so it will only run once the page is loaded
+
+window.onload = (event) => {
+
+    console.log("window.onload")
+
+    // Connect information: Replace with your Connect Instance
+
+    const ccpUrl = "https://my-instance-name.my.connect.aws/connect/ccp-v2";
+
+    try {
+
+        connect.core.initCCP(
+
+            document.getElementById("customCCPDiv"), {
+
+            ccpUrl: ccpUrl,     // REQUIRED
+
+            loginPopup: true,                // optional, defaults to `true`
+
+            loginPopupAutoClose: true,        // optional, defaults to `false`
+
+            loginOptions: {                 // optional, if provided opens login in new window
+
+                autoClose: true,              // optional, defaults to `false`
+
+                height: 600,                  // optional, defaults to 578
+
+                width: 400,                   // optional, defaults to 433
+
+                top: 0,                       // optional, defaults to 0
+
+                left: 0                       // optional, defaults to 0
+
+            }, 
+
+    } catch (error) {
+
+        console.error("CCP initialization error", error);
+
+    }
+
+};
+
+Step 4: Initializing Amazon Q in Connect client
+
+Next, Mary modifies the index.js file to initialize the Amazon Q in Connect client.
+
+
+
+Code
+// Initialize QConnectJS client with "QConnectClient"
+
+const instanceUrl = "https://my-instance-name.my.connect.aws/connect";
+
+const qConnectClient = new connect.qconnectjs.QConnectClient({
+
+    instanceUrl,
+
+});
+
+Step 5: Retrieving and displaying Amazon Q in Connect recommendations
+
+After reading the documentation, Mary identifies three key actions to implement. First, she must retrieve the contact details, then get the recommendations, and last, get the relevant answer for the agent.
+
+Next, Mary updates the index.js file to integrate the GetContact(opens in a new tab), GetRecommendations(opens in a new tab), and QueryAssistant (opens in a new tab)APIs. 
+
+The following code sample shows how Mary uses the GetContact API to retrieve the contact details, including the current sessionARN or session identifier. For active contacts, the code loops every fifteen seconds, and uses the active connection and calls the GetRecommendations function. 
+
+
+
+Code
+// Check if a contact exist for Amazon Q in Connect GetRecommendation
+
+if (contact) {
+
+    console.log('Contact object exists.');
+
+    sessionARN = GetContact(contact);
+
+    console.log('sessionARN: ' + sessionARN);
+
+    const intervalId = setInterval(async () => {
+
+        if (contact.getActiveInitialConnection()) {
+
+            if (sessionARN) { // Check if sessionARN is not undefined or null
+
+                GetRecommendations(sessionARN);
+
+            } else {
+
+                console.log('No session is available.');
+
+            }
+
+        } else {
+
+            clearInterval(intervalId);
+
+            console.log('Initial connection is no longer active.');
+
+        }
+
+    }, 15000);
+
+} else {
+
+    console.log('Contact object no longer exists.');
+
+}
+
+
+
+async function GetContact(contact){
+
+    try {
+
+        const getContactResponse = await qConnectClient.getContact({
+
+            awsAccountId: '111122223333', //Replace placeholder with your AWS account Id
+
+            instanceId: 'a1b2c3d4-5678-90ab-cdef-EXAMPLE11111', // Replace placeholder with your Amazon Connect instance Id 
+
+            contactId: contact.getContactId()
+
+        });
+
+        sessionARN = getContactResponse.body.contactData.contactFeature.wisdomFeatures.wisdomConfig.sessionArn;
+
+        return sessionARN;
+
+    } catch (error) {
+
+        console.error('Error searching for getContact:', error);
+
+    }
+
+}
+
+The GetRecommendations function uses the sessionARN retrieved in the previous action. It then uses the assistant client to get the recommendations. The following code sample shows the creation of a button for each suggested recommendation. The code has a main for loop. For each recommendation, if there is a trigger object. The sample code creates an action button, so the agent selects the right recommendation to handle the contact. The function GenQueryAssistant is invoked when the agent selects the action button. The following is a code snippet. To review the full code, expand the section following this image.
+
+
+
+Code
+async function GetRecommendations(sessionARN) {
+
+    if(sessionARN != ''){
+
+        try {        
+
+            const QResponse = await qConnectClient.getRecommendations({
+
+                // Replace placeholder with your Amazon Q in Connect assistant Id: https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_ListAssistants.html
+
+                assistantId: "arn:aws:wisdom:eu-west-2:111122223333:assistant/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222",
+
+                sessionId: sessionARN.split(/\/(?=[^/]*$)/)[1],
+
+                maxResults: 10,
+
+                waitTimeSeconds: 15
+
+            });
+
+            console.log(`GetRecommendation ${QResponse.body}`);
+
+
+
+            for (const recommendation of QResponse.body.recommendations) {
+
+                const recommendationId = recommendation.recommendationId;
+
+
+
+                // Find the trigger object with the matching recommendationId
+
+                const trigger = QResponse.body.triggers.find((t) =>
+
+                    t.recommendationIds.includes(recommendationId)
+
+                );
+
+                                
+
+                if (trigger) {
+
+                    // Access the trigger text and id
+
+                    const triggerText = trigger.data.query.text;
+
+                    const triggerId = trigger.id;
+
+                    console.log(`Trigger Text for RecommendationId ${recommendationId}:`, triggerText);
+
+                    
+
+                    // Create a button element as an HTML string
+
+                    const buttonHTML = `<button class="search-q-button">${triggerText}</button>`;
+
+
+
+                    // Append the button HTML to the searchQResults div
+
+                    searchQResults.innerHTML += buttonHTML;
+
+
+
+                    // Add an event listener to the button
+
+                    const button = document.querySelector('.search-q-button:last-child');
+
+                    button.addEventListener('click', async (event) => {
+
+                        // Handle button click event
+
+                        console.log(`Button clicked for RecommendationId ${recommendationId}`);
+
+                        // Add your desired functionality here
+
+                        GenQueryAssistant(`"#intentrecommendation:${triggerId}"`);
+
+                        // Disable the button after it has been clicked
+
+                        button.disabled = true;
+
+                    });
+
+                } else {
+
+                    console.log(`No trigger found for RecommendationId ${recommendationId}`);
+
+                }
+
+            }
+
+            // process response.
+
+        } catch (error) {
+
+            console.error('Error searching for getRecommendations:', error);
+
+        } 
+
+    }
+
+}
+
+The last action Mary needs to complete is to write the code for the recommendation button handlers, the GenQueryAssistant function. The following sample showcases the display of the recommendations content in a visual container. 
+
+
+
+Code
+async function GenQueryAssistant(searchQTerm){
+
+    try {
+
+        const searchQResponse = await qConnectClient.queryAssistant({
+
+            // Replace placeholder with your Amazon Q in Connect assistant Id: https://docs.aws.amazon.com/connect/latest/APIReference/API_amazon-q-connect_ListAssistants.html
+
+            assistantId: "arn:aws:wisdom:eu-west-2:111122223333:assistant/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222", 
+
+            queryText: searchQTerm,
+
+            maxResults: 1,
+
+            queryCondition: [
+
+                {
+
+                    "single": {
+
+                        "field": "RESULT_TYPE",
+
+                        "comparator": "EQUALS",
+
+                        "value": "GENERATIVE_ANSWER"
+
+                    }
+
+                }
+
+            ]
+
+        });
+
+        // Create a new div element to hold the result
+
+        const resultDiv = document.createElement('div');
+
+        resultDiv.classList.add('result-container');
+
+
+
+        if (searchQResponse.body.results.length === 0) {
+
+            resultDiv.innerHTML = '<p>No answer found.</p>';
+
+        } else {
+
+            resultDiv.innerHTML = `
+
+                <div style="height: 300px; border-style: outset; border-color: gray; border-width: thin;">
+
+                <h3>Solution</h3>
+
+                <p>${searchQResponse.body.results[0].data.details.generativeData.completion}</p>
+
+            `;
+
+        }
+
+
+
+        // Append the resultDiv to the searchQResults div
+
+        searchQResults.appendChild(resultDiv);
+
+    } catch (error) {
+
+        console.error('Error searching for answers:', error);
+
+        const errorDiv = document.createElement('div');
+
+        errorDiv.innerHTML = '<p>An error occurred while searching for answers</p>';
+
+        searchQResults.appendChild(errorDiv);
+
+    }
+
+}
+
+Testing the code
+
+To test the code that Mary created for her use case, choose anywhere inside the following box.
+
+amazon-q-in-connect-sample-code.zip
+151.1 KB
+Screenshot of the Amazon Q widget, solution output.
+Mary is ready to start testing her code in a test page. After she confirms the code works, she can embed it in the agent application’s webpage. Then, she can design the look and feel of the new Amazon Q in Connect widget.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A developer is asked to add the built-in Amazon Q in Connect widget into the homegrown web agent application for AnyCompany. Which parameter passed to the connect.agentApp.initApp function initializes the agent assist functionality?
+
+name
+
+Correctly unselected
+containerId
+
+Correctly unselected
+appUrl
+
+Correctly selected
+config
+
+Correctly unselected
+SUBMIT
+
+Correct
+The appUrl identifies the app widget link loaded in the iframe.
+
+
+
+The name identifies the app, the containerId specifies the iframe where the widget is displayed, and the config parameters set the style.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you explored options to implement Amazon Q in Connect functionality in web applications. In the next lesson, you will learn how you can display agent guides in agent web applications.
+
+Lesson 8 of 12
+Step-by-Step Guides
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore embedding step-by-step guides functionality in a custom webpage.
+
+Lesson introduction
+
+Contact center agents need guidance to effectively handle contact inquiries. The Amazon Connect agent workspace provides built-in step-by-step guides within Amazon Connect flows. Developers can also integrate these guides into custom applications using Streams to make sure agents resolve contact requests efficiently.
+
+Amazon Connect step-by-step guides
+
+(opens in a new tab)(opens in a new tab)Step-by-step guides empower organizations to create customizable workflows for agents to resolve customer issues. IVR designers use a no-code UI to develop workflows for tasks like reservations and orders. The guides integrate with third-party applications, streamlining agents' access to external information.
+
+Prerequisites
+
+(opens in a new tab)For instructions on how to configure step-by-step guides in Amazon Connect, navigate to Enable Step-by-Step Guides(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Scenario
+
+AnyCompany wants to empower agents with guided workflows to assist customers with fraud queries and card replacement requests. The workflows must adhere to AnyCompany’s internal processes and procedures. Mary reviews the requirements to integrate the agent application with Amazon Connect step-by-step guides. She must display a guide view that displays as soon as the contact is connected with the agent. The view must stay visible until the contact is complete after the agent's ACW. Mary will use the following five steps to perform the custom CCP development process.
+
+At the end of the lesson, you will find sample code for the functionality covered in the lesson.
+
+Step 1: Creating a step-by-step guides container
+
+Mary looks at the code from the index.html file. She creates a new container id="guides-container" for the step-by-step guides widget. 
+
+
+
+Code
+<!-- Create div container for step-by-step guides -->
+
+<div id="guides-container" style="width: 400px; height: 600px;"></div>
+
+Step 2: Initializing the CCP
+
+To confirm CCP initialization when the page loads, Mary writes code to subscribe to the onload event. The following code sample shows the first step Mary takes to initialize CCP.
+
+
+
+Code
+// Connect information: Replace with your Connect Instance
+
+const connectUrl = "https://my-instance-name.my.connect.aws/connect";
+
+// Add the call to init() as an onload so it will only run once the page is loaded
+
+window.onload = (event) => {
+
+    console.log("window.onload")
+
+    try {
+
+        connect.agentApp.initApp(
+
+            "ccp", 
+
+            document.getElementById("customCCPDiv"), 
+
+            connectUrl + "/ccp-v2/",
+
+            { style: "width:400px; height:600px;" }
+
+        );
+
+    } catch (error) {
+
+        console.error("initialization error", error);
+
+    }
+
+};
+
+Step 3: Initializing the guides view when a contact connects
+
+Mary modifies the "index.js" file to initialize the step-by-step guides using connect.agentApp.initApp(name, containerId, appUrl, config). Based on the requirements, she must call this function as soon as the contact is connected. For this to happen, she includes the initialization code in the event handler function for contact.onConnected().
+
+The handler function code uses the initApp function to initialize the customviews app in the guides-container HTML container. The "/stargate/app" is the suffix for the iframe URL that loads the guides widget. The config parameter includes the display style, and the request body property called customViewsParams. Expand each of the following four categories to find out more about the request body that initializes the guides functionality.
+
+
+name
+The first parameter represents the name of the app that uniquely identifies this integration. Mary sets the value of the initApp function to customviews.
+
+
+containerId
+The second parameter is the identifier for the HTML Document Object Model (DOM) that contains the app inline frame (iframe). Mary sets the value to viewContainer.
+
+
+appUrl
+The third parameter is the string URL of the app. This is the page the iframe uses to navigate to the app.
+
+
+
+This value uses a relative path connectUrl + "/stargate/app" 
+
+
+config
+This is an optional parameter that provides additional configuration settings for the app.
+
+
+
+These settings include the following: 
+
+style: This is an optional string that supplies inline styling for the iframe. Mary sets the value of this parameter to { style: "width:400px; height:600px;" }.
+customViewsParams: This is a property available for customviews only. This configuration object associates the current contact with the guides view and flow. Additionally, it has a property called disableAutoDestroy.
+The customViewsParams property is used to associate the current contact id with the view. Expand each of the following four properties to find out more about how to set their values.
+
+
+contact
+By setting this value, the code attaches the contact to the customviews application. The value can be a contact object or a contactId string. If you use a contactId, then disableAutoDestroy is set to true by default.
+
+
+
+You must use connect.core.terminateCustomView() to end the lifecycle of the customviews before closing the iframe.
+
+
+contactFlowId
+This parameter must be set to the flow ID for the customviews that the application displays.
+
+
+
+For more information, navigate to Find the Flow ID(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+
+iframeSuffix
+This attaches a suffix to the customviews application iframe id.
+
+
+
+This id format becomes customviews{iframeSuffix}.
+
+
+
+This parameter is useful for instantiating multiple customviews applications in a single page, and associating customviews applications with contactIds.
+
+
+disableAutoDestroy
+When this parameter is set to true, the code does not clear the view when the connected contact is closed.
+
+Note: The code must handle the lifecycle of a step-by-step customview when the setting, disableAutoDestroy, is set to true. As a developer, you must invoke terminateCustomView() to make sure you do not impact service quota. Contact interactions using guides count against chat concurrency. The guide remains active until it either reaches the configured duration or the Show view block timeout value expires.
+
+The following code snippet shows sample values for the parameters used to initialize the custom view for step-by-step guides.
+
+
+
+Code
+// Get the HTML element for step-by-step guides 
+
+var viewcontainer = document.getElementById("customviews-container");
+
+var acwContainer = document.getElementById('customviews-acw');
+
+function handleContactConnected(contact) {
+
+    console.debug('CDEBUG >> ContactEvents.handleContactConnected() - Contact connected to agent');
+
+    if (contact) {
+
+        connect.agentApp.initApp(
+
+            "customviews",
+
+            viewcontainer,
+
+            connectUrl + "/stargate/app",
+
+            { 
+
+                style: "width:850px; height:500px;",
+
+                customViewsParams: {
+
+                    contact: contact,
+
+                    contactFlowId: "a1b2c3d4-5678-90ab-cdef-EXAMPLEaaaaa",
+
+                    iframeSuffix: `${contact.getContactId()}-a1b2c3d4-5678-90ab-cdef-EXAMPLEaaaaa`,
+
+                    disableAutoDestroy: false,
+
+                }
+
+            }
+
+        );  
+
+        logInfoEvent("[contact.onConnected] Contact connected to agent. Contact state is " + contact.getStatus().type);
+
+    } else {
+
+        logInfoEvent("[contact.onConnected] Contact connected to agent. Null contact passed to event handler");
+
+    }
+
+}
+
+Because the disableAutoDestroy property is set to false, the customview does not need to be cleaned up by using the terminatecustomview(). Mary must hide the view when the contact ends so she can display the disposition guide. To achieve this, Mary creates a handler function that runs when the contact ends. The sample code shows the container that displays the guide set to none, which means it won't be visible on the screen.
+
+
+
+Code
+function handleContactEnded(contact) {
+
+    console.debug('CDEBUG >> ContactEvents.handleContactEnded() - Contact has ended successfully');
+
+    if (contact) {
+
+        viewcontainer.style.display = 'none'; 
+
+        logInfoEvent("[contact.onEnded] Contact has ended. Contact state is " + contact.getStatus().type);
+
+    } else {
+
+        logInfoEvent("[contact.onEnded] Contact has ended. Null contact passed to event handler");
+
+    }
+
+}
+
+Step 4: Initializing the guides at the end of the call
+
+Mary continues to review the requirements. AnyCompany wants to measure agent performance through a post-contact survey. Mary modifies the index.js file to launch a guided workflow when the contact is in ACW state. The ACW state occurs when the caller disconnects. Mary writes code to initialize the step-by-step guides in the event listener function for contact onACW. The following example shows a function handler for the onACW event.
+
+
+
+Code
+function handleContactACW(contact) {
+
+    if (contact) {
+
+        console.log('[contact.onACW] Contact is on ACW ended. Contact state is ' + contact.getStatus().type);
+
+        connect.agentApp.initApp(
+
+            "customviews",
+
+            document.getElementById("guides-container"),
+
+            connectUrl + "/stargate/app",
+
+            { 
+
+                style: "width:850px; height:550px;",
+
+                customViewsParams: {
+
+                contact: contact,
+
+                contactFlowId: "a1b2c3d4-5678-90ab-cdef-EXAMPLEbbbbb",
+
+                iframeSuffix: `${contact.getContactId()}-a1b2c3d4-5678-90ab-cdef-EXAMPLEbbbbb`,
+
+                disableAutoDestroy: true
+
+                }
+
+            }
+
+        );            
+
+    } else {
+
+        console.log('[contact.onACW] Contact is on ACW ended. Null contact passed to event handler');
+
+    }
+
+}
+
+Because the disableAutoDestroy configuration option is set to true, Mary should handle the cleanup of the guides view next.
+
+Step 5: Cleaning the view the onACW event handler
+
+To handle the lifecycle of the post-contact customview, Mary writes code to invoke connect.core.terminateCustomView in the event listener function for contact.onDestroy. The onDestroy event is published after ACW when the contact is cleared from the agent application.
+
+
+
+Code
+//onACW initApp for customviews has disableAutoDestroy set to true, you must manually terminate the customview 
+
+function handleContactDestroyed(contact) {
+
+    console.debug('CDEBUG >> ContactEvents.handleContactDestroyed() - Contact will be destroyed');
+
+    logInfoEvent("[contact.onDestroy] Contact is Destroyed");
+
+    if (contact) {
+
+        connect.core.terminateCustomView(
+
+            connectUrl, 
+
+            `${contact.getContactId()}-a1b2c3d4-5678-90ab-cdef-EXAMPLEbbbbb`,
+
+                {
+
+                resolveIframe: true,
+
+                timeout: 30000, 
+
+                hideIframe: false
+
+                }
+
+            );
+
+        logInfoEvent("[contact.onDestroy] Contact is destroyed. Contact state is " + contact.getStatus().type);
+
+    } else {
+
+        logInfoEvent("[contact.onDestroy] Contact is connecting. Null contact passed to event handler");
+
+    }
+
+}
+
+After a quick break, Mary is ready to start testing her code in a test page. After she confirms the code works, she can embed it in the agent application’s webpage. Then, she can design the look and feel of the new step-by-step guides.
+
+Step 6: Testing the code
+
+Martha Rivera, an experience designer at AnyCompany, creates a contact flow that includes custom guides' view for the following four agent workflows: 
+
+Review transaction history 
+Request replacement card 
+Temporarily block card 
+Apply for a new credit card 
+Martha shares the contact flow identifier with Mary. Mary updates the contact flow identifier in her code to associate the guides view with the flow. Then she places a test call in the queue. As soon as the call is connected, her test webpage displays the step-by-step guides. The following image shows Mary's test page that displays the guide view as soon as the contact connects.
+
+Screenshot of Test web app showing softphone controls on the left and highlighted step-by-step guide cards on the right.
+To download the sample code for this test page, choose anywhere inside the following box.
+
+step-by-step-guides-sample-code.zip
+152.1 KB
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A developer must add a custom guide view to an existing webpage. The view should display when a contact is presented to the agent, and be hidden when the contact disconnects. What are the first steps the developer must follow to implement this requirement? (Select TWO.)
+
+Initialize the view in the onIncomming handler. 
+
+Incorrectly unchecked
+Cleanup the view in the onACW handler.
+
+Correctly unchecked
+Initialize the view in the onConnected handler. 
+
+Correctly unchecked
+Initialize the view in the onACW handler. 
+
+Incorrectly checked
+Cleanup the view in the onContactDestroyed handler.
+
+Correctly checked
+SUBMIT
+
+Incorrect
+The view must be initialized in the onIncoming handler function because of the requirement to display the guides when the contact is presented to the agent. The view will be hidden if the code is implemented in the onContactDestroyed handler.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you explored options to implement Amazon Step-by-step guide functionality in web applications. Continue to the next lesson to review the course summary and prepare for the end-of-course assessment.
+
+Lesson 9 of 12
+Summary
+Course summary
+
+In this course, you learned about Amazon Connect Streams. It’s a feature of Amazon Connect that offers organizations the flexibility to expand and customize the built-in functionality for agent applications. Take a moment to review these key concepts in the course summary before taking the course assessment.
+
+Benefits
+The Amazon Connect Streams APIs offer organizations the ability to create custom agent experiences within their web applications. Streams offer access to real-time call and chat events, agent assist, and case management. Developers can meet various functional and business needs with Streams' support for multi-layered integrations.
+
+Architecture
+The Streams architecture is comprised of four layers.
+
+
+
+Amazon Connect CTI Service
+This layer handles requests and raises events.
+
+
+Application Integration
+
+This layer provides methods and event buses for integrating Amazon Connect functionality within external web applications.
+
+
+
+CCP
+
+This layer authenticates agents and passes information between the application and the Connect Shared Worker.
+
+
+
+Connect Shared Worker
+
+This layer synchronizes data across different service components, making sure agent status and configuration updates are reflected across all open tabs, iframes, and connected application pages.
+
+APIs
+Core API
+
+Developers can initialize the CCP, subscribe to events like onload, configure softphone settings, and customize the CCP's display in the settings tab. This API offers integration of the built-in CCP in external applications, and synchronization of agent and contact updates.
+
+
+
+Agent API
+
+The Agent API provides event subscription and methods to manage agent states. Developers handle events like state changes, routable or non-routable events, and errors. They can create handlers for state changes and agent availability. Additionally, the API can programmatically set the agent's availability using the setState method.
+
+
+
+Contact API
+
+The Contact API offers event subscription and methods to manage contact states. Developers handle events like onIncoming, onConnected, and onEnded, and perform actions such as answering or disconnecting calls. The API also programmatically retrieves contact details like caller name, phone number, and queue name.
+
+Additional functionality
+Customer Profiles 
+
+Customer Profiles offers agents real-time access to customer data for personalized interactions. The functionality of Customer Profiles delivers capabilities such as search and display of relevant customer information. Developers can integrate this functionality using Streams with either the built-in, or a custom widget via the Customer Profiles JavaScript library.
+
+
+
+Amazon Q in Connect 
+
+Amazon Q in Connect uses generative AI to suggest responses and actions, enhancing issue resolution and customer satisfaction. Developers can integrate this functionality into their applications using Streams. They can initialize the built-in Amazon Q in Connect widget or create a custom widget using the Amazon Q in Connect JavaScript library. The custom widget offers tailored recommendations based on the conversation and relevant knowledge content.
+
+
+
+Step-by-step guides 
+
+Amazon Connect provides step-by-step guides that help agents navigate contact requests efficiently. Developers can embed guides into their applications using Streams. The guide displays when a contact connects and stays visible until after-call work is done.
+
+

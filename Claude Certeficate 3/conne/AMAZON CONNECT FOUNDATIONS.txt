@@ -1,0 +1,1218 @@
+Legacy and Modern Cloud Contact Centers
+Key differences between legacy and modern cloud contact centers
+
+Just as smartphones revolutionized communication beyond the basic call functionality of landlines, cloud contact centers have dramatically transformed customer service operations compared to their legacy counterparts. The shift represents not merely a technological upgrade but a fundamental reimagining of how businesses connect with customers. The following table highlights how cloud-based solutions are reshaping customer service landscapes.
+
+Legacy Contact Centers
+
+Modern Cloud Contact Centers
+
+Large upfront investments in telephony hardware
+
+No physical hardware to purchase or maintain
+
+Rigid licensing models with long-term contracts
+
+Pay-as-you-go pricing instead of long-term contracts
+
+Complex on-premises servers and equipment
+
+Set up in minutes through a web browser
+
+Specialized IT teams for maintenance
+
+Regular updates and new features without disruption
+
+Multiple vendors for different services such as phone systems, interactive voice response (IVR), and recording
+
+Built-in tools for voice, chat, and analytics
+
+Transforming contact center setup
+
+A bank needs to set up a new customer service department. With a traditional approach, it would need to purchase physical phone systems, servers, recording equipment, and specialized software. It might take months to order, install, and configure everything before it could take the first customer call.
+
+Amazon Connect transforms this model with a cloud-based solution that eliminates hardware dependencies.
+
+By providing browser-based components accessible from anywhere, Amazon Connect resolves integration challenges. The service incorporates built-in features like IVR flows, call distribution, and voice analytics. Businesses can scale without hardware constraints and pay only for actual usage rather than maintaining excess capacity.
+
+New environments can be provisioned in minutes, which frees technical resources from maintenance cycles to focus on innovation.
+
+Amazon Connect transforms the contact center from a technological challenge into a valuable business asset. By consolidating what was previously a multi-vendor relationship into a single system, it simplifies management and improves efficiency.
+
+Lesson 4 of 28
+Cloud-Based Solutions
+Key benefits
+
+Using the previous bank example with Amazon Connect, the bank could set up its contact center in minutes through a web browser. The bank can configure its call flows without coding and only pay for the time that agents spend handling customer contacts. Agents can also work from home using only an internet connection and a headset.
+
+
+Cost efficiency
+With traditional contact centers, you're paying for maximum capacity, even if you don't use it. Amazon Connect uses a pay-as-you-go model, meaning that you only pay for what you use. There are no upfront costs for hardware or software licenses. This can result in up to 80 percent cost savings compared to a traditional system.
+
+To learn more, see Amazon Connect Customers(opens in a new tab).
+
+
+
+Scalability and flexibility
+In today's connected world, regional events have demonstrated the capacity to create impacts on a global scale. These occurrences translate into disruptions and uncertainties that might prompt customers to contact customer service centers with inquiries in large numbers. Traditional contact centers have experienced difficulties managing these sudden increases in volume.
+
+Cloud contact centers can instantly scale up during busy periods (like holiday shopping seasons or an unforeseen event) and scale down during quieter times. There is no need to purchase extra capacity when it isn't needed.
+
+
+
+Rapid deployment and innovation
+Traditional systems might take months to deploy or update. With Amazon Connect, you can do the following:
+
+Set up a contact center in minutes.
+
+Make changes to call flows instantly.
+
+Add new features or channels (like chat) without hardware changes.
+
+Test changes in a separate environment before releasing for real-world use.
+
+For example, a retail company could quickly add a special holiday return policy message to their contact center in minutes without any coding or specialized technical knowledge.
+
+
+
+Integration with modern technologies
+Amazon Connect can integrate with technologies such as the following:
+
+Artificial intelligence and machine learning (AI/ML) for customer insights
+
+Voice biometrics for security
+
+Natural language processing (NLP) for self-service
+
+Analytics for performance optimization
+
+
+
+Remote work capabilities
+Agents only need a computer, internet connection, and headset to handle customer contacts from anywhere in the world. This provides the following benefits:
+
+Business continuity during disruptions
+
+Access to wider talent pools
+
+Greater agent satisfaction and retention
+
+Lesson 5 of 28
+Amazon Connect in the AWS Suite of Services
+Benefits of Amazon Connect
+
+Amazon Connect provides the following benefits:
+
+Built-in integration with other AWS services like Amazon Lex (conversational AI), Amazon Polly (text-to-speech), and AWS Lambda (serverless computing)
+
+Enterprise-grade security and compliance
+
+Global availability with low latency
+
+Designed to provide consistent reliability backed by AWS infrastructure
+
+Amazon Connect is not just a standalone product, it is part of a comprehensive suite of services. For example, you can use Amazon Lex to build conversational bots that help customers self-serve from the Amazon Connect console. Amazon Polly is used to create natural-sounding voice prompts, and Amazon S3 is used to store call recordings cost effectively.
+
+
+The following questions will check your understanding of cloud contact center fundamentals.
+
+What is a key difference when choosing Amazon Connect instead of a traditional contact center approach?
+
+
+Traditional contact centers have lower overall costs than Amazon Connect.
+
+Correctly unselected
+
+Amazon Connect requires a large upfront hardware investments.
+
+Correctly unselected
+
+Traditional contact centers use fixed licensing regardless of usage. Amazon Connect uses a pay as you go model.
+
+Correctly selected
+
+Amazon Connect charges the same monthly fee regardless of usage.
+
+Correctly unselected
+SUBMIT
+
+Correct
+Amazon Connect use a pay-as-you-go model that aligns costs with actual usage. Traditional contact centers typically require purchasing licenses to accommodate peak capacity, regardless of actual usage.
+
+What equipment do agents require to handle customer interactions with Amazon Connect?
+
+
+Specialized hardware installed at their desk
+
+Correctly unselected
+
+Custom software downloaded to their computer
+
+Correctly unselected
+
+A computer with internet connection and a headset
+
+Correctly selected
+
+A physical phone connected to the contact center private branch exchange (PBX)
+
+Correctly unselected
+SUBMIT
+
+Correct
+Amazon Connect is a browser-based solution that requires minimal equipment. Agents only need a computer with an internet connection and a headset to handle customer interactions. This eliminates the need for specialized hardware, reduces costs, and enables flexible working arrangements including remote options.
+
+A retail company experiences call volumes that are five times higher during the holiday season than the rest of the year. Which contact center approach would likely be MOST cost effective?
+
+
+A traditional on-premises system sized for peak capacity
+
+Correctly unselected
+
+A cloud-based system with pay-as-you-go pricing
+
+Correctly selected
+
+A hybrid system with fixed capacity plus overflow to outsourced agents
+
+Correctly unselected
+
+Multiple physical call centers in different time zones
+
+Correctly unselected
+SUBMIT
+
+Correct
+For businesses with significant seasonal fluctuations like this retail company, a cloud-based system with pay-as-you-go pricing is ideal. The company can efficiently scale up capacity during the holiday rush. It can also scale down during quieter periods so that they pay only for what they actually use.
+
+Lesson 7 of 28
+Summary
+You have explored how cloud contact centers are eliminating traditional hardware constraints and embracing pay-as-you-go flexibility. The transformation is similar to how smartphones changed communication by moving from limited, fixed systems to dynamic, feature-rich solutions accessible from anywhere.
+
+Through integration with AWS services, Amazon Connect provides businesses with powerful capabilities like AI-assisted customer service, real-time analytics, and global scalability without managing physical infrastructure. As customer expectations continue to evolve, cloud contact centers provide the agility needed to adapt quickly and deliver exceptional experiences while optimizing costs.
+
+In the next section, you will learn about key terms and the core components of Amazon Connect.
+
+Lesson 8 of 28
+Introduction to Amazon Connect Architecture
+Section objectives
+In this section, you will learn to do the following:
+
+Identify key Amazon Connect terminology.
+
+Explain how the different components work together to create a complete contact center solution.
+
+
+
+Section introduction
+
+In this section, you will learn the basics of Amazon Connect and learn key terms that you will need to know. You will see how different parts like contact flows, queues, and agent workspaces all fit together to make a complete contact center system. You will look at how these pieces connect with each other to handle customer calls from start to finish. Understanding how everything works together will help you set up and improve your contact center. With this knowledge, you will be ready to use Amazon Connect to build a contact center that works for your specific needs. This solution can grow with your business.
+
+Lesson 9 of 28
+Understanding Key Terminology
+Understanding essential terms will help you navigate Amazon Connect effectively. These terms are used to describe the different components of Amazon Connect.
+
+To learn more about common Amazon Connect terminology, choose each of the following flashcards.
+Click to flip
+Instance
+
+
+Contact
+
+Flow
+
+Blocks
+
+Queue
+
+Routing profile
+
+Quick connect
+
+Hours of operation
+
+Service level
+
+Your virtual contact center environment
+
+Any customer interaction (call, chat, task) that needs handling
+
+A visual workflow that defines how contacts are handled
+
+Individual components within a flow that perform specific actions
+
+Virtual line where contacts wait for an agent
+
+Determines which queues an agent can receive contacts from
+
+Predefined transfer destination for contacts
+
+Schedules that determine when services are available
+
+Performance target for how quickly contacts should be answered
+
+
+Lesson 10 of 28
+Core Components of Amazon Connect
+Have you ever wondered what happens when you call a customer service number? Amazon Connect allow businesses to manage customer interactions across voice, chat, and other channels. Amazon Connect provides scalable infrastructure, intelligent routing capabilities, and integrated analytics to efficiently handle customer communications.
+
+Amazon Connect's core components work together to create a complete contact center solution.
+
+
+Amazon Connect instance
+An Amazon Connect instance serves as your virtual contact center. Think of it as the foundation that everything else is built on. Each instance contains the following attributes:
+
+It has its own unique access URL (for example, https://example.my.connect.aws).
+
+It contains all your contact center configuration.
+
+It can be created in different AWS Regions for global coverage.
+
+It functions as a separate environment (many companies have development, testing, and production instances).
+
+For example, if you were setting up a new help desk, you would start by creating an Amazon Connect instance. This gives you the container where all your other contact center components will live.
+
+To learn more, see Create an Amazon Connect Instance(opens in a new tab).
+
+
+Users and security profiles
+Users represent the people who work in your contact center, such as the following:
+
+Agents who handle customer contacts
+
+Supervisors who manage teams and monitor performance
+
+Administrators who configure the system
+
+To learn more, see Users(opens in a new tab).
+
+Security profiles control what each user can access and change in the system. The following are some examples:
+
+Agents might only access the agent workspace.
+
+Supervisors can view reports and monitor calls.
+
+Administrators can change phone numbers and flows.
+
+To learn more, see Security profiles.(opens in a new tab)
+
+
+Routing profiles and queues
+Queues are virtual waiting lines for contacts (for example, calls or chats) before they reach an agent. They can be organized by the following criteria:
+
+Skill type (technical support, billing, sales)
+
+Language (English, Spanish, and more)
+
+Priority level (premium customers, urgent issues)
+
+To learn more, see Queues(opens in a new tab)
+
+Routing profiles connect agents to the queues that they can serve. The following are some examples of common routing profiles:
+
+Basic Support Profile: Connects agents to general inquiry queues
+
+Specialized Support Profile: Connects agents to technical, billing, or sales queues
+
+Multi-language Profile: Connects agents to queues based on their language skills
+
+To learn more, see Routing profiles(opens in a new tab).
+
+
+Flows (IVR)
+Flows are the pathways that determine next steps for the customer within the contact center. They are created using a visual drag-and-drop interface, and can do the following:
+
+Greet customers and collect information
+
+Route to the right department
+
+Provide self-service options
+
+Collect customer feedback
+
+For example, a bank's contact flow might ask, "Are you calling about account balance, reporting a lost card, or something else?" and then route the customer accordingly.
+
+To learn more, see Flows.(opens in a new tab)
+
+Contact center access and interaction tools
+
+In addition to the core infrastructure, Amazon Connect provides essential tools for customer communication, agent operations, and performance tracking.
+
+
+Phone numbers and channel integrations
+With Amazon Connect, you can do the following:
+
+Claim new phone numbers in many countries.
+
+Port existing numbers from other providers.
+
+Set up web and mobile chat interfaces.
+
+Configure chat, SMS, WhatsApp, and email messaging channels.
+
+Channels serve as the entry and exit points for customers to connect with your contact center.
+
+To learn more about supported channels, see Set up your channels.(opens in a new tab)
+
+
+Agent workspace and CCP
+The Contact Control Panel (CCP) is the interface that agents use to do the following:
+
+Accept incoming contacts (calls, chats)
+
+Transfer contacts when needed
+
+Set their status (Available, Break, Offline)
+
+In addition to the CCP function, the agent workspace provides the following:
+
+Customer Profiles can display customer information sourced from existing backend systems. To learn more, see Customer Profiles.(opens in a new tab)
+
+Step-by-step guides are guided workflows used to provide consistent responses to customers. To learn more, see Step-by-step guides(opens in a new tab).
+
+Amazon Connect Cases can integrate directly with third-party applications. To learn more, see Amazon Connect Cases.(opens in a new tab)
+
+Agent workspace can integrate directly with third-party applications. To learn more, see third-party applications.(opens in a new tab)
+
+Amazon Q in Connect is available to provide agent assistance through generative AI. To learn more, see Amazon Q in Connect(opens in a new tab).
+
+
+Analytics and reporting
+Amazon Connect provides real-time and historical metrics on the following:
+
+Contact volumes and handling times
+
+Queue performance
+
+Agent activity and efficiency
+
+Customer experience metrics
+
+These insights help optimize operations and identify areas for improvement.
+
+To learn more about metrics and reporting, see Metrics, dashboards, and reports in Amazon Connect(opens in a new tab).
+
+Next, you will explore how the key operational components of Amazon Connect work together to facilitate effective customer interactions.
+
+Lesson 11 of 28
+How Components Work Together
+You will see how all these components work together by following a typical customer contact into Amazon Connect.
+
+For example, when a customer calls about a billing question, the flow might verify their identity by using their phone number. The system checks whether there are any account alerts, and offers self-service payment options. If needed, it connects them to a billing specialist, all while providing the agent with the customer's account information before they even start speaking.
+
+The following scenario explains a typical call flow.
+
+Customer initiating contact
+A customer calls a phone number associated with your Amazon Connect instance or starts a chat on your website.
+
+Flow processing
+The contact enters a flow that does the following:
+
+Plays a welcome message
+
+Checks operating hours
+
+Offers menu options
+
+Collects information (account number, reason for contact)
+
+Tries to resolve issues through self-service
+
+Queuing
+If agent assistance is needed, the contact is placed in the appropriate queue based on the information collected.
+
+Agent selection
+Amazon Connect identifies available agents who meet the following criteria:
+
+They are currently online.
+
+They have the right routing profile for the queue.
+
+They have been waiting longest since their last contact (or based on other routing strategies).
+
+Contact handling
+The selected agent receives the contact through the CCP or Agent Workspace. This contact may contain any collected information. The Agent then handles the customer's issue, and completes the interaction.
+
+After-contact work
+The agent documents the interaction and clears the current contact so that they are ready to receive the next contact.
+
+Reporting
+All aspects of the contact are recorded in the reporting system for later analysis.
+
+Amazon Connect's value comes from the integration of it's components. Amazon Connect handles everything from initial customer contact through contact management to analytics reporting. It offers a complete contact center solution that scales with your business. One of the key advantages is adaptable functionality that aligns with your specific operational needs.
+
+The following questions will check your understanding of Amazon Connect architecture.
+
+What BEST describes an Amazon Connect instance?
+
+
+A physical server that runs contact center software
+
+Correctly unselected
+
+A virtual contact center environment with its own configuration
+
+Correctly selected
+
+A group of agent workstations in a physical location
+
+Correctly unselected
+
+A single customer interaction handled by an agent
+
+Correctly unselected
+SUBMIT
+
+Correct
+An Amazon Connect instance is a virtual contact center environment with its own configuration. This cloud-based approach eliminates the need for physical hardware and provides flexibility to manage your contact center from anywhere.
+
+In Amazon Connect, what is a contact?
+
+
+Voice call
+
+Correctly unselected
+
+Chat
+
+Correctly unselected
+
+Task
+
+Correctly unselected
+
+Any interaction on any channel
+
+Correctly selected
+SUBMIT
+
+Correct
+A contact in Amazon Connect represents any customer interaction. This includes voice calls, chats, tasks, and other communication methods. The omnichannel capabilities in Amazon Connect enable versatile customer service delivery.
+
+A contact center needs to handle both Spanish and English calls. Which combination of Amazon Connect components work together to route calls to appropriate agents?
+
+
+Security profiles and user accounts
+
+Correctly unselected
+
+Contact flows and phone numbers
+
+Incorrectly selected
+
+Queues and routing profiles
+
+Incorrectly unselected
+
+Quick connects and hours of operation
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Although other components play important roles in the contact center, queues and routing profiles are specifically designed to control contact distribution. They determine which agents receive which types of contacts. For language-based routing, you would create dedicated queues for Spanish contacts. Routing profiles would then assign these queues only to agents with the appropriate language skills.
+
+
+TAKE AGAIN
+
+Lesson 13 of 28
+Summary
+The Amazon Connect architecture integrates multiple components: instances, contact flows, users, queues, and reporting tools. These components create a comprehensive contact center solution. This infrastructure seamlessly manages customer interactions from start to finish while empowering agents with essential tools. Understanding this architecture is key to building effective, customer-centric contact centers.
+
+As you continue working with Amazon Connect, this architectural understanding will help you build and optimize contact centers that deliver exceptional customer experiences. Additionally, it will provide your agents with the tools that they need to succeed.
+
+The next section covers how AWS and Amazon Connect address compliance and security requirements.
+
+
+Lesson 14 of 28
+Introduction to Compliance Essentials
+Section objectives
+In this section, you will learn to do the following:
+
+Recognize the AWS shared responsibility model for compliance in Amazon Connect.
+
+Identify common compliance frameworks relevant to contact centers.
+
+Apply best practices for maintaining compliance in your contact center.
+
+
+Section introduction
+
+In this section, you will explore how Amazon Connect helps businesses meet important regulatory requirements while protecting sensitive customer information. Whether you are handling credit cards or health information, or are just concerned about privacy, understanding compliance is essential for running a trustworthy contact center. You will now learn how Amazon Connect helps keep customer data secure and compliant.
+
+Lesson 15 of 28
+AWS Shared Responsibility Model
+Security responsibilities
+
+When using Amazon Connect, security and compliance responsibilities are shared between AWS and you, the customer. Understanding this division of responsibilities is crucial for maintaining a secure contact center.
+
+AWS responsibilities:
+Security of the cloud
+
+Customer responsibilities:
+Security in the cloud
+
+Physical security of data centers
+
+User access and permissions
+
+Hardware and software infrastructure
+
+Data protection and encryption
+
+Network configuration and security
+
+Configuration of Amazon Connect features
+
+Service availability and reliability
+
+Compliance with regulatory requirements
+
+Security patches for the underlying system
+
+Agent training and behavior
+
+Think of it like renting an apartment: The landlord (AWS) is responsible for the building's foundation, walls, and utilities. You (the customer) are responsible for what happens inside your apartment, who you let in, and how you use the space.
+
+AWS makes sure that the resources running Amazon Connect are physically secure, properly maintained, and regularly updated with security patches. You don't need to worry about server maintenance or hardware failures.
+
+The following graphic illustrates how the various facets of security regarding Amazon Connect are shared between AWS and you, the customer. As a managed service, Amazon Connect has different security responsibilities than container services and infrastructure services.
+
+Lesson 16 of 28
+Common Compliance Frameworks
+Key frameworks for Amazon Connect
+
+Contact centers often need to comply with various regulations and governance depending on their industry and location. The following are some key frameworks relevant to Amazon Connect users.
+
+
+PCI DSS
+The Payment Card Industry Data Security Standard (PCI DSS) applies to any organization that handles credit card information. For contact centers, this means the following:
+
+Secure collection of payment information
+
+Proper storage and transmission of cardholder data
+
+Regular security assessments
+
+Amazon Connect helps with PCI DSS compliance through features such as the following:
+
+Dual tone multi-frequency (DTMF) masking (hiding credit card numbers entered through the keypad)
+
+Encryption for sensitive customer inputs
+
+Call recording redaction to remove sensitive data
+
+For example, when a customer needs to make a payment, you can use the Amazon Connect Store customer input(opens in a new tab) block with encryption enabled. This will securely collect their credit card information without agents seeing or hearing the actual numbers.
+
+For more information, see Best Practices for PCI Compliance in Amazon Connect(opens in a new tab).
+
+
+HIPAA
+The Health Insurance Portability and Accountability Act of 1996 (HIPAA) protects sensitive patient health information in healthcare contact centers. Key requirements include the following:
+
+Safeguards for protected health information (PHI)
+
+Limited disclosure of information
+
+Patient rights to their health information
+
+Breach notification procedures
+
+Amazon Connect can support HIPAA compliance through the following:
+
+Encrypted storage of patient information
+
+Secure transmission of health data
+
+Access controls and audit trails
+
+For more information, see Best Practices for HIPPA Compliance in Amazon Connect(opens in a new tab).
+
+
+GDPR and other privacy regulations
+Privacy regulations like General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and others establish the following:
+
+Requirements for consent before collecting data
+
+Rights for individuals to access or delete their data
+
+Restrictions on data transfer and storage
+
+Requirements for breach notification
+
+To support privacy compliance, Amazon Connect provides the following:
+
+Data retention controls
+
+Access to customer data for fulfilling requests
+
+Regional instances to maintain data residency
+
+For more information, see Best Practices for PII Compliance in Amazon Connect(opens in a new tab).
+
+Insider tip: Create a compliance checklist specific to your contact center operations and review it quarterly. Map each Amazon Connect feature to your compliance requirements and document how they work together. This proactive approach will streamline audits and help you stay ahead of regulatory changes.
+
+Building a secure and compliant contact center
+
+The compliance frameworks that you just learned about might apply in securing your contact center. As you learned, industry and location play a factor in which frameworks might apply to your contact center. Building a secure and compliant contact center from the ground up requires more in-depth strategies and analysis. That is beyond the scope of this course.
+
+To learn more, see Design Principles for Developing a Secure Contact Center in Amazon Connect(opens in a new tab).
+
+Lesson 17 of 28
+AWS Artifact
+Understanding AWS Artifact
+
+AWS Artifact is a central resource for compliance-related information about AWS services, including Amazon Connect. It provides the following:
+
+Access to AWS compliance reports, such as System and Organization Controls (SOC), PCI, HIPAA, and more
+
+Certification documentation for auditors
+
+Compliance agreements that you can review and accept
+
+Accessing AWS Artifact
+
+Log in to the AWS Management Console.
+
+In the AWS Management Console search box, type AWS Artifact.
+
+Open AWS Artifact.(opens in a new tab)
+
+Browse available compliance reports and agreements.
+
+This service helps you demonstrate to auditors that the underlying AWS infrastructure meets compliance requirements, which streamlines your certification process.
+
+Lesson 18 of 28
+Practical Compliance Implementation
+Learn how to apply compliance principles in everyday Amazon Connect operations. Select each tab to learn more.
+
+
+Securing sensitive customer information
+
+Agent access controls
+
+Call recording and screen recording compliance
+
+Audit and documentation
+Examples of sensitive information include the following:
+
+Credit card numbers
+
+Social security numbers
+
+Health information
+
+Account passwords
+
+When collecting sensitive information, use the following Amazon Connect features:
+
+Encrypted Store customer input(opens in a new tab) blocks for DTMF collection
+
+Contact attributes with encryption for sensitive data
+
+Recording and analytics redaction to protect sensitive information
+
+Securing sensitive customer information
+
+Agent access controls
+
+Call recording and screen recording compliance
+
+Audit and documentation
+To implement the principle of least privilege, do the following:
+
+Create security profiles that limit access to only what is needed.
+
+Use separate profiles for agents, supervisors, and administrators.
+
+Regularly audit user permissions and remove access when no longer needed.
+
+Now that you have reviewed agent access controls, move to the next tab to learn about call recording and screen recording compliance.
+
+Call recording and screen recording compliance
+
+Audit and documentation
+When recording calls or screens, do the following:
+
+Provide clear notification to customers that recording is in progress.
+
+Configure recording behavior based on compliance requirements.
+
+Set appropriate retention periods for recordings.
+
+Implement encryption for stored recordings.
+
+Now that you have reviewed call recording and screen recording compliance, move to the next tab to learn about audit and documentation.
+
+Audit and documentation
+To maintain compliance documentation, do the following:
+
+Create and maintain compliance policies.
+
+Document system configurations.
+
+Keep records of compliance activities.
+
+Prepare for audits with organized evidence.
+
+Remember that compliance is not a one-time achievement. It is an ongoing process that requires regular review and updates as regulations and your contact center evolve.
+
+Now that you have reviewed audit and documentation, move to the remaining content.
+
+The following questions will check your understanding of compliance essentials.
+
+Who is responsible for configuring user permissions in Amazon Connect, according to the AWS shared responsibility model?
+
+
+AWS
+
+Correctly unselected
+
+The customer
+
+Correctly selected
+
+Both AWS and the customer
+
+Correctly unselected
+
+A third-party compliance auditor
+
+Correctly unselected
+SUBMIT
+
+Correct
+The AWS shared responsibility model defines security roles. AWS secures the underlying infrastructure. Customers manage security within their cloud environment. This includes setting user permissions and access controls in Amazon Connect. The model creates clear security guidelines for both parties.
+
+Which compliance framework should be considered when setting up an option for credit card numbers to be entered through the phone keypad?
+
+
+Payment Card Industry Data Security Standard (PCI DSS)
+
+Correctly selected
+
+Health Insurance Portability and Accountability Act of 1996 (HIPAA)
+
+Correctly unselected
+
+General Data Protection Regulation (GDPR)
+
+Correctly unselected
+
+California Consumer Privacy Act (CCPA)
+
+Correctly unselected
+SUBMIT
+
+Correct
+Correct. Using encrypted dual tone multi-frequency (DTMF) collection for credit card information is a best practice for PCI DSS compliance. This method prevents agents from seeing or hearing card details, reduces your compliance scope, and provides better security for sensitive payment information. It is beneficial for both security and customer privacy.
+
+A healthcare provider is setting up an Amazon Connect contact center. What should they implement to help maintain Health Insurance Portability and Accountability Act of 1996 (HIPAA) compliance?
+
+
+Allowing all agents to access all patient records for efficiency
+
+Correctly unselected
+
+Contact flows and phone numbers
+
+Correctly unselected
+
+Strict access controls and encrypt-protected health information
+
+Correctly selected
+
+Quick connects and hours of operation
+
+Correctly unselected
+SUBMIT
+
+Correct
+HIPAA compliance requires both strict access controls and encryption of protected health information (PHI). Healthcare providers must ensure that patient data is accessible only to authorized personnel. This protection remains effective even if a security breach occurs.
+
+Summary
+Up next
+
+In today's contact center environment, compliance isn't optional; it's essential for protecting customers and your business. You explored how Amazon Connect operates under the AWS shared responsibility model. AWS secures the underlying infrastructure, and you manage configurations, access controls, and sensitive data handling.
+
+Amazon Connect provides the tools needed to build compliant operations through features like encrypted data collection, DTMF masking, and customizable retention policies. This includes PCI DSS for payment processing, HIPAA for healthcare, and GDPR for privacy. Remember that compliance is an ongoing process requiring vigilance and adaptation as regulations evolve. By implementing the best practices covered in this module, you can create a contact center that earns customer trust and meets regulatory requirements.
+
+In the next section, you will learn about customer experience design principles and how to apply them to Amazon Connect.
+
+Lesson 21 of 28
+Introduction to Customer Experience Design Principles
+Section objectives
+In this section, you will learn to do the following:
+
+Identify key customer experience principles for contact center design.
+
+Identify methods for measuring contact center customer experience.
+
+Apply customer-centric design principles to Amazon Connect implementations.
+
+
+Section introduction
+
+There are essential principles that make for great customer experiences in contact center design. Amazon Connect features can recognize returning customers to provide personalization. You will learn practical ways to measure contact center performance. Amazon Connect provides real-time and historical metrics for monitoring. Then walk through applying these customer-first principles in your Amazon Connect setup. By the end, you will understand how to put customers at the center of your Amazon Connect implementation.
+
+Lesson 22 of 28
+Customer Experience Design
+Key customer experience principles
+
+Customer experience design in contact centers focuses on creating interactions that satisfy customers and efficiently resolve their needs. The fundamental principles that guide effective customer experience design are as follows:
+
+Customer-centric approach
+A customer-centric contact center puts the customer's needs and preferences at the center of every decision by doing the following:
+
+Designing from the customer perspective rather than the company perspective
+
+Removing unnecessary steps and friction points
+
+Respecting the customer's time and effort
+
+For example, a customer-centric design makes common tasks available immediately in the main menu. This eliminates forcing customers to navigate through multiple menus just to check their order status.
+
+Omnichannel consistency
+Modern customers expect seamless experiences across channels, including the following:
+
+Maintaining consistent information across voice, chat, SMS, and email
+
+Allowing conversations to transition between channels without starting over
+
+Providing the same level of service regardless of channel
+
+For instance, sometimes a customer starts in chat but needs to switch to a phone call for a complex issue.  For omnichannel consistency, agents need access to chat history and customer information. This prevents customers from having to repeat themselves.
+
+Amazon Connect chat and mobile contacts routing to an agent.
+
+Personalization
+Tailoring interactions to individual customers creates more meaningful experiences by doing the following:
+
+Using available customer data to personalize greetings and options
+
+Remembering customer preferences and history
+
+Adjusting the service approach based on customer segment or history
+
+Amazon Connect enables personalization through features such as the following:
+
+Contact attributes that can store and retrieve customer information
+
+Integration with customer relationship management (CRM) systems for comprehensive customer profile data
+
+Dynamic routing based on customer history or value
+
+Self-service optimization
+Effective self-service options benefit both customers and contact centers. To create effective self-service options, do the following:
+
+Provide intuitive options for common tasks.
+
+Design clear paths with escape routes when needed.
+
+Balance automation with efficient access to human agents.
+
+For example, a well-designed bill payment flow might help customers to check balances and make payments without agent assistance. However, it should also provide a clear option to speak with an agent if they have questions or encounter problems.
+
+Effortless experience
+Reducing customer effort is directly linked to loyalty and satisfaction. You can do this in the following ways:
+
+Minimize transfers between agents.
+
+Reduce the need for customers to repeat information.
+
+Eliminate unnecessary steps.
+
+Proactive service
+It is important to anticipate customer needs before they become problems by implementing the following tactics:
+
+Send notifications about potential issues before customers notice.
+
+Offer information and solutions before customers ask.
+
+Follow up after interactions to help ensure resolution.
+
+The outbound capabilities of Amazon Connect help enable proactive outreach through calls, SMS, or emails such as appointment reminders, delivery updates, or service notifications.
+
+Continuous feedback loop
+Great customer experience relies on ongoing improvement through customer feedback:
+
+Collect feedback after interactions.
+
+Identify trends in customer comments.
+
+Make iterative improvements based on insights.
+
+Lesson 23 of 28
+Measuring Customer Experience
+To improve customer experience, you need to measure it effectively. The following are key metrics and methods for evaluating customer experience in contact centers.
+
+To learn more, choose the START or arrow buttons to display each of the six steps.
+Measuring resolution efficiency
+By measuring key performance indicators, you can continuously improve your operations. Have you considered tracking interactions across various channels with Amazon Connect's analytics capabilities?
+
+Step 1
+CSAT
+Customer satisfaction (CSAT) measures how satisfied customers are with a specific interaction. When setting up CSAT surveys, consider the following best practices:
+
+It's typical to use a five-point scale (very satisfied to very dissatisfied).
+
+Collect <X> through post-call surveys, emails, or text messages.
+
+Provide immediate feedback on specific interactions.
+
+With Amazon Connect, you can implement post-call surveys by using flows to automatically collect CSAT data after interactions.
+
+Step 2
+NPS
+Net promoter score (NPS) measures customer loyalty by asking how likely customers are to recommend your company. NPS surveys typically include the following characteristics:
+
+Uses a 0–10 scale.
+
+Categorizes customers as promoters (9–10), passives (7–8), or detractors (0–6).
+
+To calculate the net promoter score, subtract the percentage of detractors from the percentage of promoters collected by the survey. The NPS result is typically expressed as an integer rather than a percentage.
+
+NPS is valuable for understanding long-term customer loyalty beyond individual interactions.
+
+Step 3
+Customer effort score
+Customer effort score (CES) measures the effort a customer expends to get their issue resolved or a question answered. To assess this, organizations typically do the following:
+
+Ask customers, "How efficient was your issue resolution today?"
+
+Uses a scale ranging from very inefficient to very efficient.
+
+Tracks responses to predict future purchase behavior and loyalty.
+
+Step 4
+FCR
+First contact resolution (FCR) tracks how often customer issues are resolved in the initial interaction. It is a key metric for customer service because it indicates the effectiveness of a call center's ability to address customer needs efficiently and quickly. Measuring resolution success includes the following:
+
+Monitoring satisfaction levels for single-contact resolutions
+
+Confirming resolution directly with customers
+
+Using Amazon Connect Contact Lens to identify repeat contacts
+
+Customer conversation analysis
+Amazon Connect dashboard showing sentiment trend, sentiment distribution, and talk time analysis.
+
+Amazon Connect Contact Lens analyzes customer conversations beyond surveys. Contact Lens can do the following:
+
+Analyze call transcripts for sentiment
+
+Identify common issues, complaints, or compliments
+
+Detect emerging trends before they appear in survey data
+
+The following sentiment analyses can be viewed in Amazon Connect:
+
+Customer sentiment trend
+
+Customer sentiment distribution
+
+Talk time
+
+Step 6
+Customer journey analytics
+Customer journey analytics helps understand customer experience across multiple interactions and touchpoints. It helps evaluate customer experience in the following ways:
+
+Track paths that customers take across channels.
+
+Identify common drop-off points or friction areas.
+
+Compare and analyze successful and unsuccessful journeys.
+
+Summary
+Amazon Connect provides the tools to implement effective customer experience strategies. Several methods can help accomplish this evaluation process effectively. These include implementing automated post-call surveys, utilizing advanced Contact Lens analytics for sentiment analysis, and leveraging Customer Profiles for detailed customer journey mapping.
+
+
+By collecting, analyzing, and acting on this customer experience data, you can create a continuous improvement cycle for your customer experience strategies. Amazon Connect equips you with the ability to consistently elevate service quality, increase customer loyalty, and deliver measurable business results.
+
+The goal is not only measurement, but using these insights to drive meaningful actions. These actions help enhance customer experience, empower agents, and align contact center operations with broader business objectives.
+
+Lesson 24 of 28
+Applying CX Principles to Amazon Connect
+Customer Experience (CX) design in contact centers focuses on creating interactions that satisfy customers while efficiently resolving their needs. Learn how to apply fundamental CX principles that guide effective design when implementing Amazon Connect:
+
+
+Designing Effective Flows
+
+Queue and Routing Strategy
+
+Agent Experience Design
+
+Voice and Tone Guidelines
+Contact flows are the backbone of your customer experience. To design effective flows, do the following:
+
+Start with customer-centric goals, not technical capabilities.
+
+Map common customer journeys before building flows.
+
+Optimize for the most frequent scenarios.
+
+Test flows with real customers using the Distribute by percentage(opens in a new tab) block.
+
+Keep menus basic with 3–5 options maximum.
+
+Best practices include the following:
+
+Provide a straightforward way to reach an agent in all automated flows.
+
+Use personalization where appropriate ("Welcome back, Jane.").
+
+Design flows that handle both successful interactions and potential errors.
+
+Ensure errors are logged and managed through operational procedures.
+
+Regularly review and update based on customer feedback.
+
+Now that you have reviewed designing effective flows, move on to the next tab to learn about queue and routing strategy.
+
+Customer experience continuous improvement process
+
+Customer experience excellence requires ongoing refinement, such as the following:
+
+Regularly analyze contact center metrics and customer feedback.
+
+Identify top contact drivers and work to address root causes.
+
+Test changes in a controlled environment before full implementation.
+
+Share customer insights across the organization.
+
+Queue and Routing Strategy
+
+Agent Experience Design
+
+Voice and Tone Guidelines
+Intelligent routing improves both efficiency and customer satisfaction. With intelligent routing(opens in a new tab), you can:
+
+Route to agents with the right skills for each issue.
+
+Use customer history to maintain continuity with previous agents.
+
+Offer callback options during high-volume periods.
+
+Prioritize based on business rules and customer needs.
+
+Now that you have reviewed queue and routing strategy, move on to the next tab to learn about agent experience design.
+
+Agent Experience Design
+
+Voice and Tone Guidelines
+Agent experience plays a vital role in delivering excellent customer service. To enhance agent effectiveness, implement these key practices:
+
+Provide agents with relevant customer information before they connect.
+
+Create efficient desktop layouts that reduce handling time.
+
+Implement tools like Amazon Q in Connect(opens in a new tab) knowledge bases for quick information access.
+
+Design scripts and guidance that feel natural, not robotic.
+
+The Amazon Connect Agent Workspace(opens in a new tab) helps achieve these goals by surfacing customer history, providing suggested responses, and streamlining common tasks.
+
+
+Voice and Tone Guidelines
+The language that you use shapes how customers perceive your brand. Use Amazon Connect to establish voice and tone guidelines, do the following:
+
+Create consistent voice prompts(opens in a new tab) that reflect your brand personality.
+
+Use clear, concise language that customers understand.
+
+Avoid jargon and technical terms.
+
+Test different messages to see what resonates with customers.
+
+For example, instead of "Your call is important to us, please continue to hold," consider more honest and helpful messaging. For instance, you could use, "We're currently experiencing higher than normal call volumes. Your estimated wait time is 5 minutes, or we can call you back when an agent is available."
+
+Lesson 25 of 28
+Knowledge Check
+The following questions will check your understanding of customer experience design principles.
+
+Which metric BEST measures how many initial contacts result in the desired outcome?
+
+
+Net promoter score (NPS)
+
+Correctly unselected
+
+Customer effort measurement
+
+Correctly unselected
+
+First call resolution (FCR)
+
+Correctly selected
+
+Customer satisfaction (CSAT)
+
+Correctly unselected
+SUBMIT
+
+Correct
+Correct. FCR measures resolution efficiency on initial contact.
+
+A contact center manager is designing a new Amazon Connect implementation for a healthcare provider's customer service department. The manager needs to determine the most effective approach for structuring the contact flow menu options.
+
+Which approach is considered the BEST practice for designing Amazon Connect contact flows?
+
+
+Create deep menu hierarchies with extensive sub-menus to handle every possible patient scenario
+
+Correctly unselected
+
+Implement basic menus with 3-5 options that provide direct paths to common healthcare tasks
+
+Correctly selected
+
+Build comprehensive menu trees that cover all department-specific routing possibilities
+
+Correctly unselected
+
+Design automated response systems that present all available service options upfront
+
+Correctly unselected
+SUBMIT
+
+Correct
+Keeping menus streamlined with 3-5 options ensures patients can quickly access common services like appointment scheduling, billing inquiries, or prescription refills. This design promotes efficiency and reduces customer friction points in healthcare contact flows.
+
+A travel company notices that customers who start in chat often need to call in later to complete their bookings. This causes frustration when they have to repeat information.
+
+Which customer experience principle should the company focus on improving?
+
+
+Self-service optimization
+
+Correctly unselected
+
+Proactive service
+
+Correctly unselected
+
+Omnichannel consistency
+
+Correctly selected
+
+Continuous feedback loop
+
+Correctly unselected
+SUBMIT
+
+Correct
+This is an omnichannel consistency issue. When customers switch channels (from chat to voice, in this example), their context and conversation history should follow them seamlessly. By implementing proper cross-channel context sharing in Amazon Connect, the company can eliminate the frustrating need for customers to repeat themselves. This creates a more connected experience.
+
+
+Lesson 26 of 28
+Summary
+Next up
+
+In this section, you explored how exceptional customer experiences in contact centers are deliberately designed with the customer at the center. By embracing key principles like reducing effort, personalizing interactions, and creating omnichannel consistency, you can transform routine service encounters into meaningful connections.
+
+Amazon Connect provides the flexible foundation to implement these principles through intelligent routing, personalized flows, and comprehensive analytics that measure your customer's experience. An outstanding customer experience is created by blending empathy with data-driven decisions. Apply these principles to your Amazon Connect implementation to create memorable positive customer moments. Focus on continuously listening and adapting to evolving customer expectations. Your contact center isn't just solving problems; it's about building relationships that drive loyalty and business growth.
+
+This concludes the course. The next section provides resources for further learning.
+
+

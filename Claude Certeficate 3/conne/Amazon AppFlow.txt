@@ -1,0 +1,839 @@
+Amazon AppFlow
+User Guide
+What is Amazon AppFlow?
+Amazon AppFlow is a fully-managed integration service that enables you to securely exchange 
+data between software as a service (SaaS) applications, such as Salesforce, and AWS services, such 
+as Amazon Simple Storage Service (Amazon S3) and Amazon Redshift. For example, you can ingest 
+contact records from Salesforce to Amazon Redshift or pull support tickets from Zendesk to an 
+Amazon S3 bucket. The following diagram illustrates how it works:
+In addition to this User Guide, you can also refer to the 
+Amazon AppFlow enables you to do the following:
+Amazon AppFlow API Reference.
+• Get started quickly — Create data flows to transfer data between a source and destination in 
+minutes, without writing any code.
+• Keep your data in sync — Run flows on demand or on a schedule to keep data in sync across 
+your SaaS applications and AWS services.
+• Bring your data together — Aggregate data from multiple sources so that you can train your 
+analytics tools more effectively and save money.
+• Keep track of your data — Use Amazon AppFlow flow management tools to monitor what data 
+has moved where and when.
+• Keep your data secure — Security is a top priority. We encrypt your data at rest and in transit.
+• Transfer data privately — Amazon AppFlow integrates with AWS PrivateLink to provide private 
+data transfer over AWS infrastructure instead of public data transfer over the internet.
+• Catalog your data for search and discovery — Catalog the data that you transfer to Amazon S3 
+in the AWS Glue Data Catalog. When you catalog your data, you make it easier to discover and 
+access with AWS analytics and machine learning services.
+• Organize transferred data into partitions and files — Use partition and aggregation settings to 
+optimize query performance for applications that access the data that you transfer.
+• Develop custom connectors — Use the Amazon AppFlow Custom Connector SDKs to build 
+connectors for data sources that aren't already integrated with the service. With custom 
+1
+Amazon AppFlow
+User Guide
+connectors, you can transfer data between private APIs, on-premise systems, other cloud 
+services, and AWS. The SDKs are available on GitHub:
+•
+•
+Amazon AppFlow Custom Connector SDK (Python)
+Amazon AppFlow Custom Connector SDK (Java)
+For a list of Amazon AppFlow Regions, see 
+General Reference.
+Use cases
+Amazon AppFlow Regions and Endpoints in the AWS 
+Following are some example uses cases that illustrate the benefits of using Amazon AppFlow.
+Transfer Salesforce opportunities to Amazon Redshift tables
+Create a flow triggered on each new record created in Salesforce Cloud that calculates the sales 
+potential and then transfers the modified record to an Amazon Redshift table.
+Analyze Slack conversations
+Create a flow triggered on a schedule that transfers conversation data from a Slack channel to 
+Amazon Redshift, Snowflake, or Amazon S3 for storage and analysis.
+Transfer support tickets from Zendesk for storage and analysis
+Create a manually triggered flow for all tickets with a common case number in Zendesk that 
+transfers ticket data to Amazon Redshift, Snowflake, or Amazon S3 for storage and analysis.
+Transfer aggregate data weekly to S3 at 100GB per flow
+Create a flow triggered on a weekly schedule to transfer Salesforce, Marketo, ServiceNow, and 
+Zendesk data to Amazon S3 in aggregate up to 100GB per flow with low latency.
+Related AWS services
+You can use the following services with Amazon AppFlow.
+AWS CloudTrail
+Amazon AppFlow is integrated with AWS CloudTrail, a service that provides a record of actions 
+taken by a user, role, or an AWS service in Amazon AppFlow. CloudTrail captures all API calls 
+Use cases
+2
+Amazon AppFlow
+User Guide
+for Amazon AppFlow as events. The calls captured include calls from the Amazon AppFlow 
+console and code calls to the Amazon AppFlow API operations. If you create a trail, you can enable 
+continuous delivery of CloudTrail events to an Amazon S3 bucket, including events for Amazon 
+AppFlow. If you don't configure a trail, you can still view the most recent events in the CloudTrail 
+console in Event history. Using the information collected by CloudTrail, you can determine the 
+request that was made to Amazon AppFlow, the IP address from which the request was made, who 
+made the request, when it was made, and additional details. For more information, see 
+Logging 
+Amazon AppFlow API calls with AWS CloudTrail in the Amazon AppFlow User Guide.
+AWS CloudFormation
+AWS CloudFormation provides a common language for you to model and provision AWS and third 
+party application resources in your cloud environment. AWS CloudFormation allows you to use 
+programming languages or a simple text file to model and provision, in an automated and secure 
+manner, all the resources needed for your applications across all regions and accounts. This gives 
+you a single source of truth for your AWS and third party resources. Amazon AppFlow supports 
+AWS CloudFormation for creating and configuring Amazon AppFlow resources along with the rest 
+of your AWS infrastructure—in a secure, efficient, and repeatable way. For more information, see
+AWS::AppFlow::ConnectorProfile and 
+AWS::AppFlow::Flow in the AWS CloudFormation User Guide.
+Amazon EventBridge
+Amazon AppFlow integrates with Amazon EventBridge to receive events from Amazon AppFlow 
+sources such as Salesforce. This enables you to publish events ingested by Amazon AppFlow to a 
+partner event bus in Amazon EventBridge. Amazon AppFlow supports the ingestion of Salesforce 
+Platform events and Change Data Capture events. You can configure rules in Amazon EventBridge 
+to match patterns from events such as those from Salesforce, and then route them to AWS 
+services such as AWS Lambda, AWS Step Functions, Amazon Simple Queue Service, and others. 
+You can also use Amazon AppFlow’s private data transfer option to ensure that events don't get 
+exposed to the public internet during transfers between AWS and Salesforce, improving security 
+and minimizing risks of Internet-based attack vectors. For more information, see the 
+EventBridge documentation page in the Amazon AppFlow User Guide.
+AWS Identity and Access Management (IAM)
+Amazon 
+IAM is an AWS service that helps an administrator securely control access to AWS resources. 
+Amazon AppFlow integrates with the IAM service so that you can control who in your organization 
+has access to Amazon AppFlow. For more information, see 
+AWS Identity and Access Management 
+for Amazon AppFlow in the Amazon AppFlow User Guide.
+Related AWS services
+3
+Amazon AppFlow
+User Guide
+Getting started with Amazon AppFlow
+This section provides an introduction to Amazon AppFlow with prerequisites for getting started. 
+The following diagram illustrates how you can use Amazon AppFlow to transfer and enrich data 
+from a data source to a data destination in your flow:
+Tasks
+•
+•
+Sign up for an AWS account
+Prerequisites
+Sign up for an AWS account
+To get started with AWS, you need an AWS account. For information about creating an AWS 
+account, see 
+Getting started with an AWS account in the AWS Account Management Reference 
+Guide.
+Prerequisites
+Complete the following prerequisites before getting started with Amazon AppFlow.
+• SaaS application setup — You must verify that you have the required information about the 
+source and destination applications, and that they meet the relevant configuration requirements. 
+Sign up for an AWS account
+4
+Amazon AppFlow
+Supported source and 
+User Guide
+For application-specific requirements and setup instructions, see 
+destination applications.
+• Identity and access management — Your administrator must grant you the permissions 
+required to create and run flows. For more information, see 
+Identity and access management for 
+Amazon AppFlow.
+• CloudFormation OAuth (Optional) — If you want to use CloudFormation to create a connector 
+profile for connectors that implement OAuth (such as Salesforce, Slack, Zendesk, and Google 
+Analytics), you must fetch the access and refresh tokens. You can do this by implementing your 
+own UI for OAuth, or by retrieving them from elsewhere. Alternatively, you can use the Amazon 
+AppFlow console to create the connector profile, and then use that connector profile in the flow 
+creation CloudFormation template.
+• Data encryption (Optional) — Amazon AppFlow encrypts your data and connection details 
+during transit and at rest. For more information, see 
+Data protection in Amazon AppFlow. When 
+you configure a flow, you specify an AWS Key Management Service CMK to use for encryption. 
+You can choose the AWS managed customer master key (CMK) that Amazon AppFlow creates by 
+default, named AWSDefaultEncryptionKey, or you can choose a customer managed CMK that 
+you create. To create a CMK, see 
+Creating symmetric CMKs in the AWS Key Management Service 
+Developer Guide. For examples of how to set IAM permissions for KMS access, see 
+policy examples for Amazon AppFlow.
+Identity-based 
+Prerequisites
+5
+Amazon AppFlow
+User Guide
+Tutorial: Transfer data between applications with 
+Amazon AppFlow
+This tutorial explains how to use Amazon AppFlow with 
+Amazon Simple Storage Service (Amazon 
+S3) and Salesforce through the AWS Management Console. Optionally, if you want to use 
+a different supported software as a service (SaaS) application, the tutorial provides general 
+instructions for how to create a flow. A flow uses a connection to transfer data between a source 
+and a destination. When you run a flow, Amazon AppFlow verifies that the data is available in the 
+source, processes the data according to the flow configuration, and transfers the processed data to 
+the destination.
+Objective
+In this tutorial, you learn to transfer data between applications. Specifically, you transfer data 
+both from Amazon S3 to Salesforce, and from Salesforce to Amazon S3. First, you synchronize 
+additional account records with the customer relationship management (CRM) data already stored 
+in Salesforce (Flow 1). You can optionally add validations to this flow to only transfer good data. 
+Then, you transfer the account data in Salesforce to Amazon S3 in an event-triggered flow (Flow 2). 
+When Amazon AppFlow detects a change to the target data in the CRM storage service, an event
+triggered flow runs. This way, you have access to up-to-date information in Amazon S3, where you 
+can import it into an object for data lake hydration to generate business value.
+In this tutorial, you accomplish the following:
+• Store a sample data set of accounts in 
+• Flow 1 — Use 
+Amazon Simple Storage Service (Amazon S3).
+Amazon AppFlow to transfer data from Amazon S3 to Salesforce.
+• Flow 2 — Use Amazon AppFlow to transfer data from Salesforce to Amazon S3.
+The following diagram shows the two workflows.
+6
+Amazon AppFlow
+User Guide
+Estimated cost: Some of the actions in this tutorial may incur minor charges on your AWS 
+account. The provided sample data is 1 KB. Should you choose to use your own data, you might 
+incur greater charges. Reduce charges by completing the tutorial through 
+Step 5: Clean up your 
+resources. For information about pricing, see 
+Topics
+•
+•
+•
+Prerequisites
+Step 1: Upload data to Amazon S3
+Amazon S3 pricing and 
+Step 2: Connect Amazon AppFlow to an application
+•
+•
+•
+Step 3: Transfer data from Amazon S3 to a SaaS destination
+Step 4: Transfer data from a SaaS source to Amazon S3
+Step 5: Clean up your resources
+Amazon AppFlow pricing.
+7
+Amazon AppFlow User Guide
+Prerequisites
+Before you begin, you need access to an AWS account and an account for a supported application. 
+This tutorial uses Salesforce, but you can follow the steps to create flows with a different 
+application. Before you can access the AWS services in this tutorial, your administrator must grant 
+the required permissions to your user, group, or role.
+• Amazon AppFlow setup — If you haven't already done so, complete the Getting started 
+prerequisites.
+• AWS Identity and Access Management (IAM) setup — You or your administrator must attach 
+the AWS managed policy AmazonAppFlowFullAccess to your user, group, or role. For 
+information on how to attach an IAM policy, see Adding and removing IAM identity permissions
+in the IAM User Guide. Also, you must create and attach the following policy to your user, group, 
+or role.
+JSON
+{ 
+  "Version":"2012-10-17",        
+  "Statement": [ 
+    { 
+      "Sid": "VisualEditor0", 
+      "Effect": "Allow", 
+      "Action": [ 
+        "s3:GetBucketTagging", 
+        "s3:ListBucketVersions", 
+        "s3:CreateBucket", 
+        "s3:ListBucket", 
+        "s3:GetBucketPolicy", 
+        "s3:PutEncryptionConfiguration", 
+        "s3:GetEncryptionConfiguration", 
+        "s3:PutBucketTagging", 
+        "s3:GetObjectTagging", 
+        "s3:GetBucketOwnershipControls", 
+        "s3:PutObjectTagging", 
+        "s3:DeleteObject", 
+        "s3:DeleteBucket", 
+        "s3:DeleteObjectTagging", 
+        "s3:GetBucketPublicAccessBlock", 
+        "s3:GetBucketPolicyStatus", 
+        "s3:PutBucketPublicAccessBlock", 
+Prerequisites 8
+Amazon AppFlow User Guide
+        "s3:PutAccountPublicAccessBlock", 
+        "s3:ListAccessPoints", 
+        "s3:PutBucketOwnershipControls", 
+        "s3:PutObjectVersionTagging", 
+        "s3:DeleteObjectVersionTagging", 
+        "s3:GetBucketVersioning", 
+        "s3:GetBucketAcl", 
+        "s3:PutObject", 
+        "s3:GetObject", 
+        "s3:GetAccountPublicAccessBlock", 
+        "s3:ListAllMyBuckets", 
+        "s3:GetAnalyticsConfiguration", 
+        "s3:GetBucketLocation" 
+      ], 
+      "Resource": "*" 
+    } 
+  ]
+}
+For information on how to create IAM policies, see Creating IAM policies in the IAM User Guide. 
+These two policies grant you all the permissions that you need to complete this tutorial. For 
+more information on the different types of policies, see Managed policies and inline policies in 
+the IAM User Guide.
+• Salesforce setup (Optional) — If you already have a Salesforce account or you want to complete 
+this tutorial with a different SaaS application, you can skip this step. Sign up for a free Salesforce 
+developer account here.
+Step 1: Upload data to Amazon S3
+Suppose you have data that you want to turn into Salesforce account records. You acquired 
+this data from a web form and used it to generate account records. You can upload this list of 
+additional accounts to Amazon Simple Storage Service (Amazon S3). Amazon AppFlow can transfer 
+the data from Amazon S3 to Salesforce to synchronize your customer relationship management 
+(CRM) data.
+To use Amazon S3 as your source for the flow, create a storage container, called a bucket, and 
+populate it with data. Amazon AppFlow can transfer the data within an S3 bucket to any of the 
+supported destinations. In this step, you create an S3 bucket, create a source folder within the S3 
+bucket, and upload sample data to the source folder.
+Step 1: Upload data to Amazon S3 9
+Amazon AppFlow
+User Guide
+Topics
+•
+•
+•
+•
+•
+(Optional) Download sample data
+Create an S3 bucket
+Create a folder in an S3 bucket
+Upload data to Amazon S3
+Additional resources
+(Optional) Download sample data
+If you have your own data that you want to use for this tutorial, you can skip this step. Also, if you 
+use a SaaS application other than Salesforce, this sample data may not be useful.
+The sample data includes nine account records. Download this sample data set.
+To get the sample data
+1. Download the zip file 
+tutorial-account-data.zip.
+2. Extract the zip file. The unzipped file called tutorial-account-data.csv contains the 
+sample data set.
+Create an S3 bucket
+After you extract your sample data, use the AWS Management Console to create an S3 bucket to 
+store your data. Your S3 bucket must occupy the same AWS Region as the one where you want to 
+use Amazon AppFlow.
+To create an S3 bucket
+1. Open the Amazon S3 console at 
+https://console.aws.amazon.com/s3/.
+2. In the Buckets section, choose Create bucket.
+3. For Bucket name, enter a descriptive name. The name must be globally unique. For example, 
+enter username-appflow-tutorial.
+4. For AWS Region, choose the same Region as your Amazon AppFlow console.
+(Optional) Download sample data
+10
+Amazon AppFlow
+User Guide
+Warning
+If your S3 bucket isn't in the same AWS Region as your console, your flow can't access 
+it.
+5. Keep the other settings at their default values. Choose Create bucket.
+Create a folder in an S3 bucket
+Now that you have an S3 bucket, use the console to create a folder in the bucket where you want 
+to store the sample data. While a folder isn't essential, it's useful for keeping your files organized.
+To create a folder in Amazon S3
+1. Open the Amazon S3 console at 
+https://console.aws.amazon.com/s3/.
+2. In the Buckets section, choose your S3 bucket from the list.
+3. Under the Objects tab, choose Create folder.
+4. For the folder name, enter source.
+5. Choose Create folder.
+Upload data to Amazon S3
+Now that you have set up your S3 bucket, upload the data.
+To populate the S3 bucket with data
+1. Open the Amazon S3 console at 
+https://console.aws.amazon.com/s3/.
+2. In the Buckets section, choose your S3 bucket from the list.
+3. Choose the source folder. Then, under the Objects tab, choose Upload.
+4. Choose Add files, and choose your data set. If you downloaded the sample data set, choose 
+the tutorial-account-data.csv file.
+5. Choose Upload.
+You now have an S3 bucket with sample data in the source folder.
+Create a folder
+11
+Amazon AppFlow
+User Guide
+Additional resources
+For more information on Amazon S3, see the following resources:
+•
+•
+Amazon S3 in the Amazon AppFlow User Guide.
+Amazon S3 in the Amazon S3 User Guide.
+Step 2: Connect Amazon AppFlow to an application
+You can securely move your data between supported source and destination applications with 
+a connection in Amazon AppFlow. Connections store the configuration details and credentials 
+necessary to run flows without the need to repeatedly enter information. After you have an 
+established connection with an application, you can use that connection in new or existing flows.
+Topics
+•
+•
+•
+Prerequisites
+Create a connection between Amazon AppFlow and a SaaS application
+Additional resources
+Prerequisites
+Before you begin, complete the 
+tutorial prerequisites.
+Create a connection between Amazon AppFlow and a SaaS application
+If you want to create and run a flow, you must establish a connection with the software as a service 
+(SaaS). You can create this connection while you create the flow, or you can create the connection 
+separately. Here, you create a connection in Amazon AppFlow before you create the flow.
+To create a connection with Salesforce
+1. Open the Amazon AppFlow console at 
+https://console.aws.amazon.com/appflow/.
+2. Expand the navigation pane on the left-hand side of the console page and choose
+Connections.
+3. For Connectors, select Salesforce.
+4. Choose Create connection.
+Additional resources
+12
+Amazon AppFlow
+User Guide
+5. Leave the default selections and enter a Connection name. For example, enter my
+salesforce-connection.
+6. Choose Continue.
+7. If you're not already logged into Salesforce, Amazon AppFlow prompts you to log in.
+8. Choose Allow to give Amazon AppFlow access to your Salesforce account.
+To create a connection with other applications
+• Go to the 
+Supported applications page and select the application that you want to connect 
+with. Follow the instructions for your selected application.
+You now have a connection in the Amazon AppFlow console to your SaaS account. If you use the 
+same third-party application in both flows, you only need one connection.
+Additional resources
+For more information on connections, see the following resources:
+•
+•
+Managing connections in the Amazon AppFlow User Guide.
+Salesforce in the Amazon AppFlow User Guide.
+Step 3: Transfer data from Amazon S3 to a SaaS destination
+Amazon S3 now hosts your data, but you still need to synchronize all your records in the 
+destination. To transfer data to a supported destination, you must create and run a flow with 
+Amazon AppFlow. In this step, you use the AWS Management Console to send data from Amazon 
+S3 to either Salesforce or another software as a service (SaaS) application.
+Topics
+•
+•
+•
+•
+•
+Prerequisites
+Create a flow
+Run a flow
+View transferred data
+(Optional) Edit flow to add validations
+Additional resources
+13
+Amazon AppFlow
+User Guide
+Prerequisites
+Before you begin, complete 
+Create a flow
+Step 1: Upload data to Amazon S3.
+The following procedures detail how to create a flow from Amazon S3 to Salesforce, but you can 
+follow the steps with any destination.
+To complete Step 1: Specify flow details
+1. Open the Amazon AppFlow console at 
+https://console.aws.amazon.com/appflow/. Ensure the 
+AWS Region of your Amazon AppFlow console is the same one as your S3 bucket.
+2. Choose Create flow.
+3. For Flow name, enter s3-to-SaaS. For example, if your destination is Salesforce, enter s3
+to-salesforce.
+4. Under Data encryption, you have the option to activate custom encryption settings. By 
+default, Amazon AppFlow encrypts your data with a key in AWS Key Management Service 
+(AWS KMS). AWS creates, uses, and manages this key for you. Amazon AppFlow always 
+encrypts your data during transit and at rest. The default encryption is adequate for this 
+tutorial, so don't select custom encryption settings. For more information, see 
+in the Amazon AppFlow User Guide.
+Data protection
+5. Under Tags, you have the option to add tags to your flow. Tags are key-value pairs that assign 
+metadata to resources that you create. Tags are not necessary for this tutorial. For more 
+information, see 
+Tagging AWS resources in the AWS General Reference.
+6. To continue to Step 2: Configure flow, choose Next.
+To complete Step 2: Configure flow
+1. For Source name, choose Amazon S3.
+2. In Bucket details, for Choose an S3 bucket, select your S3 bucket.
+3. For Enter bucket prefix, enter source. Bucket prefixes are folders.
+4. Ensure Data format preference is CSV format.
+5. Configure the Destination details. These details vary based on the destination that you want 
+to transfer data to.
+• If you want to transfer data to Salesforce, do the following:
+Prerequisites
+14
+Amazon AppFlow
+For Destination name, select Salesforce.
+User Guide
+a.
+b. For Choose Salesforce connection, select your connection. For example, select my
+salesforce-connection, the connection that you created in the previous step.
+Tip
+If you don't have a connection, you can choose Connect to create one now.
+c.
+If you want to use the sample data that you downloaded, for Choose Salesforce 
+object, select Account.
+• If you want to transfer data to another supported application besides Salesforce, do the 
+following:
+a.
+For Destination name, select the destination that you want for your data.
+b. For Choose connection, select the connection that you created, or create one.
+c.
+Select object and specify the correct object type for your data.
+d. If there are any other destination details, configure the required fields.
+6. In the Error handling section, you can specify how you want the flow to handle errors and 
+where to put the data that causes errors. For this tutorial, you can leave the settings in this 
+section at their default values.
+7. For Flow trigger, leave the default selection Run on demand. When you select this value, you 
+use a single button in the console to run the flow.
+Tip
+You can also run flows on a schedule. Amazon AppFlow bases the time zone for this 
+schedule on your web browser. For more information, see 
+Schedule-triggered flows in 
+the Amazon AppFlow User Guide.
+8. To continue to Step 3: Map data fields, choose Next.
+To complete Step 3: Map data fields
+1. Map your data fields. These vary based on the destination for your data transfer.
+• If you're transferring to Salesforce, do the following:
+Create a flow
+15
+Amazon AppFlow
+Under Mapping method, leave the default selection Manually map fields.
+User Guide
+a.
+b. Under Destination record preference, leave the default selection Insert new records.
+c.
+In the Source to destination field mapping section, select the Choose source fields
+dropdown and select Map all fields directly.
+Important
+If you use the sample data, ensure Account Name maps to Account Name, 
+Account Type maps to Account Type, Billing State/Province maps to Billing 
+State/Province, Account Rating maps to Account Rating, and Industry maps to 
+Industry.
+d. Choose Map selected fields.
+• If you want to transfer data to another supported application besides Salesforce, do the 
+following:
+a.
+Select Mapping method and specify how you want to map your data. You can choose 
+to map the source fields to the destination fields manually, or else upload a .csv file 
+that includes these mappings.
+b. Map your fields from the source field name to the destination field name.
+2. Under Validations, specify what happens to invalid data within the flow. For this step, you 
+don't need any validations.
+3. To continue to Step 4: Add filters, choose Next.
+To complete Step 4: Add filters
+1. Under Filters, specify what data the flow transfers. With this setting, you can ensure the flow 
+transfers data only when it meets certain criteria. For this tutorial, you don't need any filters.
+2. To continue to Step 5: Review and create, choose Next.
+To complete Step 5: Review and create
+• Review the flow settings, and then choose Create flow.
+Create a flow
+16
+Amazon AppFlow
+User Guide
+Run a flow
+You now have a run-on-demand flow. When you choose the Run flow button in the console, this 
+flow transfers your data.
+To run a flow
+1. In Flows, select your flow from the list.
+2. Choose Run flow.
+When the flow successfully runs, a banner appears. If you use the provided data, the banner shows 
+nine processed records.
+View transferred data
+After your flow runs, you can view the data in the destination.
+To view transferred data
+• If you use the sample Salesforce account data, navigate to your Salesforce Account tab to view 
+the imported account records. For more information on Salesforce accounts, see 
+accounts.
+Salesforce 
+You have now transferred data from Amazon S3 to Salesforce or the SaaS application that you 
+chose. If you used Salesforce and the sample data, you have synchronized and expanded your 
+Salesforce account data.
+(Optional) Edit flow to add validations
+The flow that you ran transferred all the records in the data set. You can add validations to a flow 
+so that you transfer only valid records. In this procedure, if you use the sample data, you edit your 
+Amazon S3 to Salesforce flow to transfer only account records with ratings.
+Run a flow
+17
+Amazon AppFlow
+User Guide
+Before you edit and run the flow again, delete the records that you transferred from the original 
+flow.
+To delete account records in Salesforce
+• Follow the directions in 
+Mass Delete Records.
+For the sample data set, suppose you consider account records valid only if they have an account 
+rating. Two of the account records don't have associated account ratings. You don't want these 
+records to transfer from Amazon S3 so that you only have valid data in Salesforce.
+To edit a flow and add validations
+1. Open the Amazon AppFlow console at 
+2. In Flows, choose your flow.
+https://console.aws.amazon.com/appflow/.
+3. Choose Actions, then choose Edit flow.
+4. Choose Next until you reach Step 3: Edit data fields.
+5. In Validations, choose Add validation.
+6. If you use the sample data, for Field name, select Account rating. For Condition, choose
+Values missing or null. For Action, choose Ignore record. This configuration will omit the 
+transfer of account records with missing rating values.
+7. Choose Save.
+To run the edited flow and view transferred data
+1. In Flows, select your flow from the list.
+2. Choose Run flow. When the flow successfully runs, a banner appears.
+(Optional) Edit flow to add validations
+18
+Amazon AppFlow
+User Guide
+3. If you use the sample Salesforce account data, navigate to your Salesforce Account tab to view 
+the imported account records. For more information on Salesforce accounts, see 
+Salesforce 
+Accounts.
+If you used the sample data, only seven of the nine records transferred. Example4 and Example8
+do not appear because they have no account ratings associated with them.
+Step 4: Transfer data from a SaaS source to Amazon S3
+Suppose you now want to transfer your data from Salesforce to Amazon S3. With Amazon S3, you 
+can synchronize and replicate customer relationship management (CRM) data into data lakes to 
+analyze or use to drive machine learning. To keep this information up to date, you can create an 
+event-triggered flow from Salesforce to Amazon S3. An event-triggered flow runs when Amazon 
+AppFlow detects a change to the target data in the CRM storage service.
+After you create an S3 bucket, you can set up and run a flow with Amazon AppFlow to transfer 
+data from a supported source to the S3 bucket. You can use one S3 bucket as both a source and 
+destination, so you don't need to create a new S3 bucket if you already created one for this tutorial. 
+In this step, you use the AWS Management Console to create and run a flow from Salesforce or 
+another software as a service (SaaS) application to Amazon S3.
+Topics
+•
+•
+•
+•
+•
+Prerequisites
+Change data capture in Salesforce
+Create a flow
+Run a flow
+View transferred data
+Step 4: Transfer data from a SaaS source to Amazon S3
+19
+Amazon AppFlow
+User Guide
+Prerequisites
+Before you begin, you need an S3 bucket to receive the data if you don't already have one. You 
+can use the same S3 bucket as both a source and destination for different flows. This tutorial uses 
+Salesforce for a SaaS account, but you can use another supported source application if you want. 
+Some flow options that this tutorial uses don't work for a SaaS application other than Salesforce.
+• Amazon S3 setup — If you don't already have an S3 bucket, 
+Amazon S3 to receive your data.
+Create an S3 bucket to prepare 
+• Salesforce setup (Optional) — If you already have a Salesforce account, or you want to 
+complete this tutorial with a different SaaS application, you can skip this step. Sign up for a free 
+Salesforce developer account 
+here.
+• Transfer data to Salesforce (Optional) — If you use Salesforce for this tutorial, we recommend 
+that you complete 
+Step 3: Transfer data from Amazon S3 before you continue.
+Change data capture in Salesforce
+To run an event-triggered flow, Amazon AppFlow needs to receive a notification when a record 
+changes. When you use the change data capture feature in Salesforce, you can generate change 
+event notifications for selected entities. If you don't have administrator-level credentials, you 
+might not be able to select entities to generate change notifications. However, the free developer 
+account has administrator privileges.
+To enable change data capture
+1. Open Salesforce at 
+www.salesforce.com and log in to your account.
+2. Navigate to the Change Data Capture page.
+3. If you use the sample data, select Account (Account) to generate change event notifications. 
+Otherwise, select the appropriate entity for your data.
+For more information about Salesforce change data capture, see 
+Create a flow
+Change Data Capture.
+The following procedures detail how to create a flow from Salesforce to Amazon S3, but you can 
+follow the steps with any supported source. Some flow options that this tutorial uses don't work 
+for a SaaS application other than Salesforce, but alternate steps appear.
+Prerequisites
+20
+Amazon AppFlow
+https://console.aws.amazon.com/appflow/.
+User Guide
+To complete Step 1: Specify flow details
+1. Open the Amazon AppFlow console at 
+2. Choose Create flow.
+3. For Flow name, enter SaaS-to-s3. For example, if your source is Salesforce, enter
+salesforce-to-s3.
+4. Under Data encryption, you have the option to activate custom encryption settings. By 
+default, Amazon AppFlow encrypts your data with a key in AWS Key Management Service 
+(AWS KMS). AWS creates, uses, and manages this key for you. Amazon AppFlow always 
+encrypts your data during transit and at rest. The default encryption is adequate for this 
+tutorial, so don't select custom encryption settings. For more information, see 
+Data protection
+in the Amazon AppFlow User Guide.
+5. Under Tags, you have the option to add tags to your flow. Tags are key-value pairs that 
+assign metadata to resources that you create. Tags aren't necessary for this tutorial. For more 
+information, see 
+Tagging AWS resources in the AWS General Reference.
+6. To continue to Step 2: Configure flow, choose Next.
+To complete Step 2: Configure flow
+1. Configure the Source details. These details vary based on the source that you want to transfer 
+data from.
+• If you want to transfer data from Salesforce, do the following:
+a.
+For Source name, choose Salesforce.
+b. For Choose Salesforce connection, select your connection. For example, select my
+salesforce-connection, the connection that you created in a previous step.
+Tip
+If you don't have a connection, you can choose Connect to create one now.
+c.
+Select Salesforce events.
+d. If you use the sample data, for Choose Salesforce event, select Account Change 
+Event. Otherwise, select the event that matches your data.
+• If you want to transfer data from another supported application besides Salesforce, do the 
+following:
+Create a flow
+21
+Amazon AppFlow
+For Source name, select the source that you want for your data.
+User Guide
+a.
+b. For Choose connection, select the connection that you created, or create one.
+c.
+Select object and specify the correct object type for your data.
+d. If there are any other source details, configure the required fields.
+2. For Destination name, choose Amazon S3.
+3. In Bucket details, for Choose an S3 bucket, select your S3 bucket. Use the same S3 bucket that 
+contains the source folder from the previous step.
+4. For Enter bucket prefix, enter destination. Bucket prefixes are folders.
+Tip
+If you don't have a folder that matches the name that you entered, the flow 
+automatically creates one when it runs.
+5. Configure the Flow trigger. This varies based on the source where you want to transfer data 
+from.
+• If you want to transfer data from Salesforce, leave the default selection Run flow on 
+event.
+• If you want to transfer data from another supported application besides Salesforce, leave 
+the default selection Run on demand. This option allows you to run the flow with the 
+selection of one button in the console.
+Tip
+You can also run flows on a schedule. Amazon AppFlow bases the time zone for 
+this schedule on your web browser. For more information, see 
+flows in the Amazon AppFlow User Guide.
+6. To continue to Step 3: Map data fields, choose Next.
+To complete Step 3: Map data fields
+Schedule-triggered 
+1. Under Mapping method, leave the default selection Manually map fields.
+2. In the Source to destination field mapping section, select the Choose source fields dropdown 
+and select Map all fields directly.
+Create a flow
+22
+Amazon AppFlow
+User Guide
+3. Under Validations, specify what happens to invalid data within the flow. For this step, you 
+don't need any validations.
+4. To continue to Step 4: Add filters, choose Next.
+To complete Step 4: Add filters
+1. Under Filters, specify what data the flow transfers. With this setting, you can ensure the flow 
+transfers data only when it meets certain criteria. For this tutorial, you don't need any filters.
+2. To continue to Step 5: Review and create, choose Next.
+To complete Step 5: Review and create
+• Review the flow settings, then choose Create flow.
+Run a flow
+You now have a flow. The source that you use determines how you run this flow.
+Run an event-triggered flow with Salesforce
+Your event-triggered flow runs when a change occurs to a record that you've set up to generate 
+change event notifications. Here, you change a record within your Salesforce account to activate a 
+flow run.
+To run an event-triggered flow with Salesforce
+1. Open the Amazon AppFlow console at 
+https://console.aws.amazon.com/appflow/.
+2. In Flows, select the salesforce-to-s3 flow.
+3. Choose Activate flow.
+4. Open Salesforce at 
+www.salesforce.com and log in to your account.
+5. Navigate to the page where Salesforce stores your records. For the sample data, this is the
+Accounts page.
+6. Edit one of the records. For example, in the sample data, change the Rating in Example3 from
+cold to hot.
+Run a flow (event-triggered or on-demand)
+23
+Amazon AppFlow
+User Guide
+After about a minute, refresh your flow page in Amazon AppFlow. When the flow successfully runs, 
+a timestamp from the last flow run appears.
+Run an on-demand flow with a supported SaaS source
+Your on-demand flow runs when you choose the Run flow button in the console.
+To run an on-demand flow
+1. In Flows, select your flow from the list.
+2. Choose Run flow.
+When the flow successfully runs, a banner appears.
+View transferred data
+The data from your source now resides in your S3 bucket. From the S3 bucket, you can, for 
+example, consume the data from multiple AWS services for analysis. In this step, you download and 
+view the data on your computer.
+To retrieve the transferred data
+1. Open the Amazon S3 console at 
+https://console.aws.amazon.com/s3/.
+2. In Buckets, choose your S3 bucket from the list.
+3. In your S3 bucket, choose the destination folder. Then choose the flow folder, for example,
+salesforce-to-s3.
+4. The folder contains one file. Select this file and choose Download.
+5. Navigate to the file in your Downloads folder and rename it with a descriptive name.
+View transferred data
+24
+Amazon AppFlow
+User Guide
+6. Open the file to view the updated record.
+You've now transferred data from Salesforce or the SaaS that you chose to Amazon S3. If you used 
+Salesforce, you set up an event-triggered flow to keep up-to-date with changing data.
+Step 5: Clean up your resources
+After you've completed the tutorial, it's good practice to clean up any resources that you no longer 
+want to use. This way, your account doesn't incur any further charges.
+Topics
+•
+•
+•
+Clean up in Amazon S3
+Clean up in Amazon AppFlow
+Clean up in Salesforce
+Clean up in Amazon S3
+Because you used an S3 bucket as both a source and a destination throughout this tutorial, 
+Amazon S3 hosted multiple files. Unless you delete these files, their storage continues to incur 
+charges on your AWS account. Before you delete an S3 bucket, ensure you have saved any 
+important files to another location.
+To clean up your S3 bucket
+1. Open the Amazon S3 console at 
+https://console.aws.amazon.com/s3/.
+2. In the Buckets section, select your S3 bucket and choose Empty. Follow the prompts to delete 
+the contents of the bucket.
+3. In the Buckets section, select your S3 bucket and choose Delete. Follow the prompts to delete 
+the S3 bucket.
+Warning
+Because S3 bucket names are globally unique, when you delete your S3 bucket, 
+someone else can use its name. If you want to reserve an S3 bucket name, don't delete 
+the bucket.
+Step 5: Clean up
+25
+Amazon AppFlow
+User Guide
+Now you have deleted all of the Amazon S3 resources that you created for the tutorial.
+For more information on how to empty and delete S3 buckets, see the following resources:
+•
+•
+Emptying a bucket in the Amazon S3 User Guide.
+Deleting a bucket in the Amazon S3 User Guide.
+Clean up in Amazon AppFlow
+Amazon AppFlow stores both your connection and flows. To clean up all resources that you created 
+in this tutorial, delete the two flows and your connection to the SaaS application.
+To clean up your flows
+1. Open the Amazon AppFlow console at 
+https://console.aws.amazon.com/appflow/.
+2. In the Flows section, select a flow and choose Delete. Follow the prompts to delete your flow.
+3. Perform the above step for any flows that remain.
+To clean up your connection
+1. Open the Amazon AppFlow console at 
+https://console.aws.amazon.com/appflow/.
+2. In the Connections section, under Connectors, open the Choose a connector box. Select the 
+connector that you used in the tutorial.
+3. Select the connection and choose Delete.
+4. If you used more than one connector, repeat steps 2 and 3 for all connectors.
+Now you have deleted all of the resources that you created within Amazon AppFlow for the 
+tutorial.
+Clean up in Salesforce
+If you used Salesforce for this tutorial and uploaded the sample data from an S3 bucket to 
+Salesforce, you might want to delete the sample account records.
+To delete imported records in Salesforce
+• Follow the directions in 
+Mass delete records.
+Clean up in Amazon AppFlow
+26
+Amazon AppFlow
+User Guide
+After you complete these steps, you have cleaned up all of the resources that you created in this 
+tutorial. Deleted resources no longer incur charges on your AWS account.

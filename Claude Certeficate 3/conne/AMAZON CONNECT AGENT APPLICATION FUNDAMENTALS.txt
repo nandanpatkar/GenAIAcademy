@@ -1,0 +1,897 @@
+Lesson 2 of 9
+Introduction to Amazon Connect Agent Applications
+Lesson objectives
+
+In this lesson, you will:
+
+Identify Amazon Connect agent applications and their core functionality.
+Recognize the benefits of using Amazon Connect agent applications.
+
+Lesson introduction
+
+Contact center agents need access to relevant customer context to effectively handle contacts across different channels. Amazon Connect offers two web browser applications agents can use to address customers' inquiries: the Contact Control Panel (CCP) and the agent workspace. In this lesson, you will learn about the core functionality offered by these applications.
+
+Amazon Connect agent applications
+
+Contact Control Panel (CCP)
+
+The CCP application allows agents to interact with customers. Within the CCP, agents can dial, consult, transfer or conference calls, handle or transfer chats, or handle offline tasks related to customers. 
+
+To launch the CCP, agents use a browser bookmark or a desktop shortcut to a URL link provided by their contact center administrator. This allows them to work from home or from their organization’s office.
+
+With the CCP, agents can take calls over an internet connection using any supported web browser and a USB headset. The Agent headset and workstation requirements for the CCP(opens in a new tab) link includes guidance on minimum and recommended agent equipment. Amazon Connect can also be configured to forward the audio portion of a call to agents' mobile devices or any phone number they own. In this configuration, agents must first log into the CCP using a supported browser and make themselves available to take calls. 
+
+Select each numbered marker in the following image to explore the CCP widget agent experience.
+
+CCP phone tab with numbered markers for agent status, channel tabs, settings, agent name, quick connects, number pad.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Agent workspace
+
+The agent workspace is a single, intuitive interface that provides agents with customer information and assisted guidance. The CCP widget is embedded in the agent workspace, giving agents access to all CCP features. With the agent workspace, agents handling interactions on any channel can see the customer data and context as soon as their interaction starts. Agents get real-time guidance and suggestions on the steps to follow to solve customer issues fast. 
+
+(opens in a new tab)
+
+Agents can access the agent workspace using the same supported web browser(opens in a new tab) as the CCP. Like with the CCP, agents use a browser bookmark or a desktop shortcut to a URL link provided by their contact center administrator.
+
+As seen in the following image, supervisors handling contacts and requiring access to the agent workspace can launch the application from the top of the Amazon Connect console.
+
+Screenshot of the Amazon Connect console with highlight on access to the Agent Workspace application.
+When agents receive a new customer interaction, the customer context is displayed on the screen. Customer data includes demographics information used to validate the contact, cases, and previous contact history. Data collected from the customer or system of record data searches is also available and displayed to agents. 
+
+You can use configuration to provide agents with step-by-step guidance and assistance based on the organization's knowledge articles and processes. Additionally, upload relevant knowledge articles to help provide agents with AI-assisted responses and suggestions.
+
+To learn more about the built-in features of the agent workspace, select the numbered markers below.
+
+Screenshot of the Amazon Connect agent workspace showcasing various configuration options and built-in features.
+
+
+
+
+
+
+
+
+
+
+
+
+Benefits of agent applications
+
+Scale operations while providing high quality voice
+
+The CCP delivers high quality real-time web communication (WebRTC) audio and video over an internet connection. This helps organizations deliver excellent customer service without having agents tied to a traditional call center setup.
+
+Scenario
+AnyOrganization Retailer needs to scale their operations during the holiday season. Because the CCP works anywhere there is internet connectivity, AnyOrganization Retailer employs Li Juan as a customer service agent working from her home office.
+
+
+
+At the beginning of her shift Li Juan launches the CCP and changes the status to Available to start taking calls. Because the CCP runs in her web browser, she uses her headset and does not need a physical desk phone.
+
+
+
+When a customer calls into AnyOrganization Retailer's contact center, Li Juan provides assistance with clear two-way voice communication without lags, echoes, or dropouts. 
+
+
+
+Li Juan is able to handle customer inquiries seamlessly using the CCP's easy-to-use interface. 
+
+Screenshot of Contact Control Panel while agent is on a call.
+Simplify agent operations with a unified agent experience
+
+By integrating with internal and external applications, the agent workspace empowers agents to quickly resolve complex issues. Agents benefit from a unified view of customer information, AI powered recommendations, and step-by-step guidance. 
+
+Scenario
+AnyCompany Financial agents can efficiently handle complex credit card and loan product inquiries using the Amazon Connect agent workspace. 
+
+
+
+When customers contact AnyCompany Financial the agent workspace integrates with internal systems such as customer relationship management (CRM) and core banking applications. The integration provides agents with a comprehensive view of the customer's profile. The unified view includes account details, transaction history, outstanding balances, and any pending requests or issues.
+
+
+
+Using generative artificial intelligence (generative AI) and machine learning capabilities, the agent workspace analyzes the customer's inquiry and provides agents with real-time recommendations. For instance, if a customer inquires about a loan product, the system can recommend loan options based on the customer's financial profile and eligibility criteria.
+
+
+
+The agent workspace provides agents with contextual guidance and prompts based on the customer's inquiry and the specific product or service. For example, when addressing a credit card dispute, the system can guide the agent through the necessary steps. This includes gathering relevant information and initiating the dispute process. Similarly, for loan product inquiries, the system can walk the agent through the application process, document requirements, and follow-up actions.
+
+
+
+The agent workspace can also integrate with external applications and data sources to enhance the agent's ability to resolve complex issues. For instance, for loan product inquiries, the agent workspace can integrate with credit bureaus and external databases to verify customer information and eligibility criteria.
+
+Screenshot of Amazon Connect Agent Workspace: Customer profile view with unified details.
+Reduce handle time with contextual agent guidance
+
+The agent workspace can automatically identify customer issues and recommend appropriate steps to solve them. It uses data available for the current contact to dynamically adapt agent guidance. This reduces agent time spent on manual searches and duplicate data entry, and can decrease the average handle time. 
+
+Scenario
+Ana Carolina Silva, a rental car customer, calls AnyCompany Rent-a-Car to modify an existing reservation. Diego Ramirez is a new agent working for AnyCompany Rent-a-Car. As soon as the phone rings, Diego sees Ana Carolina's profile automatically populate in the agent workspace. Diego sees Ana Carolina's full name, account number, contact information, and current reservation.
+
+
+
+Diego greets Ana Carolina warmly and confirms the reservation details. Using the information collected from Ana Carolina's interaction with the IVR system, the agent workspace recommends steps to guide Diego. He sees options to either update the existing reservation or make a new one. Diego, who recently worked for another car rental contact center, is excited at how efficiently he can handle the contact. At his prior company, he had to check the reservation system for even basic customer inquiries.
+
+
+
+As a new agent, Diego is unclear about how to help Ana Carolina, as her inquiry becomes more complex. Rather than requesting help from a supervisor or opening multiple systems to find procedures, he uses the agent assist widget. The widget identifies Ana Carolina's intent using the real-time conversation, it suggests agent responses, and provides detailed recommendations along with information source links. 
+
+
+
+The agent workspace agent assist and step-by-step guides allow Diego to efficiently resolve Ana Carolina's inquiry while delivering a positive customer experience.
+
+Agent Workspace showing CCP and list of interactions on the left panel, and step-by-step guides in the main panel
+Check Your Knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+Which of the following are benefits of using agent applications? (Select THREE.)
+
+Agents can take calls over an internet connection using any supported web browser and a USB headset. 
+
+Incorrectly unchecked
+Agents can use the agent workspace to see data from multiple applications in a unified view.
+
+Incorrectly unchecked
+Agents can use any web browser and headset to take calls from anywhere.
+
+Correctly unchecked
+Agents receive AI assistance and contextual guidance on best ways to address customer issues.
+
+Correctly checked
+The agent's CCP can forward calls to the agent's mobile device.
+
+Incorrectly checked
+Agents can easily contact supervisors and open multiple applications to address customer issues.
+
+Correctly unchecked
+SUBMIT
+
+Incorrect
+Benefits of using the CCP include accessing calls over an internet connection using any supported web browser and a USB headset. In Amazon Connect, agents can access a single, unified view that helps them efficiently handle customer inquiries. The agent workspace can automatically identify customer issues and recommend appropriate steps to solve them. The data available for the current contact is used to dynamically adapt the guidance based on the customer available context. 
+
+Amazon Connect can be configured to forward the audio portion of a call to agents' mobile devices or any phone number they own. In this configuration, agents must first log into the CCP using a supported browser and make themselves available to take calls. Although this configuration is possible, it is not the CCP that forwards the call, but  the Amazon Connect service.
+
+
+TAKE AGAIN
+Which of the following are built-in features of the CCP? (Select THREE.)
+
+Handle calls over an internet connection
+
+Incorrectly unchecked
+Redirect calls to a mobile device
+
+Incorrectly unchecked
+Receive step-by-step guidance
+
+Incorrectly checked
+Select agent status
+
+Correctly checked
+Ask for guidance using natural language
+
+Correctly unchecked
+Display customer profile information
+
+Correctly unchecked
+SUBMIT
+
+Incorrect
+With CCP, agents can take calls over an internet connection. 
+
+Amazon Connect can be configured to forward the audio portion of a call to agents' mobile device or any phone number they own. Agents can select a status from the agent status drop down list located at the top-left of the CCP.
+
+
+
+Step-by step guidance is a feature available in the Agent Workspace, but not a built-in feature of the CCP. The standard CCP functionality does not include guidance using natural language, nor customer profile information. These are features of the Agent Workspace.
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you have been introduced to the CCP and Amazon Connect agent workspace agent applications. You have learned their benefits and how agents can access them. In the next lesson, you will learn about how to use the CCP.
+
+Lesson 3 of 9
+Using the Contact Control Panel
+Lesson objectives
+
+In this lesson, you will:
+
+Identify the use of built-in CCP features.
+Recognize built-in and custom CCP functionality.
+
+Lesson introduction
+
+In this lesson, you will explore the built-in functionality of the CCP and discover optional customizations available for CCP.
+
+Built-in functionality
+
+The Amazon Connect CCP is a single, intuitive communication interface for agents. Agents use the CCP to interact with customers. With the CPP, agents can receive voice calls, digital messages, and task interactions. Agents have the ability to transfer contact interactions to other agents, put contacts on hold, and perform other tasks. Expand the following categories to learn more about the built-in functionality of CCP.
+
+
+Change agent status
+–
+In the built-in CCP, agents can select the status Available to handle contacts. This means inbound contacts can be routed to them. Agents can also select the Offline status. This means no contacts will route to them.
+
+
+
+Companies can use custom statuses to have discrete reporting about the time agents spend offline. Examples of common statuses include: Break, Training, and Lunch. 
+
+
+
+After Contact Work (ACW) is an agent status that is set when agents complete a necessary set of tasks after interacting with the customer. These tasks include updating the customer record, logging the reason for contact and outcome, updating colleagues, and scheduling follow-up actions. ACW varies across different customer queries and resolution requests. There is no predetermined duration of ACW. However, it is a metric that impacts average handle time (AHT) and hence, and must be closely tracked.
+
+
+
+You can configure the CCP to automatically move an agent to an after contact work (ACW) state when a conversation between agent and customer ends. The ACW configuration value represents the number of seconds agents will not receive any new calls so they can complete the post call tasks. Once the configured ACW duration expired, CCP automatically goes back to Available, and the agents can receive new contacts. 
+
+
+
+An ACW value of 0 means the agents have an indefinite amount of time to complete tasks. In this configuration, when agents finish their post contact updates, they must select the Close contact button to become Available for the next contact. Unlike other statuses, agents cannot choose the ACW status. Supervisors can use the Amazon Connect reporting functionality to identify how long an agent spent on ACW for a contact.
+
+
+
+To find out more about the agent status options, refer to the About agent status(opens in a new tab) section of the Amazon Connect Administrator Guide.
+
+Amazon Connect CCP screenshot showing the selection of "Lunch" agent status from the available list of statuses.
+
+Handle live interactions
+–
+When using the CCP, agents can receive interactions on all the channels supported by Amazon Connect. Agents can perform the following actions in the CCP:
+
+Answer or reject contacts
+Place calls on hold and resume calls
+Mute and unmute their microphone
+End a contact
+Close a contact after call work to make themselves available for the next contact
+Transfer a contact
+Make a call
+Handle multiple contacts
+Amazon Connect CCP screenshot displaying call controls during an active call.
+
+Use Quick connects
+–
+Quick connects act like a speed dial for agents. With Quick connects, agents can transfer interactions to other agents, queues, or external numbers. They can also use Quick connects to make calls or transfer calls to external numbers. Quick connects must be configured before agents can see them in the CCP.
+
+Amazon Connect CCP screenshot showing the Quick Connect list during an active call.
+
+Work with Tasks
+–
+With Amazon Connect Tasks, organizations can prioritize, assign, and track user work items to completion. For example, using Tasks you can:
+
+Follow-up on customer issues recorded in a customer relationship management (CRM) solution, such as Salesforce.
+Follow-up with a customer through a call.
+Complete actions in a business-specific system, such as processing a customer claim in an insurance application.
+With Amazon Connect, organizations can expand the benefits of the skills based routing engine and reporting to users that are not directly handling customer interactions. Consider the following scenario: a contact center agent receives a customer request to deliver a brochure for a specific product. The agent creates a Task in the CCP for the mailing department. The customer information is automatically displayed to the mailing department user that picks up the request. Despite the fact that the mailing department user is not directly communicating with the customer, they can help solve a customer issue. Both the call and the Task are tracked in the same reporting system. The mailing department user does not require an Amazon Connect user license to access the Tasks functionality. 
+
+Amazon Connect CCP screenshot of an active task.
+CCP configuration settings
+
+Discover the available CCP configuration settings in the following section. While using the CCP, users can modify specific configuration settings. Within the settings tab, users can configure video, audio, phone, and language settings.
+
+
+Configuration setting 1
+
+Settings tab
+Screenshot of Amazon Connect CCP toolbar with the Settings tab highlighted.
+When using the CCP, users can change specific configuration settings by selecting the Settings tab located in the top right corner.
+
+1
+2
+3
+4
+5
+Configuration setting 2
+
+Video Settings
+Screenshot of Amazon Connect CCP displaying video device configuration with background blur option.
+Agents configured with permissions to access the video capabilities of the CCP can select their video device and activate background blur. 
+
+1
+2
+3
+4
+5
+Configuration setting 3
+
+Audio settings
+Amazon Connect CCP screenshot showing audio devices configuration. Options include Speaker, Microphone, and Ringer settings.
+Agents can choose their preferred device for the audio, microphone, and ringer. For example, they can configure audio notifications to ring from a desktop or laptop speaker instead of a headset. 
+
+1
+2
+3
+4
+5
+Configuration setting 4
+
+Phone type
+Amazon Connect CCP screenshot showing phone type configuration. The Desk phone setting is selected, country and phone numbers are configured.
+Agents can redirect incoming calls to a physical phone, such as a desk or mobile phone. In this configuration, Amazon Connect will forward calls that normally arrive on the CCP softphone to the configured phone number. When configuring Desk phone mode, the target destination phone must able to receive calls over the public switched telephone network (PSTN).
+
+1
+2
+3
+4
+5
+Configuration setting 5
+
+Language
+Amazon Connect CCP screenshot displaying language configuration with English selected and Save button in Settings view.
+Agents can select their preferred language from the Language drop down list. To save changes to configuration options, users must select the Save button located at the bottom right side of the Settings view. For more information about the languages available in the CCP, refer to the Languages supported by Amazon Connect(opens in a new tab) section of the Administrator Guide.
+
+1
+2
+3
+4
+5
+Additional CCP integration and customization options with Amazon Connect Streams
+
+Amazon Connect provides organizations with the ability to customize their CCP. For example, they integrate the CCP with their customer system of record and other applications the agents use to effectively address customer inquiries.
+
+Developers can integrate the CCP widget into existing CRM web pages or create their own interfaces for agent applications. To learn more, expand the following categories. 
+
+
+Embed the built-in CCP widget
+–
+Using the Amazon Connect Streams API, developers can embed the CCP widget inside of the web based CRMs that agents use. With this integration approach, the agents get access to CCP contact and status controls within the same workspace where they access the customer data. An example of application that uses embedded CCP widget is the Amazon Connect CTI Adapter. For more details, refer to the Embed the CCP into Salesforce(opens in a new tab) documentation. The core functionality of the Amazon Connect CTI Adapter provides a WebRTC browser-based CCP within Salesforce.
+
+
+
+You can find more details in the Embed a custom Contact Control Panel (CCP)(opens in a new tab) section of the Amazon Connect Administrator Guide. 
+
+
+Use controls without the built-in CCP interface
+–
+Some organizations require simple call control, such as Answer, Hold, and Disconnect functionality. For these use cases, developers can use the Amazon Connect Streams API to provide call and agent status control, without displaying the CCP view. With this approach, a CRM page will only display an Answer, Hold, and Disconnect button for their phone controls, and not the full CCP interface.
+
+
+Build a custom CCP interface
+–
+Developers can embed the standard built-in widget interface and benefit from the ability to change states, answer interactions, or transfer them via Quick connects. They can then add a customer data panel, a disposition code panel, or agent stats panel. An example of a custom customer data and disposition panel this can be seen in the following image. 
+
+Screenshot of a side-by-side view of Amazon Connect CCP displaying the custom customer data and disposition panel.
+An agent's day using CCP
+
+To review how the CCP works for agents, review the following scenario describing a typical agent's day using the CCP.
+
+Efua Owusu is a customer service agent at AnyCompany. When Efua was hired, the Amazon Connect administrator at AnyCompany assigned Efua an agent security profile. The security profile gives Efua basic permissions to access the built-in functionality of the CCP agent application. Efua's routing configuration gives her access to one contact interaction at a time.
+
+Let's take a look at Efua's experience using the Amazon Connect CCP as she interacts with customers during a regular work day.
+
+Logging into the application
+AnyCompany implemented SAML 2.0 authentication to ensure secure access of their users to the contact center applications. When they first migrated to Amazon Connect, AnyCompany decided to use the built-in capabilities of the CCP. Once their new Customer Relationship Management (CRM) application is upgraded, AnyCompany has the option to easily integrate the CCP into their CRM.  
+
+
+
+Efua uses the Sign in screen to log into the application.
+
+Laptop displaying a Sign In page
+Getting the first call
+Once her credentials are accepted and the authentication process is complete, Efua sees the Amazon Connect CCP. 
+
+
+
+To begin her workday, Efua sets the CCP state to Available. 
+
+
+
+Efua is a tenured agent, so her configuration includes handling contacts across all Amazon Connect channels. When she sets her status to Available, any voice, chat, or task interaction waiting in queue can be delivered to Efua. 
+
+
+
+An incoming call is presented. Efua accepts the call.
+
+
+
+John, the customer, is requesting a refund for an item they purchased last month. Efua reviews the order history and sees that this is the third refund request from John in the past 6 months. 
+
+
+
+Efua knows there is a company policy that limits the number of refunds that can be given to the same customer within a certain timeframe. 
+
+Screenshot of Amazon Connect CCP showing an incoming call.
+Consulting with the supervisor
+Efua is unsure about how to handle this situation. She asks John to briefly hold while she consult with her supervisor. Efua places the call on hold and uses the Quick connect to conference in her supervisor, Jane Doe, to discuss the case.
+
+
+
+Efua asks for guidance on how to proceed based on company policy. Jane clarifies the specifics of the policy. Because this would be the third refund if processed, Jane advises Efua to politely inform the customer they are unable to process another refund at this time. 
+
+Screenshot of Amazon Connect CCP view highlighting the Quick Connects button.
+After contact work
+Efua takes Jane's guidance, and returns to John's call. She explains the company refund policy and discusses another option available that may help resolve the matter.
+
+
+
+When the call ends, Efua's CCP automatically goes to ACW status, based on Efua's user configuration. While in the ACW status, Efua doesn’t receive new incoming contacts. She completes her work, then selects Close contact in the CCP to be available for another call.
+
+Screenshot of Amazon Connect CCP showing the After Contact Work state, with the Close Contact button highlighted.
+Handling a follow-up task
+As soon as her CCP goes back to Available status, Efua receives an incoming task. 
+
+
+
+Efua accepts the task and sees the billing department's response. John's payment was received three days late, and their account was correctly charged. 
+
+
+
+Efua selects the phone number link displayed in the task, and calls John. She apologizes for yesterday's confusion, and informs John of the reason for the extra charge. John is grateful to receive the explanation, thanks Efua, and hangs up.
+
+
+
+Efua completes the task and changes her agent status to Break, a custom status her organization configured. She will not receive contacts while in Break status.
+
+Amazon Connect CCP interface showing an incoming task.
+Logging out for the day
+After her break, Efua continues to handle calls, chats, and tasks for the rest of the day. 
+
+
+
+Before leaving for home, Efua selects the Settings option at the top right of her CCP and changes her status to Logout.
+
+Screenshot of Amazon Connect CCP settings window with the Logout link highlighted.
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+AnyCompany Telecom has configured the CCP with a custom Lunch agent status and a ten second ACW status for all their agents. Efua is an agent working in the AnyCompany Telecom contact center. While on a customer call, Efua receives a message from her supervisor asking her to come talk about a previous contact as soon as her current call is done. What should Efua do after her call ends to avoid missing incoming interactions while she is meeting with her supervisor?
+
+Complete the call and select ACW to block incoming calls.
+
+Correctly unselected
+Complete the call and change her status to Lunch.
+
+Incorrectly selected
+Complete the call and select Offline.
+
+Incorrectly unselected
+Do nothing, the system will set her status to ACW.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Unlike other statuses, agents cannot choose an ACW status. 
+
+Selecting a Lunch status will impact the agent reporting schedule. 
+
+Because the ACW status is configured to reset after 10 seconds, Efua cannot rely on the ACW status when leaving her desk. 
+
+
+
+The correct option for Efua is to complete the call and select the Offline state while she speaks with her supervisor.
+
+
+TAKE AGAIN
+Efua, an agent at AnyCompany Telecom, finished handling her contact’s issue about internet charges for their office. Now her contact wants to talk about adding services for a new office location they are considering opening. Efua needs to transfer the call to a new business sales representative. What CCP functionality must be configured to transfer the call?
+
+Tasks
+
+Correctly unselected
+Quick connects
+
+Incorrectly unselected
+After contact work
+
+Incorrectly selected
+Number pad
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Quick connects act like a speed dial for agents. With Quick connects, agents can transfer interactions to other agents, queues, or external numbers. They can also use Quick connects to dial and transfer calls to external numbers. Quick connects must be configured before agents can see them in the CCP.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you explored the agent experience with the CCP. You learned about the built-in CCP experience and common CCP customizations. In the next lesson, you will explore the agent experience while using the Amazon Connect agent workspace.
+
+Video Settings
+Screenshot of Amazon Connect CCP displaying video device configuration with background blur option.
+Agents configured with permissions to access the video capabilities of the CCP can select their video device and activate background blur. 
+Audio settings
+Amazon Connect CCP screenshot showing audio devices configuration. Options include Speaker, Microphone, and Ringer settings.
+Agents can choose their preferred device for the audio, microphone, and ringer. For example, they can configure audio notifications to ring from a desktop or laptop speaker instead of a headset. 
+Phone type
+Amazon Connect CCP screenshot showing phone type configuration. The Desk phone setting is selected, country and phone numbers are configured.
+Agents can redirect incoming calls to a physical phone, such as a desk or mobile phone. In this configuration, Amazon Connect will forward calls that normally arrive on the CCP softphone to the configured phone number. When configuring Desk phone mode, the target destination phone must able to receive calls over the public switched telephone network (PSTN).
+Language
+Amazon Connect CCP screenshot displaying language configuration with English selected and Save button in Settings view.
+Agents can select their preferred language from the Language drop down list. To save changes to configuration options, users must select the Save button located at the bottom right side of the Settings view. For more information about the languages available in the CCP, refer to the Languages supported by Amazon Connect(opens in a new tab) section of the Administrator Guide.
+
+Lesson 4 of 9
+Using the Agent Workspace
+Lesson objectives
+
+In this lesson, you will:
+
+Explore the agent experience with the agent workspace.
+Understand the value of the built-in and customizable features of the agent workspace. 
+
+Lesson introduction
+
+The agent workspace provides agents with the customer context they need to effectively handle contacts. In this section, you can view a video that demonstrates the Agent Experience. Then, you can dive deep into the built-in functionality for the agent workspace.
+
+Play Video
+
+Transcript: Agent Experience
+–
+While traveling internationally, Nikki's travel card gets declined. She opens her AnyCompany mobile app, starts a chat with Amazon Connect's self-service and explores increasing her credit limit. The self-service experience suggests upgrading her travel card. She promptly requests to chat with an agent.
+
+
+
+The self-service experience suggests upgrading her travel card. She promptly requests to chat with an agent.
+
+
+
+John, an Amazon Connect agent, can effortlessly preview Nikki's customer and case information.
+
+
+
+Amazon Q in Connect identifies Nikki's question from the chat and provides John with a tailored response and solution, including specific details about the travel rewards card.
+
+
+
+John observes how Amazon Q in Connect retrieves the answer from the enterprise knowledge base, enabling him to paste the generated response into the chat seamlessly.
+
+
+
+Nikki expresses interest in applying for the new traveler's rewards card. John identifies the next best action for the credit card offer and guides Nikki through the application process with a series of steps.
+
+
+
+The credit card application is approved, and John informs Nikki about the approval from the guides, sharing the news with her.
+
+
+
+John aims to prevent Nikki from facing transaction declines while traveling. He accesses their homegrown credit card travel portal from the agent workspace and enters Nikki's travel details.
+
+
+
+The chat concludes with Nikki's issue successfully resolved, and John successfully concludes the call.
+
+Using the built-in functionality
+
+With the agent workspace, agents can access multiple Amazon Connect features in a single application.
+
+The CCP to interact with customer contacts
+Amazon Connect Customer Profiles to view customer information
+Amazon Connect Cases to create, update, and resolve customer cases
+Amazon Q in Connect to get recommendations and suggestions on the most effective ways to solve customer inquiries
+Amazon Connect step-by-step guides to speed up issue resolution
+To learn more about each application, expand the following categories.
+
+
+CCP
+–
+The CCP is fully integrated in the agent workspace. This allows agents to access all the CCP built-in features and functionality related to contact control within the unified interface.
+
+Screenshot of Amazon Connect CCP displaying the Agent Workspace with active interactions and soft phone call controls.
+
+Customer Profiles
+–
+Customer Profiles allows agents to view contact history and customer information tied together from multiple data sources at the moment of contact. Pre-built connectors integrate with featured applications(opens in a new tab), external applications(opens in a new tab), or Amazon Simple Storage Service (S3)(opens in a new tab). 
+
+Customer information including name, phone number, account number, date of birth, and more.
+
+Cases
+–
+With Cases, agents can create, update, track, and resolve customer issues that require multiple interactions and follow-up tasks across multiple teams. 
+
+
+
+Agents can document customer issues and include details like date opened, issue summary, customer information, and status. Cases provide a unified view of each customer’s issue, the steps and interactions taken to resolve the customer’s issue, and the outcome. 
+
+Amazon Connect case view for customer activity.
+
+Amazon Q in Connect
+–
+Amazon Q in Connect provides real-time agent assistance powered by generative AI and organizations knowledge base and information data sources. 
+
+
+
+The agent assist functionality displays suggested responses and actions so agents can effectively address customer inquiries. 
+
+
+
+Agents can also use natural language to search across connected knowledge sources to receive generated responses, recommended actions, and links to the information source.
+
+Screenshot of Amazon Connect agent assist view with a suggested response, next steps and links to the source information.
+
+Step-by-step Guides
+–
+Step-by-step agent guides streamline and standardize agent workflows by surfacing guidance on how to handle or process next steps. 
+
+
+
+Using flows(opens in a new tab), companies can design and configure guides that present what the agent should review or do at a given moment during a customer interaction.
+
+
+
+In the following section, you will dive deeper into the data and agent assist functionality of agent workspace.
+
+Amazon Connect Customer profile view providing step-by-step guide for interaction with customer.
+Data
+
+Customer profile data: The contact data is available and displayed as soon as an incoming contact is presented to the agent. For contacts successfully associated with a customer profile in the IVR, the Customer Profile view displays all the available contact information. Based on their configured permissions, agents can create, view, and update standard customer profile data, such as name, date of birth, phone numbers, or email addresses.
+
+IVR data: With additional IVR flows configuration, agents can see contact related information collected during the IVR interaction. Some examples include: contact IVR menu selections or chatbot intents, or customer sentiment following a chatbot conversation. The contact data is delivered to the agent application through contact attributes(opens in a new tab). Data can be displayed in configurable views built as part of the agent experience flows.
+
+Agent assist functions
+
+The ease of access to customer data is only one of the agent assist functions available in the agent workspace.
+
+Step-by-step guides: Similar to building a customer experience, flow designers can create workflows to improve agent experience by using Show view(opens in a new tab) flow blocks. The agent workspace displays dynamic views that suggest actions agents can take at any given moment during a customer interaction. Agent workflows may include: display of single page form or detailed step-by-step views and forms that give clear instructions on how to handle a particular use case. Another common example of step-by-step guidance is helping agents enter a disposition code at the end of the contact.
+
+Responses, recommendations, and information links: With Amazon Q in Connect, agents can manually lookup information available in their organization's knowledge base repositories. Additionally, Amazon Q in Connect can identify intent from live calls or chat transcripts and automatically initiate a relevant search for the agents. Agents then benefit from a suggested response for the customer, a list of suggested actions, and links to the relevant information. 
+
+Organizations can chose to enable the real-time contact center analytics functionality provided by Amazon Connect Contact Lens. When Contact Lens analytics are enabled, Amazon Q in Connect processes the voice transcription of the live conversation between the customer and the agent. It then automatically initiates a relevant search in the knowledge base. Contact Lens real-time analytics are not required for chat or other digital messaging interactions. Amazon Q in Connect uses the live chat transcript to perform the same actions as for voice call transcripts. 
+
+Additional integration and configuration options
+
+In addition to the built-in features of the agent workspace described previously, organizations can integrate their home-grown or partner-built applications. For more information about ways to integrate existing applications into the agent workspace, see the Onboard third-party applications(opens in a new tab) section of the Administration Guide.
+
+To learn how to develop a third-party application, explore the Agent Workspace Developer Guide(opens in a new tab).
+
+Check Your Knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+Nikki, an entrepreneur, is a long-term customer of AnyCompany Financial. She works with a new customer located across Europe and India and needs to book travel to meet with her new clients. After booking half of her travel, Nikki’s AnyCompany Financial credit card is declined. She contacts customer support to understand why. An agent connects with Nikki and immediately receives guidance from the agent workspace. The AI agent assist functionality identifies Nikki’s need for an increase limit and recommends a card with travel reward benefits and a higher limit offer.  
+
+
+
+Which built-in features of the agent workspace helps the AnyCompany Financial agent solve Nikki’s issue and upgrade her card experience? (Select THREE.)
+
+Amazon Connect Customer Profiles
+
+Incorrectly unchecked
+Home-grown application integrated in the agent workspace
+
+Correctly unchecked
+Amazon Q in Connect
+
+Correctly checked
+Partner application integrated in the agent workspace
+
+Incorrectly checked
+Step-by-step guides
+
+Incorrectly unchecked
+Salesforce CRM
+
+Correctly unchecked
+SUBMIT
+
+Incorrect
+The built-in features available in the agent workspace are: the CCP, Customer Profiles, Cases, Amazon Q in Connect, and Step-by-step guides.
+
+
+
+Amazon Q in Connect provides real-time agent assistance powered by generative AI. The agent assist functionality displays suggested responses and actions so agents can effectively address customer inquiries. 
+
+
+
+Step-by-step agent guides streamline and standardize agent workflows by surfacing guidance on how to handle or process next steps.
+
+What's next?
+
+In this lesson, you explored the built-in features of the Amazon Connect agent workspace. You learned about the ability to integrate external applications and watched a short demo of an agent experience. In the next lesson, you will learn about security, quotas, and pricing considerations.
+
+Lesson 5 of 9
+Considerations
+Lesson objectives
+
+In this lesson, you will:
+
+Recognize Amazon Connect agent applications security considerations.
+Recognize considerations for Amazon Connect agent workspace service quotas.
+
+Lesson introduction
+
+When using Amazon Connect agent applications, it is important for organizations to consider security permissions as they develop and implement security policies. It is also helpful to verify service quotas and understand the limits and request increases to adjustable quotas. 
+
+The Amazon Connect flexible pricing model allows organizations to scale their number of users at no additional cost. When enabling and configuring Amazon Connect agent workspace functionality, we recommend checking the pricing of each service to avoid unexpected costs for your organization.
+
+In this lesson, you will review all these considerations. 
+
+Security
+
+(opens in a new tab)(opens in a new tab)Amazon Connect administrators manage users and assign appropriate permissions so they can access the features they need. Most companies have rules that grant different level of access to Amazon Connect users based on their roles.
+
+When logging into an agent application, Amazon Connect agents are first identified and authenticated by using their organization's identity provider. Once authenticated, Amazon Connect authorizes access to functionality within the contact center by using security profiles. 
+
+Security profiles provide secure role-based access to specific areas of the Amazon Connect application. A security profile consists of a set of permissions allowing users to view, modify, and delete resources, or to simply use features and functionality. One of the required agent security permissions is access to the CCP. Agents need this security permission to handle incoming contacts in the CCP or agent workspace. For more information about security profiles, see best practices for security profiles(opens in a new tab) in the Administrator Guide.
+
+(opens in a new tab)(opens in a new tab)
+
+(opens in a new tab)(opens in a new tab)
+
+Service quotas
+
+When planning user access to agent applications, administrators must also take into consideration service quotas for all the services agents need to use. Service quotas are the maximum values for the resources and operations in your Amazon Web Services (AWS) account. In addition to Amazon Connect quotas, such as Number of users per instance, administrators must also consider adjusting quotas for Amazon Connect Contact Lens usage. Automatic detection of contact intent and Amazon Q in Connect recommendations requires Contact Lens real-time analysis to be enabled. Administrators must consider adjusting Concurrent real-time calls with analytics and Concurrent chat analytics jobs quotas according to the service usage.(opens in a new tab)(opens in a new tab)
+
+For integrations with third party applications added to the agent workspace, administrators should also verify App Integrations quotas and API throttling quotas.
+
+Service quotas details for Amazon Connect are available in the Amazon Connect service quotas(opens in a new tab) section in the Administrator Guide.
+
+Pricing
+
+The cost of agent interactions in the CCP and agent workspace depends on the features a company enables. Planning workflows carefully and calculating the cost of each functionality in a workflow helps companies achieve optimal results at greatest cost-efficiency. 
+
+To learn about Amazon Connect’s current pricing for the functionality you use in the agent workspace, review the Amazon Connect pricing(opens in a new tab) web page.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+AnyCompany is in the process of migrating to Amazon Connect. What permission do new AnyCompany agents require to be able to handle incoming calls in the Contact Control Panel (CCP)?
+
+Access to the CCP
+
+Incorrectly unselected
+Access to step-by-step guides
+
+Correctly unselected
+Access to outbound calls
+
+Incorrectly selected
+View, edit, and create contacts
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+One of the required agent security permissions is access to the CCP. Agents need this security permission to be able to handle incoming contacts in any Amazon Connect agent application.
+
+
+TAKE AGAIN
+AnyCompany Financial grants agents access to Amazon Q in Connect in the agent workspace. What quotas should they consider evaluating for their agent setup? (Select THREE.)
+
+Amazon Connect quotas for number of users per instance
+
+Correctly checked
+
+
+Concurrent real-time calls with analytics
+
+Incorrectly unchecked
+Step-by-step guide quotas
+
+Correctly unchecked
+Concurrent chat analytics jobs
+
+Incorrectly unchecked
+Customer profiles quotas
+
+Correctly unchecked
+Number of instances per account quota
+
+Correctly unchecked
+SUBMIT
+
+Incorrect
+In addition to Amazon Connect quotas, such as Number of users per instance, administrators must also consider adjusting quotas for Contact Lens usage. To automatically detect contact intent and receive Amazon Q in Connect recommendations, Contact Lens real-time analysis must be enabled. Administrators must consider adjusting Concurrent real-time calls with analytics and Concurrent chat analytics jobs quotas according to the service usage.
+
+
+
+(opens in a new tab)
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you reviewed security, service quotas, and pricing considerations for Amazon Connect agent applications. Continue to the next lesson to review the course summary and prepare for the end-of-course assessment.
+
+Lesson 6 of 9
+Summary
+Course summary
+
+In this course, you learned about Amazon Connect agent applications. Amazon Connect offers agents two out-of-the-box applications: Contact Control panel and agent workspace. You explored the benefits of agent applications and learned about the agent experience using each application. Take a moment to review these key concepts in the course summary before taking the course assessment. 
+
+Benefits
+Scale operations while providing high quality voice: The CCP delivers high quality real-time web communication (WebRTC) audio and video over an internet connection. This helps organizations deliver excellent customer service without having agents tied to a traditional call center setup.
+Simplify agent operations with a unified agent experience: By integrating with internal and external applications, the agent workspace empowers agents to quickly resolve complex issues. Agents benefit from a unified view of customer information, AI powered recommendations, and step-by-step guidance.
+Reduce handle time with contextual agent guidance: The agent workspace can automatically identify customer issues and recommend appropriate steps to solve them. It uses data available for the current contact to dynamically adapt and provide agent guidance.
+
+CCP
+The CCP is an application that helps agents interact with customers. Within the CCP, agents can dial, consult, transfer or conference calls, handle or transfer chats, or handle offline tasks related to customers.
+
+
+
+Agents use a browser bookmark or a desktop shortcut to a URL link provided by their contact center administrator. This allows agents to work from home or from their organization's office.
+
+
+
+The built-in CCP features include:
+
+The ability to handle interactions across any of the channels configured in the contact center.
+The ability to select an Available status from the agent status drop-down list.
+Configuration settings such as log out, speaker, headphone, and microphone settings. Other settings include redirecting the audio to a mobile device or desk phone and language settings.
+Quick Connects: Pre-configured destination numbers that agents can use to dial or transfer interactions.
+Number Pad: Agents can manually enter 10-digit external phone numbers. They can also send DTMF digits when interacting with an IVR system.
+CCP integration and customization options:
+
+Large organizations often customize their CCP by integrating it with their customer system of record and other applications used by agents to address customer inquiries effectively.
+Developers can embed the built-in CCP widget into existing CRM web pages. By embedding the CCP widget, agents can access contact and status controls within the same workspace where they access customer data.
+
+For organizations that require simple call control functionality (Answer, Hold, and Disconnect), developers can use the Amazon Connect Streams API to provide these controls without displaying the full CCP interface.
+
+Screenshot Amazon Connect CCP displaying a connected call.
+Agent Workspace
+Agent workspace integrates multiple Amazon Connect features into a single application, including:
+
+Contact Control Panel for interacting with customer contacts.
+Customer Profiles for viewing customer information.
+Cases for creating, updating, and resolving customer issues.
+Amazon Q in Connect for receiving recommendations and suggestions.
+Step-by-step guides for speeding up issue resolution.
+Customer Profiles allows agents to view contact history and customer information from multiple data sources during the interaction.
+
+
+
+Cases enable agents to create, track, and resolve customer issues that require multiple interactions across teams. It provides a unified view of each customer's issue, steps taken, and the outcome.
+
+
+
+Amazon Q in Connect provides real-time agent assistance powered by generative AI, knowledge bases, and data sources. It displays suggested responses, recommended actions, and links to information sources based on the customer inquiry.
+
+
+
+Step-by-step agent guides streamline agent workflows by providing guidance on how to handle or process next steps during customer interactions.
+
+
+
+The agent workspace displays the following customer data:
+
+Customer profile data: Contact information that allows agents to view and update customer details.
+IVR data: Agents can view information collected during the IVR interaction, such as menu selections or chatbot intents.
+The agent workspace provides the following agent assistance:
+
+Step-by-step guides: IVR designers can create workflows to display dynamic views suggesting actions for agents during customer interactions.
+Responses, recommendations, and information links: Using Contact Lens real-time contact intent identification, Amazon Q in Connect surfaces suggested responses, recommended actions, and relevant links. Agents can also manually search knowledge articles.
+In addition to the built-in features of the agent workspace described above, organizations can integrate their home-grown or partner-built applications.
+
+Screenshot of Amazon Connect Agent Workspace showing the Customer Profile view with integrated details.
+Considerations
+There are a few considerations you should be aware of when using agent applications:
+
+Security permissions: Organizations must implement proper security policies and permissions for their users based on roles and access levels required. Security profiles provide secure role-based access to specific areas of the Amazon Connect application. One of the required agent security permissions is access to the CCP. Agents need this security permission to handle incoming contacts in the CCP or agent workspace 
+Service quotas: Administrators must verify and adjust service quotas as needed for Amazon Connect and related AWS services. Recommended quotas include Number of users per instance, Concurrent real-time calls with analytics, and Concurrent chat analytics jobs. 
+Pricing: Amazon Connect has a flexible pricing model that allows scaling the number of users at no additional cost. However, organizations should carefully review and calculate the pricing of specific features and functionality they enable in agent workflows to avoid unexpected costs
+

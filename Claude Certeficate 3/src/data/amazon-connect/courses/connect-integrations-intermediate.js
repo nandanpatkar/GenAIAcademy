@@ -1,0 +1,1873 @@
+/*
+ * Amazon Connect — Integrations Intermediate
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne/AMAZON CONNECT INTEGRATIONS INTERMEDIATE.txt
+ *            conne-text/Amazon Connect Integrations Intermediate Summary.txt  (from conne/Amazon Connect Integrations Intermediate Summary.pdf)
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-integrations-intermediate",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Integrations Intermediate",
+  "provider": "Amazon Web Services",
+  "level": "Intermediate",
+  "category": "Development",
+  "description": "Streaming contact events, agent events, Contact Lens real-time analytics, and contact records, plus integrating Amazon API Gateway with Connect.",
+  "examFormat": "6 topics · ~40 min · 14 review questions",
+  "sourceFiles": [
+    "conne/AMAZON CONNECT INTEGRATIONS INTERMEDIATE.txt",
+    "conne-text/Amazon Connect Integrations Intermediate Summary.txt  (from conne/Amazon Connect Integrations Intermediate Summary.pdf)"
+  ],
+  "modules": [
+    {
+      "id": "connect-integrations-intermediate-t1",
+      "number": 1,
+      "title": "Streaming Contact Events",
+      "shortTitle": "Streaming Contact Events",
+      "summary": "Amazon Connect offers a set of data streaming capabilities that streamline integrations with external applications. Additionally, developers have…",
+      "duration": "~6 min",
+      "lede": null,
+      "objectives": [
+        "Identify Amazon Connect contact events.",
+        "Recognize the data model of contact events.",
+        "Explore a use case for contact event streams."
+      ],
+      "sections": [
+        {
+          "id": "connect-integrations-intermediate-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a set of data streaming capabilities that streamline integrations with external applications. Additionally, developers have access to a set of robust APIs to develop integration solutions for a variety of contact center use cases. Data streams make real-time events related to contact or agent activity available. APIs provide access to real-time data for queues, routing profiles, users, or flows. Understanding integration options, data structure, and frequency of event generation helps developers determine the best approach to meet business integration requirements."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Introduction to Amazon Connect contact events",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "With Amazon Connect, developers can subscribe to a near real-time stream of contact events. Examples of contact events include a contact placed into a queue, connecting with an agent, or disconnecting from an interaction."
+            },
+            {
+              "type": "p",
+              "text": "Common uses of contact event streams are as follows:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Analytics dashboard to monitor and track contact activity"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Integrations into workforce management solutions",
+                "Custom solutions built to operationalize processes in the contact center",
+                "A typical example is using a contact disconnect event to implement a recovery mechanism for abandoned calls."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Understanding contact events",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect publishes contact events on an Amazon EventBridge bus. For more information, navigate to Amazon EventBridge. Amazon EventBridge captures and processes the events using a rule-based mechanism. A rule specifies the events to send to Amazon EventBridge targets for processing. For more information, navigate to Event bus targets in Amazon EventBridge. One rule can activate an event for multiple targets, which will then run simultaneously. For the Amazon Connect contact event stream, you create rules that match the published event pattern."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect events are streamed to an Amazon EventBridge bus. They are distributed to AWS services like AWS Lambda, Amazon CloudWatch, and Amazon Data Firehose."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Contact events",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Throughout a contact's lifespan, Amazon Connect produces contact events in near real time. During an interaction, Amazon Connect publishes the following events for a contact:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Contact initiated"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Connected to system",
+                "Queued",
+                "Connected to agent"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Disconnected"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect publishes contact events on a best-effort basis. The sequence is not guaranteed, but a timestamp accompanies each event to aid in data processing. The event structure follows JSON format. For more information about configuring rules, navigate to Rules in Amazon EventBridge in the Amazon EventBridge User Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Contact event general information",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The first group of properties of an EventBridge event stores information about the event. The properties include the following unique resource identifiers:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Version of the EventBridge event model"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Event ID",
+                "Type of EventBridge event",
+                "Source of the event",
+                "Account that generated this event",
+                "Time the event was generated",
+                "AWS Region the event has been generated from",
+                "Resources involved in the generation of the event",
+                "The following code snippet shows sample values for the EventBridge properties described in this section."
+              ]
+            },
+            {
+              "type": "code",
+              "text": "{\n\"version\": \"0\",\n\"id\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\",\n\"detail-type\": \"Amazon Connect Contact Event\",\n\"source\": \"aws.connect\",\n\"account\": \"111122223333\",\n\"time\": \"2024-05-29T23:43:29Z\",\n\"region\": \"ap-southeast-2\",\n\"resources\": [\n\"arn:aws:connect:ap-southeast-2:111122223333:instance/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n\"arn:aws:connect:ap-southeast-2:111122223333:instance/1cc2a6ed-528e-4f96-afd2-0344b1c81114/contact/a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\"\n],\n...\n}"
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Contact event detail",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Each EventBridge event includes a detail property, which contains the data about the contact related to the event. Some examples of data included in the event detail are the contact initiation timestamp, the channel, the initiation method, agent information, and event type."
+            },
+            {
+              "type": "p",
+              "text": "You can use the eventType property to understand the contact lifecycle stage. In the following example, the event was published when the contact was connected to an agent."
+            },
+            {
+              "type": "code",
+              "text": "\"eventType\": \"CONNECTED_TO_AGENT\""
+            },
+            {
+              "type": "p",
+              "text": "In addition to standard contact properties, such as contact ID, channel, and instance Amazon Resource Name (ARN), the details include the initiation method of the contact. Every contact in your Amazon Connect contact center is initiated by one of the following methods:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Inbound"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Outbound",
+                "Transfer",
+                "Callback",
+                "API",
+                "Queue_Transfer"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Disconnect"
+            },
+            {
+              "type": "p",
+              "text": "You can use the initiationMethod property to gain insights on the origination of the contact covered by the event."
+            },
+            {
+              "type": "code",
+              "text": "\"initiationMethod\": \"INBOUND\""
+            },
+            {
+              "type": "p",
+              "text": "Use the initiationMethod property if you build an integration that needs to process outbound events, such as an outbound call registry."
+            },
+            {
+              "type": "p",
+              "text": "Contact events also include various timestamps. As the contact progresses through the interaction, timestamps are added. For example, a disconnect timestamp will not be available until the contact ends. You can use these timestamps to create monitoring solutions for contacts in external systems. The following snippet shows timestamps for when the contact started, connected to the system, got queued up, and an agent answered."
+            },
+            {
+              "type": "code",
+              "text": "...\n\"initiationTimestamp\": \"2024-05-29T23:42:55.769Z\",\n...\n\"connectedToSystemTimestamp\": \"2024-05-29T23:42:56.474Z\",\n...\n\"enqueueTimestamp\": \"YYYY-MM-DDTHH:mm:ss.SSSZ\"\n...\n\"connectedToAgentTimestamp\": \"2024-05-29T23:43:29.695Z\"\n..."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Contact event queue and agent information",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Queue and agent information are also part of contact events. The queue information shows in the event data when a contact transfer to a queue occurs. The agent information shows in the event data when an agent answers the contact. The following snippet shows an example of a queue and agent information."
+            },
+            {
+              "type": "code",
+              "text": "...\n\"queueInfo\": {\n\"queueArn\": \"arn:aws:connect:ap-southeast-2:111122223333:instance/ a1b2c3d4-5678-90ab-cdef-EXAMPLE11111/queue/a1b2c3d4-5678-90ab-cdef-EXAMPLEaaaaa\",\n\"enqueueTimestamp\": \"2024-05-29T23:42:57.524Z\",\n\"queueType\": \"STANDARD\"\n},\n\"agentInfo\": {\n\"agentArn\": \"arn:aws:connect:ap-southeast-2:111122223333:instance/ a1b2c3d4-5678-90ab-cdef-EXAMPLE11111/agent/a1b2c3d4-5678-90ab-cdef-EXAMPLEbbbbb\",\n\"connectedToAgentTimestamp\": \"2024-05-29T23:43:29.695Z\"\n},\n..."
+            },
+            {
+              "type": "p",
+              "text": "The details contained in contact events help you build integrations for use cases requiring real-time data for contacts."
+            },
+            {
+              "type": "p",
+              "text": "The event structure can differ from one event to another because the data included with each event is specific to the event type. For example, you can find different properties for INITIATED and CONNECTED_TO_AGENT event types, or for INBOUND and OUTBOUND initiation methods."
+            },
+            {
+              "type": "p",
+              "text": "To learn more about the structure of each event, navigate to Contact Events Data Model. A sample event is available in the following attachment. To download the file attachment, choose anywhere inside the following box."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "contact-event-sample.json",
+                "2.2 KB"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use Case: Monitoring outbound dialing attempts"
+            },
+            {
+              "type": "p",
+              "text": "Alejandro Rosalez, a software developer at AnyCompany Bank, is tasked with implementing a Cloudwatch dashboard to monitor outbound campaigns dialing activity. Events generated are published on EventBridge and can be written to Cloudwatch log groups."
+            },
+            {
+              "type": "p",
+              "text": "Alejandro creates a rule in EventBridge to capture these events. To capture only the relevant type of event, Alejandro configures the rule to match the following pattern."
+            },
+            {
+              "type": "code",
+              "text": "{\n\"source\": [\"aws.connect\"],\n\"detail-type\": [\"Amazon Connect Contact Event\"],\n\"detail\": {\n\"initiationMethod\": [ \"API\" ],\n\"campaign\": {\n\"campaignId\": [ { \"exists\": true } ]\n}\n}\n}"
+            },
+            {
+              "type": "p",
+              "text": "This pattern will only activate the rule if the initiation method is API, and a campaign id is available. This helps Alejandro capture Amazon Connect Campaigns contact events for processing. These events can then be written to Amazon Cloudwatch Logs."
+            },
+            {
+              "type": "p",
+              "text": "After defining the pattern for the rule, Alejandro sets the target to the Cloudwatch log group, and enters amazon-connect-campaign-contact-events for the name."
+            },
+            {
+              "type": "p",
+              "text": "The CloudWatch log group contains the events sent by the Amazon Connect contact event stream. The log group contains an entry corresponding to a campaign call connected to the system after being answered by a human."
+            },
+            {
+              "type": "p",
+              "text": "In the following example, the eventType is CONNECTED_TO_SYSTEM, which indicates the call has been answered. The initiation method is API, which corresponds to an Amazon Connect Campaigns outbound call. The campaign id is included in the event and the answeringMachineDetectionStatus property provides additional insight on the result of call progress detection. A sample event is available in the following attachment. To download the file attachment, choose anywhere inside the following box."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "outbound-contact-event-sample.json",
+                "1.5 KB",
+                "Check your knowledge"
+              ]
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned about Amazon Connect contact events. You explored the events data model and some of their properties. In the next lesson, you will discover the agent events and their practical application in Amazon Connect integrations. Lesson 3 of 10 Lesson 2 of 10"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-integrations-intermediate-t1-q1",
+          "question": "A software engineer is developing a custom solution to operationalize processes in the contact center, based on contact events. Which property in the contact event data model should the engineer use to differentiate between inbound and outbound contacts?",
+          "options": [
+            {
+              "id": "A",
+              "text": "eventType"
+            },
+            {
+              "id": "B",
+              "text": "initiationMethod"
+            },
+            {
+              "id": "C",
+              "text": "channel"
+            },
+            {
+              "id": "D",
+              "text": "instanceArn"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "In addition to standard contact properties, such as contact id, channel, and instance ARN, the details include the initiation method of the contact. Every contact in the Amazon Connect contact center is initiated by one of the following methods:"
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-q2",
+          "question": "A developer is building an integration to monitor queue activity in Amazon Connect. Which property in the contact event data model should the developer use to identify the queue associated with a contact?",
+          "options": [
+            {
+              "id": "A",
+              "text": "queueType"
+            },
+            {
+              "id": "B",
+              "text": "queueArn"
+            },
+            {
+              "id": "C",
+              "text": "queueInfo"
+            },
+            {
+              "id": "D",
+              "text": "queueTimestamp"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "Queue and agent information are also part of contact events. These are added to the event when a contact is transferred to a queue, or when an agent answers the contact."
+        },
+        {
+          "id": "connect-integrations-intermediate-t1-q3",
+          "question": "A developer at AnyCompany wishes to analyze their company's outbound campaign dialing activity. What is the best way to do this?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Create an Amazon CloudWatch dashboard to visualize and track the contact events published on Amazon EventBridge."
+            },
+            {
+              "id": "B",
+              "text": "Use Amazon EventBridge to directly stream the events into Amazon CloudWatch Logs."
+            },
+            {
+              "id": "C",
+              "text": "Use Amazon Connect contact events with Amazon CloudWatch to create a custom solution for the data."
+            },
+            {
+              "id": "D",
+              "text": "Use Amazon S3 to store the data, then use the data with CloudWatch Logs to create a custom solution."
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "After capturing the events through EventBridge rules, you can stream them to CloudWatch Logs. This will help you to build a CloudWatch dashboard."
+        }
+      ]
+    },
+    {
+      "id": "connect-integrations-intermediate-t2",
+      "number": 2,
+      "title": "Streaming Agent Events",
+      "shortTitle": "Streaming Agent Events",
+      "summary": "Amazon Connect publishes agent events using Kinesis Data Streams. By processing agent event streams, organizations get access to near real-time…",
+      "duration": "~5 min",
+      "lede": null,
+      "objectives": [
+        "Identify agent events published on Amazon Kinesis Data Streams.",
+        "Recognize the agent events data model.",
+        "Explore a use case for agent event streams."
+      ],
+      "sections": [
+        {
+          "id": "connect-integrations-intermediate-t2-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect publishes agent events using Kinesis Data Streams. By processing agent event streams, organizations get access to near real-time agent activity. You can use agent event streams to create dashboards, integrate with workforce management solutions, and configure alerts for specific agent activity."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t2-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Understanding agent events",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To capture agent events, cloud administrators with permissions to the Amazon Connect instance must create and configure a Kinesis data stream. For more information about data streams, navigate to the Amazon Kinesis Data Streams Developer Guide."
+            },
+            {
+              "type": "p",
+              "text": "Agent events published to Kinesis Data Streams are formatted in JSON format. For each event type, a JSON object is sent to the data stream. You can determine the event type of each agent event by inspecting the EventType property. There are the following four types of agent events:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "LOGIN"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "LOGOUT",
+                "STATE_CHANGE"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "HEART_BEAT"
+            },
+            {
+              "type": "p",
+              "text": "The LOGIN and LOGOUT events are published when an agent logs in and out of an agent application that has a Contact Control Panel (CCP) integrated in. Amazon Connect generates a HEART_BEAT event every 120 seconds in the absence of other events. This happens for every agent connected to an Amazon Connect instance. This event is best used for timestamp updates and to validate that the connection is still active."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t2-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "The agent state change event",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect publishes events with EventType set to STATE_CHANGE every time the agent status changes between routable and non-routable states. Available is the only routable state where agents receive contacts. All the other states, such as Lunch, Break, Training, or Offline, are non-routable events. When agents are in this state, they do not receive any new contacts."
+            },
+            {
+              "type": "p",
+              "text": "The following event is an example of a STATE_CHANGE event. The event contains two successive objects containing an agent data snapshot for current and previous state. Agent state events are published only when there is a change. CurrentAgentSnapshot contains the most recent data, PreviousAgentSnapshot contains the previous event data. By using data in these objects, developers can implement behavior specific to a particular succession of events. For example, when the agent status changes from Available to Offline, the code can disable or hide certain parts of the agent view."
+            },
+            {
+              "type": "code",
+              "text": "...\n\"CurrentAgentSnapshot\": {\n\"AgentStatus\": {\n\"ARN\": \"arn:aws:connect:ap-southeast-2:111122223333:instance/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111/agent-state/a1b2c3d4-5678-90ab-cdef-EXAMPLEhhhhh\",\n\"Name\": \"Offline\",\n\"StartTimestamp\": \"2024-05-30T03:56:57.058Z\",\n\"Type\": \"OFFLINE\"\n},\n...\n\"Username\": \"jorge_souza\"\n},\n...\n},\n...\n\"PreviousAgentSnapshot\": {\n\"AgentStatus\": {\n\"ARN\": \"arn:aws:connect:ap-southeast-2:111122223333:instance/a1b2c3d4-5678-90ab-cdef-EXAMPLE11111/agent-state/a1b2c3d4-5678-90ab-cdef-EXAMPLE99999\",\n\"Name\": \"Available\",\n\"StartTimestamp\": \"2024-05-29T23:43:07.048Z\",\n\"Type\": \"ROUTABLE\"\n},\n...\n},\n..."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t2-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Contact interaction state changes",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In addition to the agent snapshot properties, the STATE_CHANGE event schema contains a Contacts property. This property only contains information when the agent is in the process of handling a contact interaction. For example, when an agent accepts a contact, a STATE_CHANGE event is published. In the CurrentAgentSnapshot object, under the Contacts property, you can find information about the contact the agent is currently handling. The Contacts property is an array, due to the fact that an agent can handle multiple simultaneous contacts. This property includes every contact the agent is currently handling at the time the event is published. The following example shows property values for an inbound voice contact connecting with the agent."
+            },
+            {
+              "type": "code",
+              "text": "\"Contacts\": [\n{\n\"Channel\": \"VOICE\",\n\"ConnectedToAgentTimestamp\": null,\n\"ContactId\": \"2878e4b9-3ca1-439b-bd7c-4326df954aba\",\n\"InitialContactId\": \"2878e4b9-3ca1-439b-bd7c-4326df954aba\",\n\"InitiationMethod\": \"INBOUND\",\n\"Queue\": {\n\"ARN\": \"arn:aws:connect:ap-southeast-2:964328442121:instance/1cc2a6ed-528e-4f96-afd2-0344b1c81114/queue/f4931946-8f30-449c-ba72-56b1b0bee900\",\n\"Name\": \"BasicQueue\"\n},\n\"QueueTimestamp\": \"2024-06-04T00:41:35.625Z\",\n\"State\": \"CONNECTING\",\n\"StateStartTimestamp\": \"2024-06-04T00:41:35.831Z\"\n}\n]"
+            },
+            {
+              "type": "p",
+              "text": "For a complete definition of the properties, navigate to Agent Event Streams Data Model in the Amazon Connect Administrator Guide. A sample event is available in the following attachment. To download the file attachment, choose anywhere inside the following box."
+            },
+            {
+              "type": "p",
+              "text": "agent-event-sample.json"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "5.7 KB"
+            },
+            {
+              "type": "p",
+              "text": "Events published on Kinesis Data Streams are base64 encoded, and follow a defined format. The encryption reduces the size of the event. You must first decode the data, then process it."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t2-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use Case: Formatting and using agent event data",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Mary Major, a contact center developer at AnyCompany Health, is tasked with implementing a solution that captures real-time agent status. The solution must store data in a datastore for downstream consumption by an external application. Mary decides to use the agent events stream to avoid repetitive calls to the Amazon Connect API."
+            },
+            {
+              "type": "p",
+              "text": "The Amazon Connect instance at AnyCompany Health is configured to publish agent events to a Kinesis data stream. Mary creates an AWS Lambda function that is activated every time an event is received on the data stream."
+            },
+            {
+              "type": "p",
+              "text": "Mary must decode the event data first, because it is published in a base64 encoded format."
+            },
+            {
+              "type": "code",
+              "text": "const decodedRecords = event.Records.map(e => {\nreturn JSON.parse(Buffer.from(e.kinesis.data, 'base64').toString('ascii'));\n});"
+            },
+            {
+              "type": "p",
+              "text": "The event published on the Kinesis data stream is an array of records."
+            },
+            {
+              "type": "p",
+              "text": "After decoding the event data, Mary implements logic to iterate over the decoded records. Each record corresponds to an agent event. She also implements a check for the value of the EventType property."
+            },
+            {
+              "type": "code",
+              "text": "for(const record of decodedRecords) {\nconsole.log(record)\nif (record.EventType === \"STATE_CHANGE\") {\n// implement the logic to write to the datastore (for example, an Amazon DynamoDB table)\n// the agent unique identifier is contained in the record.AgentARN property\n// the current agent status is found in record.CurrentAgentSnapshot.AgentStatus\n}\n}"
+            },
+            {
+              "type": "p",
+              "text": "If the EventType property is set to STATE_CHANGE, Mary extracts the agent status from the AgentStatus>Name property of the event."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned about the Amazon Connect agent event stream. You identified agent events delivered using Amazon Kinesis Data Streams, understood their data model, and explored their use cases. In the next lesson, you will explore Amazon Connect Contact Lens analytics. Lesson 4 of 10"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-integrations-intermediate-t2-q1",
+          "question": "Mary Major, a contact center developer at AnyCompany Health, wants to capture real-time agent status data from the Amazon Connect instance. She plans to use the agent event stream published on Amazon Kinesis Data Streams. Which event type would be most relevant for capturing agent status changes?",
+          "options": [
+            {
+              "id": "A",
+              "text": "LOGIN"
+            },
+            {
+              "id": "B",
+              "text": "HEART_BEAT"
+            },
+            {
+              "id": "C",
+              "text": "STATE_CHANGE"
+            },
+            {
+              "id": "D",
+              "text": "CONNECTING"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "The correct answer is STATE_CHANGE. This means a routing event impacting the agent's status has occurred."
+        },
+        {
+          "id": "connect-integrations-intermediate-t2-q2",
+          "question": "Mary Major wants to decode the agent event data received from the Amazon Kinesis data stream. Which code decodes the base64 encoded event data?",
+          "options": [
+            {
+              "id": "A",
+              "text": "const decodedRecords = event.Records.map(e => { return JSON.parse(e.kinesis.data); });"
+            },
+            {
+              "id": "B",
+              "text": "const decodedRecords = event.Records.map(e => { return Buffer.from(e.kinesis.data, ‘base64’).toString(‘ascii’); });"
+            },
+            {
+              "id": "C",
+              "text": "const decodedRecords = event.Records.map(e => { return JSON.parse(Buffer.from(e.kinesis.data, ‘base64’).toString(‘ascii’)); });"
+            },
+            {
+              "id": "D",
+              "text": "const decodedRecords = event.Records.map(e => { return Buffer.from(e.kinesis.data).toString('ascii'); });"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "Events published on Amazon Kinesis data streams are base64 encoded and follow a defined format. Although this reduces the size of the event, Mary must decode the data contained in the event before processing it."
+        },
+        {
+          "id": "connect-integrations-intermediate-t2-q3",
+          "question": "Mary Major, a contact center developer at AnyCompany Health, wants to implement a system that captures real-time agent status and stores the data in a datastore for downstream consumption. Which approach would be MOST suitable for this use case?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Use the Amazon Connect API to poll for agent status changes and store the data in a database."
+            },
+            {
+              "id": "B",
+              "text": "Use the agent event stream published on Amazon Kinesis Data Streams and create an AWS Lambda function to process and store the events."
+            },
+            {
+              "id": "C",
+              "text": "Implement a custom solution that directly integrates with the contact center software to capture agent status changes."
+            },
+            {
+              "id": "D",
+              "text": "Use Amazon CloudWatch to monitor agent status changes and store the data in Amazon S3."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Using the agent event stream and creating an AWS Lambda function to process and store the events is the most suitable approach. This avoids repetitive calls to the Amazon Connect API and allows for real-time processing of agent status changes."
+        }
+      ]
+    },
+    {
+      "id": "connect-integrations-intermediate-t3",
+      "number": 3,
+      "title": "Streaming Amazon Connect Contact Lens Real-Time Analytics",
+      "shortTitle": "Streaming Amazon Connect Contact Lens Real-T…",
+      "summary": "Amazon Connect Contact Lens includes two APIs that support conversational analytics. The two APIs are as follows:",
+      "duration": "~7 min",
+      "lede": null,
+      "objectives": [
+        "Identify real-time contact analysis events.",
+        "Recognize the data model for real-time contact analysis events.",
+        "Explore a use case for real-time contact analysis events."
+      ],
+      "sections": [
+        {
+          "id": "connect-integrations-intermediate-t3-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect Contact Lens includes two APIs that support conversational analytics. The two APIs are as follows:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "ListRealtimeContactAnalysisSegments for voice contacts"
+            },
+            {
+              "type": "p",
+              "text": "ListRealtimeContactAnalysisSegmentsV2 for chats"
+            },
+            {
+              "type": "p",
+              "text": "Organizations can use these APIs to build solutions that make their contact center more efficient. The events published by these APIs are available in near real time. They include contact analytics data, such as real-time sentiment analysis and the interaction conversation transcript."
+            },
+            {
+              "type": "p",
+              "text": "In Amazon Connect, publishing real-time contact analysis events is not active by default. Cloud administrators need to create an Amazon Kinesis data stream, then configure the Amazon Connect instance to use that stream."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Understanding real-time contact analysis segments",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The data model for the contact analysis events varies based on the interaction channel. The real-time contact analysis segment streams are generated in JSON format. Event data is published for every contact that has real-time contact analysis enabled in Amazon Connect."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Data model for voice contact analysis",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For voice contacts, Amazon Connect Contact Lens publishes four event types: STARTED, SEGMENTS, COMPLETED or FAILED. The event type is available in the StreamingEventType property."
+            },
+            {
+              "type": "p",
+              "text": "The SEGMENTS event contains the contact real-time analysis data. The other types are indicative of the progress of the analysis. Each of these events contains a set of properties. This section focuses on the SEGMENTS event."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "General event properties",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The SEGMENTS event type contains properties that identify the version, channel, AWS account, Amazon Connect instance, contact identifier, and language. Developers use these properties to gain insight on the contact ID related to this event, and the Amazon Connect instance that published it. The following code snippet illustrates property values for channel, account, instance, contact identifiers, language code, and event type."
+            },
+            {
+              "type": "code",
+              "text": "\"Version\": \"1.0.0\",\n\"Channel\": \"VOICE\",\n\"AccountId\": \"111122223333\",\n\"InstanceId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE11111\",\n\"ContactId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLE22222\",\n\"LanguageCode\": \"en-US\",\n\"EventType\": \"SEGMENTS\""
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "The Segments property",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Segments property is an array that contains utterances, transcripts, and matched categories."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Utterance"
+            },
+            {
+              "type": "p",
+              "text": "The Utterance objects include the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "An utterance unique identifier"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "A unique transcript identifier for each conversation",
+                "The participant ID and role of the utterance, containing values such as AGENT or CUSTOMER",
+                "The utterance or stated sentence",
+                "Beginning and end time offset of the utterance in milliseconds",
+                "Sample code showing the Utterance property structure."
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Transcript"
+            },
+            {
+              "type": "p",
+              "text": "The Transcript object contains the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "A unique transcript identifier"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "The participant ID and role for that transcript",
+                "The text transcript",
+                "Beginning and end time offset of the transcript included in the record"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "The sentiment analysis of the transcript"
+            },
+            {
+              "type": "p",
+              "text": "An IssuesDetected array that stores issues detected by Contact Lens, if any. Each issue includes the beginning and end character offset. You can use this to extract the issue from the transcript."
+            },
+            {
+              "type": "p",
+              "text": "Sample code showing the Transcript property structure."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Categories"
+            },
+            {
+              "type": "p",
+              "text": "The Categories objects contain information about categories matched in this event, if any. In this object, you can find the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "An array containing the matched categories"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Details about points of interest in the transcript where the categories were detected",
+                "Sample code showing the Categories property structure."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The data included in the real-time contact analysis event for a voice contact helps developers build applications that use real-time analysis. An example includes showing the real-time transcript of the ongoing conversation in the agent application. Another example is intercepting the real-time transcription to translate the content in a different language for the agent. Segment data gives access to a point-in-time snapshot of the conversation at the time the event is emitted. The segment data includes the segment's sentiment analysis evaluated, based on the current utterance."
+            },
+            {
+              "type": "p",
+              "text": "To download a sample of a real-time voice contact analysis SEGMENTS event, choose anywhere inside the following box."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "voice-realtime-analysis-segments-sample.json",
+                "3.4 KB"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Data model for chat contact analysis"
+            },
+            {
+              "type": "p",
+              "text": "Similar to voice, for real-time chat analysis, Amazon Connect publishes identical event types: STARTED, SEGMENTS, COMPLETED, and FAILED."
+            },
+            {
+              "type": "p",
+              "text": "The event type is available in the StreamingEventType property. The following example shows an event type STARTED."
+            },
+            {
+              "type": "code",
+              "text": "\"StreamingEventType\": \"STARTED\""
+            },
+            {
+              "type": "p",
+              "text": "In the SEGMENTS event type, you can find the contact analysis data. These events include additional properties unique to chat interactions."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "OutputType"
+            },
+            {
+              "type": "p",
+              "text": "The OutputType property contains information related to the transcript redaction. For example, the following indicates a redacted output."
+            },
+            {
+              "type": "p",
+              "text": "The OutputType property value is Redacted."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "StreamingSettings"
+            },
+            {
+              "type": "p",
+              "text": "The StreamingSettings property stores the language setup for the contact. This property also contains information about the redaction configuration for the analysis. In the following example, the transcript includes personally identifiable information (PII) redaction. The output contains both redacted and original transcripts."
+            },
+            {
+              "type": "p",
+              "text": "Sample code showing the Streaming setting code structure."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Transcript"
+            },
+            {
+              "type": "p",
+              "text": "The Transcript property contains the analyzed transcript for chat contacts. Chat interactions are text-based, and the transcripts object contains additional properties, such as display name of the participant or the content type. Similar to voice events, the transcript stores the sentiment information for each segment of the conversation. In this example, the value of the sentiment for the content is NEUTRAL."
+            },
+            {
+              "type": "p",
+              "text": "Sample code showing the Chat transcript code structure."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Attachments"
+            },
+            {
+              "type": "p",
+              "text": "The Attachments property stores information about attachments uploaded by the contact or the agent. Developers can use this data to access attachments in real time for further processing, as needed. The property includes the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "A unique identifier"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "The participant that uploaded the attachment",
+                "Information about the attachment, such as the file name and file type",
+                "The time when the attachment was uploaded",
+                "Sample code showing the Attachments code structure."
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Additional events"
+            },
+            {
+              "type": "p",
+              "text": "Additional chat events, such as participant joining or disconnecting, or participant typing are also included in the SEGMENTS array. The Event property provides insights on system events that occur during the current segment."
+            },
+            {
+              "type": "p",
+              "text": "Sample code showing the Additional chat event code structure."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Categories"
+            },
+            {
+              "type": "p",
+              "text": "Similar to the voice contact, the Categories property includes the Amazon Connect Contact Lens categories matched by a rule. The Categories property is not included in a Segments property if there are no categories configured. The Categories property is also not included if no categories matched a rule based on the utterance of the current segment."
+            },
+            {
+              "type": "p",
+              "text": "When building an application that processes real-time contact analysis events streams, it is important to consider the variable nature of the events structure."
+            },
+            {
+              "type": "p",
+              "text": "Sample code showing the Chat categories code structure."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Aggregated sentiment scores",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The events published for real-time contact analysis capture a point-in-time sentiment of a conversation. Developers can aggregate event sentiment scores to calculate the overall sentiment of a customer or agent in a conversation."
+            },
+            {
+              "type": "p",
+              "text": "To download a sample of a real-time chat contact analysis SEGMENTS event, choose anywhere inside the following box."
+            },
+            {
+              "type": "p",
+              "text": "chat-realtime-analysis-segments-sample.json"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "3.1 KB"
+            },
+            {
+              "type": "p",
+              "text": "To learn more about all the contact analysis events, navigate to Use Amazon Kinesis Data Streams for Contact Analysis in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "Events published on Amazon Kinesis data streams are base64 encoded and follow a defined format. Although this allows the size of the event to be reduced, you must decode the data contained in the event before processing it."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use Case",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Richard Roe, a software developer at AnyCompany Bank, is tasked to build a custom widget. The widget must display an excerpt of current conversations where the customer sentiment is positive. AnyCompany Bank’s Amazon Connect instance is configured to stream real-time contact analysis data to a Kinesis data stream. Richard creates a new Lambda function and configures a trigger for the Kinesis data stream."
+            },
+            {
+              "type": "p",
+              "text": "When a real-time contact analysis event is published, the function reads the event. Because the real-time contact analysis published on an Amazon Kinesis data stream is base64 encoded, Richard needs to decode the event first."
+            },
+            {
+              "type": "code",
+              "text": "const decodedRecords = event.Records.map(e => {\nreturn JSON.parse(Buffer.from(e.kinesis.data, 'base64').toString('ascii'));\n});"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect can send multiple records as part of the same event. Richard must implement logic to iterate over the records. In this logic, Richard filters the events where EventType is not equal to SEGMENTS. This helps Richard focus only on the events that contain sentiment information for voice contacts."
+            },
+            {
+              "type": "code",
+              "text": "const segments = decodedRecords.filter(record => record.EventType==='SEGMENTS');"
+            },
+            {
+              "type": "p",
+              "text": "The Segments property of the contact analysis event is an array. Only the Transcript objects contain sentiment information. Richard filters the segments array further to extract the Transcript objects from each segment. With this approach, the transcripts array contains relevant data that includes the sentiment. Richard can access the customer or agent sentiment for each segment, and use this data to build the widget."
+            },
+            {
+              "type": "code",
+              "text": "const transcripts = segments.filter(segment => 'Transcript' in segment);"
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned about real-time contact analysis events and explored the events data models. In the next lesson, you will explore contact records streaming. Lesson 5 of 10"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-integrations-intermediate-t3-q1",
+          "question": "Kwesi Manu is working on a real-time customer service application that needs to analyze customer sentiment during interactions. His company's Amazon Connect instance is configured to stream real-time contact analysis events to an Amazon Kinesis data stream. Which event should Kwesi focus on to access the sentiment information for voice contacts?",
+          "options": [
+            {
+              "id": "A",
+              "text": "STARTED"
+            },
+            {
+              "id": "B",
+              "text": "COMPLETED"
+            },
+            {
+              "id": "C",
+              "text": "FAILED"
+            },
+            {
+              "id": "D",
+              "text": "SEGMENTS"
+            }
+          ],
+          "correctOptionId": "D",
+          "rationale": "SEGMENTS contains the contact real-time analysis data."
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-q2",
+          "question": "Carlos Salazar is developing an application that needs to display real-time category matches during a customer interaction. Which conditions will include the Categories property in the SEGMENTS events?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The Categories property will always be included in SEGMENTS events."
+            },
+            {
+              "id": "B",
+              "text": "The Categories property will be included only if categories have been set up in Amazon Connect and the content matches a category."
+            },
+            {
+              "id": "C",
+              "text": "The Categories property will be included only if the customer sentiment is negative."
+            },
+            {
+              "id": "D",
+              "text": "The Categories property will be included only for voice interactions, not chat interactions."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "The Categories property will be included only if categories have been set up in Amazon Connect and the content matches a category."
+        },
+        {
+          "id": "connect-integrations-intermediate-t3-q3",
+          "question": "As an AWS developer, Mary Major wants to access the contact transcript and customer sentiment in real-time for the company's call center. Which AWS services can she use to achieve this? (Select TWO.) (Select all that apply: Amazon Lex / Amazon Connect / Amazon DynamoDB / Amazon Kinesis / Amazon Transcribe)",
+          "options": [],
+          "answer": "Amazon Connect; Amazon Kinesis. Amazon Connect is a contact center service that Mary can use to publish contact analysis events in real time. Amazon Connect Contact Lens events, including contact analytics data, are published by Amazon Connect. Mary needs to create an Amazon Kinesis data stream and configure the Connect instance to use it to stream real-time contact analysis events."
+        }
+      ]
+    },
+    {
+      "id": "connect-integrations-intermediate-t4",
+      "number": 4,
+      "title": "Streaming Contact Records",
+      "shortTitle": "Streaming Contact Records",
+      "summary": "Amazon Connect contact records provide detailed information about each customer interaction. They capture data points that give a comprehensive…",
+      "duration": "~8 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the contact record data model.",
+        "Explore use cases for contact records streaming."
+      ],
+      "sections": [
+        {
+          "id": "connect-integrations-intermediate-t4-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect contact records provide detailed information about each customer interaction. They capture data points that give a comprehensive view of the contact end to end. Contact records include metadata, such as the contact ID, start and end times, contact type, customer phone number, and routing information. They also include agent information, such as ID and name. Additionally, contact records store performance metrics, such as handle time, hold time, and time spent in various contact stages. Based on the system configuration, contact records might include audio recordings, and text transcripts of the customer-agent conversation."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect streams contact records to allow downstream processing by other AWS services or external systems."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t4-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Streaming contact records",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect publishes contact records at least once when the contact interaction ends. Contact interactions end when the following happens:"
+            },
+            {
+              "type": "p",
+              "text": "The contact disconnects from the interaction before being connected to an agent."
+            },
+            {
+              "type": "p",
+              "text": "The contact interacts with an agent. The agent handles the interaction and closes the contact in the agent application."
+            },
+            {
+              "type": "p",
+              "text": "A contact record is re-published every time the contact information is updated. For example, if an application or solution updates contact attributes after completion, a new record is streamed. In Amazon Connect, contact records are available for 24 months."
+            },
+            {
+              "type": "p",
+              "text": "Contact records include user-defined contact attributes associated with the contact. Amazon Connect contact records can store user-defined attributes up to 32 KB."
+            },
+            {
+              "type": "p",
+              "text": "In Amazon Connect, you can choose to stream contact records using Amazon Kinesis Data Streams or Amazon Data Firehose delivery stream. When choosing a streaming model for your contact records events, you need to consider your specific use cases. Processing data in near real time for multiple applications is a good use case for a data stream. Processing data for a single purpose with no requirement for real-time availability is a good use case for the Firehose streaming option."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t4-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Understanding the contact record model",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Contact records are published in JSON format. The contact record includes the information available at the time when the contact ended. For example, if a contact ends before being routed to a queue, the event does not contain any queue information. However, if the contact is routed to a queue, then connected with an agent, the contact record includes both queue and agent interaction details."
+            },
+            {
+              "type": "p",
+              "text": "Real-time and historical metrics are based on the data captured in contact records. The most commonly used information available within a contact record is as follows:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "General contact interaction information"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Contact details",
+                "Agent details",
+                "Queue details",
+                "Disconnect details",
+                "References or attached documents",
+                "Recording information",
+                "Quality metrics",
+                "In this lesson, you will explore the ContactTraceRecord, Queue, and Agent properties."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t4-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Understanding the ContactTraceRecord property",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The ContactTraceRecord property contains the interaction unique identifier, the communication channel, and the start and end time of the conversation. Data related to queue and agents handing the contact is also present in this object. The following provides an example of ContactTraceRecord detail property values."
+            },
+            {
+              "type": "code",
+              "text": "{\n\"AWSAccountId\": \"111122223333\",\n\"AWSContactTraceRecordFormatVersion\": \"2017-03-10\",\n\"Agent\":\n{\n....\n\"ConnectedToAgentTimestamp\": \"2024-06-04T00:41:39Z\",\n},\n\"AgentConnectionAttempts\": 1,\n\"AnsweringMachineDetectionStatus\": null,\n\"Channel\": \"VOICE\",\n\"ConnectedToSystemTimestamp\": \"2024-06-04T00:41:33Z\",\n\"ContactId\": \"2878e4b9-3ca1-439b-bd7c-4326df954aba\",\n\"NextContactId\": null,\n\"PreviousContactId\": null,\n\"CustomerEndpoint\":\n{\n\"Address\": \"+14155550255\",\n\"Type\": \"TELEPHONE_NUMBER\"\n},\n\"Queue\":\n{\n...\n}\n}"
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t4-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Understanding the Queue property",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Queue property contains the unique identifier and name of the queue. Additionally, the Queue property stores the time when the contact entered and left the queue. EnqueueTimestamp is the date and time when the contact was placed in queue. DequeueTimestamp is the time when the contact was routed out of this queue. The Duration property stores the duration in seconds of the contact queue time. The value of these properties can be used to perform custom metrics calculations required by specific business use cases. The following example shows the Queue property details, including the enqueue and dequeue timestamps."
+            },
+            {
+              "type": "code",
+              "text": "\"Queue\": {\n\"ARN\": \"arn:aws:connect:ap-southeast-2:111122223333:instance/a1b2c3d4-5678-90ab-cdef-EXAMPLEddddd/queue/ a1b2c3d4-5678-90ab-cdef-EXAMPLEkkkkk\",\n\"DequeueTimestamp\": \"2024-05-28T08:44:32Z\",\n\"Duration\": 2,\n\"EnqueueTimestamp\": \"2024-05-28T08:44:29Z\",\n\"Name\": \"BasicQueue\"\n}"
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t4-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Understanding the Agent property",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "If the contact is connected with an agent, the contact record includes information about the agent. The Agent property includes agent metrics, such as after-contact work, interaction duration, or hold duration. The Capabilities property shows whether the video feature was activated during the interaction. The following example shows an Agent property for a contact where the agent spent 10 seconds in after-call work. The conversation with the agent lasted 320 seconds, and video was enabled. There was no hold time during this interaction. The following snippet shows these sample property values for the agent object."
+            },
+            {
+              "type": "code",
+              "text": "\"Agent\": {\n\"ConnectedToAgentTimestamp\": \"2024-06-04T00:41:39Z\",\n\"AfterContactWorkDuration\": 10,\n\"AgentInteractionDuration\": 320,\n\"Capabilities\": {\n\"Video\": \"SEND\"\n},\n\"CustomerHoldDuration\": 0,\n\"LongestHoldDuration\": 0,\n\"NumberOfHolds\": 0\n}"
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t4-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using contact record properties",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Developers use the data available in the contact records to solve specific business use cases. The InitiationMethod property and the DisconnectReason property provide insight into how the contact was initiated and what caused the contact to be disconnected. The following example shows property values for the disconnect reason and initiation method."
+            },
+            {
+              "type": "code",
+              "text": "\"DisconnectReason\": \"CUSTOMER_DISCONNECT\",\n\"InitiationMethod\": \"WEBRTC_API\""
+            },
+            {
+              "type": "p",
+              "text": "Another practical use case for contact record property values is identifying the abandoned contacts for further downstream processing. An abandoned contact refers to a contact that disconnected themselves while in queue before being connected to an agent. The contact record for an abandoned contact has a Queue, and an Enqueue Timestamp because it was enqueued. It won't have a ConnectedToAgentTimestamp, or any of the other fields that populate only after the contact has been connected to an agent."
+            },
+            {
+              "type": "p",
+              "text": "To find a complete description of the contact record model, navigate to Contact Records Data Model in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "You can stream contact records to publish information about completed contacts to third-party applications. One of the common use cases is saving a copy of all contact records in an Amazon Simple Storage Service (Amazon S3) bucket. This solution helps organizations retain records beyond the 24-month default Amazon Connect retention window. The contact records information can enhance data available in external business intelligence (BI) tools. The streaming of the contact records is the preferred integration method for third-party workforce management solutions."
+            },
+            {
+              "type": "p",
+              "text": "To download a sample contact record, choose anywhere inside the following box."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "contact-record-sample.json",
+                "3 KB"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "Mateo Jackson, a data engineer at AnyOrganization Insurance, is tasked to build a solution that stores contact records beyond the 2-year availability period. AnyOrganization Insurance complies with a 7-year data retention policy."
+            },
+            {
+              "type": "p",
+              "text": "AnyOrganization has the following two requirements for Mateo:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "The contact records need to be accessed for audit purposes for a period of 7 years.",
+                "The contact records need to be ingested in an external BI application."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For this use case, Mateo determines that he can store a copy of the contact records in an Amazon S3 bucket. For the first requirement, Mateo can use Firehose to write the contact record directly to a configured Amazon S3 bucket. Because of the second requirement, Mateo decides to use an Amazon Kinesis data stream that activates a Lambda function. When activated, the Lambda function will call the external BI application APIs to store the record data. Mateo confirms that an Amazon Connect Kinesis data stream is created and contact record streaming is enabled."
+            },
+            {
+              "type": "p",
+              "text": "In the Lambda console, Mateo creates a new function and sets up a trigger for the Amazon Kinesis data stream."
+            },
+            {
+              "type": "p",
+              "text": "Each time a record is streamed from the Amazon Connect instance, the AWS Lambda function is activated and the Lambda code runs. The contact records are published on a Kinesis data stream and are base64 encoded. Mateo needs to decode the information before processing it. Amazon Connect sends events in batches. This means that multiple records are published at once. The decodedRecords constant contains all the contact records published on the data stream for an event. Each of these records is the unique representation of a contact in the Amazon Connect instance."
+            },
+            {
+              "type": "code",
+              "text": "const decodedRecords = event.Records.map(e => {\nreturn JSON.parse(Buffer.from(e.kinesis.data, 'base64').toString('ascii'));\n});"
+            },
+            {
+              "type": "p",
+              "text": "For each record in the array, Mateo can write the necessary logic to write the contact record in the bucket."
+            },
+            {
+              "type": "code",
+              "text": "for (const record of decodedRecords) {\nconst putParameters = {\nKey: `${record.ContactId}.json`, // using the contact id as the filename\nBucket: 'DOC-EXAMPLE-DESTINATION-BUCKET', // the destination bucket\nBody: Buffer.from(JSON.stringify(record)) // the JSON object is converted to a Buffer to be written to S3\n}\n\n// writing error safe code\ntry {\nconst response = await s3Client.send(new PutObjectCommand(putParameters));\n} catch (e) {\nconsole.log(e);\n}\n}"
+            },
+            {
+              "type": "p",
+              "text": "After testing his code, Mateo confirms that new contact records are written to the S3 bucket. Every time an update is available for a contact record, the corresponding file in the bucket is overwritten. The record contact identifier is used as a key. This strategy guarantees the latest version of the contact record is saved. For example, when a contact attribute is updated, the file corresponding to the contact record will also contain the update. Mateo also confirms that the external BI application has the latest updates of the contact records."
+            },
+            {
+              "type": "p",
+              "text": "This implementation helps AnyOrganization Insurance access a copy of contact records outside Amazon Connect. It also guarantees that this copy is always accurate and can be used for auditing and reporting."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned about contact record events in Amazon Connect. You explored the data model of contact records and recognized their use cases for streaming. In the next lesson, you will explore integrations using Amazon API Gateway. Lesson 6 of 10"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-integrations-intermediate-t4-q1",
+          "question": "A data engineer at AnyOrganization Insurance is tasked to store a copy of the contact records from Amazon Connect for auditing purposes. He is also asked to update the contact record data in a homegrown, real-time reporting application. What is the BEST approach to achieve this?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Store the contact records in the Amazon Connect instance. Use the search function to update data to the external reporting application."
+            },
+            {
+              "id": "B",
+              "text": "Stream the contact records to an Amazon Kinesis data stream. Using an AWS Lambda function, write records to an Amazon S3 bucket and an external reporting application."
+            },
+            {
+              "id": "C",
+              "text": "Use Amazon Data Firehose to directly write the contact records to an Amazon S3 bucket."
+            },
+            {
+              "id": "D",
+              "text": "Use Amazon Kinesis Data Analytics to process the contact records and store them in the third-party reporting system."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "When choosing a streaming model for your contact records events, you need to consider your specific use cases. Processing data in near real time for multiple applications is a good use case for a data stream. Processing data for a single purpose with no requirement for real-time availability is a good use case for the Firehose streaming option."
+        },
+        {
+          "id": "connect-integrations-intermediate-t4-q2",
+          "question": "Which statement about the contact record model is TRUE?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The contact record model includes all information about a contact, regardless of the stage when the contact ended."
+            },
+            {
+              "id": "B",
+              "text": "The contact record model only includes information about contacts that were handled by an agent."
+            },
+            {
+              "id": "C",
+              "text": "The contact record model includes information about a contact based on the events that occurred during its lifecycle."
+            },
+            {
+              "id": "D",
+              "text": "The contact record model is a fixed structure and does not vary based on the contact's lifecycle."
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "The contact record includes the information available at the time when the contact ended. For example, if a contact ends before being routed to a queue, the event does not contain any queue information. However, if the contact is routed to a queue, then connected with an agent, the contact record includes both queue and agent interaction details."
+        }
+      ]
+    },
+    {
+      "id": "connect-integrations-intermediate-t5",
+      "number": 5,
+      "title": "Integrating Amazon API Gateway and Amazon Connect",
+      "shortTitle": "Integrating Amazon API Gateway and Amazon Co…",
+      "summary": "Amazon API Gateway is a managed service used to create, publish, maintain, monitor, and secure APIs at any scale. It acts as an entry point for…",
+      "duration": "~12 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the benefits of using Amazon API Gateway with Amazon Connect.",
+        "Recognize Amazon Connect integration options using API Gateway."
+      ],
+      "sections": [
+        {
+          "id": "connect-integrations-intermediate-t5-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon API Gateway is a managed service used to create, publish, maintain, monitor, and secure APIs at any scale. It acts as an entry point for applications to access data, business logic, and functionality from services such as AWS Lambda, and Amazon Connect. API Gateway supports protocols such as REST, WebSocket, and HTTP."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect provides APIs that offer programmatic access to interact with its resources and functionality. By integrating API Gateway with Amazon Connect, you can create custom applications or interfaces that interact with Amazon Connect resources and functionality. With this type of integration, you can build serverless applications and solutions. A typical use case for API Gateway is to create an API endpoint that helps invoke an Amazon Connect API to create click-to-call functionality. Click-to-call is a method offering customers to connect with a contact center representative by phone while they're browsing a website."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t5-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using API Gateway with Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can use an API Gateway to directly interact with Amazon Connect instances. This means you can create REST endpoints exposed over the internet that your applications can use to perform actions. For example, you can create an endpoint to list all queues in an Amazon Connect instance or retrieve real-time metrics for a group of queues."
+            },
+            {
+              "type": "p",
+              "text": "Your applications can invoke REST API endpoints using the HTTPS protocol. When the API Gateway receives the request on an endpoint, it determines the requested operation, activates it, and returns a result."
+            },
+            {
+              "type": "p",
+              "text": "This approach presents the following two main benefits:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "A single API Gateway can be used for multiple applications.",
+                "Applications do not need to implement the AWS SDK to interact with Amazon Connect instances."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "To integrate your applications with Amazon Connect using API Gateway, you can choose between AWS service integration or AWS Lambda proxy integration. Both options require you to create an Amazon API Gateway. To create an API Gateway, your user needs AWS Identity and Access Management (IAM) permissions. To learn more, navigate to Control Access to a REST API with IAM Permissions in the Amazon API Gateway Developer Guide. To learn how to create an API Gateway for an Amazon Connect solution, choose the arrow buttons to display each of the following six steps."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Creating an API Gateway",
+                  "body": "Follow these steps to create an API Gateway."
+                },
+                {
+                  "title": "Navigate to Amazon API Gateway",
+                  "body": "AWS Management Console screenshot. Amazon API Gateway service link is highlighted. Log in to the AWS Management Console and navigate to the Amazon API Gateway service."
+                },
+                {
+                  "title": "Create an API",
+                  "body": "API Gateway screenshot. Create an API button is indicated with an arrow. Choose Create API."
+                },
+                {
+                  "title": "Choose REST API",
+                  "body": "API Gateway Create API screenshot. Rest API is highlighted. To develop a new API that integrates with Amazon Connect, choose REST API, then choose Build."
+                },
+                {
+                  "title": "Create the API Gateway",
+                  "body": "Create APIGateway page showing API Details. API name field is highlighted, and an arrow indicates to the Create API button. Enter a name for your API, then choose Create API."
+                },
+                {
+                  "title": "Create resources",
+                  "body": "Create resources screenshot. Create resource button is indicated with an arrow. Choose Create resources."
+                },
+                {
+                  "title": "Configure resources",
+                  "body": "Configure resources screenshot. Resource is highlighted, and the Create resource button is indicated with an arrow. The resources are endpoints your applications will use to perform actions. Enter a resource name (for example, outbound-calls) and choose Create resource."
+                },
+                {
+                  "title": "Summary",
+                  "body": "After the resource is created, you can add methods in your applications to interact with your API."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For each method, you can define the integration type."
+            },
+            {
+              "type": "p",
+              "text": "You will explore the integration types in the next sections."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t5-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Integrating directly with the Amazon Connect service",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Operations that consume Amazon Connect APIs directly and do not require complex pre-processing or post-processing of the results are a best fit for this option. A common example is an API endpoint that programmatically places an outbound call. In the following example, the processing of the request or the response is not complex. The request must contain the information required to place the call. This approach is similar to directly calling the Amazon Connect REST API without the need to manage the AWS credentials on the client side."
+            },
+            {
+              "type": "p",
+              "text": "Architectural diagram depicting an integration between an Application and Amazon Connect using Amazon API Gateway."
+            },
+            {
+              "type": "p",
+              "text": "When using this pattern, developers must ensure necessary permissions for the API Gateway service to access Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "The following example covers the three steps to configure API Gateway for a direct integration with the StartOutboundVoiceContact Amazon Connect API."
+            },
+            {
+              "type": "p",
+              "text": "To create a new method, for Integration type, select AWS service."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Integration type screenshot. AWS service is selected and highlighted.",
+                "Integration configuration of an AWS Service screenshot. AWS Region and AWS service fields are highlighted."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Select the AWS Region and AWS service for your Connect integration."
+            },
+            {
+              "type": "p",
+              "text": "Configure where API Gateway forwards the request made to this endpoint. In this example, forward the request to the StartOutboundVoiceContact action. Using the path override setting helps define the Amazon Connect API endpoint to use. Configure the HTTP method to match the method for that action in the Amazon Connect API. Provide a role that allows the invocation of this action."
+            },
+            {
+              "type": "p",
+              "text": "API configuration settings screenshot. HTTP method, Action Type, Path override, and Execution role are highlighted."
+            },
+            {
+              "type": "p",
+              "text": "When users make requests to this endpoint, the API Gateway forwards it to the configured path for the Amazon Connect service."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t5-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Integrating with Amazon Connect using Lambda proxy integration",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "This option should be considered for complex, multi-step operations."
+            },
+            {
+              "type": "p",
+              "text": "When you use this integration option, the Lambda function receives the request data as input, including the request body. With this option, you can perform multiple operations in the function and return a result to your applications when complete."
+            },
+            {
+              "type": "p",
+              "text": "An example is getting a list of all the agents assigned to a routing profile. When using the Amazon Connect REST API, you first need to list all routing profiles and users. Then, you process the two datasets to achieve the outcome. Your application needs to manage AWS credentials to perform two distinct calls to the Amazon Connect REST API. By using API Gateway and Lambda proxy integration, your application can receive all data in a single function call."
+            },
+            {
+              "type": "p",
+              "text": "With this approach, the API Gateway does not interact directly with Amazon Connect. Instead, it interacts with a Lambda function that accesses Amazon Connect APIs."
+            },
+            {
+              "type": "p",
+              "text": "This architectural diagram shows an integration between an application and Amazon Connect. This setup uses Amazon API Gateway to query an AWS Lambda proxy."
+            },
+            {
+              "type": "p",
+              "text": "The permissions are managed at the Lambda level. The role of the function associated to the endpoint needs to be adjusted to reflect your use case."
+            },
+            {
+              "type": "p",
+              "text": "To implement this functionality, when you create a new method, you choose the Lambda function integration type."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Integration type screenshot. The Lambda function tile is highlighted and selected.",
+                "Lambda function configurations screenshot. The selected values are highlighted.",
+                "You can then select the Lambda function where the requests on that endpoint will be directed."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "In this configuration, API Gateway forwards the requests made to this endpoint to the AWS Lambda function for processing."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t5-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use case",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Terry Whitlock, a developer at AnyCompany Insurance, was tasked to implement a click-to-call solution. AnyCompany Insurance wants to offer their customers the ability to request a call by choosing a button on the company website."
+            },
+            {
+              "type": "p",
+              "text": "The website front-end work is completed and Terry needs to provide an API endpoint that can be invoked by the website."
+            },
+            {
+              "type": "p",
+              "text": "Terry creates a new REST API in API Gateway. This API will implement one route: /outbound-calls. The endpoint accepts requests that include the phone number of the customer. Terry creates the endpoint in the API."
+            },
+            {
+              "type": "p",
+              "text": "Create resource, Resource details screenshot. Resource name is highlighted."
+            },
+            {
+              "type": "p",
+              "text": "Terry decides to implement a POST method to receive the requests. Terry implements the method with a Lambda integration. This provides the ability to run code when a request is received. Terry chooses this option so the solution can be expanded with additional functionality in the future. The route needs to point to a Lambda function, and Terry writes the necessary code."
+            },
+            {
+              "type": "p",
+              "text": "Terry implements the function so that only the contactPhoneNumber parameter is required. This parameter must be passed with the request made to the API Gateway. The following code sample shows a Lambda function that invokes the Amazon Connect StartOutboundVoiceContactCommand."
+            },
+            {
+              "type": "code",
+              "text": "import { ConnectClient, StartOutboundVoiceContactCommand } from \"@aws-sdk/client-connect\";\n\nexport const handler = async (event) => {\nconst response = {\nstatusCode: 200\n};\n\nconst connectClient = new ConnectClient();\n\nconst outboundParams = {\nDestinationPhoneNumber:event.contactPhoneNumber,\nContactFlowId: \"a1b2c3d4-5678-90ab-cdef-EXAMPLEddddd\" // the id of the flow for the outbound call,\nInstanceId: \"a1b2c3d4-5678-90ab-cdef-EXAMPLEkkkkk\" // the Amazon Connect instance that will start the call,\nSourcePhoneNumber: \"+14155550100\" // a phone number claimed in the Amazon Connect instance\n};\n\ntry {\nconst result = await connectClient.send(new StartOutboundVoiceContactCommand(outboundParams));\n} catch (e) {\nconsole.log(e);\n\nresponse.statusCode = 500;\n}\n\nreturn response;\n};"
+            },
+            {
+              "type": "p",
+              "text": "With this new resource and methods configured, Terry can now deploy the API."
+            },
+            {
+              "type": "p",
+              "text": "Resources screenshot with Deploy API highlighted."
+            },
+            {
+              "type": "p",
+              "text": "When deploying an API for the first time, you are prompted to create a new stage. This action helps when working on different versions of your API. Each stage provides its own set of invocation URLs you can use to interact with it."
+            },
+            {
+              "type": "p",
+              "text": "Terry shares the structure of the request body and the endpoint to use when invoking this functionality with the web development team. The endpoint for the API Gateway is available under Stage setting in the AWS Management Console. Terry locates the invocation URL for the resource, and copies it."
+            },
+            {
+              "type": "p",
+              "text": "Stage setting screenshot. Invoke URL is highlighted."
+            },
+            {
+              "type": "p",
+              "text": "She communicates this URL to the team and informs them that requests made to this endpoint need to use the POST method, with the following body:"
+            },
+            {
+              "type": "code",
+              "text": "{\n“contactPhoneNumber”: <the phone number to call>\n}"
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned the two ways API Gateway interacts with Amazon Connect APIs. Continue to the next lesson to review the course summary and prepare for the end-of-course assessment. Course summary In this course, you learned about Amazon Connect integrations and the most common event streaming capabilities of Amazon Connect. You learned about the built-in AWS Lambda integration, data ingestion functionality, and integrations with external applications using Amazon API Gateway. Take a moment to review these key concepts in the course summary before taking the course assessment. Streaming contact events Amazon Connect publishes contact events on an EventBridge bus. Contact events capture the lifecycle of a contact interaction. These events are published in near real time. The events include contact initiation, connection to the system, queuing, agent connection, and disconnection. Contact events contain details like contact ID, channel, initiation method, agent information, and timestamps. Developers can create rules in EventBridge to capture and process these events. The contact events data model includes general event information and event details. General information consists of resource identifiers, event version, ID, type, source, account, timestamp, and Region. Event details contain contact-specific data, like initiation timestamp, channel, initiation method, agent information, and event type. Queue and agent information is included when a contact is queued or connected to an agent. Contact events can be used for analytics dashboards, workforce management integrations, and custom solutions like abandoned call recovery mechanisms. Streaming agent events Amazon Connect publishes agent events using Kinesis Data Streams. Agent events provide near real-time agent activity data. Developers can create dashboards, integrate with workforce management solutions, and configure alerts based on agent events. Agent events include LOGIN, LOGOUT, STATE_CHANGE, and HEART_BEAT events. STATE_CHANGE events occur when an agent's status changes between routable and non-routable states. These events contain agent snapshots for current and previous states, in addition to contact information when an agent is handling a contact. Agent events data includes agent status, username, contact details, and timestamps. Developers can use this data to implement behavior specific to agent state changes and handle ongoing contact interactions. Streaming Contact Lens analytics Contact Lens offers real-time conversational analytics streaming through APIs. These APIs publish events for voice and chat interactions, enabling solutions for contact center efficiency. For voice contacts, Contact Lens publishes STARTED, SEGMENTS, COMPLETED, and FAILED events. SEGMENTS events contain real-time analysis data like utterances, transcripts, matched categories, and sentiment analysis. For chat contacts, the event types are similar, but the data model includes additional properties like output type, streaming settings, attachments, and system events. Real-time contact analysis events provide insights like sentiment scores, transcripts, and matched categories. Developers can aggregate sentiment scores and use the data for real-time widgets or translations. Streaming contact records Amazon Connect streams contact records for completed interactions. Contact records include metadata, agent information, performance metrics, recordings, and transcripts. Records are published at least once when a contact ends and are republished upon updates. Contact records contain general interaction information, contact details, agent details, queue details, disconnect reasons, and attached documents. Developers can use this data for auditing, reporting, and integrating with external systems. Contact records are published to Kinesis Data Streams or Firehose delivery streams. Kinesis Data Streams are suitable for near real-time processing, while Firehose is suitable for single-purpose processing. Integrating API Gateway with Amazon Connect API Gateway enables creating, publishing, and maintaining APIs for services like Amazon Connect. By integrating API Gateway with Amazon Connect, you can build custom applications and interfaces that interact with Amazon Connect resources. API Gateway can integrate with Amazon Connect using AWS service integration or Lambda proxy. Service integration is suitable for direct API consumption, whereas Lambda proxy is suitable for complex, multi-step operations. Developers can create REST endpoints in API Gateway that invoke Amazon Connect APIs or Lambda functions. This enables serverless applications and solutions, such as click-to-call functionality on websites. Downloadable PDF of the summary To download a PDF version of the summary section, choose anywhere inside the following box. Note: For the best experience with screen readers, use NVDA or JAWS. If you are using VoiceOver, you might experience issues with the downloaded PDF. Amazon Connect Integrations Intermediate Summary.pdf 64.8 KB What's next? In this lesson, you reviewed common Amazon Connect integration options. In the next lesson, you will assess your knowledge of these concepts."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-integrations-intermediate-t5-q1",
+          "question": "A developer at AnyCompany Insurance, is tasked with implementing a click-to-call solution using Amazon API Gateway and Amazon Connect. Terry has created a REST API in API Gateway with a POST method that invokes an AWS Lambda function. The Lambda function is designed to initiate an outbound call from the contact center when a request is received. Which statement accurately describes the integration between Amazon API Gateway and Amazon Connect in this scenario?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The API Gateway directly interacts with the Amazon Connect API to initiate the outbound call."
+            },
+            {
+              "id": "B",
+              "text": "The API Gateway invokes the Lambda function, which then interacts with the Amazon Connect API to initiate the outbound call."
+            },
+            {
+              "id": "C",
+              "text": "The API Gateway directly initiates the outbound call through the Amazon Connect API without involving a Lambda function."
+            },
+            {
+              "id": "D",
+              "text": "The API Gateway invokes a Lambda function that interacts with the Amazon Connect API to retrieve agent information, but not to initiate the outbound call."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "The API Gateway invokes the Lambda function, which then interacts with the Amazon Connect API to initiate the outbound call."
+        },
+        {
+          "id": "connect-integrations-intermediate-t5-q2",
+          "question": "Which integration pattern allows an application to invoke an Amazon Connect API by calling the API's REST endpoint?",
+          "options": [
+            {
+              "id": "A",
+              "text": "AWS service integration"
+            },
+            {
+              "id": "B",
+              "text": "AWS Lambda proxy integration"
+            },
+            {
+              "id": "C",
+              "text": "Amazon API Gateway"
+            },
+            {
+              "id": "D",
+              "text": "Amazon Connect"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "The correct answer is AWS service integration. Users can use Amazon API Gateway to directly interact with Amazon Connect instances using REST endpoints. This allows applications to perform actions on an instance using multiple HTTPS requests."
+        },
+        {
+          "id": "connect-integrations-intermediate-t5-q3",
+          "question": "What is the main benefit of using Amazon API Gateway with Amazon Connect?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Allows for the creation of custom applications or interfaces that interact with Amazon Connect resources and functionality"
+            },
+            {
+              "id": "B",
+              "text": "Provides a managed service that helps to create, publish, maintain, monitor, and secure APIs at any scale."
+            },
+            {
+              "id": "C",
+              "text": "Gives businesses the ability to integrate communication channels, like voice, chat, task management, and more, into a unified agent workspace."
+            },
+            {
+              "id": "D",
+              "text": "Supports various protocols like REST, WebSocket, HTTP, and more."
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "By integrating Amazon API Gateway with Amazon Connect, developers can create custom applications or interfaces that interact with Amazon Connect resources and functionality."
+        }
+      ]
+    },
+    {
+      "id": "connect-integrations-intermediate-t6",
+      "number": 6,
+      "title": "Course summary",
+      "shortTitle": "Course summary",
+      "summary": "Amazon Connect publishes contact events on an Amazon EventBridge bus. Contact events capture the lifecycle of a contact interaction. These events…",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-integrations-intermediate-t6-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Streaming contact events",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect publishes contact events on an Amazon EventBridge bus. Contact events capture the lifecycle of a contact interaction. These events are published in near real-time. The events include contact initiation, connection to the system, queuing, agent connection, and disconnection. Contact events contain details like contact ID, channel, initiation method, agent information, and timestamps. Developers can create rules in EventBridge to capture and process these events."
+            },
+            {
+              "type": "p",
+              "text": "The contact events data model includes general event information and event details. General information consists of resource identifiers, event version, ID, type, source, account, timestamp, and region."
+            },
+            {
+              "type": "p",
+              "text": "Event details contain contact-specific data like initiation timestamp, channel, initiation method, agent information, and event type."
+            },
+            {
+              "type": "p",
+              "text": "Queue and agent information is included when a contact is queued or connected to an agent."
+            },
+            {
+              "type": "p",
+              "text": "Contact events can be used for analytics dashboards, workforce management integrations, and custom solutions like abandoned call recovery mechanisms."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t6-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Streaming agent events",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect publishes agent events using Amazon Kinesis Data Streams. Agent events provide near real-time agent activity data. Developers can create dashboards, integrate with workforce management solutions, and configure alerts based on agent events."
+            },
+            {
+              "type": "p",
+              "text": "Agent events include LOGIN, LOGOUT, STATE_CHANGE, and HEART_BEAT events. STATE_CHANGE events occur when an agent's status changes between routable and non-routable states. These events contain agent snapshots for current and previous states, as well as contact information when an agent is handling a contact."
+            },
+            {
+              "type": "p",
+              "text": "Agent events data includes agent status, username, contact details, and timestamps. Developers can use this data to implement behavior specific to agent state changes and handle ongoing contact interactions."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t6-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Streaming Amazon Connect Contact Lens analytics",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect Contact Lens offers real-time conversational analytics streaming through APIs. These APIs publish events for voice and chat interactions, enabling solutions for contact center efficiency."
+            },
+            {
+              "type": "p",
+              "text": "For voice contacts, Contact Lens publishes STARTED, SEGMENTS, COMPLETED, and FAILED events."
+            },
+            {
+              "type": "p",
+              "text": "SEGMENTS events contain real-time analysis data like utterances, transcripts, matched categories, and sentiment analysis."
+            },
+            {
+              "type": "p",
+              "text": "For chat contacts, the event types are similar, but the data model includes additional properties like output type, streaming settings, attachments, and system events. Real-time contact analysis events provide insights like sentiment scores, transcripts, and matched categories. Developers can aggregate sentiment scores and use the data for real-time widgets or translations."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t6-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Streaming contact records",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect streams contact records for completed interactions."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Contact records include metadata, agent information, performance metrics, recordings, and transcripts.",
+                "Records are published at least once when a contact ends and are re-published upon updates."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Contact records contain general interaction information, contact details, agent details, queue details, disconnect reasons, and attached documents. Developers can use this data for auditing, reporting, and integrating with external systems."
+            },
+            {
+              "type": "p",
+              "text": "Contact records are published to Amazon Kinesis Data Streams or Amazon Kinesis Firehose Delivery Streams. Data Streams are suitable for near real-time processing, while Firehose is suitable for single- purpose processing."
+            }
+          ]
+        },
+        {
+          "id": "connect-integrations-intermediate-t6-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Integrating API Gateway with Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon API Gateway enables creating, publishing, and maintaining APIs for services like Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "Integrating API Gateway with Amazon Connect allows building custom applications and interfaces that"
+            },
+            {
+              "type": "p",
+              "text": "interact with Amazon Connect resources."
+            },
+            {
+              "type": "p",
+              "text": "API Gateway can integrate with Amazon Connect using AWS service integration or AWS Lambda proxy."
+            },
+            {
+              "type": "p",
+              "text": "Service integration is suitable for direct API consumption, while Lambda proxy is suitable for complex,"
+            },
+            {
+              "type": "p",
+              "text": "multi-step operations."
+            },
+            {
+              "type": "p",
+              "text": "Developers can create REST endpoints in API Gateway that invoke Amazon Connect APIs or Lambda"
+            },
+            {
+              "type": "p",
+              "text": "functions. This enables serverless applications and solutions, such as click-to-call functionality on websites."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

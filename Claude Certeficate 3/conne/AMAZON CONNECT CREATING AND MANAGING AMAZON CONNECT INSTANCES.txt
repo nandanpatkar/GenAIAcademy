@@ -1,0 +1,790 @@
+Before You Create an Amazon Connect Instance
+Lesson 2 of 7
+Amazon Connect is a cloud contact center that helps you offer superior customer service. Because it is designed from the ground up to be omnichannel, Amazon Connect provides a seamless experience across voice, chat, and tasks for your customers and contact center agents. Amazon Connect includes tools for skills-based routing, powerful real-time and historical analytics, and intuitive management tools. With pay-as-you-go pricing, Amazon Connect can lower costs while improving contact center operations and agent efficiency.
+
+Amazon Connect logo.
+Amazon Connect contact center
+
+This course guides you through how to set up an Amazon Connect contact center that can scale to support millions of customers.
+
+Create an AWS account
+
+This course was designed with the assumption that you have some experience working in the AWS Management Console and have an active AWS account. If you are just getting started with AWS, use this Quick Guide to learn about setting up your first AWS account. 
+
+The Amazon Connect instance
+
+The first step to set up your Amazon Connect contact center is to create a virtual contact center instance and define your instance configurations. These configurations contain the resources and settings related to your contact center, including telephony, data storage, and data streaming, each covered in this course. Other configurations you can modify are phone numbers, agents, queues, and more.
+
+With your new Amazon Connect contact center, you have the ability to:
+
+
+bullet
+Provision phone numbers or port your own.
+
+
+bullet
+Add agents and assign them permissions appropriate to their roles.
+
+
+bullet
+Set up queues so that you can route communications to agents based on their specific skills.
+
+Instance considerations
+
+When preparing to create your Amazon Connect instance, consider the AWS Identity and Access Management (IAM) permissions for your users. Also consider your company’s user management practices and the AWS Region in which your instance should be deployed to have the most efficient setup for your contact center. In order to create the best contact center solution based on your business needs, consider receiving additional support from AWS Partners and AWS Professional Services. 
+
+IAM permissions
+
+One way to allow an IAM user to create an instance is to provide the AmazonConnect_FullAccess policy permissions. With this policy, additional privileges are required to create an Amazon Simple Storage Service (Amazon S3)  bucket. While creating or updating an instance from the Amazon Connect console, you can choose a name for your new bucket or use an existing bucket. If you choose default storage locations—for your call recordings, chat transcripts, call transcripts, and more—they are now prefixed with amazon-connect-.
+
+The aws/connect AWS Key Management Service (AWS KMS) key is available to use as a default encryption option. To use a custom encryption key, assign users additional KMS privileges. To learn more about how to bring your own keys (BYOK), see Key Management in the Amazon Connect Administrator Guide.
+
+You can add other AWS services to your Amazon Connect contact center to enhance security, dive deeper into analytics, add messaging capabilities, and more. You can assign users additional privileges to attach other AWS resources, such as Amazon Polly, live media streaming, data streaming, and Amazon Lex bots to their Amazon Connect instances. For more information about how Amazon Connect interacts with other AWS services to enhance your contact center, see The Power of AWS with Amazon Connect in the Amazon Connect Administrator Guide.
+
+If you are using custom IAM policies to manage access to the Amazon Connect console, your users might need adjusted permissions, depending on the tasks they want to do. For more information on how to provide more security surrounding least privilege access, see Required Permissions for Using Custom IAM Policies to Manage Access to the Amazon Connect Console in the Amazon Connect Administrator Guide.
+
+User management
+
+When you create an instance, you will decide how you want to manage users. When you create your instance, you'll be prompted to choose from one of the following identity management solutions supported in Amazon Connect.
+
+To learn more about when to select each option, expand each of the three identity management solutions.
+
+
+Store users with Amazon Connect
+–
+Choose this option if you want to create and manage user accounts within Amazon Connect.
+
+
+Link to an existing directory
+–
+
+
+Choose this option to use an existing active directory. Users will log in to Amazon Connect by using their corporate credentials.
+
+
+Use SAML 2.0-based authentication
+–
+Choose this option if you want to use your existing network identity provider to federate users with Amazon Connect.
+
+Warning: You cannot change the identity management configuration after creating the instance. You would need to create a new Amazon Connect instance with the identity management configuration you want.
+
+For more information on an option that best serves your company, see Plan Your Identity Management in Amazon Connect in the Amazon Connect Administrator Guide.
+
+Check your knowledge
+
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+AnyCompany wants their agents to log in to Amazon Connect from their existing network identity provider without having to provide separate credentials for Amazon Connect. Which identity management option would work best?
+
+Use SAML 2.0-based authentication.
+
+Correctly selected
+Link to an existing directory.
+
+Correctly unselected
+Store users with Amazon Connect.
+
+Correctly unselected
+Use IAM authentication.
+
+Correctly unselected
+SUBMIT
+Correct
+SAML 2.0-based authentication allows your users to sign in to your organization’s portal and log in to an Amazon Connect instance with a single sign-on (SSO) experience.
+
+
+TAKE AGAIN
+Regional considerations
+
+Amazon Connect is a regional service. When choosing the AWS Region to deploy an Amazon Connect contact center, ask yourself the following questions:
+
+
+bullet
+Where are my customers physically located?
+
+
+bullet
+Where are my agents physically located?
+
+
+bullet
+Do I need to abide by any regulatory, compliance, or data residency requirements?
+
+
+bullet
+Do I have any on-premises, cloud, or software as a service (SaaS) workloads that integrate to the contact center?
+
+The answers to these questions will help you determine which Region will work best for you and your company.
+
+For example, AnyCompany is headquartered in Portland, Oregon USA. The company has agents and customers located across Western USA and is running production workloads in the AWS us-west-2 Region. The company also uses a third-party customer relationship management (CRM) platform that is hosted in the us-west-2 Region. After evaluating agent network connectivity with the Amazon Connect Endpoint Test Utility, the AnyCompany administrator selected us-west-2 as the AWS Region to use for their Amazon Connect contact center. By creating your Amazon Connect instance in the Region that is geographically closest to your customers and agents, you achieve lower latency, optimal performance of your Amazon Connect contact center, more efficiency for your agents, and a more seamless experience for your customers.
+
+
+To validate service availability in your desired Region, refer to the AWS Regional Services List.
+
+Amazon Connect continues to expand our international availability. If you encounter an error while creating your Amazon Connect instance, reach out to AWS Support.
+
+AWS Partners and AWS Professional Services
+
+Moving your contact center to the cloud is a big undertaking, and we want you to know you are not alone. The AWS Partner Network, for example, includes some of the largest system integrators, and regional and boutique partners, that have built their practices specifically to move workloads to Amazon Connect. You can also use AWS Professional Services to help achieve specific outcomes related to enterprise cloud adoption. For more information on these AWS resources, see AWS Partners and AWS Professional Services.
+
+Check your knowledge
+
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+AnyCompany is about to implement Amazon Connect. What should the service administrators determine prior to creating their Amazon Connect instance? 
+
+Region
+
+Correctly selected
+Availability Zone
+
+Correctly unselected
+Data center
+
+Correctly unselected
+Amazon Elastic Compute Cloud (Amazon EC2) instance
+
+Correctly unselected
+SUBMIT
+Correct
+Deploy an Amazon Connect instance in a supported Region, a physical location around the world where AWS clusters data centers. Region selection is contingent upon data governance requirements, use case, services available in each Region, and latency in relation to your agents, customers, and external transfer endpoint geography. Evaluate your requirements prior to deploying Amazon Connect into a specific Region. 
+
+
+TAKE AGAIN
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+If a contact center administrator does not already have an AWS account, where is the best place to go for step-by-step guidance on how to create one?
+
+AWS Solutions website
+
+Correctly unselected
+AWS Administrator Guide 
+
+Incorrectly selected
+Contact AWS 
+
+Correctly unselected
+AWS Quick Guide 
+
+Incorrectly unselected
+AWS Professional Services
+
+Correctly unselected
+AWS Partner Network
+
+Correctly unselected
+SUBMIT
+Incorrect
+While all of these locations and teams can provide you with resources in your AWS journey, the best resource for creating your AWS account would be the AWS Quick Guide. This is a step-by-step guide to creating your first account.
+
+
+TAKE AGAIN
+Select the correct answers and choose SUBMIT. For keyboard-only accessibility, press TAB to navigate to the correct answer, and press SPACEBAR to select. Repeat this step until all correct responses are checked, and press ENTER to submit.
+
+What information can a Amazon Connect instance contain? (Select TWO.)
+
+Telephony settings for your contact center
+
+Correctly checked
+Server location settings for your contact center
+
+Correctly unchecked
+Networking configuration settings
+
+Incorrectly checked
+Data storage settings for your contact center 
+
+Incorrectly unchecked
+SUBMIT
+Incorrect
+Your Amazon Connect instance can contain your contact center’s telephony settings and data storage setting. 
+
+
+TAKE AGAIN
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+Administrators can choose a new or existing Amazon Simple Storage Service (Amazon S3) bucket to store their contact center data. If they choose default storage locations for their call recordings, chat transcripts, and other data, what is the prefix they have?
+
+aws-connect-
+
+Correctly unselected
+amazon-connect- 
+
+Incorrectly unselected
+<your company name>-aws-connect-
+
+Incorrectly selected
+amazon-<your company name>-
+
+Correctly unselected
+SUBMIT
+Incorrect
+By default, contact center data is stored in Amazon S3 with a prefix of amazon-connect-.
+
+
+TAKE AGAIN
+Select the correct answers and choose SUBMIT. For keyboard-only accessibility, press TAB to navigate to the correct answer, and press SPACEBAR to select. Repeat this step until all correct responses are checked, and press ENTER to submit.
+
+Which identity management solutions can an administrator choose from when creating an Amazon Connect instance? (Select THREE.)
+
+Store users with Amazon Connect.
+
+Incorrectly unchecked
+Use an OAuth provider.
+
+Correctly unchecked
+Use Amazon Cognito.
+
+Correctly unchecked
+Link to an existing directory.
+
+Correctly checked
+Use SAML 2.0-based authentication.
+
+Correctly checked
+SUBMIT
+Incorrect
+With Amazon Connect, you can store users directly with Amazon Connect, link to an existing directory, or use SAML 2.0-based authentication.
+
+
+TAKE AGAIN
+Summary
+
+Amazon Connect serves as an omnichannel cloud contact center that can help you provide superior customer service at a lower cost. To deploy your omnichannel contact center and create your Amazon Connect instance, consider the AWS Identity and Access Management (IAM) permissions you want for your users within Amazon Connect. Also consider the identity management solution that best fits your needs and the AWS Region in which your instance should be deployed. Assistance is available from AWS Partners and AWS Professional Services.
+
+The next lesson will guide you through how to create your Amazon Connect instance.
+
+Creating an Amazon Connect Instance
+Lesson 3 of 7
+In the previous lesson, you considered the various aspects of how you want to set up your Amazon Connect contact center. This lesson guides you through how to create and configure your Amazon Connect instance.
+
+Amazon Connect instance creation
+
+Select a Region
+
+In the previous lesson, you determined the best Region in which to deploy your Amazon Connect instance.
+
+In the AWS Management Console, select your preferred Region. Then, in the console, search for and choose the Amazon Connect service.
+
+Create an instance
+
+After you choose the Amazon Connect service in your Region of choice, you'll go to the Amazon Connect console. If this is your first visit, you'll likely land on the Amazon Connect Welcome page, shown in the following image. If so, choose the Create instance button at the top right of the screen.
+
+
+If you have already visited the Amazon Connect console, and created Amazon Connect instances, you will likely land on the Amazon Connect virtual contact center instances page, shown in the following image. If so, choose the Add an instance button on the right side of the screen.
+
+
+Amazon Connect instance configuration
+
+You can configure your Amazon Connect instance in five steps: set your identity, add an administrator, set the telephony, select data storage, and review and create.
+
+
+Step 1: Set your identity
+
+As shown in the following image, you have three identity management options: store users in Amazon Connect, link to an existing directory, or use SAML 2.0-based authentication. When creating your Amazon Connect instance, select the option that best suits your company's needs.
+
+
+After you select an identify management option, you want to create a unique name for your instance. This instance name (called instance alias) will be part of your Amazon Connect instance URL after it is created. This label must be unique across all Amazon Connect instances in all Regions.
+
+Under Access URL, enter your unique instance alias. Then, choose Next at the bottom right of the screen.
+
+Warning: You cannot change the options you select for identity management or access URL after you create the instance. If you want to change the access URL or identity management option you selected, you must delete the instance and create a new one. When you delete an instance, you lose all configuration settings and metrics data for it.
+
+Step 2: Add an administrator
+
+On the Add administrator page, shown in the following image, you have the option to select Specify an administrator. The best practice we recommend is to specify an administrator user during setup. You can then log in as this user and begin administrating the Amazon Connect environment, such as adding additional users.
+
+
+After you specify an administrator (optional), enter a first and last name, create a username and password, and enter an email. Then, choose Next at the bottom right of the screen.
+
+Step 3: Set telephony
+
+Amazon Connect is an omnichannel cloud contact center where voice is among the channels available. Administrators can choose whether the contact center allows inbound calls, outbound calls, or both.
+
+On the Set telephony page, shown in the following image, you can select Allow incoming calls, Allow outgoing calls, or both. Then, choose the Next button at the bottom right of the screen.
+
+Later, in user permissions, you can also determine which users are able to place outbound calls. The telephony configuration can be modified as the contact center grows.
+
+
+For more information about toll-free numbers, direct inward dial numbers (DID/DDI), telephony architecture, and how to manage new and existing numbers, see Telephony in the Amazon Connect Administrator Guide.
+
+Step 4: Data storage
+
+When creating an Amazon Connect instance, you are able to select the Amazon Simple Storage Service (Amazon S3) bucket used for storing Amazon Connect data. Amazon Connect can automatically create a bucket for you in your account. Or, you can select an existing Amazon S3 bucket that adheres to existing naming conventions, data residency requirements, or other organizational considerations.
+
+In the next lesson, Modifying Instance Configurations, you will learn about modifying your data storage configurations after your instance has been created.
+
+
+
+Within your Amazon S3 bucket, different objects store the data for your contact center. The object types, shown in the previous image, are folders for your attachments, call recordings, chat transcripts, and reports.
+
+To learn more about the types of Amazon Connect data that can be stored, expand each of the following seven categories.
+
+
+Call recordings
+–
+Administrators have the option to set up recorded calls. When this bucket is created, call recording is enabled at the instance level. You can configure which calls are recorded (and not) inside your contact flows. For more information about activating call recordings in your Amazon Connect instance contact flows, see Step 4: Data Storage in the Amazon Connect Administrator Guide.
+
+Perhaps your company wants to make sure that customer service calls are always recorded for quality assurance and training purposes. Perhaps payment processing calls, which have protected information, are not recorded as a default. When you activate call recordings in your contact flows, the recordings are stored in the appropriate Amazon S3 bucket. You can listen to and manage call recordings from the Amazon Connect UI, or you can manage the recordings from your Amazon S3 bucket.
+
+
+Chat transcripts
+–
+Administrators have the option to set up recorded chat conversations. When this bucket is created, chat transcripts are enabled at the instance level, and all future chat transcripts will be stored there. Chat transcripts can be viewed and managed from the Amazon Connect UI.
+
+The Amazon Connect UI shows the contact details from the chat conversation with the customer through the contact summary, chat transcript, agent details, and more.
+
+
+
+Chat attachments
+–
+Administrators can set up the option for customers and agents to share files using chat. When this bucket is created, an attachment icon automatically appears in your agents' contact control panel (CCP). Agents can share attachments on chats, such as digital receipts, customer service photos, and more.
+
+The attachments feature uses two Amazon S3 locations: a staging location and a final location. The final location is where the attachment resides once it's gone through staging and has been validated. For more information about the staging location, see Enable Attachments to Share Files Using Chat in the Amazon Connect Administrator Guide.
+
+Within Amazon S3, the staging location is the object called Staging/, and the final location is called chat/.
+
+
+
+Exported reports
+–
+Amazon Connect provides real-time and historical reports. Scheduled reports are saved as CSV files in the Amazon S3 bucket specified for your contact center reports. When administrators or supervisors set up a scheduled report, they can add a prefix to sort and filter reports in Amazon S3. For example, you can sort by line of business (such as Accounting or Sales) or by email distribution list (such as 1st shift or 2nd shift).
+
+By adding a prefix, your file will have the following naming convention: amazon-connect-<bucket name>/connect/<Amazon Connect Instance Alias>/Reports/<Prefix>/<Report Name>. When a report is exported to your Amazon S3 bucket, the file name includes the date and UTC time when it was created. Because the last modified date for the file is displayed using the bucket’s time zone, it might not match the creation time for the report. For example, if a report is exported on January 1 at 7:00 AM UTC, the file name will include the date and time. Five minutes later, the bucket that is located in the US West (Northern California) Region is modified with a date and time of December 31 at 11:00 PM PST. 
+
+
+
+Contact flow logs
+–
+Amazon Connect contact flow logs provide you with real-time details about events in your contact flows as customers interact with them. You can also use contact flow logs to help debug your contact flows as you create them. Contact flow logs are stored in an Amazon CloudWatch log group, in the same Region as your Amazon Connect instance. This log group is created automatically when contact flow logging is turned on for your instance. A log entry is added as each block in your contact flow is invoked. You can configure CloudWatch to send alerts when unexpected events occur during active contact flows.
+
+
+Customer profiles
+–
+With Amazon Connect Customer Profiles, customer information that agents need is centralized in a single location. This service can use information from external applications, such as account numbers, billing addresses, and dates of birth. Customer Profiles ties the Amazon Connect contact history with customer information so agents can deliver more efficient and personalized customer service. Agents will then be able to see this information every time the customer calls. By default, Amazon Connect creates your Customer Profiles domain.
+
+
+Encryption
+–
+To protect your contact center data, you can specify AWS Key Management Service (AWS KMS) keys, which includes the option to bring your own keys (BYOK). AWS KMS keys can also be applied to data stored in Amazon Connect Customer Profiles. By default, Amazon Connect creates an AWS KMS key to protect stored data when no other key is defined. 
+
+The AWS shared responsibility model applies to data protection in Amazon Connect. As described in this model, AWS is responsible for protecting the global infrastructure that runs all of the AWS Cloud. You are responsible for maintaining control over your content that is hosted on this infrastructure.
+
+Step 5: Review and create
+
+In this step, you can review and edit your instance configuration settings prior to creation.
+Your configurations are displayed on the Review and create page, each with an Edit button you can use to modify as necessary. When ready, choose the Create instance button at the bottom right of the screen.
+
+To learn more about the Review and create page, choose each numbered marker in the following image.
+
+
+
+
+
+
+Once confirmed, choose the Create instance button. When the instance has been created successfully, choose the Get started button at the top right of the page to navigate to the newly created Amazon Connect instance.
+
+After creating your instance, you land on the Amazon Connect instances page. Choose the Get started button in the success bar at the top of the page, or select your instance alias to open your newly created instance.
+
+
+For more information on creating an Amazon Connect instance, see Create an Amazon Connect instance in the Amazon Connect Administrator Guide.
+
+Check your knowledge
+
+Select the correct answers and choose SUBMIT. For keyboard-only accessibility, press TAB to navigate to the correct answer, and press SPACEBAR to select. Repeat this step until all correct responses are checked, and press ENTER to submit.
+
+In which circumstances can a user create an administrator user? (Select TWO.)
+
+When the administrator is creating the instance 
+
+Correctly checked
+When the administrator is in the Contact Control Panel (CCP)
+
+Incorrectly checked
+When an existing administrator user is adding additional users
+
+Incorrectly unchecked
+When a user is added to the admin group in Active Directory
+
+Correctly unchecked
+SUBMIT
+Incorrect
+The administrator can create an administrator user when they are creating the instance, which is the best practice we recommend. They can also enter the instance dashboard as an existing administrator. 
+
+
+TAKE AGAIN
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+How can an administrator improve the organizational structure of exported reports in their Amazon Simple Storage Service (Amazon S3) bucket?
+
+Add a prefix.
+
+Incorrectly unselected
+Add a bucket bookmark.
+
+Correctly unselected
+Add a new Amazon S3 bucket.
+
+Correctly unselected
+Create automatic report downloads to your local computer.
+
+Incorrectly selected
+SUBMIT
+Incorrect
+In order to organize the structure of your Amazon S3 bucket, you can add a prefix so the reports can be sorted or filtered accordingly; for example, by department or email distribution list. By default, if you add a prefix, your file will have the following naming convention: amazon-connect-<bucket name>/connect/<Amazon Connect Instance Alias>/Reports/<Prefix>/<Report Name>.
+
+
+TAKE AGAIN
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+After making changes to the contact center, callers are being routed to an unexpected queue. The administrator has been tasked with reviewing the customer path. Which Amazon Connect feature is best to troubleshoot the issue?
+
+Exported reports
+
+Correctly unselected
+Chat transcripts 
+
+Correctly unselected
+Contact flow logs
+
+Correctly selected
+Call recordings
+
+Correctly unselected
+SUBMIT
+Correct
+Amazon Connect contact flow logs provide real-time details about events in your contact flows as customers interact with them. You can also use contact flow logs to help debug your contact flows.
+
+
+TAKE AGAIN
+Summary
+
+Congratulations on creating your Amazon Connect instance! This lesson walked through the 5-step process to create and configure your Amazon Connect instance, setting your identity, adding an administrator, setting telephony, determining data storage, and reviewing and creating your instance.
+
+Several options cannot be adjusted after the creation of the instance, such as the access URL and identity management selection. However, the next lesson guides you through the process to adjust instance configurations as your company grows, based on the needs of your customers.
+
+Modifying Instance Configurations
+Lesson 4 of 7
+The previous lesson walked you through the five steps to create and configure your Amazon Connect instance. This lesson covers how to enhance the functionality of your existing instance configurations so that your contact center can adapt as your business grows.
+
+Five steps to create and configure an Amazon Connect instance.
+Amazon Connect instance modifications
+
+From the AWS Management Console, search for and choose Amazon Connect.
+
+The Instances page, shown in the following image, lists every instance you have created. Select the Instance alias you wish to view and modify.
+
+
+The Account overview page, shown in the following image, contains the instance configuration panel, access information, and distribution settings.
+
+
+In the instance configuration panel on the left side of the screen, you can quickly navigate to and modify a specific configuration:
+
+
+bullet
+Telephony
+
+
+bullet
+Data storage
+
+
+bullet
+Data streaming
+
+
+bullet
+Contact flows
+
+
+bullet
+Analytics tools
+
+
+bullet
+Approved origins
+
+
+bullet
+Customer profiles
+
+
+bullet
+Tasks
+
+
+bullet
+Wisdom
+
+
+bullet
+Voice ID
+
+Telephony and data streaming
+
+To learn about a category in each of the following sections, select the appropriate tab.
+
+
+Telephony
+
+Data storage
+Administrators can access the Telephony tab and modify the configurations for receiving inbound calls, making outbound calls, and enabling early media for your agents as your contact center grows.
+
+For more information about toll-free numbers, direct inward dial numbers (DID/DDI), telephony architecture, and how to manage new and existing numbers, see Telephony in the Amazon Connect Administrator Guide.
+
+Telephony modification page.
+Check your knowledge
+
+Select the correct answers and choose SUBMIT. For keyboard-only accessibility, press TAB to navigate to the correct answer, and press SPACEBAR to select. Repeat this step until all correct responses are checked, and press ENTER to submit.
+
+Which data contains conversations and files shared during conversations with customers? (Select THREE.) 
+
+Call recordings
+
+Incorrectly unchecked
+Chat transcripts
+
+Correctly checked
+Contact flow logs
+
+Correctly unchecked
+Chat attachments
+
+Incorrectly unchecked
+Customer profiles
+
+Correctly unchecked
+SUBMIT
+Incorrect
+Conversations with customers are kept through call recordings and chat transcripts. The files that are shared during conversations with customers are contained in chat attachments. Customer profiles have customer data, such as contact information, account numbers, and dates of birth. Finally, real-time reports of customer paths (to see how customers interact) are found in contact flow logs.
+
+
+TAKE AGAIN
+Data streaming
+
+To learn about a category, select the appropriate tab.
+
+
+Data Streaming
+
+Contact Trace Records (CTRs)
+
+Agent Events
+With data streaming, you can export contact records and agent events from Amazon Connect to perform real-time analysis on your contacts. Data streaming sends data to Amazon Kinesis. 
+
+Contact flows
+
+To learn about a category, select the appropriate tab.
+
+
+Contact Flows
+
+Amazon Lex
+
+AWS Lambda
+A contact flow defines how a customer experiences your contact center from start to finish. At the most basic level, you can use contact flows to customize your interactive voice response (IVR) system.
+
+For example, you can give customers a set of menu options that route them to agents based on what they enter on their phone. With Amazon Connect, contact flows are significantly more powerful than that. You can create dynamic, personalized flows that have the ability to interact with other AWS services.
+
+On the Contact flows page, you can control which AWS services (such as Amazon Lex and AWS Lambda) are able to integrate with your Amazon Connect contact center.
+
+The following image is an example of a contact flow that you can build to create dynamic experiences for your customers.
+
+
+Analytics tools
+
+To learn about a category, select the appropriate tab.
+
+
+Analytics Tools
+
+Contact Lens
+With Amazon Connect analytics tools, you can enable Contact Lens to monitor the performance of your contact center and track key performance indicators. As an administrator for your contact center, you might be requested to enable Contact Lens at an instance level to allow set up and functionality of Contact Lens within your Amazon Connect instance.
+
+Additional features
+
+To learn more about the modification pages of additional features, expand each of the four categories.
+
+
+Approved origins
+–
+Amazon Connect can integrate with other products, including customer relationship management (CRM) and workforce management (WFM) products. The Approved origins page is where you can explicitly allow for cross-domain access to a particular instance so that the Amazon Connect Contact Control Panel (CCP) can be embedded. For example, if you are integrating your Amazon Connect contact center with Salesforce, you must place your Salesforce Visualforce domain in an allow list.
+
+
+
+For more information on how to integrate Amazon Connect with other products, see the Use an Allow List for Integrated Applications in the Amazon Connect Administrator Guide.
+
+Approved domains section of the Amazon Connect console where you can search for and add domains.
+
+Customer profiles
+–
+Efficient and personalized customer service is key to providing a great experience every time a customer contacts your contact center. In the past, agents often searched through several third-party applications and CRMs to find basic customer information. With Amazon Connect Customer Profiles, you can create a singular view of a customer’s profile with the most up-to-date information for your agents. 
+
+For more information on how to use the pre-built connectors AWS provides to your third-party applications, and create unified customer profiles, see Enable Customer Profiles for Your Instance in the Amazon Connect Administrator Guide.
+
+
+
+Tasks
+–
+A task is a unit of work that an agent must complete. With Amazon Connect Tasks, you can prioritize, assign, track, and even automate tasks across the disparate tools agents use to support customers. Agents can follow-up on customer issues recorded in a CRM solution such as Salesforce or Zendesk, follow-up with a customer call, or complete actions in a business-specific system.
+
+You can set up pre-built applications for task creation in just a few steps with no coding required. Amazon Connect uses Amazon EventBridge to pull data from your external application.
+
+For more information on how to configure pre-built applications for tasks, see Set Up Applications for Task Creation in the Amazon Connect Administrator Guide.
+
+
+Wisdom
+–
+Contact center agents often encounter questions from customers that require them to reference knowledge documents such as frequently asked questions (FAQs), Wikis, product manuals, and how-to guides. Many contact centers use knowledge management systems and document repositories that are siloed and not well integrated with the applications that contact center agents use when interacting with customers. As a result, agents spend valuable time manually searching across data sources for information to solve customer issues, leading to frustrating delays for customers.
+
+With Amazon Connect Wisdom, agents can search across a connected repository and receive real-time recommendations from within their agent desktop to find answers to customer issues quickly. Wisdom provides built-in connectors to third-party applications including Salesforce and ServiceNow. Contact center managers can also use the Amazon Connect Wisdom API to ingest data, building custom connectors to consume content from other enterprise applications and data sources, such as an Amazon S3 bucket.
+
+For more information on how to use Wisdom in your Amazon Connect instances and contact flows, see Enable Amazon Connect Wisdom for Your Instance in the Amazon Connect Administrator Guide.
+
+
+Voice ID
+–
+Amazon Connect Voice ID provides real-time caller authentication and fraud risk detection, which make voice interactions in contact centers more secure and efficient. Voice ID uses machine learning to verify the identity of genuine customers by analyzing a caller's unique voice characteristics. This verification provides an additional security layer that doesn't rely on the caller answering multiple security questions. Voice ID also helps enroll and verify customers without changing the natural flow of their conversation. Voice ID also offers real-time detection of fraudsters who frequently target your contact center, thereby reducing losses due to fraud.
+
+
+With Amazon Connect Voice ID you can:
+
+Passively enroll customers for voice authentication without requiring them to repeat a particular word or phrase.
+Migrate customers into Voice ID by enrolling them in batch.
+Verify the enrolled customer's identity by analyzing unique voice characteristics.
+Detect fraudsters from a watch list that you have created.
+For more information on how to use Amazon Connect Voice ID for your instances and contact flows, see Enable Voice ID in the Amazon Connect Administrator Guide.
+
+
+
+
+
+Check your knowledge
+
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+Where would administrators go to modify their existing Amazon Connect instance?
+
+Amazon Connect CCP > Settings
+
+Correctly unselected
+Amazon S3 > Amazon Connect instance alias
+
+Incorrectly selected
+AWS Management Console > Amazon Connect > instance alias
+
+Incorrectly unselected
+  https://aws.amazon.com/connect/ > Contact us
+
+Correctly unselected
+SUBMIT
+Incorrect
+To modify your existing Amazon Connect instance, log into your AWS Management Console. Under services, select Amazon Connect. There will be a list of all of your Amazon Connect instances. Choose the instance alias you want to modify. 
+
+
+TAKE AGAIN
+Select the correct answers and choose SUBMIT. For keyboard-only accessibility, press TAB to navigate to the correct answer, and press SPACEBAR to select. Repeat this step until all correct responses are checked, and press ENTER to submit.
+
+Which Amazon Connect instance settings can you modify after instance creation? (Select FOUR.)
+
+Access URL
+
+Correctly unchecked
+Data storage
+
+Incorrectly unchecked
+Identity management
+
+Correctly unchecked
+Data streaming
+
+Incorrectly unchecked
+Contact flows
+
+Correctly checked
+Customer profiles
+
+Incorrectly unchecked
+SUBMIT
+Incorrect
+After instance creation, you can use the Amazon Connect instance configuration panel to quickly navigate to and modify telephony, data storage, data streaming, contact flows, analytics tools, approved origins, customer profiles, tasks, Wisdom, and Voice ID configurations. Once an Amazon Connect instance has been created, you are not able to adjust the access URL or the identity management configurations. If either of these two settings need to be modified, you will need to create a new Amazon Connect instance with the correct settings.
+
+
+TAKE AGAIN
+Select the correct answer and choose SUBMIT. For keyboard-only accessibility, press TAB then the ARROW keys to navigate to the correct answer, and press ENTER to submit.
+
+AnyCompany has decided to add the Amazon Connect feature that can help agents better understand the sentiment and trends of their customer conversations. How will an administrator enable this feature?
+
+Contact the company's AWS Account Team or AWS Support to submit a request for Contact Lens.
+
+Correctly unselected
+Modify the approved origins of the Amazon Connect instance by selecting the appropriate customer relationship management (CRM) application.
+
+Incorrectly selected
+Modify the Voice ID of the Amazon Connect instance by selecting enable Wisdom.
+
+Correctly unselected
+Modify the analytics tools of the Amazon Connect instance by selecting enable Contact Lens.
+
+Incorrectly unselected
+SUBMIT
+Incorrect
+Contact Lens is the AWS service that enables you to better understand the sentiment and trends of your customers. To enable this feature, log into your AWS Management Console. Under services, select Amazon Connect. There will be a list of all of your Amazon Connect instance. Choose the instance alias you want to modify. Using the side menu, select Analytics tools and then select enable Contact Lens.
+
+
+TAKE AGAIN
+Next steps
+
+This lesson covered how to modify your Amazon Connect instance configurations, which you can navigate to from the AWS Management Console. The various instance configuration tabs adjust telephony, data storage, data streaming, contact flows, analytics tools, and approved origins. The additional features include customer profiles, tasks, Wisdom, and Voice ID.
+
+In the next lesson, you review what you've learned before testing your knowledge of the course.
+
+
+Summary
+Lesson 5 of 7
+In this course, you explored what to consider before you create an Amazon Connect instance, how to create an instance, and how to modify instance configurations after you create an instance.
+
+Before You Create an Amazon Connect Instance
+Amazon Connect is an omnichannel cloud contact center that can help you provide superior customer service at a lower cost. To deploy your omnichannel contact center and create your Amazon Connect instance, you should consider the following:
+
+
+
+Ensure you have the correct AWS Identity and Access Management (IAM) permissions for the users who will create or modify the instances. Common choices are to use AmazonConnect_FullAccess policy permissions or look into custom IAM policies that emphasize security using least privilege access.
+
+
+
+Determine the identity management solution that best fits your needs, the Region in which your instance is best deployed, and any assistance from AWS Partners or AWS Professional Services that might be beneficial.
+
+Open IAM policies page emphasizes the AmazonConnect_FullAccess policy.
+Creating an Amazon Connect Instance
+The Amazon Connect console will guide you through the 5-step process to create and configure your Amazon Connect instance settings.
+
+
+
+First, determine the identity management settings for your instance: storing users within Amazon Connect, linking your instance to an existing directory, or using SAML 2.0-based authentication.
+
+
+
+Second, we recommend you specify an administrator (optional) for your instance.
+
+
+
+Third, set telephony by choosing if your agents will receive calls from customers, make outbound calls, or allow for both.
+
+
+
+Fourth, select where your Amazon Connect data will be stored.
+
+
+
+Finally, review and create your Amazon Connect instance.
+
+
+Modifying Instance Configurations
+Within the Amazon Connect console, you can quickly navigate to several features to modify your existing instance configurations. In the telephony tab, you are able to modify the configurations for receiving inbound calls, making outbound calls, and enabling early media for your agents as your contact center grows. In the data storage tab, you can edit each category to enable storage of the item, select the appropriate Amazon S3 bucket, and adjust encryption options. To power third-party integrations or custom reporting, you can enable data streaming. From here, you can access agent streams or contact trace records (CTRs) to better understand events surrounding every contact in your contact center.  In the Contact Flows tab, you can enhance your contact center capabilities by adding Amazon Lex bots and AWS Lambda functions to help build dynamic customer experiences. In the Approved Origins tab you can explicitly allow and provide cross-domain access to your instance for embedding your Contact Control Panel (CCP) on a webpage, or customer relationship management (CRM). Contact Lens helps you better understand sentiment trends of customer conversations. Other additional features to help your contact center become more efficient, such as Customer Profiles, Tasks, Wisdom, and Voice ID. 
+
+The vertical menu bar that displays the features that are available in an Amazon Connect instance.
+Moving forward
+
+Considering these concepts is essential to effectively prepare for your Amazon Connect contact center. Continue to the next lesson to assess your knowledge of everything you learned in this course. 
+

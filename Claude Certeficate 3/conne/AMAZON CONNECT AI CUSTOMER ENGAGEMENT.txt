@@ -1,0 +1,1529 @@
+esson 2 of 24
+Introduction to AI-Powered Customer Engagement
+Section objectives
+In this section, you will learn to do the following:
+
+Compare traditional contact centers with AI-enhanced engagement models to identify key opportunities for transformation.
+
+Implement AI-powered features to recognize customers across channels and deliver personalized experiences.
+
+Evaluate how the partnership between AI and human agents improves key business metrics and customer satisfaction.
+
+
+Section introduction
+
+Have you ever called customer service and repeated your information multiple times to different agents? Or have you received generic marketing messages that had nothing to do with your needs?
+
+In this section, you will explore how Amazon Connect AI capabilities are reshaping customer engagement and why these capabilities matter for your business. You will discover how AI helps businesses recognize customers across different channels. This helps businesses understand customer history and needs, so they can engage with customers in more relevant ways. Whether you are managing a support team or designing customer journeys, understanding these AI foundations is valuable. They will help you deliver experiences that feel personalized and efficient instead of robotic and frustrating.
+
+Lesson 3 of 24
+Customer Data in the Contact Center
+Traditional contact centers operate with a major constraint: fragmented customer information. Agents often need to juggle multiple systems to gather basic information about who they are talking to and why.
+
+This can create a number of problems with the contact center experience, including the following:
+
+•
+Disjointed customer experience – When customer data lives in separate systems, agents spend valuable time switching between applications instead of helping customers. By the time the agent has gathered the necessary information, the customer is already frustrated.
+
+•
+Repetitive customer identification – One of the most frustrating experiences for customers is having to repeatedly identify themselves as they are transferred between departments or agents. This happens when contact centers lack a unified customer profile that travels with the customer throughout their journey.
+
+•
+Generic service instead of personalized engagement – Without a complete picture of the customer, agents default to generic service scripts instead of tailored interactions. They miss opportunities to reference previous purchases, anticipate needs, or acknowledge loyalty.
+
+Real-world example: You recently moved and updated your address with a company's billing department. When you call customer services about a different issue, the agent asks you to confirm your address. However, the agent still sees your old address because the billing system and customer services system are not sharing information.
+
+Contact center evolution
+
+Contact centers have evolved through several stages over the years as explained in the following:
+
+1970s-1990s
+Basic Call Centers: The Phone-Only Era
+Phone-based support with minimal customer data.
+
+Basic call centers revolutionized customer service by moving interactions from stores to centralized telephone support. This transformation standardized service delivery across entire organizations. Companies achieved significant operational savings while maintaining consistent customer communication for the first time.
+
+Customer viewpoint: Why am I on hold for 20 minutes?
+
+Basic contact center icon.
+
+1990s-2010s
+Multichannel Contact Centers: Breaking Down the Walls
+Added email, chat, and social media, but often as separate operations.
+
+Multichannel centers fueled ecommerce growth by supporting customers through emerging digital channels. New service expectations developed as consumers demanded help beyond traditional business hours. Companies built specialized teams for each channel, which created new career paths in digital customer engagement.
+
+Customer viewpoint: Can I just email you instead of calling?
+
+Multichannel agent icon.
+
+2010-2020
+Omnichannel Contact Centers: Making Connections
+Connected channels but still with fragmented customer data.
+
+Omnichannel approaches elevated customer experience as a primary business differentiator beyond price and product. Organizations began measuring success through customer satisfaction metrics instead of operational efficiency alone. Seamless experiences across touchpoints became essential as consumer loyalty increasingly depended on effortless service interactions.
+
+Customer viewpoint: Why do I need to repeat myself every time I contact you?
+
+Omni-channel contact center icon
+
+2020+
+AI-Powered Contact Hubs: The Intelligent Revolution
+Intelligent AI-powered systems that unify customer data and provide AI-assisted insights.
+
+AI-powered hubs transform service operations from reactive cost centers into proactive revenue generators. Predictive capabilities empower companies to address customer needs before problems fully develop. Human agents now focus on complex problem-solving while technology handles routine interactions. Service insights drive product development and marketing strategies across the entire organization.
+
+Customer viewpoint: The system already knew what I needed before I explained it.
+
+AI-powered engagement hub icon.
+
+Unified customer data
+
+The foundation of effective customer engagement is having a complete, unified view of each customer by bringing all customer information together. When properly implemented, this comprehensive customer profile becomes the central hub from which meaningful interactions flow.
+
+A unified customer profile includes data such as the following:
+
+•
+Basic identity information – Names, contact details, account numbers, and authentication history
+
+•
+Purchase and billing history – Complete transaction records, subscription status, and payment preferences
+
+•
+Previous interactions across all channels – Conversation history from calls, chats, emails, and social media engagements
+
+•
+Service cases and their resolutions – Past issues, how they were resolved, and follow-up outcomes
+
+•
+Preferences and behavioral patterns – Communication preferences, product usage habits, and engagement tendencies
+
+Without this unified foundation, customer data remains trapped in isolated systems, which creates fragmented experiences. When agents lack access to complete information, customers face repetitive questions and inconsistent service.
+
+Even the most sophisticated AI tools will struggle to deliver meaningful improvements in customer engagement when working with disjointed data. Personalization begins with this consolidated view that empowers both human agents and AI systems to understand the full customer context.
+
+Avoid these critical engagement pitfalls
+
+Before revolutionizing your customer experience strategy, be aware of the following crucial pitfalls that even seasoned organizations could encounter:
+
+1
+Never launch new engagement channels without establishing proper data infrastructure first.
+
+2
+Do not rush into automation solutions while your customer data remains fragmented across systems.
+
+3
+Remember that without a comprehensive view of the entire customer journey, your personalization efforts will fall short.
+
+By addressing these fundamental challenges before implementing advanced technologies, you can build a solid foundation that maximizes the return on your customer experience investments.
+
+Lesson 4 of 24
+Personalizing Customer Interactions
+AI is transforming customer interactions from generic scripts to personalized conversations. Amazon Connect AI capabilities help businesses recognize customers instantly, understand their needs more deeply, and deliver more relevant experiences.
+
+Beyond basic recognition
+
+Identity Resolution in Amazon Connect uses both rule-based and machine learning (ML) approaches to identify and consolidate matching customer profiles. This helps create a unified view of the customer across channels and systems as follows:
+
+•
+Rule-based matching – Uses exact matching on key identifiers such as phone numbers, email addresses, and account numbers
+
+•
+ML matching – Goes beyond basic rules to detect patterns and relationships that indicate the same customer across different records
+
+With Amazon Connect Identity Resolution, businesses can maintain conversation continuity across channels. This helps honor preferences consistently regardless of how customers identify themselves. Companies can deliver truly personalized experiences without requiring customers to repeatedly explain who they are.
+
+Identity Resolution in action
+
+Customer Profile: Alejandro "Ale" Rosalez
+
+Alejandro has used both his personnel email and work email when contacting your business. He has also contacted your business using both the name Alejandro and the name Ale.
+
+Customer profile image of Ale.
+Alejandro "Ale" Rosalez
+
+Traditional systems would create separate records for Alejandro and name Ale and each email used. This fragments the customer's history across multiple profiles.
+
+Identity Resolution in Amazon Connect can recognize these are likely the same person based on multiple data points. The system analyzes behavior patterns, device information, and location data.
+
+To learn more about Identity Resolution, choose each of the numbered markers.
+
+Amazon Connect identity resolution process: ingest data, map profiles, resolve identities, merge and enrich profiles
+
+
+
+
+AI-enhanced context for better first-contact resolution
+
+AI capabilities of Amazon Connect systematically analyze multiple data points to provide agents with comprehensive context at the moment of customer contact. This proactive intelligence increases the likelihood of resolving issues during the first interaction.
+
+Personalization diagram showing contact info, history, customer insights, purchases, and case data
+As illustrated in the diagram, Amazon Connect places personalization at the center of the customer experience by intelligently connecting the following:
+
+•
+Contact information – Identifying the customer across channels
+
+•
+Contact history – Maintaining continuity between interactions
+
+•
+Case information – Bringing relevant support details forward
+
+•
+Purchase history – Understanding what products and services the customer uses
+
+•
+Customer insights – Using predictive analytics to anticipate needs
+
+This unified approach transforms typical fragmented support experiences into seamless interactions where customers feel recognized and understood from the first moment of contact.
+
+Calculated attributes
+
+Calculated attributes represent a key AI capability that elevates customer service beyond basic identification to truly intelligent engagement. These dynamically generated insights transform raw behavioral data into predictive customer understanding that drives meaningful personalization.
+
+Calculated attributes create actionable intelligence as follows:
+
+•
+Identifying a customer's preferred communication channel – Analyzing patterns to determine whether a customer responds best to chat, email, SMS, or phone contact
+
+•
+Calculating average order frequency – Determining typical purchase cycles to anticipate needs and identify potential upsell opportunities
+
+•
+Recognizing past behavior such as frequency of contact – Establishing baselines for normal customer behavior that help identify potential satisfaction issues
+
+•
+Detecting rising frustration based on recent interactions – Analyzing tone, word choice, and contact patterns to predict customer sentiment
+
+For example, a customer typically contacts support through chat during business hours. If the customer unexpectedly calls after hours, the system might flag this as an urgent issue requiring special attention. This pattern deviation intelligence makes it possible for support teams to prioritize appropriately and respond with the appropriate level of urgency.
+
+Image showing the Amazon Connect calculated attributes page.
+
+The system adapts with each interaction, building a deeper understanding of customer needs to guide automated systems and human agents.
+
+Lesson 5 of 24
+Human-AI Partnership
+The most effective implementations of AI for customer engagement augment human agents instead of replacing them. AI can augment agents as follows:
+
+•
+AI handles data gathering and analysis.
+
+•
+AI suggests possible solutions and provides context.
+
+•
+Human agents apply judgment, empathy, and creativity.
+
+•
+Together, they deliver better outcomes than either could alone.
+
+For example, when a customer contacts support about a product issue, Amazon Connect can immediately recognize them. It can pull up their purchase history and identify the likely product they are calling about. Amazon Connect can recommend solutions based on similar cases before the agent even greets the customer. This leaves the agent free to focus on the human elements of the interaction that AI cannot replicate.
+
+Benefits of AI-powered customer engagement
+
+Organizations implementing AI-powered customer engagement solutions see improvements across multiple dimensions of their business. The following tangible benefits demonstrate why forward-thinking companies are adopting these technologies to transform their customer experience operations. Explore each benefit below to understand how AI creates value for both customers and businesses.
+
+
+Improved first-contact resolution
+When customers get their issues resolved on the first contact, it delivers the following benefits:
+
+Lower support costs (fewer repeat contacts)
+
+Higher customer satisfaction
+
+Reduced customer effort
+
+"More than 80% of companies cite improved CSAT as the top driver for proactive outreach." AI for Business Success, Jan 2024. Metrigy.
+
+
+
+Reduced handle time without sacrificing quality
+AI helps agents work more efficiently without cutting corners by doing the following:
+
+Pre-populating customer information from unified profiles
+
+Capturing and categorizing interaction details
+
+Suggesting appropriate next steps
+
+
+
+Enhanced personalization at scale
+AI makes personalization scalable as follows:
+
+Recognizing customers across channels instantly
+
+Providing relevant context at the right moment
+
+Suggesting personalized next-best actions
+
+
+
+Improved operational efficiency
+Beyond customer experience benefits, AI delivers significant operational improvements such as the following:
+
+More efficient agent onboarding
+
+Optimized workforce management
+
+Reduced technical debt
+
+
+
+Measurable business outcomes
+The benefits translate to concrete business results:
+
+Cost Savings
+
+Reduced average handle time
+
+Higher first-contact resolution
+
+More efficient agent training
+
+Revenue Protection and Growth
+
+Improved customer retention
+
+Increased cross-sell/upsell
+
+Higher customer lifetime value
+
+Customer Experience Improvements
+
+Higher customer satisfaction scores
+
+Reduced customer effort
+
+Improved Net Promoter Score (NPS)
+
+
+As customer expectations continue to rise, the gap between companies that embrace AI-powered engagement strategies and those that continue to use fragmented, reactive approaches widens. Leading organizations will view AI not merely as automation, but as a tool for understanding customers at a deeper level.
+
+Lesson 6 of 24
+Knowledge Check
+The following section will check your understanding of AI-Powered Customer Engagement.
+
+A financial services company is experiencing high levels of customer frustration due to repetitive identification processes when customers are transferred between departments.
+
+Which key difference between traditional contact centers and AI-enhanced engagement models MOST directly addresses this customer pain point?
+
+
+AI-enhanced models use predictive dialing while traditional centers use manual dialing
+
+Incorrectly selected
+
+AI-enhanced models unify customer data across systems while traditional centers have fragmented information
+
+Incorrectly unselected
+
+AI-enhanced models operate in the cloud while traditional centers use on-premises technology
+
+Correctly unselected
+
+AI-enhanced models focus on self-service while traditional centers prioritize agent interactions
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Predictive dialing is a feature found in some advanced contact centers. It addresses agent efficiency in outbound calling instead of customer identification during transfers. The core issue involves repetitive customer identification caused by fragmented information.
+
+
+A retail company wants to implement identity resolution to improve customer recognition across different contact channels.
+
+Which approach does Amazon Connect Identity Resolution use to identify the same customer across different channels and systems? (Select TWO)
+
+
+Manual agent verification of customer identity
+
+Correctly unchecked
+
+Rule-based matching on key identifiers
+
+Incorrectly unchecked
+
+Blockchain identity verification
+
+Incorrectly checked
+
+Biometric voice authentication
+
+Incorrectly checked
+
+Machine learning (ML)-based pattern detection
+
+Incorrectly unchecked
+
+Social media profile integration
+
+Correctly unchecked
+SUBMIT
+
+Incorrect
+The incorrect options represent authentication or identification methods not used by Amazon Connect Identity Resolution. Manual agent verification is a traditional approach that AI aims to replace. Blockchain identity verification requires different technology infrastructure. Biometric voice authentication involves specialized voice analysis tools. Social media profile integration requires external platform connections not covered in the Identity Resolution capabilities discussed in this course.
+
+
+A telecommunications company is considering implementing AI tools to support their contact center agents but is concerned about the impact on the human workforce.
+
+How does the human-AI partnership possible with Amazon Connect MOST effectively improve business metrics?
+
+
+AI completely automates basic customer interactions while human agents handle only the most complex cases.
+
+Correctly unselected
+
+Human agents supervise AI systems to ensure that they are functioning properly.
+
+Correctly unselected
+
+AI handles data analysis and human agents apply judgment, empathy, and creativity to customer interactions.
+
+Correctly selected
+
+AI replaces human agents for night shifts and humans work during business hours.
+
+Correctly unselected
+SUBMIT
+
+Correct
+The human-AI partnership works best when AI handles data gathering and analysis. AI suggests possible solutions and provides context to agents. Human agents apply judgment, empathy, and creativity in customer conversations. This combination improves metrics like first-contact resolution, handle time, and customer satisfaction.
+
+Lesson 7 of 24
+Summary
+In this section, you explored how Amazon Connect AI capabilities transform customer engagement through intelligent data integration and processing. You examined how unified customer data forms the critical foundation for effective personalization and context-aware interactions. The section showed how Identity Resolution in Amazon Connect blends rule-based and ML methods to identify customers across various channels. You discovered how calculated attributes convert raw customer behavior data into actionable insights that predict needs and detect emerging patterns. These AI foundations enable businesses to deliver more relevant, personalized experiences while maintaining operational efficiency.
+
+In the next section, you will explore Amazon Connect Customer Profiles with AI capabilities.
+
+Lesson 8 of 24
+Introduction to Amazon Connect Customer Profiles with AI Capabilities
+Section objectives
+In this section, you will learn to do the following:
+
+Configure Amazon Connect Customer Profiles with generative AI data mapping to unify customer data from multiple sources.
+
+Implement Identity Resolution using both rule-based and ML approaches to create consolidated customer profiles.
+
+Apply best practices for profile merging to improve agent efficiency and customer experience.
+
+
+Section introduction
+
+Imagine answering a customer call and immediately having access to your customer's complete history, preferences, and account details. You have their data organized in one place without switching between multiple systems.
+
+With Amazon Connect Customer Profiles, you can combine contact history from Amazon Connect with information from external applications to provide this improved experience.
+
+In this section, you will learn how generative AI streamlines data mapping and how identity resolution automatically finds and merges duplicate customer records.
+
+Lesson 9 of 24
+Components of Amazon Connect Customer Profiles
+Amazon Connect Customer Profiles combine customer contact history with important information such as their account number, personal details, contact information, and interaction preferences. After it is enabled, Amazon Connect Customer Profiles automatically creates a unique profile for every customer who contacts your organization.
+
+When a customer contacts your organization, Amazon Connect can identify the customer. Typically, it uses a phone number to identify the customer for a voice call or email address for chat. Amazon Connect Customer Profiles then retrieves the customer's existing profile or creates a new one. The profile may contain the following:
+
+•
+Personal information (name, date of birth, email addresses)
+
+•
+Account details (account numbers, status)
+
+•
+Contact history (previous calls, chats, and interactions)
+
+•
+Case information (open issues, resolved problems)
+
+•
+Data from external systems (customer relationship management records, order history)
+
+Benefits for agents and customers
+
+
+Benefits for Agents
+
+Benefits for Customers
+Having all customer information in one place benefits human support agents in the following ways:
+
+Reduced handle time – Agents no longer need to switch between systems.
+
+Personalized service – Agents can greet customers by name and acknowledge their contact history.
+
+Improved issue resolution – Agents understand previous interactions.
+
+""End of Tab.
+Key components of Amazon Connect Customer Profiles
+
+To learn more about the key components of Amazon Connect Customer Profile, choose each of the numbered markers.
+
+Benefits for Customers
+The benefits for customers are as follows:
+
+Reduced repetition – Customer details are stored, which reduces the need to repeat the same information.
+
+Faster resolution – Customers experience faster issue resolution because agents have customer data when they connect.
+
+Personalized service – Agents can greet customers by name or route them to an agent faster due to account status.
+
+Consistent experience – Customers experience is more consistent across different communication channels.
+
+Lesson 10 of 24
+Data Mapping with Generative AI
+Modern contact centers handle massive volumes of customer data from multiple sources. Understanding how to effectively integrate this data is crucial for delivering exceptional customer experiences.
+
+Comparing traditional and AI-powered data integrations
+
+The following tabs compare traditional data integration methods with generative AI-powered automated data mapping in Amazon Connect.
+
+
+Traditional Data Integration Methods
+
+Generative AI-Powered Data Mapping
+Traditional data integration relies on manual processes and predefined rules.
+
+Organizations typically use extract, transform, load (ETL) pipelines where data engineers manually map fields between systems.
+
+For example, mapping a customer's phone_number field from a customer relationship management (CRM) system to the contact_number field in Amazon Connect requires explicit programming.
+
+
+Key characteristics of traditional methods include the following:
+
+Manual field mapping – Engineers identify and code relationships between data fields.
+
+Static rule-based transformations – Predefined logic handles data format conversions.
+
+Batch processing – Data moves in scheduled intervals rather than in real time.
+
+High maintenance overhead – Changes require developer intervention and testing.
+
+Now that you have reviewed traditional data integration methods, move on to the next tab to learn about generative AI-powered data mapping.
+
+Although traditional data integration methods provide proven reliability, generative AI-powered automated mapping represents the future of contact center data management. It offers unprecedented speed, accuracy, and scalability for modern customer service operations.
+
+Generative AI-Powered Data Mapping Process
+
+To learn about how generative AI-powered data mapping works, choose the START or arrow buttons to display each of the following four phases.
+
+
+1
+2
+3
+4
+
+
+
+1 of 6
+How does data mapping with generative AI work?
+Generative AI transforms how you map customer data in Amazon Connect Customer Profiles. The system analyzes your incoming data from various sources and intelligently determines relationship patterns between fields.
+
+Generative AI-powered data mapping in Amazon Connect Customer Profiles automatically determines how to organize and combine it into unified profiles.
+
+This significantly reduces the time needed for unified customer profiles, which empowers you to deliver more personalized customer experiences efficiently.
+
+Let's see how it works in action.
+
+
+START
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Setting up Generative AI-Powered Data Mapping in Amazon Connect Customer Profiles
+
+Contact center administrators can review and complete the setup of customer profiles for data mapping to occur. This will provide agents with relevant customer information and dynamically personalized interactive voice response (IVR) and self-service assistants to improve customer satisfaction and agent productivity.
+
+In the following demonstration, you will learn about setting up generative AI-powered data mapping in Amazon Connect Customer Profiles.
+
+Play Video
+Setting up Generative AI Powered Data Mapping in Amazon Connect Customer Profiles
+
+
+Transcript: Setting Up Generative AI Powered Data Mapping in Amazon Connect Customer Profiles
+Welcome to this demonstration on setting up generative AI-powered data mapping in Amazon Connect Customer Profiles.
+
+ 
+
+To start, sign in to the AWS Management Console.
+
+ 
+
+In the search box at the top of the page, enter Amazon Connect. In the displayed list of services, choose Amazon Connect.
+
+ 
+
+On the Amazon Connect page, the instances in your account are displayed. Choose the Instance alias of the instance that you want to set up automated data mapping in Amazon Connect Customer Profiles on.
+
+ 
+
+On the Instance page, under Applications, choose Customer Profiles.
+
+ 
+
+On the Data source integrations tab, choose Add data source integration to begin the process.
+
+ 
+
+Select a Data source from any of the 70+ available no-code data connectors such as Adobe Analytics, Salesforce, or Amazon Simple Storage Service (S3). Each connector is designed to pull specific types of customer data. Configure the connector you have selected, then choose Next.
+
+ 
+
+When you reach the Map data step, select the Auto-generate mapping option. This is where the generative AI capabilities are used to automatically map the attributes of your data to Amazon Connect Customer Profiles attributes. Then, choose Next to continue.
+
+ 
+
+You will now be presented with a summary of all the automatically mapped Amazon Connect Customer Profiles attributes. This is your opportunity to review and make any necessary adjustments. When you are ready, choose Next to continue.
+
+ 
+
+When you are satisfied with the configuration, choose Add data source integration to complete the connector configuration and begin ingesting your customer data into Amazon Connect Customer Profiles.
+
+ 
+
+Your new connector will now be listed in your Amazon Connect Customer Profiles Data source integrations. When the connector is complete, it will show as Active.
+
+Generative AI-Powered Data Mapping
+Generative AI-powered data mapping in Amazon Connect Customer Profiles is an intelligent system that analyzes your customer data. The data mapping feature uses data from various sources and automatically determines how to organize and combine it into unified profiles. This capability reduces the time needed to create unified customer profiles.
+
+For example, an insurance company can use the generative AI-powered data mapping in Amazon Connect to automatically consolidate customer information. This makes it possible for the company to map customer data from their claims database, CRM system, and payment portal into unified profiles. Agents can view a comprehensive customer history on a single screen and reduce call handling time.
+
+Key characteristics of generative AI-powered features include the following:
+
+Intelligent pattern recognition – AI identifies similar data types across systems automatically.
+
+Semantic understanding – Natural language processing recognizes that customer_phone and contact_number represent the same concept.
+
+Real-time adaptation – Continuous learning improves mapping accuracy over time.
+
+Self-healing integrations – Automatic adjustments occur when source systems change.
+
+Now that you have reviewed generative AI powered data mapping, move on to the remaining content.
+
+Phase 1: Data Collection and Analysis
+
+
+The system fetches source attributes and, if available, sample data from your data source. For an Amazon Simple Storage Service (Amazon S3) data source, the first CSV file found in the selected Amazon S3 bucket and prefix will be used as the sample data.
+
+For other data sources such as Salesforce or Zendesk, it fetches attributes through Amazon AppFlow.
+
+Phase 2: Smart Field Mapping
+
+
+A large language model (LLM) processes each custom attribute from your data source and maps them to standard customer profile attributes.
+
+For example, if your system has fields labeled CustomerEmailAddress, Email_Contact, and EmailID, the AI recognizes these are all referring to email addresses and maps them appropriately.
+
+Phase 3: Key Attribute Selection
+
+
+After mapping fields, the LLM selects suitable attributes that can serve as keys (standard identifiers) for customer profiles. These include the following:
+
+Unique identifier – You must have a unique identifier for your data to avoid ingestion errors. This identifier, also known as the unique key, distinguishes data and enables indexing for search and updates. There can be only one unique identifier.
+
+Customer identifier – You must have at least one customer identifier to avoid ingestion errors. Also known as the profile key, Amazon Connect Customer Profiles uses it to determine if data can be associated to existing profiles or create new ones by searching other profiles for this identifier. You can have multiple customer identifiers.
+
+Product identifier – You must have at least one product identifier to avoid ingestion errors. Also known as the asset key, Amazon Connect Customer Profiles uses it to distinguish from other customer product purchase data and determine profile associations by searching other profiles for this identifier. You can have multiple product identifiers.
+
+Case identifier – You must have at least one case identifier to avoid ingestion errors. Also known as the case key, Amazon Connect Customer Profiles uses it to distinguish from other customer case data and determine profile associations by searching other profiles for this identifier. You can have multiple case identifiers.
+
+Order identifier – You must have at least one order identifier to avoid ingestion errors. Also known as the order key, Customer Profiles uses it to distinguish from other customer order data and determine profile associations by searching other profiles for this identifier. You can have multiple order identifiers.
+
+Additional search attributes (optional) – You can choose attributes in your data source object that you want to index to be searchable. By default, all your identifiers are indexed.
+
+Phase 4: Timestamp Processing
+
+
+Finally, the system parses timestamps to maintain the correct chronological order of records. This ensures that customer interactions and updates appear in the right sequence.
+
+The entire process typically takes minutes. This improves speed and accuracy compared to manual data mapping, which could take hours or days.
+Generative AI-powered data mapping in Amazon Connect Customer Profiles goes beyond field matching. It analyzes the actual data values in each field to ensure accurate connections. You no longer need to manually define every relationship between data sources.
+
+Amazon Connect processes this information and suggests optimal mapping configurations for your specific data. You maintain control with the ability to review and adjust these suggestions before implementation. The system learns from your adjustments to improve future mapping recommendations.
+Lesson 11 of 24
+Identity Resolution
+There can be multiple profiles when customer records are captured across multiple channels and applications for the same customer. Without a common unique identifier linking these profiles, the same customer ends up with separate, disconnected profiles across different systems.
+
+Identity Resolution in Amazon Connect Customer Profiles tackles this challenge by finding each profile and consolidating them. Identity Resolution uses both rules-based matching and ML matching to ensure that each customer has just one comprehensive profile.
+
+For more information, see Enable Identity Resolution for your Amazon Connect Customer Profiles domain(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Rule-based matching
+
+Rule-based matching relies on predefined rules to determine if two profiles represent the same customer. This method compares specific attributes between profiles using a set of matching rules.
+
+These rules examine attributes such as the following:
+
+•
+Account number
+
+•
+Address components (city, postal code, country)
+
+•
+Email addresses
+
+•
+Phone numbers
+
+•
+Name components (first name, last name, middle name)
+
+•
+Date of birth
+
+You can configure up to 15 different matching rules to catch various scenarios where profiles might represent the same customer. The strength of rule-based matching is its precision and transparency. You know exactly why two profiles were matched.
+
+Insider tip: Matching rules are processed by priority. For example, the first rule should be the most optimized rule you want to define and should be used to achieve the most accurate result.
+
+You can choose how profiles are compared across attribute types and which attribute to use for matching from each type.
+
+For example, if you want to match multiple email types, choose many-to-many to match across profiles and attribute types that your business uses.
+
+You can choose from multiple attribute types.
+
+
+Email type
+Choose from the following:
+
+EmailAddress
+
+BusinessEmailAddress
+
+PersonalEmailAddress
+
+
+Phone number type
+Choose from the following:
+
+PhoneNumberNumber
+
+HomePhoneNumber
+
+MobilePhoneNumber
+
+
+Address type
+Choose from the following:
+
+Address
+
+BusinessAddress
+
+MaillingAddress
+
+ShippingAddress
+
+Each attribute type supports either ONE_TO_ONE matching (exact matches) or MANY_TO_MANY matching (matches across sub-types) as follows:
+
+•
+ONE_TO_ONE – The system can only match if the sub-types are exact matches.
+
+For example, when the EmailAddress fields of Profile A and B match, the two profiles are matched on the EmailAddress type.
+
+•
+MANY_TO_MANY – The system can match attributes across the sub-types of an attribute type.
+
+For example, if EmailAddress for Profile A matches BusinessEmailAddress for Profile B, the profiles are matched based on EmailAddress type.
+
+ML matching
+
+For more sophisticated matching capabilities, Amazon Connect offers ML-based Identity Resolution. This approach uses AI to identify similarities that might not be caught by basic rules.
+
+ML-based Identity Resolution reviews the following personal identifiable information (PII) attributes in each profile:
+
+•
+Names (first, middle, last)
+
+•
+Email addresses (personal, business)
+
+•
+Phone numbers (home, mobile, business)
+
+•
+Addresses (business, mailing, shipping, billing)
+
+•
+Date of birth
+
+Unlike rule-based matching, ML-based matching can detect similarities even when information is not exactly the same.
+
+For example, it might recognize that Ana Carolina Silva and Ana Silva with similar addresses are likely the same person.
+
+Setting up Identity Resolution in Amazon Connect Customer Profiles
+
+Ensure you have an Amazon Connect Customer Profiles domain already set up for your Amazon Connect instance. If not, see the Enable Customer Profiles for your Amazon Connect instance(opens in a new tab) section of the Amazon Connect Administrator Guide.
+
+In the following demonstration, you will learn about setting up Identity Resolution in Amazon Connect Customer Profiles.
+
+Play Video
+Setting up Identity Resolution in Amazon Connect Customer Profiles
+
+
+Transcript: Setting up Identity Resolution in Amazon Connect Customer Profiles
+Welcome to this demonstration on setting up Identity Resolution for your Amazon Connect Customer Profiles.
+
+To start, sign in to the AWS Management Console.
+
+ 
+
+In the search box at the top of the page, enter Amazon Connect. In the displayed list of services, choose Amazon Connect.
+
+ 
+
+On the Amazon Connect page, the instances in your account are displayed. Choose the Instance alias that you want to set up Identity Resolution for Amazon Connect Customer Profiles.
+
+ 
+
+On the Instance page, under Applications, choose Customer Profiles.
+
+ 
+
+On the Amazon Connect Customer Profiles page, in the Identity Resolution section, choose Enable identity resolution to begin the process.
+
+A message appears asking you to confirm that you understand that enabling Identity Resolution will not result in any profile merging, and that you will need to enable merging separately within Identity Resolution. After reading the message, choose Enable Identity Resolution to proceed.
+
+You've now successfully enabled Identity Resolution with rule-based matching and machine learning-based matching for your Amazon Connect Customer Profiles domain.
+
+After enabling Identity Resolution for a new domain with rule-based matching, the matching will start immediately if you have an integration running. For existing domains, the matching process will start within one hour. For machine learning-based matching, the Identity Resolution job will run for the first time within 24 hours of enabling the feature.
+
+Insider tip: Before running an Identity Resolution Job for the first time on a new Customer Profiles domain, check your profile metrics to ensure profiles have been created.
+
+
+Lesson 12 of 24
+Auto-Merging Setup and Best Practices
+After Identity Resolution identifies similar profiles (either through rules or ML), the next step is to consolidate them through the following auto-merging process:
+
+1
+Apply consolidation criteria that you define to determine which profiles should be combined.
+
+2
+Create a consolidated profile that combines information from all matching profiles.
+
+3
+Preserve information from the original profiles, and retain all values if there are conflicts.
+
+4
+Update references to the original profiles to point to the new consolidated profile.
+
+Auto-merging process
+
+The Identity Resolution process in Amazon Connect Customer Profiles, automatically combines fragmented customer data from multiple sources into a unified customer profile.
+
+In the following example, John Doe creates an account with his personal email. Later, he contacts support using his work email. Without Identity Resolution, the system would create two separate profiles. With Identity Resolution, if other attributes, such as the name and phone number match, the system recognizes these are the same person and merges the profiles.
+
+To learn more about the auto-merging process, choose each of the numbered markers.  
+
+Diagram showing Identity Resolution workflow in three stages. Stage 1: Fragmented first-party data collected from six touchpoints (Advertising, Email, Site, Retail, App, and Contact center) containing customer information like Mobile ID ABC123, name John Doe, email j.doe@example.com  , phone 206-555-0100, and address 123 Any Street, Any Town, USA. Stage 2: Automatic matching and merging through three sequential processes - 1P deterministic match, 1P probabilistic match, and auto-merging records using custom workflows. Stage 3: Unified profile showing consolidated customer record with complete information for John Doe including ID 123456, email j.doe@example.com  , phone 206-555-0100, address 123 Any Street, Any Town, USA, and Mobile ID ABC123.
+
+
+
+This automated process helps businesses recognize the same customers across different channels, which can result in better customer service experiences and more effective marketing.
+
+Setting up Auto-Merging in Identity Resolution for Amazon Connect Customer Profiles
+
+When similar profiles are detected by an Identity Resolution job, the process can automatically merge them into a unified profile based on auto-merging rules that you specify.
+
+In the following demonstration, you will learn about setting up auto-merging in Identity Resolution for Amazon Connect Customer Profiles.
+
+Play Video
+Setting up Auto-Merging in Identity Resolution for Amazon Connect Customer Profiles
+
+
+Transcript: Setting up Auto-Merging in Identity Resolution for Amazon Connect Customer Profiles
+Welcome to this demonstration on setting up auto-merging in Identity Resolution for Amazon Connect Customer Profiles.
+
+To start, sign in to the AWS Management Console.
+
+ 
+
+In the search box at the top of the page, enter Amazon Connect. In the displayed list of services, choose Amazon Connect.
+
+ 
+
+On the Amazon Connect page, the instances in your account are displayed. Choose the Instance alias of the instance that you want to set up Identity Resolution in Amazon Connect Customer Profiles on.
+
+ 
+
+Now, on your Amazon Connect instance Overview page in the navigation pane, under Applications, choose Customer Profiles.
+
+ 
+
+Next, in the Identity Resolution section, choose View Identity Resolution.
+
+On the Identity Resolution page, in the Identity Resolution settings section, you will see the Rule-based resolution and Machine learning resolution. Choose the resolution that you want to setup auto-merging on. For this demonstration, choose the Rule-based resolution.
+
+Now, on the Rule-based resolution settings page, in the Merge rule-based matches section, choose Edit.
+
+The Missing timestamp pop-up appears and indicates whether you have custom object type mappings. Amazon Connect uses a timestamp attribute and timestamp format to determine when a profile was last updated. If the Missing timestamp pop-up appears, it means there is a timestamp missing from your custom objects. You can add it using the PutProfileObjectType API. If your object type does not have a proper timestamp attribute, you can acknowledge that a default timestamp will be applied for records ingested into Amazon Connect Customer Profiles. For this demonstration, select the acknowledgment. Then, choose Next.
+
+On the Edit merge rule-based matches page, in the Merge matches section, you will define when to merge profiles based on the selected rule. Select the Merge matches found by rule-based matching checkbox.
+
+Next, choose a rule level for merging from the list available. For this demonstration, choose Rule 1.
+
+Then, choose Save.
+
+In the Merge data pop-up, enter confirm in the textbox.
+
+Then, choose Merge data.
+
+Now, on the Rule-based resolution settings page, notice that the rule-based resolution settings have been updated.
+
+Next, decide if you want to review matched profile IDs by having them written to an Amazon Simple Storage Service (Amazon S3) bucket. For this demonstration, assign an S3 bucket to the rule-based resolution. In the Match results location section, choose Edit.
+
+Now, on the Edit match results location page, in the S3 location - optional section, select the Write profile ID matches to Amazon S3 checkbox.
+
+To choose your bucket destination, either enter the S3 URI or choose Browse S3. For this demonstration, choose Browse S3.
+
+In the Choose an archive in S3 pop-up, under Buckets, enter the name of the S3 bucket.
+
+Now, choose the S3 bucket.
+
+Then, select Choose.
+
+Now, with the S3 bucket URI entered into the S3 URI textbox, choose Save.
+
+On the Rules-based resolution settings page, an alert indicates you have successfully assigned the S3 bucket location.
+
+Next, choose View Identity Resolution.
+
+On the Identity Resolution page, notice that the rule-based resolution has an Active status for both Find matches and Merge matches. Also, S3 location displays the chosen S3 bucket.
+
+Now, you will complete the machine learning resolution. In the Identity Resolution settings section, choose Machine learning resolution.
+
+On the Machine learning resolution settings page, in the Merge matches section, choose Edit. 
+
+Now, on the Edit merge machine learning matches page, in the Merge matches section, define when to merge profiles based on attribute rules you create. Select the Merge matches found by machine learning matching checkbox.
+
+Next, under Rule 1, choose the Attributes menu, and then choose one or more attributes from the list. For this demonstration, choose AccountNumber and EmailAddress.
+
+To add more rules, choose Add merge rule. For the second rule, choose AccountNumber only, and for the third rule, choose EmailAddress only.
+
+Then, choose Save.
+
+In the Merge data pop-up, enter confirm in the textbox.
+
+Then, choose Merge data.
+
+Now, on the Machine learning resolution settings page, notice that the machine learning resolution settings have been updated.
+
+Next, decide if you want to review matched profile IDs by having them written to an S3 bucket. For this demonstration, you will assign an S3 bucket to the machine learning resolution. In the Match results location section, choose Edit.
+
+Now, on the Edit match results location page, in the S3 location - optional section, select the Write profile ID matches to Amazon S3 checkbox.
+
+To choose your bucket destination, either enter the S3 URI or choose Browse S3. For this demonstration, choose Browse S3.
+
+In the Choose an archive in S3 pop-up, under Buckets, enter the name of the S3 bucket.
+
+Next, choose the S3 bucket.
+
+Then, select Choose.
+
+Now, with the S3 bucket URI entered into the S3 URI textbox, choose Save.
+
+On the Machine learning resolution settings page, an alert indicates you have successfully assigned the S3 bucket location.
+
+Next, choose View Identity Resolution.
+
+On the Identity Resolution page, notice that the machine learning resolution has an Active status for both Find matches and Merge matches. Also, S3 location displays the chosen S3 bucket.
+
+That's it. You successfully set up auto-merging in Identity Resolution and assigned S3 buckets to store matched profile IDs for Amazon Connect Customer Profiles.
+
+Insider tip: Use the PutProfileObjectType API to add timestamp attributes to your custom object types. For more information, see PutProfileObjectType(opens in a new tab) in the Amazon Connect API Reference.
+
+Best practices for Identity Resolution
+
+Best practices of Identity Resolution include the following:
+
+•
+Start conservative: Begin with stricter matching rules and gradually relax them.
+
+•
+Monitor regularly: Periodically review matched profiles.
+
+•
+Take a balanced approach: Consider using both rule-based matching and ML-based matching.
+
+•
+Use clear consolidation criteria: Define clear criteria for when profiles should be merged.
+
+Lesson 13 of 24
+Knowledge Check
+The following section will check your understanding of Amazon Connect Customer Profiles with AI capabilities.
+
+A healthcare provider is implementing Amazon Connect Customer Profiles. The provider needs to integrate patient data from multiple systems, including the electronic medical records system, appointment scheduling software, and billing system.
+
+What is the PRIMARY advantage of using generative AI-powered data mapping in this scenario?
+
+
+It creates synthetic patient data for testing purposes.
+
+Correctly unselected
+
+It generates realistic self-service assistant responses based on patient medical history.
+
+Correctly unselected
+
+It prevents unauthorized access to protected health information.
+
+Incorrectly selected
+
+It automatically determines how to organize and combine data from different sources into unified profiles.
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+Generative AI data mapping focuses on data organization and integration. It does not primarily address security concerns. Other features and configurations handle access control and data protection requirements in healthcare settings.
+
+
+A financial institution is implementing Identity Resolution capabilities in Amazon Connect Customer Profiles and needs to understand about the matching resolutions to use for the institution's customer data.
+
+What is the key difference between rule-based matching and machine learning (ML) matching in Identity Resolution for Amazon Connect Customer Profiles?
+
+
+Rule-based matching works with email addresses, while ML matching works with phone numbers.
+
+Correctly unselected
+
+ML matching requires manual approval, while rule-based matching is fully automated.
+
+Incorrectly selected
+
+Rule-based matching uses predefined rules for exact comparisons, while ML matching can detect similarities in non-exact matches.
+
+Incorrectly unselected
+
+Rule-based matching is available at no charge, while ML matching requires additional payment.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Both approaches can run automatically without manual approval requirements. The difference lies in their matching methodology and capabilities. Both can be configured to operate independently after initial setup.
+
+
+A retail company has implemented Identity Resolution in Amazon Connect Customer Profiles and is now setting up auto-merging to consolidate duplicate customer records.
+
+Which best practice should be followed when implementing profile merging in Amazon Connect? (Select TWO.)
+
+
+Begin with stricter matching rules and gradually relax them as confidence in the system grows.
+
+Incorrectly unchecked
+
+Rely solely on machine learning (ML) matching and ignore rule-based matching.
+
+Incorrectly checked
+
+Regularly monitor matched profiles to make sure there is accurate consolidation.
+
+Correctly checked
+
+Merge all potential matches automatically without review.
+
+Correctly unchecked
+
+Use both rule-based matching and machine learning (ML) matching approaches for comprehensive coverage.
+
+Correctly unchecked
+SUBMIT
+
+Incorrect
+The incorrect options can create data quality issues. Relying on only one matching approach limits effectiveness. Both methods complement each other for better results. Automatic merging without review endangers data integrity. Although using both matching approaches is beneficial, implementation requires careful monitoring and conservative initial settings.
+
+Lesson 14 of 24
+Summary
+You have explored Amazon Connect Customer Profiles and the AI-powered capabilities that create unified customer views across multiple data sources. Generative AI data mapping streamlines organizing and combining customer data from disparate systems. This reduces setup time from hours to seconds.
+
+You examined how Amazon Connect uses both rule-based and machine learning-based identity resolution to automatically identify and merge duplicate profiles. Rule-based matching uses deterministic criteria while ML matching identifies patterns in customer data. Together, these identity resolution methods ensure a single comprehensive view of each customer. The unified profiles provide agents with immediate access to customer information. This enables agents to deliver personalized service while improving operational efficiency.
+
+In the next section, you will explore how to use unified customer profiles and generative AI in outbound campaign intelligence.
+
+Lesson 15 of 24
+Introduction to Outbound Campaigns and Customer Segments
+Section objectives
+
+In this section, you will learn to do the following:
+
+Configure Amazon Connect outbound campaigns with AI-powered call classification to optimize agent productivity.
+
+Create targeted customer segments using both natural language prompts and data-driven inspiration cards.
+
+Implement segmentation strategies that improve campaign performance and customer engagement metrics.
+
+
+Section introduction
+
+Imagine you are tasked with reaching out to thousands of customers who haven't made a purchase in the past month. How would you identify these customers? How would you make sure that your outreach is personalized and effective? This is where outbound campaign intelligence comes into play.
+
+In this section, you will explore how AI-powered tools in Amazon Connect can transform your outbound campaigns from basic mass communications to strategic, data-driven customer engagements.
+
+Lesson 16 of 24
+Setting up Outbound Campaigns
+Outbound campaigns are proactive communications initiated by businesses to their customers, and they are essential for everything from appointment reminders to marketing promotions.
+
+Amazon Connect outbound campaigns can help with various proactive communications. Review the following examples of outbound campaigns:
+
+•
+Appointment reminders
+
+•
+Marketing promotions
+
+•
+Delivery notifications
+
+•
+Billing reminders
+
+•
+Service follow-ups
+
+•
+Customer satisfaction surveys
+
+Preparing to set up Amazon Connect outbound campaigns
+
+Before beginning your first campaign, you need to complete the following prerequisites:
+
+•
+Make sure the Amazon Connect instance is configured for outbound calling. For more information, see Enable Outbound Calls in Your Amazon Connect Instance(opens in a new tab).
+
+•
+Create a dedicated outbound campaigns queue to handle any contacts that will be routed to agents as a result of the campaign.
+
+•
+Assign the queue to the agent's routing profile. Note: The agent's routing profile should only include the dedicated outbound campaigns queue.
+
+•
+Create and publish a flow that includes a Check call progress block. With this block, you can branch based on whether a person or a machine answered a call. For more information, see Flow Block in Amazon Connect: Check Call Progress(opens in a new tab).
+
+Configuring Outbound Campaigns in Amazon Connect
+
+In the following demonstration, you will learn about enabling outbound campaigns in the Amazon Connect. Amazon Connect outbound campaigns allow you to automate outbound campaign voice communications to your customers.
+
+Play Video
+Configuring Outbound Campaigns in Amazon Connect
+
+
+Transcript: Configuring Outbound Campaigns in Amazon Connect
+Welcome to this demonstration on how to set up Amazon Connect outbound campaigns, formerly known as high-volume outbound communications.
+
+To start, sign in to the AWS Management Console. 
+
+In the search box at the top of the page, enter Amazon Connect. In the displayed list of services, choose Amazon Connect.
+
+On the Amazon Connect page, the instances in your account are displayed. Choose the Instance alias of the instance that you want to enable outbound campaigns on.
+
+Next, in the navigation pane, under Channels and communications, choose Outbound campaigns.
+
+On the Outbound campaigns page, choose Enable. If you don't have this option, verify whether outbound campaigns is available in your AWS Region.
+
+Next, under the Encryption section, you will need to either enter your own AWS KMS key or choose to create a new one. For this demonstration, you will create a new KMS key.
+
+Choose Create an AWS KMS key. A new browser tab will open for the AWS Key Management Service (AWS KMS) console.
+
+On the Create key page, in the Configure key step, review that the Key type is set to Symmetric and Key usage is set as Encrypt and decrypt. Then, choose Next.
+
+On the Add labels step, enter a descriptive alias and description for your key. In this demonstration, for Alias, enter KMS-AmazonConnectOutboundCampaigns. For Description, enter KMS for Amazon Connect Outbound Campaigns. When you are done, choose Next.
+
+On the Define key administrative permissions - optional step, choose Next.
+
+On the Define key usage permissions - optional step, choose Next.
+
+On the Edit key policy - optional step, choose Next.
+
+Finally, on the Review step, choose Finish to complete the key creation process.
+
+Now, return to the Amazon Connect console tab. Choose the AWS KMS key field, and review your list of available keys. Your newly created key should appear in the list. In this demonstration, you will choose the KMS-AmazonConnectOutboundCampaigns key.
+
+With everything configured, choose Enable outbound campaigns. The process will take a few minutes to complete. After outbound campaigns is enabled, you can begin creating outbound campaigns for voice calls in Amazon Connect.
+
+If the enabling process fails, you might need to verify that you have the required AWS Identity and Access Management (IAM) permissions for the key, including kms:DescribeKey, kms:CreateGrant, and kms:RetireGrant.
+
+To enable your total instance limits for outbound campaigns, you need to make sure that your campaign permissions are up to date. Choose Upgrade permission.
+
+This completes the demonstration on setting up Amazon Connect outbound campaigns.
+
+Lesson 17 of 24
+Understanding Customer Segments
+Customer segments are specific groups of people who share common characteristics or behaviors. Customer segments are dynamically evaluated based on attributes that you define and can change over time when the value of the attributes change. In Amazon Connect, segments serve as the foundation for targeted outbound campaigns.
+
+Instead of sending the same promotional message to all customers, you might create different segments, such as the following:
+
+•
+Customers who abandoned their shopping carts recently
+
+•
+High-value customers who haven't purchased in 30 days
+
+•
+New customers who made their first purchase in the past week
+
+Real-world example
+
+The following diagram illustrates how a customer can be segmented based on interaction type (inbound compared to outbound contacts) and priority levels. At the center is Amazon Connect, which serves as the hub for all customer interactions.
+
+On the left side of the diagram, inbound contacts are categorized into the following three priority segments:
+
+Cart abandoners (urgent priority) with an estimated 3,200 contacts who abandoned their carts within 24–72 hours
+
+High-value customers (high priority) with 2,450 estimated contacts who haven't made purchases in more than 30 days and have historical spend exceeding $500 each month
+
+New customers (medium priority) with approximately 1,850 contacts who made their first purchase within 7 days
+
+The right side of the diagram displays the following outbound contact strategies:
+
+Recovery and conversion efforts (urgent priority) targeting 200 contacts with limited-time offers and purchase hesitation solutions
+
+Reengagement strategies (high priority) focusing on 350 contacts through personalized discounts and loyalty program enrollment
+
+Welcome and onboarding (medium priority) reaching 1,500 contacts with product tutorials and support information
+
+Workflow diagram for Amazon Connect Customer Engagement system showing inbound and outbound contact strategies. Inbound contacts (left) include three customer segments: Cart abandoners (Urgent priority, 3,200 contacts), High-value customers (High priority, 2,450 contacts), and New customers (Medium priority, 1,850 contacts). Outbound contacts (right) show corresponding engagement strategies: Recovery and conversion efforts (Urgent, 200 contacts), Reengagement strategies (High, 350 contacts), and Welcome & onboarding (Medium, 1,500 contacts). Arrows connect each segment to the central Amazon Connect system.
+
+Customer segments are specific groups of people who share common characteristics or behaviors.
+
+Segmentation benefits
+
+The more targeted your segments, the more personalized and effective your campaigns can be. The following are some examples:
+
+•
+Higher engagement rates: When customers receive relevant messages, they're more likely to engage.
+
+•
+Improved customer experience: Personalized communications demonstrate to customers that you understand their needs.
+
+•
+Better resource allocation: By focusing on the right customers at the right time, you optimize your outreach efforts.
+
+Lesson 18 of 24
+AI in Campaign Management
+AI has revolutionized outbound campaign management, enabling businesses to work smarter, not harder. From detecting whether a human or machine answered a call to receiving recommendations based on trends in the customer data, AI-powered tools make campaigns more efficient.
+
+In Amazon Connect, AI powers the following key aspects of outbound campaigns.
+
+
+Call Classification
+
+Segment AI Assistant
+
+Inspiration Cards
+Call classification uses machine learning to determine whether a call was answered by a person or an automated system.
+
+
+Amazon Connect call classification technology analyzes several factors:
+
+Background noise analysis: It can detect background noise patterns typically associated with pre-recorded messages.
+
+Speech patterns: The system recognizes long strings of words common in voicemail greetings.
+
+Human response patterns: Call classification identifies typical human responses, such as "Hello," followed by pauses.
+
+Amazon Connect call classification connects agents only with live customers.
+
+Call classification. End of Tab.
+Understanding call classification
+
+Call classification uses machine learning to determine whether a call was answered by a person or an automated system.
+
+
+Call progress analysis
+When your outbound campaign makes a call, the Check call progress flow block branches based on the call classification outcome. The following are a few examples:
+
+If a human answers, it branches to connect to an agent.
+
+If an answering machine responds, it branches to leave a pre-recorded message.
+
+If the ML model cannot determine the answer type, it branches to play a message before connecting to an agent.
+
+This intelligence matters because studies show that many calls to consumers go to voicemail. Without call classification, agents would waste countless hours listening to voicemail greetings and leaving messages.
+
+Check call progress block in an Amazon Connect flow.
+
+
+Agent productivity benefits
+Beyond call classification, AI improves agent productivity in several key ways:
+
+Minimizing idle time: Predictive dialing helps agents spend more time speaking with customers.
+
+Prioritizing live connections: Because answering machines, wrong numbers, and no-answers are filtered out, agents stay focused on live connections.
+
+Providing context: When a call connects to an agent, AI can instantly display relevant customer information.
+
+Graphic illustrating the benefits of AI to enhance agent productivity as described in the text.
+
+
+Customer experience impact
+AI does not just benefit agents and businesses, it also improves the customer experience in the following ways:
+
+Reduced spam perception: When calls connect to live agents immediately, customers are more likely to engage.
+
+Personalization: AI helps agents have more relevant conversations by providing customer context.
+
+Graphic illustrating customer experience benefits using AI as described in the text.
+
+Segment AI Assistant
+
+Inspiration Cards
+Generative AI-powered segmentation helps non-technical business users to build audiences using natural language queries.
+
+Natural language segment creation represents a significant breakthrough in making data more accessible to non-technical users. Instead of navigating complex filter interfaces or writing database queries, you can describe the customers you want to target in everyday language.
+
+Amazon Connect segment AI assistant interprets your natural language description and translates it into a structured segment definition that identifies the exact customers matching your criteria.
+
+Inspiration Cards
+This generative AI-powered feature presents segment ideas tailored to specific customer data and trends, streamlining segment creation.
+
+Inspiration cards are AI-powered recommendations that analyze your customer data to suggest potentially valuable segments for your campaigns. Unlike traditional segmentation that requires you to define criteria from scratch, inspiration cards proactively identify patterns and opportunities in your data.
+
+Lesson 19 of 24
+Segment AI Assistant
+Natural language segment creation represents a significant breakthrough in making data more accessible to non-technical users. Instead of navigating complex filter interfaces or writing database queries, you can describe the customers you want to target in conversational language.
+
+Amazon Connect segment AI assistant interprets your natural language description and translates it into a structured segment definition that identifies the exact customers matching your criteria.
+
+How natural language segment creation works
+
+Behind the scenes, the segment AI assistant uses advanced natural language processing algorithms to do the following:
+
+•
+Analyze your description to identify key criteria and conditions.
+
+•
+Map these criteria to available customer attributes in your domain.
+
+•
+Construct a logical segment definition with the appropriate filters and relationships.
+
+•
+Apply this definition to your customer data to generate the segment.
+
+For example, instead of manually configuring multiple filters and conditions, you could enter: Customers who have spent over $2,000 in the last 60 days.
+
+Amazon Connect interface for creating customer segments, showing segment definition fields and AI assistant chat.
+
+Best practices for your segment AI assistant prompts
+
+Amazon Connect segment AI assistant relies heavily on the quality of prompts to generate effective responses for customer service agents. The difference between vague and better formed prompts can significantly impact the assistant's performance and usefulness. The quality of your segment depends significantly on how you phrase your prompt. Use the following best practices when composing prompts for the segment AI assistant:
+
+•
+Be specific: Include precise criteria instead of vague descriptions.
+
+•
+Reference existing attributes: When possible, use the names of attributes that exist in your data.
+
+•
+Include clear timeframes: Specify time periods clearly, such as in the last quarter.
+
+•
+Start simple: Begin with straightforward prompts and gradually add complexity.
+
+•
+Use business terminology: Frame your prompt in terms of business objectives.
+
+Examples of vague and better formed prompts
+
+
+
+Vague prompt example
+
+"I want to generate a segment"
+
+A detailed but ineffective prompt that lists specific numbers and timeframes without connecting to actual system attributes
+
+
+
+Better prompt example
+
+"Identify VIP Customers who might be interested in our new subscription offer and have opted in to receive text messages."
+
+A concise prompt that aligns with existing customer profile attributes in the system
+
+Refining AI-generated segments
+
+After the AI generates your segment, you can do the following:
+
+•
+Review the segment definition: Check that all conditions reflect your intent.
+
+•
+Adjust thresholds: Fine-tune values like purchase amounts or timeframes.
+
+•
+Add or remove conditions: Enhance the segment with additional criteria or simplify.
+
+•
+Preview results: See how many customers match your segment and review a sample.
+
+Lesson 20 of 24
+Inspiration Cards
+Inspiration cards are Amazon Connect AI-powered recommendations that analyze your customer data to suggest potentially valuable segments for your campaigns. Unlike traditional segmentation that requires you to define criteria from scratch, inspiration cards proactively identify patterns and opportunities in your data.
+
+These cards appear on the Customer segments page in Amazon Connect and present ready-to-use segment ideas based on actual trends in your customer profiles data.
+
+Amazon Connect customer segments dashboard showing three inspiration cards for targeting support cases and purchase patterns.
+
+Amazon Connect customer segments
+
+Inspiration cards generated recommendations
+
+Inspiration cards use advanced analytics and AI to generate their suggestions. They do the following:
+
+•
+Analyze historical data: Examine customer behavior patterns over time.
+
+•
+Identify trends: Spot significant changes or patterns in customer activities.
+
+•
+Apply business logic: Categorize these patterns into meaningful business contexts.
+
+•
+Generate actionable segments: Create predefined segment criteria based on these insights.
+
+The system organizes these suggestions into the following business-focused themes:
+
+•
+Promotion: Segments ideal for marketing promotions and special offers
+
+•
+Retention: Segments highlighting customers who might need attention to prevent churn
+
+•
+Support: Segments identifying customers who might benefit from proactive service
+
+Using AI-Powered Inspiration Cards for Customer Segmentation in Amazon Connect
+
+In the following demonstration, you will learn about using AI-powered inspiration cards for segmentation in Amazon Connect.
+
+Play Video
+Using AI-Powered Inspiration Cards for Customer Segmentation in Amazon Connect
+
+
+Transcript: Using AI-Powered Inspiration Cards for Customer Segmentation in Amazon Connect
+Welcome to this demonstration on using AI-powered inspiration cards for customer segmentation in Amazon Connect.
+
+First, you will need to sign into your Amazon Connect admin workspace by navigating to your instance URL, such as https://yourinstancename.my.connect.aws. You will either need the Admin security profile or make sure your security profile includes the CustomerProfiles.Segments.Create permission.
+
+After you are logged in, navigate to the Customer segments page. On the navigation pane, choose Customer Profiles, then select Customer segments.
+
+On the Customer segments page, you will see the Inspired by customer trends section, which shows the AI-powered inspiration cards.
+
+Review the inspiration cards that have been suggested for you. These are not just random suggestions. They are carefully crafted segments designed to help your business grow. Think about how each inspiration card might fit your business needs.
+
+If the first few cards are not quite right, you can choose Explore more to display more possible inspiration cards if available.
+
+When you have selected an inspiration card that matches your business goals, choose Get started on your chosen inspiration card.
+
+Review the generated customer segmentation audience. You can fine-tune the segment by adjusting the group and filters to perfectly match your target audience.
+
+When you are happy with your target audience, choose Create segment.
+
+Your AI-powered customer segment will now be created and ready to power your marketing strategy.
+
+Lesson 21 of 24
+Knowledge Check
+The following section will check your understanding of Amazon Connect outbound campaign intelligence.
+
+A utility company needs to set up outbound campaigns in Amazon Connect to notify customers about planned service interruptions.
+
+What are the necessary prerequisites for setting up outbound campaigns in Amazon Connect? (Select THREE.)
+
+
+Enable outbound calling capabilities for the Amazon Connect instance.
+
+Incorrectly unchecked
+
+Create a dedicated queue for outbound campaign contacts.
+
+Incorrectly unchecked
+
+Purchase additional phone numbers specifically for outbound calling.
+
+Incorrectly checked
+
+Build a flow that includes the Check call progress block.
+
+Correctly unchecked
+
+Install special hardware for campaign management.
+
+Correctly unchecked
+
+Assign the outbound campaigns queue to agent routing profiles.
+
+Incorrectly unchecked
+SUBMIT
+
+Incorrect
+The incorrect options represent unnecessary requirements for Amazon Connect outbound campaigns. Building a flow with Check call progress helps with answering machine detection but is not a prerequisite. Additional phone numbers are not required because existing numbers can manage the outbound calls. Special hardware is unnecessary because Amazon Connect operates as a cloud-based solution. The platform does not need on-premises equipment for campaign management.
+
+
+A subscription-based streaming service wants to create customer segments for retention campaigns using the segment AI assistant in Amazon Connect.
+
+Which approach would produce the MOST effective results when creating a segment with natural language prompts?
+
+
+"Customers who might cancel soon"
+
+Correctly unselected
+
+"Give me a list of all at-risk customers"
+
+Correctly unselected
+
+"Find subscribers who need special offers"
+
+Incorrectly selected
+
+"Customers who have decreased their viewing time by more than 30 percent in the last month, have not watched any new releases, and whose subscription renews within the next 14 days"
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+This prompt lacks the precision needed for effective segmentation. It contains no specific criteria, timeframes, or behaviors. The AI cannot determine which customers "need special offers" without defined parameters. Effective prompts require concrete definitions.
+
+
+A travel company is using inspiration cards in Amazon Connect to discover new customer segments for their promotional campaigns.
+
+How can a contact center manager evaluate which inspiration card suggestions are worth pursuing?
+
+
+Select inspiration cards that generate the largest possible customer segments.
+
+Correctly unselected
+
+Choose the first three inspiration cards that appear in the system.
+
+Incorrectly selected
+
+Assess alignment with business goals, actionability, segment size, and timing relevance.
+
+Incorrectly unselected
+
+Implement all inspiration cards without evaluation to maximize coverage.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+The order of inspiration cards does not indicate their business value. Each suggestion deserves evaluation based on its alignment with current objectives. The system does not prioritize cards by potential effectiveness.
+
+Lesson 22 of 24
+Summary
+You have completed your journey through Amazon Connect AI Customer Engagement capabilities. Throughout this course, you explored three major areas that can revolutionize customer engagement. First, you learned how AI enhances traditional contact centers by creating unified customer views. Instead of agents navigating through multiple systems, they can now see all customer information in one place. Next, you explored Customer Profiles with AI capabilities. You learned how generative AI data mapping automatically organizes customer information from different sources and how identity resolution works to recognize that variation. Finally, you explored outbound campaign intelligence, where you learned to create customer segments using natural language and to use inspiration cards to discover patterns.
+
+You have now been introduced to the AI tools that can transform customer engagement. How will you use them to create more personalized, efficient, and meaningful connections with your customers?
+

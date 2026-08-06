@@ -1,0 +1,1751 @@
+/*
+ * Amazon Connect — Development Fundamentals
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne/AMAZON CONNECT DEVELOPMENT FUNDAMENTALS.txt
+ *            conne-text/Amazon Connect Development Fundamentals Summary.txt  (from conne/Amazon Connect Development Fundamentals Summary.pdf)
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-development-fundamentals",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Development Fundamentals",
+  "provider": "Amazon Web Services",
+  "level": "Fundamentals",
+  "category": "Development",
+  "description": "Reaching Amazon Connect programmatically: the AWS CLI, the Amazon Connect REST APIs, and the AWS SDKs.",
+  "examFormat": "5 topics · ~39 min · 11 review questions",
+  "sourceFiles": [
+    "conne/AMAZON CONNECT DEVELOPMENT FUNDAMENTALS.txt",
+    "conne-text/Amazon Connect Development Fundamentals Summary.txt  (from conne/Amazon Connect Development Fundamentals Summary.pdf)"
+  ],
+  "modules": [
+    {
+      "id": "connect-development-fundamentals-t1",
+      "number": 1,
+      "title": "AWS CLI for Amazon Connect",
+      "shortTitle": "AWS CLI for Amazon Connect",
+      "summary": "The AWS CLI offers a streamlined method of interaction for developers who build solutions with Amazon Connect. You can also use it to interact…",
+      "duration": "~8 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the key concepts and terminology of the AWS CLI.",
+        "Identify the benefits of using the AWS CLI.",
+        "Explore installing and configuring the AWS CLI.",
+        "Explore the use of AWS CLI commands for Amazon Connect."
+      ],
+      "sections": [
+        {
+          "id": "connect-development-fundamentals-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The AWS CLI offers a streamlined method of interaction for developers who build solutions with Amazon Connect. You can also use it to interact with related features, like Amazon Connect Contact Lens and Amazon Connect Customer Profiles. In this lesson, you will learn how to use the AWS CLI for Amazon Connect."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Introduction to AWS CLI",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The AWS CLI is a unified tool to manage AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts. The AWS CLI fully supports Amazon Connect. With a minimal amount of knowledge and configuration, you can build scripts to create, modify, or delete Amazon Connect related resources."
+            },
+            {
+              "type": "p",
+              "text": "With these scripts, you can do the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Limit manual operations within the Amazon Connect console to avoid human errors.",
+                "Automate repetitive tasks, for example promoting flows from a development instance to a production instance.",
+                "Perform bulk operations for Amazon Connect resources, like creating users or associating routing profiles.",
+                "Run actions otherwise prevented in the Amazon Connect UI, such as deleting flows, flow modules, or queues."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To use AWS CLI, you require a user created in the AWS account you want to interact with through the command line interface (CLI). Specifically, you will need an access key ID and a secret access key that you use in the configuration step of the AWS CLI. The combination of access key ID and secret access key are security credentials used for systems or programs to access AWS resources on your behalf."
+            },
+            {
+              "type": "p",
+              "text": "The CLI user does not need access to the AWS Management Console."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Concepts and terminology",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To understand how to use the AWS CLI with Amazon Connect, expand the following categories."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "CLI",
+                  "body": "A command line interface is a text-based user interface used to interact with a computer system by typing commands and receiving textual output. It is an alternative to a graphical user interface (GUI) where users interact with the system using a mouse, keyboard, and visual elements."
+                },
+                {
+                  "title": "Shell",
+                  "body": "The shell (sometimes referred to as terminal) is the program that provides the command line interface and interprets the user's commands. Common shells include Bash (Bourne-Again SHell), Zsh (Z Shell), and PowerShell."
+                },
+                {
+                  "title": "Service",
+                  "body": "In the AWS CLI, service refers to an AWS service or feature of a service, such as Amazon Connect or Amazon Connect Contact Lens. It is a logical grouping of commands and actions available for a specific feature."
+                },
+                {
+                  "title": "Commands",
+                  "body": "A command is a specific instruction or action that the user types into the command line interface to perform a task. Commands can be built-in shell commands or external programs. For example, mkdir is a command that you can use to create a new directory."
+                },
+                {
+                  "title": "Parameters",
+                  "body": "Parameters, also referred to as arguments or operands, are additional pieces of information provided to a command to modify its behavior or specify input data. For example, the command ls -l would list the contents of the current directory in a long format, where -l is a parameter."
+                },
+                {
+                  "title": "Options",
+                  "body": "Options, or flags, are special arguments that modify the behavior of a command. They are usually preceded by a dash or a slash, such as -h for the help option."
+                },
+                {
+                  "title": "Environment variables",
+                  "body": "Environment variables are system-level settings that can be accessed and modified from the command line. They store information that is used by the operating system and programs."
+                },
+                {
+                  "title": "JSON",
+                  "body": "JavaScript Object Notation is an open-standard format and data-interchange format that uses human-readable text to store and transmit data objects consisting of attribute–value pairs and arrays."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits and considerations",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The AWS CLI provides programmatic access to perform operations for the following Amazon Connect features:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Amazon Connect resource management"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Amazon Connect Contact Lens",
+                "Amazon Connect outbound campaigns",
+                "Amazon Connect Cases",
+                "Amazon Connect Customer Profiles",
+                "Amazon Connect Participant Service",
+                "Amazon Q in Connect",
+                "For detailed instructions for each feature, see the AWS CLI Command Reference documentation."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The AWS CLI has two main benefits."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Efficiency and speed",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Improved level of control and customization"
+            },
+            {
+              "type": "p",
+              "text": "The AWS CLI is a powerful tool for users, especially those in technical fields. By typing commands, you can access the Amazon Connect functionality quicker than navigating through the Amazon Connect console. This is particularly useful for repetitive or complex tasks where automating a sequence of commands through scripting can greatly improve productivity."
+            },
+            {
+              "type": "p",
+              "text": "For example, you can retrieve the definition of a contact flow using the aws describe-contact-flow command. You can then use the output of this command to deploy the contact flow to a different Amazon Connect instance."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed efficiency and speed, move to the next tab to learn about improved levels of control and customization."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Installation and configuration",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can install the AWS CLI on machines running Linux, macOS, and Windows. Each operating system has its own installation process that includes the following steps:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Downloading the latest version of the AWS CLI"
+            },
+            {
+              "type": "p",
+              "text": "Running the installer"
+            },
+            {
+              "type": "p",
+              "text": "For detailed instructions to install the AWS CLI for your specific operating system (OS), see the Install or Update to the Latest Version of the AWS CLI section of the user guide."
+            },
+            {
+              "type": "p",
+              "text": "After completing the installation, you can confirm success by running your first AWS CLI command."
+            },
+            {
+              "type": "code",
+              "text": "aws --version"
+            },
+            {
+              "type": "p",
+              "text": "By running this command, you have used your first option, --version, which is used to display the version of the AWS CLI installed. The version of the AWS CLI installed on your system is important. It defines which services and operations are available within the tool. As AWS releases new services and features, you can upgrade the AWS CLI on your system to be able to use them."
+            },
+            {
+              "type": "p",
+              "text": "Alternatively, you can use AWS CloudShell, a browser-based shell, to run scripts with the AWS CLI. The CloudShell icon appears in AWS Regions where CloudShell is available. The same permissions associated to your AWS user apply to CloudShell."
+            },
+            {
+              "type": "p",
+              "text": "When you use the AWS CLI, you can configure the AWS user that runs the commands, along with other parameters. To do this, you must use the configure command."
+            },
+            {
+              "type": "code",
+              "text": "aws configure"
+            },
+            {
+              "type": "p",
+              "text": "When configuring the AWS CLI, you are prompted for the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "An AWS access key ID"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "An AWS secret access key",
+                "The name of a default Region to use"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "The default output format"
+            },
+            {
+              "type": "p",
+              "text": "To learn how to configure the AWS CLI for the first time, refer to the AWS Command Line Interface User Guide."
+            },
+            {
+              "type": "p",
+              "text": "You can use Single Sign On with the AWS CLI. Refer to the AWS Command Line Interface User Guide to configure the AWS CLI according to your specific organization identity management strategy."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Manage user profiles",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can configure the AWS CLI to use different user profiles. You can set up multiple profiles with each using their own set of credentials and parameters. You can have different profiles for different AWS accounts or profiles allowing you to use different services based on the environment you are interacting with. To configure a new profile with the AWS CLI, run the aws configure command. Each time this command is used, a new profile is created with a default name. You can optionally specify a name for a new profile by running the following command."
+            },
+            {
+              "type": "code",
+              "text": "aws configure --profile a_name_for_my_new_profile"
+            },
+            {
+              "type": "p",
+              "text": "Profiles are stored locally on your machine in a credentials file, located in the root of your OS user folder under the following path: ~/.aws/config. You can use the aws configure list command to list the profiles that the AWS CLI on your machine can access."
+            },
+            {
+              "type": "p",
+              "text": "You can specify which profile you want to use when running a command by appending the profile option. For example, the following command runs using the connect-dev profile."
+            },
+            {
+              "type": "code",
+              "text": "aws --profile connect-dev connect list-instances"
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t1-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use case",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Martha Rivera is a flow developer tasked with migrating a flow module built using the Amazon Connect console from a development environment into production. These Amazon Connect instances are located in two separate AWS accounts, and Martha has already configured her AWS CLI with two profiles: dev and prod."
+            },
+            {
+              "type": "p",
+              "text": "Using the AWS CLI, Martha can use the describe-contact-flow-module command to retrieve the description of the module. This command takes the following parameters:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "An instance ID"
+            },
+            {
+              "type": "p",
+              "text": "A flow module ID"
+            },
+            {
+              "type": "code",
+              "text": "aws --profile dev connect describe-flow-module --instance-id 11111111-1111-1111-1111-111111111111 --contact-flow-module-id 12345678-1234-1234-1234-123456789012"
+            },
+            {
+              "type": "p",
+              "text": "Martha sees the following output inside her terminal."
+            },
+            {
+              "type": "code",
+              "text": "{\n\"ContactFlowModule\": {\n\"Arn\": \"arn:aws:connect:ap-southeast-2:012345678901:instance/11111111-1111-1111-1111-111111111111/flow-module/12345678-1234-1234-1234-123456789012\",\n\"Id\": \"12345678-1234-1234-1234-123456789012\",\n\"Name\": \"init\",\n\"Content\": \"{\\\"Version\\\":\\\"2019-10-30\\\",\\\"StartAction\\\":\\\"cb2ce590-98f9-4961-9c23-a93f6b00045e\\\",\\\"Metadata\\\":{\\\"entryPointPosition\\\":{\\\"x\\\":40,\\\"y\\\":40},\\\"ActionMetadata\\\":{\\\"cb2ce590-98f9-4961-9c23-a93f6b00045e\\\":{\\\"position\\\":{\\\"x\\\":152.8,\\\"y\\\":113.6}},\\\"916add85-71b4-489a-a077-e62dbc661d26\\\":{\\\"position\\\":{\\\"x\\\":913.6,\\\"y\\\":159.2}},\\\"839cfe28-51c0-482d-8b0d-0b41643ec29c\\\":{\\\"position\\\":{\\\"x\\\":408.8,\\\"y\\\":114.4},\\\"overrideConsoleVoice\\\":true},\\\"97c7de76-c62b-49f8-9249-52ab49d3bcc2\\\":{\\\"position\\\":{\\\"x\\\":666.4,\\\"y\\\":116}}},\\\"Annotations\\\":[]},\\\"Actions\\\":[{\\\"Parameters\\\":{\\\"FlowLoggingBehavior\\\":\\\"Enabled\\\"},\\\"Identifier\\\":\\\"cb2ce590-98f9-4961-9c23-a93f6b00045e\\\",\\\"Type\\\":\\\"UpdateFlowLoggingBehavior\\\",\\\"Transitions\\\":{\\\"NextAction\\\":\\\"839cfe28-51c0-482d-8b0d-0b41643ec29c\\\"}},{\\\"Parameters\\\":{},\\\"Identifier\\\":\\\"916add85-71b4-489a-a077-e62dbc661d26\\\",\\\"Type\\\":\\\"EndFlowModuleExecution\\\",\\\"Transitions\\\":{}},{\\\"Parameters\\\":{\\\"TextToSpeechEngine\\\":\\\"Neural\\\",\\\"TextToSpeechStyle\\\":\\\"None\\\",\\\"TextToSpeechVoice\\\":\\\"Aria\\\"},\\\"Identifier\\\":\\\"839cfe28-51c0-482d-8b0d-0b41643ec29c\\\",\\\"Type\\\":\\\"UpdateContactTextToSpeechVoice\\\",\\\"Transitions\\\":{\\\"NextAction\\\":\\\"97c7de76-c62b-49f8-9249-52ab49d3bcc2\\\"}},{\\\"Parameters\\\":{\\\"RecordingBehavior\\\":{\\\"RecordedParticipants\\\":[\\\"Agent\\\",\\\"Customer\\\"]},\\\"AnalyticsBehavior\\\":{\\\"Enabled\\\":\\\"True\\\",\\\"AnalyticsLanguage\\\":\\\"en-NZ\\\",\\\"AnalyticsRedactionBehavior\\\":\\\"Disabled\\\",\\\"AnalyticsRedactionResults\\\":\\\"RedactedAndOriginal\\\",\\\"ChannelConfiguration\\\":{\\\"Chat\\\":{\\\"AnalyticsModes\\\":[\\\"ContactLens\\\"]},\\\"Voice\\\":{\\\"AnalyticsModes\\\":[\\\"PostContact\\\"]}}}},\\\"Identifier\\\":\\\"97c7de76-c62b-49f8-9249-52ab49d3bcc2\\\",\\\"Type\\\":\\\"UpdateContactRecordingBehavior\\\",\\\"Transitions\\\":{\\\"NextAction\\\":\\\"916add85-71b4-489a-a077-e62dbc661d26\\\"}}],\\\"Settings\\\":{\\\"InputParameters\\\":[],\\\"OutputParameters\\\":[],\\\"Transitions\\\":[{\\\"DisplayName\\\":\\\"Success\\\",\\\"ReferenceName\\\":\\\"Success\\\",\\\"Description\\\":\\\"\\\"},{\\\"DisplayName\\\":\\\"Error\\\",\\\"ReferenceName\\\":\\\"Error\\\",\\\"Description\\\":\\\"\\\"}]}}\",\n\"Description\": \"\",\n\"State\": \"active\",\n\"Status\": \"published\",\n\"Tags\": {}\n}\n}"
+            },
+            {
+              "type": "p",
+              "text": "The output of that command is complex. Martha decides to save this directly into a file."
+            },
+            {
+              "type": "code",
+              "text": "aws --profile dev connect describe-flow-module --instance-id 11111111-1111-1111-1111-111111111111 --contact-flow-module-id 12345678-1234-1234-1234-123456789012 > my-module.json"
+            },
+            {
+              "type": "p",
+              "text": "Martha can now use the output of the previous command when using the create-contact-flow-module command. This command takes three parameters: an instance id in which to create the new module, the new module name, and the module’s content. Maria has saved the content in a file, and she can use that file directly."
+            },
+            {
+              "type": "code",
+              "text": "aws --profile prod connect create-contact-flow-module --instance-id 1cc2a6ed-528e-4f96-afd2-0344b1c81114 --name init-prod --content file://my-content.json"
+            },
+            {
+              "type": "p",
+              "text": "With only two commands, Martha was able to copy an entire flow module from one instance to another in separate accounts. This reduces the possibility of human error and accelerates the process compared to creating the module from scratch using the Amazon Connect console."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Improved level of control and customization"
+            },
+            {
+              "type": "p",
+              "text": "AWS CLI provides more control and customization options compared to the Amazon Connect console. You can access a wide range of settings, configurations, and advanced features that are not readily available or easily accessible through the console."
+            },
+            {
+              "type": "p",
+              "text": "For example, you can use the aws connect list-queues command to retrieve a list of deactivated queues from an Amazon Connect instance. You can then use the result of this operation to delete the queues using the aws connect delete-queue command. Now that you've explored ways to improve control and customization, move on to the next section of the lesson."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-development-fundamentals-t1-q1",
+          "question": "An AWS developer wants to automate the creation of Amazon Connect resources, such as flows and routing profiles. Which approach should the developer take?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Use the Amazon Connect console to manually create the resources."
+            },
+            {
+              "id": "B",
+              "text": "Use the AWS Command Line Interface (AWS CLI) to create scripts for automating the resource creation."
+            },
+            {
+              "id": "C",
+              "text": "Use AWS Identity and Access Management (IAM) to provision resources."
+            },
+            {
+              "id": "D",
+              "text": "Request AWS Support to create the resources on their behalf."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "With the AWS CLI, developers can create scripts to automate tasks with Amazon Connect."
+        },
+        {
+          "id": "connect-development-fundamentals-t1-q2",
+          "question": "An AWS solutions architect needs to create a script that deletes Amazon Connect flows, flow modules, and queues. Which tool should the architect use?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Amazon Connect console"
+            },
+            {
+              "id": "B",
+              "text": "AWS Management Console"
+            },
+            {
+              "id": "C",
+              "text": "AWS Command Line Interface (AWS CLI)"
+            },
+            {
+              "id": "D",
+              "text": "AWS Direct Connect"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "The AWS CLI can be used to create a script to delete Amazon Connect resources."
+        },
+        {
+          "id": "connect-development-fundamentals-t1-q3",
+          "question": "After saving the flow module content to a file, a developer wants to create a new flow module with the same content in the production instance. Which command should the developer use?",
+          "options": [
+            {
+              "id": "A",
+              "text": "aws --profile dev connect describe-contact-flow-module --instance-id 11111111-1111-1111-1111-111111111111 --contact-flow-module-id 12345678-1234-1234-1234-123456789012"
+            },
+            {
+              "id": "B",
+              "text": "aws --profile prod connect create-contact-flow-module --instance-id 1cc2a6ed-528e-4f96-afd2-0344b1c81114 --name init-prod --content file://my-module.json"
+            },
+            {
+              "id": "C",
+              "text": "aws --profile dev connect create-contact-flow-module --instance-id 11111111-1111-1111-1111-111111111111 --name init --content file://my-module.json"
+            },
+            {
+              "id": "D",
+              "text": "aws --profile prod connect describe-contact-flow-module --instance-id 1cc2a6ed-528e-4f96-afd2-0344b1c81114 —contact-flow-module-id 12345678-1234-1234-1234-123456789012"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Developers can use the output of a previous command when using the create-contact-flow-module command. This simplifies providing complex input for commands. In addition, they can specify the profile to use when running the command."
+        },
+        {
+          "id": "connect-development-fundamentals-t1-q4",
+          "question": "A developer wants to check the version of the AWS Command Line Interface (AWS CLI) installed on their machine. Which command should they use?",
+          "options": [
+            {
+              "id": "A",
+              "text": "aws --version"
+            },
+            {
+              "id": "B",
+              "text": "aws version"
+            },
+            {
+              "id": "C",
+              "text": "aws --check-version"
+            },
+            {
+              "id": "D",
+              "text": "aws cli --version"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "aws --version is the valid command used to display the version of the AWS CLI installed."
+        }
+      ]
+    },
+    {
+      "id": "connect-development-fundamentals-t2",
+      "number": 2,
+      "title": "Amazon Connect REST APIs",
+      "shortTitle": "Amazon Connect REST APIs",
+      "summary": "A Representational State Transfer (REST) API, also known as RESTful API, is an API that follows the REST architectural style. REST APIs allow for…",
+      "duration": "~13 min",
+      "lede": null,
+      "objectives": [
+        "Explore benefits and considerations when using the Amazon Connect REST API.",
+        "Explore how to set up an API client.",
+        "Recognize the endpoint options for the Amazon Connect REST APIs."
+      ],
+      "sections": [
+        {
+          "id": "connect-development-fundamentals-t2-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "A Representational State Transfer (REST) API, also known as RESTful API, is an API that follows the REST architectural style. REST APIs allow for interaction with RESTful web services. This development model is suitable for many different types of applications that depend on synchronous communication."
+            },
+            {
+              "type": "p",
+              "text": "By using the Amazon Connect REST APIs, you can interact with Amazon Connect within an AWS account to perform administrative operations. You can also integrate Amazon Connect REST APIs in the applications you build, if the technology you use allows making HTTPS calls."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Introduction to the Amazon Connect REST APIs",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "REST APIs can be used from any system or programming language capable of handling an HTTP request. The request and response models are typically well documented. APIs offer an opportunity for developers to build scalable and interoperable applications. The Amazon Connect APIs, and features specific APIs, offer the options to programmatically operate Amazon Connect instances."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Concepts and terminology",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect API has specific terminology to be aware of."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Endpoint",
+                  "body": "An endpoint is a specific location within an API that accepts requests and sends back responses. It's a way for different systems and applications to communicate with each other by sending and receiving information and instructions."
+                },
+                {
+                  "title": "Resource",
+                  "body": "A resource is a fundamental concept in RESTful APIs. It represents a data entity or object that can be accessed and manipulated through the API."
+                },
+                {
+                  "title": "URI",
+                  "body": "The Uniform Resource Identifier (URI) is a unique address or path used to identify a specific resource within the API."
+                },
+                {
+                  "title": "HTTP methods",
+                  "body": "The HTTP methods are standard operations used to interact with resources, including GET, POST, PUT, DELETE, and sometimes others like PATCH."
+                },
+                {
+                  "title": "Request",
+                  "body": "The request is a message sent by the client to the server that contains details such as the HTTP method, the URI, headers, and the optional request body."
+                },
+                {
+                  "title": "Response",
+                  "body": "The response is the message sent by the server back to the client that contains details such as the status code, headers, and the optional response body."
+                },
+                {
+                  "title": "Authentication and authorization",
+                  "body": "Authentication and authorization are mechanisms for securing REST APIs, such as API keys, OAuth, JSON Web Tokens (JWT), or other authentication methods."
+                },
+                {
+                  "title": "Throttling or rate limiting",
+                  "body": "These techniques are used to control and limit the number of requests a client can make to the API within a given time period."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits of using the Amazon Connect REST APIs",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect REST API presents several benefits. It offers capabilities for managing and extending the functionality of Amazon Connect contact centers. The following are the two major benefits of using an Amazon Connect REST API."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Automation",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Integration"
+            },
+            {
+              "type": "p",
+              "text": "One of the primary benefits of using the API is the ability to automate and streamline contact center operations. You can create and manage users, queues, routing profiles, and contact flows. This can improve efficiency, reduce manual effort, and allow faster deployment and updates of contact center configurations."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed automation, move to the next tab to learn about integration."
+            },
+            {
+              "type": "p",
+              "text": "When working with Amazon Connect REST APIs, take into consideration the following factors."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Authentication",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Throttling"
+            },
+            {
+              "type": "p",
+              "text": "The Amazon Connect REST APIs requires that requests are signed using AWS Signature Version 4 (SigV4). In AWS Signature Version 4, you don't use your secret access key to sign the request. Instead, you first use your secret access key to derive a signing key. The derived signing key is specific to the date, service, and AWS Region. For a complete description of the signing process, see the AWS Signature Version 4 for API Requests section of the AWS Identity and Access Management User Guide."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed authentication, move to the next tab to learn about throttling."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Setting up an API client",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In this section, you will learn how to set up an API client to use the Amazon Connect API. Although the client used here is Postman, the learning can be applied to set up other clients."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Authorization",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When configuring an API client to interact with Amazon Connect REST APIs, you require the secret key and secret access key of an IAM user. This user will also need to be allowed to perform the Amazon Connect operations required for your use case."
+            },
+            {
+              "type": "p",
+              "text": "In the API client, you can start by creating a collection to organize your requests. With the collection, you can share configuration across all the requests within it. You can use this concept to configure authentication for your requests at collection level."
+            },
+            {
+              "type": "p",
+              "text": "When you create a collection, you configure the authentication for all the requests of that collection. You will also need to specify additional parameters to start interacting with Amazon Connect APIs."
+            },
+            {
+              "type": "p",
+              "text": "You need to configure your collections or individual requests to perform authorization against the Amazon Connect APIs endpoint using SigV4. To learn more about AWS Signature V4, see Create a signed AWS API request in the AWS Identity and Access Management User Guide. API clients typically include a streamlined way to configure SigV4. You can learn about the underlying process in the AWS Identity and Access Management User Guide."
+            },
+            {
+              "type": "p",
+              "text": "You need the following parameters to configure when using an API client with Amazon Connect APIs."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Access key and secret access key"
+            },
+            {
+              "type": "p",
+              "text": "An access key is a long-term credential for an IAM user. You can obtain it using IAM. It is used to sign programmatic requests to the AWS CLI or AWS API. For more information, see AWS Signature Version 4 for API Requests in the AWS Identity and Access Management User Guide."
+            },
+            {
+              "type": "p",
+              "text": "Access keys consist of two parts:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "An access key ID (for example, AKIAIOSFODNN7EXAMPLE)"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "A secret access key (for example, wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY)",
+                "You must use both the access key ID and secret access key together to authenticate your requests."
+              ]
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "AWS Region",
+                  "body": "Endpoints used to send HTTP requests to the Amazon Connect APIs and other AWS APIs are usually Region dependent. You need to specify the Region for that resource because it will dictate the endpoint that will process that request."
+                },
+                {
+                  "title": "Service name",
+                  "body": "This is the name of the service that is receiving the requests, such as connect for Amazon Connect or profile for Amazon Connect Customer Profiles. Like AWS Region, the endpoint that will process your request varies with the service."
+                },
+                {
+                  "title": "Session token",
+                  "body": "You can use temporary security credentials to make programmatic requests for AWS resources using the AWS CLI or AWS API. The temporary credentials provide the same permissions as long-term security credentials, such as IAM user credentials. This is typically used when your application is assuming an IAM role."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Depending on the API client you use, the interface might look different, but the same concepts apply."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Endpoints",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To access Amazon Connect REST APIs, you use an endpoint. The endpoint is specific to the Amazon Connect service and the AWS Region you are using. For example, to interact with Amazon Connect Customer Profiles in the Asia Pacific (Sydney) Region (ap-southeast-2), you send your request to profile.ap-southeast-2."
+            },
+            {
+              "type": "p",
+              "text": "You can use these endpoints to perform operations with Amazon Connect resources, such as creating instances, updating users, or deleting queues. However, when you interact with Amazon Connect Cases, you need to use the Amazon Connect Cases endpoints."
+            },
+            {
+              "type": "p",
+              "text": "You must choose the endpoint that is assigned to the Region you are intending to send a request to and that is associated to the feature you are interacting with. For example, to interact with Amazon Connect Customer Profiles in the ap-southeast-2 (Sydney) Region, you must send your request to profile.ap-southeast-2.amazonaws.com."
+            },
+            {
+              "type": "p",
+              "text": "For an exhaustive list of endpoints for Amazon Connect, see the Amazon Connect endpoints and quotas section of the AWS General Reference guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Paths, methods, and the request and response models",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In a REST API, the path or the URI, is a crucial component. It defines the location of a specific resource or a collection of resources on the server. The path typically follows a hierarchical structure, similar to a file system on a computer. It represents the logical organization of the resources and helps to identify the specific resource or resources that the client wants to interact with."
+            },
+            {
+              "type": "p",
+              "text": "For example, when you interact with an existing queue in Amazon Connect, you reference it by sending a request to its corresponding path, such as /queues/InstanceId/QueueId."
+            },
+            {
+              "type": "p",
+              "text": "URIs in Amazon Connect typically include the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Resource type, such as queues"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect instance ID"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Resource ID"
+            },
+            {
+              "type": "p",
+              "text": "The method (HTTP method or HTTP verb) is an important component that defines the type of action the client wants to perform on a resource."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "GET"
+            },
+            {
+              "type": "p",
+              "text": "Use the GET method to retrieve the representation of a resource or a collection of resources. With this method, you describe Amazon Connect resources such as instances, users, or queues."
+            },
+            {
+              "type": "p",
+              "text": "For example, to retrieve the definition of a queue, you emit a GET request to the /queues/11111111-1111-1111-1111-111111111111/12345678-1234-1234-1234-123456789012 URI. This request will describe the queue with the 12345678-1234-1234-1234-123456789012, from the instance 11111111-1111-1111-1111-111111111111."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "POST"
+            },
+            {
+              "type": "p",
+              "text": "Use the POST method to create or update resources in Amazon Connect. You can also use it to start a form of processing, like a search operation. POST requests typically include the data required to create the new resource in the request body."
+            },
+            {
+              "type": "p",
+              "text": "For example, to create a set of hours of operation in an instance that has the ID 11111111-1111-1111-1111-111111111111, you emit a POST request on the /hours-of-operation/11111111-1111-1111-1111-111111111111 URI."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "DELETE"
+            },
+            {
+              "type": "p",
+              "text": "Use the DELETE method to remove a resource from Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "For example, you can emit a DELETE request to the /prompts/11111111-1111-1111-1111-111111111111/12345678-1234-1234-1234-123456789012 to delete the prompt with ID 12345678-1234-1234-1234-123456789012."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "PUT"
+            },
+            {
+              "type": "p",
+              "text": "Use the PUT method to create or update an existing resource in Amazon Connect. PUT requests include the complete representation of the resource that will replace the existing one."
+            },
+            {
+              "type": "p",
+              "text": "For example, when you send a PUT request to the /evaluation-forms/11111111-1111-1111-1111-111111111111/12345678-1234-1234-1234-123456789012, you update the evaluation form ID of 12345678-1234-1234-1234-123456789012 from the instance with ID 11111111-1111-1111-1111-111111111111."
+            },
+            {
+              "type": "p",
+              "text": "When you send a POST or a PUT request, you need to add a body to your request. This body follows a specific data model called the request model. Additionally, every request is answered with a response (in addition to the status code that informs you of the result of the operation). The request and response model are central to the way REST APIs work."
+            },
+            {
+              "type": "p",
+              "text": "The client can interact with the server's resources in a standardized and predictable manner for the development of scalable and maintainable applications and services. For example, with the Amazon Connect APIs, the client will send a GET request to the /contacts endpoint to describe a contact."
+            },
+            {
+              "type": "p",
+              "text": "The server would then respond with a JSON payload containing the contact record. The client can send a PUT request to the /users endpoint with user information. It adds a user to an Amazon Connect instance, and the server will respond with a confirmation or an error message."
+            },
+            {
+              "type": "p",
+              "text": "The model of the request and response is unique to each operation you are running and the resource you are interacting with. You can find the request and response model for each Amazon Connect API in the Amazon Connect API Reference."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "Automating user creation in Amazon Connect"
+            },
+            {
+              "type": "p",
+              "text": "John Stiles, a senior developer at AnyCompany Bank, is tasked to develop an integration between the company’s HR system and Amazon Connect. Whenever a new employee joins AnyCompany, HR has to send over the employee's information, and the contact center administrator's team has to manually create a user account in Amazon Connect for the new hire. John is familiar with the Amazon Connect APIs. He can automate this task by initiating a request to Amazon Connect and creating a user when an employee is added to the HR software."
+            },
+            {
+              "type": "p",
+              "text": "John has already researched the Amazon Connect APIs for the Amazon Connect instance with ID a1b2c3d4-5678-90ab-cdef-EXAMPLEaaaaa. He knows the Region where the Amazon Connect instance is located is ap-southeast-2."
+            },
+            {
+              "type": "p",
+              "text": "Using the Amazon Connect Developer Guide, he identifies the API endpoint to create this automation: https://connect.ap-southeast-2.amazonaws.com/users/a1b2c3d4-5678-90ab-cdef-EXAMPLEaaaaa. This endpoint allows him to interact with user resources in Amazon Connect. He documents the need to use the following REST methods:"
+            },
+            {
+              "type": "p",
+              "text": "PUT: He uses the PUT method on the user's resource to create a user in an Amazon Connect instance."
+            },
+            {
+              "type": "p",
+              "text": "DELETE: He uses the DELETE method on the user's resource to delete a user in the Amazon Connect instance."
+            },
+            {
+              "type": "p",
+              "text": "John provides the proper request body to create users. The following code example shows a request body for a user."
+            },
+            {
+              "type": "code",
+              "text": "{\n\"IdentityInfo\": {\n\"FirstName\": \"Nikhil\",\n\"LastName\": \"Jayashankar\"\n},\n\"PhoneConfig\": {\n\"AfterContactWorkTimeLimit\": 7,\n\"AutoAccept\": false,\n\"PhoneType\": \"SOFT_PHONE\"\n},\n\"RoutingProfileId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLEbbbbb\",\n\"SecurityProfileIds\": [ \"a1b2c3d4-5678-90ab-cdef-EXAMPLE33333\" ],\n\"Username\": \"nikhil_jayashankar@example.com\"\n}"
+            },
+            {
+              "type": "p",
+              "text": "John tests this request manually with his API client. The following response indicates the success of the operation."
+            },
+            {
+              "type": "code",
+              "text": "HTTP/1.1 200\nContent-type: application/json\n\n{\n\"UserArn\": \"arn:aws:connect:ap-southeast-2:555555555555:instance/a1b2c3d4-5678-90ab-cdef-EXAMPLEaaaaa/agent/a1b2c3d4-5678-90ab-cdef-EXAMPLEeeeee\",\n\"UserId\": \"a1b2c3d4-5678-90ab-cdef-EXAMPLEeeeee\"\n}"
+            },
+            {
+              "type": "p",
+              "text": "John proceeds to test the deletion of this user with the API. The DELETE action does not require a body, only the ID of the user to delete. He emits this request in his API client."
+            },
+            {
+              "type": "p",
+              "text": "The Amazon Connect REST API returns the following success response."
+            },
+            {
+              "type": "code",
+              "text": "HTTP/1.1 200"
+            },
+            {
+              "type": "p",
+              "text": "John is ready to automate the creation and deletion of users in Amazon Connect."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s11",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Status codes",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Status codes are numeric values that are included in the response of an HTTP request made to a REST API. These codes provide information on the status of the request, indicating whether it is successful, failed, or requires further action. They are an essential part of the HTTP protocol and help clients understand the outcome of their requests."
+            },
+            {
+              "type": "p",
+              "text": "In the context of the Amazon Connect REST API, you need to be familiar with the following status codes."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t2-s12",
+          "eyebrow": null,
+          "duration": null,
+          "title": "4xx",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "5xx"
+            },
+            {
+              "type": "p",
+              "text": "These codes indicate that the request was received, understood, and successfully processed by the server. With the Amazon Connect API, a successful request is indicated by 200 OK."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed 2XX, move to the next tab to learn about 4XX."
+            },
+            {
+              "type": "p",
+              "text": "In addition to the status code, the API also returns a message as part of the response’s body. In case of failure, the status code and message help you better understand the cause of the error."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you gained an overview and learned to use the Amazon Connect REST API. Continue to the next lesson to explore the AWS SDK, which is another development tool for Amazon Connect. Integration With the Amazon Connect REST API, developers integrate Amazon Connect with other systems and applications. Developers can build custom applications that retrieve real-time metrics, update customer records in a CRM system based on interaction data, or initiate outbound calls programmatically. Now that you have reviewed integration, move on to learn about the consideration factors when working with Amazon Connect REST APIs. Throttling Amazon Connect REST APIs are subject to the API throttling quotas. When you build an application that uses the Amazon Connect REST APIs, you need to ensure that your logic caters for failure. For more information about throttling quotas, see API Throttling Quotas in the Amazon Connect Administrator Guide. Now that you have reviewed authentication and throttling, continue to the next section. 4xx 5xx These codes indicate that the request contained an error on the client-side, such as a syntax error, missing authentication, or a non-existent resource. With the Amazon Connect REST API, 400 Bad Request indicates a malformed request. 403 Forbidden indicates the IAM credentials are valid but no policy statement allows the operation to run. 404 Not Found indicates that the resource you are trying to interact with does not exist. Now that you have reviewed 4XX, move to the next tab to learn about 5XX. 5xx These codes indicate that the server encountered an error while processing the request. Common codes in this range include 500 Internal Server Error, which indicates a generic server error. 503 Service Unavailable means the server is currently unable to handle the request because of temporary overload or maintenance. Now that you've explored status codes, move on to the next section of the lesson. Lesson 5 of 9"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-development-fundamentals-t2-q1",
+          "question": "It is time to check your understanding of the content covered in this lesson. A developer wants to build an application that interacts with an Amazon Connect instance using the REST API. Which statement describes the authentication and authorization process?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The developer can use their AWS access key and secret access key directly to sign the API requests."
+            },
+            {
+              "id": "B",
+              "text": "The developer needs to use AWS Signature Version 4 (SigV4) to sign the API requests."
+            },
+            {
+              "id": "C",
+              "text": "The developer can use their AWS root user credentials to authenticate and authorize the API requests."
+            },
+            {
+              "id": "D",
+              "text": "The developer can use a shared API key provided by Amazon Connect to authenticate and authorize the API requests."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "The Amazon Connect REST APIs requires requests to be signed using SigV4."
+        },
+        {
+          "id": "connect-development-fundamentals-t2-q2",
+          "question": "A developer sends a request to create a user in the Amazon Connect instance, but receives a 403 Forbidden status code in the response. What could be the reason for this error?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The request body was malformed."
+            },
+            {
+              "id": "B",
+              "text": "The resource you are trying to interact with does not exist."
+            },
+            {
+              "id": "C",
+              "text": "The IAM credentials are valid, but no policy statement allows the operation to run."
+            },
+            {
+              "id": "D",
+              "text": "The server encountered an internal error while processing the request."
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "403 Forbidden indicates a permission issue. That means the policy statement does not allow the operation to run."
+        },
+        {
+          "id": "connect-development-fundamentals-t2-q3",
+          "question": "AnyCompany's Amazon Connect instance is located in the us-west-2 Region. Which endpoint should AnyCompany use to interact with the Amazon Connect REST APIs for this instance?",
+          "options": [
+            {
+              "id": "A",
+              "text": "https://connect.us-west-2.amazonaws.com"
+            },
+            {
+              "id": "B",
+              "text": "https://connect.us-east-1.amazonaws.com"
+            },
+            {
+              "id": "C",
+              "text": "https://connect-fips.us-east-1.amazonaws.com"
+            },
+            {
+              "id": "D",
+              "text": "https://cases.us-west-2.amazonaws.com"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "The Region is included in the endpoint, which in this case is us-west-2."
+        }
+      ]
+    },
+    {
+      "id": "connect-development-fundamentals-t3",
+      "number": 3,
+      "title": "AWS SDK for Amazon Connect",
+      "shortTitle": "AWS SDK for Amazon Connect",
+      "summary": "An SDK is a collection of software development tools in one installable package. It typically includes a compiler, a debugger, libraries,…",
+      "duration": "~14 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the purpose and key components of the AWS SDK.",
+        "Explore the core concepts and terminology of the AWS SDK for Amazon Connect.",
+        "Identify the benefits of using the AWS SDK for Amazon Connect.",
+        "Explore the use of the Amazon Connect SDK."
+      ],
+      "sections": [
+        {
+          "id": "connect-development-fundamentals-t3-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "An SDK is a collection of software development tools in one installable package. It typically includes a compiler, a debugger, libraries, documentation, code samples, and other tools needed for software development. The AWS SDK for Amazon Connect is designed to simplify the development process of applications for Amazon Connect. It provides a comprehensive set of tools and libraries that developers can use to create new functionality for their Amazon Connect contact centers."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Introduction to the AWS SDK for Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The AWS SDK for Amazon Connect is a collection of libraries, code samples, and documentation that helps developers build applications on top of Amazon Connect. The AWS SDK for Amazon Connect provides language-specific interfaces to access Amazon Connect programmatically. It includes support for various programming languages, such as:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "AWS SDK for Java"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "AWS SDK for .NET",
+                "AWS SDK for Python (Boto3)",
+                "AWS SDK for JavaScript",
+                "AWS SDK for Go"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Many other programming languages"
+            },
+            {
+              "type": "p",
+              "text": "By using the AWS SDK for Amazon Connect, you can interact with Amazon Connect programmatically. The SDK handles the complexities of IAM credentials, which makes it simple to authenticate and authorize access to AWS resources."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Concepts and terminology",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The following are Amazon Connect API terms."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "AWS service clients",
+                  "body": "The AWS SDK provides service-specific clients that developers use to interact with individual services. In particular, it provides the Amazon Connect client that you can use to interact with Amazon Connect. There are also feature specific clients, like Customer Profiles or Cases. The clients provide functions to perform operations on the corresponding AWS service."
+                },
+                {
+                  "title": "AWS credentials",
+                  "body": "To use the AWS SDK for Amazon Connect, you need to provide valid AWS credentials. These are used to authenticate and authorize access to AWS resources. The SDK supports various credential providers, including environment variables, configuration files, and AWS IAM roles."
+                },
+                {
+                  "title": "Exceptions and error handling",
+                  "body": "The AWS SDK for Amazon Connect includes error handling mechanisms with specific exceptions that provide detailed information on errors that occur during operations. You can catch and handle these exceptions to implement appropriate error handling and logging in your applications."
+                },
+                {
+                  "title": "Asynchronous programming",
+                  "body": "Many AWS SDK for Amazon Connect implementations, such as the AWS SDK for JavaScript, support asynchronous programming. You can write non-blocking, concurrent code that can improve the performance and scalability of your applications by running operations concurrently."
+                },
+                {
+                  "title": "Throttling or rate limiting",
+                  "body": "These techniques control and limit the number of requests a client can make to the API within a given time period. In the context of the Amazon Connect SDK, you will see it referred to as transactions per second (TPS)."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits of using the AWS SDK for Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To realize the following benefits over using the REST API, use AWS SDK to build applications on top of Amazon Connect."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Simplified access to Amazon Connect functionality",
+                  "body": "The AWS SDK for Amazon Connect abstracts the low-level details of interacting with Amazon Connect to provide a streamlined and intuitive interface for developers. You can focus on your application logic rather than dealing with the complexities of the underlying AWS APIs. This can result in faster development and easier integration of Amazon Connect into applications."
+                },
+                {
+                  "title": "Consistent and reliable",
+                  "body": "The AWS SDK for Amazon Connect ensures consistent behavior and error handling. Use the SDK to provide a standardized way of interacting with Amazon Connect and reduce the need to learn and adapt to APIs. This consistency helps to improve the overall reliability and maintainability of applications built on top of Amazon Connect."
+                },
+                {
+                  "title": "Seamless authentication and authorization",
+                  "body": "The AWS SDK handles the complexity of IAM credentials. This streamlines authentication and authorization access to Amazon Connect resources. You can use the SDK to manage AWS credentials, including temporary security credentials, without having to implement custom authentication logic in your applications."
+                },
+                {
+                  "title": "Language specific integration",
+                  "body": "The AWS SDK is available for a wide range of programming languages, including Java, .NET, Python, JavaScript, and Go. With this language-specific integration, you can work with Amazon Connect using the programming languages and tools you are already familiar with."
+                },
+                {
+                  "title": "Support for asynchronous programming",
+                  "body": "Many AWS SDK implementations, such as the AWS SDK for Python (Boto3), support asynchronous programming using co-routines and event loops. You can write non-blocking, concurrent code that improves the performance and scalability of your applications when interacting with Amazon Connect."
+                },
+                {
+                  "title": "Ongoing maintenance and updates",
+                  "body": "The AWS SDK is actively maintained and updated by AWS to keep pace with the evolving functionality of Amazon Connect. Use the SDK to provide the latest features, bug fixes, and security updates, without having to manually keep up with changes in the underlying AWS APIs."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "When you use the AWS SDK for Amazon Connect, consider the following when building applications."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Maintenance and updates",
+                  "body": "Features are added to the AWS SDK for Amazon Connect on an ongoing basis. It is recommended to consider the version of the AWS SDK when you build an application on top of Amazon Connect."
+                },
+                {
+                  "title": "Managing AWS credentials",
+                  "body": "You need to follow best practices for credential management, such as using IAM roles, environment variables, or configuration files, and avoid hard-coding credentials in the application code. In addition, you need to carefully consider which permissions you give to your application that interact with Amazon Connect."
+                },
+                {
+                  "title": "Error handling and exception management",
+                  "body": "The AWS SDK for Amazon Connect provides exceptions and error handling mechanisms, and you need to understand how to properly catch and handle these exceptions to provide a robust and user-friendly experience. Proper error handling can help you troubleshoot issues and provide meaningful feedback to users when things go wrong."
+                },
+                {
+                  "title": "Performance and optimization",
+                  "body": "Depending on the type of application and AWS services used, consider optimization techniques, batching requests, using asynchronous programming, or using SDK features like pagination. Understanding the performance characteristics of the AWS SDK for Amazon Connect can help you build efficient and scalable applications."
+                },
+                {
+                  "title": "SDK documentation",
+                  "body": "You can familiarize yourself with the documentation provided by the AWS SDK for Amazon Connect, which includes code samples, usage examples, and best practices. Additionally, use the active AWS developer community for troubleshooting, learning, and staying up to date with the latest SDK developments and best practices."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using the AWS SDK for Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Depending on the programming language you are familiar with, the code you will write will vary. However, the concepts will stay the same. You will first need to install the AWS SDK in your application. The AWS SDK is available for many programming languages, like JavaScript, Python, Java, or Go."
+            },
+            {
+              "type": "p",
+              "text": "After you’ve installed the AWS SDK as a dependency of your application, you will instantiate the Amazon Connect client from the AWS SDK. By initializing the Amazon Connect client, you can use its methods and functions to interact with Amazon Connect. In JavaScript, you import the Amazon Connect client from the client-connect module of the AWS SDK. Then, you need to create a new instance of the client to use its methods and functions. The following example demonstrated this."
+            },
+            {
+              "type": "code",
+              "text": "import { ConnectClient } from \"@aws-sdk/client-connect\";"
+            },
+            {
+              "type": "p",
+              "text": "..."
+            },
+            {
+              "type": "p",
+              "text": "const connectClient = new ConnectClient({...});"
+            },
+            {
+              "type": "p",
+              "text": "However, in Python, you only need to import the AWS SDK and create an Amazon Connect client, as shown in the following example."
+            },
+            {
+              "type": "code",
+              "text": "import boto3"
+            },
+            {
+              "type": "p",
+              "text": "..."
+            },
+            {
+              "type": "p",
+              "text": "connectClient = boto3.client(\"connect\")"
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "AWS SDK for Amazon Connect documentation",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The methods and functions necessary for you to build your application exists at the Amazon Connect client level. For each operation, there is a corresponding function or method in the AWS SDK. Similar to the Amazon Connect API, the methods take one or multiple arguments, and return an output. The input and output are specific to each programming language. For information about how the languages are defined, see Amazon Connect API Reference, under the language-specific documentation."
+            },
+            {
+              "type": "p",
+              "text": "For example, to understand how to use the AssociateBot API in an application in Java, you can navigate to the documentation in the Amazon Connect API Reference. In the See Also section of the page, you will find a language-specific link for each of the supported programming languages. When you select the AWS SDK for Java V2 link, you are directed to that API documentation for Java."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using the AWS SDK for Amazon Connect in Lambda",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can consider using Lambda to add required functionality to your Amazon Connect contact center. When you use Lambda, you don’t need to install the AWS SDK. A version of the SDK is included with Lambda functions for every supported language."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "Note",
+              "body": [
+                "The version of the SDK included by default with Lambda might not be the latest version. If the code you write uses a recently released functionality in Amazon Connect, you can create a layer with the latest version of the SDK. For information on layers, see the AWS Lambda Developer Guide."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "There are several benefits with using Lambda to extend the functionality of your Amazon Connect contact center."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Serverless architecture",
+                  "body": "Lambda is a serverless, event-driven compute service that you can use to run code for any type of application or service without provisioning or managing servers. You can start your code directly from Amazon Connect contact flows or based on an event emitted by an Amazon Connect instance."
+                },
+                {
+                  "title": "Credentials",
+                  "body": "When you create a Lambda function, you must create a special IAM role that has permission to run the function. This role is automatically assumed by the Lambda function and authorizes it to call the operation you have specified in the role."
+                },
+                {
+                  "title": "Logging and monitoring",
+                  "body": "Lambda automatically monitors Lambda functions on your behalf to help you troubleshoot failures in your functions. You can insert logging statements into your code to help you validate that your code is working as expected. Lambda automatically integrates with Amazon CloudWatch Logs and sends all logs from your code to a CloudWatch logs group associated with a Lambda function."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Handling errors and retries with the Amazon Connect SDK",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When you write code, error handling and retries is crucial for reliability to enhance the user experience, maintain data integrity, scalability, and resilience, and facilitate troubleshooting. By proactively addressing these aspects, you create robust and dependable applications and functionality that can withstand the challenges of real-world usage."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Throttling and TPS limits with Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Applications that handle errors and retries effectively are reliable and resilient to failures. By anticipating and addressing potential errors, you can ensure that your application can gracefully handle unexpected situations. When you build applications with Amazon Connect, it is important that you consider carefully throttling. The TPS limit supported for most of the available APIs is two transactions every second, but there are some exceptions."
+            },
+            {
+              "type": "p",
+              "text": "For example, you can call the DescribeUser API two times in a 1 second window, but you can run the UpdateContactAttributes API ten times. To familiarize yourself with the limits, see the API Throttling Quotas section of Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "The TPS for each API is set at account level. This means that when different users from the same account make requests, they share the TPS, regardless of the instance targeted by the request."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Retry behavior and exponential back-off",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The AWS SDK is configured to implement retry mechanisms used for the throttled API call. You can modify the retry settings when you instantiate the Amazon Connect client. To customize the default behavior, you must take into consideration following parameters:"
+            },
+            {
+              "type": "p",
+              "text": "Max attempts: This represents the maximum number of times the AWS SDK will attempt to retry a failed operation before stopping."
+            },
+            {
+              "type": "p",
+              "text": "Retry mode: This specifies the algorithm the AWS SDK uses for retries. The retry modes are legacy, standard, and adaptive."
+            },
+            {
+              "type": "p",
+              "text": "Failed requests and default mode settings depend on the programming language you use."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Legacy",
+                  "body": "The legacy mode behavior is SDK specific. It involves a maximum of three retries for throttled and transient errors only. For specific details on each language, see the AWS SDKs and Tools Reference Guide to find additional resources for the SDK you will use."
+                },
+                {
+                  "title": "Standard",
+                  "body": "This mode includes a standard set of retry errors and support for retry quotas. The default maximum number of attempts with this mode is three, unless you have configured a different value when instantiating the client."
+                },
+                {
+                  "title": "Adaptive",
+                  "body": "An experimental retry mode that includes the functionality of standard mode but includes automatic throttling on the application side. Because this mode is experimental, the retry behavior can change between versions of the AWS SDK."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Although you might want to retry throttled operations indefinitely until success, retries can overload network bandwidth and cause contention. Exponential back-off is a technique where operations are retried by increasing wait times for a specified number of retry attempts."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "Martha Rivera, a software engineer at AnyOrganization Health, is tasked to build an application that monitors and displays specific real-time metrics. Martha dives into researching the requirements and constraints. She learns that the GetCurrentMetricData API allows her to retrieve current metric data for queues in a specific instance. She notes the API's rate limit of five requests per second to ensure her application doesn't encounter throttling."
+            },
+            {
+              "type": "p",
+              "text": "Martha decides to create a quick proof of concept and test the usage of the API using Lambda. She decides to use the latest node runtime. She knows the AWS SDK for JavaScript in included in the runtime, and she can start writing code without delay. She needs to import two modules from the AWS SDK Connect client library."
+            },
+            {
+              "type": "p",
+              "text": "Martha writes the following code to send commands to Amazon Connect. The GetCurrentMetricDataCommand module retrieves the real-time metric data from the specified Amazon Connect instance. By using the Amazon Connect SDK documentation for JavaScript, Martha identifies that she will need to define the input required to send the command. For more information on the documentation Martha used, see AWS SDK for JavaScript v3."
+            },
+            {
+              "type": "code",
+              "text": "import { ConnectClient, GetCurrentMetricDataCommand } from \"@aws-sdk/client-connect\";"
+            },
+            {
+              "type": "p",
+              "text": "Martha configures the input for the GetCurrentMetricCommand with the following steps:"
+            },
+            {
+              "type": "ol",
+              "items": [
+                "Retrieve the metrics for the instance with ID a1b2c3d4-5678-90ab-cdef-EXAMPLEbbbbb.",
+                "Set the maximum results to 100 metrics values per call of the GetCurrentMetricCommand.",
+                "Retrieve the metrics specified in the metrics array.",
+                "Group the results by queues.",
+                "Filter the metrics for the VOICE channel and the queues specified in the queues array.",
+                "Store the results in the metricsResult array."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Martha has also implemented a pagination mechanism. She understands that there can be over one hundred results, particularly as she will add queues in the queues array in the future. Commands that retrieve data with the Amazon Connect SDK include a token that can be used to retrieve the next set of results. She has also implemented basic error handling that outputs an error to the console. This will help with her troubleshooting problems."
+            },
+            {
+              "type": "code",
+              "text": "let channels = [\"VOICE\"];\nlet queues = [];\nlet metrics = [];\n\nconst metricsInput = {\nInstanceId: \"a1b2c3d4-5678-90ab-cdef-EXAMPLEbbbbb\",\nCurrentMetrics: metrics,\nMaxResults: 100,\nGroupings: [\"QUEUE\"],\nFilters: {\nChannels: channels,\nQueues: queues\n}\n};\n\nlet metricsResult = [];\n\ntry {\ndo {\nconst { MetricResults, NextToken } = await connectClient.send(new GetCurrentMetricDataCommand(metricsInput));\nmetricsResult = metricsResult.concat(MetricResults);\n\nmetricsInput.NextToken = NextToken;\n} while (metricsInput.NextToken)\n\nreturn metricsResult;\n}\ncatch (e) {\nconsole.log(e);\n\nthrow e;\n}"
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t3-s11",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Troubleshooting errors",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Martha has implemented code to retrieve real time metrics for queues in an Amazon Connect instance. She is confident that her code works. She has implemented error handling to assist with troubleshooting potential problems. When she runs it, she receives the following error message."
+            },
+            {
+              "type": "code",
+              "text": "2024-05-02T12:31:00.254Z 6e7f960b-7562-476c-b688-3e2f4d9bb9fe"
+            },
+            {
+              "type": "p",
+              "text": "INFO AccessDeniedException: User: arn:aws:sts::111122223333:assumed-role/my-metrics-lambda-role/realtime-queue-metrics is not authorized to perform: connect:GetCurrentMetricData on resource: arn:aws:connect:ap-southeast-2:123456789012:instance/a1b2c3d4-5678-90ab-cdef-EXAMPLE33333/queue/*"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "at de_AccessDeniedExceptionRes (/var/runtime/node_modules/@aws-sdk/client-connect/dist-cjs/index.js:9320:21)",
+                "at de_CommandError (/var/runtime/node_modules/@aws-sdk/client-connect/dist-cjs/index.js:9254:19)",
+                "at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "at async /var/runtime/node_modules/@aws-sdk/node_modules/@smithy/middleware-serde/dist-cjs/index.js:35:20",
+                "at async /var/runtime/node_modules/@aws-sdk/node_modules/@smithy/core/dist-cjs/index.js:165:18",
+                "at async /var/runtime/node_modules/@aws-sdk/node_modules/@smithy/middleware-retry/dist-cjs/index.js:320:38",
+                "at async /var/runtime/node_modules/@aws-sdk/middleware-logger/dist-cjs/index.js:33:22",
+                "at async getInstanceQueues (file:///var/task/index.mjs:346:57)",
+                "at async Runtime.handler (file:///var/task/index.mjs:107:18) {",
+                "'$fault': 'client',",
+                "'$metadata': {",
+                "httpStatusCode: 403,",
+                "requestId: '25123dfe-9b87-473d-83b0-c34db0c5972b',",
+                "extendedRequestId: undefined,",
+                "cfId: undefined,",
+                "attempts: 1,",
+                "totalRetryDelay: 0",
+                "}",
+                "}"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "She reviews the error message. The httpStatusCode is 403. She knows that this error code indicates permission issues. The error message AccessDeniedException also indicates that the Lambda does not have the proper permissions to use a command. She reviews the policies attached to the Lambda role and notices that the GetCurrentMetricData command is missing from the policy document. She asks her cloud infrastructure colleague to add the permission, and then she can successfully run her code."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you gained an overview of the AWS SDK for Amazon Connect and the fundamentals of using the AWS SDK for Amazon Connect development. This concludes the Amazon Connect Development Fundamentals course. Proceed to the Summary lesson and the final Knowledge Check. Lesson 6 of 9"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-development-fundamentals-t3-q1",
+          "question": "It is time to check your understanding of the content covered in this lesson. A developer is building an application that interacts with Amazon Connect and needs to handle errors and exceptions gracefully. Which benefit of the AWS SDK for Amazon Connect would be most relevant in this scenario?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Simplified access to Amazon Connect functionality"
+            },
+            {
+              "id": "B",
+              "text": "Language-specific integration"
+            },
+            {
+              "id": "C",
+              "text": "Seamless authentication and authorization"
+            },
+            {
+              "id": "D",
+              "text": "Exceptions and error handling"
+            }
+          ],
+          "correctOptionId": "D",
+          "rationale": "The AWS SDK provides exceptions and error handling capabilities."
+        },
+        {
+          "id": "connect-development-fundamentals-t3-q2",
+          "question": "A development team is building an application that needs to interact with Amazon Connect and run operations in parallel. Which concept or terminology related to the AWS SDK for Amazon Connect is most relevant in this scenario?",
+          "options": [
+            {
+              "id": "A",
+              "text": "AWS service clients"
+            },
+            {
+              "id": "B",
+              "text": "AWS credentials"
+            },
+            {
+              "id": "C",
+              "text": "Asynchronous programming"
+            },
+            {
+              "id": "D",
+              "text": "Throttling or rate limiting"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "With asynchronous programming, developers can run multiple operations in parallel."
+        },
+        {
+          "id": "connect-development-fundamentals-t3-q3",
+          "question": "Martha Rivera, a developer at AnyCompany Insurance, wants to ensure that her application is resilient to throttling when making API calls to Amazon Connect. Which approach should Martha consider to handle throttling and retries?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Implement exponential back-off and retry logic in her code with a maximum number of retry attempts and increasing wait times between retries."
+            },
+            {
+              "id": "B",
+              "text": "Increase the rate limit for the GetCurrentMetricData API by contacting AWS Support."
+            },
+            {
+              "id": "C",
+              "text": "Use the legacy retry mode in the AWS SDK, which automatically adjusts the retry behavior based on the error type and network conditions."
+            },
+            {
+              "id": "D",
+              "text": "Implement a caching mechanism to store the retrieved metric data and reduce the number of API calls to Amazon Connect."
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Exponential back-off is a technique where operations are retried by increasing wait times for a specified number of retry attempts."
+        },
+        {
+          "id": "connect-development-fundamentals-t3-q4",
+          "question": "A developer wants to understand the input parameters required for the AssociateBot command in the AWS SDK for Java. Where should the developer look for the documentation on the input parameters and their usage?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The Amazon Connect API Reference documentation under the AWS SDK for Java V2 link"
+            },
+            {
+              "id": "B",
+              "text": "The AWS Lambda Developer Guide"
+            },
+            {
+              "id": "C",
+              "text": "The AWS SDK for JavaScript documentation"
+            },
+            {
+              "id": "D",
+              "text": "The Amazon Connect Administrator Guide"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "To understand how to use an API in an application in Java, developers can navigate to the Amazon Connect API Reference."
+        }
+      ]
+    },
+    {
+      "id": "connect-development-fundamentals-t4",
+      "number": 4,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "In this course, you learned about Amazon Connect development. Take a moment to review these key learnings in the course summary before taking the…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-development-fundamentals-t4-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Course summary",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In this course, you learned about Amazon Connect development. Take a moment to review these key learnings in the course summary before taking the course assessment."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Benefits"
+            },
+            {
+              "type": "p",
+              "text": "Using the AWS CLI offers efficiency and speed by running commands directly. It provides a higher level of control and customization compared to the Amazon Connect console. With the AWS CLI, you can automate repetitive tasks, perform bulk operations, and run actions not available in the console."
+            },
+            {
+              "type": "p",
+              "text": "Using the Amazon Connect REST APIs enables automation and streamlining of contact center operations, such as creating and managing users, queues, routing profiles, and contact flows. It allows integration with other systems and applications, retrieving real-time metrics, updating customer records, and initiating outbound calls programmatically."
+            },
+            {
+              "type": "p",
+              "text": "The AWS SDK abstracts away low-level details, providing a streamlined interface for interacting with Amazon Connect. It ensures consistent and reliable functionality, seamless authentication and authorization, and language-specific integration. The SDK supports asynchronous programming and is actively maintained and updated by AWS."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Concepts"
+            },
+            {
+              "type": "p",
+              "text": "IAM permissions are required for developers to access the Amazon Connect APIs. Roles and policies define operations that can be performed within an AWS account."
+            },
+            {
+              "type": "p",
+              "text": "The AWS CLI is a unified tool to interact with Amazon Connect. It gives you the ability to control Amazon Connect resources from the command line and automate them through scripts."
+            },
+            {
+              "type": "p",
+              "text": "With the Amazon Connect REST API, you can interact with Amazon Connect instances and resources by issuing HTTP requests."
+            },
+            {
+              "type": "p",
+              "text": "The AWS SDK for Amazon Connect is a collection of libraries, code samples, and documentation that streamlines building applications on top of Amazon Connect."
+            },
+            {
+              "type": "callout",
+              "variant": "warning",
+              "title": "Considerations",
+              "body": [
+                "When creating roles, follow the principle of least privilege by granting the minimum permissions required to perform a task.",
+                "When using the AWS CLI, consider the version installed to confirm it includes the latest additions. Use profiles to interact with different environments.",
+                "When using the Amazon Connect REST APIs, requests must be signed using SigV4. Be aware of API throttling quotas and ensure your logic caters to scenarios where requests cannot be completed because of TPS quotas.",
+                "When using the AWS SDK for Amazon Connect, manage AWS credentials securely by following best practices. Implement proper error handling and exception management. Consider performance optimization techniques, and use the SDK documentation and community resources."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t4-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Downloadable PDF of the summary",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To download a PDF version of the summary section, choose anywhere inside the following box. Note: For the best experience with screen readers, use NVDA or JAWS. If you are using voiceover, you might experience issues with the downloaded PDF."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Amazon Connect Development Fundamentals Summary.pdf"
+            },
+            {
+              "type": "p",
+              "text": "88.8 KB"
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this section, you reviewed the tools available for developers wanting to build on and for Amazon Connect. In the next section, you will assess your knowledge of these concepts."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-development-fundamentals-t5",
+      "number": 5,
+      "title": "Course summary",
+      "shortTitle": "Course summary",
+      "summary": "Using the AWS CLI offers efficiency and speed by running commands directly. It provides a higher level of control and customization compared to…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-development-fundamentals-t5-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Using the AWS CLI offers efficiency and speed by running commands directly. It provides a higher level of control and customization compared to the Amazon Connect Console. The AWS CLI allows you to automate repetitive tasks, perform bulk operations, and run actions not available in the Console."
+            },
+            {
+              "type": "p",
+              "text": "Using the Amazon Connect REST APIs enables automation and streamlining of contact center operations, such as creating and managing users, queues, routing profiles, and contact flows. It allows integration with other systems and applications, retrieving real-time metrics, updating customer records, and initiating outbound calls programmatically."
+            },
+            {
+              "type": "p",
+              "text": "The AWS SDK abstracts away low-level details, providing a streamlined interface for interacting with Amazon Connect. It ensures consistent and reliable functionality, seamless authentication and authorization, and language-specific integration. The SDK supports asynchronous programming and is actively maintained and updated by AWS."
+            }
+          ]
+        },
+        {
+          "id": "connect-development-fundamentals-t5-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Concepts",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Identity and Access Management (IAM) permissions are required for developers to access the Amazon Connect APIs. Roles and policies define operations that can be performed within an AWS account."
+            },
+            {
+              "type": "p",
+              "text": "The AWS Command Line Interface (CLI) is a unified tool to interact with Amazon Connect. It allows you to control Amazon Connect resources from the command line and automate them through scripts."
+            },
+            {
+              "type": "p",
+              "text": "The Amazon Connect REST API allows you to interact with Amazon Connect instances and resources by issuing HTTP requests."
+            },
+            {
+              "type": "p",
+              "text": "The AWS SDK for Amazon Connect is a collection of libraries, code samples, and documentation that simplifies building applications on top of Amazon Connect."
+            },
+            {
+              "type": "callout",
+              "variant": "warning",
+              "title": "Considerations",
+              "body": [
+                "When creating roles, follow the principle of least privilege by granting the minimum permissions required to perform a task.",
+                "When using the AWS CLI, consider the version installed to confirm it includes the latest additions.",
+                "Use profiles to interact with different environments.",
+                "When using the Amazon Connect REST APIs, requests must be signed using Sigv4. Be aware of API throttling quotas and ensure your logic caters to scenarios where requests cannot be completed due to transaction per second quotas.",
+                "When using the AWS SDK for Amazon Connect, manage AWS credentials securely, following best practices. Implement proper error handling and exception management. Consider performance optimization techniques and leverage the SDK documentation and community resources."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

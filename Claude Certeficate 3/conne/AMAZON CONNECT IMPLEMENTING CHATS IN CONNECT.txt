@@ -1,0 +1,993 @@
+Lesson 2 of 9
+Introduction to Amazon Connect Chat
+Customers appreciate fast and comprehensive customer service. Responding immediately to customers can be a challenge for an organization, but implementing an omnichannel contact center can help cultivate a customer service experience your customers can rely on. Amazon Connect is a straightforward, omnichannel cloud contact center that helps organizations provide superior customer service. Amazon Connect provides a seamless experience when working between communication channels: calls, chats, and tasks.   
+
+Amazon Connect logo.
+With Amazon Connect, organizations can build a unified experience for both voice and chat channels. Core components allow organizations to design robust architectures for their contact center. Customer service agents can focus their attention on the customer, rather than on navigating a complex system. Amazon Connect Chat extends that contact center experience. 
+
+
+
+Overview of Amazon Connect Chat
+
+Amazon Connect Chat is a feature that can be added to Amazon Connect to provide more flexibility in how customers and agents communicate. It has unique features and benefits that can help organizations serve customers with agility and speed, as well as personalize the customer or agent experience in chat. Organizations can benefit from the comprehensive and cost-savings advantages Amazon Connect Chat offers to provide an efficient and flexible method to connect and support customers. 
+
+What is Amazon Connect Chat?
+
+Chat capabilities in Amazon Connect provide businesses with a single, unified contact center service to integrate voice and chat to enhance the customer experience. Amazon Connect Chat is a web-based solution that allows customers and agents to interact and message each other. Deploying Amazon Connect Chat can increase customer support efficiency with decreased customer wait times and automated customer support actions. Agent efficiency can improve with agents simultaneously working on more than one interaction at a time. Chat interactions can happen through business applications, web browsers, or mobile devices.
+
+Because customers drive business, customer satisfaction is a main focus of an organization—with customer responsiveness being a key element to customer satisfaction. Responding to customer inquiries and fulfilling them in a timely manner is important. Let’s take a look at a typical situation of an agent using Amazon Connect Chat.
+
+Scenario: Quickly connect customers to agents
+
+A customer visits AnyCompany’s website to get help booking a flight with rewards points. They start a chat conversation and are automatically greeted by a virtual agent. The customer is presented with options of the business' most frequent customer requests, including booking with points and billing. The customer selects the option to book with points, which routes a chat notification to Arnav—an agent assigned to provide rewards support. Arnav can now accept the invite to start a chat contact with the customer and help them book a flight with their accrued rewards. 
+
+Benefits of using Amazon Connect Chat
+
+At the core of an omnichannel contact center is the ability to create personalized experiences for customers. Amazon Connect Chat lets organizations tailor chat so that customers feel welcomed, for example by greeting them by name. Tailoring chat can also help agents focus on helping customers with their queries by displaying customer details, such as a member ID or phone number, instead of having to ask customers for this information. 
+
+Amazon Connect Chat also enhances the contact center experience by providing more flexibility in how customers and agents communicate, for example, with asynchronous chat. Customers can communicate at their own time and pace. A full context of the conversation can be preserved for a defined session duration, allowing the customer and agent to resume a conversation where they paused it. For more information on chat duration, see When do chats end? in the Administrator Guide. By deploying a single contact center, the same routing profiles and queues can be used to route contacts to the appropriate agent for both voice and chat.    
+
+How does Amazon Connect Chat work?
+
+Similar to voice contacts, Amazon Connect Chat routes customers based on the settings in the agent’s routing profile. Before agents can use chat to connect with customers, chat must be configured as a part of the agent's routing profile. A routing profile determines what types of contacts an agent can receive and the routing priority. Chat contacts are placed in queues to wait before they are routed to an agent. Within the routing profile, administrators can specify the maximum number of chats an agent can work on simultaneously and can activate the channel availability for each queue in the routing profile. For more information on the agent’s experience using chat in Amazon Connect, see Chat with contacts in the Administrator Guide.
+
+A chat example between an agent and customer.
+Routing
+
+A representation of a routing profile configured for voice, chat, and task channels with three sample queues.
+Amazon Connect routes contacts to the appropriate agent through a queue based on parameters set in an agent's routing profile. A routing profile defines which channels (voice, chat, or task) that agents can handle. In routing profiles, administrators can initiate multiple channels of contact on specific queues. 
+
+A routing profile can be configured to receive voice contacts and the defined number of chats. When the agent signs on, they can receive either a voice or chat contact. After the agent completes an assigned chat, they're available to receive either voice or chat contacts. For more information on how routing works with multiple channels, see How routing works in the Administrator Guide.
+
+Queues
+
+A close up of the Routing profile queues section of the Routing Profiles page displaying the queue’s Name, Channels, and Priority.
+When a chat arrives in the contact center, it can be routed to a queue. All contacts that are waiting to be answered by an agent are placed in a queue. Queues are linked to an agent through their routing profile. The routing profile can have one queue to handle all incoming contacts, or it can have multiple queues. Queues can be configured to handle voice, chat, or task channels. For more information on how queues work with chat, see Set up routing in the Administrator Guide.
+
+Chat capacity
+
+It's best practice to determine how many chats an agent can manage at one time. This can prevent a chat contact from waiting in a queue for a long time before being answered by an agent. In the routing profile, administrators can set the maximum number of chats that an agent can have simultaneously. Agents can be routed up to 10 chats at one time.
+
+
+
+Set channels and concurrency section of the routing profile with check boxes for Voice and Chat channels and a field for Maximum chats per agent.
+To increase capacity, administrators may configure a routing profile to have senior agents take multiple chats at one time. They might choose to have junior agents take fewer concurrent chats until they become more experienced, balancing chat capacity with agent experience.
+
+Understanding how routing, queues, and queue capacity work with Amazon Connect Chat can help administrators best utilize its different features. In the next section, we discuss the features available for Amazon Connect Chat.
+
+Features of Amazon Connect Chat
+
+Amazon Connect Chat offers built-in features such as asynchronous messaging and message formatting. Additional integrations and customizations, such as interactive messaging and Amazon Lex, allow customers access to support without the need to interact directly with a human agent. Amazon Connect Chat also offers an Apple Messages for Business integration that allows customers to message an organization easily using their Apple device. By offering these features, Amazon Connect Chat helps organizations increase customer satisfaction and optimize their business processes. 
+
+Built-in features
+
+Asynchronous messaging
+Amazon Connect Chat supports asynchronous messaging, which allows customers to continue previously interrupted conversations for up to 25 hours by default without losing the context. Customers can chat when it's convenient, regardless of the asynchronous functionality. Customers who use messaging apps every day are already familiar with this experience. Customers can start a chat with an agent or Amazon Lex bot, step away, and then resume the conversation later. Customers can even switch devices and continue the chat.
+
+Asynchronous messaging allows customers to have more flexibility when interacting with the contact center. Customers don’t have to wait for an uninterrupted window of time to reach out like they would on a phone call. Instead, customers can interact with the chat session when they have time while the entire conversation history is visible by the agents servicing the chat.
+
+Representation of the differences between synchronous and asynchronous messaging
+Use case
+A customer and agent are chatting. The customer stops responding to the agent. The agent asks, "Are you there?" and doesn't get a reply. The agent leaves the chat, and now the chat is no longer associated with an agent. A disconnect contact flow can be configured to handle this scenario according to the desired business logic. It can either continue to allow the contact to be re-connected up to a 25-hour limit by default, or it can disconnect the contact right away.
+
+The customer eventually sends another message, "Hey, I'm back" and the chat resumes. Depending on the logic that is defined in the contact flow, the chat can be assigned to the original agent, or a different agent or queue. During an ongoing chat session, there's no limit to the number of times a customer can leave and rejoin an existing ongoing chat session.
+
+Attachments and rich text support
+Customers and agents can quickly add structure and clarity to their chat messages with chat formatting. The chat user interface and the agent application message formatting options include:
+
+Bold
+Italic
+Bulleted list
+Numbered list
+Hyperlinks
+Include attachments
+To include attachments in chat, set up attachment sharing at an instance level and choose a storage location. For more information on activating attachments, see Enable attachments to share files using chat.
+
+The Enable Attachments sharing option selected on the Instances page.
+Use case
+Items, such as order forms, photos of an accident for an insurance claim, or other requested data, can be attached directly in the chat interface. Agents can share product documentation or other materials with customers directly, instead of directing them to a website and potentially downloading the wrong document and creating a delay in providing a customer solution.
+
+Optional integrations and customizations
+
+Amazon Lex
+Amazon Lex is a fully managed artificial intelligence (AI) service with advanced natural language models to design, build, test, and deploy conversational interfaces in applications. With Amazon Lex, users can provide self-service capabilities with virtual contact center agents. Because Amazon Lex is omnichannel, you can build a bot once and use it across both voice and chat channels. The customer interactions are realistic, natural, and engaging. Amazon Lex provides self-service experiences, escalates to an agent when needed, and even acts as a part of a contact routing strategy to ensure the right agent is selected based on the customer need.
+
+
+Getting started with building chatbots is straightforward. The Amazon Lex automated chatbot designer helps administrators design chatbots using existing conversation transcripts in hours rather than weeks. Using machine learning (ML), it can analyze thousands of lines of transcripts in a couple of hours and provide an initial bot design that includes common intents and the information needed to fulfill them. Administrators can then duplicate the bot design in order to deliver effective conversational experiences.
+
+An example chat conversation between a customer and a bot.
+Use case
+By using Amazon Lex, customers can change a password or schedule an appointment without speaking to a human agent. Administrators can design conversational solutions that provide responses to frequently asked questions (FAQs). These solutions improve the conversation flows for tech support, HR benefits, or finance with natural language search for FAQs.
+
+
+Administrators can also automate basic user tasks in their application with powerful chatbots. Chatbots seamlessly connect with other enterprise software through AWS Lambda, a cloud-based compute service that allows you to run code for virtually any application or service, and maintain granular access control through AWS Identity and Access Management (IAM). For more information on Amazon Lex, see Amazon Lex or Amazon Lex features.
+
+Interactive messaging
+Interactive messages are rich messages that present a prompt and a pre-configured display of options that a customer can select from. These messages are powered by Amazon Lex and configured through Amazon Lex using a Lambda function.
+
+
+Amazon Connect provides two message display templates: a list picker and a date/time picker. These templates define how the information is going to appear and what information is surfaced in the chat interface.
+
+Three examples of interactive messaging experiences.
+Use case
+Many chatbot experiences begin with ambiguous, open-ended questions, such as "How can I help you?" As a result, customers reply with a range of responses that often require follow-up questions for the bot to understand the customer’s intent. This is frustrating for customers, leading many to prefer speaking with an agent.
+
+
+Interactive messages in Amazon Connect Chat allow contact centers to provide personalized prompts and response options that customers can easily select from. This feature extends the Amazon Connect Chat functionality and helps businesses create rich, engaging, and dynamic interactions through their self-service chatbot experiences. For example, you could use a list picker template with the title "How can I help you?" together with several options, such as "Check self-service options," "Talk to an agent," and "End chat." The customer can easily select "Check self-service options" with one quick click to proceed.
+
+
+
+If a customer needs to select from available appointment times, a date/time template can be used. This template helps customers schedule time with an agent based on several available time slots for a call back. This makes it easy for the customer to select their preferred time within the chat interface. For more information on adding interactive messages to chat, see Add interactive messages to chat in the Administrator Guide. 
+
+Apple Messages for Business
+Amazon Connect Chat allows organizations to provide customer support through web and mobile chat. Since chat is asynchronous, customers can respond at their own pace, just as they would when texting with a friend. Now, through the Amazon Connect Chat integration for Apple Messages for Business, organizations can deliver that same convenient and familiar customer service directly through the Apple Messages app. Apple Messages for Business gives customers a way to chat with agents anytime they click on the organization’s registered phone number on an Apple device. This helps reduce contact center call volumes while increasing customer satisfaction.
+
+
+To maximize the chat experience for iPhone customers, Apple's Message Suggest feature can help organizations reduce call volume in order to reduce customer wait times. Message Suggest can extend the customer service experience with built-in features such as Apple Pay, list and date/time pickers, and augmented reality.
+
+A phone screen displaying Apple Maps with a prompt to call or chat with Amazon Connect Labs
+Use case
+When an organization registers a phone number with Apple, Message Suggest proactively gives the option to chat when users click to call the business’ phone number in Safari, Maps, Siri, or Search. Once a customer selects the messaging option, they are directed to the Messages app. This offers a powerful voice deflection strategy, reducing voice support costs by shifting call volume to messaging.
+
+
+Apple Message Suggest also allows an organization to control how many users are presented with the option to message them. For example, Apple provides throttling capabilities if at first the organization only wants to show 20% of customers the option to message the business before scaling up to 100% over time. Customers also have the ability to start a conversation through the organization’s website or mobile app. For more information on integrating Apple Messages for Business with Amazon Connect, see Enable Apple Messages for Business in the Administrator Guide.
+
+Real-time chat message streaming
+Amazon Connect Chat provides APIs (Application Programming Interface) that allow an organization to subscribe to a real-time stream of chat messages.
+
+The Amazon Connect message streaming APIs are launched when certain events occur within an Amazon Connect Chat contact. For example, when a customer sends a new chat message, the event sends a payload to a specified endpoint containing data about the message that was just sent. Messages are published using Amazon Simple Notification Service (Amazon SNS) to a specific endpoint.
+
+Representation of the process of publishing messages using SNS
+Use case
+Using these APIs, it is possible to:
+
+Stream chat messages in real time when a new chat contact is created.
+Extend the current Amazon Connect Chat functionality to support use cases like building integrations with SMS solutions and third-party messaging applications (for example, Facebook Messenger), enabling mobile push notifications, and creating analytics dashboards to monitor and track chat message activity. For more information on how APIs work, see Enabling real-time chat message streaming in the Administrator Guide.
+Why choose Amazon Connect Chat?
+
+When making the decision to implement Amazon Connect Chat, it's important to consider many factors. For example, an administrator might want to know if Amazon Connect Chat can make their business processes run better. They should also determine if their infrastructure is capable of supporting Amazon Connect Chat. Consider the questions in the following table to help guide you in making the decision to implement Amazon Connect Chat.
+
+Consideration
+Questions
+Business processes
+
+Business processes are activities that an organization can take to reach a specific goal. It's helpful to consider how your business currently handles chat functionalities.
+
+
+
+
+
+
+
+How do you currently report on your contact center channels?
+
+Do your agents currently handle voice and chat channels, or do you have dedicated agents working each channel? What would your ideal state be?
+
+What chat concurrency do you currently utilize? What would your ideal state be?
+
+Infrastructure
+
+It's important to determine if an organization has the appropriate infrastructure, or basic technological framework, to support implementing Amazon Connect Chat. 
+
+Where do you want customers to be able to initiate a chat? (public website, mobile app, intranet, SMS, Apple Business Chat, and so on).
+
+Do you want a deployment-ready, low-code widget or a development kit to deploy chat?
+Opportunities for Improvement
+
+There are many opportunities for Amazon Connect Chat to improve how a business connects with its customers. It's beneficial to identify the business’s goals and areas for improvement.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Does your company seek to provide customers a “high-touch” experience by giving them the chance to engage with the company?
+
+Do you seek to improve your customer contact’s perception of your availability to service them (for example, by signaling your agent’s availability)?
+
+Do you want to improve customer satisfaction with respect to response time? 
+
+Do you struggle with overloading agents and think you would benefit from automating responses to commonly asked customer inquiries?
+
+Do you seek to personalize your customer’s experience based on the channel they use to contact you?
+
+Do customer calls often need to be rerouted from a chat bot to connect with a live agent either over chat or a call?
+
+What are your top customer service goals/KPIs you are measuring and how are you prioritizing them? 
+
+How do you determine which channels you provide?
+
+What is your vision for your end customer experience for each channel?
+
+How do you envision creating a consistent experience across these channels?
+
+What support channels does your company leverage today?
+
+Are you leveraging the same solution for voice and chat today? If not, what challenges have you encountered with managing multiple tools?
+
+What applications and tools do your agents currently use to manage customer interactions?
+
+What systems are key to integrate a chat experience with?
+Increase agent efficiency
+
+Difficulties arise when different communication tools are required to handle customer interactions. This can include agents needing to be trained on multiple applications and being unable to easily switch contact roles to address changing business needs. With Amazon Connect, an agent can handle voice and chat contacts, as well as tasks, from the same interface. Supervisors can see metrics for the entire contact center, including voice, chat, and tasks, and can move agents across channels as demand requires. For more information on metric reports, see Monitor metrics and run reports. 
+
+Automate business processes
+
+With Amazon Lex natively integrated with Amazon Connect, conversational interactions can be created to add Natural Language Understanding (NLU)-powered chatbots for self-service experiences and for the context of the conversations to be passed automatically if escalated to a human agent. Amazon Connect offers transcript persistence. This data allows businesses to resume customers' context and conversations so that they never have to repeat themselves as they move between bots or across agents. For more information on how to add an Amazon Lex bot, see Add an Amazon Lex Bot.
+
+Increase customer satisfaction
+
+Today, as customer expectations have evolved, organizations understand the importance of allowing their customers to contact them through the channel of their choice when they need help. However, when different solutions are used to provide support for channels like voice and chat, the customer experience has to be built and maintained in multiple solutions. As business needs change, it can be a challenge to create consistency and visibility across these channels.
+
+Offering customers the channel of their choice leads to increased customer satisfaction because they can use the most convenient option. Providing immediate chat help from the application the customer is using deflects phone calls and reduces the Interactive Voice Response (IVR) hold times for customers who call.
+
+Optimize business practices
+
+Organizations that use different solutions for voice and chat risk creating inconsistent customer experiences on voice and chat channels. Building and maintaining integrations across multiple contact center applications is costly and complex. This means that contact center managers use different reporting solutions to track and measure Key Performance Indicators (KPIs) and face challenges measuring the service holistically. Amazon Connect Chat uses the same management and user interface, contact flows, Amazon Lex bots, dashboards, metrics and reporting, and APIs that supervisors, agents, and admins are already familiar with on other channels.
+
+Metrics and reports
+
+Organizations regularly use metrics on their contact center to help make decisions that improve the customer experience, lower costs, and improve agent performance. Organizations can gain insight into trends and identify performance issues in the contact center, giving them the tools to adjust their processes and improve agent and customer experiences. Amazon Connect offers built-in real-time metrics and historical metrics that show the overall performance of the contact center across chat, voice, and tasks. The metrics and reporting features are accessible from the Amazon Connect console—where administrators can view overall contact center information. To view real-time and historical metrics in your Amazon Connect account: 
+
+Navigate to the side menu
+Hover over the Analytics menu item
+Select the metrics you want to view
+Metrics and quality menu expanded to show sub-menu options including real-time and historical metrics reports.
+Real-time metrics reports
+
+Real-time metrics are viewable from a dashboard. The real-time metrics update every 15 seconds and can include information on agent activity, such as handled or abandoned calls and which agents are online. Real-time metrics are customizable to focus on a specific area of contact center activity, such as filtering activity for a team or specific agents. For example, if average chat activity time is high, but abandoned contacts are not, you can opt to exclude abandoned contacts from reports. Supervisors can create and customize real-time metrics dashboards with more than one view. For example, one dashboard can contain a live report for queue performance, as well as agent performance. The flexibility of real-time metrics reports gives organizations a view of current chat support activity, as well as voice or task interactions, to help them respond accordingly. For more information on how to tailor reports to your organization's needs, see Real-time metrics reports in the Administrator Guide.
+
+Amazon Connect real-time metrics showing real-time metrics data for queues and routing profiles in one dashboard.
+Historical metrics reports
+
+Organizations can gain longer-term insights on contact center activity with historical data. With Amazon Connect and its built-in services that use machine learning, organizations can more easily plan for demand using historical data. Historical data is viewed in the dashboard and is customizable. For example, if historically, the average handled time for agents is significantly higher with the launch of a new product, viewing historical metrics can help organizations prepare and make decisions for an upcoming launch. Gaining insights based on historical metrics can be time consuming if organizations manually download .csv files to analyze metrics data. With Amazon Connect, historical reports can be scheduled to automatically produce a .csv export with the desired data breakdown. Organizations can also use historical metrics to create forecasts on contact volume and agent-contact handle time to aid with scheduling and capacity planning activities. For more information on how to create your own custom reports, see Create a historical metrics report in the Administrator Guide. 
+
+Amazon Connect historical metrics dashboard showing historical metrics data for queues.
+Amazon Connect metrics and reporting makes decision making easier for organizations and administrators. Organizations leverage from these offerings to improve customer support, contact center effectiveness, and the overall customer experience.  
+
+Amazon Connect Chat experience
+
+Agents using chat with customers can enhance the customer service experience by using a platform to communicate with customers in real-time. Live chat is a convenient solution for customers, including creating a real-time connection with an agent, allowing customers to multitask, and quickly receive a solution to their queries. Let’s review what an agent and customer might experience with Amazon Connect Chat.
+
+Agent experience
+
+When an agent sets their status in the Amazon Connect Contact Control Panel to Available, they can receive calls, chat, or tasks based on the settings in their routing profile. Remember, routing profiles allow administrators to control how queues are handled, including what types of contacts an agent can receive and the routing priority. 
+
+Agent notification
+
+To learn about a category, choose the appropriate tab.
+
+
+Browser notification
+
+chat tab focus
+
+phone tab focus
+If the agent activated notifications in their browser, a pop-up notification displays at the bottom of their screen and they will also hear the sound of a phone ring. 
+
+A notification indicating an incoming chat. It advises the user to click in order to open the contact control panel.
+One tab indicating an ongoing chat with one customer next to another tab indicating that a chat was missed.
+The agent has 20 seconds to accept or reject a contact. If they’re already working on a chat with a customer and another chat comes in and they do not accept it, a tab appears indicating the chat was missed.  An administrator can specify that up to 10 chat conversations can be routed to an agent at the same time.
+
+Agent accepts the chat
+
+After the agent clicks on Accept chat to connect to the contact, they can see a full transcript of what the customer has already typed. If the customer has already been chatting with a bot or another agent during this interaction, the agent can also see the transcript. In the following image, John is the name of the customer, Martha  and Jane are agents. Since John has already indicated to Martha what they need help with, Jane does not have to ask for this same information.
+
+
+
+
+
+
+
+
+
+
+
+A sample chat with a customer and the interaction with two agents.
+The agent would then continue to communicate with the customer from within the chat interface. Similar to other communication tools, the agent can use formatting tools while composing a chat message. To learn more, choose each of the two markers.
+
+
+
+While using Amazon Connect Chat, the agent can manage the customer contact, including transferring the chat or converting it to a task for follow-up or additional action.
+
+Customer experience
+
+Amazon Connect Chat is designed to provide the customer with a simple way to start chat communication and an easy-to-use interface, allowing them to focus on interacting with an agent.
+
+
+
+
+
+
+
+A bubble indicating to a customer where to click to start a chat interaction.
+If an administrator has set up Amazon Connect Chat to display information, such as a welcome message or expected wait time, this information is provided to the customer. To learn more, choose each of the two markers.
+
+
+
+Whether the customer is communicating with a bot, such as Amazon Lex, or directly with an agent, the customer can simply begin typing their message. With Amazon Connect Chat, agents can communicate with customers with a robust set of tools and an intuitive interface. At the same time, customers can quickly get support whenever they need with a convenient chat.
+
+Check your knowledge
+
+Take a minute to check your understanding of the content covered in this lesson.
+
+Select the correct answer and choose SUBMIT. For keyboard only accessibility, press TAB then the ARROW keys to select the correct answer. Then, press TAB to navigate to the Submit button and press ENTER to continue. 
+
+After accepting a chat, an agent reviews the chat transcript. What might the agent see in the transcript?
+
+A screenshare view of the customer’s computer.
+
+Correctly unselected
+The customer’s conversation with another agent and details from contact flows.
+
+Correctly selected
+An archive of all previous chats from the customer’s organization.
+
+Correctly unselected
+Transcripts are not available using Amazon Connect Chat.
+
+Correctly unselected
+SUBMIT
+
+Correct
+When a customer is speaking with a bot or an agent before being transferred to another agent, the transcript of this conversation is included, along with any transcript details from contact flows. This allows the current agent to review the current state of the interaction.
+
+
+TAKE AGAIN
+Select the correct answer and choose SUBMIT. For keyboard only accessibility, press TAB then the ARROW keys to select the correct answer. Then, press TAB to navigate to the Submit button and press ENTER to continue. 
+
+AnyCompany has set up Amazon Connect Chat to display a welcome message whenever a customer begins a chat. After seeing this message, what is the next step a customer would take to continue the conversation?
+
+Log into Amazon Connect
+
+Correctly unselected
+Navigate to the Amazon Connect website
+
+Incorrectly selected
+Install the Amazon Connect Chat widget
+
+Correctly unselected
+Start typing in the chat field
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+Amazon Connect Chat was designed to be convenient to use. To begin a conversation with an organization, a customer can simply start typing in the chat interface.
+
+
+TAKE AGAIN
+Summary
+
+Amazon Connect is an easy-to-use omnichannel cloud contact center that helps organizations provide fast, personalized service with every customer interaction. With Amazon Connect Chat, an organization can provide customers with faster and automated resolutions. Agents can increase productivity with the ability to work across voice, chat, or task channels and receive customer interactions specific to their routing profile and queue parameters. Administrators can reduce the build time by reusing the same contact flows for calls, chat, and tasks.
+
+The Amazon Connect Chat built-in features allow customer chat interactions to happen when it’s convenient for the customer. With optional extensions, organizations can determine how to create automatic customer support opportunities with Amazon Lex. In addition, organizations can build rich and differentiated experiences for Apple Business Chat customers.
+
+The streamlined platform design makes it easy for agents to communicate with customers in real-time. Agents can review the chat transcript to learn more about the customer interaction, either for communication with a bot or another agent. The message formatting options allow agents and customers to highlight specific instructions and customers to include supporting attachments.
+
+You’ve been introduced to how Amazon Connect Chat can be used to enhance customer satisfaction. Agents can build rapport with customers, while customers can receive personalized support to their inquiries. Continue to the next lesson to review how an organization can configure Amazon Connect Chat.
+
+
+Lesson 4 of 9
+Integrate Amazon Connect Chat
+Amazon Connect Chat provides customizations that help improve the customer experience. All businesses have different messaging needs, and Amazon Connect Chat offers several methods for implementing chat that can be tailored to an organization’s specific requirements. An organization can use the pre-built chat widget as an easy, ready-to-use option, or they can build their own widget to incorporate more complex customizations that the pre-built option does not provide. Organizations can also integrate third-party messaging services, such as Apple Messages for Business, to provide a more dynamic experience for Apple users. Application Programming Interfaces (APIs) are also available to help an organization further personalize their customers’ experience over chat or digital channels. With the integration options that Amazon Connect Chat provides, organizations have a variety of options to find a chat solution that will work best for their unique needs.
+
+Five modes to use Amazon Connect Chat
+
+Amazon Connect Chat’s integration options can be used to extend the cloud-based contact center chat functionality. Organizations can choose which modes to use to implement chat that will provide the best experience for their customers while also streamlining the chat process.
+
+In the table below, learn more about the five modes of utilizing Amazon Connect Chat.
+
+Integration	Description
+Pre-built widget
+To support customers through chat, administrators can add an pre-built chat widget to their organization’s website. The chat widget can be configured in the Amazon Connect console to customize the font and colors and secure the widget so that it can be launched only from the organization’s website. A short code snippet can be added to an organization’s website without having to write any code. This allows an organization to customize and implement Amazon Connect Chat without requiring developers to code the application. Amazon Connect hosts the widget, so it ensures that the latest version is live on an organization’s website.
+Customize your chat widget
+If an organization’s business or technical requirements necessitate customizations that are not available in the pre-built, administrators can further customize the chat experience that customers use to interact with agents. The Amazon Connect open source library on GitHub has examples to help an organization get started customizing their own chat widget quickly. 
+Apple Messages for Business	Apple Messages for Business allows customers to engage directly with an organization’s contact center through iMessage on their iPhone, iPad, and Mac. When activated, customers are provided with the option to chat with their contact center any time they use Search, Safari, Siri, or Maps to call the business's registered phone number. This helps redirect potential voice calls to chat for customers on iOS or Mac devices. Apple Messages for Business integration with Amazon Connect also allows organizations to use the same configuration, analytics, routing, and agent user interface that they already use for Amazon Connect.
+Real-time chat message streaming
+Amazon Connect Chat provides APIs that allow an organization to subscribe to a real-time stream of chat messages. Using these APIs, an organization can also build their own user interface (UI) from scratch and integrate with Short Message Service (SMS) solutions and third-party messaging applications, like Facebook Messenger.
+Software Development Kits (SDKs)
+An organization can use Amazon Connect APIs to start chats in their own applications. The StartChatConnect API is used to start the chat. Amazon Connect Chat can be integrated into custom applications using the available Software Development Kits (SDKs).
+Before deciding on how to deploy Amazon Connect Chat, an administrator must understand the different integration options available and how these options will enhance their customers’ experience. In the following sections, learn more about the different modes of implementing Amazon Connect Chat. 
+
+Implement chat with the pre-built widget
+
+Amazon Connect provides organizations with several ways to integrate chat into their website. One way to implement chat is by using the Amazon Connect Chat pre-built widget. It leverages a built-in configuration tool that walks administrators through the end-to-end process of creating a widget that aligns with an organization’s branding and helps them setup secure exchange of customer information. The tool automatically generates a short code snippet that can be added to a website without having to write any code, making implementation fast and easy.
+
+Implementing chat with the pre-built offering can also help reduce how much organizations have to manage since Amazon Connect hosts the widget. This means the latest version of chat is live on an organization’s website because Amazon Connect takes care of backend maintenance. Amazon Connect also manages cloud security for customers through a shared responsibility model, adding to the ease of use of the pre-built offering. This also means organizations can focus on the aspects of security that matter the most to them, such as customer data.
+
+Let’s take a look at how AnyCompany uses the pre-built chat widget.
+
+Scenario: Quickly and easily launch chat on a website
+
+AnyCompany is looking to easily implement chat on their website. However, they’re limited on development resources to build their own Amazon Connect Chat experience. AnyCompany decides to implement the low-code chat widget hosted by Amazon Connect.
+
+AnyCompany can configure the chat widget in the Amazon Connect console by customizing the font and colors, and securing the widget so that it can be launched from their website. As a result, they have a short code snippet to add to their existing hosted webpage. Additionally, since Amazon Connect hosts the widget, it ensures that the latest version is live on their website. Using the pre-built widget lets AnyCompany launch chat on their website quickly, giving customers a way to securely start chatting with an agent within seconds.
+
+For more information on the Amazon Connect hosted chat widget and supported browsers, see Add a chat user interface to your website.
+
+Getting started
+
+There are five simple steps an organization needs to take to generate the short code snippet and security key needed to implement Amazon Connect Chat on their website using the pre-built widget:
+
+Customize chat widget.
+Select contact flow.
+Add the required domains for the chat widget.
+Add security for new chat requests.
+Add short code snippet and security key to your website.
+A flowchart showing the five steps to implement Amazon Connect Chat on a website using the out-of-the-box widget builder.
+Administrators can access the configuration tool by logging in to their Amazon Connect instance. In the Explore your channels of communication section of the Dashboard, select the Customize chat widget link. This redirects to the customize chat widget page.
+
+A box around Customize chat widget link text.
+Customize the chat widget
+
+There are three main sections of the Chat widget page: the chat widget preview, the customization form, and the Select contact flow drop-down menu. The customization form is where administrators can design the customer experience to align with their organization’s branding by customizing the font for the text shown in the chat widget, the header message that displays at the top of the chat widget, and the color scheme in the user interface. The chat widget preview displays the changes made in the customization form in real time.
+
+A side-by-side view of the chat widget preview and customization form.
+Select the contact flow
+
+Administrators can define the customer experience by selecting the contact flow from the drop-down menu. All published contact flows associated with the Amazon Connect instance appear in the drop-down menu, including default, sample, and customized contact flows. To learn more about contact flows, visit Create Amazon Connect Flows in the Administrator Guide. All changes are saved once the administrator selects the Next button.
+
+A box around the contact flow from the drop-down menu and Next button.
+Add the required domains for the chat widget
+
+Organizations can add up to five different domains in the Add the required domains for chat widget section. The appearance of the chat widget and the way the inbound customer experience launches is the same across each domain, creating a consistent experience for customers across domains. The domain validates where in the website the chat request originates. To learn more about required domains, visit Step 2: Specify the website domains where you expect to display the chat widget in the Administrator Guide.
+
+User interface for adding required domains for the chat widget with box around open response field to add domain.
+Add security for new chat requests
+
+We recommend using JavaScript Object Notation (JSON) web tokens to secure chat requests. For organizations that exchange information over websites or web-based apps, JSON web tokens provide a way to authenticate users in the context of those websites or web apps. Amazon Connect automatically generates a security key to generate JSON web tokens from an organization’s web server. Organizations can even capture information about the contact who is using the chat widget, such as the customer name or where in the website the customer initiated chat, by passing contact attributes to Amazon Connect. This allows organizations to further customize the customer experience, and more importantly ensure chat requests are authenticated. To learn more about implementing backend security for the pre-built chat widget, visit Step 3: Confirm and copy chat widget code and security keys in the Administrator Guide. 
+
+Organizations can also use attributes that are specific to their business, such as account IDs, emails, or other metadata associated with a contact. To learn more about using contact attributes for authentication, visit Pass contact attributes when a chat initializes in the Administrator Guide.
+
+User interface for adding security for new chat requests with box around Yes option to confirm decision to add security.
+Add the short code snippet and security key to the website
+
+After going through the guided process of customizing the chat widget, the chat widget script is generated as well as a security key. The script and security key can be copied and pasted onto each page of the organization’s website where the widget should appear.
+
+Chat widget script and security key displayed with boxes around the Copy script and Copy key buttons.
+Customize chat with ChatJS
+
+For organizations with business or technical requirements that require customization not available in the pre-built widget, the Amazon Connect Chat JavaScript library (ChatJS) on GitHub gives full flexibility to build your own chat widget for a completely customized chat experience for the customer chat widget. ChatJS on GitHub is a platform that has examples of how organizations can build their own chat widget and get started quickly with customizing Amazon Connect Chat. Additionally, GitHub uses a common programming language to allow developers to design and implement Amazon Connect Chat on the organization’s website with ease.
+
+The build-your-own-chat option for integrating Amazon Connect Chat is ideally suited for organizations that have development resources available, want to use the pre-built chat framework as a blueprint for getting started, and take more responsibility for maintaining the bespoke customizations. With the flexibility that ChatJS provides, organizations can tailor specific aspects of the customer chat experience beyond what is available in the  pre-built widget, such as using customized font families. With this level of control, organizations make sure the most-up-to-date version of their customizations is live on their website while leveraging the ChatJS library solutions provided in GitHub.
+
+Scenario: Meet branding requirements with ChatJS
+
+Large AnyCompany is excited about their new Amazon Connect Chat experience. They have a readily available development team to help support the implementation of their chat widget. They like the pre-built widget for the most part, but they have some strict branding rules around how the chat widget must look and feel. To meet these standards, they require stronger customization of the chat widget.
+
+Large AnyCompany has opted to work with the ChatJS open source library on GitHub to provide a customized chat experience and to build something more in line with their branding. Since Large AnyCompany likes the pre-built widget, they can use the widget framework as a starting point instead of starting from scratch.
+
+In addition to customizing color schemes and font, Large AnyCompany can stylize the chat UI to the user interface standards tied to their branding, for example, by using the company mascot for the start chat icon instead of the pre-built widget icon. By leveraging the open source library, they can build a chat experience that meets the specific branding needs of the company.
+
+Amazon Connect Chat UI Examples repository
+
+There are two main resources to use when customizing chat with ChatJS: the Amazon Connect Chat UI Examples repository in GitHub and the Amazon Connect Chat JavaScript library. Let’s look at an Amazon Connect Chat UI example that helps deploy an API Gateway and Lambda function for initiating chat from your webpage—which is necessary before starting chat interface customization.
+
+To get started, visit cloudformationTemplates on GitHub, which redirects to a repository of CloudFormation templates. To learn more about CloudFormation templates and other key concepts, see AWS CloudFormation concepts in the AWS CloudFormation User Guide. Once in the cloudformationTemplates subfolder on GitHub, select the asyncCustomerChatUX template. In short, the template in this solution:
+
+Creates a simple, customer-facing website where the chat widget is hosted
+Uses the StartChatContact API, which initiates a contact flow in Amazon Connect to start a chat with a customer
+Includes all the pieces needed for the API to communicate with the organization’s Amazon Connect instance
+Checks whether customers already have an active chat, and can resume chats on any device, reducing the need for customers to repeat chat details
+The simple customer-facing website that is created lets organizations start a chat with the pre-built chat widget. The website is hosted in Amazon S3 which is served by Amazon CloudFront. Amazon S3 is a simple and flexible way to store static and dynamic content. Amazon CloudFront is a web service that speeds up the distribution of content. The two services work together to optimize performance by serving content through a global network of data centers called Edge Locations. Edge Locations cache and serve content from data centers located closer to where your customers are located. To learn more about how Amazon S3, Amazon CloudFront, and Edge Locations work together to optimally serve customers read Amazon S3 + Amazon CloudFront: A Match Made in the Cloud on the AWS Blog.
+
+The template also creates the Amazon API Gateway endpoint that initiates an AWS Lambda function. This is the stack. To learn more about stacks, visit Working with stacks in the AWS CloudFormation User Guide.
+
+Flowchart describing how Amazon Connect Chat connects a contact to an agent when organizations build their own chat widget.
+The Lambda function provides authentication and invokes the Amazon Connect Service StartChatContact API. The StartChatContact API is what initiates a contact flow in Amazon Connect to start a chat with a customer. The result is stored in Amazon DynamoDB, which stores contact and conversation session information, so the application can merge subsequent conversations from the same contact. This lets the customer continue an existing chat session where it left off on any device, instead of creating a new conversation every time. Once this is stack is deployed, developers can continue development using the Amazon Connect Chat JavaScript library.
+
+The asyncCustomerChatUX template is one of the patterns organizations can use to build your own chat widget. To view additional example templates that also include all the resources required to begin developing, organizations can use the Amazon Connect Chat UI Examples available in GitHub. 
+
+Integrate to Apple Messages for Business
+
+Through the Amazon Connect Chat integration for Apple Messages for Business, organizations can provide customers with a way to start a chat directly through the Apple Messages app. This makes it easy and convenient for customers to chat with agents anytime they click on the organization’s registered phone number on an Apple device. This helps improve the customer experience while also converting customer calls to chat interactions. 
+
+Amazon Connect Chat provides an easy process for integrating Apple Messages for Business into their cloud-based contact center. In the next sections, learn how to integrate Apple Messages for Business and take advantage of the many features provided to enhance chat performance and customer satisfaction.
+
+How to integrate Apple Messages for Business
+
+To integrate Apple Messages for Business with Amazon Connect Chat, organizations must first register with Apple as a business. In order to register, go to the Apple Messages for Business page and get started. Organizations will need to create an Apple ID for their business if they don’t already have one. After registering a new profile for Apple Messages for Business, organizations can select Amazon Connect as their Messaging Service Provider. Now organizations to integrate Apple Messages for Business with their Amazon Connect contact center. 
+
+Next, administrators need to collect some required information to link their Apple Messages for Business ID with their Amazon Connect account.
+
+Apple Messages for Business account ID: This will be issued to an organization after they have been approved by Apple Messages for business.
+Apple token: This is an ID that is used to authenticate an organization's account.
+Amazon Connect instance ARN: This identifies which instance an organization would like to link their Apple Messages for Business account to.
+Amazon Connect ID flow: This identifies which contact flow an organization would like to use for inbound chat.
+After collecting the above information, an organization can go to their AWS management console and create a special ticket to link their Apple Messages for Business ID to Amazon Connect. The required information must be included in the body of the ticket.
+
+An example of a completed Apple Messages for Business integration request ticket.
+For more information on how to integrate Apple Messages for Business with Amazon Connect, see Enable Apple Messages for Business in the Administrator Guide.
+
+After Apple Messages for Business is linked to Amazon Connect, an organization can enhance their messages by adding the available Apple Messages for Business features.
+
+Apple Messages for Business Features
+
+Apple Messages for Business includes several features that enhance the customer experience and improve chat functionality. After integrating Apple Messages for Business, administrators can incorporate these features into Amazon Connect Chat.
+
+Amazon Connect’s omnichannel architecture uses the same features administrators are already familiar with, like queues, routing profiles, contact flows, and their reports. This aids in building rich and differentiated experiences for Apple Messages for Business customers. For example, once an administrator has completed their Apple registration and Amazon Connect setup for Apple Messages for Business, they can leverage the same contact flows they’ve already built for Apple Messages for Business. This allows the organization to start receiving, routing, and responding to messages right away. Administrators also have the flexibility to create customized contact flows using specific Apple Messages for Business attributes. For example, an administrator can use the “MessagingPlatform” attribute to route Apple Messages for Business contacts to specific contact flows.
+
+Organizations can activate Message Suggest, which provides customers with the option to start a chat or make a voice call when they tap on the organization’s phone number in Safari, Maps, Siri, or Search. Once a customer selects the messaging option, they are directed to the Messages app. This helps reduce the number of voice calls that an organization receives by redirecting calls to chat. Organizations can also use Message Suggest to control how many customers receive the option to message. For example, Apple provides throttling capabilities if the organization initially only wants to show 20% of customers the option to message before gradually increasing to 100%. Message Suggest can also extend the customer service experience with built-in features such as Apple Pay, list and date/time pickers, and augmented reality.
+
+Apple Maps application showing the option to message or call Amazon Connect Labs.
+Organizations can also embed Apple Messages for Business buttons on their website or mobile app. Customers can start a chat from different points of access that an organization chooses. Organizations can also provide a special URL that redirects customers to the Messages app to begin a conversation.
+
+For more information on the features available with Apple Messages for Business, see Add Apple Messages for Business features in the Administrator Guide.
+
+Apple Messages for Business is just one of the messaging applications able to integrate with Amazon Connect. In the following section, explore how Amazon Connect provides organizations with the opportunity to integrate other digital messaging apps.
+
+Implement real-time chat message streaming
+
+Customers have access to numerous digital messaging apps. These include Facebook Messenger, Twitter, Slack, and many more. Due to the convenience and familiarity, customers are interested in using these digital channels to reach out to companies.
+
+Amazon Connect Chat provides APIs that allow an organization to subscribe to a real-time stream of chat messages. Using these APIs, a company can use Amazon Connect Chat to integrate those digital channels into their contact center and meet their customers’ evolving communication preferences.
+
+Facebook Messenger
+
+AnyCompany has a Facebook business Page where they engage with a significant portion of their customers. Since they are already maintaining this social media presence, they want to integrate Facebook Messenger with their Amazon Connect contact center to streamline communication. 
+
+A side-by-side with a customer using Facebook Messenger and an agent in Connect CCP.
+To do so, they access the Facebook developer console and to set up Messenger with a Callback URL and secure token to make the connection. Afterwards, agents at AnyCompany no longer need to utilize the Facebook Messenger interface as those interactions are offered to agents within the same CCP they use for other Amazon Connect Chat communications.
+
+To learn more about how Facebook Messenger fits into the Amazon Connect architecture, choose each of the numbered markers in the following image:
+
+
+
+
+
+
+
+
+Using SMS
+
+The Amazon Connect APIs are not limited to connecting to digital messaging apps. Using the APIs allow companies to extend the current Amazon Connect Chat functionality to support use cases such as building integrations with SMS (Short Message Service, more commonly referred to as text messaging), activating mobile push notifications, and creating analytics dashboards to monitor and track chat message activity.
+
+To learn more about how SMS fits into the Amazon Connect architecture, choose each of the numbered markers in the following image:
+
+
+
+
+
+
+
+
+
+For Large AnyCompany, this was essential because a large number of their customers prefer texting. After a satisfaction survey, the found that SMS provided those customers with the flexibility to get support while on-the-go, instead of waiting on hold or remaining connected to a web chat session. 
+
+For more information on how APIs work, see Enabling real-time chat message streaming in the Administrator Guide.
+
+If you would like to review examples of using APIs to activate SMS and Facebook messenger channels, visit Message Streaming Examples in the Amazon Connect GitHub repository.
+
+Use AWS Software Development Kits
+
+The options discussed so far provide many ways for a company to customize Amazon Connect Chat for use in a web browser. There may be times, however, where a company may want to integrate into non-web-based applications.
+
+With AWS Software Development Kits, or SDKs, your custom software can include Amazon Connect Chat as well as a broad array of other AWS services. This means that an organization's developers have nearly endless options to customize Amazon Connect Chat to the company's needs.
+
+Large AnyCompany has a mobile application where customers can interact with some of their services. In order to streamline communication and ensure customer satisfaction, they want to allow customer so receive support without having to leave the app. Thanks to AWS SDKs, their developers were able to add an option to chat with an agent from the application’s main drop-down menu. Furthermore, their developers were able to optimize the chat interface for use inside the app. For more information on AWS SDKs, visit the list of resources available within GitHub.
+
+Choose an integration
+
+With so many different integration options available, deciding on how to deploy Amazon Connect Chat can be challenging. An administrator needs to know their organization and customer needs in order to decide which integrations would best fit these requirements. Let’s look at how Carlos, an administrator with AnyCompany, decides to deploy Amazon Connect Chat for their organization.
+
+Carlos is tasked with deploying chat for AnyCompany, and they must decide the best way to implement chat on AnyCompany’s digital channels. Carlos first needs to decide if they want to deploy chat on the website, on messaging services, on third-party services, on custom applications, or any combination of these options. Once they have decided which platforms to use to implement chat, Carlos will know which modes of utilizing Amazon Connect Chat are best for their organization.
+
+Because AnyCompany gets a lot of traffic to their website, Carlos decides that they want to deploy chat on the website. However, they are required to use the AnyCompany logo and branding. AnyCompany has developers on staff who can write code to customize the chat widget to meet their organization’s needs, so Carlos decides that building their own chat widget is the best option.
+
+Carlos also notices that AnyCompany receives a lot of customer messages through their Facebook business page. They decide to implement messaging API’s to build an integration for Facebook Messenger in order to route these messages to AnyCompany’s contact center.
+
+Decision tree that shows different options for deploying a chat solution.
+Carlos decided which Amazon Connect Chat integrations fit AnyCompany’s needs by considering how customers interact with their organization. By providing different modes of utilizing chat, Amazon Connect Chat allows administrators to make the best choice for their organization’s specific requirements and customer needs.
+
+Check your knowledge
+
+Select the correct answer and choose SUBMIT. For keyboard only accessibility, press TAB then the ARROW keys to select the correct answer. Then, press TAB to navigate to the Submit button and press ENTER to continue. 
+
+If an organization wants to allow customers to communicate with their Amazon Connect contact center via text messaging, which resource will best allow them to achieve this?
+
+Enabling the option for SMS within the customization settings for the chat widget
+
+Correctly unselected
+Implementing Amazon Connect message streaming APIs
+
+Correctly selected
+This is a default setting in Amazon Connect, so no additional action is needed
+
+Correctly unselected
+This is not something that can be set up with Amazon Connect
+
+Correctly unselected
+SUBMIT
+
+Correct
+Organizations can utilize Amazon Connect message streaming APIs to integrate multiple workflows. This includes the ability to allow agents to interact with customers who are using SMS.
+
+
+TAKE AGAIN
+Select the correct answers and choose SUBMIT. For keyboard-only accessibility, press TAB to navigate to the correct answer, and press SPACEBAR to select. Repeat this step until all correct responses are checked, and press ENTER to submit.
+
+Which of the following are true about building your own chat widget? (Select TWO.) 
+
+Organizations must build from scratch
+
+Correctly unchecked
+Building your own widget is a good option for businesses with strict design requirements
+
+Incorrectly unchecked
+Amazon Connect Chat hosts pre-built chat widgets for organizations
+
+Incorrectly checked
+Building your own chat widget is done within the Amazon Connect console
+
+Incorrectly checked
+Organizations are responsible for maintaining versions of their widget
+
+Incorrectly unchecked
+SUBMIT
+
+Incorrect
+Building your own chat widget is usually a good option for organizations that have strict business requirements because it allows for highly detailed customization. Because of this, organizations are also responsible for the maintenance of their chat widget to make sure the most up-to-date version is live on their websites.
+
+
+TAKE AGAIN
+Summary
+
+The customization options in Amazon Connect Chat help improve the user experience. Organizations can choose from using pre-built functionality, building a chat widget, integrating Apple Messages for Business, using messaging APIs, or using AWS SDKs. Chat can be tailored to an organization’s specific requirements. Organizations have flexibility in offering a chat solution that works for their business needs.
+
+Using the pre-built chat widget is a quick and easy method to launch Amazon Connect Chat on an organization’s existing website. The chat widget allows organizations to customize the font and colors and secure the chat experience. All that is needed is a short code snippet to be added to an organization’s website.
+
+Organizations that want a little more customization to the chat experience and have some developer resources can build their own chat widget. Organizations can use ChatJS, the Amazon Connect Chat UI Examples repository on GitHub and the Amazon Connect Chat JavaScript library. Amazon Connect open source library has examples to help organizations get started.
+
+Organizations can provide a convenient and familiar chat experience directly through the Apple Messages app on their Apple device. With Apple Messages for Business, organizations can chat with an organization’s agent through Search, Safari, Siri, or Maps to call their registered phone number. Apple Messages for Business integration with Amazon Connect also allows organizations to use the same configuration, analytics, routing, and agent user interface that they already use for Amazon Connect Chat.
+
+APIs can be used to subscribe to a real-time stream of chat messages. Using the APIs, organizations can integrate Amazon Connect Chat with digital messaging channels. Organizations can implement mobile push notifications and create analytics dashboards to monitor and track chat message activity.
+
+An organization may want to integrate chat into their non-web-based application. With developer resources, the AWS Software Development Kits can integrate Amazon Connect Chat with an organization’s custom software.
+
+You’ve been introduced to five methods to integrate Amazon Connect Chat. These options allow organizations to customize the chat with customers from a website, mobile app, or a variety of messaging services. Continue to the next lesson to review considerations for deploying Amazon Connect Chat.
+
+Lesson 5 of 9
+Considerations
+Amazon Connect is a cloud-based omnichannel contact center service that provides a seamless experience between voice and chat channels for customers and agents. The all-in-one agent interface reduces the amount of time agents have to spend learning multiple tools and the number of screens agents have to interact with. Ultimately, this lets agents focus on solving problems that directly impact customers.
+
+On top of helping organizations serve customers more efficiently and effectively, Amazon Connect also helps organizations design personalized experiences for customers. Companies can address customers by name in a chat window, tailor chat widgets to match company branding requirements, and more. Since Amazon Connect is backed by the security of AWS Cloud, even the most security-sensitive organizations can build and iterate confidently.
+
+Amazon Connect integrates with AWS services that help streamline and scale contact center activities, including chat conversations. Developers can seamlessly integrate chatbots into their Amazon Connect Chat solution to handle common queries. Customer interactions through chat can be tailored for a personalized and unique customer experience. Messaging APIs can be used to let organizations subscribe to a real-time stream of chat messages from digital applications such as Facebook Messenger to help deliver contact center experiences that customers appreciate.
+
+With these rich options, it’s important for organizations to consider the downstream impact of customization on customers and the organization ahead of time. This way, organizations can balance building satisfying experiences that delight customers while also meeting organizational needs.
+
+Service quotas
+
+Amazon Connect offers many different integrations and customizations that improve customer experience. In order to efficiently provide these services to customers, AWS sets default service quotas. Service quotas refer to the maximum number of resources available in an AWS account for each AWS service. Establishing service quotas allows AWS to ensure the availability of resources and keep costs lower for the customer. Service quotas also protect the customer from using more resources than they need and incurring a large bill.
+
+When an AWS account is created, default quotas are set for each AWS service. Unless otherwise noted, these quotas can be adjusted to meet an organization’s needs. For example, the default Amazon Connect instance service quota is two. This means that an account can create up to two Amazon Connect instances. However, an organization might require more than two instances, so they can request an increase in the number of Amazon Connect instances available for their account. Administrators can make a request to increase service quotas through the AWS Management Console.
+
+Service quotas page in AWS management console with a box around the Request quota increase button.
+If an administrator wants to request a change to a quota that is not yet available in Service Quotas in the AWS Management Console, an administrator can sign into the AWS management console and fill out the Amazon Connect service quotas increase form. For more information about service quotas, see Amazon Connect service quotas in the Administrator guide. 
+
+Amazon Connect service quotas
+
+For Amazon Connect Chat, there are several service quotas that are important to note. New Amazon Connect accounts have default quotas for Amazon Lex bots per instance and concurrent active chats per instance, along with quotas for many other AWS services. Amazon Lex bots can be integrated with chat to build interactive message prompts to converse with customers. Currently, the default number of Amazon Lex bots allotted per instance is 100. 
+
+There is also a quota for the number of concurrent active chats per instance, including chats that are waiting in a queue. The default service quota for concurrent active chats per instance is 100. If this quota is surpassed, the API call fails and a 429 LimitExceededException error occurs.
+
+Organizations can ensure that they have the appropriate service quota configuration for their anticipated usage. They can monitor failed requests due to quota breaches and adjust accordingly to ensure continued Amazon Connect Chat availability. Quota usage can be monitored and alerted in Amazon CloudWatch. Amazon CloudWatch is a service that monitors AWS resources and the applications the organization runs on AWS in real-time. It can be used to monitor and track metrics about every AWS service an organization uses. 
+
+Rate of API requests
+
+When an organization uses Amazon Connect Service API, there are service quotas for the number of requests made per second. For example, StartChatContact, StartContactStreaming, and StopContactStreaming APIs have a RateLimit of five requests per second and a BurstLimit of eight requests per second. The RateLimit refers to the maximum number of requests that can be made per second, while the BurstLimit refers to the maximum concurrent requests that can be made at one time. This means that if eight requests are made in the same second, the system can handle them because the BurstLimit is eight. However, if another eight requests are made in the next millisecond, the system can only handle five of those requests because the RateLimit of five requests per second has already been exceeded. When the rate of requests slows down to less than five requests per second, the BurstLimit can refresh. These throttling quotas are made by account and per region, not by user and not by instance. 
+
+Amazon Connect Participant Service (ACPS) API, which are APIs used by chat participants, also have a limited number of requests per second. For example, SendEvent and SendMessage APIs have a RateLimit of 10 requests per second and a BurstLimit of 15 requests per second. Unlike Amazon Connect Service APIs, ACPS API throttling quotas are made by instance. Organizations can provide data on how many requests they receive per second and work with the AWS service team to increase these quotas, if needed. For more information on rate of API request limits, see Amazon Connect API throttling quotas.
+
+After becoming familiar with the service quotas that are in place for different AWS services, it is helpful to know how to include these services in an Amazon Connect account. In the next sections, learn more about how to integrate AWS services with Amazon Connect Chat.
+
+Integrate with AWS services
+
+Amazon Connect provides options for a robust and customizable chat experience. Organizations can take this even further by integrating other AWS services for additional functionality.
+
+This could mean utilizing Amazon Lex with AWS Lambda to create rich, engaging, and dynamic interactions through a self-service chatbot experience. For example, adding interactive messages allows organizations to configure messages that present a prompt with pre-configured options that a customer can select from.
+
+Lambda could also be used to integrate a database management system, such as Amazon DynamoDB, to store and retrieve customer details and create personalized experiences. For example, Lambda can be used to pull stored details such as membership level or account status from a database based on a customer’s details. Using this information, a contact flow can then route the customer to a specific queue.
+
+Adding additional messaging functionality is another common use case for integrating other AWS services. Depending on the needs of your company, that might include the use of Amazon Simple Notification Service (Amazon SNS) to allow customers to use SMS for chat interactions instead of needing to access a web browser. Organizations can also utilize Amazon Pinpoint to send automated SMS notifications to customers. This could be useful for notifying customers of account changes or updates to requests. These notifications facilitate customer engagement because they are able to quickly start a chat session by replying to the message.
+
+AWS has an extensive portfolio of solutions to enhance the chat experience in Amazon Connect. This includes options to enhance data collection, monitoring, and analytics. For additional information, see AWS services that can be integrated into Amazon Connect in the Administrator Guide.
+
+How to integrate
+
+Once determining the functionality to be added to a contact center’s chat interactions, an administrator will need to integrate the required services. The process involves activating or configuring the required service and using a contact flow to interact with the AWS service. Amazon Lex has a specific block for use within contact flows while other services are integrated by utilizing AWS Lambda make an API call. Lambda functions can also be used to interact with services outside of AWS as well.
+
+To integrate an Amazon Lex bot, the steps include:
+
+Creating and configuring the Amazon Lex bot
+Associating the bot with your Amazon Connect instance
+Adding the Amazon Lex bot to a contact flow with a Get customer input block
+Part of an example contact flow with a box around the Get customer input block.
+The full process for adding an Amazon Lex bot to your Amazon Connect instance is covered in the Administrator Guide.
+
+Self-service
+
+A prominent use case to integrate Amazon Lex with Amazon Connect Chat is to create an enhanced self-service experience for the customer. With Amazon Lex bots, organizations can capture details during chat on what their customers are trying to accomplish. By gathering this intent information upfront, organizations can make better routing decisions while also allowing for more appropriate API calls to be leveraged.
+
+Let’s look at an example of a customer’s self-service experience with AnyCompany’s integration with Amazon Connect Chat and other AWS services. In this example, the customer’s name is Carlos. To learn more about how this chat integration functions, choose each of the four markers:
+
+
+
+
+
+The chat interaction continues with additional questions such as what amount Carlos would like to pay, the date on which the payment should be posted, and what source bank account should be used to complete the payment.
+
+After this information is collected, the Amazon Lex bot performs the requested payment operations through an integration with the back-end systems. Additionally, AnyCompany incorporated Amazon Pinpoint to send a text message confirmation that the payment is complete.
+
+As soon as the payment transaction is complete, Carlos is asked if there is anything else they need help with. Since this was the only item he needed to resolve, Carlos responds, “No” and the chat disconnects.
+
+Amazon Lex and agent interaction
+
+The benefits of integrating Amazon Lex with Amazon Connect Chat are not limited to just self-service. If a customer experiences any issues while interacting with the Amazon Lex bot, the contact can easily transition into a conversation with an agent. 
+
+Let’s take another look at the previous example. If the payment that Carlos requested failed for any reason, the contact could be automatically routed to an agent for further assistance. The chat details from interacting with the Amazon Lex bot are persistent and are provided to the agent that takes over. This means that Carlos will not need to explain what happened, preventing any additional frustration.
+
+An agent joins the chat to assist Carlos after the Amazon Lex bot is unable to process a payment.
+Interactive messages
+
+This transition from a customer communicating with an Amazon Lex bot to working with an agent is not limited to escalations or resolving errors. When planning an organization’s Amazon Connect Chat experience, an administrator may decide to utilize integrations to create interactive messages. Interactive messages are pre-configured responses that customers can select from, guiding them through the chat experience. The image below shows this interaction from the customer’s perspective before and after choosing a response.
+
+A side-by-side comparison that shows a customer provided with a list of options in chat followed by the view after a selection is made.
+Customer transitions between an integrated Amazon Lex bot and a live agent are streamlined. This can be helpful to drive operational efficiency regarding customer communication. 
+
+For more information about incorporating this type of interation, see how to add interactive messages to chat in the Administrator Guide.
+
+Manage the conversation
+
+Customers all over the world have busy lives, so reducing the amount of time spent in communication with the contact center is ideal. However, the time customers spend interacting with the organization is equally important and should be personalized as much as possible to make customers feel considered and attended to. This is why it’s useful to consider ways to manage chat interactions in the Amazon Connect console, particularly chat duration and using contact attributes. 
+
+Chat duration determines the length of time a chat session is active, and therefore, when a chat should end. Organizations can personalize the customer experience by dynamically leveraging contact attributes in the contact flow. Contact attributes store temporary information about a contact to use in the contact flow. For example, a Check contact attributes block can be added to a contact flow to determine which channel a customer uses to contact an organization. Then, the system can serve an appropriate greeting to the customer based on the channel they used. While there are other ways to customize and tailor the customer experience in Amazon Connect, this section hones in on ways to make the most out of the time customers spend while interacting with agents or Amazon Lex bots through chat.
+
+Chat durations
+
+By default, chat duration in Amazon Connect is set to 25 hours. This includes time spent waiting when a customer isn't active in the chat. For example, if a customer asks a question in chat, and then walks away to run errands, the chat and history can still exist when they return. After the 25-hour threshold is met, the chat conversation ends. If the 25-hour threshold doesn’t meet an organization’s needs, and the organization has implemented via the custom widget, for example by using the AWS GitHub repository of Amazon Connect Chat UI examples, then administrators can change chat duration using the StartChatContact API. When chat is deployed with the pre-build widget short code snippet, the code is not accessible to be modified. The StartChatContact API initiates a flow to start a new chat for a customer and sets the amount of time a chat session should exist. Administrators can configure chat conversations to be as short as one hour (60 minutes) or as long as seven days (10,080 minutes), which provides flexibility to set duration to a length that fits the organization’s requirements. Once in the StartChatContact API, administrators configure chat duration by adding the ChatDurationInMinutes parameter in the request syntax.
+
+Box around ChatDurationInMinutes parameter in the API request syntax.
+This API sets chat duration. If only chat duration is set, chat sessions will end once the agent disconnects the chat or the duration threshold is met, whichever comes first. To give customers the flexibility to leave and rejoin ongoing chat sessions an unlimited number of times, organizations should create a disconnect contact flow in the Amazon Connect console that has a Wait block in it. The maximum duration for Wait blocks is seven days. When determining the length of time for the Wait block, specify a wait time that is significantly shorter than the chat duration for a better customer experience. For example, if the chat duration is set to 24 hours, an organization could specify the wait time to be 12 hours. This gives the customer 12 more hours to rejoin the chat.
+
+If the wait time is too close to the chat duration time, it’s possible for a customer to return to a chat session right before it ends, and then be cut off because the session duration threshold is met. Continuing with the 24-hour chat duration example, if the wait time is configured for 23 hours, that only gives the customer one hour to return and complete a chat session. This means, it’s possible the chat could be cut off because it exceeds the 24-hour chat duration defined. When a customer rejoins an ongoing chat session, organizations can choose to put them back in queue or send them back to self-service where they have the opportunity to interact with Amazon Lex bots. For more information about chat session duration with an example using Wait blocks, see the Chat capabilities for Amazon Connect page in the Administrator Guide.
+
+Contact attributes
+
+Another aspect to consider when managing chat interactions is contact attributes. A contact is the owner of an interaction, for example a customer who starts a chat with an organization. Interactions can be a phone call or a chat that's with an agent or is an automated interaction using an Amazon Lex bot. Attributes are data associated with a particular contact. There are different types of contact attributes including system attributes provided by Amazon Connect such as a customer’s channel or name. For more information, see the Types of contact attributes section of What is a contact attribute? page in the Administrator Guide. 
+
+Contact attributes store temporary information about the contact to use in the contact flow so organizations can personalize the chat experience for customers. For example, when chat is initialized, a customer’s name can be captured and displayed instead of showing a generic term such as “customer.” This engages the customer and tailors the experience to them. This engages the customer and tailors the experience to them. Remember, that information such as customers’ names, addresses, and credit card information are sensitive. Be sure to follow the appropriate security practices to keep data safe and protect against attacks and bad actors. For more information about security practices while using contact attributes, see Pass contact attributes when a chat initializes in the Administrator Guide.
+
+Contact attributes can also be used to route a contact based on the customer’s channel. For example, an administrator can add a Check contact attributes block to an inbound contact flow to check the channel a customer uses to contact their center. Once the channel is identified, the flow branches accordingly. In a case where the customer reaches out to the organization via chat, an administrator can personalize the greeting for a chat experience instead of a voice experience–– adding to a more satisfying customer experience––and route the customer to a chat queue. For more information about routing based on a contact’s channel, see the Administrator Guide.
+
+Box around the check contact attributes operation called Checking: System, Channel, which determines customer channel.
+Additional resources to implement Amazon Connect Chat
+
+This lesson presented considerations for implementing chat in Amazon Connect. There are additional resources to help troubleshoot errors if you encounter any while implementing Amazon Connect Chat, as well as customization options using the ACPS API and AWS GitHub repositories.
+
+Amazon Connect Participant Service API
+
+When implementing Amazon Connect Chat, there are additional options to customize some of the functionality, such as creating automatic actions when a document is uploaded to the chat. The ACPS API is the API that provides another option of customizing certain functions of Amazon Connect Chat. This API is called by other AWS resources and external integrations to utilize the chat functionality. Understanding what the API does and where to find more information about it offers options to further customize the Amazon Connect Chat implementation.
+
+ The ACPS API allows an organization to perform requests that upload attachments to the chat, send messages to customers, and create participant connections. For example, when an agent or customer is uploading an attachment to their chat, the chat is utilizing the StartAttachmentUpload API call from the ACPS API. These requests are automatically made in the background of the Connect interface. Developers can also use these API calls through the AWS Command Line Interface (CLI) for testing and development. For more information on how to use the ACPS API and the API calls available, see Amazon Connect Participant Service API Reference.
+
+Implement sample chat applications
+
+AWS provides examples of common Amazon Connect Chat configurations to help with implementation. The AWS GitHub repository of Amazon Connect Chat UI examples provide the code for different implementations of Amazon Connect Chat to guide setup. To learn more, expand each of the following four categories. 
+
+
+Asynchronous Customer Chat UX
+–
+An asynchronous customer chat widget that allows a customer to leave a chat conversation with an agent mid-conversation and return to the same chat with the conversation information still saved. Asynchronous chat conversations have a customizable set time limit for saving the conversation details. Ideal to allow customers to respond at their own pace from any device. 
+
+
+StartChatContact API
+–
+A CloudFormation template that creates a chat widget that uses the StartChatContact API to allow the customer to start the chat. Ideal to use to get a basic customer chat functionality interface available to be used quickly.
+
+
+Interactive Message Example
+–
+An interactive message chat that allows personalized prompts that customers can easily select from. This template is ideal to use when customers should only select from a set list of questions for the agent to answer.  
+
+
+Custom Chat Widget
+–
+A JavaScript library for a custom chat widget to easily place a Chat Button, Chat Form or Chat Widget onto a webpage. This simplifies the process of implementing your own custom chat widget with the code to use as a starting point
+
+These code samples save time and effort by making the configurations simple to copy. Use these code packages to further customize the experience of customers using Amazon Connect Chat. 
+
+Troubleshoot Amazon Connect Chat
+
+If any errors occur when creating and customizing the Amazon Connect Chat experience, an administrator must know how to resolve them. This section goes through the customer facing error that appears during development and testing, and how an administrator can resolve it. Amazon Connect Chat also provides a service to subscribe to a real-time stream of chat messages. This lesson provides troubleshooting techniques when issues arise with real-time message streaming.
+
+Error in Widget
+
+If an issue arises with the Amazon Connect Chat widget, your customer's user interface displays the following “Something went wrong” error message within the chat widget.
+
+Error message in the chat widget states Something went wrong. Please refresh the page to retry, or try again later.
+To find out exactly what type of error is causing this message, open the browser tools and review the error code. The most common error codes and reasons are:
+
+Error code	Error reason
+400 Invalid request
+The request endpoint is formatted incorrectly. This usually occurs when the contents of the embed snippet have been modified. Ensure the embed snippet matches the code provided by Amazon.
+
+Alternatively, a 400 error displays if the chat widget is not being presented on the domain it was configured for. To resolve this error, ensure that the domain that hosts the widget is stated during widget configuration.
+
+401 Unauthorized
+There is a problem with the JSON Web Token (JWT) being used for your API call authentication. This could be caused if there is an invalid signature, an expired token, or you may need to add a callback function. Find exact details of the callback function required in the Troubleshooting section in the Administrator Guide.
+404 Not found
+The widgetId cannot be found. Check to make sure the widgetId matches what is in the Amazon Connect instance.
+500 Internal server error
+This can be a result of a role linked to this service not having required permissions to start the chat. Add the connect:* policy on the role that is associated with your Amazon Connect instance.
+For more information on troubleshooting these error messages, see the Troubleshooting issues with your chat widget in the Amazon Connect Administrator guide.
+
+Real-time message streaming
+
+Amazon Connect Chat can be used with Amazon SNS to subscribe to real-time chat messages. Amazon SNS delivers messages from publishers to subscribers by sending messages to an SNS topic. An SNS topic is an access point that acts as a communication channel. If messages are not being published to SNS when utilizing this feature, take another look at the SNS topic created in the AWS Account. Confirm that the following settings are correctly setup:
+
+
+bullet
+Ensure the SNS topic is correctly created. Events will not occur without an SNS topic created.
+
+
+bullet
+Use the standard SNS and not Amazon SNS FIFO (first in, first out). Currently the message streaming API only supports standard SNS for real-time streaming of messages.
+
+
+bullet
+In the Access policy tab, there must be an SNS resource-based policy on the SNS topic to publish it.
+
+
+bullet
+If server-side encryption on SNS is used, verify that connect.amazonaws.com permission is activated for encryption and decryption.
+
+If the message streaming flow doesn’t initiate, this generally points to an issue with Creating the Participant Connection. The flow begins only after the connection acknowledgement event.
+
+If errors persist, log into your AWS Management Console, then go to Support Center and submit a ticket. An AWS support representative will respond to your case to help personalize troubleshooting.
+
+Check your knowledge
+
+Select the correct answers and choose SUBMIT. For keyboard-only accessibility, press TAB to navigate to the correct answer, and press SPACEBAR to select. Repeat this step until all correct responses are checked, and press ENTER to submit.
+
+What are the advantages of a contact attribute? (Select TWO.) 
+
+Initiating a contact flow to start a new chat for a customer
+
+Correctly unchecked
+Routing a customer to the appropriate queue
+
+Incorrectly unchecked
+Using contact information to configure the length of chat or Lex session
+
+Correctly unchecked
+Storing information about a contact to personalize the customer experience
+
+Incorrectly unchecked
+Customers are automatically sent to the same agent they chatted with previously
+
+Incorrectly checked
+SUBMIT
+
+Incorrect
+Contact attributes are details about interactions a customer has with the contact center via a call, a chat, or an interaction with an Amazon Lex bot. Two advantages of contact attributes are to temporarily store information about a contact to improve the overall experience as well as routing the customer to the correct queue based on details about the contact such as the channel used to contact the organization.
+
+
+TAKE AGAIN
+Select the correct answer and choose SUBMIT. For keyboard only accessibility, press TAB then the ARROW keys to select the correct answer. Then, press TAB to navigate to the Submit button and press ENTER to continue.
+
+AnyCompany has successfully set up an Amazon Lex bot for customers to troubleshoot software via chat. If the customer cannot resolve their issue, the chat is escalated to a technician. What would the technician need to do to review the information that the customer has already gone over with the Amazon Lex bot?
+
+Open the Amazon Lex bot chat interface
+
+Correctly unselected
+Simply review the chat transcript
+
+Incorrectly unselected
+Ask the customer for the relevant details
+
+Correctly unselected
+Check the contact flow to see what was said
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+When an Amazon Lex bot is integrated with Amazon Connect Chat to allow a transfer to an agent, the interaction with the customer persists and is visible to the agent in the chat transcript.
+
+
+TAKE AGAIN
+Summary
+
+Service quotas refer to the maximum number of resources available in an AWS account for each service. Each instance of Amazon Connect offers many integrations and customizations, each with their own default quotas. Most service quotas can be adjusted to meet an organization’s needs by simply making a request to increase the service limit in Service Quotas in the AWS Management Console. To request a change to a quota that is not yet available in the AWS Management Console, administrators can fill out the Amazon Connect service quotas form. A key reason why quotas exist is to prevent organizations from provisioning more resources than needed. 
+
+Integrating with AWS services such as Amazon Lex, Lambda, and interactive messages requires that organizations first determine the functionalities needed to meet customer and business needs. Integrating Amazon Connect Chat with an Amazon Lex bot can facilitate self-service customer interactions that save the full transcript, and can make seamless transitions from a bot to an agent. When integrations match customer and business needs, organizations can create the robust and customizable chat experience that customers have come to expect and appreciate.
+
+Managing chat interactions, particularly chat duration and contact attributes, is a way to personalize the time customers spend with an organization’s contact center. Consider whether the 25-hour default chat duration fits the unique circumstances of your organization. If it doesn’t, organizations that deploy using a customized widget can adjust the duration of chats to be as little as one hour up to seven days by visiting the StartChatContact API and inputting the appropriate number of minutes a chat should last in the ChatDurationInMinutes parameter. When organizations implement chat using the pre-built widget, the code cannot be modified. Organizations should also consider how they want to personalize the chat experience for customers. For example, does it make sense for your organization to address customers by name? These are some key considerations when configuring the length of a chat experience for an organization’s customer base.
+
+Several additional resources are provided in this lesson. Some, such as the GitHub repository of Amazon Connect Chat UI examples, are provided to help organizations troubleshoot issues that might occur when implementing Amazon Connect. Others, such as the ACPS API, let administrators further customize the chat experience by letting customers upload documents to chat, for example.
+
+You have learned the key considerations an organization should account for when building out a customer experience in Amazon Connect Chat. Continue to the Summary lesson of this Implementing Chat in Amazon Connect course.
+
+Lesson 6 of 9
+Summary
+Amazon Connect is a convenient omnichannel cloud contact center service that lets organizations set up their contact center quickly and build voice and chat experiences once—saving time and effort from duplicative builds. You learned about Amazon Connect Chat, which helps organizations deliver personalized customer experiences by leveraging powerful integrations with AWS services for tailored, secure, and natural interactions. Organizations of all sizes, across industries have switched from on-premise contact centers to make life easier for agents, save on costs with a pay-as-you-go model, and more easily create experiences that delight and satisfy today’s customers.
+
+What is Amazon Connect Chat?
+One way Amazon Connect Chat helps organizations build delightful customer experiences is by allowing organizations to converse with customers in a flexible and convenient way. With chat, customers can interact with an organization through their business applications, websites, and mobile applications. Chat contacts are routed through an organization’s contact center using the same process as voice or task contacts. This allows agents to easily manage all interactions and provide faster customer support within a single user interface.
+
+
+
+Amazon Connect Chat offers built-in features, such as asynchronous messaging, and optional extensions, such as Amazon Lex, that allow organizations to build personalized customer experiences that best fit their business needs. Organizations can create automated support interactions while also allowing agents to chat with customers in real-time. The chat functionality of Amazon Connect helps an organization increase agent efficiency, automate business processes, increase customer satisfaction, and optimize business practices.
+
+Representation of a chat interaction between a customer and agent.
+Configure Amazon Connect Chat
+Amazon Connect Chat helps organizations optimize business practices by letting them build routing profiles once and use them across voice, chat, and task channels. If an organization wants an agent to receive chat contacts, the administrator needs to configure the routing profile to which an agent is assigned in order to:
+
+Accept chats and the number of chats an agent can have simultaneously
+Determine which queues the routing profile will contain, and configure priority and delay settings
+To determine how a customer is routed through the contact center, administrators need to create contact flows. Contact flows are the heart of the customer experience and are designed to work across all channels. This means one contact flow can include blocks that handle routing for calls, chats, and tasks, instead of building a new contact flow for each channel. As an organization grows, administrators can add more contact flows, queues and routing profiles, and reuse them across all channels to scale and continue delivering consistent customer experiences while also saving time on building.
+
+Representation of how a contact moves through a contact center.
+Integrate with Amazon Connect Chat
+On top of scaling easily, Amazon Connect Chat has five modes of utilizing the chat functionality, giving organizations flexibility to provide the best experience to their customers. Administrators can configure a chat widget in the Amazon Connect console that can be implemented without having to code a custom application. For branding restrictions, Amazon Connect provides an open source library on GitHub. This allows developers to build a customized chat widget according to the needs of their organization. Amazon Connect Chat also provides resources for integrating with Apple Messages for Business and messaging APIs for other third-party services like Facebook and SMS. Organizations with custom applications can integrate chat functionality with the use of Amazon Connect SDKs. These five modes create avenues for organizations to create a highly personalized customer experience that aligns with business requirements.
+
+Decision tree that shows different options for deploying a chat solution.
+Considerations
+Amazon Connect Chat helps organizations design personalized experiences for customers through powerful integrations. AWS has an extensive portfolio of solutions to enhance the chat experience in Amazon Connect. 
+
+Amazon Lex and AWS Lambda are utilized to provide a self-service experience with selectable pre-configured responses. If an agent is needed, Amazon Lex and AWS Lambda create a seamless transition to a live agent. 
+Contact attributes store temporary information about the customer in the contact flow to personalize the customer’s chat experience. 
+Organizations can integrate with Amazon Pinpoint to send texts directly to the customer and Amazon Simple Notification Service (SNS) to send real-time notifications to subscribers. 
+The Amazon Connect Participant Service (ACPS) API allows organizations to integrate Amazon Connect Chat functionality with external applications. 
+To ensure implementation of Amazon Connect Chat is as seamless as possible, AWS provides examples of common Amazon Connect Chat configurations in the GitHub Repository. Organizations can copy the code samples to save time and effort on implementation.
+When utilizing these solutions, remember the service quotas for Amazon Connect accounts that control the number of Amazon Lex bots allowed and the number of concurrent active chats available per instance.
+
+
+iconography of troubleshooting, customers and personalized experience.
+Moving forward
+
+The next course, Implementing Tasks in Amazon Connect, explores the Task feature of Amazon Connect. The course is ideal for those in roles of agents, administrators, quality analysts, supervisors, call center managers, developers, and AWS partners.
+
+Continue to the next lesson to assess your knowledge of material covered in the course you just completed.
+

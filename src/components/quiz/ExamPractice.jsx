@@ -33,11 +33,12 @@ export default function ExamPractice({ onStartExam, theme = "dark", onWorkspaceC
   const [vendorFilter, setVendorFilter] = useState("All tracks");
   const [selected, setSelected] = useState(null); // { slug, name, vendor }
   const [showClaude, setShowClaude] = useState(false);
+  const [showConnect, setShowConnect] = useState(false);
 
   useEffect(() => {
-    onWorkspaceChange?.(showClaude);
+    onWorkspaceChange?.(showClaude || showConnect);
     return () => onWorkspaceChange?.(false);
-  }, [showClaude, onWorkspaceChange]);
+  }, [showClaude, showConnect, onWorkspaceChange]);
 
   useEffect(() => {
     fetch("/data/exam-list.json")
@@ -80,6 +81,10 @@ export default function ExamPractice({ onStartExam, theme = "dark", onWorkspaceC
 
   if (showClaude) {
     return <ClaudeCertificationWorkspace theme={theme} onBack={() => setShowClaude(false)} />;
+  }
+
+  if (showConnect) {
+    return <AmazonConnectWorkspace theme={theme} onBack={() => setShowConnect(false)} />;
   }
 
   return (
@@ -147,10 +152,16 @@ export default function ExamPractice({ onStartExam, theme = "dark", onWorkspaceC
             exam={databricksStarter} examCount={allExams.filter((exam) => exam.vendor === "Databricks").length} onOpen={openExam}
           />
           <PathCard
-            theme="claude" vendor="Claude" icon="simple-icons:anthropic" color="#d97757" secondary="#e9b9a7" eyebrow="ASSOCIATE → DEVELOPER"
+            theme="claude" vendor="Claude" icon="simple-icons:anthropic" color="#d97757" secondary="#e9b9a7" eyebrow="ASSOCIATE → ARCHITECT"
             title="Claude certification path" description="Build disciplined Claude skills from structured prompting and output evaluation through APIs, agents, tools, MCP, and production delivery."
-            modules={["Associate foundations", "Developer systems", "Practice & review"]}
-            countLabel="2 certifications" onAction={() => setShowClaude(true)}
+            modules={["Associate foundations", "Developer systems", "Architect practice"]}
+            countLabel="3 certifications" onAction={() => setShowClaude(true)}
+          />
+          <PathCard
+            theme="connect" vendor="Amazon Connect" icon="logos:aws" color="#00a1c9" secondary="#7bd3e6" eyebrow="FUNDAMENTALS → SPECIALIST"
+            title="Amazon Connect path" description="Study the AWS contact center platform — routing, flows, chat and voice channels, analytics, AI, development, and administration."
+            modules={["Routing & flows", "Channels & analytics", "Development & admin"]}
+            countLabel="34 course modules" onAction={() => setShowConnect(true)}
           />
         </div>
       </section>
@@ -217,8 +228,21 @@ function ClaudeCertificationWorkspace({ theme, onBack }) {
     <section className="quiz-claude-workspace quiz-claude-workspace--embedded" aria-label="Claude certification workspace">
       <button className="quiz-claude-back" onClick={onBack}>← Back to certification paths</button>
       <div className="quiz-claude-frame-shell">
-        <div className="quiz-claude-frame-bar"><span><i /> Claude Certifications</span><small>Associate · Developer</small></div>
-        <iframe className="quiz-claude-frame" src={`/claude-certificate/index.html?theme=${childTheme}`} title="Claude Certifications — Associate and Developer courses" loading="eager" />
+        <div className="quiz-claude-frame-bar"><span><i /> Claude Certifications</span><small>Associate · Developer · Architect</small></div>
+        <iframe className="quiz-claude-frame" src={`/claude-certificate/index.html?theme=${childTheme}`} title="Claude Certifications — Associate, Developer, and Architect courses" loading="eager" />
+      </div>
+    </section>
+  );
+}
+
+function AmazonConnectWorkspace({ theme, onBack }) {
+  const childTheme = theme === "light" ? "light" : "dark";
+  return (
+    <section className="quiz-claude-workspace quiz-claude-workspace--embedded" aria-label="Amazon Connect workspace">
+      <button className="quiz-claude-back" onClick={onBack}>← Back to certification paths</button>
+      <div className="quiz-claude-frame-shell">
+        <div className="quiz-claude-frame-bar"><span><i /> Amazon Connect</span><small>34 course modules</small></div>
+        <iframe className="quiz-claude-frame" src={`/claude-certificate/index.html?theme=${childTheme}&track=amazon-connect`} title="Amazon Connect — course library" loading="eager" />
       </div>
     </section>
   );

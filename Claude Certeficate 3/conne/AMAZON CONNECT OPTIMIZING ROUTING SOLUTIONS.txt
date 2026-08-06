@@ -1,0 +1,964 @@
+Lesson 2 of 9
+Dynamic Routing Design
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore the use of a centralized configuration database.
+Select a solution to handle emergency use cases.
+
+Lesson introduction
+
+Key routing decisions occur before a call is answered. Amazon Connect uses tools such as data, real-time statistics, business rules, and calculated attributes to help inform these routing decisions. Contact center administrators can use these tools to implement efficient routing strategies, enhance customer experiences, and achieve improved business outcomes.
+
+Baseline routing design
+
+It is important to develop a baseline (bootstrap) pre-routing flow that runs across all contacts across similar contact center lines of business. The bootstrap flow sets the foundation for all flows and customer experiences in the contact center. You can manage your routing in a modular way and use a centralized configuration database that provides key settings for your flow.
+
+For example, you can use Amazon DynamoDB as the configuration database where you store a set of settings for your workloads. When a contact calls the contact center, the active flow uses the dialed phone number to retrieve the configuration for that specific workflow. The returned configuration values are then used as dynamic attributes for the following flows.
+
+Bootstrap architecture
+
+In this sample architecture, a contact reaches out to an Amazon Connect contact center, and a bootstrap flow module is activated. The flow module uses an Invoke AWS Lambda function flow block to search the configuration by using the dialed phone number. The Lambda function retrieves configuration data from a DynamoDB table. 
+
+To learn more, choose each of the seven numbered markers.
+
+Sample bootstrap architecture. Details provided in the numbered markers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The following are examples of configuration settings you can use as part of a bootstrap flow.
+
+
+did
+This setting represents the phone number dialed by the contact. This value is used as a search key to retrieve the rest of the values stored in the configuration table.
+
+
+is_emergency
+This setting is the emergency state flag used to activate an emergency mode experience. You can use this mode for situations when the contact center needs to shut down unexpectedly during open hours.
+
+
+offer_callbacks
+This setting is a flag that indicates whether the following flow actions include a callback offering.
+
+
+language
+This setting represents the configuration value for the language activated to play the emergency message.
+
+
+emergency_message
+This setting contains an emergency message to play for contacts when the emergency mode is activated by the is_emergency flag.
+
+
+default_greeting
+This setting contains the standard greeting message played for all incoming contacts.
+
+
+default_recording
+This setting contains a standard message that informs the contact about the call recording.
+
+
+out_of_hours
+This setting contains the message that informs the contact about the options available outside operating hours.
+
+These dynamic configuration settings help shape the customer's experience when they are interacting with your contact center. By keeping the configuration in one place, you can reduce the time required to maintain multiple flows while delivering a consistent experience every time. 
+
+The following code snippet is a JSON object that represents a sample DynamoDB configuration item. 
+
+{
+    "did": "+12015550112",
+    "is_emergency": false,
+    "offer_callbacks": true
+    "language": "en_US",
+    "emergency_message": "We are currently closed because of an emergency. Please try again later. We apologize for the inconvenience. Thank you, and goodbye.",
+    "default_greeting": "Thank you for contacting us.",
+    "default_recording": "All interactions might be monitored for quality assurance.",
+    "out_of_hours": "I'm sorry, our contact center is currently closed. Our normal hours are Monday through Friday, 7 a.m. through 9 p.m. and Saturday from 9 a.m. to 3 p.m. Please call back during those hours. Thank you. Goodbye."
+}
+
+Code transcript
+{
+"did": "+12015550112",
+"is_emergency": false,
+"offer_callbacks": true
+"language": "en_US",
+"emergency_message": "We are currently closed because of an emergency. Please try again later. We apologize for the inconvenience. Thank you, and goodbye.",
+"default_greeting": "Thank you for contacting us.",
+"default_recording": "All interactions might be monitored for quality assurance.",
+"out_of_hours": "I'm sorry, our contact center is currently closed. Our normal hours are Monday through Friday, 7 a.m. through 9 p.m. and Saturday from 9 a.m. to 3 p.m. Please call back during those hours. Thank you. Goodbye."
+}
+
+Bootstrap flow module
+
+Create a flow module that runs a Lambda function and queries a DynamoDB configuration table. The Invoke AWS Lambda function block retrieves the configuration settings for the flow. The Success and Error block exit branches offer different implementation flow actions. 
+
+In the following example, both exit branches lead to the same flow action: Return the control to the flow that invoked the module. 
+
+Amazon Connect flow highlighting a bootstrap flow module. The Invoke a Lambda function is highlighted.
+Retrieving the configuration data
+
+This image shows the Invoke AWS Lambda function block that retrieves the configuration settings for the flow.
+
+Invoke AWS Lambda function flow block.
+Set contact attributes flow block.
+Set contact attributes
+
+After the configuration is retrieved, you can associate the settings values to the current contact by using the Set contact attributes flow block. With contact attributes, you can make dynamic routing decisions. 
+
+Using dynamic configuration values
+
+After you associate the settings values with the current contact, you can dynamically adjust the contact experience without changing your flows.
+
+Playing the main greeting
+
+Use the default greeting configured in your DynamoDB table. You can change this setting in the configuration table at any time. Changing this setting will reduce your time to make changes to multiple flows that might use the same greeting. The contact attribute $.Attributes.main_hello contains the value retrieved from the default_greeting configuration setting. 
+
+In the following example of the Play prompt block, you can select the Text-to-speech or chat text options to manually set the contact attribute. 
+
+Screenshot of Play main greeting block with radio buttons for Text-to-speech or chat text and a manually selected option.
+Changing the analytics language
+
+Use the configured language setting to initialize the default language for Amazon Connect Contact Lens analytics behavior.
+
+The following image is a sample diagram of such a setting.
+
+Amazon Connect flow with the Enable Contact Lens with the all options block highlighted.
+Amazon Connect flow highlighting the Set recording and analytics flow block. The flow includes setting the logging behavior, checking contact attributes, setting different voices, and setting recording and analytics.
+
+Set recording and analytics block view.
+Dynamically setting language configuration
+
+Use the Set recording and analytics flow block to set the Contact Lens analytics language.
+
+Activating the emergency mode
+
+Use a flow module to check the configuration value for the emergency mode. Check the value of the is_emergency configuration setting to determine if the emergency mode is active. 
+
+If an emergency happens during the open hours, and the emergency mode is active, then play the configured message. If the contact center is closed, then play the configured message for the closed hours.
+
+The following sample diagram illustrates the emergency mode.
+
+Amazon Connect flow with Check hours of operation and Check contact attributes blocks highlighted.
+Amazon Connect flow highlighting the Check hours of operation and Check contact attributes blocks. The flow includes setting the logging behavior, setting attributes, playing prompts, and returning to the parent flow.
+
+Check hours of operation and Check contact attributes flow blocks.
+Checking the emergency flag during working hours
+
+This image provides an example. In this scenario, the emergency mode check happens only during operating hours. The Check contact attributes block implements the check condition for the is_emergency attribute received from the configuration.
+
+Offering a callback option
+
+Build your own logic for offering callbacks. The configuration option can include one or more settings that help make your flows more straightforward. For example, after the contact is ready to be queued, activate a callback module. The module can first check if the configuration setting for offering callbacks is active. Depending on this value, you can offer callbacks based on criteria that work best for your business.
+
+The following image illustrates a callback option.
+
+Amazon Connect flow module with the Check if we are offering callbacks at all option highlighted.
+Amazon Connect flow highlighting the Check contact attributes block. The flow includes setting the logging behavior, setting attributes, checking hours of operation, playing prompts, getting customer input, and returning to the main flow.
+
+Check contact attributes block.
+Checking the callback configuration setting
+
+Use the Check contact attributes block to validate whether a callback mode is active before continuing a flow.
+
+Flow design
+
+Natural disasters or local power outages can occasionally impact your contact center. Best practice recommendations advise you to design flows that adapt your routing configuration efficiently. You need to plan for the most appropriate ways to inform users of the situation and offer alternative options. Amazon Connect provides the flexibility to do this efficiently by using baseline routing.
+
+Administering dynamic configuration changes
+
+Using the previous bootstrap mechanism, you can empower system administrators and contact center managers to change flow configuration values in real time. You can develop a custom web interface to provide the necessary level of access, or you can create an administration support line. Administrators can use this dedicated line to change configuration values, such as the emergency mode, by using their phone.
+
+When implementing a remote configuration mechanism, you must always consider security. You can design your solution to only allow specific originating phone numbers to interact with the administration line, or you can implement PIN-based authentication.
+
+Using the same bootstrap architecture you explored in the previous section, you can do the following:
+
+1
+Add a new phone number dedicated to the administration support line.
+
+2
+Create a new configuration record in your DynamoDB table for this support line.
+
+3
+Create a flow that validates the caller so they can update the configuration settings.
+
+In the following configuration, only users calling from the two phone numbers configured in the allowed_callers array can update the configuration settings. They must dial the number configured in the did setting and authenticate with a secret access code. If all three conditions are met, the caller can change the outage configuration setting.
+
+{
+ "did": "+12015550324",
+ "allowed_callers": [
+  "+12015550245",
+  "+12015550403"
+ ],
+ "outage_secret": "488354"
+}
+
+Code transcript
+{
+"did": "+12015550324",
+"allowed_callers": [
+"+12015550245",
+"+12015550403"
+],
+"outage_secret": "488354"
+}
+
+Flow design steps
+
+From a flow implementation perspective, you can implement the following steps:
+
+1
+Greet the caller.
+
+2
+Retrieve the configuration, including the secret access code.
+
+3
+Ask the caller to enter the access code.
+
+4
+Validate the entry.
+
+5
+Check the current emergency status.
+
+6
+Provide the option to change it.
+
+7
+Verify the change.
+
+8
+Update the center state.
+
+Save and publish the flow, then assign it to the administration support line. With this implementation, you can set the contact center to activate and deactivate the emergency state without making changes to Amazon Connect flows. You can expand this concept so callers can make changes to other configuration elements. 
+
+The following image depicts a sample emergency flow.
+
+
+Amazon Connect sample flow for handling emergency mode. The flow includes checking and setting contact attributes, and playing prompts. You can download this sample in this lesson.
+
+To download the file attachment, choose anywhere inside the following box.
+
+Emergency_sample
+9.9 KB
+You can import the previous sample flow into your Amazon Connect instance by downloading the file.
+
+This is only a sample flow, and it will not work until you create all the resources referenced in the flow block configuration. To import the file, navigate to your Amazon Connect flow designer. Create a new Inbound flow, and use the Import button to upload the content of the attachment.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A contact center experience designer wants to develop a centralized configuration that applies across all contacts. What is a recommended approach?
+
+Use a NoSQL database such as Amazon DynamoDB to store configuration settings.
+
+Incorrectly unselected
+Hardcode the configuration settings in the Amazon Connect contact flows.
+
+Correctly unselected
+Make copies of flows to account for configuration differences.
+
+Correctly unselected
+Use AWS Lambda to generate dynamic configurations on each contact.
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+Use DynamoDB as a centralized configuration database to store settings that can be applied across all contacts.
+
+
+
+Hardcoding settings in contact flows would not allow for centralized, dynamic configuration across contacts. 
+
+
+
+Creating copies of flows with minor changes makes it difficult to make further common changes. By consolidating and using dynamic attributes, you can design, build, and test flows more efficiently.
+
+
+
+Using Lambda to dynamically generate configurations on each contact would be inefficient compared to retrieving centralized settings from DynamoDB.
+
+
+TAKE AGAIN
+An emergency has caused an unexpected shutdown at a contact center. The IT team needs to activate the emergency mode without making changes to the Amazon Connect flows. What should the team implement based on the architecture described?
+
+An administration line that allows updating the emergency state in the configuration database
+
+Incorrectly unselected
+A separate emergency flow that overrides the normal routing
+
+Correctly unselected
+Manual updates directly in the Amazon Connect flow interface
+
+Incorrectly selected
+A serverless function to monitor emergencies and update flows automatically
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Implement an administration line that can update the emergency flag in the configuration database to activate emergency mode without changing flows.
+
+
+
+Although a separate emergency flow can be implemented, the goal is to avoid changing the normal flows by using a centralized configuration.
+
+
+
+Manual updates are not recommended because the goal is to use a centralized, dynamically updated configuration.
+
+
+
+Although serverless can be used, the described approach uses an administration line to manually update the centralized configuration.
+
+
+TAKE AGAIN
+What's next?
+
+In this module, you have been introduced to how to implement a configuration flow that baselines global settings for your contact center. In the next lesson, you will learn how to handle unexpectedly high contact volumes.
+
+Lesson 3 of 9
+Handling Unexpected High Contact Volumes
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore queue metrics to inform routing decisions.
+Explore methods to reduce wait times and costs.
+
+Lesson introduction
+
+Contact centers often experience unpredictable volumes of contact interactions. Reasons can vary from marketing campaigns advertising new products to outages in specific areas or changes to the organization's web portal.
+
+In this lesson, you will learn how to handle an unexpected influx of interactions by using real-time queue reporting metrics or offering callbacks. You will also learn how to deflect contacts to communication channels that are less busy at the time of the interaction. 
+
+Using real-time metrics
+
+In Amazon Connect, you can access real-time queue reporting data in flows. You can use queue metrics to inform routing decisions and personalize experiences. By using reporting data, you can dynamically divert contacts to self-service options, callbacks, or other channels. This improves experiences and enhances operational efficiency. To use real-time data in your routing, you first need to retrieve the metrics. 
+
+Get queue metrics 
+
+Queue metrics block with example name and optional parameters selected, set manually by the queue.
+The Get queue metrics flow block retrieves real-time queue metrics for a queue. You can specify the queue by selecting it from a list, or you can do it dynamically by using a contact attribute. You can then use the metrics data in your flow to inform the next best routing decisions. The available queue metrics are returned as contact attributes in the Queue metrics namespace. With the Get queue metrics flow block, you can optionally specify the queue channel. 
+
+For example, you can retrieve metrics related only to the chat interactions queue.
+
+Check contact attributes
+
+After the metrics have been retrieved by using the Get queue metrics flow block, you can evaluate various conditions by using a Check contact attributes block. You can then create routing paths that meet your business requirements based on the metrics.
+
+This image illustrates the Check contact attributes block properties.
+
+Checking contact attributes properties block: block name, attributes to check, and conditions to verify.
+Check queue status
+
+Check queue status block with block name, metric, operator, value, and units options set.
+The Check queue status flow block provides the oldest contact time for a queue and the queue capacity. 
+
+For both the Get queue metrics and Check queue status flow blocks, you can choose the current or default queue the contact is about to be transferred to based on your routing logic. You can also explicitly specify a queue by selecting it from a list, or you can dynamically set it by using contact attributes. 
+
+This image illustrates the Check queue status block properties.
+
+Based on the conditions defined in the details of the Check queue status flow block, your block will have multiple exit points. The block creates different branches for each condition you define in the block configuration. 
+
+In the example, if the contact wait time exceeds 5 minutes, the exit branch Time in Queue > 5 activates the next action.
+
+Check queue status flow block highlighting Time in Queue greater than 5.
+Callbacks
+
+You can use the Amazon Connect queued callback feature to offer callbacks to voice contacts. Contacts can be called back when an agent is available without losing their position in the queue. You can choose to assign the callback to a different queue or leave the contacts in the current queue. Regardless of the option you choose, the contact will not lose their current position in the queue.
+
+When you assign the contact to a specific queue for a callback, you benefit from improved visibility in the number of callbacks to be processed. When you move the contact to a different queue for callback, you need to consider reporting. The reporting metrics for that contact are spread over two separate queues. The initial queue the contact was assigned to will include data for the contact before they were moved to the callback queue. The callback queue will include the metric data for the contact after they were assigned to the callback queue.
+
+To implement callbacks, you use the Transfer to queue flow block. You select the Transfer to callback queue option and configure it according to your requirements.
+
+The following image illustrates the Transfer to queue attributes block properties.
+
+An open Transfer to queue flow block.
+Open Transfer to queue Flow block. Configuration options include Block Name, Transfer to queue, and Transfer to callback queue with specific emphasis on settings such as Initial delay and duration in minutes for the Transfer to callback queue.
+
+You will need to configure three settings. Select each tab to find out more.
+
+
+Initial delay
+
+Maximum number of retries
+
+Minimum time between attempts
+Specify how much time must pass after a callback contact is initiated before the contact is put in the queue for the next available agent. In the example, the time is 10 seconds.
+
+
+
+Now that you have reviewed how to specify an initial delay, move to the next tab to learn about the maximum number of retries.
+
+Callback considerations
+
+You can offer a callback at any point in the experience before the contact is connected to an agent. Common use cases include offering a callback if a queue is at capacity or if a contact has been waiting for a long time. Proactively offering a callback to contacts prevents long wait times. This improves the customer experience and helps optimize costs. 
+
+It is a best practice to develop a flow module or a customer queue flow to determine when to offer callbacks. If the intent is to offer callbacks before the contact is queued, use a flow module. If the intent is to offer callbacks while the contact waits in the queue, the callback experience must be built into a queue flow. The following categories will explore these options in more detail.
+
+
+Consider operating hours when offering a callback
+Callbacks offered near the end of daily operations can be scheduled, but no agents will be available to answer. Similarly, callbacks offered outside the hours of operations will not be offered to agents until they log in. After applying the initial delay, the callback is put into the queue. It remains there until an agent is available to receive the contact.
+
+
+Check hours of operation
+Use the Check hours of operation flow block in Amazon Connect to offer callbacks only during specific hours. This option reduces the likelihood of calls being left in a queue at the end of the day. Stop offering callbacks ahead of the close of business so agents can complete all pending callbacks for that day before logging off.
+
+
+Consider offering scheduled callbacks
+For contacts that have a preferred contact time or that request a callback at end of the day, offering a scheduled callback provides a better experience. Use Amazon Connect Tasks to implement this experience. You can schedule tasks for specific dates and times and include all the originating contact data with the callback number. For advanced scheduled callback use cases, you can build additional logic and functionality with Amazon Connect and other AWS services.
+
+
+Check metrics and contact data before offering callbacks
+Callbacks do not reduce the call volume. Instead, they redistribute the volume over time. You can check the metrics and make callback decisions accordingly. Use contact preferences stored in your customer relationship management (CRM) system or in Amazon Connect Customer Profiles. With this data, you can dynamically filter and sort the options presented to the contact. You can then offer callbacks based on contact preferences and current contact center contact volumes by channel.
+
+Channel deflection
+
+Organizations can deflect voice traffic by updating information on their web portal. By using the GetCurrentMetricData API, developers can check the status of the phone and digital channel queues. With this approach, when call volumes are high, organizations can offer chat and SMS interaction options instead of voice. As contact volumes return to normal parameters, if the wait times are still high, a best practice recommendation is to offer a callback option.
+
+Organizations can also activate call deflection by using self-service options. For example, if a contact calls to check on order status, the routing strategy can offer information about the order. Alternatively, the system can send an SMS with a URL link that helps the caller get access to the required information. This type of contact deflection offers a seamless customer experience while reducing call center costs.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+An organization wants to use queue metrics to dynamically route contacts to self-service options or other channels based on real-time data. Which Amazon Connect flow block should the organization use?
+
+Check queue status flow block
+
+Correctly unselected
+Get queue metrics flow block
+
+Incorrectly unselected
+Transfer to queue flow block
+
+Incorrectly selected
+Check contact attributes flow block
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+The Get queue metrics flow block retrieves real-time queue metrics that can be used to inform routing decisions.
+
+
+
+The Check queue status flow block provides only the oldest contact time and queue capacity for a queue, not real-time queue metrics.
+
+
+
+The Transfer to queue flow block is used for transferring contacts to queues or callback queues, not retrieving metrics.
+
+
+
+The Check contact attributes flow block is used to evaluate contact attributes, not retrieve queue metrics.
+
+
+
+
+TAKE AGAIN
+An ecommerce company wants to deflect calls to digital channels when inbound contact volumes are high. Which approach should the company take?
+
+Use the GetCurrentMetricData API to determine contact center volumes and offer different channels based on real-time data.
+
+Incorrectly unselected
+Offer callbacks to all voice contacts to reduce inbound call volumes.
+
+Correctly unselected
+Route all voice contacts to a virtual assistant for self-service options.
+
+Incorrectly selected
+Remove the Contact Us page from the web portal.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+By using the GetCurrentMetricData API, developers can check the status of the phone and digital channel queues. With this approach, when call volumes are high, organizations can offer chat and SMS interaction options instead of voice.
+
+
+
+Callbacks do not reduce the call volume. 
+
+
+
+Not all workloads are appropriate for self-service options, so this solution might not always be viable.
+
+
+
+Removing the Contact Us page might relieve some volume, but it is not an ideal customer experience.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you have been introduced to the different strategies to handle high contact volumes and long wait times. In the next lesson, you will learn about routing fraudulent calls.
+
+Maximum number of retries
+
+Minimum time between attempts
+If you enter 1 for this setting, Amazon Connect will attempt a maximum of 2 callbacks: the initial callback and a retry. A retry happens only if the call rings but there is no answer. If the callback goes to voicemail, the contact is considered to be connected, and Amazon Connect does not retry the callback.
+
+
+
+Now that you have reviewed the maximum number of retries, move to the next tab to learn about the minimum time between attempts.
+
+Minimum time between attempts
+If the contact doesn't answer the phone, this setting indicates how long to wait until trying the callback again. In the example, the wait time between attempts is 10 minutes.
+Lesson 4 of 9
+Handling Fraudulent Calls
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore caller validation by using one-time passwords (OTPs).
+Explore deflection mechanisms for repeat callers.
+
+Lesson introduction
+
+Contact centers occasionally receive fraudulent phone calls. A fraudulent call is when the caller impersonates a contact by using an organization's existing customer phone numbers. Contact centers frequently become targets for social engineering, especially when they use automatic number identification (ANI) as a means of contact identification. Fraudulent calls lead to increased wait times, unexpected costs, or revenue loss for contact centers. In this lesson, you will explore patterns to mitigate the risk of fraudulent calls.
+
+Caller validation
+
+With caller validation, you verify contacts by asking them to enter a one-time password (OTP). The validation flow uses a Lambda function to generate the password and sends the password to the contact through email or SMS. The flow then asks the contact to enter the password they received. If the contact is successfully validated, the flow progresses with the interaction.
+
+Contact validation architecture
+
+You can create a flow module to implement repeatable functionality. For example, by creating a module, you can deploy and reuse contact validation functionality in all the flows that require validation.
+
+To learn more, choose the following eight numbered markers.
+
+Diagram of caller validation workflow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Repeat caller identification and deflection
+
+Contact centers encounter situations where multiple interactions originate from the same contact. Most of these repeat interactions are justified and have valid reasons for contacts getting back in touch. However, illegitimate interactions can sometimes occur, and they result in an increase in agent busy time. 
+
+You can implement logic in your flows to handle illegitimate repeat contact situations. One option is to give these contacts a lower priority when you suspect the contact is illegitimate. 
+
+If you suspect contacts are generated by automated systems, you can implement a validation action to test your assumption. For example, ask the contact to enter a randomly generated code. Human contacts can enter the appropriate information, but a machine will find it difficult to follow specific instructions. For illegitimate calls that reach agents, offer an option in the agent application where agents can flag these contacts.
+
+Implement strict guardrails and carefully consider classification criteria for illegitimate contacts. For example, phone number ownership can change. Calls that were previously identified as illegitimate from a specific phone number might not be illegitimate if the phone number ownership changes. 
+
+You can flag and track illegitimate calls by logging basic information in a data store of your choice. You can then analyze and identify patterns based on the frequency of occurrence, contact duration, and interval between contacts.
+
+The following architecture implements contact tracking. In this example, the contacts flagged as illegitimate are stored in a DynamoDB table. You can use this information to further refine your routing decisions. You can implement this logic in flow modules and in the agent applications.
+
+To learn more, choose the following eight numbered markers.
+
+Diagram of repeat caller identification and deflection.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A contact center administrator wants to implement caller validation by using one-time passwords (OTPs). Which step should the administrator take?
+
+Ask the caller to enter a predefined password for every call.
+
+Correctly unselected
+Ask the caller to verify their identity by entering an OTP sent through a secure channel.
+
+Incorrectly unselected
+Instruct the caller to provide their Social Security number for verification.
+
+Correctly unselected
+Validate the caller's identity by using their phone number.
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+The correct response is to ask callers to verify themselves by entering an OTP. Send it to the customer through a secure channel, such as email or SMS.
+
+
+
+Requesting a predefined password for every call is not a secure method of verification.
+
+
+
+Requesting sensitive information, such as Social Security numbers, is a security risk and not recommended for verification.
+
+
+
+Phone numbers can change ownership, which makes them unreliable for verification.
+
+
+TAKE AGAIN
+A contact center experience designer wants to implement a deflection mechanism for repeat callers. Which approach will deliver the best customer experience?
+
+Immediately disconnect any repeat caller without providing a reason.
+
+Correctly unselected
+Track incoming calls, log basic information in a data store, and use the information to refine routing decisions.
+
+Correctly selected
+Implement a system to block all phone numbers that have called the contact center more than five times in a month.
+
+Correctly unselected
+Randomly select a percentage of repeat callers, and put them on hold indefinitely.
+
+Correctly unselected
+SUBMIT
+
+Correct
+The correct response is to track incoming calls and log basic information for each caller in a data store. This information can be used to further refine routing decisions.
+
+
+
+Disconnecting repeat callers without any reason is not a recommended practice.
+
+
+
+Blocking phone numbers after a certain number of calls is not a recommended practice because phone number ownership can change.
+
+
+
+Putting callers on hold indefinitely without any reason is not a recommended practice.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you have been introduced to how to handle fraudulent calls with Amazon Connect. In the next lesson, you will learn about solutions that recover disconnected contacts and optimally resume interactions.
+
+Lesson 5 of 9
+Resuming Interrupted Interactions
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore solutions to resume interrupted multistep processes.
+Explore solutions to recover abandoned contacts.
+
+Lesson introduction
+
+Organizations offer customers different options to interact on their channels of choice. Customer interactions can be interrupted by factors beyond the contact center's control. In these circumstances, experience designers can implement logic that retains context, comprehends abandonment reasons, and manages interactions by taking a customer-centric approach. This lesson explores solutions that use previous context to resume interrupted interactions.
+
+Recovering multistep process interruptions
+
+Some of the contact center interactions involve multistep processes that can be disrupted if the contact cannot complete all the necessary steps. An example of such an interaction is making a payment. A payment workflow involves the following steps:
+
+Identify the bill the contact wants to pay.
+Specify the amount they want to pay.
+Select the account they want the payment to come from.
+Specify the date for the payment.
+If the contact gets disconnected after step 3, typically they would have to call back, authenticate, navigate the menu, and repeat steps 1–3.
+
+Solutions for mitigating interruptions
+
+To avoid impacting customer trust, organizations must efficiently mitigate the interruption of multistep processes by implementing recovery mechanisms. The following are two potential approaches to recover multistep interruptions:
+
+
+Track status by using Amazon DynamoDB
+
+Tracking progress by using Amazon Connect Cases
+Track the status of each step, and provide details about the data by using a nonrelational managed database such as DynamoDB. Check for interrupted processes for new contacts, and restore the existing context to reduce customer effort and ensure process continuity.
+
+
+
+Now that you have learned about how to track status, move to the next tab to learn about the tracking progress.
+
+Both approaches implement logic that checks for open processes or cases as part of the initial bootstrap flow. After the data is retrieved, the flow offers customers the option to resume the action where they left off.
+
+For each call, the flow logic checks whether an inbound call is part of an open process and handles routing accordingly. If no previous open process is found, the flow starts a new tracking process. During the contact interaction, the various steps are tracked in sequence. If the process is interrupted, the next time the contact reaches out, they will resume the process by following the open process branch. If the process continues and all steps are completed, the process is closed.
+
+The following diagram depicts the flow logic for an incoming call with no previous process open. Chose each of the four numbered markers to learn more.
+
+Diagram of the flow logic for an incoming call with no previous process open.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+If there is a previously open process, the flow retrieves the process data and resumes the interaction from where it was interrupted. If the process completes during the new interaction, the process is closed. 
+
+Chose each of the five numbered markers to learn more about how a previously interrupted process is resumed.
+
+Diagram of a call flow of a resumed call that was previously interrupted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Considerations
+
+Select a persistent unique identifier for your contact that can be used for the current interaction and future interactions. An example is a unique customer number or account number. In some situations, the phone number related to the contact account might be a viable option. However, the phone number does not always uniquely identify the contact because mobile phone numbers can change owners. 
+
+Another example where the phone number might not be available to use is when contacts use different channels to interact with the contact center. They might initiate a payment over a voice call, get disconnected, and then start a chat. Unless you ask the contact to enter their phone number while using a messaging channel, the phone number is not always available.
+
+If you use the Amazon Connect Cases solution, ensure that you open the case at the beginning of the process and close the case when the process is complete. With this option, you can manage multistep processes at scale without the use of any additional AWS services. When the contacts return, query for open cases, and use the data returned in the case fields to continue the process from the point where the process was interrupted.
+
+The following images depict how to use the Case flow block to check and update an existing case when a contact using the voice channel calls back.
+
+Configure case block options: Link contact to case and Request Fields, such as Case Reason, Customer, and Status.
+The Case flow block uses the customer number to retrieve an open case that has payment_tracker as the Case Reason. If no open case is found, the previous payment process was successfully completed. 
+
+If the previous payment process was interrupted, the case used as a payment tracker is still open.  
+
+You can use the data stored with the case, including the step where the process was interrupted. Some examples of Response Fields include Case Id, flow_module, last_step, and payment_amount. By using this data, your flow can resume the payment process from the point where the process was interrupted. With this approach, you can reduce customer effort and ensure a seamless contact issue resolution.
+
+Response Fields block.
+Recovering abandoned contacts
+
+During some interactions, contacts disconnect after waiting in the queue for longer than expected periods of time. The experience can be frustrating for contacts, and it can be damaging for a business both from a customer satisfaction and a business revenue perspective. 
+
+With Amazon Connect, organizations can define business rules to recover contacts who abandoned while waiting in the queue. To learn about the recommended steps for implementing recovery solutions for abandoned contacts, choose the following tabs.
+
+
+Defining an abandoned contact
+
+Selecting the contacts to recover
+
+​Selecting the approach to recover contacts
+
+
+From a reporting standpoint in Amazon Connect, any call that enters a queue and never connects to an agent is an abandoned call. This definition is correct from a reporting standpoint, but organizations are more selective when deciding which abandoned calls to recover. 
+
+
+
+Now that you have learned about abandoned contacts, move to the next tab to learn about the approaches organizations use to select the contacts to recover.
+
+Regardless of the approach, the key steps are to recognize the abandoned call, store the customer's data, and call them back. Organizations should also have a mechanism to remove the tracking if the customer calls back on their own.
+
+Architecture of a callback flow
+
+In this example architecture, the organization processes contact records sent from Amazon Connect to the configured Amazon Kinesis Data Streams. A Lambda function is invoked when a record or batch of records enters the stream. The function identifies if the record was an abandoned call. It then retrieves the configuration data from DynamoDB. This data includes the queue time threshold for an abandoned call. It also includes the flow to use when calling the customer back and the queue to place the call in when requeuing. 
+
+If the function determines the call is recoverable, it places an outbound call by using the StartOutboundVoiceContact API. The customer answers, hears the message, and then chooses if they want to speak with a representative. If so, a callback is set, and the customer is called when an agent is available. 
+
+To learn more, choose the following seven numbered markers.
+
+Diagram of the architecture of a callback flow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The following image depicts a potential implementation of the callback flow. In this implementation, the Play prompt asks the contact to press 1 if they still need assistance. If the contact selects this option, they get placed back into a queue to talk to an agent.
+
+Set logging behavior flow: Success. Play prompt: Success. Get customer input: Pressed 1. Transfer to queue.
+The previous example is only one of the approaches organizations can take to recover abandoned calls. Regardless of the approach you take, the common pattern typically includes the following steps:
+
+Define which abandoned calls the organization wants to recover.
+Capture relevant data about the abandoned calls.
+Determine the most appropriate engagement model for reaching out to and reconnecting with customers.
+Design the customer experience for the recovery process.
+Implement a mechanism to track the status of the recovery efforts, and clear the tracking when customers call back on their own.
+By following this structured approach, organizations can develop a tailored solution for recovering abandoned calls that aligns with their business requirements and customer service objectives.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+AnyCompany identifies a large number of abandoned calls in their strategic customer queue. AnyCompany hires a consultant to help design a cost-effective solution to reach out to strategic callers who abandon calls and get feedback from the callers about the reason for the abandonment.
+
+ 
+
+What are the first two steps the consultant should take to implement a solution that improves the customer experience? (Select TWO.)
+
+Define the mechanism to track the status of the recovery.
+
+Correctly unchecked
+Define which abandoned calls must be recovered.
+
+Incorrectly unchecked
+Determine the most relevant engagement model for the contact.
+
+Correctly unchecked
+Capture the most relevant data about the abandoned call.
+
+Correctly checked
+Design the customer experience for the recovery process.
+
+Incorrectly checked
+SUBMIT
+
+Incorrect
+The common pattern to recover abandoned calls includes the following steps:
+
+Define which abandoned calls the organization wants to recover. 
+Capture relevant data about the abandoned calls. 
+Determine the most appropriate engagement model for reaching out to and reconnecting with customers. 
+Design the customer experience for the recovery process. 
+Implement a mechanism to track the status of the recovery efforts, and clear the tracking when customers call back on their own.
+
+TAKE AGAIN
+AnyCompany Tech sells innovative gaming accessories. The company has a small team with no internal development resources. A customer, Kwesi Manu, is using an Amazon Connect self-service payment option to pay for a product he is ordering online from AnyCompany Tech. Kwesi enters the invoice number and amount to pay. Before Kwesi can complete the transaction, the internet connection drops, and the interaction is interrupted. A few minutes later, the connection returns, and Kwesi reconnects to complete the transaction.
+
+
+
+Which approach can AnyCompany Tech implement to reduce Kwesi's effort after the interaction is interrupted?
+
+
+
+Ask Kwesi to start the payment process from the beginning to avoid any confusion. 
+
+Correctly unselected
+Use a nonrelational managed database, such as Amazon DynamoDB, to track the process and restore the existing context. 
+
+Correctly unselected
+Use Amazon Connect Cases to track the process progress and resume from where the interaction was interrupted.
+
+Correctly selected
+Ask the customer to provide all the details again because the previous context cannot be retrieved. 
+
+Correctly unselected
+SUBMIT
+
+Correct
+There are two potential approaches to recover multistep interruptions. However, because AnyCompany Tech does not have any developers on staff, they can use Amazon Connect Cases to track process progress and restore the context of the previous interaction. This approach uses the built-in functionality of the Amazon Connect flows and does not require additional development resources.
+
+
+TAKE AGAIN
+What's next
+
+In this lesson, you have been introduced to how to identify and build optimized business processes to seamlessly recover customer contacts. Continue to the next lesson to review the course summary and prepare for the end-of-course assessment.
+
+Tracking progress by using Amazon Connect Cases
+Use Amazon Connect Cases to track process progress. This approach uses the built-in functionality of Amazon Connect flows and does not require additional development resources.
+
+Selecting the contacts to recover
+
+​Selecting the approach to recover contacts
+Organizations are selective in determining which abandoned calls to follow up on. When deciding which contacts to recover, organizations typically take into consideration factors such as the following:
+
+The total queue time before the abandon
+Self-service attempts before the abandon
+The queue the contact was waiting in before the abandon
+Contact-specific data, such as a high loyalty level or account status
+Current call volumes or the longest wait times at the time of the abandon
+Now that you have learned about how organizations select which contacts to recover, move to the next tab to learn about recovering strategies.
+
+​Selecting the approach to recover contacts
+After deciding which abandoned calls to track, organizations must determine the most appropriate approach to recover them. There might be valid reasons why a customer disconnected. 
+
+
+
+Common approaches considered for recovering abandoned contacts include the following:
+
+Place an outbound call to the contact, and play an automated message. For example, the message might say, "We are sorry you disconnected. If you still need assistance, please press 1, and we will be happy to serve you." This approach uses contact data to determine the original queue time and age of the contact.
+Place a callback in the queue on the customer's behalf using the same model as a web-based callback.
+Send the contact an SMS message providing a dedicated phone number to call so they can reconnect.
+
+Lesson 6 of 9
+Summary
+Course summary
+
+In this course, you learned advanced routing strategies in Amazon Connect, focusing on implementing dynamic inbound routing to enhance customer experiences and operational efficiency. You explored foundational routing design principles and how to handle high contact volumes, how to mitigate fraudulent calls, and how to recover interrupted customer interactions. 
+
+Take a moment to review these key concepts in the course summary before taking the course assessment. 
+
+Concepts
+Implementing foundational routing design: Develop a baseline pre-routing flow that runs across all contacts. Use a centralized configuration database, such as Amazon DynamoDB, to store global settings. Implement an administration line to remotely update configurations during emergencies.
+
+
+
+Handling high contact volumes: Use real-time queue metrics from the Get queue metrics flow block to inform routing decisions. Offer callbacks by using the Transfer to queue flow block to reduce wait times. Take advantage of channel deflection by offering chat or self-service options based on contact center volumes.
+
+Mitigating fraudulent calls: Implement caller validation by using OTPs sent through secure channels, such as SMS or email. Track incoming calls and log data to identify and deflect repeat callers causing issues.
+
+Recovering interrupted interactions: Implement business task tracking by writing the status of each step in the process and additional data to a tracking database or by using Amazon Connect Cases. Recover abandoned calls by processing contact trace records, identifying abandoned calls based on criteria, and reaching out to customers through outbound calls or callbacks.
+
+Considerations
+Security: Implement security measures such as phone number allowlists or PIN-based authentication for remote configuration updates. Carefully handle sensitive information such as OTPs and Social Security numbers.
+
+Operating hours: Consider operating hours when offering callbacks to ensure that agents are available to handle them. Stop offering callbacks ahead of closing time so agents can complete pending callbacks.
+
+Customer experience: Implement guardrails when deflecting calls based on arbitrary information to avoid negatively impacting legitimate customers. Provide clear communication and options when recovering abandoned calls.
+
+Use cases
+Emergency activation: Use the administration line to activate emergency mode remotely during unexpected outages or natural disasters, informing customers and offering alternative options.
+
+Channel deflection: Offer chat or self-service options instead of voice calls when inbound contact volumes are high based on real-time metrics from the GetCurrentMetricData API.
+
+Repeat caller identification: Analyze incoming call data to identify and deflect repeat callers causing issues, potentially implementing lower priority queuing or deflection mechanisms.
+
+Recoverable business processes: Track multistep processes such as payments or account updates so customers can resume interrupted interactions without repeating previous steps.
+
+Abandoned call recovery: Identify abandoned calls based on criteria like queue time or customer characteristics. Reach out to customers with outbound calls, callbacks, or SMS messages to reconnect them with agents.
+
+

@@ -1,0 +1,1523 @@
+Lesson 2 of 31
+Introduction to Advanced Contact Flow Design
+Section objectives
+
+In this section, you will learn to recognize best practices for the following:
+
+Creating personalized customer experiences by using dynamic attributes
+
+Building reusable components to streamline contact flow development
+
+Implementing effective error handling to ensure smooth customer interactions
+
+
+Section introduction
+
+Have you ever called a company and been amazed when their system already knew who you were and what you might need help with? Behind that seamless experience is some clever contact flow design. In this section, you will explore how to create these personalized experiences for your customers by using the advanced flow techniques of Amazon Connect.
+
+Lesson 3 of 31
+Dynamic Attributes and Personalization
+Contact attributes in Amazon Connect are like digital sticky notes that follow a customer's interaction throughout their journey. They store important information that can be used to personalize the experience.
+
+
+User-defined attributes
+For all other attributes Amazon Connect defines the key and value. For user-defined attributes, however, you provide a name for the key and the value.
+
+To learn more, visit the User attributes section(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+
+System attributes
+These are predefined attributes in Amazon Connect. You can reference system attributes, but you cannot create them. These attributes contain information such as the customer's phone number.
+
+To learn more, visit the System attributes section(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+
+Lambda contact attributes
+Lambda contact attributes are returned as key-value pairs from the most recent invocation of an Invoke AWS Lambda function block. Lambda contact attributes are overwritten with each invocation of the Lambda function.
+
+To learn more, visit the Lambda contact attributes section(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+
+Flow attributes
+Flow attributes are like a type user-defined attribute, however, they are restricted to the flow where they are set.
+
+To learn more, visit the Flow attributes section(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+For referencing contact attributes in Amazon Connect, you need to use specific JSON syntax. While these are the most commonly used attributes in contact flows, you can find the complete list and their corresponding JSONPath references in the Amazon Connect Administrator Guide. For more information, visit the List of available contact attributes in Amazon Connect and their JSONPath references(opens in a new tab).
+
+Insider tip: Lambda contact attributes may also be referred to as an External attribute due to their JSONPath namespace: $.External.attributeName
+
+Real-world application of attributes
+
+Imagine a customer calls your airline's support line. Using the incoming phone number, you can look up their account details and create a personalized greeting.
+
+Example: "Hello Sarah, thanks for being a Gold member with us for 5 years! I see you have an upcoming flight to Chicago tomorrow."
+
+To learn more about contact attributes, choose the START or arrow buttons to display each of the three steps.
+
+
+1
+2
+3
+4
+
+
+
+Create dynamic text strings in Play prompt blocks in Amazon Connect
+Follow these steps to reference a dynamic contact attribute in Flow Designer.
+
+Contact attributes are used in any number of scenarios in a contact flow. In this example, you want to play a custom greeting to callers.
+
+Navigate to Flow Designer
+Amazon Connect flows console page.
+
+In the Amazon Connect console, create a new flow or select an existing flow.
+
+Step 2
+Get customer information from a database
+Invoke Lambda function flow block in Flow Designer.
+
+Use a Lambda function to return values from your customer database for FirstName and LastName of the caller.
+
+Using a Lambda function to retrieve information is a multi step task. To learn more, visit the Connect Lambda Functions(opens in a new tab) in the Amazon Connect Administrator Guide.
+Step 3
+Use the values in a flow
+Amazon Connect Play Prompt block in Flow Designer.
+
+You can now use these attributes to say the customer’s name in a Play prompt block.
+
+Step 4
+Dynamically assign the attribute value
+Use dynamic values from the external attributes to set the value of the greeting.
+
+To set the greeting based on information retrieved from your database select the Play prompt block, choose Text-to-speech or chat text and then select Set manually. Next, enter the greeting and JSONPath for the values in the text box.
+
+Lesson 4 of 31
+Creating Custom Blocks and Reusable Components
+One of the most powerful features in Amazon Connect is the ability to create reusable modules. These modules are like building blocks that can be used across multiple flows, which save you time and ensure consistency.
+
+Flow modules explained
+
+Flow modules are reusable sections of a flow that you can create once and use multiple times. Think of them like functions in programming—write once, use many times.
+
+Use flow modules for the following:
+
+•
+Authentication processes that are used in multiple flows
+
+•
+Standard greetings or disclaimers
+
+•
+Error handling routines
+
+•
+Data collection sequences, such as gathering customer information
+
+Insider tip: Not all flows support the use of modules.
+
+Modules are only supported by the following inbound flow types:
+
+•
+Inbound flow
+
+•
+Campaign flow
+
+Real-world application
+
+You are building a number of different contact flows that will verify a callers' identity. Instead of recreating this in each flow, you can create a flow module that handles the verification. You can reuse the module rather than rebuilding this logic each time.
+
+To implement the flow module, follow this procedure:
+
+Create a customer verification module that does the following:
+
+Asks for account information
+
+Validates the input against your database with a Lambda function
+
+Returns a success or failure result
+
+Customer verification module blocks.
+
+Use the Invoke module(opens in a new tab) flow block and reference the module in any flow where verification is needed.
+
+Invoke module flow block for the Customer Verification module.
+
+Insider tip: Modules centralize logic in a single location, ensuring all flows automatically leverage the most recent published version, eliminating redundancy and maintaining consistency across your system.
+
+Lesson 5 of 31
+Error Handling and Recovery Patterns
+Even the best-planned flows can run into unexpected problems. By adding graceful error handling, you can make sure your customers have a smooth experience no matter what happens behind the scenes. Well-architected systems have robust error handling strategies that detect problems as they occur. These strategies can be used to create actionable solutions, such as diverting contacts or alerting contact center managers. This can prevent minor issues from cascading into significant service disruptions.
+
+
+Common Error Scenarios
+
+Error Handling Strategies
+Common error scenarios include the following:
+
+Failed connections to external services
+
+Customers providing invalid inputs without error checking
+
+System limitations (such as attribute size exceeding 32 KB)
+
+Now that you have reviewed common error scenarios, move on to the next tab to learn about error handling.
+
+The following interaction presents you with one scene that simulates dialogue with a character. Choose the appropriate response to receive feedback from your decision and move ahead. To start the scenario interaction, choose Continue.
+
+Linda is wearing business casual clothing. She is standing in a hotel lobby and has a neutral expression.
+
+
+Handling database connection failures
+Even the best-designed flows can encounter problems. Effective error handling promotes a smooth experience for your customers, even when things don't go as planned.
+
+CONTINUE
+Best practices for error handling in Amazon Connect
+
+In Amazon Connect, error handling best practices focus on proactive error prevention, error logging and monitoring, clear error messages for agents and customers, and automated error recovery.
+
+
+Proactive error prevention
+Implement Graceful Degradation
+
+Design fallback options when services are unavailable
+
+Create simplified alternate flows during outages
+
+Provide agent escalation paths for system failures
+
+Implement Input Validation
+
+Verify customer inputs before processing
+
+Set appropriate retry counts for customer inputs
+
+Provide clear instructions when invalid data is entered
+
+
+Error logging and monitoring
+Cross-System Error Correlation
+
+Linking Amazon Connect errors with external systems
+
+Database failure impact tracking
+
+CRM integration error detection
+
+Third-party service disruption correlation
+
+End-to-end customer journey error mapping
+
+Log and Monitor Errors
+
+Enable contact records for error tracking
+
+Set up Amazon CloudWatch alarms for error thresholds
+
+Create dashboards to visualize error patterns
+
+Review CCP logs using Amazon Connect CCP Log Parser(opens in a new tab)
+
+
+Customer and agent communication
+Transparent Error Communication
+
+Clear messaging to customers when errors occur
+
+Avoidance of technical jargon in customer-facing error messages
+
+Real-time status updates during system disruptions
+
+Setting appropriate expectations about resolution timeframes
+
+Confirmation of issue receipt and tracking
+
+Agent Error Notification System
+
+Immediate alerts to agents when systems fail
+
+Error context provided in the Agent Workspace
+
+Guidance scripts for communicating specific errors to customers
+
+Visual indicators for different severity levels
+
+Quick access to known issue repository
+
+
+Automated recovery strategies
+Flow Fallbacks
+
+Alternative branches for different error scenarios
+
+Default paths when primary services are unavailable
+
+Simplified flows that execute during system degradation
+
+Error-specific recovery flows triggered by error types
+
+Dynamic flow switching based on system health checks
+
+Queue Management Recovery
+
+Automatic queue overflow handling
+
+Dynamic re-queuing based on error conditions
+
+Queue priority adjustments during system stress
+
+Alternate queue routing during primary queue failures
+
+Callback options automatically offered during queue errors
+
+To learn more about error handling techniques, choose any of the numbered markers.
+
+Contact flow with error handling callouts.
+
+
+
+To learn more, visit the Troubleshooting Issues with the Contact Control Panel(opens in a new tab) in the Amazon Connect Administrator Guide.Error Handling Strategies
+To create a robust error handling system, consider the following:
+
+Always use error branches: Every block that could potentially fail should have its error path handled gracefully to maintain a positive customer experience.
+
+Provide clear customer messaging: When errors occur, explain clearly what happened and what the customer should do next, if needed.
+
+Create recovery options: Give customers a way to retry or speak to an agent.
+
+Log errors for analysis: Use contact attributes to track what went wrong for later improvement.
+Lesson 6 of 31
+Best Practices for Complex Flows
+As your customer experience grows more sophisticated, keeping them manageable becomes crucial. Consider these best practices to streamline your complex flows:
+
+
+Naming and documentation
+Use descriptive naming conventions for flows, blocks, and attributes.
+
+Document your flows with comments and clear structure.
+
+Create a standardized naming system across your organization.
+
+
+Visual organization
+Use color-coded branches to visually distinguish different paths.
+
+Break complex logic into modules for better organization.
+
+Use the search function to quickly find blocks in complex flows.
+
+
+Testing strategy
+Create test cases that cover all possible paths.
+
+Test thoroughly with different scenarios and edge cases.
+
+Validate each individual error handling path.
+
+
+Maintenance considerations
+Plan for regular reviews and updates.
+
+Document dependencies between flows.
+
+Consider how changes might impact other parts of the system.
+Lesson 7 of 31
+Knowledge Check
+The following questions will check your understanding of Amazon Connect advanced contact flow design.
+
+A financial services company wants to personalize their Amazon Connect contact flows based on the customer's account type (Gold, Silver, Bronze). When a customer calls, the company plans to retrieve the account type from their customer relationship management (CRM) system.
+
+How should they implement personalized greetings based on the customer's account type?
+
+
+Use an AWS Lambda function to analyze the customer's call history and determine the appropriate greeting.
+
+Correctly unselected
+
+Set up dynamic attributes to store the account type and reference it in flow prompts.
+
+Incorrectly unselected
+
+Create separate flows for each account type and manually transfer customers.
+
+Correctly unselected
+
+Use Amazon Lex to ask customers about their account type before routing the call.
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+Using Amazon Lex to ask customers about information they already have in their systems creates unnecessary friction in the customer experience.
+
+
+TAKE AGAIN
+A retail company needs to implement the same payment verification process in multiple contact flows throughout their Amazon Connect instance. The development team aims for consistent implementation and streamlined future updates.  
+
+What is the MOST efficient approach?
+
+
+Duplicate the payment verification blocks in each flow.
+
+Correctly unselected
+
+Create a separate AWS Lambda function for each flow.
+
+Incorrectly selected
+
+Create a flow module for payment verification and reference it in each flow.
+
+Incorrectly unselected
+
+Store the payment verification code in Amazon S3 and use an AWS Lambda function to retrieve it.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Creating separate Lambda functions would lead to code duplication and inconsistency.
+
+
+TAKE AGAIN
+A healthcare provider's contact center experiences occasional failures when trying to retrieve patient records.
+
+What is the MOST effective approach to implement error handling in their Amazon Connect contact flow?
+
+
+End the contact whenever an error occurs and ask the customer to call back.
+
+Correctly unselected
+
+Create a specialized error branch for each possible error scenario in the flow.
+
+Correctly unselected
+
+Use error branches on integration points with default fallback messages and self-service alternatives.
+
+Correctly selected
+
+Always transfer to an agent when any system error occurs.
+
+Correctly unselected
+SUBMIT
+
+Correct
+Error branches in Amazon Connect contact flows provide a way to handle failures gracefully. Adding default messages and self-service alternatives helps ensure customers have options even when integrations fail.
+Lesson 8 of 31
+Summary
+In this section, you learned how to design advanced contact flows in Amazon Connect using dynamic attributes, reusable components, and effective error handling. These techniques help create personalized and reliable customer experiences.
+
+In the next section, you will learn how Amazon Connect integrates with other supporting services.
+Lesson 9 of 31
+Introduction to AWS Service Integration
+Section objectives
+In this section, you will learn to recognize best practices for the following:
+
+Configuring Lambda functions to enhance contact flows with external data
+
+Implementing Amazon Lex bots for natural language interactions
+
+Integrating Amazon Connect with databases and voice services for enhanced functionality
+
+
+Section introduction
+
+Have you ever wondered how some customer service systems seem to know everything about you and your history with the company? Or how they can understand what you're saying in natural language? The magic behind these capabilities is AWS service integration! In this section, you will explore how to supercharge your Amazon Connect implementation by connecting it with other powerful AWS services.
+
+Lesson 10 of 31
+AWS Lambda Integration
+AWS Lambda provides the ability to run code without provisioning or managing servers. When Lambda is integrated with Amazon Connect, you can create dynamic, data-driven experiences by connecting to external systems and databases. To learn more, visit the What is AWS Lambda(opens in a new tab) in the AWS Lambda Developer Guide.
+
+You will now review Lambda integrations for your contact center. To learn about Lambda integration with Amazon Connect, choose each of the numbered markers.
+
+Amazon Connect to Lambda integration setup screen.
+
+
+To learn more, visit the Grant Amazon Connect access to your AWS Lambda functions(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Real-world application
+
+Consider a scenario where a customer calls about their recent order. The following flow chart shows the steps for how you might use Lambda. To learn more about how Lambda would handle their request, choose each of the numbered markers.
+
+
+Insider tip: Add a Play prompt block between Lambda functions to prevent silence.
+
+Implementing the Insider tip in your flows preserves seamless customer interaction while background processes execute efficiently. Brief prompts reassure callers that their interaction remains active. Customers won't experience awkward pauses or think the call disconnected. Use simple messages like, "Processing your request," to bridge the gap during data processing.
+
+Lesson 11 of 31
+Amazon Lex Integration
+Amazon Lex is a conversational AI service that integrates with Amazon Connect to power natural language understanding and conversational interactions with customers. By using Amazon Connect with Amazon Lex, customers can speak their responses or press buttons on their keypad to navigate menus and access services.
+
+This integration allows self-service capabilities like checking account balances or routing to the appropriate department through natural conversation flows. This enhances the customer experience while reducing the need for human agent intervention for basic inquiries.
+
+
+Benefits of Amazon Lex integration
+
+Amazon Lex best practices
+Natural conversation experiences
+
+Intent recognition to understand what customers want
+
+Collection of required information
+
+Processing both voice and chat interactions
+
+Multi-language support
+
+Setting up Amazon Lex with Amazon Connect
+
+Setting up an Amazon Lex bot in Amazon Connect involves creating a bot with specific intents in the Amazon Lex console. You then integrate the bot with your Amazon Connect instance through a flow.
+
+Adding Amazon Lex to Amazon Connect requires a number of steps that occur outside of Amazon Connect. To learn how, visit Add an Amazon Lex bot to Amazon Connect(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Real-world application of Amazon Lex
+
+Instead of a traditional interactive voice response (IVR) menu saying, "Press 1 for billing, press 2 for technical support," an Amazon Lex powered system can simply ask, "How can I help you today?" The customer might respond, "I need help with my internet connection." Amazon Lex would recognize this as a technical support intent and then proceed to collect relevant information about the customer's problem.
+
+Amazon Lex is covered in more detail in Amazon Connect AI Fundamentals curriculum. To learn more about Amazon Lex, see the Amazon Lex Developer Guide.
+
+Amazon Lex best practices
+Provide simple and realistic phrases (utterances) as training sets.
+
+Regularly review bot performance and update your utterance sets.
+
+Give clear prompts that guide users toward supported intents.
+
+Plan for fallback scenarios when customer intent is unrecognized.
+
+Use synonyms to handle different ways that customers might express the same intent.
+
+Now that you have reviewed common best practices, move on to the remaining content.
+Lesson 12 of 31
+Database Connections
+Connecting Amazon Connect to databases makes it possible for you to personalize experiences based on customer data and record interaction information for future use. The following steps discuss the general needs to integrate Amazon Connect and your database.
+
+Understand the use case
+Common database integration scenarios include the following:
+
+Customer profile lookups
+
+Order history retrieval
+
+Account status verification
+
+Storing customer preferences
+
+Recording interaction outcomes
+
+Choose the right connection method
+Connection methods include the following:
+
+Through Lambda (most common approach): Lambda functions act as the intermediary between Amazon Connect and your database.
+
+Through Amazon API Gateway: Use this method for more complex integrations with authentication requirements.
+
+Direct to Amazon DynamoDB: Use this method is for simpler use cases with Lambda.
+
+Implement the integration
+Follow these general steps:
+
+Set up proper permissions for Lambda to access your database (RDS, DynamoDB, other AWS databases or an on-premise database)
+
+Code Lambda functions to perform create, read, update and delete (CRUD) operations on your database based on contact interactions.
+
+Pass relevant customer data between Connect and your Lambda using contact attributes.
+
+Validate the end-to-end flow
+
+Additional steps may be needed based on your system configuraion. Please consult with appropriate resources to determine specific requirements to connect to your database.
+
+Apply best practices
+Cache frequently accessed data to improve performance.
+
+Plan for database unavailability in your flows.
+
+Be mindful of security when storing and accessing customer data.
+
+Consider read replicas for high-volume lookup operations.
+
+Remember that security and performance considerations should guide your implementation choices. Follow the principle of least privilege(opens in a new tab) when configuring AWS Identity and Access Management (IAM) roles. Store sensitive credentials in AWS Secrets Manager(opens in a new tab) and optimize database calls to maintain low latency.
+
+The customer experience depends on quick access to data, so a technique like caching frequently accessed information will help ensure smooth interactions.
+Lesson 13 of 31
+Amazon Polly Integration
+Amazon Connect is seamlessly integrated with Amazon Polly(opens in a new tab) to create a natural and dynamic voice experience.
+
+Consider the following integration options and best practices for Amazon Polly.
+
+
+Amazon Polly features in Amazon Connect
+Natural text-to-speech (TTS) in multiple voices and languages
+
+Support for Speech Synthesis Markup Language (SSML) tags(opens in a new tab)
+
+Neural TTS for even more human-like voices
+
+Ability to create dynamic, personalized prompts
+
+Amazon Connect SSML Play prompt block.
+
+
+Setting up voice services
+Step 1: Configure text-to-speech in your Play prompt blocks.
+
+Step 2: Select voice and language options.
+
+Step 3: Reference contact attributes to personalize messages.
+
+Step 4: Optionally add SSML tags for enhanced control.
+
+Example SSML in Play prompt block
+
+<speak>
+
+ <prosody rate="95%">
+
+      Hello <emphasis level="moderate">\$[Customer.FirstName] </emphasis>, thanks for calling.
+
+ </prosody>
+
+ <break time="300ms"/>
+
+ I see your \$[Customer.ProductName] is scheduled for delivery on <say-as interpret-as="date" format="mdy">\$[Customer.DeliveryDate]</say-as>.
+
+ <break time="500ms"/>
+
+ <prosody volume="+10%">
+
+ Would you like an update on this order?
+
+ </prosody>
+
+</speak>
+
+
+Real-world application
+Instead of recording dozens of prompt variations, you can use Amazon Polly to dynamically generate personalized messages.
+
+For example, "Hello [First Name], thanks for calling. I see that your [Product Name] is scheduled for delivery on [Delivery Date]. Would you like an update on this order?"
+
+All the bracketed items could be contact attributes, providing completely personalized experiences without prerecording anything.
+
+
+Best practices
+Test pronunciations of industry-specific terms.
+
+Use SSML for pauses, emphasis, and proper pronunciation.
+
+Consider different voices for different types of messages.
+
+Balance natural speech with efficiency.
+
+Insider tip: Use Amazon Polly's SSML tags in Connect to create natural-sounding voice interactions that enhance caller satisfaction.
+
+Lesson 14 of 31
+Knowledge Check
+The following questions will check your understanding of Amazon Connect AWS service integration.
+
+A travel company wants to integrate their Amazon Connect contact center with their existing booking system. When a customer calls, they want to retrieve the customer's upcoming reservations and offer specific options based on how close the travel date is.
+
+Which approach should they implement?
+
+
+Store all reservation data in Amazon Connect contact attributes.
+
+Correctly unselected
+
+Configure an AWS Lambda function that queries the booking system and returns reservation details.
+
+Incorrectly unselected
+
+Use Amazon DynamoDB as an intermediary to store all customer reservations.
+
+Incorrectly selected
+
+Create a separate contact flow for each possible reservation scenario.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Using DynamoDB as an intermediary would create unnecessary data duplication and synchronization challenges.
+
+
+TAKE AGAIN
+A telecommunications company wants to implement a self-service system in their contact center to handle common requests like checking account balances and paying bills.
+
+Which approach provides the most natural conversational experience for customers?
+
+
+Create DTMF, or touch-tone, menus for all self-service options.
+
+Correctly unselected
+
+Implement an Amazon Lex bot integrated with Amazon Connect.
+
+Incorrectly unselected
+
+Use a series of stored audio prompts to guide customers through options.
+
+Incorrectly selected
+
+Create a custom JavaScript application to process customer voice commands.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Stored audio prompts alone do not provide natural language understanding capabilities.
+
+
+TAKE AGAIN
+A contact center manager needs to implement dynamic text-to-speech capabilities in Amazon Connect contact flows that support multiple languages with natural-sounding voices.
+
+Which AWS service should be integrated for this requirement?
+
+
+Amazon Transcribe
+
+Incorrectly selected
+
+Amazon Comprehend
+
+Correctly unselected
+
+Amazon Polly
+
+Incorrectly unselected
+
+Amazon Translate
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Amazon Transcribe is a speech-to-text service that converts audio to text, not text to speech. While useful for transcribing customer conversations, it cannot generate spoken responses in contact flows.
+
+
+TAKE AGAIN
+
+Lesson 15 of 31
+Summary
+In this section, you learned how Amazon Connect integrates with AWS services like Lambda and Amazon Lex and databases. These integrations enhance contact flows with external data and natural language capabilities.
+
+In the next section, you will learn about security services and how they are used in Amazon Connect.
+Lesson 16 of 31
+Introduction to Security Implementation
+Section objectives
+
+In this section, you will learn to recognize best practices for the following:
+
+Configuring security profiles with appropriate permission level
+
+Implementing advanced authentication methods for agent access
+
+Applying data protection techniques for customer information
+
+Implementing compliance contact centers requirements
+
+
+Section introduction
+
+What if a disgruntled former employee could still access your customer data? Or what if customer credit card information was being stored unprotected in your contact recordings? Security breaches in contact centers can have serious consequences. In this section, you explore how to implement robust security measures in Amazon Connect. These measures help protect your customers, your agents, and your organization from potential threats.
+Lesson 17 of 31
+Security Profile Configuration
+Security profiles in Amazon Connect control what actions users can perform within the system. They are permission sets that determine what each person can see and do.
+
+Understanding security profile structure
+
+Amazon Connect security profiles are built around granular permissions grouped into categories, such as the following:
+
+•
+Contact Control Panel (CCP) access
+
+•
+Routing profiles and queue management
+
+•
+User management
+
+•
+Contact flows and modules
+
+•
+Metrics and reporting
+
+•
+Phone numbers and prompts
+
+For a complete list of security profile permissions, see the Amazon Connect security profiles (opens in a new tab)webpage.
+
+To explore key points about Amazon Connect security profiles, choose each of the numbered markers.
+
+Security profile editing screen showing the Amazon Q feature set expanded to list all available assignable permissions.
+
+
+
+
+
+To view the complete list of assignable permissions available in Amazon Connect, see the Security Profile List(opens in a new tab) webpage.
+
+Default security profiles
+
+In an Amazon Connect contact center, the following are the available default security profiles. Additional security profiles can be created with custom permissions. Consider the following security profiles and their key permissions.
+
+
+Admin
+Grants administrators permission to perform a majority of actions.
+
+
+Agent
+Grants agents permission to access the Contact Control Panel (CCP).
+
+
+Call center manager
+Grants managers permission to perform actions related to user management, metrics, and routing.
+
+
+Quality analyst
+Grants analysts permission to perform actions related to metrics.
+
+Insider tip: New permissions are added on a regular basis. We recommend revisiting your permission configurations to ensure your users can access the latest Amazon Connect features.
+
+Best practices
+
+The following are best practices for configuring a security profile:
+
+Document the purpose of each custom security profile.
+
+Implement approval processes for granting admin access.
+
+Review profiles when staff roles change.
+
+Create specialized profiles rather than giving broad access.
+
+Regularly audit who has access to sensitive functions.
+
+To learn more, visit the Best practices for Amazon Connect and Contact Control Panel (CCP) security profiles(opens in a new tab) webpage in the Amazon Connect Administrator Guide.
+Lesson 18 of 31
+Advanced Authentication Methods
+Securing access to Amazon Connect goes beyond just username and password authentication. Implementing stronger authentication methods helps prevent unauthorized access.
+
+Authentication options in Amazon Connect
+
+WIth Amazon Connect, you have the option of selecting different authetication methods for users to access the system.
+
+
+Store user accounts with Amazon Connect
+Uses the basic username and password system.
+
+
+This is the simplest method but best practice recommends using a method with additional security measures such as an existing directory or SAML 2.0.
+
+
+Link to an existing directory
+Use an existing directory service that is associated with your AWS account. Users can log in to Amazon Connect by using their corporate credentials. Amazon Connect supports the following directories using AWS Directory Service:
+
+AWS Directory Service for Microsoft Active Directory(opens in a new tab) – With AWS Managed Microsoft AD, you can run Active Directory as a managed service.
+
+Active Directory Connector(opens in a new tab) – AD Connector is a directory gateway that you can use to redirect directory requests to your on-premises Active Directory.
+
+Simple Active Directory(opens in a new tab) – Simple AD is a standalone managed directory that is powered by a Samba 4 Active Directory compatible server.
+
+
+Use SAML 2.0-based authentication
+Integrate with identity providers like Okta, Azure AD, or AWS IAM Identity Center. This method allows the following:
+
+Single sign-on capabilities
+
+Centralized identity management
+
+Enhanced authentication controls
+
+Insider tip: Identity management settings cannot be changed after instance creation. To modify these settings, you must create a new instance. Deleting an instance permanently removes all configuration settings and metrics data.
+
+Real-world application
+
+
+A financial services contact center might do the following:
+
+Use SAML 2.0-based authentication with their corporate identity provider.
+
+Require multi-factor authentication (MFA) for all agent logins.
+
+Implement automatic session timeout after periods of inactivity.
+
+Enforce IP-based restrictions so that agents can only log in from approved networks.
+
+Best practices for authentication
+
+Use the following best practices for authentication:
+
+•
+Enable MFA for all user types.
+
+•
+Implement single sign-on for a seamless user experience.
+
+•
+Enforce strong password policies.
+
+•
+Set appropriate session timeouts.
+
+•
+Monitor for unusual login patterns.
+
+•
+Implement thorough offboarding processes when employees leave.
+Lesson 19 of 31
+Data Protection Techniques
+Contact centers handle sensitive customer information that requires protection both in transit and at rest. To learn more, review the following.
+
+
+Data Protection Layers
+
+Handling Sensitive Data
+
+Payment Card Protection Example
+
+The following provide protection for sensitive customer data:
+
+Encryption in transit: All communication between browsers and Amazon Connect uses TLS.
+
+Encryption at rest: Customer data stored in AWS is encrypted by default.
+
+Call recording encryption: AWS encryption keys configured at instance creation are used to protect recorded conversations.
+
+Sensitive data handling: Use encryption in a Store customer input block for sensitive DTMF information that is obtained in the IVR.
+
+Access controls: Security profiles, tag-based access controls and hierarchy-based access controls limit who can see what information.
+
+Now that you have reviewed data protection layers, move on to the next tab to learn about handling sensitive data.
+
+Data proctection best practices
+
+The following are best practices to follow to protect data:
+
+•
+Minimize collection of sensitive data.
+
+•
+Use secure input methods for confidential information.
+
+•
+Implement appropriate retention policies.
+
+•
+Regularly audit access to sensitive data.
+
+•
+Follow relevant compliance standards for your industry.
+
+•
+Consider using AWS Key Management Service (KMS) customer managed keys for additional control.
+
+For additional information on AWS KMS, please see the AWS KMS Basic concepts(opens in a new tab) webpage.
+
+Insider tip: Data protection is a critical aspect to maintain customer trust in your contact center. For more information, see Data protection in Amazon Connect(opens in a new tab).
+Handling Sensitive Data
+
+Payment Card Protection Example
+For handling sensitive information, follow these steps:
+
+Use flow attributes for temporary storage of sensitive information.
+
+Implement pause/resume recording for payment information collection.
+
+Configure AWS encryption keys for recorded conversations.
+
+Set up storage retention policies for contact records and recordings.
+
+Now that you have reviewed handling sensitive data, move on to the next tab to learn about payment card protection.
+Payment Card Protection Example
+When a customer needs to provide their credit card information, the following process occurs:
+
+The flow detects when the payment section begins.
+
+Recording is automatically paused.
+
+The customer enters their card details by secure keypad input (not spoken).
+
+The data is processed without being stored in Amazon Connect.
+
+Recording resumes after the sensitive information collection is complete.
+Lesson 20 of 31
+Compliance Implementation
+Contact center compliance standards are important rules that protect businesses and their customers. Following these rules is essential because it helps companies avoid expensive fines and legal problems. Compliance also builds customer trust by showing that a business takes protecting personal information seriously. In today's world, where data breaches are common, following these standards is a must for any professional contact center's operation.
+
+Common compliance standards
+
+To learn more about some common compliance standards, choose each of the following flashcards.
+
+
+Click to flip
+PCI DSS
+
+
+
+Click to flip
+HIPAA
+
+
+
+Click to flip
+GDPR
+
+
+
+Click to flip
+CCPA
+
+
+
+Click to flip
+SOC
+
+
+
+Click to flip
+TCPA
+
+
+Building compliant contact centers
+
+Each standard has different requirements, but to build a compliant contact center, the following common practices apply regardless of which standard is followed.
+
+•
+Understand your requirements: Identify which regulations apply to your business.
+
+•
+Design flows with compliance in mind: Build processes that meet regulatory needs.
+
+•
+Implement appropriate controls: Technical and procedural safeguards prevent accidental or malicious changes.
+
+•
+Document your approach: Maintain evidence of compliance.
+
+•
+Audit regularly: Verify continued compliance.
+
+The following interaction presents you with one scene that simulates dialogue with a character. Choose the appropriate response to receive feedback from your decision and move ahead. Choose Continue to start the scenario interaction.
+
+Linda is standing in a contact center with a neutral expression.
+
+
+Building a compliant healthcare contact center
+Many industries have specific compliance requirements for contact centers. Try making a compliance decision for a contact center.
+
+CONTINUE
+Insider tip: Verify that each AWS service used in your Amazon Connect contact center is in scope for the compliance standards required. For more information, see Compliance Validation in Amazon Connect(opens in a new tab). 
+
+Best practices
+
+The following are best practices for compliance:
+
+•
+Engage compliance experts early in your design process.
+
+•
+Train agents on compliance requirements.
+
+•
+Regularly test your controls.
+
+•
+Keep up with changing regulations.
+
+•
+Document everything.
+
+•
+Consider AWS Artifact for access to AWS compliance reports.
+Click to flip
+Payment Card Industry Data Security Standard (PCI DSS) for payment card processing.
+
+
+
+Click to flip
+Health Insurance Portability and Accountability Act (HIPAA) for healthcare information.
+
+
+
+Click to flip
+General Data Protection Regulation (GDPR) for data protection and privacy in Europe.
+
+
+
+Click to flip
+California Consumer Privacy Act (CCPA)is a state-level data privacy law in California.
+
+
+
+Click to flip
+System and Organization Controls (SOC) is a suite of reports produced by service organizations. These reports demonstrate the effectiveness of the service organization's internal controls.
+
+
+
+Click to flip
+Telephone Consumer Protection Act of 1991, a U.S. law that regulates telemarketing calls, text messages, and faxes to protect consumers from unwanted communications.
+Lesson 21 of 31
+Knowledge Check
+The following questions will check your understanding of Amazon Connect security implementation.
+
+A contact center manager needs to grant permissions to a quality assurance team to listen to recorded calls. They want to restrict the team from changing any contact flow configurations.
+
+How should this be accomplished in Amazon Connect?
+
+
+Create AWS Identity and Access Management (IAM) roles for each quality assurance team member with specific permissions.
+
+Correctly unselected
+
+Create a security profile with CallAudioSearch - Access and Contact Search - Access permissions, but no contact flow edit permissions.
+
+Correctly selected
+
+Add the quality assurance team to the Admin security profile but set up Amazon S3 bucket policies to restrict access.
+
+Correctly unselected
+
+Configure Amazon CloudWatch alarms to monitor and prevent contact flow changes.
+
+Correctly unselected
+SUBMIT
+
+Correct
+Amazon Connect security profiles control what users can access within the Amazon Connect instance. Creating a security profile with specific call recording access permissions but without contact flow edit permissions helps ensure the QA team has appropriate access.
+
+A financial services company needs to implement stronger authentication for their contact center agents.
+
+Which authentication configuration in Amazon Connect provides the highest level of security?
+
+
+Username and complex password combination
+
+Incorrectly selected
+
+SAML-based single sign-on with multi-factor authentication
+
+Incorrectly unselected
+
+Setting a shorter session timeout for the Amazon Connect console
+
+Correctly unselected
+
+IP-based restrictions on the Amazon Connect access URL
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Username and password combinations, even with complexity requirements, provide only single-factor authentication.
+
+
+TAKE AGAIN
+A healthcare provider needs to make sure that patient information collected during calls is properly protected in their Amazon Connect implementation.
+
+Which approach meets HIPAA requirements for protecting this sensitive data?
+
+
+Use the default Amazon Connect encryption settings.
+
+Correctly unselected
+
+Implement custom encryption using a Lambda function.
+
+Correctly unselected
+
+Encrypt sensitive customer input using customer-managed KMS keys and enable encrypted call recordings.
+
+Correctly selected
+
+Store all customer data in temporary contact attributes that expire after the call.
+
+Correctly unselected
+SUBMIT
+
+Correct
+Using customer-managed KMS keys for encrypting sensitive data like call recordings and stored customer input provides the necessary control for HIPAA compliance. This allows the healthcare provider to manage their own encryption keys.
+
+A multinational company is expanding their Amazon Connect contact center to operate in the European Union (EU).
+
+Which configuration is necessary to meet GDPR requirements?
+
+
+Enable automatic call recordings for all EU-based customers.
+
+Correctly unselected
+
+Set up Amazon Connect in an EU Region and implement data retention policies.
+
+Incorrectly unselected
+
+Route all EU calls to agents physically located in the EU.
+
+Correctly unselected
+
+Add a voice prompt informing customers their data might be transferred outside the EU.
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+Although disclosure is important, only informing customers is not sufficient to meet GDPR requirements if the underlying data handling does not comply.
+
+
+TAKE AGAIN
+Lesson 22 of 31
+Summary
+In this section, you learned how to implement security controls in Amazon Connect through security profiles, authentication methods, and data protection. These features help meet various industry compliance requirements for contact centers.
+
+In the next section, you will learn about system reliability and recovery processes in the event of a critical event.Lesson 23 of 31
+Introduction to System Reliability
+Section objectives
+In this section, you will learn to recognize best practices for the following:
+
+Identifying backup strategies for critical contact center components
+
+Explaining failover principles to maintain service during disruptions
+
+Identifying recovery processes for various failure scenarios
+
+
+Section introduction
+
+Imagine that your contact center suddenly goes offline during your busiest period. Customers are unable to reach you, agents are unable to work, and your business loses thousands of dollars every minute. System reliability is strictly a technical consideration; it is a business necessity. In this section, you will explore how to build an Amazon Connect implementation that stays operational even when problems occur.
+
+
+CONTINUE
+Lesson 24 of 31
+Understanding the Amazon Connect Reliability Model
+Understanding these reliability terms and limitations will help you design resilient contact center solutions and create appropriate contingency plans.
+
+
+Reliability terminology
+The following are terms that apply to reliability:
+
+High availability: Systems designed to operate continuously without failure
+
+Fault tolerance: Ability to continue operating when components fail
+
+Disaster recovery: Processes to recover from major disruptions
+
+Business continuity: Broader strategies to maintain operations during disruptions
+
+Availability Zone (AZ): An isolated data center with independent power, cooling, and networking that enables high-availability application deployments.
+
+Region: A logical group of Availability Zones in a geographic area offering the complete set of AWS services and infrastructure.
+
+
+Reliability limitations
+Although Amazon Connect has strong built-in reliability, there are still potential failure points to consider, such as the following:
+
+Regional AWS outages affecting all Availability Zones
+
+Network connectivity issues between your agents and AWS
+
+Integration points with external systems
+
+Agent workstation or browser problems
+
+Amazon Connect's built-in reliability features makes developing strategies for a reliable contact center easier by mitigating potential failure points. This is list describes some of these key features: 
+
+•
+Global Infrastructure: Leverages AWS's globally distributed infrastructure for high availability
+
+•
+Multi-AZ Architecture: Automatically operates across multiple Availability Zones within a Region
+
+•
+Automatic Scaling: Dynamically scales to handle fluctuating contact volumes without manual intervention
+
+•
+Service Quotas: Configurable limits to protect system stability and performance
+
+•
+Phone Number Redundancy: Supports multiple carrier connections for inbound telephony traffic
+
+To learn more, visit the Resilience in Amazon Connect(opens in a new tab) section in the Amazon Connect Administrator Guide.
+
+Lesson 25 of 31
+Backup Strategies
+Protecting your contact center
+
+In today's connected business world, contact centers are essential to customer service. Setting up strong backup plans is necessary, not just helpful, for keeping your business running. These backups protect against system failures and data loss, while also helping you follow industry rules about data protection.
+
+To learn more, choose the START or arrow buttons to display each of the four steps.
+
+
+1
+2
+3
+4
+
+
+
+Plan your backup
+Amazon Connect offers powerful cloud-based contact center capabilities. Still, cloud solutions require thoughtful backup planning to protect against data loss, configuration errors, and service disruptions. The following steps help you to protect you contact center.
+
+
+START
+
+
+A good backup plan does more than just copy data. It uses multiple methods including regular exports, storing copies in different locations, and keeping track of different versions. Remember that backups are only valuable if you can actually restore your data when problems happen. This is why testing your recovery process and maintaining your backup systems regularly are key parts of any solid business continuity plan.
+
+Insider tip: Conduct an audit of your current backup procedures. Are all critical components covered? Have you tested your restoration process recently? Review and update documentation as needed.
+Step 1
+Identify what to back up
+Back up configuration data, such as the following:
+
+Flow definitions (flows, whisper flows, hold flows)
+
+User accounts and security profiles
+
+Queue configurations and routing profiles
+
+Phone number assignments
+
+Back up operational data, such as the following:
+
+Recorded conversations
+
+Contact records
+
+Agent performance metrics
+
+Custom reports
+
+Adjust as needed for your contact center.
+Step 2
+Select backup methods
+The following are possible methods to backup your Connect instance:
+
+API-based backups: Use the Amazon Connect Application Programming Interface (API) to export configuration data.
+
+Amazon Simple Storage Service (Amazon S3) bucket replication: For recorded conversations and exported reports, use built in replication functions.
+
+Database backups: For any external databases integrated with Amazon Connect, backup according to the needs of the database.
+
+Documentation: Maintain current documentation of configurations and settings for any custom settings in Amazon Connect.
+Step 3
+Implement your backup strategy
+A comprehensive backup strategy might include the following:
+
+Weekly exports of all flow configurations using the API
+
+S3 bucket cross-Region replication for all recordings and reports
+
+Daily backups of any Lambda functions and integrated databases
+
+Proper versioning of all custom code in a repository like GitHub
+Step 4
+Test and maintain your backups
+Best practices for backups include the following:
+
+Automate backup processes, where possible.
+
+Test restoration procedures regularly.
+
+Maintain multiple backup copies.
+
+Store backups in multiple AWS Regions.
+
+Document all backup and recovery procedures.
+
+Include backups in your security planning.
+Summary
+These steps outlined a four-step approach to effectively backing up your Amazon Connect environment. These practices help ensure business continuity and protect your contact center operations from potential data loss or service disruptions.
+
+To learn more, visit the Implement a backup strategy (opens in a new tab)section on the AWS Prescriptive Guidance webpage. 
+Lesson 26 of 31
+Failover and Recovery Principles
+Amazon Connect has a native highly available architecture, in all available regions, it operates simultaneously across three availability zones in an active/active/active mode.
+
+For customers needing maximum resiliency during extreme region-wide issues, Amazon Connect Global Resiliency is available. This solution also helps meet regulatory requirements for redundancy across geographically distant locations. Amazon Connect Global Resiliency (ACGR) provides the most effective failover capabilities available for Amazon Connect.
+
+Detailed failover architectures are a complex topic and outside the scope of this course. For more information, see Set up Amazon Connect Global Resiliency(opens in a new tab).
+
+Failover best practices
+
+The following are best practices for failover:
+
+•
+Regularly test failover procedures.
+
+•
+Train agents on procedures to implement depending on the severity of the outage.
+
+•
+Document clear decision criteria for initiating failover.
+
+•
+Consider automated monitoring to detect issues.
+
+•
+Make sure that integrations work in both systems.
+
+•
+Test with partial traffic shifts periodically.
+
+Recovery
+
+Even with good prevention, problems can still occur. Having documented recovery processes helps ensure that you can quickly restore service.
+
+Common recovery scenarios include the following:
+
+•
+Integration failures: When connections to external systems fail
+
+•
+Flow errors: When contact flows have logical or configuration issues
+
+•
+Agent connectivity: When agents can't access the Amazon Connect Contact Control Panel
+
+•
+Service disruptions: When cloud services experience a problem
+
+Insider tip: For more information about reliability and recovery of workloads in AWS Cloud, see Disaster Recovery Options in the Cloud(opens in a new tab)(opens in a new tab)(opens in a new tab).
+Lesson 27 of 31
+Availability Optimization
+Even in the best designed system, downtime may still occur. Contact centers often depend on external data sources that may sometimes become unavailable, potentially affecting customer interactions. In addition to backup, failover and recovery strategies, you can enhance your Amazon Connect system's availability by implementing error branches within your contact flows. These error branches allow for smooth management when integrations fail. By designing your system this way, calls can automatically follow alternative paths when problems occur.
+
+For example, the system could offer customers callback options or route them directly to available agents during integration failures. This careful planning helps maintain service continuity and preserve the customer experience even when technical challenges arise.
+
+Consider the following strategies for maintaining high availability.
+
+
+Availability enhancement strategies
+
+High availability patterns
+Agent connectivity: Make sure that agents have reliable internet connections.
+
+Browser compatibility: Test and validate supported browsers.
+
+Integration resilience: Build retry and circuit breaker patterns into integrations.
+
+Graceful degradation: Design flows that can function with reduced capabilities.
+
+Monitoring and alerting: Detect issues before they affect customers.
+
+Now that you have reviewed availability enhancement strategies, move on to the next tab to learn about high availability patterns.
+
+Best practices
+
+The following are best practices for availability:
+
+•
+Test under various failure conditions.
+
+•
+Implement comprehensive monitoring.
+
+•
+Design for partial functionality during disruptions.
+
+•
+Regularly review and update reliability plans.
+
+•
+Consider the reliability of all integrated components.
+
+•
+Plan for both technical and operational resilience.
+High availability patterns
+Circuit breakers: Prevent cascading failures when integrations fail. To learn more, see Circuit Breaker Patterns(opens in a new tab).
+
+Retry with backoff: Automatically retry failed operations with increasing delays.
+
+Fallback responses: Provide default responses when lookups fail.
+
+Asynchronous processing: Decouple time-sensitive operations.
+Lesson 28 of 31
+Knowledge Check
+Knowledge check
+
+The following questions will check your understanding of Amazon Connect system reliability.
+
+A retail company wants to make sure that their Amazon Connect contact flows and configurations are properly backed up.
+
+What is the recommended approach for backing up Amazon Connect configurations?
+
+
+Use AWS Backup to create automated snapshots of the Amazon Connect instance.
+
+Incorrectly selected
+
+Export contact flows as JSON and store them in versioned Amazon S3 buckets.
+
+Incorrectly unselected
+
+Create duplicate contact flows within the same instance as backups.
+
+Correctly unselected
+
+Use AWS CloudFormation to provision and maintain Amazon Connect resources.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+AWS Backup does not directly support Amazon Connect instances.
+
+
+TAKE AGAIN
+An insurance company's contact center must remain operational even during a company on-premise database outage.
+
+Which design would provide the most effective failover capability for their Amazon Connect implementation?
+
+
+Configure Amazon Connect in a single AWS Region with multiple Availability Zones.
+
+Correctly unselected
+
+Gracefully handle the error and offer a callback to the caller or route to an available agent.
+
+Incorrectly unselected
+
+Deploy all contact flows in containers using Amazon Elastic Container Service (Amazon ECS) for portability.
+
+Incorrectly selected
+
+Implement a backup call center with traditional private branch exchange (PBX) systems.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Amazon Connect is a managed service and does not use containers or Amazon ECS. This approach is not applicable.
+
+
+TAKE AGAIN
+During a contact flow execution, an integration with a customer database has failed. The call is stuck and customers are experiencing long wait times.
+
+Which recovery process should be implemented for this scenario?
+
+
+Restart the entire Amazon Connect instance to clear all active sessions.
+
+Correctly unselected
+
+Implement circuit breakers in AWS Lambda functions with exponential backoff retry logic.
+
+Correctly unselected
+
+Configure contact flow error branches to provide alternative paths when integrations fail.
+
+Correctly selected
+
+Increase the AWS Lambda function timeout to wait for the database to recover.
+
+Correctly unselected
+SUBMIT
+
+Correct
+Error branches in contact flows allow for graceful handling of integration failures. By designing flows with error branches, calls can be redirected to alternative paths (like offering callback options or routing to agents) when integrations fail.
+Lesson 29 of 31
+Summary
+In this section, you learned about system reliability in Amazon Connect. This includes identifying backup strategies, recognizing failover principles, and selecting high availability configurations to maintain service during disruptions.
+
+This completes the Amazon Connect Administration course. Now it's time to apply what you have learned to create exceptional customer experiences in your own Amazon Connect contact center!

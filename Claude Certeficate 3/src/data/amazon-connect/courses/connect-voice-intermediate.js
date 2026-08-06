@@ -1,0 +1,2869 @@
+/*
+ * Amazon Connect — Voice Intermediate
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne/AMAZON CONNECT VOICE INTERMEDIATE.txt
+ *            conne-text/Amazon Connect Voice Course Summary.txt  (from conne/Amazon Connect Voice Course Summary.pdf)
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-voice-intermediate",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Voice Intermediate",
+  "provider": "Amazon Web Services",
+  "level": "Intermediate",
+  "category": "Channels",
+  "description": "Amazon Connect telephony, the telecoms country coverage guide, configuring phone numbers, in-app, web, and video calling, and voice pricing.",
+  "examFormat": "8 topics · ~1 h 5 min · 6 review questions",
+  "sourceFiles": [
+    "conne/AMAZON CONNECT VOICE INTERMEDIATE.txt",
+    "conne-text/Amazon Connect Voice Course Summary.txt  (from conne/Amazon Connect Voice Course Summary.pdf)"
+  ],
+  "modules": [
+    {
+      "id": "connect-voice-intermediate-t1",
+      "number": 1,
+      "title": "Introduction to Amazon Connect Telephony",
+      "shortTitle": "Introduction to Amazon Connect Telephony",
+      "summary": "Amazon Connect offers a global and scalable managed telephony service with pay-as-you-go pricing. This makes it possible for contact centers to…",
+      "duration": "~16 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the purpose of Amazon Connect telephony as a managed service.",
+        "Identify core network and telephony concepts and how they relate to Amazon Connect telephony.",
+        "Identify the benefits of using Amazon Connect telephony."
+      ],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a global and scalable managed telephony service with pay-as-you-go pricing. This makes it possible for contact centers to rapidly deploy and use voice capabilities without managing the complexity of traditional telephony setup."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect helps organizations make and receive voice calls using traditional phone networks and internet-based calling."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t1-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Traditional phone network architecture",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When contacts call an organization's contact center from their phone, their own telephony carrier routes the call over the regular telephone network. When Amazon Connect is deployed in an AWS Region, it uses the built-in redundancy of the Amazon Web Services (AWS) Availability Zone design. In addition to the Amazon Connect service being spread across multiple Availability Zones, AWS has multiple telephony carriers. These carriers have multiple links into the data centers in those Availability Zones."
+            },
+            {
+              "type": "p",
+              "text": "AWS manages the connectivity to its network of carriers, providing diverse connections to multiple carriers in each Region supported by Amazon Connect. This means Amazon Connect can provide multiple carrier interfaces into multiple data centers."
+            },
+            {
+              "type": "p",
+              "text": "Each carrier is connected to multiple Availability Zones in an active-active configuration. If one or more links from a carrier fail, there are alternate routes available, so the service remains active. Contact center workloads are load-balanced across fleets of telephony media servers. Using this architecture, AWS can deploy new features and enhancements with virtually no downtime for the organizations."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect traditional phone network architecture."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t1-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Internet-based calling architecture",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Contacts can also call an Amazon Connect contact center using internet-based calling. The following diagram illustrates the process of internet-based calling in the Amazon Connect contact center. For further details, select the following interactive markers."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect internet-based calling architecture."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t1-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Concepts and terminology",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect provides capabilities to host Toll-Free Numbers (TFNs), Direct Inward Dialing (DID) numbers, and Universal International Freephone Numbers (UIFNs). Organizations can use any combination of the three types of numbers in a single contact center environment. For a quick refresher about core security, networking, and telephony-related concepts, expand the following categories. You will use these concepts and terminology throughout this course."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "PSTN",
+                  "body": "The Public Switched Telephone Network (PSTN) is the traditional circuit-switched telephone network for voice calls. PSTN is a global network of interconnected carriers that reliably connect calls through standard telephone numbers. It is the collective name for all the public switched telephone networks around the world operated by local, national, or regional telecommunication companies."
+                },
+                {
+                  "title": "TFN",
+                  "body": "TFNs are phone numbers with distinct prefix codes that the person initiating the call can dial at no charge. In the United States, the Federal Communications Commission provides rules for obtaining and using TFNs. In other countries, similar governing bodies ensure that TFNs are managed and distributed in accordance with local country laws. For more information, see What Is a Toll-Free Number and How Does it Work?"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "When organizations claim or port a TFN to Amazon Connect, AWS registers that number with Somos. Somos is an industry organization that governs and administers the use of TFNs in the United States. For more information, see the Somos website."
+            },
+            {
+              "type": "p",
+              "text": "After the number is successfully registered, Amazon Connect partners with multiple carriers to provide both route and carrier redundancy for that number. This provides a high level of availability, ensuring that the number functions even if there are complete carrier outages. Redundant TFNs are only available in the United States. TFNs are available outside the United States, but they are delivered by a single carrier."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t1-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "DID numbers",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "DID numbers, also called Direct Dial-In (DDI) in Europe, are local telephone numbers that match local dialing patterns. These numbers are managed by single carriers. They are typically used by localized organizations for their business numbers. A contact is more likely to answer a call originating from a DID number for a business based in the same area."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "UIFN"
+            },
+            {
+              "type": "p",
+              "text": "UIFNs are unique, inbound-only freephone numbers that can be used throughout the world. UIFNs provide toll-free calling across international locations."
+            },
+            {
+              "type": "p",
+              "text": "A UIFN is an 11-digit, fixed-format number. The first three digits represent the country code for global service application. The following eight digits represent a Global Subscriber Number (GSN). For example, if an organization wants to use 55555555 as their global number, the UIFN format is (+3-digit country code ) 55555555."
+            },
+            {
+              "type": "p",
+              "text": "For more information about Amazon Connect UIFN service support, see UIFN Service - Inbound only in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "E.164"
+            },
+            {
+              "type": "p",
+              "text": "E.164 is a unified global phone number format defined by the International Telecommunication Union (ITU). This format provides international compatibility across telephony systems. E.164 phone numbers are formatted as follows:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "[+] [country code] [subscriber number including area code]",
+                "An example of an E.164 formatted number for the United States is +1 301 555-0010.",
+                "[+] [country code for global service application] [global subscriber number]",
+                "An example of an E.164 formatted number for a UIFN is +800 55555555.",
+                "E.164 numbers can have a maximum of 15 digits."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect uses phone numbers formatted using the E.164 standard."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Call forwarding",
+                  "body": "Call forwarding is a phone management feature that redirects incoming calls from one telephone number to an alternate number."
+                },
+                {
+                  "title": "Number porting",
+                  "body": "Organizations can use number porting to keep their existing phone numbers when migrating their contact center workloads to new carriers. Number porting is the process of moving a telephone number from one telephony carrier to another."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The carrier that loses ownership of the phone number is called the losing carrier. The carrier that gains ownership of the phone number is called the winning carrier. When phone numbers are ported into Amazon Connect, the AWS Partner carriers become winning carriers."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "SBC"
+            },
+            {
+              "type": "p",
+              "text": "A session border controller (SBC) is a specialized device that protects and controls the flow of IP based communications. SBCs are deployed at the borders between networks to regulate communications sessions crossing between different infrastructures. They are crucial components that provide reliable cloud-based voice services."
+            },
+            {
+              "type": "p",
+              "text": "SBCs were originally created to protect and manage Voice over IP (VoIP) networks. They are used to control different types of real-time IP communications. These communications include VoIP calls, video conferencing, instant messaging, and other collaboration tools."
+            },
+            {
+              "type": "p",
+              "text": "SBCs provide security, call quality control, and protocol management."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect operates large groups of SBCs to handle multiple simultaneous calls."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "WebRTC"
+            },
+            {
+              "type": "p",
+              "text": "Web Real-Time Communication (WebRTC) is a project that provides real-time communication capabilities in web browsers and mobile applications. It makes it possible to have peer-to-peer audio, video, and data sharing without the need for proprietary plugins or third-party software installations."
+            },
+            {
+              "type": "p",
+              "text": "WebRTC makes the process of building real-time communication solutions more efficient by providing a standardized set of APIs for capturing, encoding, and transmitting media streams securely over the internet."
+            },
+            {
+              "type": "p",
+              "text": "Users establish voice connectivity to Amazon Connect from their browser by using a WebRTC based softphone. The Amazon Connect softphone uses the Opus codec to provide high-quality audio. For more information, see Opus Interactive Audio Codec."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "SRTP"
+            },
+            {
+              "type": "p",
+              "text": "The Secure Real-Time Transport Protocol (SRTP) provides encryption and authentication for real-time multimedia communications, such as VoIP and video over IP networks."
+            },
+            {
+              "type": "p",
+              "text": "SRTP ensures the confidentiality, integrity, and authenticity of the media streams. It protects against eavesdropping, tampering, and impersonation attacks while maintaining low latency and bandwidth overhead suitable for real-time applications. Users establish voice connectivity to Amazon Connect from their browser by using WebRTC. The audio and video media are encrypted in transit using SRTP."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "TLS"
+            },
+            {
+              "type": "p",
+              "text": "TLS is a widely adopted security protocol designed to facilitate privacy and data security for communications over the internet. TLS provides secure communications by encrypting the data transmitted between two parties. It ensures data confidentiality, integrity, and authentication, protecting against eavesdropping, tampering, and impersonation attacks."
+            },
+            {
+              "type": "p",
+              "text": "TLS is widely used in applications like web browsing, email, instant messaging, and VoIP to establish secure connections and protect sensitive information."
+            },
+            {
+              "type": "p",
+              "text": "Users access the Amazon Connect application by using a web browser. All communications are encrypted in transit using TLS."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "VDI"
+            },
+            {
+              "type": "p",
+              "text": "Virtual desktop infrastructure (VDI) is a virtualization technology that makes it possible for users to access a virtual desktop environment from a remote location. VDIs separate the desktop environment from the physical machine, so users can access their desktop applications, data, and settings from any device with an internet connection. VDIs centralize desktop management, making it more efficient for IT teams to deploy, update, and secure desktop environments. VDIs also make it possible for organizations to support remote work and bring-your-own-device (BYOD) policies."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect provides capabilities to host TFNs, DID numbers, and UIFNs. Organizations can use any combination of the three types of numbers in a single contact center environment."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t1-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits of Amazon Connect telephony",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers cost-effective, enterprise-grade telephony to organizations of all sizes. Small and midsize businesses can achieve the same advanced cloud contact center telephony capabilities as large enterprises. Now, explore the benefits of the Amazon Connect telephony."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Reliability and redundancy"
+            },
+            {
+              "type": "p",
+              "text": "Most organizations consider contact center operations to be mission critical. Amazon Connect provides a highly reliable and scalable cloud telephony solution to meet this need."
+            },
+            {
+              "type": "p",
+              "text": "Contacts can reach Amazon Connect contact centers through multiple telephony carriers over the PSTN. Amazon Connect operates multiple resilient and diverse network connections to peered carriers. If one connection fails, calls automatically route over redundant paths without service interruption."
+            },
+            {
+              "type": "p",
+              "text": "In addition to PSTN calling, with Amazon Connect, organizations can offer their customers internet in-app calling, web calling, and video calling options."
+            },
+            {
+              "type": "p",
+              "text": "Organizations running Amazon Connect workloads do not need to provision their own hardware. The Amazon Connect telephony layer runs on fleets of fully managed SBCs running across multiple Availability Zones. If an Availability Zone in one Region goes down, Amazon Connect automatically reroutes telephony traffic to other Availability Zones with no degradation in service."
+            },
+            {
+              "type": "p",
+              "text": "In addition to resilience within the Region, Amazon Connect offers multi-Region redundancy options in the United States and Europe. Organizations can implement the Amazon Connect Global Resiliency feature that includes the ability for inbound telephony to operate in an active-active mode across two Regions. This provides an extra layer of reliability and critical business continuity."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Retail is a large retail organization running multiple contact centers in the United States of America. AnyCompany Retail offers customer service and sales support across multiple channels, including voice and chat. Providing reliable and scalable customer support is mission critical for AnyCompany Retail's business operations."
+            },
+            {
+              "type": "p",
+              "text": "Previously, AnyCompany Retail relied on an on-premises contact center solution that required significant upfront capital investment, ongoing maintenance, and hardware and license refreshes every few years. Additionally, scaling up or down to meet fluctuating demand was challenging and often resulted in overprovisioning or capacity constraints."
+            },
+            {
+              "type": "p",
+              "text": "To address these challenges, AnyCompany Retail decided to migrate its contact center operations to Amazon Connect to benefit from its cloud-based telephony solution and scalability."
+            },
+            {
+              "type": "p",
+              "text": "With Amazon Connect, AnyCompany Retail can route customer calls over the PSTN through multiple telephony carriers and redundant network connections. If one connection fails, calls are automatically rerouted over alternative paths, ensuring uninterrupted service for customers. In addition to traditional voice calls, AnyCompany Retail can offer customers the convenience of the in-app calling, web calling, and video calling options that are built into Amazon Connect. AnyCompany Retail no longer needs to provision and maintain its own hardware infrastructure."
+            },
+            {
+              "type": "p",
+              "text": "For added resilience and business continuity, AnyCompany Retail implemented the Amazon Connect Global Resiliency feature. AnyCompany Retail can operate active-active telephony workloads across us-east-1 and us-west-2. Multi-Region redundancy provides an extra layer of reliability, ensuring that customer calls can be seamlessly handled even in the event of a Regional outage."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Global reach"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect is designed from the ground up to run on the secure, reliable AWS Global Infrastructure. It provides high-quality voice calls with low latency anywhere in the world. Amazon Connect partners with telephony carriers worldwide. Businesses can claim and port local phone numbers in the countries where their customers are based. Organizations can offer UIFN numbers that provide a consistent global experience, at no cost for their customers."
+            },
+            {
+              "type": "p",
+              "text": "With in-app, web, and video calling options, customers can reach contact centers directly over the internet."
+            },
+            {
+              "type": "p",
+              "text": "With local phone numbers, TFNs, UIFNs, and internet-based calling, Amazon Connect provides organizations with flexible options to engage with their customers wherever the customers are located."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "AnyOrganization Retail is a rapidly growing ecommerce business with customers worldwide. To provide superior customer service, the business needs a contact center solution that can handle inquiries from various Regions with low latency and high call quality. Using Amazon Connect, AnyOrganization Retail can use the AWS Global Infrastructure. This ensures reliable and low-latency voice connections for AnyOrganization Retail's customers, regardless of their location."
+            },
+            {
+              "type": "p",
+              "text": "Local presence: AnyOrganization Retail can claim and port local phone numbers in the countries where its customers are based because of Amazon Connect partnerships with telephony carriers worldwide. Customers in different Regions can reach AnyOrganization Retail's contact center using local phone numbers, providing a familiar and cost-effective experience."
+            },
+            {
+              "type": "p",
+              "text": "TFNs and UIFNs: For customers who prefer toll-free options, AnyOrganization Retail can provision TFNs in various countries. Additionally, AnyOrganization Retail can offer UIFNs to provide a consistent global experience, at no cost for the customers."
+            },
+            {
+              "type": "p",
+              "text": "Internet-based calling: AnyOrganization Retail can offer web calling and in-app calling options for customers who prefer to reach the contact center directly over the internet. There is no need for traditional phone lines. Customers can initiate voice or video calls directly from the AnyOrganization Retail website or mobile app, providing a convenient and modern communication channel."
+            },
+            {
+              "type": "p",
+              "text": "Scalability and flexibility: With the Amazon Connect cloud-based architecture, AnyOrganization Retail can efficiently scale its contact center operations up or down based on demand, ensuring optimal resource usage and cost-efficiency. AnyOrganization Retail can quickly provision additional phone numbers, agents, and other resources to handle peak periods or expand to new markets."
+            },
+            {
+              "type": "p",
+              "text": "By using the Amazon Connect global telephony capabilities, AnyOrganization Retail can provide seamless and high-quality customer support to its customers around the world. This helps improve customer satisfaction and drive business growth."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Fully managed telephony"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect handles the telephony infrastructure and carrier contracts for organizations of all sizes. AWS takes care of the telephony undifferentiated heavy lifting, including the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Managing carrier relationships"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Patching telecom equipment",
+                "Adhering to country regulations"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Securing the environment"
+            },
+            {
+              "type": "p",
+              "text": "Organizations can use the fully managed service to focus on their core business instead of managing telephony infrastructure. Companies can use their time and resources to innovate and improve the customer experience, agent performance, and operational processes."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany is a fast-growing ecommerce company that has been struggling to keep up with the increasing volume of customer inquiries and support requests. The company's existing on-premises contact center infrastructure was outdated and difficult to maintain. It lacked the scalability to handle sudden spikes in call traffic during peak periods or promotional campaigns."
+            },
+            {
+              "type": "p",
+              "text": "After evaluating various options, AnyCompany decided to migrate its contact center operations to Amazon Connect. After the migration, AnyCompany was able to remove the undifferentiated heavy lifting of infrastructure maintenance, license renewals, and maintenance of carrier relationships. Some of the benefits include the following:"
+            },
+            {
+              "type": "p",
+              "text": "Enhancing customer experiences by integrating Amazon Connect with existing customer relationship management (CRM) systems and business intelligence tools"
+            },
+            {
+              "type": "p",
+              "text": "Optimizing agent performance by using Amazon Connect real-time analytics and reporting capabilities"
+            },
+            {
+              "type": "p",
+              "text": "Streamlining operational processes by automating routine tasks, such as call routing and self-service options"
+            },
+            {
+              "type": "p",
+              "text": "Innovating by offering new customer engagement channels, such as chat, short message service (SMS), or in-app web calling through the Amazon Connect omnichannel capabilities"
+            },
+            {
+              "type": "p",
+              "text": "With Amazon Connect handling the telephony infrastructure and carrier contracts, AnyCompany was able to focus on delivering exceptional customer experiences. AnyCompany can drive operational efficiencies to stay ahead of the competition in the rapidly evolving ecommerce market."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Economies of scale"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect uses a pay-as-you-go pricing model with no upfront fees. This makes it convenient for organizations to migrate their contact center workloads to Amazon Connect without large initial investments."
+            },
+            {
+              "type": "p",
+              "text": "With Amazon Connect, organizations do not need to purchase or maintain their own telephony infrastructure. They only pay for what they use instead of the need to overprovision capacity."
+            },
+            {
+              "type": "p",
+              "text": "As more organizations use Amazon Connect globally, higher call volumes mean AWS can negotiate better deals with telephony carriers. AWS passes these savings to customers, so all Amazon Connect users can benefit from lower prices."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "AnyOrganization is a growing ecommerce company that experiences seasonal spikes in customer inquiries and needs a scalable contact center solution. AnyOrganization migrated its European workloads to Amazon Connect. With the Amazon Connect pay-as-you-go pricing model and no upfront fees, the ecommerce company quickly deployed a cloud-based contact center without significant upfront investments."
+            },
+            {
+              "type": "p",
+              "text": "Less than 1 year later, in November 2023, AWS reduced outbound dialing rates for Amazon Connect to several European countries, as follows:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Italy – 51 percent rate reduction"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Ireland – 57 percent rate reduction",
+                "Spain – 28 percent rate reduction"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "United Kingdom – 30 percent rate reduction"
+            },
+            {
+              "type": "p",
+              "text": "The price reductions expanded beyond the confines of Europe, with outbound and inbound telephony prices plummeting in Argentina and Mexico. In Mexico, outbound calls, DID calls, and toll-free inbound calls fell by 77 percent, 69 percent, and 61 percent, respectively. In Argentina, reductions in pricing across those call types declined by 83 percent, 82 percent, and 97 percent, respectively."
+            },
+            {
+              "type": "p",
+              "text": "AnyOrganization can now plan its strategic approach to expand its business in Latin America."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned core concepts and terminology related to Amazon Connect telephony. You also discovered the benefits of the Amazon Connect telephony as a managed service. In the next lesson, you will learn how to use the Amazon Connect Telecoms Country Coverage Guide. Lesson 3 of 11 With Amazon Connect voice channels, organizations can offer their customers high-quality, scalable, global, and cost-effective communications. Customers can interact with an organizations' contact centers by using traditional phone lines, mobile apps, or web browsers. This course provides an overview of the voice channel capabilities offered by Amazon Connect. You will learn about Amazon Connect telephony features, such as inbound and outbound calling and in-app, web, and video calling options. The course covers core concepts, set up, deployment, pricing models, and best practices. By the end of this course, you will be able to do the following: Recognize the benefits of using Amazon Connect telephony as a managed service. Recall the process of claiming or porting phone numbers in Amazon Connect. Explain how to configure and deploy the pre-built communication widget for in-app, web, and video calling. Recognize the pricing structure for the Public Switched Telephone Network (PSTN) and internet-based calling services in Amazon Connect. Recognize security, resiliency, and quality of service considerations for an Amazon Connect contact center deployment. To begin this course, choose START COURSE. To advance to a specific topic, scroll down and select the lesson. For further directions, select the How to Use This Course lesson. © 2024, Amazon Web Services, Inc. or its affiliates. All rights reserved. for Students How to Use This Course Amazon connect voice channels Introduction to Amazon Connect Telephony Using Amazon Connect Telecoms Country Coverage Guide Configuring Phone Numbers in Amazon Connect Configuring In-App, Web, and Video Calling Amazon Connect Voice Pricing Considerations Conclusion Summary Knowledge Check Questions Knowledge Check Getting Help Learn More Contact Us Lesson 2 of 11"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-voice-intermediate-t1-q1",
+          "question": "AnyCompany Financial is a global business running operations on multiple continents. AnyCompany Financial wants to offer a single number for all customers globally. Which type of number should AnyCompany Financial use?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Direct Inward Dialing (DID) number"
+            },
+            {
+              "id": "B",
+              "text": "Universal International Freephone Number (UIFN)"
+            },
+            {
+              "id": "C",
+              "text": "Toll-Free number (TFN)"
+            },
+            {
+              "id": "D",
+              "text": "E.164"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "UIFNs are unique, inbound-only freephone numbers that can be used throughout the world. UIFNs provide toll-free calling across international locations."
+        }
+      ]
+    },
+    {
+      "id": "connect-voice-intermediate-t2",
+      "number": 2,
+      "title": "Using Amazon Connect Telecoms Country Coverage Guide",
+      "shortTitle": "Using Amazon Connect Telecoms Country Covera…",
+      "summary": "Amazon Connect is available in multiple Regions. AWS partners with carrier providers in each Region where Amazon Connect is available to ensure…",
+      "duration": "~13 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the telecom features described in the Amazon Connect Telecoms Country Coverage Guide.",
+        "Use the Amazon Connect Telecoms Country Coverage Guide to select the target Region that works best for your business."
+      ],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t2-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect is available in multiple Regions. AWS partners with carrier providers in each Region where Amazon Connect is available to ensure global coverage for telephony services. For more information, see Amazon Connect availability by Region."
+            },
+            {
+              "type": "p",
+              "text": "To help organizations plan, implement, and optimize their contact center workloads, Amazon Connect published the Amazon Connect Telecoms Country Coverage Guide. The document contains the list of countries and Regions where AWS partner carriers offer services and the types of services available. As AWS onboards more carriers, the document is continuously updated."
+            },
+            {
+              "type": "p",
+              "text": "In this lesson, you will learn the telecom features and functionality offered by Amazon Connect. You will use real-life scenarios to explore how to use the Amazon Connect Telecoms Country Coverage Guide to select the Region with the right coverage for your business needs."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Document overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect Telecoms Country Coverage Guide is a document that offers information about the telecom services available in each country where AWS partners with carrier providers. This document is informational only and offers Amazon Connect product and practice offerings. Organizations are responsible for making their own independent assessment of the information included in this document. For more information, see the Amazon Connect Telecoms Country Coverage Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Definitions of columns",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "First, you need to get familiar with the definitions for each of the columns in the guide. To learn more about each column in the guide, expand each of the following categories."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "p",
+              "text": "The first column identifies the country where Amazon Connect offers telecom services."
+            },
+            {
+              "type": "p",
+              "text": "By offering contact phone numbers that are available in the customer's geographical area, organizations can reduce their costs while making themselves easily accessible."
+            },
+            {
+              "type": "p",
+              "text": "Each country has specific telecommunications regulations that require businesses to provide documentation before claiming or porting phone numbers. Some examples include proof of a physical business presence, registration, or identification documents. You should check all these requirements before selecting the Region where you want to deploy your contact center. For more information, see Region requirements for ordering and porting phone numbers in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Service type",
+                  "body": "In this second column, you will find the types of telephony services supported in each country. The supported service types are inbound TFN, DID, or UIFN and outbound calling."
+                },
+                {
+                  "title": "Number availability",
+                  "body": "In this third column, you can find out whether DID numbers or TFNs are available in the country."
+                },
+                {
+                  "title": "National outbound",
+                  "body": "Caller ID is a phone system feature that identifies an incoming caller by phone number. Unlike local number portability (LNP), caller ID is not regulated by a governing body, such as the Federal Communications Commission (FCC). The National outbound column describes whether Amazon Connect supports outbound calling within the country using a local caller ID."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "When there is a green check mark in this fourth column, Amazon Connect makes the originating phone number available to the target destination. For example, AnyCompany uses +1-555-0100 as the caller ID when reaching out to its customers. When AnyCompany dials a customer, +1-555-0100 will appear on the customer's phone display when receiving the call."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "International outbound",
+                  "body": "A green check mark in this fifth column indicates whether Amazon Connect allows outbound calling between countries using the assigned number as the caller ID. Only phone numbers that you claim or port to Amazon Connect can be used as caller ID numbers."
+                },
+                {
+                  "title": "Porting available",
+                  "body": "This sixth column indicates if Amazon Connect supports number porting for the specific country. Businesses can use number porting to transfer their existing phone numbers to Amazon Connect. Porting is limited to DID numbers and TFNs only."
+                },
+                {
+                  "title": "Multi-carrier available",
+                  "body": "A green check mark in this seventh column indicates the ability to provision multiple DID numbers or TFNs hosted on different telecommunications carriers."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "If the multiple carriers option is available, organizations can open an AWS Support ticket to request contact phone numbers for different carriers. In case of a carrier outage, if one number becomes unreachable, callers can dial a different number hosted on a different carrier."
+            },
+            {
+              "type": "p",
+              "text": "US TFNs with an asterisk (*) indicate that Amazon Connect has registered the number with SOMOS. Amazon Connect uses multiple carriers to provide both route and carrier redundancy for these numbers. Callers do not need to dial a different number during carrier outages."
+            },
+            {
+              "type": "p",
+              "text": "For countries where both the outbound service and multiple carriers' features are available, Amazon Connect routes outbound calls through multiple carriers for enhanced resilience."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Custom caller ID",
+                  "body": "This eighth column indicates whether Amazon Connect allows businesses to provide proof of ownership for a number not listed on an Amazon Connect instance. With proof of ownership, organizations can use this number as their outbound caller ID. To provide proof of ownership for the caller ID feature, create an AWS Support case. For information about the steps required to use an external number as a caller ID, see Set up outbound caller ID in the Amazon Connect Administrator Guide. Refer to the Outbound caller ID number section."
+                },
+                {
+                  "title": "Region availability",
+                  "body": "This ninth column specifies the Region where Amazon Connect supports the country's telecom features. Businesses can claim or port phone numbers in the Amazon Connect console or submit an AWS Support ticket. For more information, see Set up phone numbers to use the Amazon Connect service in the Amazon Connect Administrator Guide."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Incoming and outgoing customer calls to and from an Amazon Connect contact center are established over the PSTN. Selecting a Region that is geographically closer to where the majority of the customers are located will limit the latency of your customer calls."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Outbound campaign Regions",
+                  "body": "This tenth column lists the Regions where the Amazon Connect outbound campaign feature is available."
+                },
+                {
+                  "title": "Status",
+                  "body": "This last column displays the current status of the country's telephony services availability in Amazon Connect as follows:"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "General Availability (GA) - This means the feature or service is available and ready for production use."
+            },
+            {
+              "type": "p",
+              "text": "Early Access - Amazon Connect offers organizations early access to select services before they are officially generally available. In the early access phase, organizations can get a head start and familiarize themselves with the new functionality. During this early access phase, it is not recommended to use the services for production traffic."
+            },
+            {
+              "type": "p",
+              "text": "Testing - Services marked as Testing are available in the development and testing phase. These services are not yet ready for production use and should only be used for testing or evaluation purposes."
+            },
+            {
+              "type": "p",
+              "text": "Restricted - This means that AWS requires a thorough validation of business-specific use cases and intended usage before granting organizations access to these services. When running restricted functionality, organizations must agree to additional terms and conditions set forth by AWS. To initiate this process, organizations must work with their AWS account teams and create an AWS Support case."
+            },
+            {
+              "type": "p",
+              "text": "Sample of the document"
+            },
+            {
+              "type": "p",
+              "text": "The following table presents sample content of the document, featuring columns for countries, service types, and availability. Green checkmarks and red stop icons denote number availability, national outbound, international outbound, porting availability, multi-carrier capability, and custom caller ID, respectively. This illustrates the Amazon Connect Telecom Country Coverage Guide. To view the complete document, please see Amazon Connect Telecom Country Coverage Guide."
+            },
+            {
+              "type": "p",
+              "text": "Sample list of countries available in the Amazon Connect Telecoms Country Coverage Guide"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Screen reader friendly: Accessible table: Amazon Connect Telecom Country Coverage Guide",
+                "The following table has been divided into two parts for improved readability and analysis."
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "p",
+              "text": "Service type Number availability National out- bound International out- bound Porting available Brazil"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "DID"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Yes",
+                "Yes",
+                "Yes",
+                "Yes"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Toll-free"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Yes",
+                "Yes",
+                "Yes",
+                "Yes"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "UFIN"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Yes",
+                "No",
+                "No",
+                "Yes",
+                "Canada",
+                "DID",
+                "Yes Yes",
+                "Yes Yes",
+                "Toll-free",
+                "Yes",
+                "Yes",
+                "No",
+                "Yes",
+                "UFIN",
+                "Yes",
+                "No",
+                "No",
+                "Yes"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country Multi-carrier available"
+            },
+            {
+              "type": "p",
+              "text": "Custom caller ID Region availability Outbound campaign regions Status"
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Brazil",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Yes No"
+            },
+            {
+              "type": "p",
+              "text": "US East 1, US West 2"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "GA-GA - Via Partner"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Yes",
+                "No",
+                "All except ca-central-1,us-gov-cloud"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "GA"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "No",
+                "No",
+                "All"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "GA"
+            },
+            {
+              "type": "p",
+              "text": "Canada"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Yes"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Yes",
+                "US East 1, US West 2, Canada (Central), EU (Frankfurt), EU (London), AWS GovCloud (US-West)"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Canada (Central)"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "GA",
+                "Yes Yes",
+                "No No All except ca-central-1,us-gov-cloud"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use cases",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The following use cases will help you better understand the practical application of using the Amazon Connect Telecoms Country Coverage Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use case 1",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "AnyCompany Technology is a leading IT services provider with a strong customer base in Slovakia. The organization aims to enhance its customer support services by deploying Amazon Connect in the right Region for the business. AnyCompany Technology wants to port its existing phone numbers to Amazon Connect for a seamless integration with its customer support operations. The company's existing services include outbound dialing in the country, but it wants to potentially expand the business outside of Slovakia."
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Technology takes into consideration proximity to its customer base, compliance with data protection regulations, and availability of telephony services."
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Technology uses the Amazon Connect Telecoms Country Coverage Guide throughout the decision-making process."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Step 1: Identify the primary country of operation",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Zoomed-in screenshot focused on Amazon Connect Telecoms Country Guide, Slovakia in the country list column."
+            },
+            {
+              "type": "p",
+              "text": "Because the majority of its customer base is located in Slovakia, AnyCompany Technology first navigates to the Slovakia entry in the country list."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Service Type",
+                "Slovakia DID",
+                "Toll-free",
+                "UIFN"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Step 2: Review service types and number availability"
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Technology checks the Service Type column. All three types of phone numbers are available for inbound calling in Slovakia: DID numbers, TFNs, and UIFNs. The Status column for these services has GA, which means these phone numbers are ready for production traffic."
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Technology checks the Service Type column. All three types of phone numbers are available for inbound calling in Slovakia: DID numbers, TFNs, and UIFNs. The Status column for these services has GA, which means these phone numbers are ready for production traffic."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Service Type",
+                "Number availability Status",
+                "Slovakia DID Yes GA",
+                "Toll-free",
+                "Yes",
+                "UIFN Yes"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Step 3: Evaluate outbound calling capabilities"
+            },
+            {
+              "type": "p",
+              "text": "Zoomed-in screenshot focused on National Outbound and International Outbound columns."
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Technology requires the ability to make outbound calls within Slovakia. The company's customers are less likely to answer the call if they don’t recognize who is calling. AnyCompany Technology wants to ensure that the business is represented properly with custom caller ID information. AnyCompany Technology checks the National Outbound column."
+            },
+            {
+              "type": "p",
+              "text": "For further expansion of the business to other European countries, AnyCompany Technology checks the International Outbound column. By using the information available, the company finds out that using a Slovakian DID number registered in Amazon Connect fulfills its needs."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "National outbound"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "International outbound",
+                "Yes Yes",
+                "No No",
+                "No",
+                "No"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Step 4: Assess the availability of custom caller IDs"
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Technology wants to start by migrating its manual outbound workload to Amazon Connect. The company's on-premises system will continue to handle inbound calls."
+            },
+            {
+              "type": "p",
+              "text": "To ensure that there is caller ID functionality for all outbound calls, AnyCompany Technology must continue to display its existing phone numbers (DID or TFN) at the destination. Because the existing platform continues to serve inbound traffic, the company cannot port it’s numbers to Amazon Connect until the migration is complete. AnyCompany Technology checks if it can use its existing phone numbers to activate caller ID functionality in Amazon Connect. The company verifies that the feature is available by checking the Custom Caller ID column in the Amazon Connect Telecoms Country Coverage Guide for Slovakia."
+            },
+            {
+              "type": "p",
+              "text": "The feature is available, so AnyCompany Technology must provide proof of ownership for those numbers and get approval from the AWS Support team. By following this process, AnyCompany Technology ensures that its customers are not affected by the first step in the migration phase."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Custom caller ID",
+                "Slovakia",
+                "Yes",
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Step 5: Select the Region where Amazon Connect is deployed"
+            },
+            {
+              "type": "p",
+              "text": "AnyCompany Technology wants to explore expansion into the European market. This means the company will need to also take into consideration regulatory compliance regulations."
+            },
+            {
+              "type": "p",
+              "text": "By checking the Default Regions column, AnyCompany Technology finds out that there is Amazon Connect availability in the European Union (EU) Frankfurt Region. This Region has the closest physical proximity to Slovakia and is the ideal choice for supporting AnyCompany Technology's customer base."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Default regions",
+                "Slovakia",
+                "US East 1, US West 2, Canada (Central), EU (Frankfurt), EU (London)",
+                "All except ca-central-1,us-gov-cloud"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case 2"
+            },
+            {
+              "type": "p",
+              "text": "AnyOrganization Health, a prominent natural health products and services company based in Peru, aims to expand its customer support services. The company wants to deploy its Amazon Connect contact center in the most optimal Region. The customer base is located across North America, Central America and South America. The primary markets with a substantial customer presence are Brazil, Argentina, Canada, Chile, Colombia, and Peru."
+            },
+            {
+              "type": "p",
+              "text": "To determine the ideal deployment Region, AnyOrganization Health needs to take into consideration availability of the required telecom services and proximity to customers."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Step 1: Check the country coverage",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect Telecoms Country Coverage Guide for Brazil, Canada, Chile, Colombia, Argentina, Peru, by service type."
+            },
+            {
+              "type": "p",
+              "text": "Based on the company's customer presence, AnyOrganization Health checks the information for Brazil, Canada, Chile, Colombia, Argentina, and Peru."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Service Type",
+                "Brazil",
+                "DID",
+                "Toll-free",
+                "UIFN",
+                "Canada",
+                "DID",
+                "Toll-free",
+                "UIFN",
+                "Chile Toll-free",
+                "UIFN",
+                "Columbia DID",
+                "Toll-free",
+                "UIFN",
+                "Argentina DID",
+                "Toll-free",
+                "UIFN",
+                "Peru UIFN"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Step 2: Identify the common Regions for all required countries"
+            },
+            {
+              "type": "p",
+              "text": "Next, AnyOrganization Health notices that the US East (N. Virginia) - us-east-1, and US West (Oregon) - us-west-2 Regions are available for all of its country coverage needs. These Regions also offer comprehensive coverage for DID numbers, TFNs, and UIFNs across all of the countries on the list."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Type Region availability",
+                "Brazil",
+                "DID"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Toll-free",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "UIFN"
+            },
+            {
+              "type": "p",
+              "text": "US East 1, US West 2"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "All except ca-central-1,us-gov-cloud"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Canada",
+                "DID"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Toll-free",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "UIFN"
+            },
+            {
+              "type": "p",
+              "text": "US East 1, US West 2, Canada (Central), EU (Frankfurt), EU (London), AWS Gov Cloud (US-West)"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "All except ca-central-1,us-gov-cloud"
+            },
+            {
+              "type": "p",
+              "text": "Chile DID"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Toll-free"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "US East 1, US West 2",
+                "Columbia DID"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s11",
+          "eyebrow": null,
+          "duration": null,
+          "title": "UIFN",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Toll-free"
+            },
+            {
+              "type": "p",
+              "text": "US East 1, US West 2"
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s12",
+          "eyebrow": null,
+          "duration": null,
+          "title": "All except ca-central-1,us-gov-cloud",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "US East 1, US West 2"
+            },
+            {
+              "type": "p",
+              "text": "Argentina DID"
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s13",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Toll-free",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "UIFN"
+            },
+            {
+              "type": "p",
+              "text": "US East 1, US West 2"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "All except ca-central-1,us-gov-cloud"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Peru UIFN",
+                "All except ca-central-1,us-gov-cloud"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Step 3: Assess proximity to customers"
+            },
+            {
+              "type": "p",
+              "text": "Both the US East (us-east-1) and US West (us-west-2) Regions deliver low latency connectivity for the countries in North America, Central America, and South America."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t2-s14",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Step 4: Assess telephony service cost impact",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "UIFNs provide a consistent global inbound number for AnyOrganization Health's customers."
+            },
+            {
+              "type": "p",
+              "text": "With Amazon Connect, AnyOrganization Health can activate UIFNs if the company requires the UFINs for a minimum of five countries. Based on the information available in the guide, Chile is the only country where UIFN service is not available. AnyOrganization Health can activate UIFNs in all the other countries."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Screen reader friendly: Accessible table"
+            },
+            {
+              "type": "p",
+              "text": "The following table is interactive. Note that this is an abridged example."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Country"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Service Type",
+                "Brazil",
+                "DID",
+                "Toll-free",
+                "UIFN",
+                "Canada",
+                "DID",
+                "Toll-free",
+                "UIFN",
+                "Chile Toll-free",
+                "UIFN",
+                "Columbia DID",
+                "Toll-free",
+                "UIFN",
+                "Argentina DID",
+                "Toll-free",
+                "UIFN",
+                "Peru UIFN"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Step 5: Select the Region"
+            },
+            {
+              "type": "p",
+              "text": "Considering all these factors, AnyCompany Health decides to deploy its production Amazon Connect contact center in the US East (N. Virginia) – us-east-1 AWS Region."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned how to use the Amazon Connect Telecoms Country Coverage Guide to select the best Region for your contact center. In the next lesson, you will learn how to configure phone numbers in Amazon Connect. Lesson 4 of 11"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-voice-intermediate-t2-q1",
+          "question": "AnyCompany Retail is an ecommerce company. It plans to migrate its existing contact center to Amazon Connect to improve the customer experience. When designing the new contact center, AnyCompany Retail's main focus is to provide customers with high-quality audio and resilient telephony services at a low cost. AnyCompany Retail uses the Amazon Connect Telecoms Country Coverage Guide to select the cost optimal AWS Region. Which considerations must AnyCompany Retail evaluate when selecting the Region for Amazon Connect? (Select TWO.) (Select all that apply: The country where the company's customers are located and the Region that is in closest proximity to the customers / The porting availability for the company's phone numbers / The cost of data transfer between Regions / The availability of renewable energy sources in the Region / The option to use multiple carriers)",
+          "options": [],
+          "answer": "The country where the company's customers are located and the Region that is in closest proximity to the customers; The option to use multiple carriers. By offering contact phone numbers that are in close proximity to customers, organizations can reduce their costs while making themselves easily accessible. Incoming customer calls to an Amazon Connect contact center are established over the Public Switched Telephone Network (PSTN). Selecting a Region that is geographically closer to where the majority of the customers are located will limit the latency of customer calls."
+        }
+      ]
+    },
+    {
+      "id": "connect-voice-intermediate-t3",
+      "number": 3,
+      "title": "Configuring Phone Numbers in Amazon Connect",
+      "shortTitle": "Configuring Phone Numbers in Amazon Connect",
+      "summary": "To receive incoming calls or place outbound calls, you need to configure phone numbers in your Amazon Connect instance. There are two ways to…",
+      "duration": "~7 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the difference between claiming phone numbers and porting phone numbers.",
+        "Explain how to configure phone numbers."
+      ],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t3-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To receive incoming calls or place outbound calls, you need to configure phone numbers in your Amazon Connect instance. There are two ways to obtain phone numbers in Amazon Connect:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Claim numbers using the Amazon Connect console.",
+                "Port your existing numbers to Amazon Connect.",
+                "In this lesson, you will learn how to configure Amazon Connect contact center phone numbers."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t3-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Claiming a phone number in Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect has a pool of phone numbers you can instantly claim and use with your contact center. These numbers are available for faster setup. Claimed numbers are managed by Amazon Connect. You can use them as long as you keep your Amazon Connect instance."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t3-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Security permissions",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect users can be granted security profile permissions to claim phone numbers in the Amazon Connect console. The built-in CallCenterManager security profile includes all the necessary security settings related to handling phone numbers. However, if you are not an administrator, at a minimum, your user must have the Claim and Release settings activated for Phone numbers. Your user needs the View and Edit settings activated if you handle additional phone number configurations. For example, the Edit setting is required if you need to change the phone number description or associate the number with Amazon Connect flows."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t3-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Claiming a phone number process",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In the following video, you will learn how to claim a phone number and create a user experience by associating the phone number with an Amazon Connect flow."
+            },
+            {
+              "type": "p",
+              "text": "Transcript: Claim A Phone Number And Associate It With A Contact flow"
+            },
+            {
+              "type": "p",
+              "text": "Welcome to this demonstration for Amazon Connect. The focus of this video is to show you how to claim a phone number and associate it with a contact flow. After you have claimed a phone number, you will select a number type and a country, then associate the number with a contact flow."
+            },
+            {
+              "type": "p",
+              "text": "From the side navigation menu, select Channels, and from the drop down menu, select Phone numbers."
+            },
+            {
+              "type": "p",
+              "text": "Then, select Claim a number to start the process of claiming a phone number for your contact center."
+            },
+            {
+              "type": "p",
+              "text": "Next, select the Voice radio button in the Choose channel section. Choose the Country drop down menu in the Toll Free section."
+            },
+            {
+              "type": "p",
+              "text": "Then, select the appropriate country to meet your region needs from the menu."
+            },
+            {
+              "type": "p",
+              "text": "Now, you select the preferred telephone number from the list of options."
+            },
+            {
+              "type": "p",
+              "text": "As an alternative, you can select a Direct Inward Dialing number for the desired country. The process is the same for this option after you have selected the DID (Direct Inward Dialing) tab. Choose the Country drop down menu."
+            },
+            {
+              "type": "p",
+              "text": "Then, select the appropriate country to meet your region needs from the menu."
+            },
+            {
+              "type": "p",
+              "text": "Now, you select the preferred telephone number from the list of options."
+            },
+            {
+              "type": "p",
+              "text": "Then, scroll to the Optional information panel on the page. You can optionally enter a description for the phone number, which can help you identify its purpose or usage later. Expand the drop down menu for Contact flow / IVR."
+            },
+            {
+              "type": "p",
+              "text": "Now, associate the phone number with a contact flow which will determine how incoming calls are handled and routed within your contact center. Choose Sample inbound flow (first contact experience)."
+            },
+            {
+              "type": "p",
+              "text": "Then, the necessary settings are configured. Scroll to the beginning of the page. Choose Save to apply your settings."
+            },
+            {
+              "type": "p",
+              "text": "After saving the settings, you will be presented with a confirmation page displaying the details of the phone number you claimed, including the associated contact flow and other relevant information. Congratulations! Your contact center is now reachable by dialing the phone number you claimed. Incoming calls will be handled according to the selected contact flow."
+            },
+            {
+              "type": "p",
+              "text": "Thank you for your participation."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t3-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Porting a phone number to Amazon Connect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Number porting is the process of moving a telephone number from one communications provider to another. When migrating your contact center workloads to Amazon Connect, you have an option to claim a new number or port your existing phone numbers. Although claiming numbers is more efficient, with porting, you can keep your existing numbers and offer a seamless, uninterrupted transition of services for your customers."
+            },
+            {
+              "type": "p",
+              "text": "Choosing between these two options depends on whether you must use your custom numbers or if can use numbers assigned by Amazon Connect. You retain ownership of ported numbers and can port them out at any time as your business requires."
+            },
+            {
+              "type": "p",
+              "text": "Porting phone numbers from your existing carrier to Amazon Connect is a multi-step process. The ability to port numbers can be impacted by factors, such as the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "The terms of your service contract with your current service provider"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "The type of phone numbers you are porting",
+                "Telephony regulations in the country where your business operates"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Agreements between the current service provider and the new carrier"
+            },
+            {
+              "type": "p",
+              "text": "For more information, see Things to know before porting a phone number to Amazon Connect in the Amazon Connect Administrator Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t3-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Verifying porting availability in your country",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect Telecoms Country Coverage Guide screenshot focused on porting availability with green check marks"
+            },
+            {
+              "type": "p",
+              "text": "Use the Amazon Connect Telecoms Country Coverage Guide to verify if number porting is supported for the Region and country where your contact center operates. Search for the country. Then, verify whether there is a green check mark in the Porting Available column for each of the types of numbers you want to port."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t3-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Porting your phone numbers",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "After you confirm that porting is available, you can open an AWS Support ticket to initiate the number porting. For more information, see How to port your numbers to Amazon Connect in the Amazon Connect Administration Guide. Amazon Connect continuously improves operational processes, so you can find the most up-to-date information in the Amazon Connect Administration Guide."
+            },
+            {
+              "type": "p",
+              "text": "The following screenshot is of a support ticket that initiates the phone number porting process."
+            },
+            {
+              "type": "p",
+              "text": "AWS Support ticket screenshot, initiating the initial step for porting into Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "After AWS Support collects all the information from you, the data is submitted to the AWS partner carrier. All individual phone numbers included in your Letter of Authorization (LOA) are verified for porting. Then, the partner carrier submits the port request to your current carrier. If your carrier accepts the request to port, your preferred porting window timeframe is considered and communicated."
+            },
+            {
+              "type": "p",
+              "text": "There are situations where carriers might reject your porting request. For more information, see Documentation requirements for porting numbers in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "It's important to start the porting process several months in advance of your scheduled contact center workload go-live date. Verify all the porting documentation is in order."
+            },
+            {
+              "type": "p",
+              "text": "After the porting process is confirmed, you can start designing, building, and testing your Amazon Connect contact flows. You can temporarily claim phone numbers in the Amazon Connect console and associate them with the new flows. By using this approach, you can make your go-live process more efficient and ensure that all the customer experience flows are working as intended."
+            },
+            {
+              "type": "p",
+              "text": "It is recommended that you forward calls from your existing phone numbers to the newly claimed phone numbers. This approach makes it possible to perform a rollback if you encounter any issues during the porting process."
+            },
+            {
+              "type": "p",
+              "text": "Routing existing callers' carrier through an on-premises contact center system and acquiring new phone numbers directed to Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "After the porting process completes"
+            },
+            {
+              "type": "p",
+              "text": "AWS Support will inform you when the process is complete and successful porting is verified. The ported numbers will appear in your Amazon Connect console, so you can associate them with Amazon Connect flows."
+            },
+            {
+              "type": "p",
+              "text": "At this time, you can assign the flows you created to the newly ported phone numbers. It is a best practice for you to test the ported numbers by placing test calls to make sure that the associated contact flow is successfully activated. With this approach, your customer experience is never affected by the porting process."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned the difference between claiming numbers and porting numbers to Amazon Connect. You also learned how to configure phone numbers and associate them with contact flows. In the next lesson, you will learn how to set up in-app, web, and video calling for your customers. Lesson 5 of 11"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-voice-intermediate-t3-q1",
+          "question": "Alejandro Rosalez is a communications specialist at AnyCompany. Alejandro is tasked with creating a new customer experience flow for VIP customers and add a new phone number. He opens the Amazon Connect console to claim a new phone number. Which of the following number types can Alejandro choose in the phone number screen? (Select TWO.) (Select all that apply: Toll-free number (TFN) / Universal International Freephone Number (UIFN) / International number / Direct Inward Dialing (DID) number / Mobile number)",
+          "options": [],
+          "answer": "Toll-free number (TFN); Direct Inward Dialing (DID) number. With the Amazon Connect console, users with the right permissions can configure TFNs and DID numbers. To request a UIFN within a specific AWS Region, users must create an AWS Support case. Mobile numbers and international numbers are not services provided by Amazon Connect."
+        }
+      ]
+    },
+    {
+      "id": "connect-voice-intermediate-t4",
+      "number": 4,
+      "title": "Configuring In-App, Web, and Video Calling",
+      "shortTitle": "Configuring In-App, Web, and Video Calling",
+      "summary": "The in-app, web, and video calling capabilities of Amazon Connect empower organizations' customers to initiate voice and video communications from…",
+      "duration": "~8 min",
+      "lede": null,
+      "objectives": [
+        "Recognize use cases and benefits of in-app, web, and video calling.",
+        "Explain how to configure and deploy the prebuilt in-app, web, and video communication widget in Amazon Connect."
+      ],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t4-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The in-app, web, and video calling capabilities of Amazon Connect empower organizations' customers to initiate voice and video communications from their website or mobile applications."
+            },
+            {
+              "type": "p",
+              "text": "In this lesson, you will explore a travel and hospitality customer use case, and learn how to configure in-app, web, and video calling capabilities."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t4-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Scenario: Travel and hospitality use case",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "AnyCompany Travel is an international travel agency that receives a high volume of customer inquiries and support requests from travelers around the world. AnyCompany Travel expanded customer access by implementing in-app, web, and video calling capabilities in Amazon Connect. This provides a seamless and convenient support experience for their customers. To learn more, choose the arrow buttons to display each of the six slides."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Introduction"
+            },
+            {
+              "type": "p",
+              "text": "John and his family at the airport. John Doe is a valued member of AnyCompany Travel since 2019. He uses the travel agency for both business and personal trips."
+            },
+            {
+              "type": "p",
+              "text": "John is currently traveling to his annual beach holiday with his wife and kids. As usual, John booked his air and hotel with AnyCompany Travel."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "The challenge"
+            },
+            {
+              "type": "p",
+              "text": "Two separate rooms. John and his wife do a lot of travel, and this is a very important time for them with their family. When checking in, they notice that they have been provided with the wrong room setup. There are two separate rooms with double-sized beds, and the kids are too young to be on their own in a separate room."
+            },
+            {
+              "type": "p",
+              "text": "In his request, John booked a room with two queen-sized beds to accommodate his family of four."
+            },
+            {
+              "type": "p",
+              "text": "John and his family are at risk of not having the dream holiday that they have been planning for months."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t4-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Mobile reach",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "John opens the AnyCompany Travel mobile application. He authenticates using Face ID."
+            },
+            {
+              "type": "p",
+              "text": "While John is in his travel app, he can see all his planned experiences, including the hotel booking details. To get specifics of this booking, he opens the Details section of the app."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t4-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Self-service option",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "John chooses Chat with us to get help with the booking. John chooses the self-service options and navigates to the available selections."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t4-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Video call",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "He selects the option to talk to an agent. He wants to show the agent the current room setup, and chooses the camera icon to start a video call. Akua Mansa is the customer service representative (CSR) who receives his video call."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Summary"
+            },
+            {
+              "type": "p",
+              "text": "Corrected rooming and happy family. Because John used his mobile app to contact AnyCompany Travel, Akua can see John's contextual information. This includes his profile information, bookings, and face ID authentication. Akua's experience is seamless, and she can see all the information related to bookings, customer, and process on a single screen. Instead of placing John on hold and accessing multiple applications, Akua updates the reservation to a room with two queen-sized beds."
+            },
+            {
+              "type": "p",
+              "text": "John and his family can now enjoy the holiday that they had planned for months."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t4-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits of in-app, web, and video calling",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Let's look at the advantages that AnyCompany Travel sees by using Amazon Connect in-app, web, and video calling. To learn more, expand the following categories."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Cost-effective customer access",
+                  "body": "AnyCompany Travel's mobile app assists their customers with booking flights, managing reservations, and accessing itineraries. Within the mobile app, customers can initiate voice calls for any inquiries or assistance needed. This feature is particularly beneficial for international travelers. They can contact customer service without incurring expensive international calling charges or roaming costs."
+                },
+                {
+                  "title": "Convenience",
+                  "body": "Using the same Amazon Connect internet-based calling capabilities, AnyCompany Travel's customers can initiate voice calls to agents directly from their website. This feature is convenient for customers researching or booking flights online if they have questions or require assistance during the booking process."
+                },
+                {
+                  "title": "Faster resolution",
+                  "body": "When AnyCompany Travel's customers need to provide a better visual of their issue, they can activate real-time video sharing within the same communication. In our use case scenario, John shared with Akua a video of the single room that had no connection with the second room."
+                },
+                {
+                  "title": "Reduced customer effort",
+                  "body": "When customers initiate calls through in-app, web, or video calling, AnyCompany Travel can perform authentication based on the information available in the mobile app or website. The availability of this data reduces customer effort and streamlines the authentication process by eliminating the need for additional verification. AnyCompany Travel uses a customer's language preference or location to route the call to an agent skilled in communicating in the customer's preferred language."
+                },
+                {
+                  "title": "Added service redundancy and resiliency",
+                  "body": "In the event of a telephony carrier outage or disruption of PSTN carrier services, AnyCompany Travel's customers can use in-app, web, and video calling. The additional built-in redundancy helps AnyCompany Travel provide better service and business continuity for their customers."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t4-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Configuring calling capabilities",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "There are two ways that organizations can activate in-app, web, and video calling capabilities: use a prebuilt widget or build a custom widget."
+            },
+            {
+              "type": "p",
+              "text": "You can use the no-code UI builder to create and customize a prebuilt widget. Customization options include font, colors, and company logos."
+            },
+            {
+              "type": "p",
+              "text": "To build a custom communication widget, developers must use Amazon Connect APIs, such as StartWebRTCContact and Amazon Chime SDK client APIs."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t4-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Configure in-app, web, and video calling",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In the following video, you will learn how to configure the prebuilt in-app, web, and video communication widget in Amazon Connect."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Transcript: Configuring In-App, Web, and Video Calling"
+            },
+            {
+              "type": "p",
+              "text": "Welcome to this demonstration for Amazon Connect. In this demonstration, you will learn to configure the prebuilt in-app web and video communication widget in Amazon Connect. You will learn how to customize the widget's appearance, specify approved website domains, and understand what the generated widget code is used for. Then, you will deploy the communication widget you configured."
+            },
+            {
+              "type": "p",
+              "text": "From the side navigation menu, select Channels, then choose Communication widgets."
+            },
+            {
+              "type": "p",
+              "text": "Now, choose Add widget to create a new communication widget."
+            },
+            {
+              "type": "p",
+              "text": "Next, in the Widget details panel, enter a name for your widget. Provide a description for your widget, if you would like."
+            },
+            {
+              "type": "p",
+              "text": "Now, scroll to the Chat section of the page. Select the Chat contact flow dropdown list. Choose Sample inbound flow. This option allows customers to reach your contact center through the chat channel. In the chat window, customers can choose to switch to web calling."
+            },
+            {
+              "type": "p",
+              "text": "Then, scroll to the end of the page. Select the Contact flow for web calling dropdown list. Choose Sample inbound flow."
+            },
+            {
+              "type": "p",
+              "text": "Next, choose Save and continue."
+            },
+            {
+              "type": "p",
+              "text": "Now, you can customize the widget's appearance by changing the icon background color to match your organization's scheme. Select the color square under HEX Color."
+            },
+            {
+              "type": "p",
+              "text": "Next, select your preferred color in the Color pop up window. You may enter a specific color, such as one used in your organization's logo, by entering a value in the Red, Green, or Blue field. When you have the color you want to use configured, choose OK."
+            },
+            {
+              "type": "p",
+              "text": "Now, scroll to the Customize display names and style section of the page. In the Widget header panel, you can change the header message on demand."
+            },
+            {
+              "type": "p",
+              "text": "As an example, you can change the Header message to Welcome to AnyCompany. The header message is changed in the widget preview. You can also change the header color, as demonstrated earlier."
+            },
+            {
+              "type": "p",
+              "text": "Now, scroll to the Logo URL field if it is not visible to add your company logo to the widget. Enter a publicly accessible URL for the logo you want to use."
+            },
+            {
+              "type": "p",
+              "text": "Next, scroll to the Chat view section of the page. Here, you can adjust the typeface used for the chat as well as the text displayed for various elements, such as the bot's display name."
+            },
+            {
+              "type": "p",
+              "text": "Then, scroll to the end of the page. Choose Save and continue."
+            },
+            {
+              "type": "p",
+              "text": "Now, you will add the website domains where you want to embed the communication widget. Be sure that each URL begins with https:// and is a valid URL. Add the first website domain. A sample address, https://example.com, is displayed, but you will need to enter a URL serving a site that you have the ability to modify."
+            },
+            {
+              "type": "p",
+              "text": "Then, select +Add domain to add a second site."
+            },
+            {
+              "type": "p",
+              "text": "Now, enter the second URL. A sample domain is displayed again, but be sure to enter one you can modify."
+            },
+            {
+              "type": "p",
+              "text": "Then, select the link +Add domain to add a third domain."
+            },
+            {
+              "type": "p",
+              "text": "Next, enter the third site's URL. The sample address, https://example.org, is displayed."
+            },
+            {
+              "type": "p",
+              "text": "Now, scroll to the end of the page. In the Add security for your communications widget requests section, select No - I will skip for a quicker setup. For a production deployment, you may select Yes for the ability to pass contextual information as attributes. Choose Save and continue."
+            },
+            {
+              "type": "p",
+              "text": "Then, a confirmation page is displayed with the details of the communication widget you created."
+            },
+            {
+              "type": "p",
+              "text": "Next, scroll down to the Widget script section. Choose Copy script to copy the generated code. Add the code to each page of the websites you want the communication widget to appear and be accessible to customers."
+            },
+            {
+              "type": "p",
+              "text": "Then, scroll to the top of the page. Select the Communication widgets link."
+            },
+            {
+              "type": "p",
+              "text": "Now, the widget you configured is displayed in the Communication widgets table."
+            },
+            {
+              "type": "p",
+              "text": "From this table, you can edit, delete, or duplicate the widget as needed. Select the ellipsis for the widget you want to work with in the Actions column. Then, choose the action you want to perform from the menu."
+            },
+            {
+              "type": "p",
+              "text": "Thank you for your participation."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you explored a travel customer use case that showcases benefits of Amazon Connect in-app, web, and video calling. You also learned the steps to configure and deploy a prebuilt communication widget. In the next lesson you will explore the pricing structure of the Amazon Connect telephony service. Lesson 6 of 11"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-voice-intermediate-t4-q1",
+          "question": "AnyOrganization Financial is a leading provider of banking and investment solutions with a global customer base. They offer website and mobile app access. Their customers can get fast and secure access to their accounts, manage transactions, and seek real-time chat assistance for financial inquiries. AnyOrganization Financial wants to run a proof of concept (PoC) using Amazon Connect in-app and web calling. What additional customer benefits can AnyOrganization Financial realize by trying this PoC? (Select THREE.) (Select all that apply: Reduced customer effort due to reduced authentication time / Cost-effective international voice calling using the mobile app / Increased brand loyalty with personalized real-time video service / Extended access to voice calling from the web portal / Personalized interactions using the available contact data / Effective routing using customer language preference)",
+          "options": [],
+          "answer": "Cost-effective international voice calling using the mobile app; Increased brand loyalty with personalized real-time video service; Extended access to voice calling from the web portal. AnyOrganization Financial already offers web and mobile chat access to their customers. They already have access to the contact data available in their web portal and mobile application. This data allows them to reduce authentication time, and offer personalized service."
+        }
+      ]
+    },
+    {
+      "id": "connect-voice-intermediate-t5",
+      "number": 5,
+      "title": "Amazon Connect Voice Pricing",
+      "shortTitle": "Amazon Connect Voice Pricing",
+      "summary": "Amazon Connect offers a pay-as-you-go pricing model for its services. There are no long-term commitments or minimum monthly fees. Organizations…",
+      "duration": "~4 min",
+      "lede": null,
+      "objectives": [
+        "Explore the Amazon Connect pricing structure for Public Switched Telephone Network (PSTN) calling.",
+        "Explore the Amazon Connect pricing structure for in-app, web, and video calling."
+      ],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t5-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a pay-as-you-go pricing model for its services. There are no long-term commitments or minimum monthly fees. Organizations are charged by the number of minutes that they use Amazon Connect to engage with customers. There are specific service and per minute rates that vary based on the country, services, and types of calls."
+            },
+            {
+              "type": "p",
+              "text": "In this lesson, you will explore the pricing structure of the various Amazon Connect telephony offering, for both PSTN and internet-based calling. All the details related to Amazon Connect charges can be found on the Amazon Connect Pricing webpage."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t5-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "PSTN calling pricing",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "There are three distinct charges associated with usage and phone number ownership:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "A per minute charge for Amazon Connect service usage"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "A per minute charge for inbound and outbound phone number contact center telecommunications usage",
+                "A per day ownership charge for all the organizations' telephone numbers claimed or ported in Amazon Connect",
+                "To learn more, choose each of the numbered markers."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Overview of the billing methods for Amazon Connect, contact center telecommunications, and phone number usage charges."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t5-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use case",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Efua Owusu reaches out AnyCompany's Amazon Connect contact center in Belgium by dialing the TFN posted on their website. As soon as the call is connected, Efua is greeted by AnyCompany's interactive voice responder (IVR). A conversational chatbot uses Efua's personal data to anticipate the intent of her call. It then uses Efua's language of preference to route her call to a French-speaking agent. Efua navigates this natural language conversation in 45 seconds."
+            },
+            {
+              "type": "p",
+              "text": "As soon as Efua's call gets placed in the queue, Kwesi Manu, an AnyCompany agent, answers her call. Kwesi has access to all of Efua's information and greets her in French. Kwesi spends 4 minutes and 15 seconds resolving Efua's inquiry."
+            },
+            {
+              "type": "p",
+              "text": "To see the cost breakdown for each of the charges, choose each of the following three tabs."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t5-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Telecommunication service charges",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Number usage"
+            },
+            {
+              "type": "p",
+              "text": "Efua interacted with the IVR for 45 seconds, and talked to Kwesi for 4 minutes and 15 seconds. Efua was connected and used the Amazon Connect service for a total of 5 minutes."
+            },
+            {
+              "type": "p",
+              "text": "According to the Amazon Connect pricing page, the voice service charge per minute is $0.018. Efua's call service charge is 5 x $0.018 = $0.09."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t5-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "In-app, web, and video call pricing",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "There are three distinct charges when using in-app, web, and video calling:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "A per minute charge for Amazon Connect service usage"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "A per minute charge for in-app and web calling usage",
+                "A per minute charge for each party's video usage",
+                "To learn more, choose each of the numbered markers."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Interactive overview of pricing for in-app audio and video calling on Amazon Connect."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t5-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use cases",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Martha Rivera uses the AnyCompany's app on their mobile device to contact their support department. They select the in-app calling option within the app. The call is immediately routed to an available agent who assists Martha. Mateo Jackson is the agent handling Martha's support call. Mateo tries to diagnose the issue for 2 minutes by asking Martha questions. Mateo requires more visual information, so Martha turns on the video option and shares with Mateo the information that he needed to confirm visually. With the help of the video, Mateo is able to solve Martha's issue in a total of 6 minutes."
+            },
+            {
+              "type": "p",
+              "text": "Separately, Nikki Wolf navigates AnyCompany's website and tries to fill in a trial form for one of their new products. She is unsure about some of the fields in the form, so she chooses the Assist button available on the webpage. Nikki gets routed to Mary Major, a help desk agent working for AnyCompany. Mary walks Nikki through the various form fields and is able to successfully complete the call in 3 minutes."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t5-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Audio service charges",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Video service charges"
+            },
+            {
+              "type": "p",
+              "text": "The Amazon Connect service charge is $0.018 per minute."
+            },
+            {
+              "type": "p",
+              "text": "Martha's in-app call lasts for 6 minutes. The service charge for this call is 6 x $0.018 = $0.108."
+            },
+            {
+              "type": "p",
+              "text": "Nikki's web call lasts a total of 3 minutes. The service charge for this call is 3 x $0.018 = $0.054."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you reviewed the pricing structure of PSTN and internet-based calling in Amazon Connect. In the next lesson, you will explore additional Amazon Connect voice services considerations. Telecommunication service charges Number usage Efua dialed an AnyCompany TFN. The Belgium TFN rate is $0.0406 per minute. The telecommunication service charge for Efua's call is 5 x $0.0406 = $0.203. Number usage The price of ownership for a TFN is $0.4200 per day and for a DID number the cost $0.1000 per day. Lesson 7 of 11"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-voice-intermediate-t5-q1",
+          "question": "Which statements related to Amazon Connect Public Switched Telephone Network (PSTN) pricing are correct? (Select TWO.) (Select all that apply: AWS charges a flat monthly rate for Amazon Connect voice services, regardless of the usage. / Amazon Connect charges for voice services on a per second basis, with a minimum duration of 10 seconds. / The telecommunication service rates are the same across all Regions and countries. / Amazon Connect charges a separate per day fee for DID numbers, TFNs, and UIFNs. / AWS charges a one-time setup fee for telephone numbers claimed or ported into Amazon Connect.)",
+          "options": [],
+          "answer": "Amazon Connect charges for voice services on a per second basis, with a minimum duration of 10 seconds.; Amazon Connect charges a separate per day fee for DID numbers, TFNs, and UIFNs.. There are three distinct charges for Amazon Connect PSTN calling, voice service usage, telecommunication service usage, and number usage. Amazon Connect bills voice service charges on a per second basis, with a minimum duration of 10 seconds."
+        }
+      ]
+    },
+    {
+      "id": "connect-voice-intermediate-t6",
+      "number": 6,
+      "title": "Considerations",
+      "shortTitle": "Considerations",
+      "summary": "In the previous lesson, you learned about the pricing structure of the Amazon Connect voice services. In this lesson, you will review security,…",
+      "duration": "~6 min",
+      "lede": null,
+      "objectives": [
+        "Recall data protection in Amazon Connect telephony.",
+        "Explore resiliency and service quota considerations for Amazon Connect telephony.",
+        "Recognize best practices to ensure high-quality audio."
+      ],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t6-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In the previous lesson, you learned about the pricing structure of the Amazon Connect voice services. In this lesson, you will review security, resiliency, and quality of service considerations to help better plan, deploy, and maintain your Amazon Connect contact center."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t6-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Security",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect telephony operates under the shared responsibility model for security. This means AWS and your organization share the responsibility for security and compliance around securing voice communication data."
+            },
+            {
+              "type": "p",
+              "text": "AWS operates, manages, and controls components from the host operating system and virtualization layer to the physical facility security. Additionally, Amazon Connect manages security at the application layer."
+            },
+            {
+              "type": "p",
+              "text": "All the data stored in Amazon Connect is encrypted in transit and at rest. Organizations are responsible for securing their network, access to data, features, functionality, and, most importantly, their customer data. For more information, see Security: Design principles for developing a secure contact center in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "AWS manages security of the data in the cloud, and organizations retain control of security controls implemented to protect their own data."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t6-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Data protection in Amazon Connect telephony",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "All data exchanged between the users' web browsers and Amazon Connect is protected in transit using industry-standard TLS. Data handled by Amazon Connect is encrypted at all times while in transit or when stored. The data can only be accessed by authorized users of the Amazon Connect instance. Amazon Connect features role-based access controls that organizations can use to specify permissions based on job function. Role based access provides fine-grained authorization for data and features."
+            },
+            {
+              "type": "p",
+              "text": "For more information, see Security Best Practices for Amazon Connect in the Amazon Connect Administrator Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t6-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Phone call media",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect service is in the audio path for calls handled by the service and is responsible for relaying the call’s media stream between participants. There are two types of phone calls:"
+            },
+            {
+              "type": "p",
+              "text": "The first type are calls placed from or to the PSTN. PSTN calls include inbound calls and outbound calls placed by agents to contacts. Calls made to an agent’s physical phone when configured in the Amazon Connect Contact Control Panel (CCP) are also made using the PSTN."
+            },
+            {
+              "type": "p",
+              "text": "The second type are internet-based calls placed from Amazon Connect to the agent’s browser."
+            },
+            {
+              "type": "p",
+              "text": "Softphone or internet-based voice calls use an encrypted WebSocket connection using TLS. The audio media traffic to the user's browser is encrypted in transit using Datagram Transport Layer Security (DTLS)-Secure Real-time Transport Protocol (SRTP)."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t6-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Resiliency",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When running critical contact center workloads, organizations must plan for carrier redundancy and high call volumes."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t6-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Carrier redundancy",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Organizations can claim phone numbers across different telephony carriers to ensure additional redundancy in countries where Amazon Connect partners with multiple carriers. In this setup, if one carrier experiences an outage or service disruption, telephone numbers hosted on another carrier are still reachable. The deployment approach ensures continuous service availability regardless of carrier outages."
+            },
+            {
+              "type": "p",
+              "text": "Incoming call that can't reach Carrier A and is redirected, ensuring continuous service with Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "Before claiming or porting a DID number or TFN, consult the Amazon Connect Telecoms Country Coverage Guide and check if the Multi-Carrier Available feature is active in the country you require. If the feature is available, put in a request through AWS Support to claim or port the number across multiple telephony carriers."
+            },
+            {
+              "type": "p",
+              "text": "In the United States, Amazon Connect provides redundant TFNs where traffic is automatically routed across multiple carriers."
+            },
+            {
+              "type": "p",
+              "text": "Automatic distribution of calls on a TFN, from caller's carrier to specified carrier, routed to Amazon Connect."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "High call volume"
+            },
+            {
+              "type": "p",
+              "text": "High call volumes are large numbers of concurrent calls that arrive simultaneously in the contact center. Organizations might experience seasonal or unexpected high call volumes. By using phone numbers from multiple carriers, the concurrent call load can be distributed across different carriers. This setup increases the overall concurrency capacity of the contact center."
+            },
+            {
+              "type": "p",
+              "text": "Multiple incoming calls distributed across various carriers, routed to Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "Different countries or Regions might have limitations on the number of concurrent sessions supported by each phone number or carrier. Organizations that handle large-scale call volumes must consult with AWS Support to ensure that their Amazon Connect instances are appropriately scaled to meet requirements."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t6-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Service quotas",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Service quotas are the maximum values for the resources and operations in your AWS account. AWS implements service quotas to provide highly available and reliable service to all customers and protect them from unintentional spending. Review the default service quota for your contact center workload and request increases where needed. When requesting a quota increase, be sure to provide values without including additional padding for fluctuations. Fluctuations are considered automatically when you make your request. For additional information, see each of the following resources:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Amazon Connect service quotas"
+            },
+            {
+              "type": "p",
+              "text": "Requesting a quota increase"
+            },
+            {
+              "type": "p",
+              "text": "The Region where your instance is created determines which countries you can call by default. For more information, see Countries you can call by default. Use the instructions provided in the documentation to expand or limit the number of countries your Amazon Connect instance can call."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t6-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Call quality",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To ensure the highest quality of service for Amazon Connect voice interactions, organizations must consider a series of factors. To learn more, expand each of the following categories."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Network and agent workstation minimum requirements"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect offers two options for setting up network connectivity, which are a domain allowlist or IP address ranges."
+            },
+            {
+              "type": "p",
+              "text": "Agent workstations must have at least 2 GB of dedicated provisioned memory for browser access to Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "A USB headset is recommended for an optimal agent and caller audio experience."
+            },
+            {
+              "type": "p",
+              "text": "For a deeper dive into network setup and agent workspace requirements, refer to the resource links at the end of this course."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "VDI deployments"
+            },
+            {
+              "type": "p",
+              "text": "Virtual desktop infrastructure (VDI) adds a layer of complexity to deployments because optimal audio can be delivered only if the audio is processed by the local device. If the VDI environment uses zero client devices with no operating system, hard drive, or local memory, the audio quality is often affected."
+            },
+            {
+              "type": "p",
+              "text": "When used in a VDI environment, the Amazon Connect media is delivered to the local desktop (VDI host), and the signaling is delivered to the virtual desktop. In this configuration, an Amazon Connect custom CCP runs inside the virtual desktop and delivers events signaling only. A different CCP carrying the media runs on the local computer. For more information, see Use Amazon Connect in a VDI environment in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Network latency"
+            },
+            {
+              "type": "p",
+              "text": "Network latency is the amount of time it takes for a data packet to go from one place to another. Lowering latency is an important part of building a positive user experience."
+            },
+            {
+              "type": "p",
+              "text": "The recommended network latency value for high-quality call audio is 500 milliseconds end-to-end. Use the Amazon Connect Endpoint Test Utility to verify network latency and ensure high-quality service."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Telephony latency"
+            },
+            {
+              "type": "p",
+              "text": "Forwarded calls from an organization's carriers to Amazon Connect can introduce latency that manifests as an audio delay. This is especially true when audio is redirected across geographically distant locations."
+            },
+            {
+              "type": "p",
+              "text": "Calls that are transferred out of Amazon Connect and back in can introduce additional PSTN latency."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Continuous monitoring"
+            },
+            {
+              "type": "p",
+              "text": "Set up monitoring for agent workstations and consider partner solutions for call quality monitoring. Amazon Connect provides quality metrics in contact records to help you gain insights into audio quality, agent device information, and potential disconnect issues. It is recommended to configure alerts for your contact center specific metrics."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you reviewed Amazon Connect telephony data security and service quota considerations. You explored carrier redundancy and high-volume options that deliver maximum resiliency for contact center workloads. You also learned best practices for ensuring high-quality audio for Amazon Connect contact centers. Continue to the next lesson to review the course summary and prepare for the end-of-course assessment. Lesson 8 of 11"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-voice-intermediate-t6-q1",
+          "question": "What is a best practice for setting up a high-quality audio experience in Amazon Connect? (Select TWO.) (Select all that apply: Ensure that the agent workstations have at least 4 GB of dedicated memory. / Use Virtual Desktop Infrastructure (VDI) environments that deliver the media to the local computer for processing. / Use a wireless headset that makes it possible for agents to be mobile. / Use Virtual Desktop Infrastructure (VDI) environments with zero client devices. / Minimize end-to-end network latency to less than 500 milliseconds.)",
+          "options": [],
+          "answer": "Use Virtual Desktop Infrastructure (VDI) environments that deliver the media to the local computer for processing.; Minimize end-to-end network latency to less than 500 milliseconds.. The recommended latency value for high-quality call audio is 500 milliseconds end-to-end. When using VDI deployments, optimal audio can be delivered only if the audio is processed by the local device. VDI environments using zero client devices with no operating system, hard drive, or local memory, often deliver poor audio quality."
+        }
+      ]
+    },
+    {
+      "id": "connect-voice-intermediate-t7",
+      "number": 7,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "In this course, you learned about Amazon Connect telephony and voice channels. Take a moment to review these key learnings in the course summary…",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t7-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Course summary",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In this course, you learned about Amazon Connect telephony and voice channels. Take a moment to review these key learnings in the course summary before taking the course assessment."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Benefits"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect offers cost-effective, enterprise-grade telephony to organizations of all sizes. It provides reliability and redundancy by operating multiple resilient and diverse network connections to peered carriers."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect has global reach by running on the secure, reliable AWS Global Infrastructure. It offers a fully managed telephony service, handling infrastructure and carrier contracts."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect provides economies of scale cost advantage, with a pay-as-you-go pricing model and no upfront fees."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Amazon Connect Telecoms Country Coverage Guide"
+            },
+            {
+              "type": "p",
+              "text": "The Amazon Connect Telecoms Country Coverage Guide lists the countries and Regions where AWS partners with carrier providers. It shows the types of services available, such as inbound TFN, DID, or UIFN and outbound calling."
+            },
+            {
+              "type": "p",
+              "text": "The guide indicates number availability, national and international outbound capabilities, porting availability, multi-carrier availability, and custom caller ID support. It specifies the Region availability and outbound campaign Regions."
+            },
+            {
+              "type": "p",
+              "text": "Organizations can use the guide to select the target Region that works best for their business."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Claiming and porting phone numbers"
+            },
+            {
+              "type": "p",
+              "text": "Organizations can claim phone numbers using the Amazon Connect console or port their existing numbers to Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "Claiming numbers is faster, but porting allows organizations to keep their existing numbers."
+            },
+            {
+              "type": "p",
+              "text": "Porting involves verifying availability, initiating the process through AWS Support, and following the necessary steps. After porting, organizations can associate the numbers with Amazon Connect flows."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Benefits of in-app, web, and video calling"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect empowers organizations to offer their customers voice and video communications from website or mobile applications. Organizations can use a prebuilt widget or build a custom widget."
+            },
+            {
+              "type": "p",
+              "text": "The prebuilt widget can be customized with colors, logos, and contact flows. Developers can use Amazon Connect APIs and Amazon Chime SDK client APIs to build custom widgets."
+            },
+            {
+              "type": "p",
+              "text": "In-app, web, and video calling provide cost-effective customer access, convenience, faster resolution, reduced customer effort, and added service redundancy."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Pricing structure"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a pay-as-you-go pricing model."
+            },
+            {
+              "type": "p",
+              "text": "For PSTN calling, there are charges for Amazon Connect service usage, contact center telecommunications usage, and claimed or ported telephone number ownership."
+            },
+            {
+              "type": "p",
+              "text": "For in-app, web, and video calling, there are charges for Amazon Connect service usage, audio service usage, and video service usage."
+            },
+            {
+              "type": "p",
+              "text": "Pricing varies based on country, service, and call types."
+            },
+            {
+              "type": "callout",
+              "variant": "warning",
+              "title": "Considerations",
+              "body": [
+                "Amazon Connect operates under the shared responsibility model for security, with AWS managing the cloud infrastructure and organizations securing their data and access.",
+                "Data exchanged is encrypted in transit and at rest.",
+                "Organizations must plan for carrier redundancy and high call volumes.",
+                "Service quotas limit resources and operations to ensure service availability.",
+                "Call quality depends on network and agent workstation requirements, VDI deployments, network latency, telephony latency, and continuous monitoring."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t7-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Downloadable PDF of the summary",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To download a PDF version of the summary section, choose anywhere inside the following box. Note: For the best experience with screen readers, use NVDA or JAWS. If you are using VoiceOver, you may experience issues with the downloaded PDF."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Amazon Connect Voice Course Summary.pdf"
+            },
+            {
+              "type": "p",
+              "text": "110.8 KB"
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this section, you reviewed Amazon Connect telephony fundamental knowledge. In the next section, you will assess your knowledge of these concepts."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-voice-intermediate-t8",
+      "number": 8,
+      "title": "Course summary",
+      "shortTitle": "Course summary",
+      "summary": "In this course, you learned about Amazon Connect telephony and voice channels.",
+      "duration": "~9 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-voice-intermediate-t8-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In this course, you learned about Amazon Connect telephony and voice channels."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Reliability and redundancy",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect is a highly reliable and scalable cloud telephony solution for mission-critical contact center operations. It provides resilient network connections to multiple telephony carriers over the PSTN, with automatic rerouting over redundant paths if any connection fails."
+            },
+            {
+              "type": "p",
+              "text": "In addition to traditional PSTN calling, Amazon Connect supports internet in-app calling, web calling, and video calling options. The telephony layer runs on fully-managed SBCs spread across multiple Availability Zones, ensuring service continuity even if an entire AZ goes down within a region."
+            },
+            {
+              "type": "p",
+              "text": "For even higher levels of redundancy and business continuity, Amazon Connect offers multi-region redundancy capabilities. The Global Resiliency feature allows inbound telephony to operate in an active- active mode across two AWS Regions in the US and Europe. This provides an extra layer of reliability by enabling seamless failover between regions in the event of a regional outage or disaster. Overall, Amazon Connect is engineered to deliver highly durable and resilient cloud contact center services."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Global reach",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect is built on AWS's global infrastructure. This allows for high-quality voice communications with low latency anywhere in the world. Amazon Connect has partnered with telephony carriers globally, enabling businesses to provision local phone numbers in the countries where their customers are based. This includes the ability to use universal international freephone numbers (UIFNs) at no cost, providing a consistent global experience."
+            },
+            {
+              "type": "p",
+              "text": "In addition to traditional phone calling, Amazon Connect offers multiple channels for customers to reach contact centers, including in-app, web, and video calling options that connect directly over the internet."
+            },
+            {
+              "type": "p",
+              "text": "Between local phone numbers, toll-free numbers, UIFNs, and internet-based calling, Amazon Connect provides organizations with flexible options to engage with their customers regardless of their location. This omnichannel approach powered by AWS's global footprint allows for seamless customer communications worldwide."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Fully managed telephony",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect provides a fully-managed telephony infrastructure that handles all the complex back-end requirements involved in running a contact center operation. This includes managing relationships with telecommunications carriers, maintaining and patching telephony equipment, ensuring compliance with regulations in different countries, and securing the overall environment."
+            },
+            {
+              "type": "p",
+              "text": "By offloading this telephony undifferentiated heavy lifting to AWS, organizations can focus their time and resources on their core business priorities rather than the cumbersome tasks of managing contact center"
+            },
+            {
+              "type": "p",
+              "text": "infrastructure themselves. Amazon Connect allows companies to innovate and improve their customer experience, agent performance, and operational processes without being burdened by the complexities of telephony infrastructure management. The service enables businesses of all sizes to run an enterprise-grade contact center by tapping into the scalability and reliability of AWS's global cloud infrastructure."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Economies of scale",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a flexible and cost-effective pricing model for organizations looking to migrate their contact center operations to the cloud. Instead of requiring large upfront investments, Amazon Connect utilizes a pay-as-you-go approach with no upfront fees. This allows companies to avoid overprovisioning capacity and only pay for the actual usage, rather than maintaining their own telephony infrastructure."
+            },
+            {
+              "type": "p",
+              "text": "One of the key benefits of Amazon Connect is that as its global usage of telephony services increases, AWS is able to negotiate better deals with telephony carriers due to the high call volumes. These savings get passed along to all Connect customers in the form of lower prices. This economy of scale means that as more organizations adopt Connect, the more affordable it becomes for everyone using the service thanks to AWS's negotiating power with carriers. Overall, Amazon Connect provides a low-risk, low-cost entry point for cloud contact center capabilities."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Amazon Connect Telecoms Country Coverage Guide",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect Telecoms Country Coverage Guide provides information on the telecom services offered by Amazon Connect in various countries through partnerships with carrier providers. It details the service types, number availability, outbound calling capabilities, number porting options, multi-carrier support, and more."
+            },
+            {
+              "type": "p",
+              "text": "The guide aims to help organizations assess the telecom features available in different countries to better serve their customers while adhering to relevant regulations."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Claiming and Porting phone numbers",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a pool of phone numbers that you can instantly claim and use with your contact center. These numbers are available for fast setup and are owned and managed by Amazon Connect. You can use them while you keep your Amazon Connect instance. Amazon Connect users can be granted security profile permissions to claim phone numbers in the"
+            },
+            {
+              "type": "p",
+              "text": "console."
+            },
+            {
+              "type": "p",
+              "text": "Porting Phone Numbers to Amazon Connect: Number porting is the process of moving a telephone number from one communications provider to another. When migrating your contact center workloads to Amazon Connect, you have an option to claim a new number or port your existing phone numbers. While claiming numbers is faster, porting allows you to keep your existing numbers and offer a seamless uninterrupted services transition for your customers."
+            },
+            {
+              "type": "p",
+              "text": "Verifying Porting Availability and Initiating the Process: You can use the Amazon Connect Telecoms Country Coverage Guide to verify if number porting is supported for the region and country where your contact center operates. Once you confirm porting availability, you can open an AWS Support ticket to initiate the number porting process. Follow the steps described in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "After Porting Completes: Once the porting process is complete and successful porting is verified, the ported numbers will appear in your Amazon Connect console, and you can associate them with Amazon Connect Flows. It is best practice to test the ported numbers by placing test calls to ensure the associated contact Flow is successfully activated, ensuring a seamless transition for your customers."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits of in-app, web, and video calling",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Cost effective customer access: Users can initiate voice calls for any inquiries or assistance needed. They can contact customer service without incurring expensive international calling charges or roaming costs."
+            },
+            {
+              "type": "p",
+              "text": "Convenience: Using the same internet-based calling Amazon Connect capabilities, users can initiate voice calls to agents directly from their website."
+            },
+            {
+              "type": "p",
+              "text": "Faster resolution: When users need to provide a better visual detail of their issue, they can activate real- time video sharing within the same communication."
+            },
+            {
+              "type": "p",
+              "text": "Reduced customer effort: When users initiate calls through in-app, web, or video calling, contact centers can perform authentication based on the information available in the mobile app or website. The availability of this data reduces customer effort, and streamlines the authentication process by eliminating the need for additional verification. User’s language preference or location can be used to route the call to an agent skilled to communicate in the user's preferred language."
+            },
+            {
+              "type": "p",
+              "text": "Added service redundancy and resiliency: In the event of a telephony carrier outage or disruption of PSTN carrier services, users can use in-app, web, and video calling. The additional built-in redundancy helps organizations provide better service and business continuity for their customers."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Pricing structure",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers a pay-as-you-go pricing model with no long-term commitments or minimum monthly fees. Organizations are charged based on the number of minutes they use Amazon Connect to engage with customers. The per-minute rates vary depending on the country, services used, and types of calls."
+            },
+            {
+              "type": "p",
+              "text": "There are three distinct charges for Amazon Connect's public switched telephone network (PSTN) calling:"
+            },
+            {
+              "type": "p",
+              "text": "voice service usage, telecommunication service usage, and number usage. Voice service usage covers the cost of Amazon's software that handles call routing and management. Telecommunication service usage covers the cost of connectivity between Amazon and telecom providers for inbound and outbound calls. Number usage covers any phone numbers, such as DIDs or TFNs, provisioned through Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect charges for internet-based calling are divided into three categories: Amazon Connect service usage, audio service usage, and video service usage. For the Amazon Connect service, charges are billed per second with a minimum duration of 10 seconds."
+            },
+            {
+              "type": "p",
+              "text": "The audio service charges are also billed per second from the time the contact attempt is initiated, with a minimum of 10 seconds. The audio usage is determined by the total seconds the customer is connected to Amazon Connect. Video service usage is charged by the second as well, with a 10 second minimum. Video charges apply separately for each party that has video activated, for the duration their video is turned on."
+            }
+          ]
+        },
+        {
+          "id": "connect-voice-intermediate-t8-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Considerations",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Security"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect follows a shared responsibility security model where AWS manages security of the cloud infrastructure and services, while customers are responsible for securing their data and applications. All data in Amazon Connect is encrypted in transit and at rest. AWS handles encryption, access control, and security at the infrastructure and platform layers. Customers control security aspects related to their specific use case like network access, user permissions, and protecting their customer data."
+            },
+            {
+              "type": "p",
+              "text": "For PSTN calls routed over the public internet, signaling data is encrypted with TLS and the audio media is encrypted with SRTP. For internet-based calls to an agent's browser, the WebSocket connection is encrypted with TLS and the audio media uses DTLS-SRTP encryption. Amazon Connect's architecture and protocols ensure end-to-end encryption and protection of voice communications."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Resiliency and redundancy"
+            },
+            {
+              "type": "p",
+              "text": "Carrier redundancy involves claiming phone numbers across multiple telephony carriers in countries where Amazon Connect partners with multiple carriers. This provides continuous service availability and ensures if one carrier experiences an outage, numbers hosted on other carriers remain reachable. The Amazon Connect Telecoms Country Coverage Guide indicates if the multi-carrier feature is available in the country. In the U.S., Amazon Connect automatically provides redundant toll-free numbers routed across multiple carriers."
+            },
+            {
+              "type": "p",
+              "text": "High call volumes refer to large numbers of concurrent calls arriving simultaneously. By using phone numbers from multiple carriers, the concurrent call load can be distributed across different carriers. This increases the overall concurrency capacity of the contact center."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Call quality"
+            },
+            {
+              "type": "p",
+              "text": "To ensure high-quality voice interactions on Amazon Connect, organizations must consider several key factors. Network and agent workstation requirements are crucial, with Amazon Connect offering options for network connectivity setup and a minimum of 2GB dedicated memory for agent workstations. Virtual Desktop Infrastructure (VDI) deployments add complexity, requiring optimal audio processing on local devices and specific setup guidelines. Network latency, the time taken for data packets to travel, should be kept below 500ms end-to-end for good call audio quality, which can be verified using Amazon Connect's Endpoint Test Utility."
+            },
+            {
+              "type": "p",
+              "text": "Telephony latency, introduced when calls are forwarded from carriers to Amazon Connect or across distant locations, can affect audio quality. Monitoring agent workstations and considering partner solutions for call quality monitoring is recommended. Amazon Connect provides quality metrics in contact records, and organizations should configure CloudWatch alerts for relevant metrics. Calls transferred out of and back into Amazon Connect can introduce additional Public Switched Telephone Network (PSTN) latency, further impacting the audio quality."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

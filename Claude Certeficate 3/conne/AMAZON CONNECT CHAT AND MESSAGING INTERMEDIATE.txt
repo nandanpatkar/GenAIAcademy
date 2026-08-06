@@ -1,0 +1,1129 @@
+Lesson 2 of 8
+Amazon Connect Communication Widget
+Lesson objectives
+
+In this lesson, you will learn to do the following:
+
+Recognize steps to configure the communication widget. 
+
+Lesson introduction
+
+Amazon Connect provides organizations with a set of integrated communication channels. This includes built-in support for web chat, mobile chat, and SMS. Additionally, Amazon Connect offers integration with third-party messaging applications, such as WhatsApp and Facebook Messenger. Through chat and messaging functionality, customers can reach out to organizations using text-based interactions. With this approach, organizations provide personalized support and enhance the overall customer experience.
+
+Amazon Connect includes a pre-built communication widget that you can add to your website. You configure the communications widget using the Amazon Connect console. You can customize the font and colors. You can also secure the widget so users can only access it from your website. When the configuration steps are complete, the Amazon Connect console generates a short code snippet to add to your organization's website.
+
+Travel agency use case
+
+AnyCompany Travel wants to offer support through multiple channels, including chat. By using an Amazon Connect communication widget, they can easily integrate chat channels into their website. Users can initiate a chat interaction directly from the agency's website. This feature provides asynchronous real-time assistance with booking inquiries, itinerary changes, or general travel-related questions. You are tasked to create a chat widget.
+
+Creating a chat communication widget
+
+The Amazon Connect communication widget is a built-in interface. It allows organizations to integrate Amazon Connect chat capabilities directly into their websites or web applications. In this section, you will learn how to create a communication widget for chat. You will learn how to customize the look and feel of the user interface and configure widget security settings.
+
+To explore the steps to create a chat widget, choose the START or arrow buttons to display each of the six steps.
+
+
+Creating the chat widget
+Follow the steps required to create a communication widget for the travel agency website visitors.
+
+
+START
+Step 1
+
+Log in to the Amazon Connect console
+Log in to the Amazon Connect console at https://<instance-name>.my.connect.aws/ or using your SAML application URL. Replace the <instance-name> with the instance alias you want to log into.
+
+1
+2
+3
+4
+5
+6
+Step 2
+
+Access the communication widgets menu
+Communications widget menu option.
+From the left side navigation panel, choose Channels, and then choose Communication widgets.
+
+1
+2
+3
+4
+5
+6
+Step 3
+
+Add a communications widget
+Communication widget page, add widget button highlighted.
+On the Communications widgets page, choose Add widget to create a new communications widget.
+
+1
+2
+3
+4
+5
+6
+Step 4
+
+Enter the communication widget details
+Widget details configuration page, name and description input highlighted.
+Enter a Name and Description for your communication widget.
+
+Note: The Name must be unique for each communications widget created in the Amazon Connect instance.
+
+
+1
+2
+3
+4
+5
+6
+Step 5
+
+Add chat functionality
+Communication options configuration for chat, add chat and allow message receipts selected.
+In the Communications options section, choose Add chat. With this option, contacts can start a chat from the organization's web portal. You can leave the Allow message receipts option checked. 
+
+Next, choose the flow that is activated when a contact initiates a chat interaction with this widget. You can use an existing flow that you built or one of the sample flows created with your instance. 
+
+1
+2
+3
+4
+5
+6
+Step 6
+
+Check web calling options
+Web calling configuration options. No options selected.
+Make sure the Add web calling selection is unchecked for simple chat deployments. You can select it if you want to add video to your interactions.
+
+Select the Save and continue button to save your changes and continue with more configuration settings.
+
+1
+2
+3
+4
+5
+6
+Customizing a communication widget
+
+The Amazon Connect communication widget empowers businesses to customize the appearance of the client chat interface to create a branded experience. This includes defining the colors and logo that represent their brand. 
+
+To explore the steps to customize the colors of the travel agency chat widget, choose the START or arrow buttons to display each of the three steps. 
+
+
+Customizing the chat widget look and feel
+Follow the steps required to customize the widget for the travel agency use case. You will use settings such as button styles, widget header, and chat view.
+
+
+START
+Step 1
+
+Customize the Start button colors
+Widget access button style configuration view.
+Select the background color for the Start chat button by entering the hex value for the desired color.
+
+Then, choose the White or Black option for the icon color. 
+
+Repeat the same steps for the Minimize chat button.
+
+1
+2
+3
+
+Step 2
+
+Customize the widget header
+Widget header style configuration view.
+Enter the widget Header message and preferred Header color for your chat widget. 
+
+In the same configuration window, you can select the Widget background color. The default color is white.
+
+Organizations often want to display their own brand logo on the chat widget their customers interact with. You can configure the logo or banner that represents your brand by entering a Logo URL in this view.
+
+The logo must be in .svg, .jpg, or .png format. The image size is 280 px (width) by 60 px (height). Images larger than the dimensions above will be scaled to fit the 280 x 60 logo component space.
+
+
+
+1
+2
+3
+
+Step 3
+
+Customize the chat view
+Chat view configuration options.
+You can customize the chat view in the following ways: 
+
+Typeface: Use the menu to choose the font for the text in the communications widget.
+
+System Message Display Name: Enter a new display name to override the default. The default is SYSTEM_MESSAGE.
+
+Bot Message Display Name: Enter a new display name to override the default. The default is BOT.
+
+Text Input Placeholder: Enter new placeholder text to override the default. The default is Type a message. 
+
+End Chat Button Text: Enter new text to replace the default. The default is End chat.
+
+Agent chat bubble color: Choose the colors for the agent's message bubbles by entering hex values (HTML color codes).
+
+Customer chat bubble color: Choose the colors for the customer's message bubbles by entering hex values (HTML color codes).
+
+1
+2
+3
+
+Summary
+Save these settings and continue with domain and security configuration.
+
+START AGAIN
+1
+2
+3
+
+The widget preview that is available in the configuration view can only display logo images stored in Amazon Simple Storage Service (Amazon S3). 
+
+After the customized communications widget is deployed to the organization's website, all logos from valid sources will be displayed.
+
+Configuring security settings
+
+The Amazon Connect communications widget empowers businesses to securely host the widget on their website. The travel agency wants to ensure their chat widget is only accessible from their official website. To explore the steps to restrict access to their specific website domain, choose the START or arrow buttons to display each of the four steps. This process protects sensitive traveler data and prevents unauthorized access.
+
+
+Securing the chat widget
+Follow the steps to add website domains and security configuration for the travel agency.
+
+
+START
+Step 1
+
+Specify the website domains
+Communication widget configuration, add domain highlighted.
+To specify the website domains where you expect to display the communications widget, enter the domain URL, and then choose Add domain. 
+
+You can add up to 50 domains. 
+
+Chat loads only on websites that you select in this step.
+
+Note: Ensure that your website URLs are valid and do not contain errors. Include the full URL starting with https://. Use https:// for your production websites and applications.
+
+1
+2
+3
+4
+Step 2
+
+Add security
+Add security for communication widget request configuration.
+To secure requests to the communication widget, choose Yes under Add security for your communications widget. 
+
+The website administrator can set up the web servers to issue JSON Web Tokens (JWTs) for new chat requests. 
+
+This provides control when initiating new chats, including the ability to verify that chat requests sent to Amazon Connect are from authenticated users.
+
+1
+2
+3
+4
+Step 3
+
+Save and continue
+(opens in a new tab)After you save, you can continue to add the communication widget to your website.
+
+1
+2
+3
+4
+Step 4
+
+Additional security information
+For more information on widget security keys, navigate to the Step 3: Confirm and Copy Communications Widget Code and Security Keys(opens in a new tab) section of the Administrator Guide.
+
+1
+2
+3
+4
+Deploying a communication widget
+
+With the Amazon Connect communications widget, organizations can copy the generated code and paste it on the website pages where they want the widget to appear. 
+
+To explore the steps to add the communication widget to the website, choose the START or arrow buttons to display each of the four steps. 
+
+
+Adding the communication widget to the website
+Follow the final steps to deploy the widget to the travel agency website.
+
+
+START
+Step 1
+
+Final review
+Confirmation screen displaying successful creation of the chat widget.
+AnyCompany Travel is ready for the chat widget deployment. The final configuration confirmation page displays Success, and your widget is ready for deployment.
+
+1
+2
+3
+4
+Step 2
+
+Deploy in a staging environment
+Chat widget example, agent and customer interaction.
+Before going live, offer AnyCompany Travel the option to test the chat functionality in a staging environment. This will ensure that the widget is working correctly. If you did not configure the staging website domain, select the Edit link and add the change now.
+
+1
+2
+3
+4
+Step 3
+
+Copy the widget script
+Widget JavaScript code example.
+The following image shows JavaScript code that you can embed on the websites where you want customers to chat with agents. This script displays the widget in the bottom-right corner of the website.
+
+1
+2
+3
+4
+Step 4
+
+Accessing the widget from the portal
+Start button and Minimize button displayed on the web portal.
+When the website loads, travelers first see the Start button. When they chose the Start button, the communications widget opens, and the travel agency customers start their chat.
+
+1
+2
+3
+4
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A retail business wants to customize the appearance of the chat widget to match their brand's color scheme and logo. For example, the customer or the agent bubble color. Which options describe the customization options available in Amazon Connect? (Select THREE.)
+
+Change the button background colors using hex values.
+
+Incorrectly unchecked
+Upload a custom font for the widget text.
+
+Correctly unchecked
+Adjust the font style such as bold, or italics.
+
+Incorrectly checked
+Add a logo banner from an Amazon S3 bucket or online source.
+
+Correctly checked
+Adjust the placement of the widgets.
+
+Correctly unchecked
+Adjust the chat bubble colors for agents and contacts.
+
+Incorrectly unchecked
+SUBMIT
+
+Incorrect
+The available customization options are for:
+
+Button background color for the Start and Minimize chat icon
+Widget header color, background color, and logo URL
+Chat view font typeface, but not font style
+
+TAKE AGAIN
+A financial institution needs to ensure that their Amazon Connect chat widget is only accessible from their official website domain for security reasons. What steps should they take to specify the website domain where the chat widget will be displayed?
+
+Configure the communication widget to add security and specify website domains.
+
+Incorrectly unselected
+Use the default communication widget settings without any additional configuration.
+
+Correctly unselected
+Customize the chat view and button styles to match their brand.
+
+Incorrectly selected
+Upload their logo to an Amazon S3 bucket and provide the URL in the widget header.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+Organizations can enter the domain URL and choose Add domain to specify the website domains where they want the chat widget to appear. 
+
+
+
+Organizations can add up to 50 domains. The widget loads only on websites selected in this step.
+
+
+
+To secure requests to the communication widget, choose Yes under Add security of the organization's communications widget.
+
+
+TAKE AGAIN
+A healthcare organization is implementing the Amazon Connect chat widget on their internal test website for the first time. As the chat widget will be used for testing, they are not concerned about security. What should they do to add the widget to their website? (Select TWO.)
+
+Embed the generated JavaScript code snippet on their website. 
+
+Incorrectly unchecked
+Configure the communication options and specify the website domains.
+
+Incorrectly unchecked
+Customize the chat view and upload their logo to an Amazon S3 bucket.
+
+Correctly unchecked
+Set up security keys and add security for the communication widget.
+
+Correctly unchecked
+Configure the widget button styles and header.
+
+Incorrectly checked
+SUBMIT
+
+Incorrect
+
+The organization should embed the generated JavaScript code snippet on their website, configure the communication options, and specify the website domains.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned how to create and set up an Amazon Connect communication widget. You customized its appearance, specified website domains, and secured the widget requests. In the next lesson, you will learn how to configure Amazon Connect SMS messaging.
+
+Step 1
+
+Log in to the Amazon Connect console
+Log in to the Amazon Connect console at https://<instance-name>.my.connect.aws/ or using your SAML application URL. Replace the <instance-name> with the instance alias you want to log into.
+
+Step 2
+
+Access the communication widgets menu
+Communications widget menu option.
+From the left side navigation panel, choose Channels, and then choose Communication widgets.
+
+Step 3
+
+Add a communications widget
+Communication widget page, add widget button highlighted.
+On the Communications widgets page, choose Add widget to create a new communications widget.
+
+
+Step 4
+
+Enter the communication widget details
+Widget details configuration page, name and description input highlighted.
+Enter a Name and Description for your communication widget.
+
+Note: The Name must be unique for each communications widget created in the Amazon Connect instance.
+
+Step 5
+
+Add chat functionality
+Communication options configuration for chat, add chat and allow message receipts selected.
+In the Communications options section, choose Add chat. With this option, contacts can start a chat from the organization's web portal. You can leave the Allow message receipts option checked. 
+
+Next, choose the flow that is activated when a contact initiates a chat interaction with this widget. You can use an existing flow that you built or one of the sample flows created with your instance. 
+Step 6
+
+Check web calling options
+Web calling configuration options. No options selected.
+Make sure the Add web calling selection is unchecked for simple chat deployments. You can select it if you want to add video to your interactions.
+
+Select the Save and continue button to save your changes and continue with more configuration settings.
+Step 1
+
+Customize the Start button colors
+Widget access button style configuration view.
+Select the background color for the Start chat button by entering the hex value for the desired color.
+
+Then, choose the White or Black option for the icon color. 
+
+Repeat the same steps for the Minimize chat button.
+Step 2
+
+Customize the widget header
+Widget header style configuration view.
+Enter the widget Header message and preferred Header color for your chat widget. 
+
+In the same configuration window, you can select the Widget background color. The default color is white.
+
+Organizations often want to display their own brand logo on the chat widget their customers interact with. You can configure the logo or banner that represents your brand by entering a Logo URL in this view.
+
+The logo must be in .svg, .jpg, or .png format. The image size is 280 px (width) by 60 px (height). Images larger than the dimensions above will be scaled to fit the 280 x 60 logo component space.
+Step 3
+
+Customize the chat view
+Chat view configuration options.
+You can customize the chat view in the following ways: 
+
+Typeface: Use the menu to choose the font for the text in the communications widget.
+
+System Message Display Name: Enter a new display name to override the default. The default is SYSTEM_MESSAGE.
+
+Bot Message Display Name: Enter a new display name to override the default. The default is BOT.
+
+Text Input Placeholder: Enter new placeholder text to override the default. The default is Type a message. 
+
+End Chat Button Text: Enter new text to replace the default. The default is End chat.
+
+Agent chat bubble color: Choose the colors for the agent's message bubbles by entering hex values (HTML color codes).
+
+Customer chat bubble color: Choose the colors for the customer's message bubbles by entering hex values (HTML color codes).
+Step 1
+
+Specify the website domains
+Communication widget configuration, add domain highlighted.
+To specify the website domains where you expect to display the communications widget, enter the domain URL, and then choose Add domain. 
+
+You can add up to 50 domains. 
+
+Chat loads only on websites that you select in this step.
+
+Note: Ensure that your website URLs are valid and do not contain errors. Include the full URL starting with https://. Use https:// for your production websites and applications.
+Step 2
+
+Add security
+Add security for communication widget request configuration.
+To secure requests to the communication widget, choose Yes under Add security for your communications widget. 
+
+The website administrator can set up the web servers to issue JSON Web Tokens (JWTs) for new chat requests. 
+
+This provides control when initiating new chats, including the ability to verify that chat requests sent to Amazon Connect are from authenticated users.
+Step 3
+
+Save and continue
+(opens in a new tab)After you save, you can continue to add the communication widget to your website.
+Step 4
+
+Additional security information
+For more information on widget security keys, navigate to the Step 3: Confirm and Copy Communications Widget Code and Security Keys(opens in a new tab) section of the Administrator Guide.
+Step 1
+
+Final review
+Confirmation screen displaying successful creation of the chat widget.
+AnyCompany Travel is ready for the chat widget deployment. The final configuration confirmation page displays Success, and your widget is ready for deployment.
+Step 2
+
+Deploy in a staging environment
+Chat widget example, agent and customer interaction.
+Before going live, offer AnyCompany Travel the option to test the chat functionality in a staging environment. This will ensure that the widget is working correctly. If you did not configure the staging website domain, select the Edit link and add the change now.
+Step 3
+
+Copy the widget script
+Widget JavaScript code example.
+The following image shows JavaScript code that you can embed on the websites where you want customers to chat with agents. This script displays the widget in the bottom-right corner of the website.
+Step 4
+
+Accessing the widget from the portal
+Start button and Minimize button displayed on the web portal.
+When the website loads, travelers first see the Start button. When they chose the Start button, the communications widget opens, and the travel agency customers start their chat.
+Lesson 3 of 8
+Amazon Connect SMS Messaging
+Lesson objectives
+
+In this lesson, you will learn to do the following:
+
+Explore Amazon Connect SMS messaging.
+Recognize the process for configuring two-way SMS messaging phone numbers.
+Explore phone number types for SMS.
+
+Lesson introduction
+
+SMS is a messaging channel, supported by Amazon Connect, that businesses use to communicate with their contacts through text messages. SMS messaging offers several benefits, including increased customer satisfaction through prompt responses to customers who prefer text communication using their mobile device. Agents can send and receive text messages from within the Amazon Connect Contact Control Panel (CCP), which improves agent productivity. With Amazon Lex, organizations can automate responses to questions to save agents valuable time and effort. Additionally, SMS messaging reduces the need for customers to navigate phone menus. For more information, see Add an Amazon Lex bot to Amazon Connect(opens in a new tab).
+
+To support your contacts through the SMS channel, you can procure a phone number from Amazon Pinpoint SMS. You can then enable two-way SMS messaging for individual phone numbers. When one of your contacts sends a message to your phone number, the message body is sent to Amazon Connect. Optionally, you can update your existing flows to branch when a contact uses SMS.
+
+Requesting a phone number in Amazon Pinpoint 
+
+Some countries require phone numbers and sender IDs to be registered for use in the country. It can take up to 15 business days to process a registration request after it is submitted. For more information about registering, see Registrations(opens in a new tab).
+
+To request a number in Amazon Pinpoint SMS, navigate to Step 1: Request a Number in Amazon Pinpoint SMS(opens in a new tab) in the Amazon Connect Administrator Guide. Using Amazon Pinpoint SMS, you can request new SMS-enabled phone numbers or reuse existing SMS-enabled phone numbers in Amazon Connect. You can request short codes, 10-digit long codes (10DLC), and toll-free numbers. These are also known as Origination Identities (OIDs). Each type of OID has a different registration process, and the leasing costs vary. For more information on pricing, navigate to the Amazon Pinpoint Pricing(opens in a new tab) page.
+
+When deciding what type of phone number to request, consider your throughput needs. SMS messages are delivered in 140-byte sections known as message parts. For more information, review Message Parts per Second (MPS) Limits(opens in a new tab). Your throughput rate is the number of message parts that you can send each second.
+
+
+1–3 message parts per second
+
+10–75 message parts per second
+
+100 message parts per second or more
+For 1–3 MPS, use a toll-free number. You can consider using a 10DLC number or short code if your throughput needs exceed these limits as you expand your use cases. 10DLC and short code numbers provide an easier scaling mechanism, but they are also more expensive than toll-free numbers. Claiming and registering 10DLC or short code numbers takes longer than claiming toll free numbers. For more information about requesting a toll-free number in Amazon Pinpoint, see Request a phone number(opens in a new tab).
+
+
+
+Now that you have reviewed 1–3 MPS, move to the next tab to learn about 10–75 MPS.
+
+Enabling two-way SMS on the phone number
+
+After you have procured a phone number from Amazon Pinpoint SMS, you configure two-way SMS on the number with Amazon Connect. This will be the message destination. You can enable two-way SMS messaging for individual phone numbers. When one of your contacts sends a message to your phone number, the message body is sent to Amazon Connect. For instructions on how to enable two-way SMS, see Step 2: Enable Two-Way SMS on the Phone Number(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Note: Amazon Connect for two-way SMS is available in the AWS Regions listed in Chat Messaging: SMS Subtype(opens in a new tab).
+
+Onboarding phone number to Amazon Connect
+
+After the Amazon Pinpoint phone number is imported into Amazon Connect, you can view it in the Amazon Connect console. You can onboard the phone number to start sending and receiving SMS messages in Amazon Connect. To learn more, choose the START or arrow buttons to display each of the three steps. 
+
+
+Introduction
+To start sending and receiving SMS messages in Amazon Connect, use the following instructions.
+
+
+START
+Step 1
+
+Go to phone numbers page
+Channels menu, Phone numbers menu option highlighted.
+In the left navigation, choose Channels, and then select Phone numbers.
+
+1
+2
+3
+
+Step 2
+
+Find the SMS number
+Phone numbers channel configuration, example Phone Number and Active Channel highlighted.
+The SMS number appears on the Phone numbers page.
+
+1
+2
+3
+
+Step 3
+
+Associate the SMS phone number with your flow
+Phone number configuration, Contact flow/ IVR input selected
+Associate the SMS phone number with your flow or use another existing flow. Navigate to the phone number and select the flow from the menu for Contact flow/IVR.
+
+1
+2
+3
+
+Summary
+You can now use the number for SMS.
+
+START AGAIN
+1
+2
+3
+
+When you first purchase a phone number, the phone number's status is Pending. When the phone number is ready to use, the phone number's status is Active. If the phone number requires registration, then you must complete that step before the phone number's status changes to Active. Review more information on Registrations(opens in a new tab). 
+
+To update the flow for SMS contacts, see Step 3: Update Flows to Branch on SMS Contacts.(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+AnyOrganization has recently decided to incorporate Short Message Service (SMS) messaging into their communication channels. A developer is tasked with guiding AnyOrganization through the process of setting up SMS.
+
+
+
+Which type of phone number should AnyOrganization use if their estimated SMS throughput needs are about 50 message parts per second (MPS)? 
+
+Toll-free number
+
+Correctly unselected
+10-digit long code (10DLC) number
+
+Correctly selected
+Short code
+
+Correctly unselected
+Origination identity
+
+Correctly unselected
+SUBMIT
+
+Correct
+They should use a 10DLC number. They can also use a short code, which would provide additional room for growth, but it would also cost more.
+
+
+TAKE AGAIN
+After successfully procuring a phone number from Amazon Pinpoint Short Message Service (SMS), AnyOrganization needs to enable two-way SMS messaging for their newly acquired number. As a consultant, you need to guide them through the process of configuring two-way SMS on the phone number. Which statement accurately describes the next step in this process?
+
+Configure the phone number to send SMS messages directly to Amazon Connect.
+
+Correctly unselected
+Configure two-way SMS on the phone number with Amazon Connect as the message destination.
+
+Incorrectly unselected
+Associate the phone number with an Amazon Pinpoint SMS campaign.
+
+Correctly unselected
+Enable SMS messaging through Amazon Simple Notification Service (Amazon SNS).
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+After you have successfully procured a phone number from Amazon Pinpoint SMS, configure two-way SMS on the phone number with Amazon Connect as the message destination.
+
+
+TAKE AGAIN
+During Short Message Service (SMS) setup at AnyCompany, a contact center administrator encounters a scenario where the phone number status is showing as Pending in the Amazon Connect console. What could be the reason for this status, and what action should be taken?
+
+The phone number is not yet ready for use, and no action is required.
+
+Correctly unselected
+The phone number requires registration, and the team must complete the registration step before the status changes to Active.
+
+Incorrectly unselected
+There is an issue with the phone number, and the team should contact AWS Support.
+
+Incorrectly selected
+The phone number is associated with the wrong flow, and the team needs to reassign it.
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+When the team first purchases a phone number, the phone number's status is Pending. When the phone number is ready to use, the phone number's status is Active. If the phone number requires registration, then the administrator must complete that step before the phone number's status changes to Active.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned the benefits of the SMS channel and the process of setting up SMS messaging for Amazon Connect. In the next lesson, you will explore Amazon Connect Chat features.
+10–75 message parts per second
+
+100 message parts per second or more
+For 10–75 MPS, use a 10DLC number. You can also use a short code, which would provide additional room for growth, but it would cost more. For more information, see Requesting dedicated long codes for messaging(opens in a new tab). 
+
+
+
+Now that you have reviewed 10-75 MPS, move to the next tab to learn about 100 MPS.
+100 message parts per second or more
+For 100 MPS or more, use a short code. When you create your request in the AWS Support Center console, specify the throughput rate that you want your short code to support. By default, US short codes support 100 MPS, but you can increase the throughput rate beyond that rate for an additional monthly fee. For more information, see How to request short codes for messaging(opens in a new tab).
+
+Step 1
+
+Go to phone numbers page
+Channels menu, Phone numbers menu option highlighted.
+In the left navigation, choose Channels, and then select Phone numbers.
+
+Step 2
+
+Find the SMS number
+Phone numbers channel configuration, example Phone Number and Active Channel highlighted.
+The SMS number appears on the Phone numbers page.
+
+Step 3
+
+Associate the SMS phone number with your flow
+Phone number configuration, Contact flow/ IVR input selected
+Associate the SMS phone number with your flow or use another existing flow. Navigate to the phone number and select the flow from the menu for Contact flow/IVR.
+
+Lesson 4 of 8
+Amazon Connect Chat Features
+Lesson objectives
+
+In this lesson, you will learn to do the following:
+
+Recognize the benefits of message receipts.
+Recognize the process of configuring attachment scanning.
+Recognize the steps to set up a persistent chat experience.
+Explore quick responses for chat contacts.
+
+Lesson introduction
+
+Amazon Connect provides a comprehensive set of capabilities to enhance the chat experience for both contacts and agents. It offers message receipts to ensure transparent communication. With quick responses, agents are presented with responses that they can use during chat contacts. With persistent chat enabled, contacts can resume previous conversations with the context carried forward.
+
+Additionally, contacts and agents can add structure and clarity to their messages using message formatting options such as bulleted lists and hyperlinks. To protect against security threats, organizations can configure attachment virus scanning, prioritizing security during file transfers. With these chat features, businesses can improve customer experiences and agent productivity. In this lesson, you will explore how these Amazon Connect features work.
+
+Enabling chat message receipts
+
+Contacts often express frustration when they are unsure if their messages have been received or read by an agent. By enabling chat message receipts, the contact center can provide real-time confirmations to contacts about their messages. This feature can help improve customer satisfaction and reduce confusion during chat interactions.
+
+By default, messages are marked as delivered or read when message receipts are enabled in the communication widget for chat.
+
+A chat message is marked as Delivered when one of the following conditions occurs:
+
+A message is received by the contact or agent AND the communication widget is not in focus. For example, a message is received, but the recipient navigates away from the widget to a new browser tab.
+A message is received by the contact or agent AND the recipient does not scroll all the way down using the scroll bar.
+A chat message is marked as Read when one of the following conditions occurs:
+
+A message is received by the contact or agent AND the recipient opens the communication widget.
+A message is received by the contact or agent AND the recipient scrolls all the way down to view the latest incoming messages.
+The Amazon Connect message receipts feature is not applicable to the SMS messaging channel.
+
+Use case
+
+Chat message receipts
+María García contacts AnyCompany customer service to reset her password. She initiates a chat and starts a conversation with Jane Doe, who is an agent at AnyCompany. María sees when her messages to Jane are delivered and read.
+
+Example agent and customer chat interaction, Chat message delivered.
+Similarly, Jane sees when her messages are sent to María, and when she reads them. This provides transparency to both María and Jane and improves the overall chat experience.
+
+Example agent and customer chat interaction, Chat message read.
+Configuring attachment scanning
+
+(opens in a new tab)(opens in a new tab)With Amazon Connect, contacts and agents can share files during chat conversations. Attachments are included in the chat transcript to help ensure the context from the conversation is available if a contact is transferred. The files are stored in an Amazon Simple Storage Service (Amazon S3) bucket to offer access from other systems such as a customer relationship management (CRM) system or a case management system. Organizations can integrate a third-party or custom-built attachment scanner and use it to approve or reject attachments in Amazon Connect.
+
+The Amazon Connect attachment scanning feature is not applicable to the SMS messaging channel.
+
+To learn more about configuring attachment scanning, choose the START or arrow buttons to display each of the three steps. 
+
+
+Introduction
+Follow the instructions to enable attachment scanning for your Amazon Connect instance.
+
+
+START
+Step 1
+
+Create an AWS Lambda function
+The first step to configure attachment scanning is to create an AWS Lambda function. For more information about Lambda functions, AWS Lambda(opens in a new tab) function. For more information, see Step 1: Create a Lambda Function That Handles Scanning(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+1
+2
+3
+
+Step 2
+
+Navigate to Amazon Connect instance settings
+Amazon Connect instances page in AWS Management Console, example instance highlighted.
+Open the AWS Management Console(opens in a new tab). 
+Navigate to the Amazon Connect service, and then select your instance.
+On the instances page, choose the instance alias. The instance alias is also your instance name, which appears in your Amazon Connect URL. 
+1
+2
+3
+
+Step 3
+
+Enable attachments scanning
+Navigation pane Data storage view, enable attachment scanning for an Amazon Connect instance is highlighted.
+In the navigation pane, choose Data storage.
+On the Data storage page, in the Attachments section, choose Edit, and then select Enable attachments scanning.
+Use the Lambda Functions menu to select the Lambda function that you added in Step 1: Create a Lambda function that handles scanning.
+1
+2
+3
+
+Summary
+To complete the process and enable attachment scanning, choose Save.  Attachment scanning is now enabled for your Amazon Connect instance.
+
+START AGAIN
+1
+2
+3
+
+Use case
+
+Attachment scanning
+John Doe contacts AnyCompany Financial Institution to open a bank account. He uses the Amazon Connect communication widget to initiate a chat conversation with a customer service agent, Efua Owusu. As a part of the account opening process, Efua requests that John send his identity document. John mistakenly uploads a virus using the paperclip icon located in the communication widget. 
+
+Attachment option in chat interface, file attachment button highlighted.
+AnyCompany configured Amazon Connect attachment scanning to scan chat documents that are sent by both customers and agents. John receives a notification that his attachment was rejected. Efua also sees that John attempted to send an incorrect file.
+
+Chat interface, rejected attachment highlighted.
+John attempts to send the correct document again so that Efua can help him set up a new account. 
+
+Sending attachment in chat interface.
+John successfully sends his identity document, and Efua proceeds to open a bank account for John.
+
+Chat interface successful attachment highlighted.
+Setting up persistent chat experience
+
+(opens in a new tab)Amazon Connect empowers organizations to configure chat transcripts and context to be carried over when customers resume chatting after earlier sessions have ended.
+
+Use case
+
+Persistent chat experience
+Pat Candella, a customer service manager, arrives at his desk to find several emails from frustrated customers. The customers are complaining about having to repeat their issues multiple times when they resume conversations with agents.
+
+
+
+Pat knows that this is an ongoing problem that negatively impacts the customer experience. He decides it's time to implement persistent chat functionality. With persistent chat, customers can pick up where they left off in previous conversations.
+
+Pat reviews the Amazon Connect Administrator Guide. He understands that with persistent chat, chat transcripts and context are carried over when customers return to continue chatting after earlier sessions have ended. This means customers won't have to frustratingly re-explain everything. Pat reviewed the chat rehydration types, which is the process to retrieve chat transcripts from previous chat contacts.
+
+
+
+Amazon Connect supports two rehydration types: 
+
+ENTIRE_PAST_SESSION: This type starts a new chat session and rehydrates all chat segments from past chat sessions.
+FROM_SEGMENT: This type starts a new session and rehydrates from the specified past chat segment.
+To get started, Pat meets with Martha Rivera from the IT department. Martha explains that there are two ways to enable persistent chat:
+
+Specify a previous contact ID when creating a new chat using the SourceContactId parameter of the StartChatContact API. For more information, see StartChatContact(opens in a new tab).
+Add a block to the flow. For more information, see Flow Block: Create Persistent Contact Association(opens in a new tab).
+They decide to set up persistent chat experiences within a flow.
+
+Create persistent contact association flow block.
+After a chat contact has been created, they add the Create persistent contact association block to the flow and specify a source contact ID. 
+
+
+
+This will require building a repository to store and retrieve the previous contact IDs. A contact ID is a unique identifier in Amazon Connect for each contact, such as an incoming chat request.
+
+
+
+They decide to select ENTIRE_PAST_SESSION as the rehydration type to retrieve all chat transcripts from past conversations.
+
+Create persistent contact association flow block configuration, the Select rehydration type and Use attributes are highlighted.
+Creating quick responses
+
+Quick responses provide contact center agents with pre-written responses that they can use during chat contacts. Quick responses are especially useful for answering common inquires. They help improve agent productivity, reduce handle times, and improve customer satisfaction scores.
+
+To learn more about configuring quick responses for chat contacts, choose the START or arrow buttons to display each of the six steps.
+
+
+Introduction
+Review the steps required to configure quick responses for chat contacts.
+
+
+START
+Step 1
+
+Assign permissions
+Agent application permissions page, content management quick responses highlighted.
+To create and manage quick responses in the Amazon Connect console, users need the Content Management security profile permissions. For more information, see Assign Permissions to Manage Quick Responses(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+1
+2
+3
+4
+5
+6
+
+Step 2
+
+Navigate to the Quick responses page
+Agent applications Quick responses menu option highlighted
+Log in to the Amazon Connect console at https://<instance-name>.my.connect.aws.
+For more information on how to find your instance name, see Find Your Amazon Connect Instance Name(opens in a new tab).
+
+On the navigation bar, choose Agent applications, and then Quick responses.
+
+1
+2
+3
+4
+5
+6
+
+Step 3
+
+Create an Amazon Q in Connect knowledge base
+Quick responses getting started page, get started button highlighted.
+Create an Amazon Q in Connect knowledge base (opens in a new tab)using the Amazon Connect console to store quick responses.
+
+On the Quick responses page, choose Get started. 
+
+Note: If the Get started button isn't available, sign in with an account that has the admin security profile or ask another admin for help.
+
+1
+2
+3
+4
+5
+6
+
+Step 4
+
+Wait for the process to complete
+Amazon Q Connect knowledge base creation progress bar.
+Remain on the page until the process ends. Do not refresh the page until the process ends. An indicator shows the status.
+
+1
+2
+3
+4
+5
+6
+
+Step 5
+
+The Amazon Q in Connect knowledge base is ready
+Quick responses page, status column highlighted.
+The finished knowledge base provides two sample quick responses.
+
+The sample responses are associated with (opens in a new tab)routing profiles, if that exists in your Amazon Connect instance. For more information see, Concepts: Routing Profiles(opens in a new tab).
+
+The sample responses are set to Inactive, which means agents can't see or search for them.
+
+Note: If the basic routing profile is not present in your Amazon Connect instance, the sample quick responses are associated with All routing profiles. After you activate a sample quick response, all agents can see and search for that response, regardless of their assigned routing profiles.
+
+1
+2
+3
+4
+5
+6
+
+Step 6
+
+Activate quick responses
+Quick response configuration details, radio button selected to activate making the response visible for agents.
+Activating a sample quick response makes it visible and searchable by agents assigned to the basic routing profile.
+
+1
+2
+3
+4
+5
+6
+
+Summary
+You have activated the sample quick responses.
+
+To configure additional quick responses, see Add Quick Responses for Use with Chat Contacts(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+To personalize quick responses with user attributes such as customer’s name, see Add Attributes for Personalizing Quick Responses(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+START AGAIN
+1
+2
+3
+4
+5
+6
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+AnyCompany, a retail business, wants to provide a transparent chat experience for its customers. To achieve this, the company needs to implement a feature that confirms when messages are delivered and read by agents. Which feature should AnyCompany enable to meet this requirement?
+
+Attachment scanning
+
+Correctly unselected
+Persistent chat experience
+
+Correctly unselected
+Message receipts
+
+Correctly selected
+Quick responses
+
+Correctly unselected
+SUBMIT
+
+Correct
+By enabling chat message receipts, the contact center can provide real-time confirmations to customers that their messages have been delivered and seen by an agent.
+
+
+TAKE AGAIN
+Efua Owusu, a supervisor at AnyCompany Retail, wants to use a feature that can help agents respond efficiently to common inquiries during chat sessions. Which feature is Efua referring to?
+
+Chat message receipts
+
+Correctly unselected
+Attachment scanning
+
+Incorrectly selected
+Persistent chat
+
+Correctly unselected
+Quick responses
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+Quick responses can help agents respond efficiently to common inquiries. This improves agent productivity and customer satisfaction scores.
+
+
+TAKE AGAIN
+AnyCompany's contact center has been receiving complaints from contacts about repeating their issues multiple times when resuming chat conversations with agents. The manager, Efua Owusu, wants to implement a solution to address this problem. What action can Efua take to streamline the customer conversation by continuing where they left off in previous chat sessions?
+
+Enable chat message receipts.
+
+Correctly unselected
+Configure attachment scanning.
+
+Correctly unselected
+Set up a persistent chat experience.
+
+Incorrectly unselected
+Create quick responses.
+
+Incorrectly selected
+SUBMIT
+
+Incorrect
+With persistent chat, customers can pick up where they left off in previous conversations.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you explored chat features in Amazon Connect aimed at improving the contact and agent experience. You learned the benefits of message receipts and attachment scanning and explored the steps to set up a persistent chat experience. In the next lesson, you will review the course summary and prepare for the end-of-course assessment.
+
+Step 1
+
+Create an AWS Lambda function
+The first step to configure attachment scanning is to create an AWS Lambda function. For more information about Lambda functions, AWS Lambda(opens in a new tab) function. For more information, see Step 1: Create a Lambda Function That Handles Scanning(opens in a new tab) in the Amazon Connect Administrator Guide.
+Step 2
+
+Navigate to Amazon Connect instance settings
+Amazon Connect instances page in AWS Management Console, example instance highlighted.
+Open the AWS Management Console(opens in a new tab). 
+Navigate to the Amazon Connect service, and then select your instance.
+On the instances page, choose the instance alias. The instance alias is also your instance name, which appears in your Amazon Connect URL. 
+Step 3
+
+Enable attachments scanning
+Navigation pane Data storage view, enable attachment scanning for an Amazon Connect instance is highlighted.
+In the navigation pane, choose Data storage.
+On the Data storage page, in the Attachments section, choose Edit, and then select Enable attachments scanning.
+Use the Lambda Functions menu to select the Lambda function that you added in Step 1: Create a Lambda function that handles scanning.
+Summary
+To complete the process and enable attachment scanning, choose Save.  Attachment scanning is now enabled for your Amazon Connect instance.
+Step 1
+
+Assign permissions
+Agent application permissions page, content management quick responses highlighted.
+To create and manage quick responses in the Amazon Connect console, users need the Content Management security profile permissions. For more information, see Assign Permissions to Manage Quick Responses(opens in a new tab) in the Amazon Connect Administrator Guide.
+Step 2
+
+Navigate to the Quick responses page
+Agent applications Quick responses menu option highlighted
+Log in to the Amazon Connect console at https://<instance-name>.my.connect.aws.
+For more information on how to find your instance name, see Find Your Amazon Connect Instance Name(opens in a new tab).
+
+On the navigation bar, choose Agent applications, and then Quick responses.
+
+Step 2
+
+Navigate to the Quick responses page
+Agent applications Quick responses menu option highlighted
+Log in to the Amazon Connect console at https://<instance-name>.my.connect.aws.
+For more information on how to find your instance name, see Find Your Amazon Connect Instance Name(opens in a new tab).
+
+On the navigation bar, choose Agent applications, and then Quick responses.
+Step 3
+
+Create an Amazon Q in Connect knowledge base
+Quick responses getting started page, get started button highlighted.
+Create an Amazon Q in Connect knowledge base (opens in a new tab)using the Amazon Connect console to store quick responses.
+
+On the Quick responses page, choose Get started. 
+
+Note: If the Get started button isn't available, sign in with an account that has the admin security profile or ask another admin for help.Step 4
+
+Wait for the process to complete
+Amazon Q Connect knowledge base creation progress bar.
+Remain on the page until the process ends. Do not refresh the page until the process ends. An indicator shows the status.
+Step 5
+
+The Amazon Q in Connect knowledge base is ready
+Quick responses page, status column highlighted.
+The finished knowledge base provides two sample quick responses.
+
+The sample responses are associated with (opens in a new tab)routing profiles, if that exists in your Amazon Connect instance. For more information see, Concepts: Routing Profiles(opens in a new tab).
+
+The sample responses are set to Inactive, which means agents can't see or search for them.
+
+Note: If the basic routing profile is not present in your Amazon Connect instance, the sample quick responses are associated with All routing profiles. After you activate a sample quick response, all agents can see and search for that response, regardless of their assigned routing profiles.
+Step 6
+
+Activate quick responses
+Quick response configuration details, radio button selected to activate making the response visible for agents.
+Activating a sample quick response makes it visible and searchable by agents assigned to the basic routing profile.
+Summary
+You have activated the sample quick responses.
+
+To configure additional quick responses, see Add Quick Responses for Use with Chat Contacts(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+To personalize quick responses with user attributes such as customer’s name, see Add Attributes for Personalizing Quick Responses(opens in a new tab) in the Amazon Connect Administrator Guide.

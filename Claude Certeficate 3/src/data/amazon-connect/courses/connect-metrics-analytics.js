@@ -1,0 +1,2824 @@
+/*
+ * Amazon Connect — Metrics and Analytics
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne/AMAZON CONNECT METRICS AND ANALYTICS.txt
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-metrics-analytics",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Metrics and Analytics",
+  "provider": "Amazon Web Services",
+  "level": "Intermediate",
+  "category": "Analytics",
+  "description": "Metric categories and KPIs, real-time monitoring and decision-making, and designing, securing, and troubleshooting custom historical reports.",
+  "examFormat": "19 topics · ~37 min · 10 review questions",
+  "sourceFiles": [
+    "conne/AMAZON CONNECT METRICS AND ANALYTICS.txt"
+  ],
+  "modules": [
+    {
+      "id": "connect-metrics-analytics-t1",
+      "number": 1,
+      "title": "Introduction to Metrics Fundamentals",
+      "shortTitle": "Introduction to Metrics Fundamentals",
+      "summary": "Every day, your contact center generates thousands of data points. It can be difficult to know which ones are important. Think of metrics as the…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [
+        "Identify differences between real-time and historical metrics.",
+        "Identify key metrics categories and their business purposes.",
+        "Select appropriate metrics to measure contact center performance."
+      ],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Section introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Every day, your contact center generates thousands of data points. It can be difficult to know which ones are important. Think of metrics as the vital signs of your contact center. Metrics tell you if things are running smoothly or if attention is needed somewhere. Contact centers without proper metrics can make it difficult to know how best to provide a service to your customers."
+            },
+            {
+              "type": "p",
+              "text": "In this section, you will learn how to read your contact center's dashboard effectively."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t2",
+      "number": 2,
+      "title": "Metrics Categories and Purposes",
+      "shortTitle": "Metrics Categories and Purposes",
+      "summary": "Amazon Connect organizes metrics into logical categories that serve different purposes in your contact center.",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t2-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect organizes metrics into logical categories that serve different purposes in your contact center."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t2-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Agent metrics",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Contact metrics"
+            },
+            {
+              "type": "p",
+              "text": "Queue metrics help you understand how contacts are flowing through your system. These include metrics such as the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t2-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Abandonment rate – Percentage of contacts that hang up before reaching an agent",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For example: Let's say you notice your Abandonment Rate is suddenly 25% when it's normally around 5%. This alerts you to investigate what's happening – perhaps there's an unexpected surge of contacts or some agents aren't logged in."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed queue metrics, move on to the next tab to learn about agent metrics."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t2-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Metric Purposes",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "This dashboard displays our three key metric types: agent, queue, and contact. The charts and graphs make complex information easier to understand at a glance."
+            },
+            {
+              "type": "p",
+              "text": "Review the following to understand how showing these measurements visually allows you to see what's occurring in your contact center:"
+            },
+            {
+              "type": "steps",
+              "items": [
+                {
+                  "title": "Contact Dashboard",
+                  "text": "By analyzing these related metrics, supervisors can identify trends and address issues before they impact customer satisfaction. This dashboard provides a holistic view of contact center performance, allowing supervisors to correlate different metrics and make data-driven decisions."
+                },
+                {
+                  "title": "Queue Metrics",
+                  "text": "When reviewed alongside the decreased number of calls answered by agents and higher than expected call volumes, supervisors can identify the root cause of increased queue times. This could point to understaffing, unexpected call volume spikes, or other operational issues."
+                },
+                {
+                  "title": "Agent Metrics",
+                  "text": "The decreased handle time coupled with increased answer time suggests a staffing issue. Agents appear to be working efficiently (lower handle times) but are likely overwhelmed by call volume, resulting in longer wait times. This pattern strongly indicates there are fewer agents available to handle incoming calls than needed."
+                },
+                {
+                  "title": "Agent Performance Summary",
+                  "text": "If there are not enough agents to handle the incoming call volume, queue times will increase. When agents finally answer calls, they might rush through them to get to the next caller, resulting in shorter handle times."
+                },
+                {
+                  "title": "Contact Metrics",
+                  "text": "The elevated contact volume compared to the forecast helps explain the discrepancy in queue times and agent performance metrics. This unexpected increase in volume, if not matched with appropriate staffing, leads to longer wait times despite efficient call handling by available agents."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Understanding and interpreting this data can empower your team to make informed decisions that maintain service excellence even during challenging periods."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t2-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Agent metrics",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Contact metrics"
+            },
+            {
+              "type": "p",
+              "text": "Agent metrics focus on individual and team performance."
+            },
+            {
+              "type": "p",
+              "text": "These include metrics such as the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Average handle time – The typical amount of time an agent spends with the contact",
+                "Occupancy – Percentage of time agents spend handling contacts compared to their total available time"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Agent activity state – An automatic status that reflects what an agent is currently doing within Amazon Connect. For example: Incoming, Missed, On Contact. To learn more, visit Agent status in the Contact Control Panel (CCP)."
+            },
+            {
+              "type": "p",
+              "text": "Agent status - The availability setting an agent manually selects in the Contact Control Panel (CCP). This indicates whether the agent is available to receive contacts."
+            },
+            {
+              "type": "p",
+              "text": "For example, a new agent takes 12 minutes per call on average. The team average is only 7 minutes. This gap shows the agent might need help. You should offer extra training. Coaching sessions could help them become more efficient. Skills development takes time and support. The right guidance will help the agent improve."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed agent metrics, move on to the next tab to learn about contact metrics."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Contact metrics"
+            },
+            {
+              "type": "p",
+              "text": "Contact metrics in Amazon Connect are measurements that track how well a contact center is performing, including data like call handling time and service quality. These metrics help managers understand how efficiently their team is working and how satisfied customers are, allowing them to make improvements to the contact center."
+            },
+            {
+              "type": "p",
+              "text": "These include the following:"
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t3",
+      "number": 3,
+      "title": "Key Metrics and KPIs",
+      "shortTitle": "Key Metrics and KPIs",
+      "summary": "Amazon Connect offers dozens of metrics, but certain key performance indicators (KPIs) are vital for most contact centers. In today's…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t3-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers dozens of metrics, but certain key performance indicators (KPIs) are vital for most contact centers. In today's customer-centric service environment, tracking key performance metrics is essential for optimizing both operational efficiency and customer satisfaction."
+            },
+            {
+              "type": "p",
+              "text": "From Service Level targets to metrics like Average Handle Time, First Call Resolution, Customer Satisfaction, and Occupancy Rate, these measurements provide critical insights. These metrics help organizations deliver exceptional service while effectively managing resources."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Service level"
+            },
+            {
+              "type": "p",
+              "text": "The percentage of contacts answered within a target time (for example, 80 percent of calls answered within 30 seconds). This is often considered the gold standard for measuring customer experience in terms of wait time."
+            },
+            {
+              "type": "p",
+              "text": "For example: If your target is answering 80 percent of contacts within 20 seconds, but you are currently achieving only 65 percent. This indicates you might need to adjust staffing or routing strategies."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Average handle time (AHT)"
+            },
+            {
+              "type": "p",
+              "text": "The average time agents spend handling contacts, including talk or chat time, hold time, and after-contact work. This metric impacts staffing needs and efficiency."
+            },
+            {
+              "type": "p",
+              "text": "For example: A sudden increase in AHT might indicate a new complex issue affecting customers or a training need among agents."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "First call resolution (FCR)",
+                  "body": "The percentage of contacts resolved without the customer needing to contact you again. This measures the effectiveness of your service. The higher your FCR, the better."
+                },
+                {
+                  "title": "Customer satisfaction (CSAT)",
+                  "body": "Typically measured through post-contact surveys, this metric captures the customer's perspective on their experience."
+                },
+                {
+                  "title": "Occupancy rate",
+                  "body": "The percentage of time agents spend handling contacts compared to their total available time. This helps balance agent productivity and burnout."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t3-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Common real-time metrics to monitor",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Common real-time metrics to monitor are:"
+            },
+            {
+              "type": "p",
+              "text": "Contacts in queue – The number of contacts currently waiting to be connected to agents"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t3-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Available agents – How many agents are ready to take on contacts",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Abandonment rate – The percentage of contacts that disconnect before reaching an agent"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t3-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Common mistakes when using agent metrics",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Consider the following common pitfalls:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Over-emphasizing speed: Focusing too much on handle time can lead agents to rush customers, reducing satisfaction.",
+                "Ignoring quality: A fast agent isn't always a good agent if they are not resolving customer issues.",
+                "Using metrics punitively: Metrics should be tools for improvement, not punishment."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t3-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using metrics to improve customer experience",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Queue metrics directly impact the customer experience. Use the following strategies to improve satisfaction:"
+            },
+            {
+              "type": "p",
+              "text": "Set realistic expectations: If your average wait time is 5 minutes, tell customers upfront rather than saying, \"Just a moment.\""
+            },
+            {
+              "type": "p",
+              "text": "Offer alternatives: When queue metrics show long waits, offer callback options or suggest digital channels. To set up callbacks for queued contacts, see Set up queued callbacks."
+            },
+            {
+              "type": "p",
+              "text": "Address root causes: If abandonment rates are high, investigate whether certain issues could be resolved through self-service."
+            },
+            {
+              "type": "callout",
+              "variant": "key",
+              "title": "Tip",
+              "body": [
+                "Use metrics to look for patterns. For instance, if metrics show customers are abandoning after 3 minutes, you might implement a callback option that triggers after 2 minutes of waiting."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t4",
+      "number": 4,
+      "title": "Making Data-Driven Decisions",
+      "shortTitle": "Making Data-Driven Decisions",
+      "summary": "Expand the sections in the following chart to learn more about examples of using reports to guide data-driven decisions:",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t4-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "By",
+                "Arron Hoffer",
+                "Reports are only valuable if you use them to improve your contact center performance and operations."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Expand the sections in the following chart to learn more about examples of using reports to guide data-driven decisions:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Identifying peak times"
+            },
+            {
+              "type": "p",
+              "text": "Review historical reports to find your busiest hours and days"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t4-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use this information to adjust staffing schedules",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For example, if Monday mornings show high call volume, schedule more agents at that time."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Spotting training needs"
+            },
+            {
+              "type": "p",
+              "text": "Look for agents with significantly higher/lower metrics than others"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t4-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Exceptionally skilled agents can become mentors for others",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Improving IVR flows"
+            },
+            {
+              "type": "p",
+              "text": "Use \"Self-service success rate\" to see if customers can solve issues through your IVR"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t4-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Adjust your flows based on common customer paths",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Real-time adjustments"
+            },
+            {
+              "type": "p",
+              "text": "Use real-time metrics to make immediate changes"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t4-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "If queue lengths suddenly increase, consider moving agents between queues",
+          "blocks": [
+            {
+              "type": "callout",
+              "variant": "key",
+              "title": "Tip",
+              "body": [
+                "Track where customers are dropping out of your IVR to identify frustration points, then redesign those specific paths to reduce abandoned contacts."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "If your reports show that 40% of customers who select \"Technical Support\" in your IVR end up being transferred to \"Billing.\" This data suggests you might need to clarify your menu options or provide additional training to your technical support agents about handling billing questions"
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t5",
+      "number": 5,
+      "title": "Understanding Dashboards and Reports",
+      "shortTitle": "Understanding Dashboards and Reports",
+      "summary": "Understanding your contact center at the most granular level is key to improving performance and lowering costs. Dashboards provide visual…",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t5-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Understanding your contact center at the most granular level is key to improving performance and lowering costs. Dashboards provide visual snapshots of current activities. Real-time reports allow immediate response to developing situations. Historical reports reveal patterns over time that can be used to identify opportunities for improvement and cost reduction."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Dashboards",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect provides a prebuilt set of dashboards that are visual tools to help show you how well your contact center is performing. Dashboards display both real-time information (updated every 15 seconds) and historical data (up to 3 months in the past)."
+            },
+            {
+              "type": "p",
+              "text": "You are able to see important metrics about calls, chats, and other customer contacts along with:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Adding or removing information sections to focus on what matters to you",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Specifying a custom time range and custom benchmark comparison time range for each dashboard"
+            },
+            {
+              "type": "p",
+              "text": "Selecting filters for data to include for each report."
+            },
+            {
+              "type": "p",
+              "text": "To use dashboards, you will need the right permissions from your administrator. Once you have access, go to the Amazon Connect Admin Workspace menu for Analytics and Optimization and then Dashboards and reports."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect has 6 different pre-built dashboards available for monitoring contact center performance. To learn more about the pre-built dashboards, choose each of the numbered markers:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Example dashboard",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The following graphic is the Conversational analytics dashboard to show as an example. Click on the image of the dashboard to zoom the image:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "By default, dashboards display the trailing 15 minutes of data for the current day.",
+                "Insider tip: Customize the your dashboard to display color-coded threshold performance."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "To modify your dashboard threshold colors, visit the Modify thresholds for summary widgets and tables section in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "You can customize your dashboard by using the filters and saving your own copy of this dashboard."
+            },
+            {
+              "type": "p",
+              "text": "To learn more about dashboards in Amazon Connect, visit the Dashboards section in the Amazon Connect Administrator Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Real-time metrics reports",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Real-time metrics show what is happening right now in your contact center, the Real-time metrics page refreshes every 15 seconds. These are your in-the-moment indicators that help with immediate decision-making. You can see exactly where long waits might be happening and make immediate decisions about resolution."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Common Real-time metrics to monitor",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Common real-time metrics to monitor are:"
+            },
+            {
+              "type": "p",
+              "text": "Contacts in queue – The number of contacts currently waiting to be connected to agents"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Available agents – How many agents are ready to take on contacts",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Abandonment rate – The percentage of contacts that disconnect before reaching an agent"
+            },
+            {
+              "type": "p",
+              "text": "Real-time Metrics dashboard showing queues and various metrics."
+            },
+            {
+              "type": "p",
+              "text": "To dive deeper visit the Real-time metrics reports in Amazon Connect in the Amazon Connect Administrator Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Historical metrics report",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Historical metrics provide insights about past performance. They help you identify trends and make strategic decisions. You can choose to analyze these metrics over hours, days, weeks, or months."
+            },
+            {
+              "type": "p",
+              "text": "Historical metrics queues page in Amazon Connect, highlighting the settings gear icon for customizing table display options."
+            },
+            {
+              "type": "p",
+              "text": "By choosing Settings, you can change the display of information in the table. These settings are as follows:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Metrics",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Historical metrics provide past performance data for configurable intervals of up to 30 days. Organizations can identify patterns and improvement opportunities by analyzing the data."
+            },
+            {
+              "type": "p",
+              "text": "Examples include the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t5-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Abandonment rate trends comparing this month to last month",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Service level achievement (percentage of contacts answered within target time) for different time periods"
+            },
+            {
+              "type": "p",
+              "text": "To dive deeper visit the Historical metrics reports in Amazon Connect in the Amazon Connect Administrator Guide."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t6",
+      "number": 6,
+      "title": "Knowledge Check",
+      "shortTitle": "Knowledge Check",
+      "summary": "Course content.",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [],
+      "reviewQuestions": [
+        {
+          "id": "connect-metrics-analytics-t6-q1",
+          "question": "A contact center is experiencing an unexpected surge in call volume on Monday morning after a product launch. The manager needs to determine immediate staffing adjustments. Which metric would provide the MOST actionable insights?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Historical metrics from last week's product launch"
+            },
+            {
+              "id": "B",
+              "text": "Real-time queue metrics showing current contacts waiting and agent states"
+            },
+            {
+              "id": "C",
+              "text": "Monthly trend reports from previous launches"
+            },
+            {
+              "id": "D",
+              "text": "Aggregated metrics from the previous day"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Although historical data is valuable for planning, immediate staffing decisions during an unexpected surge require real-time metrics that show current queue conditions and agent availability. Historical or aggregated data won't reflect the current situation requiring immediate action."
+        },
+        {
+          "id": "connect-metrics-analytics-t6-q2",
+          "question": "A contact center manager needs to evaluate customer experience and agent efficiency for the Technical Support queue. Which metrics should the contact center manager monitor? (Select THREE.) (Select all that apply: Service level / Agent login time / Average handle time (AHT) / Queue capacity / First call resolution / Agent login duration)",
+          "options": [],
+          "answer": "Service level; Average handle time (AHT); First call resolution. Although agent login time, queue capacity are valuable metrics, service level, AHT, and first call resolution are the key KPIs for most contact centers in this context."
+        },
+        {
+          "id": "connect-metrics-analytics-t6-q3",
+          "question": "A contact center manager evaluates queue performance metrics across multiple teams. Which metric is the MOST important indicator of customer wait time experience?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Service level percentage"
+            },
+            {
+              "id": "B",
+              "text": "Average speed of answer"
+            },
+            {
+              "id": "C",
+              "text": "Total contacts in queue"
+            },
+            {
+              "id": "D",
+              "text": "Agent occupancy rate"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Although these metrics provide valuable operational insights, service level percentage is the standard measure for customer wait time experience. It shows the percentage of contacts answered within target thresholds."
+        }
+      ]
+    },
+    {
+      "id": "connect-metrics-analytics-t7",
+      "number": 7,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "In this section, you explored the essential metrics that power Amazon Connect contact centers. You learned to differentiate between real-time and…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t7-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In this section, you explored the essential metrics that power Amazon Connect contact centers. You learned to differentiate between real-time and historical metrics, understand key metric categories, and identify which metrics matter most for different business goals. These fundamentals will help you make data-driven decisions for your contact center."
+            },
+            {
+              "type": "p",
+              "text": "Next up, you will explore real-time monitoring capabilities in Amazon Connect."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t8",
+      "number": 8,
+      "title": "Introduction to Real-Time Monitoring",
+      "shortTitle": "Introduction to Real-Time Monitoring",
+      "summary": "When managing a contact center, sometimes seconds matter. Picture this: It's Monday morning after a major product launch, and contacts are pouring…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t8-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Section introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When managing a contact center, sometimes seconds matter. Picture this: It's Monday morning after a major product launch, and contacts are pouring in. Do you have enough agents available? Are wait times climbing too high? Is anyone stuck in a queue for too long?"
+            },
+            {
+              "type": "p",
+              "text": "Real-time monitoring is like having a mission control center for your contact center operations. In this section, you will learn how to use real-time dashboards in Amazon Connect to spot issues before they become problems. This knowledge helps you take immediate action to keep your operation running smoothly."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t9",
+      "number": 9,
+      "title": "Real-Time Metrics Reports",
+      "shortTitle": "Real-Time Metrics Reports",
+      "summary": "The real-time metrics reports in Amazon Connect provides visibility into current contact center operations.",
+      "duration": "~4 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t9-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The real-time metrics reports in Amazon Connect provides visibility into current contact center operations."
+            },
+            {
+              "type": "p",
+              "text": "Reports show real-time or near-real time metrics information about activity in your contact center. Metrics such as Online show the number of agents currently online in real-time, updating every 15 seconds, as long as the page is active."
+            },
+            {
+              "type": "p",
+              "text": "You can customize the reports, specify a time range for each report, select metrics for each report, and select filters for data to include or exclude from each report."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Permissions to access metrics",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Verify users are assigned the appropriate security profile permissions so the user can access the Real-time metrics:"
+            },
+            {
+              "type": "p",
+              "text": "Users will need one of the following Analytics and Optimization security profile permissions:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Access metrics - Access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Real-time metrics - Access, as shown in the following image of the Analytics and Optimization section of the security profiles page."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect Security profiles permissions for metric report access."
+            },
+            {
+              "type": "p",
+              "text": "When you select Access metrics - Access, permissions are also automatically granted to Real-time metrics , Historical metrics, and Agent activity audit. The following image shows all of these permissions granted."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Permissions to access resources",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Verify the relevant security profile permissions grant users the ability to view routing profiles, queues, and Amazon Connect user accounts."
+            },
+            {
+              "type": "p",
+              "text": "Make sure the following permissions are selected:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Users - View",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can use resource tags and access control tags to apply granular access to users, queues, and routing profiles for real-time metrics. For example, you can control who has access to view specific users, queues, and routing profiles on the Real-time metrics page."
+            },
+            {
+              "type": "p",
+              "text": "To learn more visit Real-time metrics tag-based access control in Amazon Connect."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Accessing metrics",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To access the real-time report, use the following steps:"
+            },
+            {
+              "type": "p",
+              "text": "Log into your Amazon Connect Admin Workspace."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Example: https://instance-alias.my.connect.aws"
+            },
+            {
+              "type": "p",
+              "text": "Navigate to Analytics and optimization."
+            },
+            {
+              "type": "p",
+              "text": "Choose Real-time metrics."
+            },
+            {
+              "type": "p",
+              "text": "Accessing Real-time metrics from the Amazon Connect Admin Workspace menu."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Key Components",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "On the real-time metrics report, you can customize several key settings, including the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Time Range"
+            },
+            {
+              "type": "p",
+              "text": "Adjust how far back the real-time data should span. This is typically set for an amount of time between 15 minutes to 24 hours:"
+            },
+            {
+              "type": "p",
+              "text": "Trailing windows for time, select the time range, in hours, for the data to include in the report."
+            },
+            {
+              "type": "p",
+              "text": "(Optional) If you select Midnight to now, the time range is from midnight to the current time, based on the Time Zone that you select."
+            },
+            {
+              "type": "p",
+              "text": "If you select a time zone other than the one you are currently in, the time range starts at midnight for the calendar day in that time zone, not your current time zone."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Groupings",
+                  "body": "Groupings determine how the data is aggregated in the rows of your table. Adding more groupings will show more granular data, and increase the number of rows displayed."
+                },
+                {
+                  "title": "Filters",
+                  "body": "Specify filters to scope the data to be included in the report. The available filters depend on the report type. The following are the possible filters:"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Queues - Includes data only for the queues that you select from Include."
+            },
+            {
+              "type": "p",
+              "text": "Routing profiles - Includes data only for the routing profiles that you select from Include."
+            },
+            {
+              "type": "p",
+              "text": "Agents - Includes data only for the agents that you select from Include."
+            },
+            {
+              "type": "p",
+              "text": "Agent Hierarchies - Includes data only for the agent hierarchies that you select from Include."
+            },
+            {
+              "type": "p",
+              "text": "Channel - Available for Queues and Routing Profile report type. Includes data only for Channels you select."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Metrics"
+            },
+            {
+              "type": "p",
+              "text": "Metrics show up as columns of table data. To learn about the available metrics in Amazon Connect visit the Metrics definitions section in the Amazon Connect Administrator Guide"
+            },
+            {
+              "type": "callout",
+              "variant": "key",
+              "title": "Tip",
+              "body": [
+                "Don't forget to scroll on the Metrics tab to see more metrics."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "These settings are accessed by selecting the gear icon on the Real-time metrics report."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect Real-time Metrics report table settings."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Multi-metric Report Functionality",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "One of the most powerful features is the ability to create multiple tables on the same report.",
+                "For example, you could have the following:"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "A routing profile table showing how different teams are performing",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The following image is an example of a real-time multi-metric report:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Amazon Connect Real-time Metrics report showing multiple tables.",
+                "Insider tip: Create and save different real-time report configurations for different scenarios."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For example, you might have an All Queues Overview for general monitoring. You might also have a Critical Situation report that focuses only on your highest-priority queues and metrics."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t9-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Real-time metric data refresh rate",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Data in real-time metrics reports is refreshed as follows:"
+            },
+            {
+              "type": "p",
+              "text": "Real-time metrics page - refreshes every 15 seconds, as long as the page is active. For example, if you have multiple tabs open in your browser and navigate to a different tab, the real-time metric page won't be updated until you return to it."
+            },
+            {
+              "type": "p",
+              "text": "Queue Metrics, such as Active and Availability - refresh as activity occurs, with a small system delay for processing the activity."
+            },
+            {
+              "type": "p",
+              "text": "Agent near real-time metrics, such as Missed and Occupancy - refresh as activity occurs, with a small delay for processing."
+            },
+            {
+              "type": "p",
+              "text": "Contact near real-time metrics - refresh about a minute after a contact ends."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t10",
+      "number": 10,
+      "title": "Agent and Queue Performance Tracking",
+      "shortTitle": "Agent and Queue Performance Tracking",
+      "summary": "Real-time agent monitoring shows exactly what the team is doing right now.",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t10-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Agent performance tracking",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Real-time agent monitoring shows exactly what the team is doing right now."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t10-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Current contact information",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Real-time agent monitoring"
+            },
+            {
+              "type": "p",
+              "text": "This metric shows the status of an agent, including the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t10-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Error states – A situation that needs immediate attention",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about agent statuses, visit the Agent status in the CCP section in the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed agent status, move to the next tab to learn about current contact information."
+            },
+            {
+              "type": "p",
+              "text": "With Amazon Connect, you can monitor agents in real time to better assess agent performance."
+            },
+            {
+              "type": "p",
+              "text": "A common mistake is overreacting to single-point observations. For example, seeing an agent in After contact work for 10 minutes might not be concerning if the agent is handling a complex case."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t10-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Queue monitoring techniques",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The following queue monitoring techniques help manage contact volumes and maintain customer experience:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Contact distribution"
+            },
+            {
+              "type": "p",
+              "text": "Monitor how contacts are distributed across queues. If one queue becomes overloaded while others remain manageable, consider reassigning agents."
+            },
+            {
+              "type": "p",
+              "text": "For example, when the Technical Support queue has 15 waiting contacts while the General Inquiries queue has none, you can temporarily move available agents to help with the backlog."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Wait time tracking"
+            },
+            {
+              "type": "p",
+              "text": "Monitor the average wait times and the longest current wait time in queues."
+            },
+            {
+              "type": "p",
+              "text": "The longest wait time identifies customers requiring immediate attention."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Service level monitoring"
+            },
+            {
+              "type": "p",
+              "text": "Track real-time performance against service level targets."
+            },
+            {
+              "type": "p",
+              "text": "For example, monitor if the current rate meets the target of answering 80 percent of contacts within 20 seconds."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Channel comparison"
+            },
+            {
+              "type": "p",
+              "text": "Monitor metrics across voice, chat, and email channels."
+            },
+            {
+              "type": "p",
+              "text": "For example, shift agents to chat support when chat wait times are high but voice queues are manageable."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Custom thresholds and visual alerts"
+            },
+            {
+              "type": "p",
+              "text": "Configure metrics to highlight values outside acceptable ranges."
+            },
+            {
+              "type": "p",
+              "text": "For example, set queue sizes to display in red when exceeding 10 waiting contacts."
+            },
+            {
+              "type": "p",
+              "text": "The Queues table in the Amazon Connect Real-time Metrics dashboard shows your contact center queues. This view displays metrics for agents, contacts, and performance."
+            },
+            {
+              "type": "p",
+              "text": "Real-time metrics dashboard in Amazon Connect showing queue table with agent and contact metrics."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t10-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Queue graph",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can visualize historical queue data using time series graphs to help identify patterns, trends, and outliers such as service level, contacts queued, and average handle time."
+            },
+            {
+              "type": "p",
+              "text": "Use the following steps to access the queue graph:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "On the Real-time Metrics dashboard, display the Queues table.",
+                "Choose the three dots to the right of the queue name.",
+                "Choose View queue graphs from the menu.",
+                "Real-time metrics dashboard in Amazon Connect highlighting queue options menu and View queue graphs.",
+                "The Queue dashboard automatically refreshes every 15 minutes. You can use it to do the following:",
+                "Configure a time range of up to 24 hours.",
+                "Select the channel of your choice.",
+                "Customize the service level thresholds.",
+                "The following image shows an example Queue dashboard. It displays a graph of service-level data for the queue."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t10-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Current contact information",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Real-time agent monitoring"
+            },
+            {
+              "type": "p",
+              "text": "For agents actively handling contacts, you can see details like the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t10-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "How long the current contact has been active",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Which queue the contact came from"
+            },
+            {
+              "type": "p",
+              "text": "Which channel the agent is using (such as voice or chat)"
+            },
+            {
+              "type": "p",
+              "text": "Now that you have reviewed current contact information, move to the next tab to learn about current contact information."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Real-time agent monitoring"
+            },
+            {
+              "type": "p",
+              "text": "Facilitates supervisor actions like the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Listen-in: Quietly monitor a call for quality assurance.",
+                "Barge: Join an ongoing contact to provide assistance.",
+                "Take over: Assume control of a difficult situation.",
+                "Change agent state: Help agents who might be stuck in an incorrect status."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t11",
+      "number": 11,
+      "title": "Real-Time Decision-Making",
+      "shortTitle": "Real-Time Decision-Making",
+      "summary": "The true value of real-time monitoring comes from the decisions it supports, such as the following:",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t11-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The true value of real-time monitoring comes from the decisions it supports, such as the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t11-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Queue interventions",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Agent support"
+            },
+            {
+              "type": "p",
+              "text": "Use real-time data to dynamically adjust your staffing for the following scenarios:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "If queues are building, request agents on break to return early.",
+                "If the volume is unexpectedly low, offer voluntary time off.",
+                "Shift agents between channels based on current demand."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The following interaction presents you with three scenes that simulate dialogue with a character. Choose the appropriate response to receive feedback from your decision and progress to the next scene. Select Continue in the scenario to explore how to handle a surge in call volume."
+            },
+            {
+              "type": "p",
+              "text": "Laura is wearing business corporate clothing. She is standing in contact center in front of agents and has a neutral expression."
+            },
+            {
+              "type": "p",
+              "text": "The Technical Support queue has 15 waiting contacts and the longest wait time is now 8 minutes (goal: 3 minutes)."
+            },
+            {
+              "type": "p",
+              "text": "Five agents are in After Contact Work status."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t11-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "What action would you take?",
+          "blocks": [
+            {
+              "type": "ol",
+              "items": [
+                "Immediately adjust staffing.",
+                "Preform queue interventions.",
+                "Don't make any adjustments. This appears to be a temporary spike and there is no need to make changes."
+              ]
+            },
+            {
+              "type": "callout",
+              "variant": "key",
+              "title": "Tip",
+              "body": [
+                "Real-time monitoring is most effective when combined with clear action plans."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For each metric you monitor, have a predetermined response strategy for when thresholds are crossed."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t11-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Queue interventions",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Agent support"
+            },
+            {
+              "type": "p",
+              "text": "Take action when queue metrics indicate problems, such as the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Implement queue callback options when wait times exceed thresholds.",
+                "Adjust routing priorities to focus on the oldest contacts.",
+                "Temporarily redirect new contacts to overflow queues."
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Agent support"
+            },
+            {
+              "type": "p",
+              "text": "Identify and assist agents who need help by doing the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Provide real-time coaching to agents struggling with complex contacts.",
+                "Help agents who appear stuck in error states.",
+                "Recognize agents who are handling high volumes efficiently."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t12",
+      "number": 12,
+      "title": "Knowledge Check",
+      "shortTitle": "Knowledge Check",
+      "summary": "Course content.",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [],
+      "reviewQuestions": [
+        {
+          "id": "connect-metrics-analytics-t12-q1",
+          "question": "A contact center supervisor needs to monitor multiple aspects of operations simultaneously. Which real-time dashboard configuration provides the MOST comprehensive view?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Multiple tables showing queue metrics, agent activities, and routing profiles"
+            },
+            {
+              "id": "B",
+              "text": "Single table displaying all metrics for all queues"
+            },
+            {
+              "id": "C",
+              "text": "Individual dashboards for each team"
+            },
+            {
+              "id": "D",
+              "text": "Agent status table only"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Using a single table or limited views restricts visibility into overall operations. Multiple focused tables are needed to monitor queue health, agent activities, and team performance effectively."
+        },
+        {
+          "id": "connect-metrics-analytics-t12-q2",
+          "question": "A supervisor monitors real-time agent performance metrics during peak hours. Which indicators suggest an agent requires immediate support? (Select THREE.) (Select all that apply: Extended time in After contact work status / Multiple consecutive contact transfers / Agent login duration / Handle times tripling the team average / Number of available queues / On Break status)",
+          "options": [],
+          "answer": "Extended time in After contact work status; Multiple consecutive contact transfers; Handle times tripling the team average. Scheduled breaks, agent login duration, and number of available queues are routine operational metrics that don't necessarily indicate an agent needs immediate support."
+        },
+        {
+          "id": "connect-metrics-analytics-t12-q3",
+          "question": "A contact center experiences an unexpected surge in Technical Support contacts while the Billing queue remains quiet. Which action provides the MOST effective immediate response?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Temporarily reassign available skilled agents from Billing to Technical Support."
+            },
+            {
+              "id": "B",
+              "text": "Implement queue callback options for all queues."
+            },
+            {
+              "id": "C",
+              "text": "Increase the Technical Support queue size limit."
+            },
+            {
+              "id": "D",
+              "text": "Close the Technical Support queue temporarily."
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Implementing universal changes or restricting access doesn't address the specific imbalance between queues. Redistributing available skilled agents provides targeted relief for the high-volume queue."
+        }
+      ]
+    },
+    {
+      "id": "connect-metrics-analytics-t13",
+      "number": 13,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "In this section, you discovered how to use the Amazon Connect real-time dashboards to track current performance. You learned about agent tracking,…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t13-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In this section, you discovered how to use the Amazon Connect real-time dashboards to track current performance. You learned about agent tracking, queue monitoring, and immediate decision-making techniques. You should now understand how to spot and address issues as they happen."
+            },
+            {
+              "type": "p",
+              "text": "Next up, you will learn how to design custom reports for deeper analysis."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t14",
+      "number": 14,
+      "title": "Introduction to Custom Report Design and Management",
+      "shortTitle": "Introduction to Custom Report Design and Man…",
+      "summary": "Although real-time metrics help you manage day-to-day operations, historical reports unlock the stories hidden in your data over time. Have you…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [
+        "Creating comprehensive historical metrics reports tailored to specific business needs"
+      ],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t14-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Section introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Although real-time metrics help you manage day-to-day operations, historical reports unlock the stories hidden in your data over time. Have you ever wondered why Mondays are consistently busier than Thursdays, or why some agents excel with chat contacts but struggle with voice? Historical reporting helps answer these questions and many more."
+            },
+            {
+              "type": "p",
+              "text": "Imagine being able to show your executive team exactly how your recent training program improved agent efficiency, with clear visual evidence. In this section, you will explore how to create, customize, and visualize historical reports that tell compelling stories about your contact center's performance."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t15",
+      "number": 15,
+      "title": "Creating Historical Metrics Reports",
+      "shortTitle": "Creating Historical Metrics Reports",
+      "summary": "Historical metrics reports analyze past contact center performance and help identify trends, patterns, and opportunities for improvement. Unlike…",
+      "duration": "~4 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t15-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Historical metrics reports analyze past contact center performance and help identify trends, patterns, and opportunities for improvement. Unlike real-time reports that focus on the current state, historical reports can span hours, days, weeks, or even months."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect includes built-in historical reports that are available for immediate use. You can also build your own custom reports too. When creating and analyzing your historical metrics reports, keep in mind that there are two categories of metrics:"
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Contact record-driven metrics",
+                  "body": "These metrics are based on formed contact record records. For example, contact record-driven metrics are Service level, Agent interaction time, and After contact work time."
+                },
+                {
+                  "title": "Agent activity-driven metrics",
+                  "body": "These metrics are based on agent activities, like agent status changes, agent conversation changes. For example, an agent activity-driven metric is Non-Productive Time."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "When you customize the report settings, you can get a view of the data that is most meaningful for your organization. You can change the time frame for the report, which metrics are included in the report, and how data is grouped in the report. After you have customized a report, you can save it for future reference and you can generate a report using a recurring schedule that you define."
+            },
+            {
+              "type": "p",
+              "text": "To learn about creating historical metrics reports, choose the START or arrow buttons to display each of the five steps."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "How to create Historical Metric Reports",
+                  "body": "Let's review how to create historical metrics reports that help you better understand trends in your contact center and guide you through continuous improvement decisions."
+                },
+                {
+                  "title": "Access historical metrics",
+                  "body": "Amazon Connect Historical Metrics - Accessing the report"
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "To create a historical metrics report in Amazon Connect, do the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Log in to the Amazon Connect Admin Workspace at https://instance-alias.my.connect.aws",
+                "Replace instance-alias with the name of your instance."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Navigate to the Analytics and optimization > Historical metrics."
+            },
+            {
+              "type": "p",
+              "text": "You must have permission to access metric data. The security profiles CallCenterManager and QualityAnalyst include this permission."
+            },
+            {
+              "type": "p",
+              "text": "For more information, see Security profiles for Amazon Connect and Contact Control Panel (CCP) access."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Choose report type"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect Historical Metrics - Report Type."
+            },
+            {
+              "type": "p",
+              "text": "Select your report type based on what you want to analyze. You can choose the following reports:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Queue-based reports: Focus on contact flow and wait times, such as the following:",
+                "- Contact metrics",
+                "- Agent metrics"
+              ]
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Agent-based reports: Focus on individual performance, such as the following:",
+                "- Agent performance",
+                "- Agent activity audit report"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Phone numbers report: Analyze performance by contact entry point per number."
+            },
+            {
+              "type": "p",
+              "text": "Email addresses report: Analyze performance by contact entry point per email address."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Cases report: Focus on case activities, such as the following:",
+                "- Interval metrics",
+                "- Snapshot metrics"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Selecting your interval and time range"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect Historical Metrics report - Interval & Time range."
+            },
+            {
+              "type": "p",
+              "text": "When creating historical reports, the first important decision is your time frame:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t15-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Time Zone: Select your time zone or location (UTC or London)",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Time range: Rolling periods (Today, Last 24 hours, Yesterday, Last 2/3 days, or Custom time range)"
+            },
+            {
+              "type": "p",
+              "text": "For example, if you're investigating why customer satisfaction dropped last week, you might create a report with an absolute range covering that specific week. This report would use daily intervals to identify which day had issues."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Advanced customizations"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect Historical Metrics report - Groupings and Filters."
+            },
+            {
+              "type": "p",
+              "text": "Optionally you can select the Groupings and Filters tabs:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "On the Groupings tab, you can do the following:",
+                "- Choose up to five groupings."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "- For multiple grouping options, the data is grouped by the first grouping option and then by the subsequent grouping options."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "On the Filters tab, you can do the following:",
+                "- Specify filters to scope the data to be included in the report.",
+                "- Available filters depend on the groupings that you select."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For more information, see Administrator Guide for Grouping options. You can also see, Administrator Guide for Filters."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Choose your report metrics and fields"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect Historical Metrics - Metric selection."
+            },
+            {
+              "type": "p",
+              "text": "Now you can select the metrics and fields that you want to display in your report."
+            },
+            {
+              "type": "p",
+              "text": "An exclamation point (!) is displayed next to any metrics that are not available based on the groupings that you selected."
+            },
+            {
+              "type": "p",
+              "text": "For more information, see Metric definitions in Amazon Connect."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Summary"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect Historical Metrics - Report Actions and Saving."
+            },
+            {
+              "type": "p",
+              "text": "Historical reports allow much deeper customization than real-time reports. They can include the following details:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t15-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Scheduled report running and delivery",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "You can then choose to Save your report or Download a CSV.",
+                "Lesson 17 of 22"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t16",
+      "number": 16,
+      "title": "Advanced Filtering and Grouping",
+      "shortTitle": "Advanced Filtering and Grouping",
+      "summary": "Amazon Connect historical metric reports provides granular filtering and grouping capabilities. These help you focus on exactly the data that…",
+      "duration": "~4 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t16-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect historical metric reports provides granular filtering and grouping capabilities. These help you focus on exactly the data that matters for your current question or investigation."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t16-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Amazon Connect historical metrics table settings showing Groupings and Filters",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Filtering narrows down which data points are included in your report. Grouping determines how data is organized and aggregated in your report. The following table helps you compare the two tools:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t16-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Filtering options",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Although tables of numbers contain valuable information, visualizations make that information accessible and actionable."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect offers the following visualization options for your historical data."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Queue filters"
+            },
+            {
+              "type": "p",
+              "text": "Include only specific queues (for example, Technical Support and Billing queues only)."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When you want to focus analysis on particular service areas or compare performance between different types of contacts"
+            },
+            {
+              "type": "p",
+              "text": "Example: To analyze how your Premium Customer queue performs compared to standard queues, filter to include only those specific queue types."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Agent filters"
+            },
+            {
+              "type": "p",
+              "text": "Include only specific agents or teams."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When evaluating individual performance or team comparisons or when tracking new hire progress"
+            },
+            {
+              "type": "p",
+              "text": "Example: To analyze how your new trainee team is performing, filter to include only agents hired in the last 30 days."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Channel filters"
+            },
+            {
+              "type": "p",
+              "text": "Focus on particular channels, such as voice, chat, or email."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When comparing performance across different communication methods or troubleshooting issues with a specific channel"
+            },
+            {
+              "type": "p",
+              "text": "Example: If customer feedback suggests chat response times are too slow, create a report filtered to chat interactions only."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Contact attribute filters"
+            },
+            {
+              "type": "p",
+              "text": "Filter by custom attributes you've defined, such as customer tier or issue type."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When analyzing performance for specific customer segments or contact types"
+            },
+            {
+              "type": "p",
+              "text": "Example: To analyze how efficiently your team resolves technical issues compared to billing questions, filter by the Contact reason attribute."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Time filters"
+            },
+            {
+              "type": "p",
+              "text": "Focus on specific time periods, such as business hours only."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When analyzing performance differences between time periods or optimizing staffing for peak hours"
+            },
+            {
+              "type": "p",
+              "text": "Example: To improve staffing during your busiest period, create a report filtered to show only contacts between 10 am–2 pm."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t16-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Grouping options",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Although tables of numbers contain valuable information, visualizations make that information accessible and actionable. Amazon Connect provides these visualization options to help you analyze your historical data:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Queue grouping"
+            },
+            {
+              "type": "p",
+              "text": "See metrics broken down by queue."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When comparing performance between different service types or identifying which queues might need additional resources"
+            },
+            {
+              "type": "p",
+              "text": "Example: Grouping by queue might show that your Technical Support queue has a much longer average handle time than other queues, suggesting more complex issues or training needs."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Agent grouping"
+            },
+            {
+              "type": "p",
+              "text": "Compare individual agent performance."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When conducting performance reviews, identifying coaching needs, or recognizing top performers"
+            },
+            {
+              "type": "p",
+              "text": "Example: Grouping by agent might reveal that certain agents have significantly higher customer satisfaction scores. The team could benefit from having those agents share their best practices."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Team grouping"
+            },
+            {
+              "type": "p",
+              "text": "Compare teams using agent hierarchy."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When evaluating team leader effectiveness or comparing performance between different departments"
+            },
+            {
+              "type": "p",
+              "text": "Example: Grouping by team might show that Team A consistently achieves better service levels than Team B, prompting an investigation into different management approaches."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Time period grouping"
+            },
+            {
+              "type": "p",
+              "text": "See how metrics change over different time intervals."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t16-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "When to use: When analyzing trends, identifying patterns, or planning staffing needs",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Example: Grouping by hour of day might reveal that handle times increase significantly after 3 pm, suggesting fatigue factors or shift planning opportunities."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Channel grouping"
+            },
+            {
+              "type": "p",
+              "text": "Compare performance across different contact channels."
+            },
+            {
+              "type": "p",
+              "text": "When to use: When evaluating channel strategy or identifying training needs for specific communication methods"
+            },
+            {
+              "type": "p",
+              "text": "Example: Grouping by channel might show that resolution rates are lower for chat than voice, suggesting a need for chat handling process improvements."
+            },
+            {
+              "type": "callout",
+              "variant": "key",
+              "title": "Tip",
+              "body": [
+                "The grouping you choose affects how metrics are calculated."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For example, Average handle time grouped by queue shows the average across all agents in that queue, while grouping by agent shows individual agent averages."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t16-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Advanced techniques",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For comparative analysis, create reports that compare performance across different dimensions, such as the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t16-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Morning shift compared to Evening shift",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For nested grouping, group by multiple factors for deeper insights such as the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t16-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "First by queue, then by time period",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For example, to see if your payment processing team performs differently on weekends compared to weekdays, you could group first by team hierarchy. Then focus on comparing weekend and weekday metrics side by side."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t17",
+      "number": 17,
+      "title": "Report Management, Security and Troubleshooting",
+      "shortTitle": "Report Management, Security and Troubleshoot…",
+      "summary": "You can create a real-time metrics report to view real-time or near-real time metrics data for activity in your contact center. You must have…",
+      "duration": "~9 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t17-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Custom report creation",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can create a real-time metrics report to view real-time or near-real time metrics data for activity in your contact center. You must have permission to access metric data. The CallCenterManager and QualityAnalyst security profiles include this permission."
+            },
+            {
+              "type": "p",
+              "text": "This demonstration shows the steps to create a custom real-time report."
+            },
+            {
+              "type": "p",
+              "text": "Video demonstration to create a custom real-time report in Amazon Connect."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Transcript: Create a custom real-time report in Amazon Connect"
+            },
+            {
+              "type": "p",
+              "text": "Welcome to this demonstration on how to create a custom real time report in Amazon Connect."
+            },
+            {
+              "type": "p",
+              "text": "To start, navigate to your Amazon Connect log in page. Enter your credentials and sign in."
+            },
+            {
+              "type": "p",
+              "text": "From the Connect Administration console, choose Analytics and optimization from the navigation sidebar."
+            },
+            {
+              "type": "p",
+              "text": "Next, choose Real-time metrics."
+            },
+            {
+              "type": "p",
+              "text": "From the Real-time Metrics page, choose one of the report types shown. They group and order the data in different ways and include different metrics by default. For this demonstration, Queues will be chosen."
+            },
+            {
+              "type": "p",
+              "text": "Then, on the Real-time Metrics Queues page, you can optionally add more tables to the report by choosing the New table menu and choosing the table."
+            },
+            {
+              "type": "p",
+              "text": "Next, to configure the Queues table, choose the gear icon in the table header."
+            },
+            {
+              "type": "p",
+              "text": "On the Time range tab, choose Trailing windows for time, then choose the time range, in hours, for the data to include in the report. This demonstration will use a 1-hour time range."
+            },
+            {
+              "type": "p",
+              "text": "Optionally, you can choose the Filters tab. There, you specify filters to scope the data to be included in the report. The available filters depend on the report type. The following possible filters for the Queues report are shown."
+            },
+            {
+              "type": "p",
+              "text": "Next, on the Metrics tab, select the metrics and fields to include in the report. The available metrics and fields depend on the report type and filters that you select. The Amazon Connect Administration guide contains definitions for all available metrics in Connect."
+            },
+            {
+              "type": "p",
+              "text": "When you are finished customizing the report, choose Apply."
+            },
+            {
+              "type": "p",
+              "text": "To optionally save your report for future reference, choose Save report."
+            },
+            {
+              "type": "p",
+              "text": "In the text box, provide a name for the report. Use a consistent naming convention for your reports."
+            },
+            {
+              "type": "p",
+              "text": "Then, choose Save."
+            },
+            {
+              "type": "p",
+              "text": "After you have saved your report, you will see the reports name in the title. Your report is now available for future use, but it is only available to you as the creator."
+            },
+            {
+              "type": "p",
+              "text": "To optionally share your report, return to the Connect Administration console home screen."
+            },
+            {
+              "type": "p",
+              "text": "From the navigation menu, choose Analytics and optimization and then choose Dashboards and reports."
+            },
+            {
+              "type": "p",
+              "text": "Next, choose the Real-time metrics tab, or optionally, choose All reports."
+            },
+            {
+              "type": "p",
+              "text": "Then on the Real-time metrics reports screen, you will see your saved report."
+            },
+            {
+              "type": "p",
+              "text": "Hover your cursor over the report name to reveal the Share and Delete functions for the report. Choose the Share icon."
+            },
+            {
+              "type": "p",
+              "text": "Next, in the Share Report pop-up, for the Share setting, turn on Read-only. Then, for Publish report to organization, turn on Publish. You will also notice that the Save option is inactive until you choose one or both of the settings."
+            },
+            {
+              "type": "p",
+              "text": "After you have turned on the share settings for your report, choose Save."
+            },
+            {
+              "type": "p",
+              "text": "Now on the Dashboards and reports page, you will see the report is now published and read-only. Your report is available to all users that have appropriate permissions to view, and you, as the owner, maintain full control. The read-only settings prevent other users from modifying the report."
+            },
+            {
+              "type": "p",
+              "text": "This concludes this demonstration on creating a custom real-time report in Amazon Connect."
+            },
+            {
+              "type": "callout",
+              "variant": "key",
+              "title": "Tip",
+              "body": [
+                "Use consistent report naming conventions, for example: \"Agent Performance - Team Name,\" to clearly identify ownership across your organization."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Report management best practices",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Implementing report management best practices can help structure, manage, and provide access to your reports. Best practices include the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Regular review – Schedule quarterly reviews of report relevance.",
+                "Version control – Consider including version numbers for major updates.",
+                "Documentation – Maintain brief descriptions of what each report is designed to show.",
+                "Organization – Create folder structures if your environment has many reports.",
+                "Permission management – Control who can edit and who can only view reports."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Scheduling reports",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For reports that need to be reviewed regularly, use automated scheduling to help ensure consistent distribution."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Setting up a scheduled report",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about how to schedule your report generation, choose the START or arrow buttons to display each of the following six steps."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Scheduling a report"
+            },
+            {
+              "type": "p",
+              "text": "Schedule a historical metrics report to support contact center stakeholders by providing them with automated report generation."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Report limitations",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Having scheduled report functionality is a great benefit for your contact center, but reports have the following limitations:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Format – Reports are delivered as CSV files only (no visualizations).",
+                "Storage – Reports are stored in Amazon S3, not emailed directly.",
+                "Notifications – There are no automatic notifications when reports are generated.",
+                "Failure alerts – There are no alerts if scheduled reports fail to run.",
+                "To overcome these limitations, use the following strategies:"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Email distribution – Set up an AWS Lambda function to email the CSV when it appears in Amazon S3."
+            },
+            {
+              "type": "p",
+              "text": "Visualization – Import scheduled report data into business intelligence tools."
+            },
+            {
+              "type": "p",
+              "text": "Monitoring – Create Amazon CloudWatch alerts to monitor for report generation failures."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Open report"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect - Scheduling a report - Step 1. Open or create a report."
+            },
+            {
+              "type": "p",
+              "text": "Create a new report and save it, or open a saved report."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Schedule report"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect - Scheduling a report - Step 2. Choose the down arrow next to Save in the top-right corner and choose Schedule."
+            },
+            {
+              "type": "p",
+              "text": "Choose the Actions menu and choose Schedule."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Acknowledgement"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect - Scheduling a report - Step 3. Acknowledge permissions notice."
+            },
+            {
+              "type": "p",
+              "text": "Read and acknowledge the note, which states all individuals who have proper permissions will be able to access the report."
+            },
+            {
+              "type": "p",
+              "text": "If you need to update permissions before scheduling your report, choose Cancel. Otherwise, choose Continue."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Set the recurrence schedule"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect - Scheduling a report - Step 4. Set your recurrence settings."
+            },
+            {
+              "type": "p",
+              "text": "On the Recurrence tab, specify how often this report should be run (for example, weekly on Saturdays). Also set the range (for example, from midnight for the previous 5 days)."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Set the delivery option (optional)"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect - Scheduling a report - Step 5. Optionally - Set the Delivery Options"
+            },
+            {
+              "type": "p",
+              "text": "On the Delivery Options tab, specify a prefix for the location in Amazon Simple Storage Service (Amazon S3) to store the report files."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Create schedule"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect - Scheduling a report - Step 6. Select Create to schedule your report."
+            },
+            {
+              "type": "p",
+              "text": "Choose Create."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Summary"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect - Scheduling a report - Complete. The report has now been scheduled."
+            },
+            {
+              "type": "p",
+              "text": "The report will now be scheduled at the settings selected and delivered to the location specified."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Report limitations",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Having scheduled report functionality is a great benefit for your contact center, but reports have the following limitations:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Format – Reports are delivered as CSV files only (no visualizations).",
+                "Storage – Reports are stored in Amazon S3, not emailed directly.",
+                "Notifications – There are no automatic notifications when reports are generated.",
+                "Failure alerts – There are no alerts if scheduled reports fail to run.",
+                "To overcome these limitations, use the following strategies:"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Email distribution – Set up an AWS Lambda function to email the CSV when it appears in Amazon S3."
+            },
+            {
+              "type": "p",
+              "text": "Visualization – Import scheduled report data into business intelligence tools."
+            },
+            {
+              "type": "p",
+              "text": "Monitoring – Create Amazon CloudWatch alerts to monitor for report generation failures."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Continued"
+            },
+            {
+              "type": "p",
+              "text": "Access control implementation"
+            },
+            {
+              "type": "p",
+              "text": "Controlling who can view, edit, or create reports is essential for maintaining data security and report integrity."
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Security profile permissions",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Role-based access patterns"
+            },
+            {
+              "type": "p",
+              "text": "Access to reports in Amazon Connect is controlled through security profiles. The key permissions related to reports include the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Delete reports – Who can remove reports",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Follow these steps to assign permissions:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Navigate to Users, then choose Security profiles.",
+                "Select the appropriate profile OR create a new one.",
+                "For Analytics, select the appropriate permissions.",
+                "Assign users to the appropriate security profile.",
+                "Amazon Connect Editing Security Profile. End of Tab."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Best practices for security permissions",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Appling the following best practices can help control your contact center data access:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Apply the principle of least privilege—give users only the permissions they need.",
+                "Create specialized security profiles for report creators and publishers.",
+                "Review permissions quarterly to make sure that they remain appropriate.",
+                "Document your permission structure for consistency.",
+                "Use groups rather than individual permissions when possible."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Metrics troubleshooting",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Even well-designed reports sometimes display unexpected results. Choose each of the following issues to see the solution."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "No data appearing in reports"
+            },
+            {
+              "type": "p",
+              "text": "If your report shows no data, check the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Time range – Confirm the selected period contains activity.",
+                "Filters – Verify filters aren't too restrictive.",
+                "Permissions – Confirm you have access to the metrics you're requesting.",
+                "Data delay – Note that historical metrics might have a slight processing delay."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For example: If you create a report for a new queue that was just set up today, there might not be any historical data yet."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Unexpected metric values"
+            },
+            {
+              "type": "p",
+              "text": "If metrics show values that seem incorrect, check the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Metric definition – Review the exact definition of the metric.",
+                "Calculation method – Check if grouping affects how the metric is calculated.",
+                "Time zone – Verify the time zone settings for the report.",
+                "Filtering impact – Consider if filters are excluding relevant data."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For example: Average handle time might appear different when grouped by queue compared to grouped by agent because the calculations are performed differently."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Common metrics discrepancies"
+            },
+            {
+              "type": "p",
+              "text": "The following metrics commonly cause confusion:"
+            },
+            {
+              "type": "p",
+              "text": "Service level – Remember this is the percentage of contacts answered within the threshold, not the average speed of answer."
+            },
+            {
+              "type": "p",
+              "text": "Occupancy – This excludes any time agents spend in custom states."
+            },
+            {
+              "type": "p",
+              "text": "Abandonment rate – Callbacks don't count as abandoned, which might make this metric look better than expected."
+            },
+            {
+              "type": "p",
+              "text": "Agent activity – Confirm agents are properly logging their activities for accurate reporting."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Report performance issues"
+            },
+            {
+              "type": "p",
+              "text": "If reports are slow to load or they time out, check the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Date range – Try reducing the timespan.",
+                "Metrics quantity – Reduce the number of metrics included.",
+                "Grouping complexity – Simplify grouping arrangements.",
+                "Filter optimization – Use more targeted filters.",
+                "Browser cache – Clear your browser cache."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For example: A report trying to show 20 metrics for all agents across all queues for a full year might time out. This can occur because of the large volume of data being processed."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Role-based access patterns"
+            },
+            {
+              "type": "p",
+              "text": "Consider implementing these common access patterns:"
+            }
+          ]
+        },
+        {
+          "id": "connect-metrics-analytics-t17-s11",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Administrators (admins, directors) – Has full control over all reports",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "For Example: You might want supervisors to have Create and Edit permissions for their own reports. Only managers would have Publish and Delete permissions for company-wide reports."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-metrics-analytics-t18",
+      "number": 18,
+      "title": "Knowledge Check",
+      "shortTitle": "Knowledge Check",
+      "summary": "Course content.",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [],
+      "reviewQuestions": [
+        {
+          "id": "connect-metrics-analytics-t18-q1",
+          "question": "A contact center manager wants to investigate why customer satisfaction dropped last week. Which historical report configuration would be most effective for this analysis?",
+          "options": [
+            {
+              "id": "A",
+              "text": "A monthly report with weekly intervals showing average handle time"
+            },
+            {
+              "id": "B",
+              "text": "A daily report for the specific week, showing service level, first contact resolution, and customer satisfaction scores"
+            },
+            {
+              "id": "C",
+              "text": "An hourly report for the entire month, focusing on queue wait times"
+            },
+            {
+              "id": "D",
+              "text": "A quarterly report with monthly intervals showing agent occupancy rates"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "A daily report for the specific week provides the right granularity to identify which days had issues. Including service level, first contact resolution, and satisfaction scores allows for correlation between operational performance. This helps pinpoint the cause of the satisfaction drop."
+        },
+        {
+          "id": "connect-metrics-analytics-t18-q2",
+          "question": "A quality manager needs to evaluate how new agents perform with chat interactions during peak business hours. Which filtering combinations will provide the MOST focused analysis? (Select TWO.) (Select all that apply: Agent group filter for new hires / Time of day filter for peak hours / Queue name filter / Channel type filter for chat / Contact duration filter)",
+          "options": [],
+          "answer": "Agent group filter for new hires; Channel type filter for chat. Although time periods, queues, and contact duration provide useful context, the primary focus should be on identifying specific agent groups and their performance in the chat channel for accurate evaluation."
+        },
+        {
+          "id": "connect-metrics-analytics-t18-q3",
+          "question": "A team lead creates report templates for multiple supervisor teams to track daily performance metrics. Which template organization approach provides the MOST effective access?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Standardized naming with purpose, frequency, and team identification"
+            },
+            {
+              "id": "B",
+              "text": "Generic names with creation dates"
+            },
+            {
+              "id": "C",
+              "text": "Numbered sequence system"
+            },
+            {
+              "id": "D",
+              "text": "Alphabetical listing by creator"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Generic names, simple numbering systems, or alphabetical listings make it difficult to identify appropriate templates. Clear, descriptive naming conventions ensure efficient template management and usage."
+        },
+        {
+          "id": "connect-metrics-analytics-t18-q4",
+          "question": "A contact center supervisor notices unusually high Average handle time (AHT) metrics across all teams in the performance dashboard. Which troubleshooting step should be performed FIRST?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Retrain all agents on contact handling procedures."
+            },
+            {
+              "id": "B",
+              "text": "Adjust AHT targets in the reporting system."
+            },
+            {
+              "id": "C",
+              "text": "Check the report's time zone settings and calculation method."
+            },
+            {
+              "id": "D",
+              "text": "Create a new performance dashboard."
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "Acting on agent performance or adjusting report configurations before verifying data accuracy can lead to unnecessary operational changes. Always validate report settings first to make sure that metrics are being calculated and displayed correctly."
+        }
+      ]
+    },
+    {
+      "id": "connect-metrics-analytics-t19",
+      "number": 19,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "Congratulations on gaining proficiency in Amazon Connect Metrics and Analytics. This course covered interpreting real-time metrics for immediate…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-metrics-analytics-t19-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Congratulations on gaining proficiency in Amazon Connect Metrics and Analytics. This course covered interpreting real-time metrics for immediate decision-making and creating customized reports for strategic planning. It also highlighted how to ensure the right insights reach the right people."
+            },
+            {
+              "type": "p",
+              "text": "Remember, effective contact center management means balancing multiple metrics. Although efficiency metrics like handle time matter, always consider their impact on quality and customer satisfaction."
+            },
+            {
+              "type": "p",
+              "text": "When applying these skills, start with a few key metrics that are aligned with business goals. Then gradually expand analytics to include more advanced reporting and visualizations."
+            },
+            {
+              "type": "p",
+              "text": "The data capabilities of Amazon Connect continue to grow. New metrics and analytics features are added regularly. Keep exploring these tools to optimize contact center operations."
+            },
+            {
+              "type": "p",
+              "text": "Now it is time to put this knowledge into practice. Good luck on the analytics journey ahead."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

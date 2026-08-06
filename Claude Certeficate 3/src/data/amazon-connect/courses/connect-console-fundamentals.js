@@ -1,0 +1,1017 @@
+/*
+ * Amazon Connect — Console Fundamentals
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne/AMAZON CONNECT CONSOLE FUNDAMENTALS.txt
+ *            conne-text/Amazon Connect Console Fundamentals Summary.txt  (from conne/Amazon Connect Console Fundamentals Summary.pdf)
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-console-fundamentals",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Console Fundamentals",
+  "provider": "Amazon Web Services",
+  "level": "Fundamentals",
+  "category": "Foundations",
+  "description": "The Amazon Connect console: managing resource access control and navigating between instance settings and the admin workspace.",
+  "examFormat": "5 topics · ~24 min · 3 review questions",
+  "sourceFiles": [
+    "conne/AMAZON CONNECT CONSOLE FUNDAMENTALS.txt",
+    "conne-text/Amazon Connect Console Fundamentals Summary.txt  (from conne/Amazon Connect Console Fundamentals Summary.pdf)"
+  ],
+  "modules": [
+    {
+      "id": "connect-console-fundamentals-t1",
+      "number": 1,
+      "title": "Introduction to the Amazon Connect Console",
+      "shortTitle": "Introduction to the Amazon Connect Console",
+      "summary": "The Amazon Connect console is where administrators, supervisors, and analysts manage and view Amazon Connect contact center resources.",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the user persona for the Amazon Connect console.",
+        "Explain the benefits of using the Amazon Connect console."
+      ],
+      "sections": [
+        {
+          "id": "connect-console-fundamentals-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect console is where administrators, supervisors, and analysts manage and view Amazon Connect contact center resources."
+            },
+            {
+              "type": "p",
+              "text": "In this lesson, you will explore the various personas that typically interact with the Amazon Connect console. You will also learn the benefits of using a unified application to manage resources."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t1-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Concepts and terminology",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect console is a web application that provides access for users to manage and use various Amazon Connect features and functionality. The console serves as an interface that gives users the ability to provision and configure resources or design customer experience flows. It also provides access to dashboards and reports and a view for managing forecasting, scheduling, and capacity plans."
+            },
+            {
+              "type": "p",
+              "text": "To learn more about some of the core concepts used in this course, expand the following categories."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Security profiles",
+                  "body": "The security profile permissions in Amazon Connect give users access to perform specific tasks in Amazon Connect. For example, the Agent security profile contains permissions needed to access the Amazon Connect Contact Control Panel (CCP). The Admin security profile contains permissions to access resources, such as users, queues, routing profiles, flows, and more."
+                },
+                {
+                  "title": "Tags",
+                  "body": "A resource tag is a custom metadata label that administrators typically add to a resource to make it more convenient to identify, organize, and find in a search. With tag-based access controls, console users can get granular access to specific resources based on the assigned resource tags. Users with the right permissions can configure tag-based access controls in the Amazon Connect console (for the supported resources). Developers can configure and use tags using the Amazon Connect APIs and Amazon Connect SDK."
+                },
+                {
+                  "title": "Agent hierarchies",
+                  "body": "Amazon Connect hierarchies are a way to organize agents into groups for reporting purposes. Administrators can group agents in hierarchies by physical location or by skill sets. Developers can configure and access hierarchy-based access controls using the Amazon Connect APIs and Amazon Connect SDK."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t1-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "User persona for the Amazon Connect console",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "There are multiple user personas that typically access the Amazon Connect console."
+            },
+            {
+              "type": "p",
+              "text": "Administrators manage access control to Amazon Connect resources by using security profiles, agent hierarchies, and tag-based access controls."
+            },
+            {
+              "type": "p",
+              "text": "Supervisors use information screens to view agent-customer communications, run reports, and review statistics for agents and queues."
+            },
+            {
+              "type": "p",
+              "text": "Interactive voice response (IVR), routing, and telecommunications specialists manage phone numbers for voice or SMS, configure routing, and create contact flows."
+            },
+            {
+              "type": "p",
+              "text": "Data, reporting, and analytics specialists analyze historical reporting, dashboards, Amazon Connect Customer Profiles, and Amazon Connect Contact Lens data."
+            },
+            {
+              "type": "p",
+              "text": "Workforce management (WFM) specialists manage forecasting, capacity planning, and scheduling."
+            },
+            {
+              "type": "p",
+              "text": "Outbound dialing specialists use Amazon Connect outbound campaigns."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t1-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits of the Amazon Connect console",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect console empowers users to configure a contact center. It provides the following:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "A unified view for all contact center functionality configurations"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Granular access control to resources and functionality based on user-specific job roles",
+                "Convenience of access to configure contact center applications and functionality"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "All capabilities are provided in a single interface, reducing the need to switch between multiple tools for common contact center tasks. With granular access controls, customers can carefully control which features and configurations are available, reducing cognitive load for specialized tasks. Contact center configuration using the console doesn't require specialized scripting or development skills, and all capabilities are available in a single, unified interface."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you have been introduced to the different user personas that interact with the Amazon Connect console. In the next lesson, you will learn about the different options used to control access to resources in the console. Lesson 3 of 8 Lesson 2 of 8"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-console-fundamentals-t1-q1",
+          "question": "Nikki Wolf manages the contact center for AnyCompany Fashion. Her organization is in the process of migrating to Amazon Connect and wants to know the benefits of the Amazon Connect console. What are the benefits of the Amazon Connect console? (Select TWO.) (Select all that apply: It can create new Amazon EC2 instances. / It provides a unified view of all contact center functionality configurations. / It automates the management of fashion inventory. / It provides granular access control for resources based on job roles. / It can code, build, and publish a new website.)",
+          "options": [],
+          "answer": "It provides a unified view of all contact center functionality configurations.; It provides granular access control for resources based on job roles.. The benefits of Amazon Connect are that it provides a unified view of all contact center functionality and configurations. It also provides granular access control for resources based on job roles."
+        }
+      ]
+    },
+    {
+      "id": "connect-console-fundamentals-t2",
+      "number": 2,
+      "title": "Managing Resource Access Control",
+      "shortTitle": "Managing Resource Access Control",
+      "summary": "Controlled access to resources, or access control, is a security technique that regulates who can access resources, such as queues, routing…",
+      "duration": "~8 min",
+      "lede": null,
+      "objectives": [
+        "Explore access control options for the Amazon Connect console."
+      ],
+      "sections": [
+        {
+          "id": "connect-console-fundamentals-t2-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Controlled access to resources, or access control, is a security technique that regulates who can access resources, such as queues, routing profiles, and users. It is important for organizations to control granular access to resources because it protects data and reduces the risk of a breach. With granular access, the users can only access the resources and functionality they need to interact with based on their job role."
+            },
+            {
+              "type": "p",
+              "text": "In this lesson, you will learn how to use various Amazon Connect security features to control user access to resources. Specifically, you will explore the following:"
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t2-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using security profiles to control access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "A security profile is a group of permissions mapped to a common role in a contact center. For example, the Agent security profile contains the permissions needed to access the CCP."
+            },
+            {
+              "type": "p",
+              "text": "Security profiles help administrators manage who can access the Amazon Connect console and agent applications and who has access to perform specific tasks. Some examples include the ability to access the flow designer, use Customer Profiles, and review reports and dashboards."
+            },
+            {
+              "type": "p",
+              "text": "There are four default built-in security profiles as follows:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Admin"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Agent",
+                "CallCenterManager"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "QualityAnalyst"
+            },
+            {
+              "type": "p",
+              "text": "The administrator can assign these security profiles as defined or adjust the permissions to fit the contact center business needs. Administrators can also create custom security profiles that grant users only the permissions required for their specific job role."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Admin",
+                  "body": "The default Admin security profile grants users permission to perform the majority of Amazon Connect actions available in the console."
+                },
+                {
+                  "title": "Agent",
+                  "body": "The default Agent security profile grants users permission to access the agent applications."
+                },
+                {
+                  "title": "CallCenterManager",
+                  "body": "The default CallCenterManager security profile grants users permission to perform actions related to user management, metrics, and routing."
+                },
+                {
+                  "title": "QualityAnalyst",
+                  "body": "The default QualityAnalyst security profile grants analysts permission to perform actions related to reports and analytics."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t2-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use case: Using security profiles to control access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about using security profiles to control access, choose the START or arrow buttons to display each of the five slides."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Use case",
+                  "body": "Efua Owusu is a new IVR designer at AnyCompany. John Doe, the contact center administrator, grants Efua access to specific Amazon Connect actions for their specific role. John creates a custom security profile to provide Efua with the necessary permissions."
+                },
+                {
+                  "title": "Add a new security profile",
+                  "body": "Create security profile in Amazon Connect console displaying the Name and Description fields in the Security profiles view. John opens the Amazon Connect console. In the left navigation pane, he chooses Users, and then Security profiles. He reviews the default profiles but doesn't find one suitable for Efua's requirements. He choses the Add new security profile button to create a custom profile."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "John enters a name for the profile and adds a description."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Add security profile permissions",
+                  "body": "Console displaying Channels and flows. All selected for Flows and Flow modules and Edit selected for Phone numbers. In the Security profile permissions section, John expands the Channels and flows category. For Flows and Flow modules, he selects All, giving Efua full access to these features. For Phone numbers, he selects Edit, so Efua can assign flows to claimed test phone numbers as needed."
+                },
+                {
+                  "title": "Assign a security profile to a user",
+                  "body": "Amazon Connect console displaying the Edit page for Efua's account and the Save button highlighted. John saves the new security profile."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "John then assigns the newly created security profile to Efua's user account. Efua can now log in to the Amazon Connect console with their appropriate permissions."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "User log in view"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect console with the Flows section highlighted in the left navigation pane. When Efua logs in, the left navigation pane only shows the Flows section under Routing and the Phone numbers section under Channels. This limited view aligns with the permissions granted by Efua's custom security profile."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t2-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using tags to control access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "A resource tag is a custom metadata label you can add to a resource for efficient identification, organization, and searching. Administrators can configure and apply resource tags using the Amazon Connect console for some resources. Developers can programmatically apply tags to resources using the Amazon Connect SDK and Amazon Connect APIs."
+            },
+            {
+              "type": "p",
+              "text": "Applying tag-based access controls is an advanced configuration feature supported by Amazon Connect that follows the AWS shared responsibility model."
+            },
+            {
+              "type": "p",
+              "text": "Tag-based access controls are enabled at the resource level, which means that each resource can be restricted independently. In certain use cases, this might be acceptable, but it is considered a best practice to enable tag-based access controls to all resources together. For example, enabling access to users and security profiles makes it possible for a user to create a security profile with additional privileges. This can be used to supersede intended user access control settings."
+            },
+            {
+              "type": "p",
+              "text": "When logged in to the Amazon Connect console with tag-based access controls applied, users cannot access historical change logs for the resources they are restricted on. To learn more about resource tags, navigate to Tag Resources in Amazon Connect."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t2-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use case: Using tags to control access",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Use case"
+            },
+            {
+              "type": "p",
+              "text": "John Stiles, a customer service manager, arrives at his desk and logs in to the Amazon Connect console to check his team's performance metrics. However, to John's surprise, he can't access the dashboard and reporting modules that he normally uses. Confused, he reaches out to Kwaku Mensah, a senior administrator on the IT team at AnyCompany."
+            },
+            {
+              "type": "p",
+              "text": "Kwaku explains that the company recently implemented tag-based access controls in their Amazon Connect instance to improve security and compliance. He informs John that his user account has been assigned a security profile with access control tags. This limits John's visibility to only certain tagged resources based on his role and department."
+            },
+            {
+              "type": "p",
+              "text": "John understands the importance of these new controls but is concerned about how he will effectively manage his team without full access to performance data. Kwaku reassures John that with proper training, he can learn to navigate the tag-based access controls and still obtain the information he needs."
+            },
+            {
+              "type": "p",
+              "text": "Kwaku walks John through the process of reviewing the resources he can access by checking the tags associated with his security profile. They discover that John can view data for the queues and routing profiles tagged with Department:CustomerService. However, John is restricted from other areas, like user management and campaign details."
+            },
+            {
+              "type": "p",
+              "text": "Kwaku then guides John on best practices for applying and managing tag-based access controls within the AnyCompany Amazon Connect instance. Kwaku emphasizes the importance of consistently tagging resources and aligning security profiles to ensure proper access levels across teams and departments."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t2-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using agent hierarchies to control access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "With agent hierarchies, you can organize agents into teams and groups for reporting purposes. Group agents based on their location and skill set. For example, you can create large groups for all agents who work on a specific continent or smaller groups for specific departments."
+            },
+            {
+              "type": "p",
+              "text": "By using the Restrict contact access permission in a security profile, you can restrict contact search results based on the agent's hierarchy."
+            },
+            {
+              "type": "p",
+              "text": "For example, agents in AgentGroup-1 can only view contact records and recordings for contacts handled by agents in their group or hierarchically lower groups. Agents in AgentGroup-2 can only access contact records and recordings for their group or lower groups."
+            },
+            {
+              "type": "p",
+              "text": "Managers and higher-level groups can view contact records and recordings for all groups hierarchically reporting into them, including AgentGroup-1 and AgentGroup-2."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you have been introduced to three access control options for configuring user access to the Amazon Connect console. In the next lesson, you will learn about the Amazon Connect console from the perspective of three different personas. Use case Efua Owusu is a new IVR designer at AnyCompany. John Doe, the contact center administrator, grants Efua access to specific Amazon Connect actions for their specific role. John creates a custom security profile to provide Efua with the necessary permissions. Add a new security profile Create security profile in Amazon Connect console displaying the Name and Description fields in the Security profiles view. John opens the Amazon Connect console. In the left navigation pane, he chooses Users, and then Security profiles. He reviews the default profiles but doesn't find one suitable for Efua's requirements. He choses the Add new security profile button to create a custom profile. John enters a name for the profile and adds a description. Add security profile permissions Console displaying Channels and flows. All selected for Flows and Flow modules and Edit selected for Phone numbers. In the Security profile permissions section, John expands the Channels and flows category. For Flows and Flow modules, he selects All, giving Efua full access to these features. For Phone numbers, he selects Edit, so Efua can assign flows to claimed test phone numbers as needed. Assign a security profile to a user Amazon Connect console displaying the Edit page for Efua's account and the Save button highlighted. John saves the new security profile. John then assigns the newly created security profile to Efua's user account. Efua can now log in to the Amazon Connect console with their appropriate permissions. User log in view Amazon Connect console with the Flows section highlighted in the left navigation pane. When Efua logs in, the left navigation pane only shows the Flows section under Routing and the Phone numbers section under Channels. This limited view aligns with the permissions granted by Efua's custom security profile. Lesson 4 of 8"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-console-fundamentals-t2-q1",
+          "question": "A contact center manager wants to organize agents into teams and groups for reporting purposes. Which access control method should they use?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Security profiles"
+            },
+            {
+              "id": "B",
+              "text": "Agent hierarchies"
+            },
+            {
+              "id": "C",
+              "text": "Tag-based access controls"
+            },
+            {
+              "id": "D",
+              "text": "AWS Identity and Access Management (IAM) permissions"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "Agent hierarchies make it possible to organize agents into teams and groups for reporting purposes, such as grouping agents by location or skill set."
+        }
+      ]
+    },
+    {
+      "id": "connect-console-fundamentals-t3",
+      "number": 3,
+      "title": "Navigating the Amazon Connect Console",
+      "shortTitle": "Navigating the Amazon Connect Console",
+      "summary": "The Amazon Connect console displays menu options based on the user's permissions set in the security profile. This means that some users have…",
+      "duration": "~10 min",
+      "lede": null,
+      "objectives": [
+        "Explore the Amazon Connect console."
+      ],
+      "sections": [
+        {
+          "id": "connect-console-fundamentals-t3-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect console displays menu options based on the user's permissions set in the security profile. This means that some users have access to more functionality than others. In this lesson, you will navigate the Amazon Connect console menus to discover the available functionality."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Logging in to the console",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect instances are a virtual representation of your contact center. Depending on the identity management method selected at instance creation, the login URL can be different. If the instance is configured to store users with Amazon Connect, the instance URL format is https://<your_instance_name>.my.connect.aws. The instance name, or alias, is configured by your infrastructure administrator and is unique to your contact center."
+            },
+            {
+              "type": "p",
+              "text": "For instances configured to use SAML 2.0 based authentication, the URL is typically shared by the identity provider used for the contact center. To log in to the Amazon Connect console, users must navigate to the Amazon Connect instance URL or identity provider URL and enter their credentials."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Access for specific job roles",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Security profiles and resource tags help manage access to different functionality in the Amazon Connect console. Tag-based access controls provide granular access to specific resources based on assigned resource tags."
+            },
+            {
+              "type": "p",
+              "text": "A user with an Admin security profile can configure different levels of access to console functionality. By configuring different settings in the security profile, in combination with resource tags, administrators can create specific job role profiles. A few examples of personas that get specific access to the console include supervisors, quality analysts, telecommunications engineers, or customer experience designers. The following are the most common job roles that require access the Amazon Connect console:"
+            },
+            {
+              "type": "p",
+              "text": "Administrators typically have access to all the functionality in the console. When new features are available, administrators might need to manually opt in for access to the features."
+            },
+            {
+              "type": "p",
+              "text": "Supervisors and quality analysts commonly access analytics functionality, such as real-time and historical reports, dashboards, contact search, or agent evaluation forms."
+            },
+            {
+              "type": "p",
+              "text": "Telecommunications engineers or customer experience designers need access to claim phone numbers, create and maintain flows, configure routing strategies, or administer digital channels."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Navigating the console",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Based on your user permissions, when you log in to the console, your access to categories and menus might be different. In the following sections, you will explore all navigation options available in the Amazon Connect console."
+            },
+            {
+              "type": "p",
+              "text": "Categories in the Amazon Connect Console navigation panel include Home, Analytics and Optimization, Routing, Users, Outbound Campaigns, Agent Applications, Customer Profiles, and Channels."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Home",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To access the configuration guide and any service level reports you create, choose the Home button."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Home main view"
+            },
+            {
+              "type": "p",
+              "text": "The main console view in the following screenshot offers a navigation panel on the left side. Each category contains sub-menus."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Analytics and optimization",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Analytics and optimization section includes reports and dashboards. It also includes workforce and quality analytics configuration options. This category is mainly used by supervisors, managers, and data analysts. However, administrators typically access evaluation forms or custom vocabularies and rules."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Real-time metrics",
+                  "body": "Real-time metrics reports display near real-time metrics of the contact center's activity. The data is updated every 15 seconds."
+                },
+                {
+                  "title": "Historical metrics",
+                  "body": "Historical metrics reports include data about past contact interactions. Create custom reports with commonly used metrics, like average handle time (AHT), customer hold time, and abandoned contacts."
+                },
+                {
+                  "title": "Login/Logout report",
+                  "body": "The Login/Logout report displays the login and logout information for users in your contact center. Supervisors can use this report to validate schedule adherence and view the time each user was logged in."
+                },
+                {
+                  "title": "Dashboards and reports",
+                  "body": "Amazon Connect dashboards and reports provide real-time and historical insights for your contact center performance. Real-time dashboards update every 15 seconds, and you can select historical data from the past 3 months."
+                },
+                {
+                  "title": "Forecasting",
+                  "body": "Amazon Connect provides functionality powered by machine learning (ML) to optimize your contact center."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Forecasting analyzes and predicts contact volume based on historical data. It provides accurate, auto-generated forecasts that are automatically updated daily. The forecasts indicate future potential contact volume and handle times."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Capacity planning",
+                  "body": "Capacity planning predicts how many agents your contact center requires. By using capacity planning, you can optimize plans by scenario and service-level goals. Capacity planning provides metrics like shrinkage."
+                },
+                {
+                  "title": "Scheduling",
+                  "body": "Scheduling generates agent schedules for day-to-day workloads that meet business and compliance requirements. It determines how many agents are needed for each shift and which agents work in each time slot."
+                },
+                {
+                  "title": "Contact search",
+                  "body": "The Contact search page empowers users to search for in-progress and completed contact interactions. If Contact Lens analysis is enabled, the search options include keywords that either the contact or agent spoke during the conversation."
+                },
+                {
+                  "title": "Rules",
+                  "body": "With Contact Lens rules, organizations can automatically categorize contacts, create alerts, or generate tasks based on keywords used during the contact interaction. Contact Lens rules criteria also take into consideration sentiment scores and offer filtering using contact attributes. For example, if the customer wants to return a product, with Contact Lens rules, administrators can create a product return task. The task is automatically routed to the back-office team with instructions to process the return."
+                },
+                {
+                  "title": "Custom vocabulary",
+                  "body": "Administrators and analysts can improve the accuracy of speech recognition for product names, brand names, and domain-specific terminology. Contact Lens offers the ability to refine the results of the speech-to-text engine by using custom vocabularies. For example, proprietary product names are not always recognized by transcription engines. Defining the phonetic versions of these special words in a custom vocabulary improves the Contact Lens transcription results."
+                },
+                {
+                  "title": "Evaluation forms",
+                  "body": "Amazon Connect helps you assess, track, and improve how agents interact with customers and resolve issues. Users can search for a contact, choose the evaluation form suited for the type of call, review the audio transcript, and then evaluate agent performance. Supervisors can use this feedback to help the agent deliver improved customer experiences. The following screenshot depicts where the engineer would create a template for an evaluation form."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Routing",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Routing menu includes ﬂows, prompts, queues, hours of operation, quick connects, and predefined attributes for proficiency-based routing."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Flows",
+                  "body": "Flows define how a customer experiences the contact center from start to finish. IVR designers customize interactions by offering a set of menu options and route contacts to agents using flows. With Amazon Connect, IVR designers can create dynamic and personalized experiences by integrating with other AWS services."
+                },
+                {
+                  "title": "Prompts",
+                  "body": "Prompts are audio files played in call flows. Amazon Connect comes with a set of prompts you can add to your flows, or you can add your own recordings."
+                },
+                {
+                  "title": "Queues",
+                  "body": "Using queues, you can route customers to specific agents based on specified criteria, such as the skill of the agent. This is called queue-based routing or skills-based routing."
+                },
+                {
+                  "title": "Hours of operation",
+                  "body": "Configure hours of operation to create different customer experiences during company business hours or after hours."
+                },
+                {
+                  "title": "Quick connects",
+                  "body": "Quick connects are predefined target destinations that act as a speed dial for agents."
+                },
+                {
+                  "title": "Predefined attributes",
+                  "body": "With predefined attributes, you can implement advanced routing strategies to find the most suitable agent for the contact when needed."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Users",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Users section is for user management, routing profiles, agent status, security profiles to determine user permissions, and agent hierarchies."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "User management",
+                  "body": "In the User management view, administrators can add or bulk edit Amazon Connect users and assign security profiles to users. Routing strategy specialists can assign users to routing profiles and configure agent status settings, such as after call work (ACW) timeout and auto-accept call, to optimize the routing process."
+                },
+                {
+                  "title": "Routing profiles",
+                  "body": "Routing profiles determine which types of contacts an agent can receive and the contact routing priority."
+                },
+                {
+                  "title": "Agent status",
+                  "body": "In the Agent status view, you can create custom agent status options and set their display order."
+                },
+                {
+                  "title": "Security profiles",
+                  "body": "A security profile is a set of permissions mapped to a common role in a contact center. For example, the Agent security profile contains the permissions needed to access the CCP. Administrators can edit the default security profiles or create new ones. Security profiles provide granular access control so users can access Amazon Connect resources and functionality."
+                },
+                {
+                  "title": "Agent hierarchy",
+                  "body": "Agent hierarchy organizes agents into teams and groups for reporting and access control purposes. You can organize groups based on agent location and skill set."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s9",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Outbound campaigns",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Outbound campaigns section only appears after you enable outbound campaigns in the AWS Management Console."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Create campaigns"
+            },
+            {
+              "type": "p",
+              "text": "With outbound campaigns, you can proactively communicate across voice, SMS, and email. You can serve your customers efficiently and improve agent productivity while supporting compliance with local regulations."
+            },
+            {
+              "type": "p",
+              "text": "Create campaigns to contact customers daily for appointment reminders, marketing promotions, deliveries, and billing reminders."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Campaign settings"
+            },
+            {
+              "type": "p",
+              "text": "Manage campaign settings, such as dialer configuration, answering machine detection, and contact flow treatment. Specify the contact list, channel, message, and pre-recorded audio to play. Connect customers to agents while surfacing relevant campaign information or operate campaigns without agents."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s10",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Agent applications",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Agent applications section provides the ability to create custom case fields, case templates, and quick responses for agents handling chat contacts."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Case fields"
+            },
+            {
+              "type": "p",
+              "text": "Case fields are the building blocks for case templates. You can create different fields, such as the vehicle identification number (VIN), policy number, and make and model of car. Agents then collect this information to create a case related to the contact issue. Administrators first create case fields and then group the fields to create case templates."
+            },
+            {
+              "type": "p",
+              "text": "There are two types of case fields as follows:"
+            },
+            {
+              "type": "p",
+              "text": "System case fields: Amazon Connect provides system fields. You cannot change the name or description."
+            },
+            {
+              "type": "p",
+              "text": "Custom case fields: You can create custom case fields that are specific to your business. You must name the case field and optionally provide a description. The description appears only in the Amazon Connect console. It doesn't appear to agents."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Case templates"
+            },
+            {
+              "type": "p",
+              "text": "Case templates are forms that ensure that agents collect and reference the appropriate information for different types of customer issues. For example, you can create a case template for vehicle damage issues. You can require agents to complete certain fields of the form when they engage with a customer who is filing an insurance claim."
+            },
+            {
+              "type": "p",
+              "text": "When you create a case template, you choose the name that appears to agents, the fields on the form, and the order of the fields."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Quick responses"
+            },
+            {
+              "type": "p",
+              "text": "Quick responses provide agents with pre-written responses they can use during messaging contacts to improve productivity, reduce handle times, and improve customer satisfaction scores."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s11",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Customer Profiles",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Customer Profiles menu is used to create, edit, and delete custom calculated attributes. With these settings, you can transform contact information into actionable data points in flows. The Customer Profiles menu appears after Customer Profiles is enabled in the AWS Management Console and only if your user has security profile permissions for the feature."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Sample calculated attributes"
+            },
+            {
+              "type": "p",
+              "text": "Customer Profiles has a set of sample calculated attributes you can use for patterns of behavior, such as preferred channel or frequency of contact. Calculated attributes surface insights about customer value or customer behavior, such as if they are a new customer or if they are a frequent caller."
+            },
+            {
+              "type": "p",
+              "text": "Developers can use the calculated attributes APIs to create new attributes using common aggregation operations, like average, count, minimum, maximum, and sum."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Custom calculated attributes"
+            },
+            {
+              "type": "p",
+              "text": "Calculated attributes calculated attributes empower you to define business logic to transform customer profile data into actionable data points. With this feature, you can personalize automated experiences, such as IVRs."
+            },
+            {
+              "type": "p",
+              "text": "Use calculated attributes to identify key attributes about a customer's past behavior. A few examples include the last website visited, the last agent the contact spoke with, or the average spend of their recent transactions."
+            },
+            {
+              "type": "p",
+              "text": "Calculated attributes automatically transform data into actionable data points and metrics in real time. You can build automated experiences and conversational interfaces based on the data available in calculated attributes."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t3-s12",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Channels",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The following are the available Channels menu options."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Phone numbers",
+                  "body": "In the Phone numbers view, users can claim and release phone numbers. After you have a number, you can associate it with a flow. The flow will activate when an incoming contact dials or messages that phone number."
+                },
+                {
+                  "title": "Communication widgets",
+                  "body": "Use the Communication widgets view to provide contacts with methods to contact your business through in-app, web, and video calling."
+                },
+                {
+                  "title": "Task templates",
+                  "body": "Task templates make it convenient for agents to capture the appropriate information when handling offline work items."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "With Amazon Connect Tasks, you can prioritize, assign, track, and automate work that agents perform to support customers."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you have been introduced to how to navigate the Amazon Connect console. Continue to the next lesson to review the course summary and prepare for the end-of-course course assessment. Lesson 5 of 8"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-console-fundamentals-t3-q1",
+          "question": "A customer experience designer wants to create a new flow to customize the interactive voice response (IVR) experience for customers. Which section in the Amazon Connect console should they access?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Routing"
+            },
+            {
+              "id": "B",
+              "text": "Analytics and optimization"
+            },
+            {
+              "id": "C",
+              "text": "Channels"
+            },
+            {
+              "id": "D",
+              "text": "Users"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "The Routing menu includes Flows, where customer experience designers can define how a customer experiences the contact center from start to finish, including customizing the IVR system."
+        }
+      ]
+    },
+    {
+      "id": "connect-console-fundamentals-t4",
+      "number": 4,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "The Amazon Connect console is a unified view that consolidates contact center management. Granular access controls based on user roles streamline…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-console-fundamentals-t4-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Course summary",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect console is a unified view that consolidates contact center management. Granular access controls based on user roles streamline operations and reduce cognitive load for specialized tasks."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Using security profiles to control access"
+            },
+            {
+              "type": "p",
+              "text": "A security profile is a group of permissions mapped to a defined role in a contact center, such as an agent, supervisor, or administrator. Security profiles help manage who can perform which tasks and who has access to which Amazon Connect assets. Security profiles ensure that users have the appropriate level of access for their roles, which reduces the risk of unauthorized actions."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Using tags to control access"
+            },
+            {
+              "type": "p",
+              "text": "Resource tags are custom metadata labels added to resources for efficient identification, organization, and searching. Tag-based access controls provide fine-grained control over resource access, making it possible for organizations to implement strict access policies and enhance their security posture. Administrators can efficiently manage access to specific resources based on business requirements."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Using agent hierarchies to control access"
+            },
+            {
+              "type": "p",
+              "text": "Agent hierarchies make it possible to organize agents into teams and groups for reporting purposes and resource access control."
+            },
+            {
+              "type": "p",
+              "text": "Agent hierarchies facilitate efficient reporting and access control by organizing agents into logical groups based on relevant criteria. They also ensure that agents can access only the information and resources relevant to their assigned group, enhancing data privacy and security."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-console-fundamentals-t5",
+      "number": 5,
+      "title": "Course summary",
+      "shortTitle": "Course summary",
+      "summary": "The console offers granular control over access to resources and functionality based on user profiles. The console streamlines contact center…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-console-fundamentals-t5-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Course Summary",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "The Amazon Connect console provides a unified view for configuring all contact center functionality.",
+                "Different user roles utilize the console, including administrators, supervisors, technical teams, and agents."
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The console offers granular control over access to resources and functionality based on user profiles. The console streamlines contact center management by consolidating all capabilities into a single, no-code graphical user interface (GUI), with no need to switch between multiple tools. Granular access controls allow you to carefully control which features are available to agent, reducing cognitive load for specialized tasks."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t5-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using security profiles to control access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "A security profile is a group of permissions mapped to a defined role in a contact center, such as an agent, supervisor, or administrator. Security profiles help manage who can perform which tasks and who has access to which Amazon Connect assets. Security profiles ensure that users have the appropriate level of access for their roles, which reduces the risk of unauthorized actions."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t5-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using tags to control access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Resource tags are custom metadata labels added to resources for efficient identification, organization, and searching. Tag-based access controls provide fine-grained control over resource access, making it possible for organizations to implement strict access policies and enhance their security posture. Administrators can efficiently manage access to specific resources based on business requirements."
+            }
+          ]
+        },
+        {
+          "id": "connect-console-fundamentals-t5-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using agent hierarchies to control access",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Agent hierarchies make it possible to organize agents into teams and groups for reporting purposes and resource access control."
+            },
+            {
+              "type": "p",
+              "text": "Agent hierarchies facilitate efficient reporting and access control by organizing agents into logical groups based on relevant criteria. They also ensure that agents can access only the information and resources relevant to their assigned group, enhancing data privacy and security."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

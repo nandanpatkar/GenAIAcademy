@@ -1,0 +1,425 @@
+Module 2
+Introduction
+·
+4 min
+Prompting & Task Execution
+The same request, phrased two ways, produces two different levels of quality.
+
+Ask Claude to "write something about our Q3 results" and you get a generic paragraph. Specify the audience, the three results that matter, the format, and the length, and you get a draft you can almost send. The model did not get smarter between those two requests. The prompt did.
+
+This module treats prompting as a communication discipline with learnable structure, not a knack some people have and others do not. The structure has a name in the AI Fluency Framework: Description, the competency of telling Claude precisely what you want. Description is the backbone of this module and the prompting foundation the rest of the course builds on.
+
+By the end of this module, you will be able to:
+1Create effective prompts for business and technical tasks using a repeatable component structure.
+2Apply task decomposition techniques to structure complex, multi-part requests.
+3Iterate prompts diagnostically to improve output quality.
+4Adapt prompting strategy to the task type: analysis, research, drafting, or brainstorming.
+The deal in this module
+Consistent output quality comes from prompt structure, not cleverness or luck. Learn the five components, learn to decompose complex work, learn to iterate on the component that failed, and learn to match strategy to task type. Those four skills cover the entire Prompting section of the exam.
+
+Disclaimer / Notice for Educational Content
+We built this Associate course Module 2: Prompting & Task Execution to help you get real work done with Claude. Treat it as educational content. It doesn't constitute legal, financial, or other professional advice, so adapt what you learn to your own situation. Our products and services evolve quickly, so certain content may contain errors or be outdated; remember to verify on Anthropic's website or docs. Examples and scenarios used in the course are illustrative and often fictitious. If the course material mentions a company or product, it doesn't mean Anthropic endorses them, they endorse Anthropic, or that we're affiliated. Also note your use of Anthropic products and services is covered by our terms, policies and documentation; if anything in this course conflicts with them, they control.
+
+Teaching
+Anatomy of a Prompt
+·
+12 min
+Anatomy of an Effective Prompt
+A strong prompt is built from components, and most weak prompts are missing one or more of them.
+
+Naming the components turns prompting from guesswork into a checklist you can run before sending any non-trivial request.
+
+The component stack
+Five components carry almost all the weight in a professional prompt. Flip each card to see what it controls.
+
+Component
+Role
+Flip ↻
+Who you want Claude to be for this task: a financial analyst, an editor, a policy reviewer. Role sets the vocabulary, depth, and assumptions Claude brings.
+
+Component
+Context
+Flip ↻
+The background Claude cannot know unless you provide it: the audience, the situation, prior decisions, the source material. This is the component professionals most often omit.
+
+Component
+Task
+Flip ↻
+The specific action, stated as a clear instruction. "Summarize," "compare," "draft," "identify": one primary verb, stated unambiguously.
+
+Component
+Constraints
+Flip ↻
+The boundaries: length, tone, what to include, what to leave out, what to avoid. Constraints are how you keep the output usable without heavy editing.
+
+Component
+Output format
+Flip ↻
+The shape of the result: a table, a bulleted list, a three-paragraph memo, a draft email. Stating the format up front saves an iteration.
+
+Not every prompt needs all five. A quick question needs a task and maybe a constraint. A client deliverable needs all five. The skill is noticing which components a given task requires.
+
+Description in practice
+The Description competency is the habit of making each component explicit instead of assuming Claude will infer it. Unless you connect a source through a Connector, Claude cannot see your inbox, your org chart, or last week's meeting, and even with a connector, Claude sees only what you have allowed it to access. Anything that lives only in your head or outside a connected source is a context gap, and context gaps are the single most common reason a prompt underperforms for new users.
+
+Diagnosing a weak prompt
+Hold a disappointing prompt against the component stack and the gap usually becomes obvious. Missing context produces generic output. An ambiguous task verb produces the wrong action. Absent constraints produce output that is the wrong length or tone. The components are also a diagnostic checklist, which is why Lesson 4 returns to them when output falls short.
+
+Teaching
+Anatomy of a Prompt
+·
+included in L2
+A Worked Build
+Weak prompt: everything left implicit
+Weak prompt
+"Write a summary of our quarterly operations."
+Claude produces three plausible paragraphs that could describe almost any company. No audience, no figures, no format, no sense of what matters. The output is not wrong. It is unusable, because the prompt specified almost nothing.
+
+Strong prompt: components made explicit
+Strong prompt
+"You are an operations analyst (role). I am preparing a one-page update for our regional director, who cares about throughput and cost, not process detail (context and audience). Summarize the attached Q3 operations data (task), covering only the three metrics that moved more than 10 percent against target (constraint). Format as a short headline followed by three bullet points, each one sentence (output format)."
+Same model, same data. The second prompt produces a draft the analyst can refine in two minutes instead of rebuilding from scratch. The difference is entirely in the specification.
+
+The habit to build
+Before sending any prompt that matters
+Run the five components in your head: have I given Claude the role, the context it cannot infer, an unambiguous task, the constraints, and the format I want back? Thirty seconds of specification routinely saves several rounds of correction.
+
+Teaching
+Task Decomposition
+·
+10 min
+Task Decomposition for Complex Requests
+Some requests are too large to specify as a single instruction.
+
+When a task has several distinct stages, packing it into one prompt produces shallow work on every stage. Decomposition is how you break a complex request into a sequence Claude can execute well.
+
+Decomposition means splitting a multi-part problem into discrete, ordered steps, then running them in sequence rather than asking for everything at once. A vendor evaluation is a good example: it is really four tasks wearing one sentence.
+
+The single-prompt version that underperforms
+Single prompt
+"Evaluate these three vendors and tell me which to pick."
+Claude has to invent criteria, apply them, weigh trade-offs, and recommend, all in one pass. It will do all four shallowly and you will not see the reasoning behind the recommendation.
+
+The decomposed version
+1
+Derive criteria
+Step 1 · Derive criteria
+From the requirements document, derive the evaluation criteria that matter and weigh them.
+2
+Score vendors
+Step 2 · Score vendors
+Score each vendor against those criteria using the supplied materials.
+3
+Raise trade-offs
+Step 3 · Raise trade-offs
+Raise the trade-offs where vendors diverge most.
+4
+Recommend
+Step 4 · Recommend
+Recommend, with the reasoning tied back to the weighted criteria.
+
+
+Each step produces a checkable intermediate result. If the criteria in Step 1 are wrong, you catch it before scoring, not after the recommendation. Decomposition also makes the work auditable, which matters when someone asks how the recommendation was reached.
+
+One conversation or several
+Keep sequential steps that build on each other in one conversation, so each step sees the prior results. Move to a separate conversation when a step is genuinely independent, or when the conversation has grown long enough that early context is degrading. That judgment connects directly to the context-management skills from Module 1.
+
+Teaching
+Task Decomposition
+·
+included in L3
+Decompose a Parallel Case
+Three deliverables, one foundation: sequence the shared extraction first.
+
+Scenario
+A communications manager needs to turn a dense 20-page policy change into an internal announcement, an FAQ for staff, and a short briefing for executives. Before reading on, decompose this into an ordered sequence of steps you would run with Claude.
+
+Model decomposition
+Step 1: Extract the substantive changes from the policy document and what each one means in practice.
+
+Step 2: Confirm the extraction is complete and accurate before building anything on top of it.
+
+Step 3: Draft the staff announcement from the confirmed change list, tuned to a general audience.
+
+Step 4: Draft the FAQ, anticipating the questions staff will likely ask about those changes.
+
+Step 5: Draft the executive briefing, compressed down to decisions and impact.
+
+Why this order
+Steps 1 and 2 build a verified foundation that the three deliverables all draw on. Drafting any deliverable before the change list is confirmed risks propagating the same misreading into three documents. Sequence the shared, high-stakes extraction first; let the parallel drafts follow.
+
+Teaching
+Iterating to Improve
+·
+8 min
+Iterating Prompts to Improve Output
+A first draft from Claude rarely lands perfectly. The skill is not rewriting the whole prompt when output disappoints. It is reading the output to diagnose which component fell short, then fixing that one thing.
+
+Output deficiencies are prompt diagnostics
+Each kind of disappointment points back to a specific component:
+
+Symptom	Likely cause	Fix
+Output is generic or off-base	The context was thin	Add the background Claude could not infer
+Output answered the wrong question	The task verb was ambiguous	Sharpen the instruction
+Output is the wrong length, tone, or shape	A constraint or the format was missing	Add it
+Output is close but misses on one section		Iterate on that section only; do not discard a draft that is mostly right
+Targeted revision, not wholesale rewriting
+When you rewrite the entire prompt, you lose the parts that worked and you cannot tell which change fixed the problem. Change the one component the output told you to change, resend, and compare. The same diagnostic discipline applies to troubleshooting any underperforming workflow, covered in depth in Module 7.
+
+A live iteration cycle
+Watch the diagnose-and-fix loop run on one deliberately weak prompt.
+
+Round 1 prompt
+
+"Write a follow-up email to the client about the delayed deliverable."
+
+Round 1 output
+
+A generic, slightly defensive three-paragraph email that does not say when the deliverable will arrive or why it slipped. Diagnosis: the context is thin (no reason, no new date) and there is no tone constraint.
+
+Round 2 prompt
+
+"Write a follow-up to the client about the two-day delay on the analytics deliverable. The cause was a data-quality issue we have now fixed; new delivery is Thursday. Tone: accountable, not over-apologetic. Keep it under 120 words."
+
+Round 2 output
+
+A tight, accountable note with the cause, the new date, and a confident close. Diagnosis: strong; only the subject line is missing.
+
+Round 3 prompt
+
+"Good. Add a subject line that signals resolution, not just delay."
+
+Three rounds, each changing exactly the component the previous output exposed. No round threw away working text, and by round three the improvement was marginal, the signal to stop.
+
+Knowing when to stop
+Iteration has converged when each additional round produces marginal change rather than improvement. At that point, further prompting yields less than a quick manual edit. Recognizing diminishing returns is part of the skill: the goal is a usable result, not a perfect prompt.
+
+Teaching
+Strategy by Task Type
+·
+8 min
+Adapting Strategy by Task Type
+The component stack applies to every prompt, but the emphasis shifts with the task.
+
+Analysis, research, drafting, and brainstorming each reward a different balance of specificity and creative latitude. Using one fixed style across all four costs quality on every task it does not fit.
+
+Analysis. Wants tight constraints and explicit criteria. Tell Claude what to measure, against what standard, and how to handle ambiguity. Low creative latitude; high specification.
+
+Research. Wants clear scope and source discipline. Define the question, the boundaries, and whether current sources are required. Quick currency needs can be met by turning on web search in chat, while deep multi-source investigation points to Research (available on paid plans). Ask for citations so claims are checkable.
+
+Drafting. Wants audience, tone, and format specified, with room for Claude to find the phrasing. Medium latitude: you control the shape, Claude fills it.
+
+Brainstorming. Wants loose constraints and high latitude. Over-specifying kills the divergence you are after. Give the goal and the boundaries, then ask for volume and range before you narrow.
+
+Strategy quick reference
+Task type	What to tighten	What to loosen
+Analysis	Criteria, standards, scope	Phrasing
+Research	Question, sources, citations	Synthesis approach
+Drafting	Audience, tone, format	Word choice
+Brainstorming	Goal and guardrails only	Quantity and direction
+Four mini-demos, one per task type
+Analysis. "Compare these two vendor contracts on payment terms, termination rights, and liability caps. For each, state which contract is more favorable to us and why, in a three-row table." Tight criteria, defined output, no room to wander.
+
+Research. "Using current sources, summarize how three named competitors positioned their Q2 launches. Cite each source. Flag anything you cannot verify." Scope and citation discipline up front; Research (or web search in chat for lighter needs) supplies the currency.
+
+Note: citations are checkable when they come from a grounded source (web search or Research results); citations produced from training memory alone can look equally confident and should be independently verified.
+
+Drafting. "Draft a 150-word LinkedIn post announcing our new reporting feature, aimed at operations managers, in a confident but not salesy voice." Audience, length, and tone fixed; phrasing left open.
+
+Brainstorming. "Give me 20 angles for a campaign around faster month-end close. Range widely; do not self-edit yet." Goal and one guardrail only; the constraints come later, after the range exists.
+
+The same prompt structure underlies all four, but the dial between control and latitude moves with the task. The underlying move is the same each time: decide where you need control and where you need range, then set constraints accordingly. Matching strategy to task type is what separates a competent prompter from one who gets the same mediocre output on every task.
+
+Exercise
+Repair the Prompt
+·
+6 min
+Exercise: Repair the Underperforming Prompt
+This exercise puts the whole module together: a weak prompt, its disappointing output, and your job to diagnose what is missing and repair it using the component stack.
+
+Below is a prompt, the output it produced, and the author's actual goal. Work in three steps: find the specification gaps, match each fix to the component it repairs, then assemble the repaired prompt. The ideal answer is revealed at the end.
+
+The weak prompt
+"Summarize the customer feedback and tell me what to do."
+
+The output it produced
+A generic five-bullet list of themes ("customers want faster support," "pricing is a concern") with vague advice ("consider improving response times"). Nothing tied to the actual data, no priorities, nothing actionable.
+
+The author's real goal
+A product manager has 200 survey responses and needs the top three issues by frequency, each with a representative quote, ranked so she can decide what to fix this quarter.
+
+Stage 1 of 3 · Diagnose the gaps
+Select every component the prompt is missing or under-specifies.
+
+✓
+Role
+✓
+Context
+✓
+Task (specificity)
+✓
+Constraints
+✓
+Output format
+Confirm gaps
+All five gaps identified
+Good. The context (200 responses) and role (analyst framing) are the easiest to miss because they exist in the author's head but never appear in the prompt.
+
+Stage 2 of 3 · Match each fix to the component it repairs
+Drag each fragment to the component it satisfies. One fragment does not belong.
+
+Role
+You are a product analyst
+Context
+Attached are 200 customer survey responses
+Task
+Identify the three most frequently raised issues, ranked by how many responses mention each
+Constraints
+For each issue include one representative verbatim quote and the approximate share of responses it appears in; use code execution to count accurately rather than estimating
+Output format
+Format as a ranked list, most frequent first
+Does not belong
+Make the summary sound professional and polished
+Check matches
+All fragments placed correctly
+You identified the tone instruction ("professional and polished") as the distractor; it closes no specification gap. Stage 3 is unlocked.
+
+Stage 3 of 3 · Assemble the repaired prompt
+Order the five fragments into a clean prompt sequence.
+
+1
+You are a product analyst
+▲
+▼
+2
+Attached are 200 customer survey responses
+▲
+▼
+3
+Identify the three most frequently raised issues, ranked by how many responses mention each
+▲
+▼
+4
+For each issue include one representative verbatim quote and the approximate share of responses it appears in; use code execution to count accurately rather than estimating
+▲
+▼
+5
+Format as a ranked list, most frequent first
+▲
+▼
+Check order
+Reveal model answer
+All stages correct
+You diagnosed all five gaps, mapped each fix to the right component, and rejected the tone distractor, a polished-sounding instruction that closes no gap. That is complete specification: every component carries weight the output depends on.
+
+"You are a product analyst (role). Attached are 200 customer survey responses (context). Identify the three most frequently raised issues (task), ranked by how many responses mention each, and for each issue include one representative verbatim quote and the approximate share of responses it appears in (constraints). Use code execution to count accurately rather than estimating. Format as a ranked list, most frequent first (output format)."
+
+Documented improvements
+Added role and context so the analysis is grounded in the actual responses
+Replaced the vague task with a specific, ranked, countable instruction
+Added constraints (representative quote, share of responses) that make the output actionable
+Specified code execution so the frequency counts are verified, not guessed
+Specified the output format so the result is decision-ready
+
+Quiz
+Module 2
+·
+5 min
+Module 2 Quiz: Prompting Foundations
+Five scenario-style questions. Each presents a situation; select the response that best applies the module's prompting framework. Approximately five minutes.
+
+Q1
+A marketer's prompt, "Write a post about our new feature," produces generic copy. Which single change will most improve the result?
+A
+Ask Claude to try harder and be more creative
+B
+Add context (audience, channel, the feature's key benefit) and the output format
+C
+Switch to a more capable model and resend the same prompt
+D
+Run the same prompt several times and pick the best output
+Generic output signals a context gap; adding audience, channel, benefit, and format is the targeted fix. A more capable model does not solve under-specification.
+Q2
+An analyst needs Claude to evaluate five suppliers against a requirements document and recommend one. Which approach produces the most reliable result?
+A
+Ask for the evaluation and recommendation in a single prompt
+B
+Decompose into derive-criteria, score-each, identify trade-offs, then recommend
+C
+Ask Claude to recommend first, then justify the choice afterward
+D
+Run five separate conversations, one per supplier, with no shared criteria
+A multi-stage evaluation decomposes into ordered steps with checkable intermediate results. Recommending first inverts the reasoning; isolated, per-supplier conversations lose shared criteria.
+Q3
+A drafted memo came back accurate but far too long and too formal for its audience. What is the most efficient next step?
+A
+Rewrite the entire prompt from scratch
+B
+Switch models and regenerate
+C
+Adjust the constraint and format components (length and tone) and resend
+D
+Manually cut the memo down and abandon the prompt
+The output diagnoses the failing components, length (constraint) and tone, so revise those and resend rather than rewriting or switching models.
+Q4
+A team wants the widest possible range of campaign concepts before narrowing. How should the prompt be calibrated?
+A
+Apply tight constraints on length, format, and terminology up front
+B
+Give the goal and a few guardrails, then ask for volume and range before filtering
+C
+Request a single best idea to save time
+D
+Specify the exact creative direction so Claude stays on message
+Brainstorming rewards latitude. Tight up-front constraints suppress the range the team wants; filter after generating.
+Q5
+A prompt asks Claude to "calculate the average deal size and summarize the trend." The summary is fine, but the average looks off. What is the best fix?
+A
+Trust the number; Claude is usually right on arithmetic
+B
+Add a constraint to use code execution for the calculation, so the figure is verified
+C
+Ask Claude to recompute the average three times and average those
+D
+Remove the calculation from the prompt entirely
+A suspect calculation is a verification problem. Code execution returns a computed result rather than a probable one.
+Submit quiz
+Skip for now
+Full marks
+Full coverage of the prompting framework: components, decomposition, diagnostic iteration, task-type strategy, and verified computation.
+
+Module 2
+Key Takeaways
+·
+5 min
+Key Takeaways
+Five things that hold across this module:
+
+01
+Structure drives quality, not cleverness.
+Five components (role, context, task, constraints, format) carry almost every professional prompt. Run them before sending anything that matters.
+
+02
+Context is the component you will forget.
+Claude cannot see what lives only in your head. The most common cause of generic output is a context gap, not a model limitation.
+
+03
+Decompose complex work into ordered steps.
+Multi-stage requests succeed when each step produces a checkable result and the high-stakes foundation is built first.
+
+04
+Iterate on the component that failed.
+Read the output as a diagnostic, change the one thing it points to, and stop when rounds stop improving the result.
+
+05
+Match strategy to task type.
+Analysis wants constraints; brainstorming wants latitude. Decide where you need control and where you need range, then set constraints to fit.
+
+Sources
+All product behavior descriptions are based on claude.ai features as of June 2026. Feature availability and behavior should be verified against current Anthropic documentation at publish:
+
+Anthropic docs: prompt engineering overview and best practices, platform.claude.com/docs
+AI Fluency Framework: Description competency, for the prompting backbone framing
+Claude Help Center: Code execution for verified calculation, support.claude.com
+
+

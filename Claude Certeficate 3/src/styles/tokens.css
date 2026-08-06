@@ -1,0 +1,228 @@
+/*
+ * Design tokens.
+ *
+ * Ported from the reference design system in design.md. That reference loaded
+ * Tailwind + Google Fonts from CDNs; the project brief forbids external CDN
+ * scripts and stylesheets, so the same palette, type scale and spacing scale
+ * are expressed here as plain CSS custom properties instead.
+ *
+ * The reference also used a `success-container` colour that its own config
+ * never defined. A success ramp is added here so correct-answer states have a
+ * token to bind to.
+ */
+
+:root {
+  /* ---- Colour: primary ---- */
+  --primary: #2036bd;
+  --primary-container: #3e52d5;
+  --on-primary: #ffffff;
+  --on-primary-container: #d7daff;
+  --primary-fixed: #dfe0ff;
+  --primary-fixed-dim: #bbc3ff;
+  --on-primary-fixed: #000d60;
+  --on-primary-fixed-variant: #1d34ba;
+  --surface-tint: #3b4fd2;
+
+  /* Channel triplets for the tinted washes and hairlines used throughout
+     app.css. Kept separate from the hex tokens above because those cannot be
+     used inside rgba(); a theme overrides both together. */
+  --accent-rgb: 32, 54, 189;
+  --outline-rgb: 197, 197, 215;
+
+  /* The colour that marks progress and the current position. The default track
+     marks with its own primary; the Amazon Connect track overrides it with
+     Smile Orange so progress reads at a glance against the Squid Ink chrome. */
+  --marker: #2036bd;
+  --marker-strong: #3b4fd2;
+  --marker-rgb: 32, 54, 189;
+
+  /* Translucent so the sticky app bar blurs what scrolls under it. */
+  --appbar-bg: rgba(251, 249, 251, 0.85);
+
+  /* ---- Colour: neutral surfaces ---- */
+  --background: #fbf9fb;
+  --surface: #fbf9fb;
+  --surface-bright: #fbf9fb;
+  --surface-dim: #dbd9dc;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f5f3f5;
+  --surface-container: #efedef;
+  --surface-container-high: #eae7ea;
+  --surface-container-highest: #e4e2e4;
+  --surface-variant: #e4e2e4;
+  --inverse-surface: #303032;
+  --inverse-on-surface: #f2f0f2;
+
+  /* ---- Colour: content ---- */
+  --on-background: #1b1b1d;
+  --on-surface: #1b1b1d;
+  --on-surface-variant: #454654;
+  --outline: #757686;
+  --outline-variant: #c5c5d7;
+
+  /* ---- Colour: secondary / tertiary ---- */
+  --secondary: #5d5f5e;
+  --secondary-container: #dfe0df;
+  --on-secondary-container: #4a4c4b;
+  --tertiary: #494849;
+  --tertiary-fixed: #e5e2e3;
+  --on-tertiary-fixed: #1b1b1c;
+
+  /* ---- Colour: status ---- */
+  --error: #ba1a1a;
+  --error-container: #ffdad6;
+  --on-error-container: #7a0007;
+  --on-error: #ffffff;
+  --success: #0d6b41;
+  --success-container: #cdf0dc;
+  --on-success-container: #06482b;
+  --on-success: #ffffff;
+  --warning: #8a5100;
+  --warning-container: #ffdcbe;
+  --on-warning-container: #5c3400;
+
+  /* ---- Spacing ---- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --gutter: 24px;
+  --margin-mobile: 16px;
+  --margin-desktop: 48px;
+
+  /* ---- Radius ---- */
+  --radius: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* ---- Typography ---- */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  --text-headline-xl: 40px;
+  --lh-headline-xl: 48px;
+  --text-headline-lg: 32px;
+  --lh-headline-lg: 40px;
+  --text-headline-md: 24px;
+  --lh-headline-md: 32px;
+  --text-headline-sm: 20px;
+  --lh-headline-sm: 28px;
+  --text-body-lg: 18px;
+  --lh-body-lg: 30px;
+  --text-body-md: 16px;
+  --lh-body-md: 26px;
+  --text-body-sm: 14px;
+  --lh-body-sm: 22px;
+  --text-label-md: 14px;
+  --lh-label-md: 20px;
+  --text-label-sm: 12px;
+  --lh-label-sm: 16px;
+
+  /* ---- Elevation ---- */
+  --shadow-ambient: 0 1px 2px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-raised: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 140ms;
+  --duration: 220ms;
+  --duration-slow: 380ms;
+
+  /* Reading measure for long-form module content. */
+  --measure: 72ch;
+}
+
+/* ===========================================================================
+ * Amazon Connect track theme
+ *
+ * Applied by App.jsx as `data-track="amazon-connect"` on the app root while an
+ * Amazon Connect course is open, and by CourseSelection to that track's shelf
+ * on the library screen. Only the colour tokens are overridden — type, spacing,
+ * radius and motion stay shared, so both tracks are recognisably one app.
+ *
+ * The palette follows AWS console conventions: Squid Ink as the ink and the
+ * primary action colour, AWS Smile Orange as the accent that marks progress and
+ * the current position.
+ * ======================================================================== */
+[data-track='amazon-connect'] {
+  /* Squid Ink primary, Smile Orange accent. */
+  --primary: #232f3e;
+  --primary-container: #31465f;
+  --on-primary: #ffffff;
+  --on-primary-container: #d5dbe3;
+  --primary-fixed: #fdf0e2;
+  --primary-fixed-dim: #f7d9b8;
+  --on-primary-fixed: #4a2c06;
+  --on-primary-fixed-variant: #8a5100;
+  --surface-tint: #31465f;
+
+  --accent-rgb: 35, 47, 62;
+  --outline-rgb: 186, 191, 199;
+
+  --background: #f7f8f9;
+  --surface: #f7f8f9;
+  --surface-bright: #ffffff;
+  --surface-dim: #d9dde2;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f2f3f5;
+  --surface-container: #eaecef;
+  --surface-container-high: #e3e6ea;
+  --surface-container-highest: #dcdfe4;
+  --surface-variant: #e3e6ea;
+  --inverse-surface: #232f3e;
+  --inverse-on-surface: #f2f3f5;
+
+  --on-background: #16191f;
+  --on-surface: #16191f;
+  --on-surface-variant: #48505b;
+  --outline: #6b7684;
+  --outline-variant: #bec4cc;
+
+  --secondary: #545b64;
+  --secondary-container: #e3e6ea;
+  --on-secondary-container: #414750;
+  --tertiary: #414750;
+  --tertiary-fixed: #e3e6ea;
+  --on-tertiary-fixed: #16191f;
+
+  /* Smile Orange, used for progress fills and the current item marker. */
+  --marker: #ff9900;
+  --marker-strong: #ec7211;
+  --marker-rgb: 255, 153, 0;
+
+  --appbar-bg: rgba(247, 248, 249, 0.88);
+}
+
+/* Respect the user's reduced-motion preference across the whole app. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration: 0ms;
+    --duration-slow: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --text-headline-xl: 28px;
+    --lh-headline-xl: 36px;
+    --text-headline-lg: 24px;
+    --lh-headline-lg: 32px;
+    --text-headline-md: 20px;
+    --lh-headline-md: 28px;
+  }
+}

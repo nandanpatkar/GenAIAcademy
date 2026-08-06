@@ -1,0 +1,1252 @@
+Lesson 2 of 9
+Introduction to Amazon Connect Flows
+Lesson objectives
+
+In this lesson, you will learn to do the following:
+
+Recognize Amazon Connect flow types.
+
+Lesson introduction
+
+Amazon Connect flows is a built-in feature that defines customer journeys. It provides a seamless experience across channels, such as voice, chat, and tasks. 
+
+With flows, organizations can design their interactive voice response (IVR) or chatbot experiences to provide customers with self-service options to answer their inquiries. Flow capabilities empower designers to build step-by-step guides for agents to help them handle contact inquiries quickly and accurately. Flows offer the ability to create task automation for agents. With flows, organizations craft outbound communications to proactively engage their customers.
+
+Flows define the path users follow when engaging organizations' contact centers for both customers and agents. Flows help you tailor greetings, menus, self-service options, and call routing. You can implement customized experiences aligned with your business needs.
+
+Screenshot of the Amazon Connect console. The Routing menu option is expanded and shows the flows option highlighted.
+Amazon Connect provides default flows with built-in customer experiences. You can also build custom flows tailored to your organization's needs. You can refer to sample flows to learn how to build custom flows. Flows help shape customer experiences through features like IVR prompts, chatbots, call recording, agent routing, and wait treatments.
+
+To navigate to Flows, you can select Flows under the Routing menu of the Amazon Connect console.
+
+Default and sample flows
+
+There are two types of built-in flows: default and sample flows. They are available as soon as the Amazon Connect instance is created, and their names are prefixed with either default or sample. 
+
+
+Default flows
+Default flows are experiences that are activated without any IVR designer intervention. An example of a default flow is the Default agent hold flow. This flow is activated when agents place a call on hold. There is no action an IVR designer needs to take to ensure this flow is started because the flow is automatically invoked. To learn more about the default flows available in Amazon Connect, navigate to the Default flows(opens in a new tab) section of the Amazon Connect Administrator Guide.
+
+
+Sample flows
+Sample flows are designed to help you learn how to create your own flows that work in a similar way. To learn more about adding a queued callback flow to your call center, navigate to the Sample queued callback(opens in a new tab) flow. These flows are not intended to be used for production environments as is. To learn more about the default flows available in Amazon Connect, navigate to the (opens in a new tab)Sample flows(opens in a new tab) section of the Amazon Connect Administrator Guide.
+
+Flow types
+
+Amazon Connect contains different flow types designed to support different scenarios. For example, when a call is answered in Amazon Connect, an inbound flow is activated. When an agent puts a call on hold, an Agent and Customer hold flow is activated.
+
+Each flow type contains flow blocks that perform specific actions. For example, when Amazon Connect answers an incoming call, you can use a Play prompt action to greet the caller.
+
+When you create a flow, you need to select the appropriate flow type that is relevant to your scenario. This is because certain actions are only allowed in specific flow types. For example, transfer a contact to a queue is not available in the Customer hold flow type.
+
+The following are the nine types of flows.
+
+
+Inbound flow
+This is the default flow type created when you choose Create flow.
+
+
+
+Choose this flow type to activate your customer experiences for incoming contacts before a transfer to a queue. You can also use this type of flow to create agent step-by-step guides or implement specific treatments, such as a survey, after an agent disconnects from a call. This type of flow is available for contacts across all channels supported by Amazon Connect, including voice, digital messaging, and tasks. 
+
+
+Customer queue flow
+This flow type defines the experience customers have while they are waiting in a queue before they are connected to an agent. 
+
+
+
+Flows are interruptible, helping you incorporate various actions and prompts to enhance the waiting experience in the Customer queue. For instance, you can include audio prompts to apologize for the delay or provide estimated wait times. If a customer has been waiting for an extended period (for example, over 5 minutes), you can design the flow to offer alternative options. This can involve presenting a dual-tone multi-frequency (DTMF) menu to deflect the caller to a chatbot or offer a callback. This flow is interruptible, meaning that customers can select options as soon as they are presented.
+
+You can use the Change routing priority/age flow block to change the call order in queue. For example, you can move the contact to the front of the queue or to the back of the queue.
+
+It's important to note that customer queue flows can handle channels such voice, chat, and tasks.
+
+
+Customer hold flow
+The Customer hold flow defines the experience that a customer has while an agent places them on hold during a voice call. This flow type differs from the customer queue flow, which handles queued customer interactions.
+
+When an agent puts a customer on hold, the Customer hold flow runs. Within this flow, you can configure one or more audio prompts to be played in a loop using the Loop prompts block. These prompts can provide information, updates, or even music to enhance the customer's on-hold experience.
+
+The Customer hold flow is designed specifically for voice contacts and cannot be used for other contact types.
+
+
+Customer whisper flow
+The customer whisper flow helps you define the customer experience just before a contact is joined with an agent. This flow provides organizations with an opportunity to play specific uninterrupted messages or prompts to customers before they start their interaction with an agent. A use case for customer whisper flow is playing mandatory announcements, like recording a disclaimer for quality assurance. This ensures that customers are aware of the recording and can make an informed decision before proceeding with the call.
+
+Customer whisper flow is only compatible with voice and chat contacts. Implementing the Customer whisper flow can ensure a consistent, professional customer experience while meeting legal or regulatory disclosure requirements before agent interaction.
+
+
+Agent whisper flow
+The Agent whisper flow defines the agent experience just before receiving a contact from a customer. This flow type plays specific uninterrupted messages to agents before they start their interaction with customers.
+
+For example, consider a scenario where an agent receives contacts from two queues, namely Sales and Customer Support. To notify an agent about which queue the contact originates from, you can use the Agent whisper flow to play the name of the queue. This flow is compatible with voice and chat interactions.
+
+
+Agent hold flow
+The Agent hold flow defines the agent experience as part of an inbound voice contact while the call is placed on hold. With this flow, one or more audio prompts can be played to an agent using the Loop prompts block while waiting on hold. This flow is only compatible with voice contacts.
+
+
+Transfer to agent flow
+The Transfer to agent flow type defines the agent experience when transferring a contact to another agent. These flows are associated with transfer to agent quick connects. They might involve playing messages and completing the Transfer to agent flow block. This flow works with channels such as voice, chat, and tasks.
+
+
+Transfer to queue flow
+The Transfer to queue flow type defines the agent experience when transferring a contact to another queue. This flow type is associated with Transfer to queue quick connects. This is useful to verify hours of operation and staffing levels to ensure agents are available to handle the contact in the target queue. This flow works with channels such as voice, chat, and tasks.
+
+
+Outbound whisper flow
+The Outbound whisper flow type defines what the customer experience is before agent interaction on outbound calls. The messages played to the customer in this flow are played to completion. Organizations can play uninterrupted messages before customer-agent interactions, like mandatory announcements on the call being recorded. This flow is compatible with voice and chat contacts only.
+
+
+Disconnect flow
+The Disconnect flow is not a default contact flow type, but is important to understand when understanding different flow types.
+
+
+
+Disconnect flows specify the inbound flow actions performed when an agent disconnects while the customer remains connected. This flow type is typically used for capturing post-contact surveys. For example, when an agent disconnects and the contact stays on the line, the flow offers a customer satisfaction (CSAT) survey.
+
+
+
+A disconnect event is classified as the following:
+
+A chat or task is disconnected.
+An agent disconnects a voice call.
+A task is disconnected as a result of a flow action.
+A task expires. The task is automatically disconnected if it is not completed in 7 days.
+Flow blocks
+
+Flow blocks visually represent the actions available in a flow. IVR designers use these blocks to create flows in the Amazon Connect flow designer. The following image outlines the process a designer follows starting from the initial Entry block. The process progresses through various flow blocks, such as checking contact attributes, playing prompts, and setting a disconnect flow.
+
+Screenshot of  Amazon Connect flow designer showing connections between Check contact attributes and Play prompt flow blocks.
+Use case
+
+Helping agents prepare for an upcoming interaction
+Nikki Wolf, an agent at AnyCompany Retail, lacks customer background information when answering calls. For each call, Nikki is asking for information the customer has already provided in the self service IVR. This is leading to poor CSAT scores.
+
+Nikki provides her feedback to her direct manager, then informs IT of the pain points that they are experiencing. John Stiles, the IVR designer, is tasked with finding a solution to Nikki’s pain point.
+
+ 
+
+How can he solve for this?
+
+Solution
+One solution for solving the problem is to use an Agent whisper flow. When a customer calls into the contact center, John can configure Amazon Connect to initiate the Agent whisper flow. During this process, the system can retrieve relevant customer data from various sources, such as customer relationship management (CRM) systems or databases. This data is then synthesized into a brief audio message, which is played directly to the agent's headset before the call is connected.
+
+The Agent whisper flow can help agents like Nikki prepare for the upcoming interaction by providing them with crucial customer information upfront. This enables personalized service because agents can address concerns effectively from the start.
+
+Check your knowledge
+
+It is time to check your understanding of the content covered in this lesson. 
+
+Arnav Desai is an experience designer at AnyCompany Petcare. Arnav wants to notify callers contacting the call center their call will be recorded for quality monitoring and training purposes. He wants to play this message just before callers are connected with an agent.
+
+Which type of Amazon Connect flow should Arnav use?
+
+Inbound flow
+
+Correctly unselected
+Customer hold flow 
+
+Correctly unselected
+Outbound whisper flow 
+
+Incorrectly selected
+Customer whisper flow 
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+A Customer whisper flow plays a message for the customer when the customer and agent are joined. Arnav can use a Customer whisper flow to play a message to the caller and notify them that their call will be recorded for quality monitoring and training purposes.
+
+An Inbound contact flow is used to define the customer experience when they first connect to an Amazon Connect instance.
+
+A Customer hold flow is used to define what the customer hears when they are placed on hold by an agent.
+
+An Outbound whisper flow for outbound voice calls is used to specify the whisper played to customer.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned different types of Amazon Connect flows and were introduced to flow blocks. In the next lesson, you will learn how to use the Amazon Connect flow designer to create and manage flows.
+
+Lesson 3 of 9
+Flow Designer
+Lesson objectives
+
+In this lesson, you will learn to do the following:
+
+Explore the key capabilities of the flow designer.
+
+Lesson introduction
+
+The flow designer in Amazon Connect is a visual tool that helps you create and customize contact-center experiences. With the drag-and-drop interface, you can add and configure various flow blocks without any coding. By focusing on personalization and continuous optimization across voice and digital channels, organizations can improve customer satisfaction with dynamic, tailored experiences.
+
+Key capabilities of the flow designer
+
+Using the flow designer empowers organizations to create contact center experiences. The key capabilities of the flow designer include the following:
+
+•
+Design flows: A drag-and-drop interface where you can build custom flows by adding various flow blocks like prompts, transfers, queues, and integrations with other Amazon Web Services (AWS) services.
+
+•
+Configure flow logic: You can define the logic and decision points in your flows by connecting the flow blocks and configuring the conditions and actions for each block.
+
+•
+Integrate with other AWS services: Integrate your flows with other AWS services like Amazon Lex for natural language processing (NLP) and AWS Lambda for custom logic.
+
+•
+Test and debug flows: You can test your flows and debug any issues before publishing them in your environment.
+
+•
+Manage flow versions: You can create and manage different versions of your flows. This helps you roll back to a previous version, if needed.
+
+•
+Import and export flows: You can import and export flows. This helps you migrate flows between different Amazon Connect instances.
+
+Now, you can look further into the process of using the flow designer.
+
+Amazon Connect flow designer screenshot showing Save menu options: Save As, Import (beta), Export (beta), and Archive.
+You can can save, import, export, and publish flows within the graphical interface, as shown in the image.
+
+After a flow is published, a version of the published flow is available in the interface, as shown in the following image.
+
+
+
+Flow designer screenshot showing a dropdown list of all previous dates and times when the flow was published or saved.
+You can also add additional information to your flow by using the description text box, as highlighted in the following image.
+
+
+Amazon Connect flow designer screenshot. On the left side of the screen, the flow description panel is highlighted. In the panel, there is a description: Default flow used to transfer to a queue.
+
+Flow designer toolbar
+
+The flow designer includes a toolbar with shortcuts to editing capabilities that improve the design experience. The key capabilities of the toolbar are as follows:
+
+Flow designer toolbar screenshot. Icons are highlighted: Search, Undo, Cut, Copy, Paste, and Attach notes.
+
+
+Search flow blocks.
+Undo and redo actions.
+Cut, copy, paste, and delete operations on flow blocks.
+Select all objects in a flow.
+Attach notes to your flow.
+(opens in a new tab)
+
+For more information about flow designer toolbar capabilities, navigate to Create a flow(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Flow blocks
+
+The flow designer provides access to multiple flow blocks. Flow blocks are the building blocks to create flows. Each block performs a distinct function that can be dragged and dropped onto the canvas to define the flow logic.
+
+Within the interface, flow blocks are organized into seven categories. (opens in a new tab)(opens in a new tab)
+
+
+INTERACT
+(opens in a new tab)This section contains blocks that deal with the customer interaction directly, such as playing messages or gathering information from the customer.
+
+
+SET
+This section provides blocks that set the conditions or attributes within a flow.
+
+
+CHECK
+This section provides blocks that check the conditions or attributes within a flow.
+
+
+ANALYZE
+(opens in a new tab)This section provides blocks that set the logging and recording behavior.
+
+
+LOGIC
+This section provides blocks that insert logic into the routing behavior.
+
+
+INTEGRATE
+This section provides blocks to do either of the following:
+
+Invoke AWS Lambda allowing integration with external data sources and services.
+Invoke a specific module. Modules are a reusable set of flow blocks that are grouped together. Modules are used when specific customer experiences are reused in multiple customer journeys.
+
+TERMINATE
+This section provides the mechanisms to transfer or terminate calls. It also provides the ability to terminate contact flow processing in specific contact flow types.
+
+(opens in a new tab)
+
+To learn more about the process of configuring a flow block, choose the START or arrow buttons to display each of the three steps.
+
+
+Configure a flow block
+Drag the flow block onto the flow designer canvas. Then follow the steps to configure a flow block.
+
+
+START
+Step 1
+
+Open the block settings
+A block with the settings menu opened. Commands available are Edit Settings, Add block name, Add a note, and Delete.
+Open the block settings by selecting the ellipsis. Another way to open the block settings is by selecting the ribbon.
+
+1
+2
+3
+
+Step 2
+
+Open block settings
+Screenshot of a block with the Settings menu open. The Edit settings command is highlighted.
+Choose Edit settings.
+
+1
+2
+3
+
+Step 3
+
+Update and save
+Screenshot of a block's Settings menu opened. Text-to-speech option is highlighted.
+Make the changes to the block settings. Then, choose Save.
+
+1
+2
+3
+
+Summary
+You can configure flow blocks in Amazon Connect by updating the flow settings.
+
+START AGAIN
+1
+2
+3
+
+When building a flow for your contact center, you need to ensure that each output from a flow block is connected to another flow block’s input to successfully publish your flow.
+
+Flow management
+
+You can use the save, publish, and archive features of the flow designer to manage the IVR and agent experience. As you design new custom flows or update existing flows, you can save your work as you go. When you are ready to publish the flows to production, you can use the publish option. You can archive flows that are no longer required to be visible or exposed to production traffic for record-keeping purposes.
+
+Save, publish, and archive flows: The flow designer maintains multiple versions of your flow when you publish it. This feature is useful if you need to review how a flow has changed over time or revert to a previous version.
+
+You can also save your flow without publishing it. A flow becomes active and processes live traffic only after you publish it. An unpublished flow does not affect live traffic. To learn more about publishing a flow, choose the START or arrow buttons to display each of the four steps.
+
+
+Save, publish, and archive a flow
+Open the flow that you want to save or publish. Follow the steps for saving and publishing a flow.
+
+
+START
+Step 1
+
+Save a flow
+Screenshot of the flow designer with Save highlighted.
+In the Contact Control Panel, choose Save to save the flow.
+
+1
+2
+3
+4
+
+Step 2
+
+Confirm saved version
+Amazon Connect flow designer screenshot showing flow designer with versions listed, highlighting the latest saved version.
+Choose the Latest menu dropdown list to verify the latest version. The version will show Saved, confirming that the flow saved successfully.
+
+1
+2
+3
+4
+
+Step 3
+
+Publish the flow
+Screenshot of the flow designer with the publish button highlighted.
+To publish the flow, choose Publish.
+
+1
+2
+3
+4
+
+Step 4
+
+Confirm published timestamp
+Screenshot of the flow designer with the versions of the flow listed with the latest publish highlighted.
+To verify the latest version, choose the Latest menu dropdown list. This will show Published, which confirms the flow published successfully.
+
+1
+2
+3
+4
+
+Summary
+You can save and publish flows using the Amazon Connect flow designer. You can archive flows that are no longer needed.
+
+START AGAIN
+1
+2
+3
+4
+
+Import and export flows: A scenario might arise where users would like the ability to import or export flows. For example, when working on multiple environments such as production, development, or test, instead of building new flows, users can import flows.
+
+Export flows: You can export flows directly from the flow designer’s graphical user interface. To learn more about exporting a flow, choose the START or arrow buttons to display each of the two steps.
+
+
+Export flows
+The steps to export a flow.
+
+
+START
+Step 1
+
+Choose export button
+Screenshot of the flow designer with the top right command menu open. The Export command is highlighted.
+From the dropdown list, choose Export.
+
+1
+2
+
+Step 2
+
+Define the export file name
+Export dialog box opened. Name of the exported file highlighted.
+In the text entry box, define a name for the file to export the flow to. Then, choose Export. A file with the name you provide is saved in your Downloads folder.
+
+1
+2
+
+Summary
+The export flow process is now complete.
+
+START AGAIN
+1
+2
+
+Import flows
+
+You can import flows exported from a different environment directly into the flow designer graphical user interface. To learn more about importing a flow, choose the START or arrow buttons to display each of the two steps.
+
+
+Import flows
+The steps to import a flow.
+
+
+START
+Step 1
+
+Choose Import
+Screen shot of the flow designer with the top-right command menu open. The Import command is highlighted.
+From the dropdown list, choose Import.
+
+1
+2
+
+Step 2
+
+Import a file
+Import dialog box opened. Choose File command highlighted.
+Next, select Choose File. Then, choose Import.
+
+1
+2
+
+Summary
+The import process is now complete.
+
+START AGAIN
+1
+2
+
+Check your knowledge
+
+It is time to check your understanding of the content covered in this lesson.
+
+What are flow blocks in the context of designing flows in Amazon Connect?
+
+The challenges faced during the flow design process
+
+Correctly unselected
+The building blocks or modular units that make up the flow's structure and functionality
+
+Incorrectly unselected
+The sections that categorize different types of flows
+
+Incorrectly selected
+The mechanisms to transfer or terminate calls
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+In the context of designing flows in Amazon Connect, flow blocks are the building blocks used to create and manage customer interactions within a flow. Flows in Amazon Connect define the sequence of actions that occur during a customer contact, such as a phone call or chat. Flow blocks help to design these interactions in a visual and intuitive way. Each block represents a specific function or action that can be taken during the interaction. 
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned how to use the flow designer, a tool that gives you the ability to build custom flows. In the next lesson, you will learn how you can use flows to enable Amazon Connect features, such as call recording and analytics.
+
+Step 1
+
+Open the block settings
+A block with the settings menu opened. Commands available are Edit Settings, Add block name, Add a note, and Delete.
+Open the block settings by selecting the ellipsis. Another way to open the block settings is by selecting the ribbon.
+
+Step 2
+
+Open block settings
+Screenshot of a block with the Settings menu open. The Edit settings command is highlighted.
+Choose Edit settings.
+
+Configure a flow block
+Drag the flow block onto the flow designer canvas. Then follow the steps to configure a flow block.
+
+
+START
+Step 1
+
+Open the block settings
+A block with the settings menu opened. Commands available are Edit Settings, Add block name, Add a note, and Delete.
+Open the block settings by selecting the ellipsis. Another way to open the block settings is by selecting the ribbon.
+
+1
+2
+3
+
+Step 2
+
+Open block settings
+Screenshot of a block with the Settings menu open. The Edit settings command is highlighted.
+Choose Edit settings.
+
+1
+2
+3
+
+Step 3
+
+Update and save
+Screenshot of a block's Settings menu opened. Text-to-speech option is highlighted.
+Make the changes to the block settings. Then, choose Save.
+
+Step 1
+
+Save a flow
+Screenshot of the flow designer with Save highlighted.
+In the Contact Control Panel, choose Save to save the flow.
+
+Step 2
+
+Confirm saved version
+Amazon Connect flow designer screenshot showing flow designer with versions listed, highlighting the latest saved version.
+Choose the Latest menu dropdown list to verify the latest version. The version will show Saved, confirming that the flow saved successfully.
+
+Step 3
+
+Publish the flow
+Screenshot of the flow designer with the publish button highlighted.
+To publish the flow, choose Publish.
+
+Step 4
+
+Confirm published timestamp
+Screenshot of the flow designer with the versions of the flow listed with the latest publish highlighted.
+To verify the latest version, choose the Latest menu dropdown list. This will show Published, which confirms the flow published successfully.
+
+Summary
+You can save and publish flows using the Amazon Connect flow designer. You can archive flows that are no longer needed.
+
+Lesson 4 of 9
+Enabling Additional Amazon Connect Functionality Using Flows
+Lesson objectives
+
+In this lesson, you will learn to do the following:
+
+Explore how to use flow blocks to activate Amazon Connect features.
+
+Lesson introduction
+
+You can activate specific Amazon Connect features within the flows to tailor the customer journey according to your business requirements. These features include capabilities such as the following:
+
+Intelligent routing
+Self-service options
+Real-time analytics
+Integration with other business applications
+By enabling Amazon Connect features through flows, you can design personalized and efficient customer interactions, ultimately improving customer satisfaction and operational efficiency.
+
+
+
+Amazon Connect call recording
+
+To enable call recording for your flow, follow these steps in the flow designer:
+
+Search for the Set recording and analytics behavior block by typing set record in the Blocks search panel on the left side of the flow designer.
+Drag the Set recording and analytics behavior block into the flow designer canvas. To edit the properties, select the block. 
+Edit the settings of the flow block. 
+The recording behavior is controlled within the properties of this block. You can enable or disable call recording by selecting the appropriate radio button.
+Save your changes.
+To learn more about Amazon Connect call recording, choose each of the five numbered markers. 
+
+Screenshot of Amazon Connect block editor with Call recording settings highlighted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+To enable speech analytics, the agent and customer call recording must be enabled.
+
+Amazon Connect Contact Lens
+
+Amazon Connect Contact Lens provides analytics and quality management tools to monitor, measure, and improve contact quality and agent performance for better customer experiences.
+
+Before using this flow block, ensure that the Contact Lens feature is enabled in the Amazon Connect instance. The administrator for your contact center can enable this feature for your Amazon Connect instance.
+
+To learn more about how to enable the Amazon Connect Contact Lens functionality, choose the START or arrow buttons to display each of the eight steps.
+
+
+Enable Amazon Connect Contact Lens
+By using the Set recording and analytics flow block, you can configure the analytics behavior that is tailored to your business needs.
+
+
+START
+Step 1
+
+Select the Flows option in the Amazon Connect console
+Amazon Connect Flows showing the list of all the flows filtered by the word Default.
+On the left navigation panel, choose the Routing option, then choose Flows. Select an existing flow or create a new one.
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+Step 2
+
+Add the Set recording and analytics behavior flow block
+Amazon Connect flow designer with the Set recording and analytics behavior block highlighted.
+Open the flow designer. Drag and drop the Set recording and analytics behavior block into the flow designer canvas.
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+Step 3
+
+Enable call and screen recording
+Set recording and analytics behavior configuration details for voice and screen recording.
+To edit the properties of the Set recording and analytics behavior block, select the block. Modify the settings of the flow block to configure the desired Contact Lens features:
+
+You can enable or disable agent recording during customer interactions by selecting the displayed options. Please note that analytics options for voice calls require that the call recording option is On.
+You can also enable or disable the screen recording for interactions that you want to evaluate. 
+1
+2
+3
+4
+5
+6
+7
+8
+
+Step 4
+
+Enable Analytics behavior for voice calls
+Set recording and analytics behavior flow block configuration options for voice calls analytics.
+To enable the analytics behavior, Select the On radio button.
+
+For voice calls, you have the option to activate post-call analytics only, or both real-time and post call analytics.
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+Step 5
+
+Enable Analytics behavior for chat
+Set recording and analytics behavior configuration options for chat analytics.
+To activate chat analytics, select the Enable chat analytics option. Both real-time and post contact analytics will become available for your chat interactions.
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+Step 6
+
+Language selection
+Set recording and analytics behavior flow block configuration options for Language selection.
+In this section, you select the language that the system will process your analytics in. 
+
+Use the dropdown list to select one of the supported languages. 
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+Step 7
+
+Sensitive data redaction
+Set recording and analytics behavior flow block configuration options for sensitive data redaction.
+To select whether you want the analytics engine to redact the Personal Identifiable Information (PII) data from your transcripts, use the Redact sensitive data checkbox. You can decide to remove the original transcripts or keep both the original and redacted transcript.
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+Step 8
+
+Generative AI Summarization
+Set recording and analytics behavior flow block configuration option for Generative AI summarization.
+If you want the analytics engine to automatically generate a summary of the conversation, select the post-contacts summary. The conversation summary saves supervisors, quality analysts, and managers time when they evaluate contact conversations.
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+Summary
+By adding the Set recording and analytics behavior flow block to your flows, you enable the analytics you need to optimize your processes. You have the flexibility to enable this functionality for all of your interactions, or select only what you need for your business.
+
+START AGAIN
+1
+2
+3
+4
+5
+6
+7
+8
+
+Amazon Q in Connect
+
+Amazon Q in Connect is a feature that uses generative AI to assist agents in providing faster and more effective customer support. It offers suggested responses and actions tailored to each customer's query, leading to quicker issue resolution and improved customer satisfaction.
+
+This functionality becomes available after Amazon Q in Connect is activated within the Amazon Connect instance. This is typically performed by a cloud administrator with access to the AWS Management Console. To learn more, navigate to the Enable Amazon Q in Connect for your instance(opens in a new tab) section of the Amazon Connect Administrator Guide.
+
+To enable Amazon Q in Connect within your flow, follow these steps:
+
+Search for the Amazon Q Connect block by typing Q in the Blocks search panel on the left side of the flow designer.
+Drag and drop the Amazon Q Connect block into the flow designer, and select the block.
+Configure the domain by associating an Amazon Q Connect domain by choosing your domain from the menu.
+Save your configuration.
+To learn more about Amazon Q in Connect, choose each of the numbered markers. 
+
+Screenshot of Amazon Q Connect block being added to a contact flow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amazon Connect Cases
+
+Amazon Connect Cases is a feature that enables your organization's contact center to track and manage customer issues. These issues often require multiple interactions, follow-up tasks, and involvement from different teams. Agents can document all relevant case details in a unified view. Details can include date, time, issue summary, customer information, and status.
+
+Before using the Cases block, ensure that the Cases feature is enabled in the Amazon Connect instance. This is typically done by a cloud administrator with access to the AWS Management Console. To learn more, navigate to the Enable Cases(opens in a new tab) section of the Amazon Connect Administrator Guide.
+
+To enable Cases within your flow, follow these steps:
+
+Search for the Cases block by typing case in the Blocks search panel on the left side of the flow designer. Drag and drop the Cases block into the flow designer. 
+Select the block to configure its parameters.
+Select the action you want to implement with this block. Multiple options are available.
+Save your configuration.
+To learn more about Amazon Connect Cases, choose each of the four numbered markers. 
+
+Cases block being added to a contact flow.
+
+
+
+
+
+
+
+
+
+
+
+
+Amazon Connect Tasks
+
+Amazon Connect Tasks is a channel within Amazon Connect that helps you prioritize, track, route, and automate tasks for contact center agents. This improves agent productivity and ensures customer issues are resolved quickly.
+
+To create a task in your flows, follow these steps:
+
+Search for the Create task block by typing task in the Blocks search panel on the left side of the flow designer. Drag and drop the Create task block into the flow designer.
+Select the block.
+Select the flow to run this task, and configure the properties of the new task.
+Save your configuration.
+To learn more about Amazon Connect Tasks, choose each of the four numbered markers. 
+
+(opens in a new tab)
+
+Screenshot of Amazon Connect Task block being added to a contact flow.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amazon Connect Customer Profiles
+
+Amazon Connect Customer Profiles provides customer service agents with automated experiences and real-time access to up-to-date customer information, enabling personalized interactions.
+
+To access the Customer Profiles functionality, a cloud administrator must enable the Customer Profiles feature in the Amazon Connect instance. To find out more, navigate to the Enable Customer Profiles for your instance(opens in a new tab) section in the Administrator Guide.
+
+To access Customer Profiles functionality within your flow:
+
+Search for the Customer profiles block by typing the block type in the Blocks search panel on the left side of the flow designer. Drag and drop the Create task block into the flow designer
+Select the block.
+Select and action, and configure the properties for the selected action.
+Save your configuration.
+Customer profiles block being added to a contact flow.
+
+
+
+
+
+
+
+
+
+
+
+
+Amazon Connect Persistent Chat
+
+Amazon Connect chat supports conversations that take place over an extended period of time. Contacts can start a chat interaction, then leave, and return later to continue the discussion.
+
+To facilitate long-running conversations, Amazon Connect offers persistent chat capabilities. With persistent chat, customers can resume previous discussions while retaining all context, metadata, and chat transcripts. This eliminates the need for repetitive conversations. Customers don't have to re-explain their issues, and agents have access to the complete interaction history.
+
+You can enable chat persistence through a process called chat rehydration. By using chat rehydration, previous chat transcripts are retrieved and displayed at the start of new chat interactions. This provides continuity for both customers and agents to pick up where they left off. To associate the current chat with a previous one, you need to have the unique identifier of the previous contact. Each interaction has a unique identifier called a Contact ID. 
+
+To enable persistent chat within flows, follow these steps:
+
+Search for the Create persistent contact association block by typing create in the Blocks search panel on the left side of the flow designer. Drag and drop the Create persistent contact association block into the flow designer.
+Select the block.
+Edit the settings in the properties panel that opens to the right side of the view.
+Save your configuration.
+Create pesistent contact association block being added to a contact flow.
+
+
+
+
+
+
+
+
+
+
+
+
+It is mandatory to provide a source Contact ID when using the Create persistent contact association block. The contact ID configured in the block properties determines the rehydration source.
+
+Use case
+
+Using analytics insights to improve customer satisfaction scores
+Diego Ramirez is the operations manager at AnyAuthority, a small retail company with a customer support call center. As part of an initiative to improve customer satisfaction, Diego wants to implement Amazon Connect to use its call recording and Contact Lens capabilities.
+
+Solution
+Diego can use the following approach:
+
+Enable call recording for quality assurance purposes by adding the Set Recording and Analytics Behavior flow block to configure recording settings and enable Contact Lens. This will help him review calls later to evaluate agent performance and identify coaching opportunities.
+Use Contact Lens to access critical insights. Diego enables screen, speech, and post-call analytics through the same flow block. The speech analytics, powered by machine learning (ML), is especially useful to automatically detect sentiments, trends, and compliance issues. However, because it requires call recording, Diego makes sure to have recording enabled.
+Improve agent training. By using call recording and analytics, Diego can pinpoint areas needing improvement. For example, if speech analytics detects that agents struggle to de-escalate angry customers, Diego can schedule additional training. 
+Track improvements over time. Key metrics from Contact Lens, like customer sentiment trends, handle time, compliance scores, and more, are important for Diego. Positive trends will help him secure budget for expanding the capabilities further.
+Check your knowledge
+
+It is time to check your understanding of the content covered in this lesson. 
+
+Which features can be enabled using the Set recording and analytics behavior flow block? (Select TWO.)
+
+Screen recording
+
+Incorrectly unchecked
+Amazon Connect Tasks
+
+Correctly unchecked
+Amazon Connect Cases
+
+Correctly unchecked
+Amazon Q in Connect
+
+Incorrectly checked
+Speech analytics
+
+Incorrectly unchecked
+SUBMIT
+
+Incorrect
+
+
+The Set recording and analytics behavior flow block enables Amazon Connect Contact Lens functionality. Contact Lens provides analytics and quality management tools to monitor, measure, and improve contact quality and agent performance for better customer experiences. This includes screen recording and speech analytics.
+
+
+TAKE AGAIN
+Nikki Wolf is a telecom engineer at AnyCompany Manufacturing. Which block can Nikki use to enable persistent chat capabilities, helping customers resume previous conversations?
+
+Set recording and analytics behavior
+
+Correctly unselected
+Amazon Q in Connect
+
+Incorrectly selected
+Customer profiles
+
+Correctly unselected
+Create persistent contact association
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+To enable persistent chat, Nikki should drag and drop the Create persistent contact association block into the flow designer. Amazon Q in Connect, Customer Profiles, and Set recording and analytics behavior do not have settings for persistent chat configuration.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned how to enable various Amazon Connect features, like call recording, Contact Lens analytics, and real-time agent recommendations using Amazon Connects flow designer. In the next lesson, you will discover the flow blocks that help improve operational processes.
+
+Step 1
+
+Select the Flows option in the Amazon Connect console
+Amazon Connect Flows showing the list of all the flows filtered by the word Default.
+On the left navigation panel, choose the Routing option, then choose Flows. Select an existing flow or create a new one.
+
+
+Step 2
+
+Add the Set recording and analytics behavior flow block
+Amazon Connect flow designer with the Set recording and analytics behavior block highlighted.
+Open the flow designer. Drag and drop the Set recording and analytics behavior block into the flow designer canvas.
+
+Step 3
+
+Enable call and screen recording
+Set recording and analytics behavior configuration details for voice and screen recording.
+To edit the properties of the Set recording and analytics behavior block, select the block. Modify the settings of the flow block to configure the desired Contact Lens features:
+
+You can enable or disable agent recording during customer interactions by selecting the displayed options. Please note that analytics options for voice calls require that the call recording option is On.
+You can also enable or disable the screen recording for interactions that you want to evaluate. 
+
+Step 4
+
+Enable Analytics behavior for voice calls
+Set recording and analytics behavior flow block configuration options for voice calls analytics.
+To enable the analytics behavior, Select the On radio button.
+
+For voice calls, you have the option to activate post-call analytics only, or both real-time and post call analytics.
+
+Step 5
+
+Enable Analytics behavior for chat
+Set recording and analytics behavior configuration options for chat analytics.
+To activate chat analytics, select the Enable chat analytics option. Both real-time and post contact analytics will become available for your chat interactions.
+
+Step 6
+
+Language selection
+Set recording and analytics behavior flow block configuration options for Language selection.
+In this section, you select the language that the system will process your analytics in. 
+
+Use the dropdown list to select one of the supported languages.
+
+Step 7
+
+Sensitive data redaction
+Set recording and analytics behavior flow block configuration options for sensitive data redaction.
+To select whether you want the analytics engine to redact the Personal Identifiable Information (PII) data from your transcripts, use the Redact sensitive data checkbox. You can decide to remove the original transcripts or keep both the original and redacted transcript.
+
+Step 8
+
+Generative AI Summarization
+Set recording and analytics behavior flow block configuration option for Generative AI summarization.
+If you want the analytics engine to automatically generate a summary of the conversation, select the post-contacts summary. The conversation summary saves supervisors, quality analysts, and managers time when they evaluate contact conversations.
+
+
+Summary
+By adding the Set recording and analytics behavior flow block to your flows, you enable the analytics you need to optimize your processes. You have the flexibility to enable this functionality for all of your interactions, or select only what you need for your business.
+
+Lesson 5 of 9
+Operational Support Flow Blocks
+Lesson objectives
+
+In this lesson, you will learn to do the following:
+
+Explore the use of flow logs.
+Recognize the ability to distribute contacts by pre-configured percentage.
+
+Lesson introduction
+
+The AWS Well-Architected Framework provides architectural best practices across operational excellence, security, reliability, performance efficiency, and cost optimization. These best practices help cloud architects build secure, high-performing, resilient, and efficient application infrastructure. 
+
+Flows play a key role in maintaining operational efficiency while ensuring high levels of customer satisfaction. By adopting flow-management best practices, operations teams can architect reliable and operationally efficient contact centers.
+
+Distribute traffic by percentage
+
+The Well-Architected reliability pillar discusses strategies like blue/green deployment to reduce risks when deploying new versions of applications. When applied to contact centers within the context of flows, gradually increasing traffic to new or modified flows can reduce risks associated with these changes.
+
+The Distribute by percentage flow block is a useful tool for implementing such strategies. This block allows for the logic to distribute incoming contacts (voice, chat, or task) randomly based on a specified percentage. 
+
+The Distribute by percentage block is compatible with the following flow types:
+
+Inbound flow
+Customer queue flow
+Outbound whisper flow
+Transfer to agent flow
+Transfer to queue flow
+To enable traffic distribution for your flow, follow these steps in the flow designer:
+
+Open the flow designer.
+Drag and drop the Distribute by percentage block into the flow designer canvas.
+Choose the block to edit the properties of the Distribute by percentage block. 
+Modify the settings of the flow block to configure the desired percentage distribution.
+Screenshot of Amazon Connect flow designer percentage block with block settings.
+When using the Distribute by percentage flow block, Amazon Connect distributes contacts randomly, so exact percentage splits might occur.
+
+For more information, refer to the Flow block: Distribute by percentage(opens in a new tab) section in the Amazon Connect Administrator Guide.
+
+Flow logs
+
+Operational teams often need to store application logs for auditing and troubleshooting purposes. The AWS Well-Architected Framework operational excellence pillar recommends storing flow logs in an Amazon CloudWatch log group.
+
+With Amazon CloudWatch Logs, you can monitor, store, and access your log files from various sources. A log group organizes log streams that share the same retention, monitoring, and access control settings. Each log stream stores log data from a specific source, such as Amazon Connect.
+
+The Set logging behavior flow block can be used to enable flow logs so you can track events as contacts interact with flows. Flow logs are stored in an Amazon CloudWatch log group, in the same AWS Region as your Amazon Connect instance. This log group is created automatically when Enable flow logging is turned on for your instance. A log entry is added as each block in your flow is invoked. You can configure CloudWatch to send alerts when unexpected events occur during active flows.
+
+To enable logs for your flow, follow these steps in the flow designer:
+
+Drag and drop the Set Logging Behavior block into the flow designer canvas.
+Choose the block to edit the properties of the Set Logging Behavior block. 
+Edit the properties of the flow block to enable or disable flow logs. 
+Screenshot of Amazon Connect flow designer logging behavior block with block settings.
+For more information, refer to the Flow block: Set logging behavior(opens in a new tab) and Flow logs stored in an Amazon CloudWatch log group(opens in a new tab) sections in the Amazon Connect Administrator Guide.
+
+Example scenario
+John is the IVR designer at AnyCompany Bank, a mid-sized institution that uses Amazon Connect for their contact center services. A significant number of users complained to agents that they were dissatisfied with the traditional DTMF-based IVR. AnyCompany Bank's customers found the menus too lengthy and inflexible. To improve the customer experience, AnyCompany Bank has deployed a new conversational IVR using Amazon Lex.
+
+
+
+John wants to implement this new conversational IVR as a production workload. A/B testing is a controlled experiment that compares two or more versions of a solution. The goal is to determine which solution performs best, and use the data to make decisions about how people interact with the solution. John wants to follow the AWS best practice of A/B testing to evaluate his script performance and impact. 
+
+Solution
+John can gradually increase the incoming call volume handled by the newly deployed conversational IVR. To do this he can use the Distribute by percentage flow block to branch routing for the incoming calls. 
+
+
+
+For example he can start by distributing 25 percent of the incoming calls to the conversational IVR. The remaining 75 percent will be distributed to the existing DTMF-based IVR.
+
+
+
+John can monitor service level metrics and gather qualitative feedback from agents and customers. If no significant issues arise during this period, he can update the flow block configuration. The configuration can distribute calls equally between the new conversational IVR and the existing DTMF-based IVR. 
+
+
+
+After another monitoring period, he can further adjust the distribution to 75 percent and 25 percent, sending more calls to the conversational IVR.
+
+
+
+Throughout this incremental call volume shift process, John can configure flow logs using the Set logging behavior flow block. He can access them through the associated Amazon CloudWatch log group. This logging mechanism gives him the ability to audit flow performance and troubleshoot any issues that might arise.
+
+
+
+Assuming no major issues occur during the gradual traffic shift, John can route 100 percent of the incoming calls to the new conversational IVR.
+
+Check your knowledge
+
+It is time to check your understanding of the content covered in this lesson. 
+
+Which flow block is used to distribute random incoming contacts based on configured percentages, and can be used for A/B testing?
+
+Distribute by skill
+
+Correctly unselected
+Distribute by priority
+
+Correctly unselected
+Distribute by percentage
+
+Correctly selected
+Distribute randomly
+
+Correctly unselected
+SUBMIT
+
+Correct
+The Distribute by percentage flow block routes customers randomly, based on a specified percentage, and can be useful for A/B testing.
+
+
+TAKE AGAIN
+John Stiles is an operations manager at AnyCompany Health. John got a report of random error messages and disconnects for some of the contact center support calls. Where can John find the Amazon Connect flow logs to best troubleshoot the reported issue?
+
+Amazon Lex dashboard
+
+Correctly unselected
+Amazon CloudWatch log group
+
+Correctly selected
+Customer relationship management (CRM) database
+
+Correctly unselected
+AWS Lambda function
+
+Correctly unselected
+SUBMIT
+
+Correct
+This is the correct option. By default, when you create a new Amazon Connect instance, an Amazon CloudWatch log group is created automatically to store the logs for your instance. Logs are generated for flows that include a Set logging behavior block with logging set to enabled.
+
+The other options are incorrect. 
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned flow management best practices and how to enable them within Amazon Connect. You explored how to conduct A/B testing to mitigate risks associated with changes. Continue to the next lesson to review the course summary and prepare for the end-of-course assessment.
+
+Lesson 6 of 9
+Summary
+Course summary
+
+n this course, you learned about Amazon Connect Flows. It’s a feature of Amazon Connect that define customer journeys across various channels, like voice, chat, and tasks. Take a moment to review these key concepts in the course summary before taking the course assessment. 
+
+Flow types
+Amazon Connect provides multiple types of flows designed to support different use cases. The types of flows available are as follows:  
+
+Inbound flow: This is a default flow type that is created when you choose Create flow. Use this flow type to activate customer experiences for incoming contacts before transferring to a queue. 
+Customer queue flow: This defines the experience customers have while waiting in a queue before connecting to an agent. 
+Customer hold flow: This defines the experience a customer has while placed on hold by an agent during a voice call. 
+Customer whisper flow: This defines the customer experience just before joining an agent. 
+Agent whisper flow: This flow defines the agent experience just before receiving a contact from a customer. 
+Agent hold flow: This defines the agent experience as part of an inbound voice contact while the call is placed on hold. 
+Agent transfer flow: This defines the agent experience when transferring a contact to another agent. 
+Transfer to queue flow: This defines the agent experience when transferring a contact to another queue. 
+Outbound whisper flow: This defines the customer experience before agent interaction on outbound calls. 
+Disconnect flow: This is an inbound flow that runs when an agent disconnects and the customer remains connected.
+Flow blocks
+Flow blocks are visual representations of actions available in a flow. Customer and agent experience designers use flow blocks to create flows in the Amazon Connect flow designer. 
+
+
+
+Flow blocks are organized into seven categories: Interact, Set, Check, Analyze, Logic, Integrate, and Terminate.
+
+
+
+To configure a flow block, drag it onto the flow designer canvas, open the block settings, update, and save the changes. 
+
+Flow designer
+The flow designer in Amazon Connect is a visual tool that helps create and customize contact center experiences. 
+
+
+
+Key capabilities include designing flows, configuring flow logic, integrating with AWS services, testing and debugging flows, managing flow versions, and importing and exporting flows. 
+
+
+
+The flow designer includes a toolbar with shortcuts to editing capabilities, like searching flow blocks, undoing and redoing actions, cutting, copying, pasting, and deleting flow blocks. 
+
+Amazon Connect flow designer full process view from block entry to various flow block implementation.
+Flow management
+You can use the save, publish, and archive features of the flow designer to manage the IVR and agent experience. 
+
+
+
+Save your work as you design new custom flows or update existing flows. When you are ready to publish the flows to production, use the publish option. 
+
+
+
+Archive flows that are no longer required to be visible or exposed to production traffic for record-keeping purposes. 
+
+
+
+The flow designer maintains multiple versions of your flow when you publish it. You can also import and export flows.
+
+Enabling Amazon Connect functionality with flow blocks
+You can activate specific Amazon Connect features within the flows to tailor the customer journey according to your business requirements. 
+
+
+
+These features are as follows:
+
+Call recording 
+Amazon Connect Contact Lens 
+Amazon Q in Connect 
+Amazon Connect Cases 
+Amazon Connect Tasks 
+Amazon Connect Customer Profiles
+Amazon Connect persistent chat
+To enable any of these features, search for the respective flow blocks, drag and drop them into the flow designer canvas. Then, configure the block properties and save the changes.
+
+Operational support flow blocks
+The Distribute by percentage block distributes incoming contacts randomly based on a specified percentage. You can use this block for testing strategies, like blue/green deployments, to reduce risks when deploying new versions. 
+
+
+
+The Set logging behavior block enables tracking events as contacts interact with flows. Flow logs are stored in an Amazon CloudWatch log group. Configure CloudWatch to send alerts for unexpected events.
+
+Downloadable PDF of the summary
+
+To download a PDF version of the summary section, choose anywhere inside the following box. Note: For the best experience with screen readers, use NVDA or JAWS. If you are using VoiceOver, you may experience issues with the downloaded PDF.

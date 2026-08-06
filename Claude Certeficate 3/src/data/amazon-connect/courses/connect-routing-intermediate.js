@@ -1,0 +1,1384 @@
+/*
+ * Amazon Connect — Routing Intermediate
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne/AMAZON CONNECT ROUTING INTERMEDIATE.txt
+ *            conne-text/Amazon Connect Routing Intermediate Summary.txt  (from conne/Amazon Connect Routing Intermediate Summary.pdf)
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-routing-intermediate",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Routing Intermediate",
+  "provider": "Amazon Web Services",
+  "level": "Intermediate",
+  "category": "Routing",
+  "description": "Implementing a routing strategy: queue prioritization, proficiency routing, and data-driven routing decisions.",
+  "examFormat": "6 topics · ~42 min · 11 review questions",
+  "sourceFiles": [
+    "conne/AMAZON CONNECT ROUTING INTERMEDIATE.txt",
+    "conne-text/Amazon Connect Routing Intermediate Summary.txt  (from conne/Amazon Connect Routing Intermediate Summary.pdf)"
+  ],
+  "modules": [
+    {
+      "id": "connect-routing-intermediate-t1",
+      "number": 1,
+      "title": "Implementing a routing strategy in Amazon Connect",
+      "shortTitle": "Implementing a routing strategy in Amazon Co…",
+      "summary": "A routing strategy refers to the rules that are used to determine how incoming contacts are distributed or routed to the most appropriate agent.…",
+      "duration": "~24 min",
+      "lede": null,
+      "objectives": [
+        "Explore routing strategies.",
+        "Configure routing strategies."
+      ],
+      "sections": [
+        {
+          "id": "connect-routing-intermediate-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "A routing strategy refers to the rules that are used to determine how incoming contacts are distributed or routed to the most appropriate agent. The goal of a routing strategy is to ensure efficient handling of contact interactions by matching contacts with the most suitable agents, based on predefined criteria. Using a routing strategy helps to improve contact satisfaction, optimize agent usage, and achieve operational efficiency in the contact center."
+            },
+            {
+              "type": "p",
+              "text": "Routing strategies can be based on various factors."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Skill-based routing",
+                  "body": "Contacts are routed to agents with the specific skills or expertise that is required to handle their queries effectively."
+                },
+                {
+                  "title": "Priority routing",
+                  "body": "Contacts are prioritized and routed based on predefined criteria, such as customer information, service level agreements (SLAs), or the urgency of the interaction."
+                },
+                {
+                  "title": "Load balancing",
+                  "body": "Interactions are distributed evenly among available agents to ensure an equal workload distribution and prevent agent overload."
+                },
+                {
+                  "title": "Language-based routing",
+                  "body": "Contacts are routed to agents who speak their preferred language or have language proficiency that matches the customer's preference."
+                },
+                {
+                  "title": "Location-based routing",
+                  "body": "Interactions are routed to agents or contact centers based on geographic proximity or time zone considerations."
+                },
+                {
+                  "title": "Interaction history",
+                  "body": "Contact interactions are routed based on their previous interactions or established relationships with specific agents or departments."
+                },
+                {
+                  "title": "Queue prioritization",
+                  "body": "Contacts are placed in different queues based on their priorities or service levels, and agents serve contacts from these queues accordingly."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "You should adjust and fine-tune routing strategies based on business requirements, performance metrics, and feedback to continuously improve the experience and operational efficiency."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t1-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Routing strategies",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When setting up routing strategies in Amazon Connect, it is important to consider several key resources. The routing profile associated to agents is particularly important because it determines how contacts are routed. For further information about available resources, choose the following tabs."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t1-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Predefined attributes",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Routing profiles"
+            },
+            {
+              "type": "p",
+              "text": "Routing interactions based on hours of operation is an important aspect of contact center routing strategies. For example, contact centers can operate in different geographical locations. Contacts might not always be located in the same geographical area where the contact center runs its operations."
+            },
+            {
+              "type": "p",
+              "text": "The routing profile that is associated with an agent determines how contacts are routed. The hours of operation for a given queue and the routing logic that you define in your flows are also considered. You configure and assign these resources in the Amazon Connect console."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t1-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Configuring routing resources",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect operates based on a series of resources, such as users, queues, routing profiles, and more. In this course, all Amazon Connect configuration elements are called resources. You will learn more about how to configure hours of operation, queues, predefined attributes, and routing profiles in the following section."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t1-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Hours of operation",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about how to configure hours of operation, select the arrow buttons and navigate each of the four steps below."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Hours of operation",
+                  "body": "Hours of operation is a resource that defines when a queue is available. You can attach this resource to queues or reference it directly in flows."
+                },
+                {
+                  "title": "Select the hours of operation",
+                  "body": "Hours of operation menu option in the Amazon Connect administrative console. To add or modify the hours of operation, choose Routing, and then choose Hours of operation."
+                },
+                {
+                  "title": "Add a new set of hours",
+                  "body": "Amazon Connect console, add new set of hours option in the hours of operation configuration. Here, you will find the existing hours of operation available in the Amazon Connect instance. Choose an existing resource to display its configuration. Alternatively, you can choose Add new set of hours to create new hours of operation."
+                },
+                {
+                  "title": "Configure the hours of operation details",
+                  "body": "Amazon Connect console, Hours of operation details. When you create a new set of hours of operation, you must enter a name and a time zone. Optionally, you can add a description to be displayed in the list of hours of operation in the Amazon Connect console. This description can help quickly identify the purpose of the resource. For Name and Description, enter Schedule for 24/7."
+                },
+                {
+                  "title": "Configure the days of the week",
+                  "body": "Amazon Connect console, settings page displaying the day of the week, start time, and end time. Amazon Connect reviews the hours of operation and time zone for your contact center to determine whether the contact can be routed to the queue. Amazon Connect uses the time zone to determine whether daylight saving time is in effect, and it adjusts automatically."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "You must specify the day of the week and the time of day for each day that you configure. By default, Amazon Connect evaluates the hours of operation as closed if the day and time are not configured."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Summary"
+            },
+            {
+              "type": "p",
+              "text": "When you are done, save your changes. The resource then becomes available in the queue configuration and in the Hours of operation flow block in the flow designer."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t1-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Queues",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about how to configure Amazon Connect queues, select the arrow buttons and navigate each of the seven steps below."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Queues",
+                  "body": "Queues are the basic building blocks of every routing strategy. When a contact must be delivered to an agent, it is placed in a queue and will wait for the next available agent."
+                },
+                {
+                  "title": "Select queues",
+                  "body": "Queues menu option in the Amazon Connect console. To create a new queue, in the Amazon Connect console, choose Routing, and then choose Queues."
+                },
+                {
+                  "title": "Add a queue",
+                  "body": "Add a queue image option in the Amazon Connect console. A list of available queues for the Amazon Connect instance will open. You can choose an existing queue to display and edit its configuration."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "To create a new queue, choose Add queue."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Configure the queue details",
+                  "body": "Amazon Connect console, add description in the queue configuration menu. To configure a queue, enter a name and associate the hours of operation. Optionally, you can add a description to be displayed in the list of queues in the Amazon Connect instance."
+                },
+                {
+                  "title": "Configure the outbound settings",
+                  "body": "Amazon Connect console, add outbound caller flow in the queue configuration. In the Settings section, you can configure the outbound settings. The settings include the default caller ID name, outbound caller ID number, and outbound caller flow."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The outbound caller ID number is the number that the recipient of a call will see on their display."
+            },
+            {
+              "type": "p",
+              "text": "The outbound caller flow is an Amazon Connect flow that gets activated when a call is placed from this queue."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Configure the quick connects"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect console, add quick contacts in the queue configuration. In the Quick Connects section, you can define which transfer or consultation destinations are available to agents handling a contact assigned to this queue. For example, you might create a quick connect to transfer a contact to the finance department and assign it to the support queue. When an agent handles a contact in the support queue, the finance department quick connect will be available to them. The agent can use this quick connect if they receive an issue that is better suited for the finance team."
+            },
+            {
+              "type": "p",
+              "text": "You can add multiple quick connects to a queue by choosing the quick connects available in the Amazon Connect instance."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Configure the queue maximum capacity"
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect console, setting maximum capacity for queue settings in the queue configuration. When you configure a queue, you can define a maximum number of contacts that can enter the queue to wait for an agent."
+            },
+            {
+              "type": "p",
+              "text": "By using this setting, you apply the limit across all channels. For example, if you set the maximum contacts to 10, and 10 contacts are waiting, subsequent contacts will follow the At capacity flow block path. They will not be transferred to the queue. Use this setting to define overflow logic for your queues."
+            },
+            {
+              "type": "p",
+              "text": "When the number of contacts that are waiting is less than the set limit, contacts are placed in queue. A contact that takes the At capacity path is not placed in queue."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Configure the tags",
+                  "body": "Amazon Connect console, tags section in the queue configuration. You can use tags for some resources in Amazon Connect. Tags are custom metadata that you can use to identify, search, and filter resources. You can also use tags to restrict access to resources to specific users. You can add tags to a queue in the Tags section."
+                },
+                {
+                  "title": "Summary",
+                  "body": "After you save your changes, the resource becomes available in the Queues menu."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t1-s7",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Predefined attributes",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about how to configure predefined routing attributes, select the arrow buttons and navigate each of the six steps below."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Predefined attributes",
+                  "body": "When you configure predefined attributes in Amazon Connect, you can select specific agents that can answer contacts based on these attributes. Predefined attributes contain a name and a value. The attributes that you create can then be assigned to agents to specify the level of proficiency of that attribute for that agent. When you use attributes to route a contact, you specify the attributes and the level that are required for agents to be eligible to answer."
+                },
+                {
+                  "title": "Select predefined attributes",
+                  "body": "Predefined menu option in the Amazon Connect console. To view or edit predefined attributes, navigate to the Amazon Connect console. Choose Routing, and then choose Predefined attributes."
+                },
+                {
+                  "title": "Add a predefined attribute",
+                  "body": "Amazon Connect console, adding a predefined attribute in the predefined attributes configuration. You will find the list of predefined attributes already available in the Amazon Connect instance. You can select and edit an existing attribute. To create a new one, choose Add predefined attribute."
+                },
+                {
+                  "title": "Configure the predefined attribute",
+                  "body": "Amazon Connect console, adding a predefined attribute in the predefined attributes configuration. When you configure a predefined attribute, you must specify a name and one or more values. You can add new values to existing attributes, and you can also remove previously configured values from an attribute."
+                },
+                {
+                  "title": "Select user management",
+                  "body": "User management menu option in the Amazon Connect console. To assign attributes to agents, choose Users, and then choose User management."
+                },
+                {
+                  "title": "View attributes assigned to an agent",
+                  "body": "Amazon Connect console, adding a proficiency level in the predefined attributes configuration. On the agent configuration screen, you will find the attributes assigned to an agent in the Proficiencies section. When you add a new proficiency to an agent, you must configure the predefined attribute, its value, and the proficiency level for that agent. Proficiency levels are defined by a number between 1 and 5, with 5 representing the most proficient and 1 the least proficient."
+                },
+                {
+                  "title": "Assign values to a predefined attribute",
+                  "body": "Amazon Connect console, assign a sample predefined attribute to a user. For example, you might want to add a specific language proficiency for an agent who is fluent in French. For Predefined attribute, choose connect:Language. For Value, choose connect:French, and then for Proficiency level, enter 5."
+                },
+                {
+                  "title": "Summary",
+                  "body": "After you save your changes, the predefined attributes are associated with the user."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t1-s8",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Routing profiles",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To learn more about how to configure routing profiles, select the arrow buttons and navigate each of the seven steps below."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Routing profiles",
+                  "body": "In Amazon Connect, an agent is assigned a single routing profile. When you create a routing profile, you define which interactions an agent can answer by assigning queues."
+                },
+                {
+                  "title": "Select routing profiles",
+                  "body": "Routing profiles option in the Amazon Connect console. To add or modify routing profiles, navigate to the Amazon Connect console. Choose User, and then choose Routing profiles."
+                },
+                {
+                  "title": "Add a routing profile",
+                  "body": "Amazon Connect console, adding a routing profile in the routing profiles configuration. You can edit existing routing profiles. To create a new one, choose Add routing profile."
+                },
+                {
+                  "title": "Configure the routing profile details",
+                  "body": "Amazon Connect console, adding a description in the routing profile configuration. When you configure a routing profile, you must give it a name and a description."
+                },
+                {
+                  "title": "Configure the channel settings",
+                  "body": "Amazon Connect console, configure channel settings in the routing profile configuration. In the Settings section, you can edit the global channel settings. You can define which channel agents that are assigned to this profile are eligible and the cross-channel concurrency rules to apply."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "When you activate a channel, you must define the following:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Whether the agent can receive interactions from another channel concurrently",
+                "Whether the agent cannot receive another type of interaction while handling a contact on this channel"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "You can create a routing profile that allows agents to handle voice and chat contacts. You can then restrict the routing of chats and tasks while an agent is on a voice contact. In addition, you can specify the number of concurrent interactions of a specific channel an agent can receive."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Add queues",
+                  "body": "Amazon Connect console, adding queues in the routing profile configuration. In the Queues section, you can select which queues you want the agents to be assigned to and the channels for each queue. To add a queue, choose Add Queue. You must define the priority and delay to implement for the agents to be considered as targets for a contact in the queue. When you configure priority in a routing profile, a lower number indicates a higher priority."
+                },
+                {
+                  "title": "Configure the queues",
+                  "body": "Amazon Connect console, setting queue priority and delay in the routing profiles configuration. For example, you can create a routing profile that delivers Business queue voice contacts to agents as a priority over other contacts. You can then configure the profile to include a second voice queue, called BasicQueue. Contacts in BasicQueue have a lower priority, and they will be evaluated only after contacts have waited for longer than 30 seconds in queue."
+                },
+                {
+                  "title": "Delete a queue",
+                  "body": "Amazon Connect console, Delete queue in the routing profile configuration. You can delete a single or multiple queues from a routing profile. By deleting queues from a routing profile, you change the contact channels that agents can handle."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "First, select the checkbox next to the the queues yhat you want to delete. If you select at least one checkbox, the Delete Queue button becomes available. Choose Delete Queue to remove all the selected queues. Selecting that button removes all the selected queues. You can also delete one queue at a time by selecting the queue and then choosing the trash can icon."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Summary"
+            },
+            {
+              "type": "p",
+              "text": "Choose Save to apply the changes to the routing profile."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned the key resources and configurations required to implement routing strategies in Amazon Connect. In the next lesson, you will explore how key routing configuration components drive effective routing in Amazon Connect. Queues Predefined attributes Routing profiles A queue-based routing strategy is customizable and can incorporate various factors, such as customer information, interaction history, agent skills, language preferences, or geographic location. Predefined attributes Routing profiles In Amazon Connect, you can use predefined attributes to target an agent or pools of agents in a queue. This technique helps when creating complex routing strategies for situations when basic queue-based routing cannot provide the outcome that you want. Routing profiles You define which interactions an agent or a group of agents can answer based on the queues that are set up in a routing profile. Hours of operation Hours of operation is a resource that defines when a queue is available. You can attach this resource to queues or reference it directly in flows. Select the hours of operation Hours of operation menu option in the Amazon Connect administrative console. To add or modify the hours of operation, choose Routing, and then choose Hours of operation. Add a new set of hours Amazon Connect console, add new set of hours option in the hours of operation configuration. Here, you will find the existing hours of operation available in the Amazon Connect instance. Choose an existing resource to display its configuration. Alternatively, you can choose Add new set of hours to create new hours of operation. Configure the hours of operation details Amazon Connect console, Hours of operation details. When you create a new set of hours of operation, you must enter a name and a time zone. Optionally, you can add a description to be displayed in the list of hours of operation in the Amazon Connect console. This description can help quickly identify the purpose of the resource. For Name and Description, enter Schedule for 24/7. Configure the days of the week Amazon Connect console, settings page displaying the day of the week, start time, and end time. Amazon Connect reviews the hours of operation and time zone for your contact center to determine whether the contact can be routed to the queue. Amazon Connect uses the time zone to determine whether daylight saving time is in effect, and it adjusts automatically. You must specify the day of the week and the time of day for each day that you configure. By default, Amazon Connect evaluates the hours of operation as closed if the day and time are not configured. Summary When you are done, save your changes. The resource then becomes available in the queue configuration and in the Hours of operation flow block in the flow designer. Queues Queues are the basic building blocks of every routing strategy. When a contact must be delivered to an agent, it is placed in a queue and will wait for the next available agent. Select queues Queues menu option in the Amazon Connect console. To create a new queue, in the Amazon Connect console, choose Routing, and then choose Queues. Add a queue Add a queue image option in the Amazon Connect console. A list of available queues for the Amazon Connect instance will open. You can choose an existing queue to display and edit its configuration. To create a new queue, choose Add queue. Configure the queue details Amazon Connect console, add description in the queue configuration menu. To configure a queue, enter a name and associate the hours of operation. Optionally, you can add a description to be displayed in the list of queues in the Amazon Connect instance. Configure the outbound settings Amazon Connect console, add outbound caller flow in the queue configuration. In the Settings section, you can configure the outbound settings. The settings include the default caller ID name, outbound caller ID number, and outbound caller flow. The outbound caller ID number is the number that the recipient of a call will see on their display. The outbound caller flow is an Amazon Connect flow that gets activated when a call is placed from this queue. Configure the quick connects Amazon Connect console, add quick contacts in the queue configuration. In the Quick Connects section, you can define which transfer or consultation destinations are available to agents handling a contact assigned to this queue. For example, you might create a quick connect to transfer a contact to the finance department and assign it to the support queue. When an agent handles a contact in the support queue, the finance department quick connect will be available to them. The agent can use this quick connect if they receive an issue that is better suited for the finance team. You can add multiple quick connects to a queue by choosing the quick connects available in the Amazon Connect instance. Queues Queues are the basic building blocks of every routing strategy. When a contact must be delivered to an agent, it is placed in a queue and will wait for the next available agent. Select queues Queues menu option in the Amazon Connect console. To create a new queue, in the Amazon Connect console, choose Routing, and then choose Queues. Add a queue Add a queue image option in the Amazon Connect console. A list of available queues for the Amazon Connect instance will open. You can choose an existing queue to display and edit its configuration. To create a new queue, choose Add queue. Configure the queue details Amazon Connect console, add description in the queue configuration menu. To configure a queue, enter a name and associate the hours of operation. Optionally, you can add a description to be displayed in the list of queues in the Amazon Connect instance. Configure the outbound settings Amazon Connect console, add outbound caller flow in the queue configuration. In the Settings section, you can configure the outbound settings. The settings include the default caller ID name, outbound caller ID number, and outbound caller flow. The outbound caller ID number is the number that the recipient of a call will see on their display. The outbound caller flow is an Amazon Connect flow that gets activated when a call is placed from this queue. Configure the quick connects Amazon Connect console, add quick contacts in the queue configuration. In the Quick Connects section, you can define which transfer or consultation destinations are available to agents handling a contact assigned to this queue. For example, you might create a quick connect to transfer a contact to the finance department and assign it to the support queue. When an agent handles a contact in the support queue, the finance department quick connect will be available to them. The agent can use this quick connect if they receive an issue that is better suited for the finance team. You can add multiple quick connects to a queue by choosing the quick connects available in the Amazon Connect instance. Configure the queue maximum capacity Amazon Connect console, setting maximum capacity for queue settings in the queue configuration. When you configure a queue, you can define a maximum number of contacts that can enter the queue to wait for an agent. By using this setting, you apply the limit across all channels. For example, if you set the maximum contacts to 10, and 10 contacts are waiting, subsequent contacts will follow the At capacity flow block path. They will not be transferred to the queue. Use this setting to define overflow logic for your queues. When the number of contacts that are waiting is less than the set limit, contacts are placed in queue. A contact that takes the At capacity path is not placed in queue. Configure the tags Amazon Connect console, tags section in the queue configuration. You can use tags for some resources in Amazon Connect. Tags are custom metadata that you can use to identify, search, and filter resources. You can also use tags to restrict access to resources to specific users. You can add tags to a queue in the Tags section. Summary After you save your changes, the resource becomes available in the Queues menu. Select predefined attributes Predefined menu option in the Amazon Connect console. To view or edit predefined attributes, navigate to the Amazon Connect console. Choose Routing, and then choose Predefined attributes. Add a predefined attribute Amazon Connect console, adding a predefined attribute in the predefined attributes configuration. You will find the list of predefined attributes already available in the Amazon Connect instance. You can select and edit an existing attribute. To create a new one, choose Add predefined attribute. Predefined attributes When you configure predefined attributes in Amazon Connect, you can select specific agents that can answer contacts based on these attributes. Predefined attributes contain a name and a value. The attributes that you create can then be assigned to agents to specify the level of proficiency of that attribute for that agent. When you use attributes to route a contact, you specify the attributes and the level that are required for agents to be eligible to answer. Select predefined attributes Predefined menu option in the Amazon Connect console. To view or edit predefined attributes, navigate to the Amazon Connect console. Choose Routing, and then choose Predefined attributes. Add a predefined attribute Amazon Connect console, adding a predefined attribute in the predefined attributes configuration. You will find the list of predefined attributes already available in the Amazon Connect instance. You can select and edit an existing attribute. To create a new one, choose Add predefined attribute. Configure the predefined attribute Amazon Connect console, adding a predefined attribute in the predefined attributes configuration. When you configure a predefined attribute, you must specify a name and one or more values. You can add new values to existing attributes, and you can also remove previously configured values from an attribute Select user management User management menu option in the Amazon Connect console. To assign attributes to agents, choose Users, and then choose User management. Predefined attributes When you configure predefined attributes in Amazon Connect, you can select specific agents that can answer contacts based on these attributes. Predefined attributes contain a name and a value. The attributes that you create can then be assigned to agents to specify the level of proficiency of that attribute for that agent. When you use attributes to route a contact, you specify the attributes and the level that are required for agents to be eligible to answer. Select predefined attributes Predefined menu option in the Amazon Connect console. To view or edit predefined attributes, navigate to the Amazon Connect console. Choose Routing, and then choose Predefined attributes. Add a predefined attribute Amazon Connect console, adding a predefined attribute in the predefined attributes configuration. You will find the list of predefined attributes already available in the Amazon Connect instance. You can select and edit an existing attribute. To create a new one, choose Add predefined attribute. Configure the predefined attribute Amazon Connect console, adding a predefined attribute in the predefined attributes configuration. When you configure a predefined attribute, you must specify a name and one or more values. You can add new values to existing attributes, and you can also remove previously configured values from an attribute. Select user management User management menu option in the Amazon Connect console. To assign attributes to agents, choose Users, and then choose User management. View attributes assigned to an agent Amazon Connect console, adding a proficiency level in the predefined attributes configuration. On the agent configuration screen, you will find the attributes assigned to an agent in the Proficiencies section. When you add a new proficiency to an agent, you must configure the predefined attribute, its value, and the proficiency level for that agent. Proficiency levels are defined by a number between 1 and 5, with 5 representing the most proficient and 1 the least proficient. Assign values to a predefined attribute Amazon Connect console, assign a sample predefined attribute to a user. For example, you might want to add a specific language proficiency for an agent who is fluent in French. For Predefined attribute, choose connect:Language. For Value, choose connect:French, and then for Proficiency level, enter 5. Summary After you save your changes, the predefined attributes are associated with the user. Select routing profiles Routing profiles option in the Amazon Connect console. To add or modify routing profiles, navigate to the Amazon Connect console. Choose User, and then choose Routing profiles. Add a routing profile Amazon Connect console, adding a routing profile in the routing profiles configuration. You can edit existing routing profiles. To create a new one, choose Add routing profile. Configure the routing profile details Amazon Connect console, adding a description in the routing profile configuration. When you configure a routing profile, you must give it a name and a description. Configure the channel settings Amazon Connect console, configure channel settings in the routing profile configuration. In the Settings section, you can edit the global channel settings. You can define which channel agents that are assigned to this profile are eligible and the cross-channel concurrency rules to apply. When you activate a channel, you must define the following: Whether the agent can receive interactions from another channel concurrently Whether the agent cannot receive another type of interaction while handling a contact on this channel You can create a routing profile that allows agents to handle voice and chat contacts. You can then restrict the routing of chats and tasks while an agent is on a voice contact. In addition, you can specify the number of concurrent interactions of a specific channel an agent can receive. Add queues Amazon Connect console, adding queues in the routing profile configuration. In the Queues section, you can select which queues you want the agents to be assigned to and the channels for each queue. To add a queue, choose Add Queue. You must define the priority and delay to implement for the agents to be considered as targets for a contact in the queue. When you configure priority in a routing profile, a lower number indicates a higher priority. Configure the queues Amazon Connect console, setting queue priority and delay in the routing profiles configuration. For example, you can create a routing profile that delivers Business queue voice contacts to agents as a priority over other contacts. You can then configure the profile to include a second voice queue, called BasicQueue. Contacts in BasicQueue have a lower priority, and they will be evaluated only after contacts have waited for longer than 30 seconds in queue. Delete a queue Amazon Connect console, Delete queue in the routing profile configuration. You can delete a single or multiple queues from a routing profile. By deleting queues from a routing profile, you change the contact channels that agents can handle. First, select the checkbox next to the the queues yhat you want to delete. If you select at least one checkbox, the Delete Queue button becomes available. Choose Delete Queue to remove all the selected queues. Selecting that button removes all the selected queues. You can also delete one queue at a time by selecting the queue and then choosing the trash can icon. Summary Choose Save to apply the changes to the routing profile Lesson 3 of 9 Lesson 2 of 9"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-routing-intermediate-t1-q1",
+          "question": "An organization wants to ensure that calls from higher value customers are prioritized in their Amazon Connect contact center. Which factor should the organization consider for its routing strategy to accomplish this?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Skill-based routing"
+            },
+            {
+              "id": "B",
+              "text": "Language-based routing"
+            },
+            {
+              "id": "C",
+              "text": "Priority routing"
+            },
+            {
+              "id": "D",
+              "text": "Location-based routing"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "In priority routing, contacts are prioritized based on predefined criteria, such as customer value, service level agreements (SLAs), or the urgency of the interaction."
+        },
+        {
+          "id": "connect-routing-intermediate-t1-q2",
+          "question": "An organization wants to ensure that customers who have previously interacted with a specific agent are routed to the same agent for better continuity. Which factor should the organization consider for its routing strategy to accomplish this objective?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Load balancing"
+            },
+            {
+              "id": "B",
+              "text": "Interaction history routing"
+            },
+            {
+              "id": "C",
+              "text": "Language-based routing"
+            },
+            {
+              "id": "D",
+              "text": "Location-based routing"
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "In interaction history routing, contacts are routed based on their previous interactions or established relationships with specific agents or departments."
+        },
+        {
+          "id": "connect-routing-intermediate-t1-q3",
+          "question": "Which resource should a contact center administrator configure to implement proficiency-based routing in Amazon Connect?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Hours of operation"
+            },
+            {
+              "id": "B",
+              "text": "Queues"
+            },
+            {
+              "id": "C",
+              "text": "Predefined attributes"
+            },
+            {
+              "id": "D",
+              "text": "Routing profiles"
+            }
+          ],
+          "correctOptionId": "C",
+          "rationale": "A contact center administrator should configure predefined attributes. With predefined attributes, they can select specific agents who can answer contacts based on these attributes."
+        }
+      ]
+    },
+    {
+      "id": "connect-routing-intermediate-t2",
+      "number": 2,
+      "title": "Queue prioritization",
+      "shortTitle": "Queue prioritization",
+      "summary": "Contact prioritization in Amazon Connect determines the order of contacts in a queue and the order of contacts that are presented to agents. You…",
+      "duration": "~6 min",
+      "lede": null,
+      "objectives": [
+        "Recognize the concept and importance of routing profiles.",
+        "Explore queue priorities."
+      ],
+      "sections": [
+        {
+          "id": "connect-routing-intermediate-t2-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Contact prioritization in Amazon Connect determines the order of contacts in a queue and the order of contacts that are presented to agents. You can manage contact prioritization within queues and across multiple queues by using routing profiles."
+            },
+            {
+              "type": "p",
+              "text": "To implement this prioritization, you must first learn how contacts are ordered in a queue. The next step is to understand how the routing engine selects the right agent to handle contacts."
+            },
+            {
+              "type": "p",
+              "text": "To determine the prioritization of contacts in a queue, you must consider the following:"
+            },
+            {
+              "type": "p",
+              "text": "Define the priority of each contact based on defined business criteria."
+            },
+            {
+              "type": "p",
+              "text": "Order the contacts in the queue according to their assigned priority. Higher priority contacts will be placed at the front of the queue. A contact with a priority of 1 is a higher priority than a contact with a priority of 3."
+            },
+            {
+              "type": "p",
+              "text": "To determine the order of contacts presented to an agent, consider the following aspects of contact prioritization:"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Identify the agent's routing profile. Routing profiles specify the queues that agents can handle.",
+                "Understand the priorities and channel settings for the queues in the routing profile.",
+                "By considering these aspects, you can effectively manage the flow of contacts in an Amazon Connect instance."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t2-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Prioritization in a queue",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "By default, in Amazon Connect, contacts are queued and handled on a first-come, first-served basis. When contacts are transferred to a queue, they are offered to agents in the order that they entered the queue. Each contact is also assigned a priority of 5 by default. You can manually assign a priority to a contact. The lower the value and closer to 0, the higher the priority."
+            },
+            {
+              "type": "p",
+              "text": "Change routing priority and age configuration flow block indicating successful updates."
+            },
+            {
+              "type": "p",
+              "text": "For example, you can give a higher priority based on customer information, such as loyalty status. To change the priority of a contact, use the Change routing priority / age flow block and enter the priority for that contact."
+            },
+            {
+              "type": "p",
+              "text": "By changing the priority, you can reorder contacts in the same queue based on your business requirements."
+            },
+            {
+              "type": "p",
+              "text": "In addition to priority, you can adjust the age of a call. You can add or subtract seconds or minutes from the amount of time that the contact has spent in queue. Priority is always evaluated before time, and time is only a factor when evaluating contacts at the same priority level. When priority is equal, the contact with the oldest age will be routed to the next available agent."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t2-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Prioritization within a routing profile",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The routing profiles that are assigned to agents define the priority of contacts across multiple queues. For example, your contact center might receive calls that you can route to four different queues: Sales, Support, Emergency, and Billing."
+            },
+            {
+              "type": "p",
+              "text": "You can configure Sales calls to be routed first, unless a call waits in the Emergency queue. Thus, it ensures that calls in the Emergency queue are answered first. Billing contacts might have the same priority as Support contacts. For this particular group of agents, no Billing calls are routed unless the wait time in the queue exceeds 30 seconds."
+            },
+            {
+              "type": "p",
+              "text": "To implement a routing profile for this agent group, you first must add the four queues. The order in which you add the queues to the routing profiles does not impact the routing priority. To implement the priority order, you must adjust the priority and delay settings. In the following example, the Emergency queue will have the highest priority with the value 1. To ensure that agents with this routing profile receive Sales calls if no Emergency calls are waiting in queue, the Sales queue has priority 2. Support and Billing queues have priority 3, and the Billing queue has a 30-second delay."
+            },
+            {
+              "type": "p",
+              "text": "Sample queue priority and delay settings in the routing profile configuration, with various assigned queues."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Routing overflow use case"
+            },
+            {
+              "type": "p",
+              "text": "To learn more about how routing profile delays work, select the arrow buttons and navigate each of the four steps below."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "Handling long queue wait times with routing profile delay configuration",
+                  "body": "A contact is transferred to the Coffee Maker Support queue."
+                },
+                {
+                  "title": "Evaluating routing profiles",
+                  "body": "Sample routing profile configurations for handling contacts from the Coffee Maker Support queue. Three routing profiles contain the Coffee Maker Support."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Agents with these routing profiles are eligible to handle the contact that is waiting in the Coffee Maker Support queue."
+            },
+            {
+              "type": "cards",
+              "items": [
+                {
+                  "title": "A contact enters the queue",
+                  "body": "Agents with the first routing profile become eligible to handle a contact as soon as it's placed in queue The first routing profile queue has a delay value of zero. Agents with this routing profile are eligible to handle contacts from this queue as soon as a contact is added to the queue."
+                },
+                {
+                  "title": "Queue wait time exceeds 120 seconds",
+                  "body": "Routing profile configuration now includes agents from first and second profile As the contact wait time exceeds 120 seconds, the routing engine expands the pool of eligible agents. The pool now includes agents from the first and second routing profiles."
+                },
+                {
+                  "title": "Queue wait time exceeds 300 seconds",
+                  "body": "Routing profile configuration extends the pool of agents available to handle the contact As the wait time exceeds 300 seconds, the routing engine uses the routing profiles delay setting to further expand the pool of eligible agents."
+                }
+              ]
+            },
+            {
+              "type": "p",
+              "text": "The pool of eligible agents now includes agents from all three routing profiles."
+            },
+            {
+              "type": "p",
+              "text": "As soon as eligible agents with these routing profiles become available, the routing engine selects the agent that has been available the longest."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Summary"
+            },
+            {
+              "type": "p",
+              "text": "By using the delay feature in the routing profile configuration, you can load balance contacts among groups of agents. This routing overflow strategy does not require contacts to be moved to other queues through additional programming."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you explored how to prioritize contacts in queues and across multiple queues by using routing profiles. You also explored queue priority. In the next lesson, you will learn how proficiency routing works in Amazon Connect. Evaluating routing profiles Sample routing profile configurations for handling contacts from the Coffee Maker Support queue. Three routing profiles contain the Coffee Maker Support. Agents with these routing profiles are eligible to handle the contact that is waiting in the Coffee Maker Support queue. A contact enters the queue Agents with the first routing profile become eligible to handle a contact as soon as it's placed in queue The first routing profile queue has a delay value of zero. Agents with this routing profile are eligible to handle contacts from this queue as soon as a contact is added to the queue. Queue wait time exceeds 120 seconds Routing profile configuration now includes agents from first and second profile As the contact wait time exceeds 120 seconds, the routing engine expands the pool of eligible agents. The pool now includes agents from the first and second routing profiles. Queue wait time exceeds 300 seconds Routing profile configuration extends the pool of agents available to handle the contact As the wait time exceeds 300 seconds, the routing engine uses the routing profiles delay setting to further expand the pool of eligible agents. The pool of eligible agents now includes agents from all three routing profiles. As soon as eligible agents with these routing profiles become available, the routing engine selects the agent that has been available the longest. Summary By using the delay feature in the routing profile configuration, you can load balance contacts among groups of agents. This routing overflow strategy does not require contacts to be moved to other queues through additional programming. Lesson 4 of 9"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-routing-intermediate-t2-q1",
+          "question": "An organization wants to prioritize sales calls over support calls in the same queue. What can the organization do to accomplish this objective?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Change the priority of sales contacts to a lower value than support contacts."
+            },
+            {
+              "id": "B",
+              "text": "Increase the age of support contacts in the queue."
+            },
+            {
+              "id": "C",
+              "text": "Create separate queues for sales and support, and assign a higher priority to the sales queue."
+            },
+            {
+              "id": "D",
+              "text": "Change the priority of sales contacts to a higher value than support contacts."
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Organizations can use the Change routing priority / age flow block to manually assign a priority to a contact. The lower the value, the higher the priority."
+        },
+        {
+          "id": "connect-routing-intermediate-t2-q2",
+          "question": "An agent's routing profile includes four queues: Sales, Support, Emergency, and Billing. The priorities for these queues are set to 1, 2, 3, and 4, respectively. Which queue is prioritized for the agent if contacts are waiting in all four queues?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Sales queue"
+            },
+            {
+              "id": "B",
+              "text": "Support queue"
+            },
+            {
+              "id": "C",
+              "text": "Emergency queue"
+            },
+            {
+              "id": "D",
+              "text": "Billing queue"
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "Setting the priority for a queue to 1 indicates that this queue has the highest priority."
+        }
+      ]
+    },
+    {
+      "id": "connect-routing-intermediate-t3",
+      "number": 3,
+      "title": "Proficiency routing",
+      "shortTitle": "Proficiency routing",
+      "summary": "Queues and routing profiles play a critical role in proficiency-based routing. Contacts are transferred to a queue, and agents who are assigned a…",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [
+        "Explore routing by using agent proficiencies.",
+        "Explore configuring routing criteria in flows."
+      ],
+      "sections": [
+        {
+          "id": "connect-routing-intermediate-t3-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Queues and routing profiles play a critical role in proficiency-based routing. Contacts are transferred to a queue, and agents who are assigned a routing profile that contains the matching queues are eligible routing resources. To implement a granular targeting mechanism to select specific agents in that queue, you can use proficiency-based routing. For example, you can use proficiency to specify language abilities, knowledge depth that is related to particular products, or geographical location."
+            },
+            {
+              "type": "p",
+              "text": "In Amazon Connect, you implement proficiency-based routing by creating predefined attributes. You can assign these attribute-value pairs to agents. You use them to specify the level of proficiency of an agent for that attribute."
+            },
+            {
+              "type": "p",
+              "text": "Set routing criteria flow block, highlighting success and error options."
+            },
+            {
+              "type": "p",
+              "text": "Levels of proficiency range from 1 to 5, with 5 being the highest level. You can assign multiple proficiencies to an agent. After you create predefined attributes and assign them to agents, you can use flows to implement your routing strategy. In your flows, use the Set routing criteria flow block to set up your routing criteria."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t3-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Routing steps",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can set up to five steps of routing criteria for a contact."
+            },
+            {
+              "type": "p",
+              "text": "Add a routing step in the Set routing criteria flow block configuration"
+            },
+            {
+              "type": "p",
+              "text": "To add a routing criteria step, choose Add a routing step in the flow block configuration. For each step that you create, you must add at least one requirement. You can configure up to eight requirements for each step. You can also define the steps and requirements dynamically by providing JSON formatted data. For more information, navigate to the Set Routing Criteria Dynamically section of the Amazon Connect Administrator Guide."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t3-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Add requirements",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Requirements specify the agents’ proficiency levels that are needed to handle the current contact. Choose Add a requirement to start configuring the first routing step."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Routing criteria view is focused on the Add requirements configuration option.",
+                "Add a requirement for connect:Language with the value connect:French, and proficiency level 5"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "For this use case, agents must have a maximum French proficiency level of 5. As soon as the values have been updated, select the button Save."
+            },
+            {
+              "type": "p",
+              "text": "The routing step now shows the first requirement configuration values. You can add more requirements by choosing Add another requirement."
+            },
+            {
+              "type": "p",
+              "text": "You can also specify an expiration time for the step. After a set expiration time, the routing engine evaluates the next step sequentially, until one of the criteria is satisfied."
+            },
+            {
+              "type": "p",
+              "text": "Add additional requirements and set requirements expiration time in the routing criteria flow block configuration."
+            },
+            {
+              "type": "p",
+              "text": "To implement a more gradual proficiency degradation, you can add multiple steps. For example, you can configure a second step that selects agents with a language proficiency equal to or greater than 3. This time, the expiration time is set for another 30 seconds. With this second step, you are effectively expanding the agent group that can handle this interaction."
+            },
+            {
+              "type": "p",
+              "text": "Sample routing criteria configuration highlighting two-step option to meet language and expiration requirements."
+            },
+            {
+              "type": "p",
+              "text": "When all the steps expire in routing criteria, the Amazon Connect routing engine will evaluate all agents configured to handle contacts from the current queue."
+            },
+            {
+              "type": "p",
+              "text": "You have an option to define steps that never expire. With this option, contacts will wait indefinitely for agents who satisfy the configured requirement. This configuration can cause long wait times in queues, and affect the customer experience. Administrators can configure alerts so that supervisors take appropriate actions, as needed. For more details, navigate to the Create Alerts on Real-Time Metrics section of the Amazon Connect Administrator Guide."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you learned how to implement proficiency-based routing in Amazon Connect by creating predefined attributes, assigning them to agents, and configuring routing criteria. In the next lesson, you will explore how contact data improves routing strategies. Lesson 5 of 9"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-routing-intermediate-t3-q1",
+          "question": "A contact center administrator wants to implement proficiency-based routing for language skills. What should the administrator do first?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Configure routing criteria in the contact flow."
+            },
+            {
+              "id": "B",
+              "text": "Create predefined attributes for language proficiency."
+            },
+            {
+              "id": "C",
+              "text": "Assign agents to queues based on their language skills."
+            },
+            {
+              "id": "D",
+              "text": "Set routing priorities for different languages."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "In Amazon Connect, implement proficiency-based routing by creating predefined attributes. Assign predefined attributes to agents and use them to specify the level of proficiency of an agent."
+        },
+        {
+          "id": "connect-routing-intermediate-t3-q2",
+          "question": "Alejandro Rosalez is an agent who has been assigned a proficiency level of 4 for the Spanish language attribute. Alejandro is available to handle contacts. A contact flow has two routing criteria steps. The first step requires a Spanish language proficiency of 5 and is configured to wait 60 seconds. The second routing criteria step requires a language proficiency equal to or greater than 3 for 30 seconds. What happens with the contact after the first step, 60-second expiration time?",
+          "options": [
+            {
+              "id": "A",
+              "text": "The contact is routed to Alejandro immediately."
+            },
+            {
+              "id": "B",
+              "text": "The routing engine moves to the next routing criteria step. The contact is routed to Alejandro."
+            },
+            {
+              "id": "C",
+              "text": "The contact is removed from the queue."
+            },
+            {
+              "id": "D",
+              "text": "The contact waits indefinitely for an agent with a proficiency level of 5."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "When you set expiration timers, the routing criteria moves to the next step until one of them is satisfied, or there are no more steps."
+        },
+        {
+          "id": "connect-routing-intermediate-t3-q3",
+          "question": "Which statement about routing criteria steps is true?",
+          "options": [
+            {
+              "id": "A",
+              "text": "There can be a maximum of three routing criteria steps per contact."
+            },
+            {
+              "id": "B",
+              "text": "Each routing criteria step can have up to eight requirements."
+            },
+            {
+              "id": "C",
+              "text": "Routing criteria steps are evaluated in parallel."
+            },
+            {
+              "id": "D",
+              "text": "Expiration times for routing criteria steps are mandatory."
+            }
+          ],
+          "correctOptionId": "B",
+          "rationale": "For each routing criteria step, you must add at least one and up to eight requirements."
+        }
+      ]
+    },
+    {
+      "id": "connect-routing-intermediate-t4",
+      "number": 4,
+      "title": "Data-driven routing",
+      "shortTitle": "Data-driven routing",
+      "summary": "When you make routing decisions to direct your call to available agents, you can use data to inform that decision. For example, you can look up…",
+      "duration": "~3 min",
+      "lede": null,
+      "objectives": [
+        "Identify customer profile data and calculated attributes.",
+        "Explore the use of external data sources to enhance routing decisions.",
+        "Learn how to use real-time metrics to improve contact experiences."
+      ],
+      "sections": [
+        {
+          "id": "connect-routing-intermediate-t4-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Lesson introduction",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "When you make routing decisions to direct your call to available agents, you can use data to inform that decision. For example, you can look up who the customer is in a customer relationship management (CRM) system to determine the best agent for that contact."
+            },
+            {
+              "type": "p",
+              "text": "The following topics explain how data improves your routing strategy and can help you find the best agent to handle each contact."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t4-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using data from Amazon Connect Customer Profiles",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect Customer Profiles provides experienced designers with real-time access to up-to-date customer information to personalize each interaction. By using calculated attributes, you can identify specific contact behavior. Examples of attributes might include the last website that the contact visited or the last agent whom they spoke with. You can also identify patterns of behavior, such as preferred channels or frequency of contact. Calculated attributes automatically transform raw data in real-time into actionable data points and metrics. You define and configure calculations based on the raw data available in Customer Profiles."
+            },
+            {
+              "type": "p",
+              "text": "Amazon Connect provides a set of default calculated attributes that you can use to inform routing decisions. They are as follows:"
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Average call duration"
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Average hold time",
+                "Frequent caller",
+                "Last agent ID",
+                "Last channel",
+                "Most frequent channel"
+              ]
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "New customer"
+            },
+            {
+              "type": "p",
+              "text": "Get profile and Get Calculated attributes options of Customer Profiles flow block, including both successful and other variables."
+            },
+            {
+              "type": "p",
+              "text": "You can use the Last agent calculated attribute to route a contact to the last agent. Use the Get profile option of the Customer Profiles flow block to retrieve data for an existing customer. Use the Get calculated attributes option of the same flow block to access calculated attributes, such as repeat contacts or the last channel that the contact interacted on. You can subsequently use this data to make routing decisions."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t4-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using external data",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "With Amazon Connect, you can use the built-in integration to AWS Lambda to access other AWS services or external data sources. You can retrieve information about a contact and use that information to make routing decisions."
+            },
+            {
+              "type": "p",
+              "text": "Some common use cases include the following."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t4-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "External predictions of intent",
+          "blocks": [
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Identify repeat callers"
+            },
+            {
+              "type": "p",
+              "text": "If you store the last agent that handled a contact in a data source, you can transfer a contact to that agent."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t4-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Using real-time metrics",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can decide to route contacts based on real-time metrics available in Amazon Connect. For example, if the oldest contact in a queue exceeds 10 minutes, you might consider offering a callback option. By proactively providing this option, you can improve the contact's experience and overall satisfaction."
+            },
+            {
+              "type": "p",
+              "text": "Get profile and Get calculated attributes options of Customer Profiles flow block with various attribute variables."
+            },
+            {
+              "type": "p",
+              "text": "In Amazon Connect, you can use the Get queue metrics block to retrieve real-time metrics for a given queue, such as contacts in queue. You can also use the Check staffing block to retrieve current staffing metrics for a queue. By checking the staffing information, you can specify the agent status that you want to consider, such as whether any agents are currently Available. Additionally, you can use the Check queue status block to make routing decisions based on the oldest contact time for a queue or its capacity."
+            },
+            {
+              "type": "callout",
+              "variant": "note",
+              "title": "What's next",
+              "body": [
+                "In this lesson, you explored how Amazon Connect uses data from various sources to drive intelligent routing decisions and enhance customer interactions. Continue to the next lesson to review the course summary and prepare for the end-of-course assessment. Abandoned call routing External predictions of intent Identify repeat callers If a contact previously abandoned the call while waiting in a queue, you can transfer the call directly to that queue. This action provides a better experience for the contact. External predictions of intent Identify repeat callers You can use insights from your websites or other information about a contact to determine the reason that the contact interacts with your contact center. Identify repeat callers You might decide to handle a contact who repetitively interacts with your contact center differently than other contacts. Lesson 6 of 9"
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": [
+        {
+          "id": "connect-routing-intermediate-t4-q1",
+          "question": "An organization wants to personalize the customer experience based on the most frequent communication channels that are used by customers. Which calculated attribute from Amazon Connect Customer Profiles can the organization use to retrieve this data?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Average call duration"
+            },
+            {
+              "id": "B",
+              "text": "Average hold time"
+            },
+            {
+              "id": "C",
+              "text": "Frequent caller"
+            },
+            {
+              "id": "D",
+              "text": "Most frequent channel"
+            }
+          ],
+          "correctOptionId": "D",
+          "rationale": "Customer Profiles provides a default calculated attribute for most frequent channel."
+        },
+        {
+          "id": "connect-routing-intermediate-t4-q2",
+          "question": "An organization wants to proactively offer a callback option to contacts if the wait time in a queue exceeds a certain threshold. Which approach can the organization use to accomplish this outcome?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Use the Check queue status block in Amazon Connect to check the oldest contact time in the queue."
+            },
+            {
+              "id": "B",
+              "text": "Integrate with AWS Lambda to access external data sources and retrieve contact intent predictions."
+            },
+            {
+              "id": "C",
+              "text": "Use the Check staffing block in Amazon Connect to retrieve current staffing metrics for the queue."
+            },
+            {
+              "id": "D",
+              "text": "Use the New customer calculated attribute in Amazon Connect Customer Profiles."
+            }
+          ],
+          "correctOptionId": "A",
+          "rationale": "In Amazon Connect, the Check queue status block can be used to retrieve real-time metrics for a given queue."
+        },
+        {
+          "id": "connect-routing-intermediate-t4-q3",
+          "question": "An organization wants to identify customers who frequently call the contact center and handle their calls differently. Which approach can the organization use to accomplish this outcome?",
+          "options": [
+            {
+              "id": "A",
+              "text": "Use the Get queue metrics block in Amazon Connect to check the oldest contact time in the queue."
+            },
+            {
+              "id": "B",
+              "text": "Integrate with AWS Lambda to access external data sources and retrieve customer contact frequency information."
+            },
+            {
+              "id": "C",
+              "text": "Use the Check staffing block in Amazon Connect to retrieve current staffing metrics for the queue."
+            },
+            {
+              "id": "D",
+              "text": "Use the Frequent caller calculated attribute from Amazon Connect Customer Profiles."
+            }
+          ],
+          "correctOptionId": "D",
+          "rationale": "Amazon Connect provides the Frequent caller calculated attribute to inform routing decisions."
+        }
+      ]
+    },
+    {
+      "id": "connect-routing-intermediate-t5",
+      "number": 5,
+      "title": "Summary",
+      "shortTitle": "Summary",
+      "summary": "In this course, you learned about routing strategies and their use in the Amazon Connect contact center. By implementing these concepts,…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-routing-intermediate-t5-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Course summary",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "In this course, you learned about routing strategies and their use in the Amazon Connect contact center. By implementing these concepts, organizations can ensure efficient handling of customer interactions, optimized agent usage, and enhanced operational efficiency. Take a moment to review these key concepts in the course summary before taking the course assessment."
+            },
+            {
+              "type": "h",
+              "level": 4,
+              "text": "Benefits of effective routing strategies"
+            },
+            {
+              "type": "p",
+              "text": "Implementing well-designed routing strategies in Amazon Connect offers many benefits to contact centers. Benefits of effective routing strategies include the following:"
+            },
+            {
+              "type": "p",
+              "text": "Contribute to efficient interaction handling by matching contacts with the most suitable agents based on predefined criteria. This approach leads to improved contact satisfaction by ensuring that queries are addressed by knowledgeable and skilled agents."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Optimize agent usage by evenly distributing interactions, thus preventing overload and under-utilization.",
+                "Drive operational efficiency in the contact center, thus leading to cost savings and improved productivity.",
+                "Key concepts and considerations",
+                "Routing strategies in Amazon Connect revolve around several key resources and configurations, such as the following:"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Queues act as the basic building blocks for routing, making it possible for contacts to be placed in designated queues and assigned to available agents."
+            },
+            {
+              "type": "p",
+              "text": "Routing profiles define which interactions agents can handle by assigning them to specific queues and setting priorities and delays."
+            },
+            {
+              "type": "p",
+              "text": "Proficiency-based routing provides granular targeting by using predefined attributes and proficiency levels that are assigned to agents."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Data-driven routing",
+                "Amazon Connect offers various data sources to inform and enhance routing decisions, such as the following:"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Customer Profiles provide access to up-to-date customer information and calculated attributes. You can use Customer Profiles to personalize interactions and routing based on customer behavior patterns, preferred channels, or previous agent interactions."
+            },
+            {
+              "type": "p",
+              "text": "External data sources can enhance routing decisions by incorporating information such as last agent routing, abandoned call routing, intent predictions, or identifying repeat callers. Real-time metrics play a vital role in optimizing routing strategies."
+            },
+            {
+              "type": "p",
+              "text": "Queue metrics, staffing information, and queue status can be used to make dynamic routing decisions. You can offer callback options when wait times exceed thresholds or when you want to prioritize specific queues based on current conditions."
+            },
+            {
+              "type": "p",
+              "text": "Use cases and implementation"
+            },
+            {
+              "type": "p",
+              "text": "You can tailor routing strategies in Amazon Connect to address various business requirements and scenarios, such as the following:"
+            },
+            {
+              "type": "p",
+              "text": "Skill-based routing ensures that contacts are matched with agents who have relevant expertise."
+            },
+            {
+              "type": "p",
+              "text": "Proficiency-based routing uses predefined attributes and proficiency levels to route contacts to the most suitable agents based on specific skills or expertise."
+            },
+            {
+              "type": "p",
+              "text": "Data-driven routing incorporates customer profile data, external data sources, and real-time metrics to personalize interactions, identify patterns, and inform routing decisions based on dynamic conditions."
+            },
+            {
+              "type": "p",
+              "text": "Conclusion"
+            },
+            {
+              "type": "p",
+              "text": "You can effectively manage interactions by implementing routing strategies in Amazon Connect. You can optimize agent usage and enhance overall operational efficiency in contact centers. With the ability to use data-driven insights, personalize customer experiences, and adapt to dynamic conditions, Amazon Connect routing capabilities empower organizations to deliver superior service."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    },
+    {
+      "id": "connect-routing-intermediate-t6",
+      "number": 6,
+      "title": "Course summary",
+      "shortTitle": "Course summary",
+      "summary": "The Amazon Connect Routing Intermediate course provides a comprehensive understanding of routing strategies and their implementation within the…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-routing-intermediate-t6-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Overview",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The Amazon Connect Routing Intermediate course provides a comprehensive understanding of routing strategies and their implementation within the Amazon Connect contact center platform. By mastering these concepts, organizations can ensure efficient contact interaction handling, optimized agent utilization, and enhanced operational efficiency."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t6-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits of effective routing strategies",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "Implementing well-designed routing strategies in Amazon Connect offers many benefits to contact centers.",
+                "Benefits of effective routing strategies include the following:"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Contribute to efficient interaction handling by matching contacts with the most suitable agents based on predefined criteria. This approach leads to improved contact satisfaction by ensuring queries are addressed by knowledgeable and skilled agents."
+            },
+            {
+              "type": "ul",
+              "items": [
+                "Optimize agent usage by evenly distributing interactions, preventing overload and underutilization.",
+                "Drive operational efficiency in the contact center, leading to cost savings and improved productivity."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t6-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Key concepts and considerations",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Routing strategies in Amazon Connect revolve around several key resources and configurations, such as the following:"
+            },
+            {
+              "type": "p",
+              "text": "Queues act as the basic building blocks for routing, allowing contacts to be placed in designated queues and assigned to available agents."
+            },
+            {
+              "type": "p",
+              "text": "Routing profiles define which interactions agents can handle by assigning them to specific queues and setting priorities and delays."
+            },
+            {
+              "type": "p",
+              "text": "Proficiency-based routing allows for even more granular targeting by using predefined attributes and proficiency levels assigned to agents."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t6-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Data-driven routing",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Amazon Connect offers various data sources to inform and enhance routing decisions, such as the following:"
+            },
+            {
+              "type": "p",
+              "text": "Customer Profiles provide access to up-to-date customer information and calculated attributes. It allows you to personalize interactions and routing based on customer behavior patterns, preferred channels, or previous agent interactions."
+            },
+            {
+              "type": "p",
+              "text": "External data sources can further enhance routing decisions by incorporating information such as last agent routing, abandoned call routing, intent predictions, or identifying repeat callers. Real-time metrics play a vital role in optimizing routing strategies."
+            },
+            {
+              "type": "p",
+              "text": "Queue metrics, staffing information, and queue status can be leveraged to make dynamic routing decisions. You can offer callback options when wait times exceed thresholds or prioritizing specific queues based on current conditions."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t6-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Use cases and implementation",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can tailor routing strategies in Amazon Connect to address various business requirements and scenarios, such as the following:"
+            },
+            {
+              "type": "p",
+              "text": "Skill-based routing ensures contacts are matched with agents that have the relevant expertise."
+            },
+            {
+              "type": "p",
+              "text": "Proficiency-based routing uses predefined attributes and proficiency levels to route contacts to the most suitable agents based on specific skills or expertise."
+            },
+            {
+              "type": "p",
+              "text": "Data-driven routing incorporates customer profile data, external data sources, and real-time metrics to personalize interactions, identify patterns, and inform routing decisions based on dynamic conditions."
+            }
+          ]
+        },
+        {
+          "id": "connect-routing-intermediate-t6-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Conclusion",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can effectively manage interactions by implementing routing strategies in Amazon Connect. You can"
+            },
+            {
+              "type": "p",
+              "text": "optimize agent usage and enhance overall operational efficiency in contact centers. With the ability to use"
+            },
+            {
+              "type": "p",
+              "text": "data-driven insights, personalize customer experiences, and adapt to dynamic conditions, Amazon Connect"
+            },
+            {
+              "type": "p",
+              "text": "routing capabilities empower organizations to deliver superior service."
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

@@ -1,0 +1,131 @@
+/*
+ * Amazon Connect — Flows Advanced
+ *
+ * GENERATED FILE. Do not edit by hand.
+ * Sources:  conne-text/Amazon Connect Flows Advanced Summary.txt  (from conne/Amazon Connect Flows Advanced Summary.pdf)
+ * Generator: tools/build-connect-data.mjs  (node tools/build-connect-data.mjs)
+ *
+ * Every string below is taken from the sources above. The block vocabulary is
+ * documented in src/data/courses.js.
+ */
+
+export const course = {
+  "id": "connect-flows-advanced",
+  "track": "amazon-connect",
+  "code": "AWS",
+  "title": "Flows Advanced",
+  "provider": "Amazon Web Services",
+  "level": "Advanced",
+  "category": "Flows",
+  "description": "Flow modules as reusable components and step-by-step guides for agents: what they are, the benefits of each, and the considerations for both.",
+  "examFormat": "1 topic · ~2 min",
+  "sourceFiles": [
+    "conne-text/Amazon Connect Flows Advanced Summary.txt  (from conne/Amazon Connect Flows Advanced Summary.pdf)"
+  ],
+  "modules": [
+    {
+      "id": "connect-flows-advanced-t1",
+      "number": 1,
+      "title": "Course summary",
+      "shortTitle": "Course summary",
+      "summary": "Flow modules are reusable components that encapsulate flow logic. Use modules for greetings, prompts, call transfers, data validation, error…",
+      "duration": "~2 min",
+      "lede": null,
+      "objectives": [],
+      "sections": [
+        {
+          "id": "connect-flows-advanced-t1-s1",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Concepts",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Flow modules are reusable components that encapsulate flow logic. Use modules for greetings, prompts, call transfers, data validation, error handling, or integration with external systems."
+            },
+            {
+              "type": "p",
+              "text": "Step-by-step Guides provide agents with custom views, forms, and step-by-step instructions tailored to each interaction. Views are AWS managed or customer managed, which provides for flexible customization."
+            }
+          ]
+        },
+        {
+          "id": "connect-flows-advanced-t1-s2",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Benefits",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Advanced capabilities of Amazon Connect Flows provide a number of benefits to organizations."
+            }
+          ]
+        },
+        {
+          "id": "connect-flows-advanced-t1-s3",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Flow modules",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Promote modular design, code reusability, customization, and more efficient development of contact flows."
+            },
+            {
+              "type": "p",
+              "text": "Break down complex flows into smaller, manageable components, to enhance code organization, readability, and maintainability. Modules provide version control and consistent updates across flows."
+            }
+          ]
+        },
+        {
+          "id": "connect-flows-advanced-t1-s4",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Step-by-step Guides",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Empower agents with intuitive workflows, tailored views, forms, and step-by-step instructions."
+            },
+            {
+              "type": "p",
+              "text": "Streamline customer interactions and guide agents through complex processes, capturing customer information, or providing personalized recommendations."
+            }
+          ]
+        },
+        {
+          "id": "connect-flows-advanced-t1-s5",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Flow modules",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "Identify experiences that use repeatable logic.",
+                "Design and build your modular components once and invoke modules within the main flows."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "connect-flows-advanced-t1-s6",
+          "eyebrow": null,
+          "duration": null,
+          "title": "Step-by-step Guides",
+          "blocks": [
+            {
+              "type": "ul",
+              "items": [
+                "Use existing AWS managed views or create your own custom views.",
+                "Configure guide flows, and display views in the agent workspace to provide guidance."
+              ]
+            }
+          ]
+        }
+      ],
+      "reviewQuestions": []
+    }
+  ],
+  "quiz": null
+};

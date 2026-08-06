@@ -1,0 +1,14 @@
+node_modules
+dist
+.vite
+*.local
+
+# Chat assistant API key. `.env.example` documents the shape; never commit the
+# filled-in file.
+.env
+.env.*
+!.env.example
+
+# Text extracted from the PDFs in conne/ by tools/extract-pdf-text.mjs.
+# Regenerate with `npm run build:connect` rather than committing it.
+conne-text

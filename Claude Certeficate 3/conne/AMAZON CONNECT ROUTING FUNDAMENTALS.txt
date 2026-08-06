@@ -1,0 +1,1176 @@
+Lesson 2 of 10
+Introduction to Amazon Connect Routing
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Recognize the key concepts of Amazon Connect routing.
+Explore the Amazon Connect interface to manage status and handle contacts.
+Identify the benefits of routing in Amazon Connect.
+
+Lesson introduction
+
+Call routing is a contact center management feature where incoming contacts are directed to the agent with the most appropriate skill set to handle that contact. The contacts can be queued or sent directly to an agent based on defined business criteria. 
+
+This lesson introduces the key concepts, terminology, and benefits of Amazon Connect routing.
+
+Concepts and terminology
+
+Amazon Connect is an omnichannel contact center that routes contacts. Throughout this course, the term contact is used to describe a user interacting on any of the channels available in Amazon Connect. These channels include voice calls, chats, tasks, and SMS. 
+
+To learn more about the common terminology used when discussing Amazon Connect routing, explore the following seven categories.
+
+
+Flow
+A contact is routed using a flow. The flow defines the routing logic and decisions that drive contacts (voice, chats, and tasks) through the contact center. Flows use customer attributes to make routing decisions or personalize contact experiences. For example, in a flow, the contact hears a personalized greeting with their name and is routed to the appropriate queue.
+
+
+Queue
+Contacts wait in a queue before being routed to and accepted by agents. A queue is typically mapped to a skill that an agent has. Queues work the same for all channels supported in Amazon Connect.
+
+
+Routing profile
+A routing profile represents the skill set and competencies of an agent. Queues are grouped into routing profiles. The queues associated with a routing profile have priorities and delays. The routing profile determines which types of contacts an agent can receive and the routing priority. Consider the following:
+
+Each agent is assigned one routing profile.
+
+A routing profile can have multiple agents assigned to it.
+
+
+Agent
+An agent is a person who handles contacts. In Amazon Connect, the term agent is used interchangeably with the term user. Agents have one routing profile, which determines the queues and channels the agent can receive contacts on.
+
+
+Agent status
+Agents in Amazon Connect have a status that can be manually set in the Amazon Connect Contact Control Panel (CCP). There are two default statuses: Offline and Available. Custom statuses can be created by administrators. Inbound contacts can only be routed to agents when their status is Available. Agents can make outbound calls by putting their status to a nonproductive custom status, such as Meeting or Lunch. Technically, agents can make outbound calls when they are in the Offline status as well.
+
+
+Quick connects
+Quick connects make it possible to create lists of common transfer destinations. For example, a bank can set up IT Help as a quick connect. If a loans agent receives a browser issue call, they can transfer it to IT Help through the quick connect list. Quick connects provide efficient call routing to relevant teams or resources.
+
+
+Channel
+A channel is a mechanism that a contact uses to interact with the contact center. Channels include voice, chats, tasks, and SMS.
+
+Benefits of Amazon Connect routing
+
+Amazon Connect routing offers organizations benefits, including a unified experience across channels, efficient routing to appropriately skilled agents, and seamless scalability based on demand.
+
+Unified experience across channels
+
+Amazon Connect routes contact channels, such as voice calls, chats, tasks, and SMS, through the same routing engine and queues. With routing profiles, queues, and flows, organizations build and maintain core contact experiences across different contact methods. Contacts access services and products on their preferred contact channels. Administrators reuse experiences and integrations, such as data retrieval, to provide seamless contact interactions across channels.
+
+Scenario – Providing multiple contact options
+Mary Major visits the AnyCompany website for assistance with a recent purchase. Instead of being limited to calling a hotline, Mary notices a chat option on the website. She initiates a chat session to inquire about her order status. Behind the scenes, Amazon Connect seamlessly routes her chat to the same routing engine and queues as voice calls, ensuring a consistent experience across channels. 
+
+
+
+The agent handling the chat, Pat Candella, has access to the same contact data, integration systems, and knowledge base as agents handling voice calls. This means Pat can quickly retrieve Mary's order details, review account history, and provide personalized assistance, just as he does on voice calls. 
+
+
+
+If Mary's preferred contact method changes during the interaction, Pat can transition the conversation to another channel, such as voice or SMS. This is done without losing the context or data gathered so far.
+
+
+
+Saanvi Sarkar, an AnyCompany supervisor, monitors and manages the contact experience across channels using the same tools and dashboards. This reduces the complexity of optimizing routing efficiency across different contact methods. With this unified approach, AnyCompany can reuse integrations, optimize resource allocation, and continuously improve the overall contact experience across all channels.
+
+Efficient routing to appropriately skilled agents
+
+With routing profiles, organizations configure contact priority and routing to agents based on agent skills, queue priorities, contact attributes, and real-time metrics. Contacts receive support without being transferred across channels. Administrators focus on optimizing contact outcomes instead of adjusting for shifts in contact volumes.
+
+Scenario – Dynamic routing meets operational needs
+Mary's chat request is automatically prioritized and routed to Pat, who specializes in order management. Because Mary's chat relates to an order management issue, the routing profile ensures that her request is sent to an appropriately skilled agent.
+
+
+
+Mary is also a high-value contact for AnyCompany. With flows and contact attributes, her status gives her chat request a higher priority, ensuring that she receives prompt assistance. Additionally, her loyalty status with AnyCompany means that she can change the destination of her order without additional charges.
+
+
+
+Pat is trained in AnyCompany's ordering operations and quickly addresses Mary's request. Pat follows the procedure to change the destination for Mary's order without additional charges.
+
+
+
+Real-time metrics, like queue lengths and agent availability, are factored into the routing process. Saanvi, a supervisor, notices an influx of order management queries. The routing profile dynamically handles the influx with predefined priorities, maintaining efficient contact support.
+
+
+
+Saanvi focuses on communicating with the operations team to understand the influx instead of actively managing the increase in contacts. Efficient routing and multiple options for real-time prioritization make it possible for AnyCompany to focus on business objectives while managing operational overhead.
+
+Seamless scalability based on demand
+
+With routing profiles, flows, and real-time metrics, business operations scale based on current volumes. Organizations establish contact experience and business workflows, and the system scales up during peak demand without additional application or hardware management. Contacts experience consistent service outcomes during busy periods. Administrators focus on agent performance and contact feedback without monitoring available application or hardware capacity.
+
+Scenario – Handling increased demand and contact outcomes
+One of Mary's orders is shipped from overseas, where an unexpected weather event impacts a large number of AnyCompany's incoming deliveries. As AnyCompany experiences a surge in status update inquiries, AnyCompany's implementation of Amazon Connect dynamically adjusts to meet the increased volume of contacts.
+
+
+
+Based on available agents and visibility into queues across all channels, Mary is offered alternative communication methods through the AnyCompany website. She can also opt-in to receive updates over SMS as they become available. 
+
+
+
+As the number of incoming calls and chat requests start to rise, Amazon Connect automatically distributes interactions to the appropriate agents. Pat continues to receive interactions that require his knowledge and skills, and the bulk of status update inquiries are deflected or provided automatically.
+
+
+
+AnyCompany can efficiently onboard and configure additional agents through the Amazon Connect web interface without provisioning or administering licenses or seats. New agents can immediately start handling contacts without any delays due to hardware or application scaling limitations. 
+
+
+
+Saanvi assigns routing profiles to the new agents, and the Amazon Connect routing engine dynamically adjusts to the increased number of agents. Contact distribution based on configured rules and agent availability handles the increased demand without configuration changes.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+An agent reports that they are not receiving contacts on certain channels. What determines the types of contacts an agent can receive and the routing priority for those contacts? 
+
+Queue
+
+Correctly unselected
+Routing profile
+
+Correctly selected
+Agent status
+
+Correctly unselected
+Flow
+
+Correctly unselected
+SUBMIT
+
+Correct
+A routing profile represents the skill set and competencies of an agent. Queues are grouped into routing profiles. The routing profile determines the types of contacts an agent can receive and the routing priority.
+
+
+TAKE AGAIN
+AnyCompany Retail is setting up an Amazon Connect contact center. The operations manager, Richard Roe, wants to ensure that agents efficiently transfer contacts to relevant teams or resources. 
+
+
+
+Which feature in Amazon Connect should Richard use to provide efficient access to the most common transfer numbers? 
+
+Queues
+
+Incorrectly selected
+Quick connects
+
+Incorrectly unselected
+Routing profiles
+
+Correctly unselected
+Flows
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+
+Quick connects are common transfer destinations. Quick connects can be used to make efficient call transfers to relevant teams or resources.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you have been introduced to Amazon Connect core routing concepts, terminology, and benefits. In the next lesson, you will learn more in-depth routing construct details.
+
+Lesson 3 of 10
+Queues and Routing Profiles
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Identify the two types of queues in Amazon Connect. 
+Recognize the functionality of queues, routing profiles, priorities, and delays. 
+
+Lesson introduction
+
+In this lesson, you will discover the types of queues in Amazon Connect and the relationship between queues and routing profiles. 
+
+Understanding queues
+
+Agents are configured as users in Amazon Connect. Agents are trained to handle different types of contacts. Their skill sets vary based on their tenure, experience, and exposure to more or less complex interactions. Amazon Connect queues typically reflect an agent's skill set, but you have flexibility to define the queue criteria that works for you. For example, in a financial institution, some agents might be more skilled at handling checking and savings account-related inquiries. Others might specialize in loans and mortgages.
+
+Businesses might want to route contacts to specific agents based on certain criteria, such as the skill set of the agent. This is called queue-based routing or skills-based routing. The following image is an example of skills-based routing.
+
+Diagram of a contact flow to an identified skill set.
+Standard queues and agent queues
+
+There are two types of queues in Amazon Connect.
+
+
+Standard queues
+
+Agent queues
+Contacts wait in standard queues before being routed to and accepted by agents. Standard queues must be created by an administrator.
+
+
+
+You can create queues based on competencies, like product knowledge, or attributes, like geography or language. This is called skills-based or queue-based routing. Agents with relevant knowledge are placed in the same queue to serve contacts effectively. This concept is covered in more detail later in the course.
+
+
+
+Now that you have learned about standard queues, move to the next tab to learn about agent queues. 
+
+Understanding routing profiles
+
+A routing profile is assigned one or more queues. Routing profiles typically match agent skills and competencies. Using routing profile configuration, you can also define the channels (voice, chat, task) agents can handle. Each agent can only have one routing profile associated in their configuration. 
+
+Identifying and grouping queues
+
+In this section, you will explore a use case about how AnyCompany Bank set up its first Amazon Connect queues and routing profiles. To learn more, choose the arrow buttons to display each of the following five slides. You can find accessible tables corresponding to the slides following the interactive experience.
+
+
+Use case
+AnyCompany Bank receives inquiries regarding checking and savings accounts, loans, mortgages, and general information.
+
+AnyCompany Bank wants to configure its Amazon Connect queues and routing profiles to achieve the best use of the company's agents. 
+
+
+START
+Step 1
+
+Evaluating agent skills
+Screenshot of Routine Profile depicting Carlos, Alejandro, and Mary assigned to the Checking, Savings, and General profiles.
+Mary Major, Alejandro Rosalez, and Carlos Salazar are tenured agents that frequently handle checking and savings inquiries. They also help with general inquiries when other agents are not available.
+
+1
+2
+3
+
+Step 2
+
+Evaluating agent skills continued
+Screenshot of Routine Profile with Juan, María, and Mateo assigned to the Checking, Savings, Loans, and Mortgages profiles.
+Li Juan, María García, and Mateo Jackson can also handle checking and savings inquiries. Additionally, they all recently completed training related to loans and mortgages.
+
+1
+2
+3
+
+Step 3
+
+Grouping queues in routing profiles
+Two routing profiles: Banking 1 has Checking, Savings, General Inquiries; Banking 2 has Checking, Savings, Loans, Mortgages.
+Based on the agents' skills and queue grouping, AnyCompany Bank creates two routing profiles. The Banking 1 routing profile contains the Checking, Savings, and General Inquiries queues. The Banking 2 routing profile contains the Checking, Savings, Loans, and Mortgages queues.
+
+1
+2
+3
+
+Finalizing the routing profile configuration
+By creating this distribution of queues across routing profiles, AnyCompany Bank ensures a balanced load of checking and savings inquiries across a pool of six agents.
+
+START AGAIN
+1
+2
+3
+
+To explore the accessible view of the use case, expand each of the following three categories.
+
+
+Step 1: Evaluating agent skills
+Mary Major, Alejandro Rosalez, and Carlos Salazar are tenured agents that frequently handle checking and savings inquiries. They also help with general inquiries when other agents are not available. 
+
+Routing Profile: Banking1
+
+General
+Checking	Savings	Loans	Mortgages	IT Help
+Mary Major	Yes	Yes
+Yes
+No
+No
+No
+Alejandro Rosalez	Yes
+Yes
+Yes
+No
+No
+No
+Carlos Salazar	Yes
+Yes
+Yes
+No
+No
+No
+Li Juan	No	Yes
+Yes
+Yes
+Yes
+No
+María García	No
+Yes
+Yes
+Yes	Yes
+No
+Mateo Jackson	No
+Yes
+Yes
+Yes
+Yes
+No
+
+Step 2: Evaluating agent skills continued
+Li Juan, María García, and Mateo Jackson can also handle checking and savings inquiries. Additionally, they all recently completed training related to loans and mortgages. 
+
+Routing Profile: Banking2
+
+General	Checking	Savings	Loans	Mortgages	IT Help
+Li Juan	No	Yes	Yes
+Yes
+Yes
+No
+María García	No
+Yes
+Yes
+Yes
+Yes
+No
+Mateo Jackson	No
+Yes
+Yes
+Yes
+Yes
+No
+Nikki Wolf
+No
+No
+No
+Yes
+Yes
+No
+Arnav Desai	No
+No
+No
+Yes
+Yes
+No
+Jorge Souza	No
+No
+No
+Yes
+Yes
+No
+
+Step 3: Grouping queues in routing profiles
+Based on the agents' skills and queue grouping, AnyCompany Bank creates two routing profiles. The Banking 1 routing profile contains the Checking, Savings, and General Inquiries queues.
+
+Banking 1
+Checking
+Savings
+General Inquires
+The Banking 2 routing profile contains the Checking, Savings, Loans, and Mortgages queues.
+
+Banking 2
+Checking
+Savings
+Loans
+Mortgages
+Evaluating queues across all routing profiles
+
+Two routing profiles with multiple queues. The Checking queue is highlighted in both profiles.
+This image illustrates two routing profiles. The first profile is named Banking 1, and includes the Checking, Savings, and General Inquiries queues. The second profile is named Banking 2, and includes the Checking, Savings, Loans, and Mortgages queues. The Checking queue is selected in both routing profiles.
+
+The Amazon Connect routing engine evaluates agent eligibility across all routing profiles to select the appropriate agent for the contact. When a contact is routed to a queue, the routing engine evaluates all routing the profiles that include that queue. 
+
+For example, for an incoming contact related to a checking inquiry, the routing engine evaluates availability across all routing profiles that contain the Checking queue.
+
+
+
+
+
+Routing profile priority
+
+Within a routing profile, you can use priority and delay settings to automatically balance incoming contacts across groups of agents. 
+
+By using the priority configuration value, the routing engine determines which queue has priority within a profile. The following is an example of how the priority setting works.
+
+The AnyCompany Bank Banking 1 routing profile includes the General Inquiries, Checking, and Savings queues. AnyCompany Bank wants to ensure that Checking and Savings inquiries are served in priority over General Inquiries. The Checking and Savings queues get a priority value of 1, and the General Inquiries queue gets a priority value of 2.
+
+An agent with a Banking 1 routing profile receives Checking and Savings contacts first. If there are no contacts in these queues, the agent becomes eligible for General Inquiries.
+
+Banking 1 routing profile priorities.
+Banking 1 routing profile where Checking and Savings are set to priority level 1, and General Inquiries are set to priority level 2.
+
+Routing profile delay
+
+(opens in a new tab)
+
+The routing engine uses the delay value to expand the pool of eligible agents when contacts wait longer than the configured threshold. With queue delay settings, as the contact gets older, more agents are considered for routing. 
+
+To learn about how the delay configuration works in routing profiles, choose the arrow buttons to display each of the following four slides. You can find accessible tables corresponding to the slides following the interactive experience.
+
+
+Use case
+Routing profile configuration for Banking 1 and Banking 2 with priority and delay configurations.
+Let's expand the configuration for the Banking 1 and Banking 2 routing profiles. 
+
+Both routing profiles have a Checking queue. In Banking 1, the Checking queue has a priority of 1 and a delay of 0. This means that agents with this routing profile will automatically become eligible to receive Checking calls as soon as they become available. 
+
+The Checking queue in the Banking 2 routing profile has a priority value of 1 and a delay of 60 seconds.
+
+
+START
+Step 1
+
+Incoming contact
+Banking 1 and Banking 2 routing profiles with the Checking queue highlighted in the Banking 1 routing profile.
+An incoming contact requires support with a checking account inquiry. The routing engine scans all the routing profiles containing the Checking queue. The Banking 1 routing profile has the Checking queue configured with priority 1 and a delay of 0 seconds. The Banking 2 routing profile has the Checking queue configured with priority 1 and a delay of 60 seconds.
+
+1
+2
+
+Step 2
+
+Contact waiting in queue
+Routing profile configuration for Banking 1 and Banking 2 with priority and delay configurations.
+The call waits in the queue for 60 seconds. 
+
+At this point, the routing engine takes into consideration agents from the Banking 1 routing profile and the Banking 2 routing profile. 
+
+1
+2
+
+Summary
+The Amazon Connect routing engine automatically expands the pool of eligible agents by evaluating all routing profiles that include the destination queue.
+
+With the queue delay configuration setting, you can increase the probability that the contact will be handled sooner. The longer the contact waits in the queue, the bigger the potential pool of eligible agents to serve this contact.
+
+START AGAIN
+1
+2
+
+
+Incoming contact
+An incoming contact requires support with a checking account inquiry. 
+
+The routing engine scans all the routing profiles containing the Checking queue. 
+
+The Banking 1 routing profile has the Checking queue configured with priority 1 and a delay of 0 seconds. 
+
+The Banking 2 routing profile has the Checking queue configured with priority 1 and a delay of 60 seconds.
+
+Banking 1
+Priority
+Delay
+Checking	1	0
+Savings	1
+30
+General Inquires	2
+0
+The call waits in the queue for 60 seconds. 
+
+At this point, the routing engine takes into consideration agents from the Banking 1 routing profile and the Banking 2 routing profile. 
+
+Banking 1
+Priority
+Delay
+Checking
+1	60
+Savings
+1	0
+Loans	1	0
+Mortgages	1	0
+Recall there are two types of queues: standard queues and agent queues. Agent queues cannot be configured in routing profiles. Contacts waiting in agent queues automatically have the highest priority and 0 delay.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+Diego Ramirez is a routing strategy specialist at AnyOrganization Financial, which has launched a new product. Diego wants to implement an overflow logic in Amazon Connect. With this logic, all agents will be eligible to handle new product inquiries when they are not busy with other contact types. Diego wants to add a new routing profile to all agents. 
+
+
+
+How many routing profiles can Diego assign to an agent?
+
+One
+
+Incorrectly unselected
+Two
+
+Correctly unselected
+Up to five
+
+Incorrectly selected
+100
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+An agent can be assigned only one routing profile in Amazon Connect.
+
+
+TAKE AGAIN
+What are the two types of queues in Amazon Connect?
+
+Primary queues and secondary queues
+
+Correctly unselected
+Last-in, first-out (LIFO) queues and first-in, first-out (FIFO) queues
+
+Incorrectly selected
+Standard queues and specific queues
+
+Correctly unselected
+Standard queues and agent queues 
+
+Incorrectly unselected
+SUBMIT
+
+Incorrect
+There are two types of queues in Amazon Connect. 
+
+
+
+Standard queues: This is where contacts wait before they are routed to and accepted by agents. These queues need to be created by an administrator. 
+
+
+
+Agent queues: Contacts are only routed to agent queues when explicitly sent there as part of a flow. These queues are created automatically when a user is created in a contact center.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you have been introduced to Amazon Connect routing constructs, such as queues and routing profiles. In the next lesson, you will learn about inbound and outbound routing.
+
+Agent queues
+Contacts are only routed to agent queues when explicitly sent there as part of a flow. Agent queues are created automatically when you create a user in your contact center.
+
+
+
+You might route contacts to a specific agent who's responsible for certain contact issues, such as billing or premium support. You might use agent queues to escalate specific interactions to dedicated resources, such as legal, translation, or specialized support.
+
+
+
+An additional use case includes routing to the last agent who assisted a contact for familiarity. Another example is routing to dedicated service advisors who work with specific clients.
+
+Step 1
+
+Evaluating agent skills
+Screenshot of Routine Profile depicting Carlos, Alejandro, and Mary assigned to the Checking, Savings, and General profiles.
+Mary Major, Alejandro Rosalez, and Carlos Salazar are tenured agents that frequently handle checking and savings inquiries. They also help with general inquiries when other agents are not available.
+
+Step 2
+
+Evaluating agent skills continued
+Screenshot of Routine Profile with Juan, María, and Mateo assigned to the Checking, Savings, Loans, and Mortgages profiles.
+Li Juan, María García, and Mateo Jackson can also handle checking and savings inquiries. Additionally, they all recently completed training related to loans and mortgages.
+
+Step 3
+
+Grouping queues in routing profiles
+Two routing profiles: Banking 1 has Checking, Savings, General Inquiries; Banking 2 has Checking, Savings, Loans, Mortgages.
+Based on the agents' skills and queue grouping, AnyCompany Bank creates two routing profiles. The Banking 1 routing profile contains the Checking, Savings, and General Inquiries queues. The Banking 2 routing profile contains the Checking, Savings, Loans, and Mortgages queues.
+
+Finalizing the routing profile configuration
+By creating this distribution of queues across routing profiles, AnyCompany Bank ensures a balanced load of checking and savings inquiries across a pool of six agents.
+
+Step 1
+
+Incoming contact
+Banking 1 and Banking 2 routing profiles with the Checking queue highlighted in the Banking 1 routing profile.
+An incoming contact requires support with a checking account inquiry. The routing engine scans all the routing profiles containing the Checking queue. The Banking 1 routing profile has the Checking queue configured with priority 1 and a delay of 0 seconds. The Banking 2 routing profile has the Checking queue configured with priority 1 and a delay of 60 seconds.
+
+Step 2
+
+Contact waiting in queue
+Routing profile configuration for Banking 1 and Banking 2 with priority and delay configurations.
+The call waits in the queue for 60 seconds. 
+
+At this point, the routing engine takes into consideration agents from the Banking 1 routing profile and the Banking 2 routing profile. 
+
+Summary
+The Amazon Connect routing engine automatically expands the pool of eligible agents by evaluating all routing profiles that include the destination queue.
+
+With the queue delay configuration setting, you can increase the probability that the contact will be handled sooner. The longer the contact waits in the queue, the bigger the potential pool of eligible agents to serve this contact.
+
+Lesson 4 of 10
+Inbound and Outbound Routing
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore inbound routing for a single channel and multiple channels. 
+Recognize how outbound routing works.
+Recognize configuration options for cross-channel concurrency.
+
+Lesson introduction
+
+In this lesson, you will learn how inbound and outbound routing works in Amazon Connect.
+
+Single channel routing
+
+In Amazon Connect, contacts are routed based on the agent's routing profile, the hours of operation for a queue, and the routing logic in flows. Contacts get prioritized automatically and routed to the agent who has been idle the longest. If no agents are available, contacts wait in the queue and get serviced in the order they entered the queue. Additional agents can become eligible for routing based on the agent's status or routing profile.
+
+Contacts are routed using the following criteria:
+
+•
+The routing profile assigned to the agent
+
+•
+The hours of operation for a given queue
+
+•
+The routing logic designed in flows
+
+To learn how a contact travels through the contact center, choose each of the numbered markers.
+
+Diagram depicting a contact traveling through the contact center. More details in each marker description.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(opens in a new tab)(opens in a new tab)Amazon Connect uses the following logic to route contacts:
+
+•
+The routing engine processes each contact in the order of their interaction starting time using a first-in, first-out (FIFO) algorithm.
+
+•
+Contacts routed to agent queues have priority over contacts routed to contact center queues. 
+
+•
+The routing engine routes contacts to the agent who has been available the longest. 
+
+Multiple channel routing
+
+Agents can handle voice, chats, and tasks in Amazon Connect. Routing profiles include one or more queues configured across one or more channels.
+
+With routing profiles, you can configure the rules for delivering multiple contacts across multiple channels. For example, an agent can handle one voice call or three simultaneous chats.
+
+Routing profile configuration for cross-channel concurrency with configuration values for one voice call and three chats.
+The second configuration option available in the routing profiles is the cross-channel concurrency. The routing engine uses this setting to decide whether to route more than one contact at the same time to agents. You can configure the routing profile of an agent to get one contact at a time and not get interrupted by other incoming contacts. You can also combine settings to deliver multiple concurrent chats but no voice calls. The following screenshot depicts a routing profile configuration that drives the following routing behavior: 
+
+When the agent is on a voice call, they will not get any chats. 
+As soon as the agent becomes available, they can get a chat or another voice call.
+If the agent gets a chat, based on their configuration, they can get up to three chats if the chat queue is busy. 
+The chats are not interrupted by voice calls.
+Screenshot of cross-channel concurrency configuration for a routing profile. Checkboxes selected for voice and chat.
+When using cross-channel concurrency, Amazon Connect checks which contact to offer the agent as follows:
+
+Amazon Connect checks which contacts and channels the agent is currently handling.
+
+Based on the channels the agent is currently handling and the cross-channel configuration in the agent's routing profile, Amazon Connect determines whether the agent can be routed to the next contact.
+
+Amazon Connect prioritizes the longest waiting contact if the priority and the delay are equal. Even though Amazon Connect is evaluating multiple channels at the same time, FIFO is still respected.
+
+For a detailed example, navigate to (opens in a new tab)Example of How a Contact Is Routed with Cross-Channel Concurrency(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Outbound call routing
+
+There are two ways to make outbound calls in Amazon Connect.
+
+
+Agent-initiated manual outbound call
+
+Programmatically initiated outbound call
+An agent can make an outbound call from their softphone by dialing the destination number. When an outbound call is placed, the agent will no longer have voice contacts routed to them.
+
+
+
+You can exclude outbound calls from impacting the routing order calculation. Choose the Outbound calls should not impact routing order option in your routing profile setup. This ensures that outbound contacts do not affect the routing sequence.
+
+Screenshot of Set routing order. Checkbox selected for Outbound calls should not impact routing order. End of tab.
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+A customer calls into an Amazon Connect powered contact center. Which step best describes a typical flow of how the customer's call is routed to an agent? 
+
+Customer call > Flow > Queue > Routing profile > Agent 
+
+Correctly selected
+Customer call > Queue > Routing profile > Flow > Agent 
+
+Correctly unselected
+Customer call > Flow > Routing profile > Queue > Agent
+
+Correctly unselected
+Customer call > Routing profile > Flow > Queue > Agent
+
+Correctly unselected
+SUBMIT
+
+Correct
+The customer's call is routed by using a flow. The flow is where the routing logic and decisions that drive the contacts (voice, chat, and tasks) through the contact center are defined. The flow transfers the call to the queue. The routing engine uses the routing profile configuration to find the best agent.
+
+
+TAKE AGAIN
+A routing profile has one queue configured to receive voice calls and up to two chats. The voice calls are configured with a higher priority than the chats. The cross-channel concurrency setting indicates that when the agent is on a voice call, they cannot receive chats. When the agent handles chats, contacts can get interrupted by voice calls. An agent with this routing profile is currently handling a chat. The queue has two chats and three voice calls waiting. 
+
+
+
+What is the order of contacts, and on which channel will the agent get routed next?
+
+A voice call and a second chat
+
+Correctly unselected
+A voice call
+
+Incorrectly unselected
+A chat, then a voice call
+
+Incorrectly selected
+A chat
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+The next contact will be a voice call. Voice calls are configured with a higher priority than chats. The chat channel configuration is also set up to allow for voice call routing. While the agent handles the current chat, a voice call can interrupt the chat.
+
+
+
+When the agent receives a voice call, no chats will be routed to the agent. Their configuration prevents voice calls from being interrupted by chats.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you have been introduced to how routing works for inbound and outbound calls. In the next lesson, you will learn how to use the built-in routing strategies in Amazon Connect effectively. 
+
+Programmatically initiated outbound call
+An agent can receive an outbound contact placed programmatically. This includes using the StartOutboundVoiceContact API or the Amazon Connect outbound campaigns feature. In this scenario, Amazon Connect places the outbound call first and then places the contact in the flow to be routed to the appropriate agent.
+
+Lesson 5 of 10
+Built-in Routing Strategies
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Recognize the built-in routing options available in Amazon Connect.
+Recognize the routing best practices to improve the contact experience.
+
+Lesson introduction
+
+This lesson covers strategies for inbound routing in Amazon Connect that direct contacts to the best-equipped agent to handle their inquiry.
+
+Queue-based routing
+
+With the built-in queue-based routing algorithms, you can route contacts to agents based on the agents' skills. This routing strategy is called queue-based routing or skills-based routing.
+
+For example, an airline can have agents handling English-speaking contacts or Spanish-speaking contacts. They can also have a group of agents handling both language contacts but only over the phone. You can assign the same routing profile to multiple agents. You can also assign multiple queues to a routing profile or assign a queue to multiple routing profiles.
+
+For agents with multiple skills, you assign multiple queues to a routing profile. The same queue can belong to multiple routing profiles. With this strategy, you can define overflow logic. 
+
+To explore examples of queue and routing profile configurations for queue-based routing, choose each of the numbered markers.
+
+Diagram of four routing profiles. Details in markers.
+
+
+
+
+
+
+
+
+
+
+Using metrics and staffing
+
+Amazon Connect offers capabilities to route contacts to the appropriate team. Before placing a contact in a queue, the routing engine checks for agent availability. To learn more about how each of the flow blocks are used to improve contact routing, choose each of the numbered markers.
+
+Get queue metrics, Check queue status, and Check staffing flow blocks.
+
+
+
+
+
+
+
+
+
+
+
+
+The Get queue metrics block provides real-time data, like number of contacts in the queue or the wait time of the oldest contact. Based on this information, you can make routing decisions, provide wait time estimates to contacts, or offer alternative service options.
+
+For example, if the oldest contact in queue exceeds 5 minutes, you can do the following:
+
+Provide information about the current queue time.
+Offer a callback option to the contact while in the queue.
+Redirect the contact to a self-service interaction, if applicable.
+These options can help prevent contacts from waiting on hold. If opting for a callback, the contact retains their position in queue.
+
+
+Check queue status
+
+Check staffing
+The Check queue status flow block checks for specified conditions. These conditions can include branches based on Time in Queue or Queue capacity. For example, you can check whether a contact has been in the General queue for longer than 60 seconds and offer a callback. 
+
+
+
+Now that you have reviewed the Check queue status flow block, move on to the next tab to learn about the Check staffing flow block. 
+
+Proficiency routing
+
+Proficiency routing is another built-in Amazon Connect routing strategy. It uses the standard queue-based routing construct but adds a more flexible and granular approach to selecting agents. You can set up proficiency routing in four steps as follows:
+
+1
+Create predefined attributes: In this step, you define the attributes you want to use to make a routing decision. The predefined attributes created here can be used individually or combined by using the AND or OR operators to form a routing step.
+
+2
+Assign proficiencies to agents: You select predefined attributes and associate them with an agent. All available agents that meet a routing step requirement of a contact within the same queue are considered for a match.
+
+3
+Set routing criteria: Using a flow block, you can set routing criteria manually or dynamically.
+
+4
+Transfer to the queue: Send the contact to the queue, where it is evaluated against your routing criteria.
+
+Diagram of routing using agent proficiencies is set up in 4 steps.
+For more information about proficiency-based routing, see Routing using agent proficiencies(opens in a new tab).
+
+Changing contact priority
+
+In addition to prioritizing contacts within a routing profile, you can dynamically move a contact to the front or back of the queue. Amazon Connect flows include a Change routing priority / age flow block. With this flow block, you can change a contact's position in the queue. 
+
+Screenshot of the Change routing priority / age flow block flow block.
+Change routing priority / age flow block
+
+Use this block to implement the business logic that works for your use case. You can move a contact to the back or the front of the queue based on contact data. For example, you can prioritize contacts using your mobile app over contacts using the traditional phone lines.
+
+The default priority for contacts is 5. By setting a priority of 1, you move the contact ahead of other contacts in the queue, so it gets served faster. To do so, change the Set priority value to 1.
+
+You can also adjust the priority of a contact by changing the age of the contact. Use the Adjust by time option to add or subtract time from the original contact start time. When using this option, you artificially change the time in queue for the contact. The system interprets the contact's time in queue as longer or shorter than it actually is and routes accordingly.
+
+Screenshot of the Change routing priority / age flow block configuration panel.
+Routing best practices
+
+Effective routing strategies involve considering the overall experience from both the agent and contact perspective. You can implement effective strategies by doing the following: 
+
+Using time-of-day routing to expand serviceability
+Offering callbacks
+Keeping the contact engaged and informed while waiting to be served by an agent 
+Routing strategies should connect contacts to a suitably skilled agent and also keep them engaged and informed throughout the process. This includes providing relevant information, updates, and guidance while they wait or are transferred to ensure that the experience is seamless and transparent.
+
+Using time-of-day routing
+
+When setting up a queue, specify the hours of operation and time zone. The hours can be referenced in flows. For example, when routing contacts, check the hours first before sending a contact to a queue.
+
+In an Amazon Connect flow, use the Check hours of operation block. This determines if the contact center is open. Then, branch in the flow accordingly.
+
+This concept is covered in greater detail in later courses. For more information, see Flow Block: Check Hours of Operation(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Scenario: Time-of-day routing with Amazon Connect
+AnyCompany, a leading service provider, uses Amazon Connect to handle inquiries and support requests. The company wants to implement time-of-day routing to ensure efficient resource allocation and a superior experience.
+
+
+AnyCompany receives a high volume of calls during specific time periods, such as business hours and weekends.
+
+ 
+
+To optimize resource allocation, AnyCompany configures the Amazon Connect time-of-day routing feature. This makes it possible to define routing strategies based on time and day.
+
+ 
+
+During business hours (Monday to Friday, 9 AM to 5 PM), incoming calls are routed to dedicated service representatives. These agents are trained to handle various queries and issues during peak call volumes.
+
+ 
+
+Outside business hours (evenings and weekends), call volumes are lower, and queries are often more straightforward. AnyCompany routes these calls to a separate queue handled by part-time agents or virtual Amazon Lex agents for common queries and basic support.
+
+ 
+
+Complex or high-priority calls are escalated to a specialized team of senior agents, regardless of time. This ensures that critical issues are promptly addressed by experienced professionals, even during off-peak hours.
+
+ 
+
+By implementing time-of-day routing, AnyCompany effectively manages resources, reduces operational costs, and provides a consistent experience across different times of day.
+
+Keeping the contact engaged and informed
+
+With Amazon Connect flows, you can seamlessly use data to keep customers informed while in the interactive voice response (IVR) and in the queue.
+
+Scenario: Keeping the customer engaged while waiting in queue
+Consider a scenario where Nikki Wolf, a customer, needs to contact the support team for an ecommerce company about a product inquiry. When Nikki calls the company's support line, the Amazon Connect routing strategies come into action.
+
+First, the Amazon Connect queue-based routing places Nikki in an appropriate queue based on factors such as language preference, product, or inquiry intent. This intelligent routing ensures that Nikki is connected with an agent who has suitable skills and expertise to address her specific needs.
+
+ 
+
+While Nikki waits in the queue, the Amazon Connect customer engagement features engage her. The system can play customized hold messages or offer self-service options. These options can include FAQs, potentially resolving her issue without the need for an agent.
+
+ 
+
+Moreover, Amazon Connect can use callback strategies to enhance Nikki's customer experience. If the estimated wait time exceeds a certain threshold, the system can offer Nikki a callback when an agent becomes available. This helps Nikki avoid prolonged hold times.
+
+
+
+Additionally, Amazon Connect real-time metrics and reporting capabilities make it possible for the company to monitor queue lengths, wait times, and agent availability. Based on these insights, the company can dynamically adjust staffing levels or implement alternative routing strategies, such as overflow routing to third-party contact centers. This ensures prompt and efficient service for customers like Nikki.
+
+ 
+
+By using Amazon Connect routing strategies and customer engagement features, the ecommerce company can provide Nikki with a seamless and personalized experience. By keeping her informed and engaged throughout the support process, this ultimately fosters customer satisfaction and loyalty. 
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+What are built-in routing strategies in Amazon Connect?
+
+Queue-based routing and proficiency-based routing
+
+Incorrectly unselected
+Skill group-based routing, bull's-eye routing, and pick-the-best agent routing
+
+Incorrectly selected
+Vector-based routing, machine learning (ML)-based routing, and on demand routing 
+
+Correctly unselected
+Switchboard routing
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+The inbound routing strategies in Amazon Connect are queue-based routing and proficiency-based routing.
+
+
+TAKE AGAIN
+What are the ways to get external data into Amazon Connect to consider it for routing decisions? (Select THREE.)
+
+Amazon Lex
+
+Correctly checked
+Amazon API Gateway and Amazon DynamoDB
+
+Correctly unchecked
+AWS Lambda
+
+Correctly checked
+Amazon Connect Customer Profiles
+
+Correctly checked
+Dual tone multi-frequency (DTMF)
+
+Correctly unchecked
+Historical metrics reports
+
+Correctly unchecked
+SUBMIT
+
+Correct
+Amazon Connect integrates with Amazon Lex and Lambda, which are the two ways external data can be brought into Amazon Connect flows. Data can also be ingested into Customer Profiles. This external data can then be used for routing decisions.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned three inbound contact routing strategies in Amazon Connect: queues, routing proficiencies, and time-of-day routing. You can configure and combine these strategies using flow blocks. In the next lesson, you will review considerations for routing contacts in Amazon Connect.
+
+
+Check staffing
+The Check staffing flow block checks the current working queue or a specified queue. You can check for agent availability, staffing levels, or online agent status. Based on this information, you can determine how to route the contact
+
+Lesson 6 of 10
+Considerations
+Lesson objectives
+
+In this lesson, you will do the following:
+
+Explore security profiles related to routing resources.
+Identify service quotas.
+
+Lesson introduction
+
+Amazon Connect is designed to be extensible and interact with existing systems and backend databases or services. This can be achieved in many ways. This section will cover routing configuration considerations, including where you define access control. Additionally, you will learn about service quotas related to routing.
+
+Security
+
+Amazon Connect provides a number of security features to consider as organizations develop and implement their own security policies. Best practice recommendations include the following: 
+
+Ensure that all profile permissions follow the principle of least privilege.
+Set a service control policy (SCP) to prevent the deletion of critical resources.
+A security profile is a group of permissions that map to a common role in a contact center. There are security profile permissions related to routing that determine who can create, edit, and view resources like routing profiles, queues, or predefined attributes.
+
+Screenshot of Security profiles permissions for Amazon Connect routing.
+As a best practice recommendation, administrators must only grant users access to resources that are absolutely required for their role. For example, a routing strategy designer might only need access to add and modify queues and routing profiles. They only need view access to hours of operation or predefined attributes. 
+
+
+Routing profiles
+This security profile defines user access to the Routing profiles configuration permissions. The following user permissions are available:
+
+View: Provides view-only user access to the Routing profiles resources available in the Amazon Connect instance
+Edit: Gives the user access to modify existing Routing profiles resources
+Create: Gives the user access to create new Routing profiles resources
+By using advanced options and selecting the Tag-based access control setting, administrators can restrict access only to routing profiles with associated tags. For example, a routing strategy designer can group a set of routing profiles for sales-specific workloads by associating a sales department tag. Tags are key-value pairs, and in this example, the tag has the key department and the value sales. Associating this tag with routing profiles related to sales workloads, the advanced security profile restricts user access to routing profile resources tagged with department:sales.
+
+
+Quick connects
+This security profile defines user access to the Quick connects configuration permissions. The following permissions are available:
+
+View: Provides view-only user access to the Quick connects resources available in the Amazon Connect instance
+Edit: Gives the user access to modify existing Quick connects resources
+Create: Gives the user access to create new Quick connects resources
+Delete: Provides users with access to delete Quick connects resources
+
+Hours of operation
+This security profile defines user access to the Hours of operation configuration permissions. The following permissions are available:
+
+View: Provides view-only access to the Hours of operation resources available in the Amazon Connect instance
+Edit: Gives the user access to modify existing Hours of operation resources
+Create: Gives the user access to create new Hours of operation resources
+Delete: Provides users with access to delete Hours of operation resources
+The Hours of operation security profile provides the capability to restrict access to resources using tags, similar to Routing profiles.
+
+
+Queues
+This security profile defines user access to the Queues configuration permissions. The following permissions are available:
+
+View: Provides view-only permission to access the Queue resources created in the Amazon Connect instance
+Edit: Gives the user access to modify existing Queues resources
+Create: Gives the user access to create new Queues resources
+Delete: Provides users with access to delete Queues resources
+Enable/Disable: Gives users access to temporarily activate or deactivate Queues resources without deleting them
+The Queues security profile provides the capability to restrict access to resources using tags, similar to Routing profiles and Hours of operation.
+
+
+Predefined attributes
+This security profile defines user access to the Predefined attributes configuration permissions. Predefined attributes are used in the proficient routing strategy. The following permissions are available:
+
+View: Provides view-only access to the Predefined attributes resources available in the Amazon Connect instance
+Edit: Gives the user access to modify existing Predefined attributes resources
+Create: Gives the user access to create new Predefined attributes resources
+Delete: Provides users with access to delete Predefined attributes resources
+Service quotas
+
+When an Amazon Connect instance is created, it includes default service quotas, or a maximum number of resources available at creation time. Some of the adjustable quota values for routing resources include the following: 
+
+•
+Number of Routing profiles per instance
+
+•
+Number of Quick connects per instance
+
+•
+Number of Hours of operation per instance
+
+•
+Number of Queues per instance
+
+•
+Number of Queues per routing profile per instance
+
+•
+Number of Predefined attributes per instance
+
+•
+Number of Proficiencies per agent 
+
+The number of Queues per routing profile service quota takes into consideration the number of queue and channel combinations per routing profile. For example, if a routing profile includes one queue used to deliver both voice and task channels, that queue will count as two against the service quota.
+
+To learn more about the available default and adjustable service quotas, see Amazon Connect Service Quotas(opens in a new tab) in the Amazon Connect Administrator Guide.
+
+Check your knowledge
+
+The following section will check your understanding of the content covered in this lesson.
+
+Terry Whitlock is a telecom engineer at AnyCompany Insurance. AnyCompany recently implemented a series of new digital channels that allow access to their customers on the channel of their choice. The routing rules for messaging must follow the same voice logic. Which service quotas should Terry consider increasing to accommodate the configuration change?
+
+Number of Queues per instance
+
+Correctly unselected
+Number of Queues per routing profile per instance
+
+Incorrectly unselected
+Number of Predefined attributes per instance
+
+Incorrectly selected
+Number of Routing profiles per instance
+
+Correctly unselected
+SUBMIT
+
+Incorrect
+The number of Queues per routing profile service quota takes into consideration the number of queue and channel combinations per routing profile. Terry must activate the messaging channel for each queue in the routing profile. This will result in doubling the number of queue and channel combinations per routing profile.
+
+
+TAKE AGAIN
+What's next?
+
+In this lesson, you learned how Amazon Connect security profile permissions are used to determine who has access to perform specific routing configuration actions. You also learned about the service quotas in Amazon Connect and how to identify the default values or adjust them to meet your requirements. This concludes the Amazon Connect Routing Fundamentals course. Continue to the next section for a summary of what you learned in this course.
+
+Lesson 7 of 10
+Summary
+Course summary
+
+Review the key learnings in the course summary before taking the course assessment.
+
+Benefits
+Amazon Connect routing offers unified experiences across channels. Voice, chat, tasks, and SMS get routed through the same engine and queues. This approach optimizes contact outcomes and agent usage. Routing can scale seamlessly without additional management overhead. 
+
+
+
+Queues
+Amazon Connect has two queue types: standard and agent. 
+
+
+
+Standard queues hold contacts waiting for available agents. Administrators create standard queues based on skills, like product knowledge, or attributes, like geography. 
+
+
+
+Agent queues are automatically generated when users are created in the system. Use agent queues to route contacts to specific agents for personalized interactions. 
+
+Routing profiles, priorities, and delays
+A routing profile groups one or more queues matching agent skills and channels. Each agent has one routing profile that determines their eligibility for the available queues and channels. Within a routing profile, you can configure queue priorities and delays. The priority settings control the order in which queues get served. The delay settings expand the eligible agent pool as contacts age in queue.
+
+Inbound and outbound routing
+For single channel routing, consider the following: 
+
+Contacts route through flows to queues based on agent routing profiles, queue hours, and flow logic. 
+Metrics, like number of contacts in the queue and the oldest wait time, can influence routing decisions. 
+Agents with available capacity receive contacts based on routing profiles, priorities, and contact age.
+Multi-channel routing profiles configure concurrent channel settings, like handling one voice call or three chats. Cross-channel concurrency rules determine whether agents receive additional contacts across channels while engaged. 
+
+
+
+Outbound calls can be agent-initiated manually or programmatically routed after being dialed out.
+
+Built-in routing strategies
+In queue-based routing, contacts get routed to agents based on the agent skills configured in routing profiles. 
+
+
+
+The proficiency routing configuration steps are as follows:
+
+Create predefined attributes for proficiency-based routing. 
+Assign attributes to agents as proficiencies. 
+Set routing criteria in flows to match contacts to proficient agents. 
+Dynamically adjust contact queue priority and age.
+Considerations
+Service quotas 
+
+Amazon Connect has default service quota limits for routing profiles, queues, quick connects, and predefined attributes per instance. Some quotas are adjustable.
+
+
+
+Security 
+
+Grant permissions through security profiles following least privilege principles. Security profiles control creating, editing, and viewing routing resources like profiles, queues, and attributes. Use tag-based access control to restrict access to specific tagged resources.
+
+Downloadable PDF of the summary
+
+To download a PDF version of the summary section, choose anywhere inside the following box. Note: For the best experience with screen readers, use NVDA or JAWS. If you are using VoiceOver, you might experience issues with the downloaded PDF. 
+
+Amazon Connect Routing Fundamentals Summary.pdf
+118.9 KB
+What's next
+
+In this section, you reviewed Amazon Connect routing capabilities. In the next section, you will assess your knowledge of these concepts.

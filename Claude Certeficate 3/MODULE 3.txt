@@ -1,0 +1,477 @@
+Associate Persona · Module 3
+
+Evaluating & Validating Claude's Output
+Claude saved you twenty minutes drafting an analysis. One fabricated figure in that analysis, sent to a client or a regulator, can cost far more than twenty minutes to undo. This module gives you the discipline to stand behind AI-assisted work: how to evaluate output systematically, recognize failure patterns, build verification into your prompts, and choose the format that matches the reliability the task demands.
+
+Table of contents
+Module Introduction
+1 screen
+Discernment: Accuracy & Completeness
+1 screen
+Hallucinations, Inconsistencies & Bias
+1 screen
+Fact-Checking & Grounding
+1 screen
+Diligence: When Review Is Non-Negotiable
+1 screen
+Editing & Adapting for Audience
+1 screen
+Choosing Output Formats
+1 screen
+Exercise: Triage the Output Set
+2 screens
+Module 3 Quiz
+2 screens
+Module Complete
+1 screen
+
+Module 3
+Introduction
+·
+4 min
+Evaluating & Validating Claude's Output
+Claude saved you twenty minutes drafting an analysis. One fabricated figure in that analysis, sent to a client or a regulator, can cost far more than twenty minutes to undo.
+
+This is the asymmetry at the center of professional AI use: the time saved is small and visible, and the cost of an unverified error is large and arrives later.
+
+This is the largest section of the certification exam, and the reason is accountability. When you put your name on a deliverable, you own every claim in it, whether you wrote the words or Claude did. This module gives you the discipline to stand behind AI-assisted work.
+
+A short cautionary case
+A consultant asked Claude to pull supporting statistics for a client market-sizing deck. Claude returned five clean figures with confident framing. Four were sound. One, a growth rate, was fabricated, plausible enough that nobody questioned it. The figures went into a deck, the deck went to a client, and the client's own analyst flagged the fabricated figure in the room.
+
+The ten minutes saved on research cost a credibility hit and a week of rebuilding trust. Nothing about the figure looked wrong on the screen. That is the problem this module is intended to solve: the cost of a missed error is not paid when you save the time, it is paid later, by someone whose trust you needed.
+
+Two competencies from the AI Fluency Framework anchor the module. Discernment is the skill of critically evaluating output against requirements, sources, and standards. Diligence is deciding when verification is required and taking responsibility for the result. Discernment is how you review; Diligence is why you must.
+
+By the end of this module, you will be able to:
+1Evaluate Claude-generated output for accuracy and completeness.
+2Identify hallucinations, inconsistencies, and biases in responses.
+3Apply fact-checking and validation techniques.
+4Determine when human review or additional verification is required.
+5Edit, adapt, refine, and compare output for the intended audience.
+6Select appropriate output formats and organize information for optimal results.
+The deal in this module
+You are accountable for everything you ship, created with Claude's help. Learn to evaluate output systematically, recognize the failure patterns, build verification into your prompts, know the thresholds where human review is mandatory, and choose the output format that matches the reliability the task demands.
+
+Disclaimer / Notice for Educational Content
+We built this Associate course Module 3: Evaluating & Validating Claude's Output to help you get real work done with Claude. Treat it as educational content. It doesn't constitute legal, financial, or other professional advice, so adapt what you learn to your own situation. Our products and services evolve quickly, so certain content may contain errors or be outdated; remember to verify on Anthropic's website or docs. Examples and scenarios used in the course are illustrative and often fictitious. If the course material mentions a company or product, it doesn't mean Anthropic endorses them, they endorse Anthropic, or that we're affiliated. Also note your use of Anthropic products and services is covered by our terms, policies and documentation; if anything in this course conflicts with them, they control.
+
+Teaching
+Discernment
+·
+12 min
+Discernment: Evaluating Accuracy, Completeness, and Fitness
+Evaluation is not a feeling about whether output looks good. It is a check against three fixed references: the requirements you set, the source material, and the professional standards of your field. The discernment protocol is running that check the same way every time, so quality does not depend on how rushed you happen to be.
+
+Three evaluation references
+Requirements. Does the output reflect what you asked for? Re-read your own request and confirm each part is addressed, not just the easy parts.
+
+Source material. Where the output relies on documents you supplied, does it match them? Trace specific claims back to the source rather than trusting that Claude read carefully.
+
+Professional standards. Would this pass in your field? A number without units, a recommendation without reasoning, a citation you cannot locate. These fail professional standards even when they read fluently.
+
+Stakes calibration
+How deeply you review depends on the stakes, and the stakes are domain-dependent, not universal. In zero-tolerance work (legal analysis, financial figures, compliance reporting), accuracy outranks speed entirely, and every claim gets verified. In low-stakes internal brainstorming, a lighter review is appropriate. The risk is applying the same casual review to both. Determine the stakes before you decide the depth of review.
+
+A three-way triage
+After review, sort each output into one of three states, with documented reasoning:
+
+Verdict	When it applies
+Ready to use	Meets requirements, matches sources, clears professional standards. Ship it.
+Needs revision	Close, but a specific gap remains. Note the gap and iterate.
+Needs human override	The stakes, the errors, or the uncertainty mean this should not go out on Claude's draft alone. Escalate to a person.
+Completeness is a separate review
+Accuracy asks whether what is present is correct. Completeness asks whether anything is missing. They fail independently: an output can be entirely accurate and still omit the one factor that impacts a decision. Review for both. Missing elements are harder to spot than wrong ones, because nothing on the screen draws your eye to them.
+
+The protocol on three real outputs
+The protocol is most effective on outputs that are not obviously good or bad. Here it is applied to three, each a different verdict.
+
+Output 1: a competitor-pricing summary. You asked Claude to summarize three competitors' published pricing from PDFs you uploaded. The summary is clean and well-organized. Running the three references: requirements met (it covers all three competitors), but the source review fails: one price is listed as "$40/user" when the uploaded PDF says "$40/user, minimum 10 seats." The omission changes the comparison. Verdict: needs revision. The fix is a source-restricted re-prompt, not a rewrite.
+
+Output 2: an internal process recommendation. You asked for three options to reduce invoice-processing time. The output gives three sensible options with trade-offs. Requirements met, no sources to check against, professional standards cleared, low stakes (internal discussion starter). Verdict: ready to use. Over-verifying this one wastes the time the tool saved.
+
+Output 3: a compliance-gap analysis. You asked Claude to compare your data-handling policy against a regulation and flag gaps. It flags four gaps confidently. Requirements appear met, but the regulation was not uploaded, so Claude worked from training-data recall of a rule that may have changed, and the stakes are regulatory. Verdict: needs human override. The output is a useful prompt for a compliance expert, not a substitute for one.
+
+Same protocol, three verdicts. The difference is never how polished the output looks; it is what the three references and the stakes return.
+
+Teaching
+Failure Patterns
+·
+10 min
+Hallucinations, Inconsistencies & Bias
+Plausible is not the same as verified. Claude writes fluently whether it is right or wrong, so you cannot rely on tone or confidence to flag an error.
+
+Knowing the specific signatures of failure lets you spot them quickly instead of reading every line with equal suspicion.
+
+Hallucination patterns
+Plausible-but-unsupported claims. A statement that sounds reasonable and fits the topic, with no basis in the source or in fact. The most dangerous kind, because nothing about it looks wrong.
+
+Fabricated specifics. Invented statistics, dates, names, quotations, or citations. Specificity reads as authority, which is exactly why fabricated specifics are persuasive.
+
+Confident tone masking uncertainty. Claude rarely hedges in proportion to its actual certainty. A guess and a well-grounded fact arrive in the same assured voice.
+
+Inconsistencies and bias
+Internal contradictions. In a long output, a claim early on can conflict with one later. Long documents are where contradictions hide, because you rarely hold the whole thing in view at once.
+
+Confirmation bias in framing. If your prompt implies a preferred answer, Claude may lean toward it. Watch for output that agrees with you a little too readily on a question that should be genuinely open.
+
+A completeness failure worth remembering
+A common, anonymized field pattern: a professional asks Claude to compare a batch of documents and identify the differences. The output lists several differences and reads as thorough. It missed differences in the single most important file in the batch. Completeness failures concentrate where attention is lowest, and a confident summary of the easy files can mask silence on the hard one.
+
+Capability hallucination
+Claude can claim to have taken an action it cannot actually take, such as "I've emailed that to your team" or "I've saved the file." Within claude.ai, Claude works with the conversation, connected tools, and uploaded files; it does not perform external actions it was not given a tool for. Treat any claimed external action as unverified until you confirm it happened.
+
+A failure-pattern gallery
+Each pattern below is shown the way it can actually appear, so you recognize the signature rather than the label.
+
+Fabricated specific, in the wild
+Prompt: "What share of mid-market SaaS firms adopted AI tools in 2025?" Output: "Approximately 63 percent of mid-market SaaS firms adopted at least one AI tool in 2025, up from 41 percent in 2024." The numbers are precise, the trend is plausible, and there is no source. The precision is the tell. Real figures this specific come with a citation; an uncited 63 percent is a number-shaped guess.
+
+Confident tone masking uncertainty
+Prompt: "Is this clause enforceable in our state?" Output: a four-sentence answer stating it is enforceable, in the same assured voice Claude uses for arithmetic. Legal enforceability is jurisdiction-specific and date-sensitive, exactly the kind of claim that should hedge and does not. Assurance is not evidence.
+
+Internal contradiction across a long output
+In a ten-page market analysis, page two states the addressable market is "roughly $2 billion" and page eight builds a projection on "the $2.6 billion market." Both read fine in isolation. The contradiction only becomes visible if you hold the whole document in view, which is why long outputs need a consistency pass, not just a paragraph-by-paragraph read.
+
+How to read the gallery
+None of these outputs looks broken. That is the point of the lesson: the failure modes are designed, by the nature of fluent generation, to pass a casual read. You catch them by knowing the signatures and checking against sources, not by waiting for something to look wrong.
+
+Teaching
+Fact-Checking & Grounding
+·
+10 min
+Fact-Checking and Grounding Techniques
+The strongest verification is built into the prompt, before the output exists.
+
+A few prompt habits cut hallucinations at the source rather than catching them after the fact, and they make whatever remains far easier to audit.
+
+Prompt for verifiability
+Grounding techniques
+Verbatim prompts
+Permit "I don't know." Tell Claude explicitly that admitting uncertainty is acceptable. Without that permission, a model under pressure to answer is more likely to fill the gap with something invented.
+
+Restrict to provided sources. For document work, instruct Claude to answer only from the materials you supplied and to flag anything those materials do not cover. This converts open-ended generation into bounded retrieval.
+
+Require auditable citations. Ask for the specific source and location behind each claim, in a form you can check. A citation you cannot trace is not a citation.
+
+The verification checklist
+Before relying on an output: did I allow uncertainty, restrict to sources where appropriate, require citations I can audit, and check the high-stakes claims against something authoritative? Building these into the prompt is cheaper than rebuilding trust in the output afterward.
+
+Grounding techniques
+Verbatim prompts
+Quote first, then analyze. For long documents, ask Claude to extract the supporting quotes before drawing conclusions. Grounding the analysis in pulled quotes makes both the reasoning and the errors visible.
+
+Best-of-N comparison. Re-run the same request and compare. Where the runs agree, confidence rises; where they diverge, you have found the soft spots that need a human look.
+
+Validate against authoritative sources. For claims that matter, check against a trusted external reference rather than a second Claude response. In-product aids help here: Claude for Excel can produce cell-level citations that tie figures back to their inputs.
+
+Verbatim prompts
+The techniques as verbatim prompts
+Each technique is a phrase you can paste. The wording is the skill.
+
+Permission to not know
+
+"If the answer is not supported by the documents I provided, say so explicitly rather than estimating. It is acceptable to answer 'the provided materials do not cover this.'"
+
+Source restriction
+
+"Answer using only the attached contract. Do not use general knowledge. For anything the contract does not address, list it under 'Not covered by this document.'"
+
+Auditable citation
+
+"For every claim, cite the section and clause number it comes from, in parentheses, so I can verify it against the source."
+
+Quote-grounding
+
+"Before you analyze, extract the exact sentences from the document that bear on my question. Then base your analysis only on those quotes."
+
+Teaching
+Diligence
+·
+10 min
+Diligence: When Human Review Is Non-Negotiable
+Some outputs must never go out as a Claude draft alone, no matter how good they look.
+
+Diligence means knowing those thresholds in advance, so the decision to escalate is made by policy, not in the moment after something has already gone wrong.
+
+Four risk thresholds
+Threshold	What to ask
+Stakes	What is the cost if this is wrong? High-cost errors demand human review regardless of how confident the output appears.
+Reversibility	Can the action be undone? An irreversible step (a sent client deliverable, a filed report) clears a higher bar than a draft you can revise.
+Audience	Who sees it? External, executive, and regulatory audiences raise the review requirement above internal working drafts.
+Regulatory exposure	Does a rule, contract, or law govern this? Regulated content carries obligations that AI assistance does not remove.
+The do-not-ship-without-review list
+Decide these in advance and treat them as fixed:
+
+Final client deliverables
+Audit-critical or financially material calculations
+Anything involving regulated, confidential, or highly sensitive data
+Public or legal communications where a misstatement carries lasting consequence
+Iteration versus escalation
+Productive iteration improves the output each round. When rounds stop improving it, you have diminishing returns, and the right move is not another prompt; it is a human expert. Recognizing that line is part of Diligence: more prompting cannot manufacture judgment the situation requires.
+
+Owning the output
+The accountability does not transfer to the tool. Work produced with Claude is your work when you ship it, and the professional standard is the same as if you had produced it unaided. Diligence is the habit of acting as though that is true, because it is.
+
+Three escalation scenarios
+The fast "yes." Claude drafts an internal meeting agenda. Low stakes, reversible, internal audience, no regulatory exposure. All four thresholds say ship. No escalation; this is the routine case you can move quickly on.
+
+The deceptive "looks fine." Claude produces a board-deck financial summary that reads cleanly. The stakes are high, there's an executive audience, and the result will be partly irreversible once presented, tripping three of the risk thresholds. The clean appearance is irrelevant; this goes to a human reviewer and the figures get recomputed with code execution.
+
+The slow creep. You have iterated a client proposal five times. Rounds three through five changed almost nothing. Diminishing returns plus a high-stakes external deliverable: stop prompting, escalate to a colleague for a fresh read. The signal to escalate is the flat improvement curve, not a visible error.
+
+Teaching
+Editing for Audience
+·
+8 min
+Editing and Adapting Output for Your Audience
+Claude drafts; you deliver. The gap between a raw draft and a finished deliverable is the editing pass, and that pass is where your professional standards and your knowledge of the audience get applied. A draft that is accurate is still not finished.
+
+From raw output to deliverable
+Three passes turn a draft into something you would put your name on:
+
+Clarity. Cut hedging, tighten loose sentences, remove anything that does not earn its place. Claude tends toward thoroughness; editing tends toward precision.
+
+Tone. Match the register to the relationship and the occasion. The same content reads differently to a peer, a client, and a regulator.
+
+Formatting. Shape the output for how it will be read: scannable for an executive, detailed for a working team, clean for an external recipient.
+
+Audience calibration
+One analysis often needs to become several deliverables. An executive summary leads with the decision and the impact. A working-team version keeps the detail and the method. An external communication controls what is disclosed and how it is framed. The underlying facts hold steady; the selection, depth, and tone change with who is reading.
+
+Comparing outputs before you edit
+When quality matters, generate more than one draft (across runs or across models) and choose the strongest base to edit from, rather than committing to the first response. Comparing candidates is cheaper than rescuing a weak draft, and it invites framing you might not have prompted for.
+
+One analysis, two audiences: a transformation
+Raw output (excerpt)
+"The analysis indicates that processing time increased by approximately 18 percent in Q3, which may be attributable to a combination of higher volume and the onboarding of three new staff members who were still onboarding during the period, and it is recommended that the team consider whether additional process documentation might help mitigate similar effects in future onboarding cycles."
+
+Executive version
+"Q3 processing time rose 18 percent, driven by volume plus onboarding three new hires. Recommend standardized onboarding docs to limit the effect next time." Leads with the number and the decision; one sentence.
+
+Working-team version
+"Processing time was up ~18% in Q3. Two drivers: higher volume and three new staff still onboarding. Action: draft onboarding documentation so the next cohort ramps faster (owner and timeline to confirm in standup)." Keeps the method and adds the operational next step.
+
+Same facts, same 18 percent. The executive cut strips method and leads with impact; the working cut keeps detail and assigns action. Neither is a raw draft, which would not serve either audience.
+
+Teaching
+Output Formats
+·
+8 min
+Choosing Output Formats: Inline, Artifacts, Structured, Code-Executed
+The output format is a reliability decision, not just a presentation choice. The right format depends on what the result is intended for and, above all, on how much the numbers have to be trusted.
+
+Format by purpose
+Inline. For conversational responses you will act on within the chat. Quick, contextual, not meant to be a standalone artifact.
+Artifacts. For documents and code: a separate, editable block you will refine and reuse. The right home for a deliverable rather than a reply.
+Structured formats. For data: tables and defined schemas that downstream tools or readers can consume directly.
+Code execution as the verified-output path
+When numbers must be right, have Claude compute them rather than write them. Prose generation produces a plausible-looking figure; code execution runs the calculation and returns a computed, checkable result, along with charts and processed files. Determinism attaches to the executed computation; Claude writes the code, so the logic itself can still contain a bug. The guarantee is that you can read, verify, and re-run the calculation, but the code is not automatically correct. The same data task done two ways shows the difference: a number generated in prose is a guess in the shape of an answer, while a number from code execution is a computed result you can trace and check.
+
+Prose versus code-executed: the same task
+Task: from an uploaded sales spreadsheet, report total Q3 revenue and the three top accounts.
+
+Prose path: "Total Q3 revenue was about $4.7 million, with the largest accounts being Northwind, Contoso, and Globex." Fluent, fast, and unverifiable. The total is the model's best guess at summing a column it cannot actually add reliably, and a wrong total here propagates into every downstream slide.
+
+Code-executed path: Claude writes and runs code over the actual file, returning $4,712,380 as a computed sum, the three top accounts ranked by their real totals, and a bar chart. The number is traceable to the rows that produced it. When the figure feeds a decision, this is the only path that earns trust.
+
+The prose answer is not lazy; it is a different kind of output. For a low-stakes gut-check it may be fine. For anything that gets reported, the reliability requirement points to code execution.
+
+Curate the inputs to shape the output
+Organized inputs produce organized outputs. Supplying clean, well-labeled source material and stating the structure you want back is what lets Claude return something structured rather than something you have to restructure. The selection rule is simple: pick the output modality by the reliability the task requires. Curating inputs means removing the wrong material, in addition to adding the right material. Three techniques do most of the work: de-duplicate your sources so Claude is not reconciling three near-identical copies of the same document; label and structure what you supply so each input's role is explicit ("this is the approved policy; these are the draft responses"); and prune material that is not relevant to the question, because noise in the input becomes noise in the output. Clean, well-labeled, minimal inputs produce a cleaner result than a large undifferentiated pile.
+
+Exercise
+Triage the Output Set
+·
+7 min
+Exercise: Triage the Output Set
+Triage is the daily muscle of responsible AI use. This exercise applies the Discernment protocol and the Diligence thresholds to a set of outputs, the way you would in real work.
+
+Four Claude outputs follow. Classify each as ready to use, needs revision, or needs human override, and state the reason. Then compare against the model answers.
+
+Outputs to triage
+Output A
+An internal brainstorm of campaign ideas, clearly labeled as a starting point, with a few generic entries among strong ones.
+Ready to use
+Needs revision
+Needs human override
+Your reason (one line, required)
+Low-risk brainstorming output, clearly labeled as a draft; generic ideas can be filtered during review.
+Model answer: Ready to use (with light editing). Low stakes, internal, labeled as a draft. Trim the weak entries and proceed.
+Output B
+A financial summary stating a total that does not match the sum of the line items above it.
+Ready to use
+Needs revision
+Needs human override
+Your reason (one line, required)
+Contains a factual arithmetic inconsistency that must be corrected before use.
+Model answer: Needs revision. An internal contradiction: the total conflicts with the line items. Recompute with code execution and confirm before use.
+Output C
+A market overview citing three statistics, none of which name a source you can check.
+Ready to use
+Needs revision
+Needs human override
+Your reason (one line, required)
+Statistics require verifiable sources before they can be trusted or shared.
+Model answer: Needs revision. Unsourced statistics are unverified claims. Require auditable citations or validate against authoritative sources before relying on them.
+Output D
+A draft regulatory filing summary, accurate on the points you spot-checked, intended for submission to a regulator.
+Ready to use
+Needs revision
+Needs human override
+Your reason (one line, required)
+Regulatory submissions are high-stakes and require human review and approval before submission.
+Model answer: Needs human override. High stakes, irreversible, regulatory audience. Mandatory expert review regardless of how clean the draft looks.
+Submit all four
+Skip for now
+Model answers revealed
+You separated stakes from output quality. Notice that the cleanest-looking output (D) carries the highest review requirement, and the messiest (A) the lowest; appearance and risk are not the same axis.
+
+Optional
+Self-Assessment
+·
+3 min
+Variant: Score Your Own Conversation
+Pick one of your own recent Claude conversations. Score it against the Discernment and Diligence behavioral indicators from this module: did you check the output before using it (Diligence), and did you judge whether the response actually fit the question you asked (Discernment)? Type one sentence on where you were strong and one on where you would tighten up, then reveal the indicator checklist to compare.
+
+Where I was strong:
+
+I checked whether Claude's response matched my objective and verified important facts before using the output.
+
+Where I would tighten up:
+
+I would more consistently verify calculations, citations, and high-stakes information instead of relying on the first response.
+Reveal indicator checklist
+Skip for now
+Indicator checklist
+Diligence: did you check the output before using it, against the model and stakes you were relying on?
+Discernment: did you judge whether the response actually fit the question you asked, not just whether it read well?
+
+This variant is optional and not scored; compare your two sentences against the checklist above.
+
+Quiz
+Module 3
+·
+5 min
+Module 3 Quiz: Output Evaluation & Validation
+Seven scenario-style questions emphasizing judgment calls. Each presents a situation; select the response that best applies the module's evaluation framework. Approximately five minutes.
+
+Q1
+A report Claude produced is accurate on every figure you checked, but you suspect a relevant factor was left out entirely. What does a complete Discernment review require?
+A
+Nothing further; every figure checked out, so the report is sound
+B
+A separate completeness check against the requirements, looking for missing elements, not just wrong ones
+C
+Re-running the report on a more capable model
+D
+Asking Claude whether it left anything out and trusting the answer
+Completeness is a separate check from accuracy; correct figures do not guarantee nothing was omitted.
+Q2
+A market analysis includes a precise, confident statistic with no source attached. What is the most likely risk?
+A
+The output is fine; confident, specific figures are usually reliable
+B
+A fabricated specific: invented detail that reads as authoritative because it is precise
+C
+A formatting issue that does not affect accuracy
+D
+A model-tier problem solved by switching models
+A precise statistic with no source is a classic fabricated specific; specificity reads as authority but is not verification.
+Q3
+You need Claude to answer questions strictly from a contract you uploaded, without inventing anything. Which prompt technique most reduces hallucination?
+A
+Ask the question and trust Claude to stay within the document
+B
+Restrict the answer to the provided document, permit "I don't know," and require citations to specific clauses
+C
+Ask the same question five times and average the answers
+D
+Use the most capable model and ask in a single sentence
+Source restriction, permission to say "I don't know," and auditable citations together cut hallucination at the prompt.
+Q4
+Claude extracted figures from your source files into a reconciliation table that will feed a regulatory filing. The table is clean and well formatted, but its subtotal does not match the line items above it. What is the correct action before the table is used?
+A
+Accept the table; the formatting is clean and the rest of the figures look right
+B
+Recompute the figures with code execution, confirm the subtotal reconciles, and resolve the discrepancy before the table is used
+C
+Submit the filing now and flag the subtotal discrepancy to the regulator afterward
+D
+Ask Claude to reformat the table to make it look cleaner and resubmit
+A subtotal that conflicts with its line items is an internal inconsistency, so the table needs revision before use. Code execution recomputes and reconciles the figures, fixing the cause; accepting it on appearance (A), submitting and flagging later (C), or merely reformatting (D) all leave the discrepancy in a filing where it matters most.
+Q5
+One analysis must go to both the executive team and the working group. What is the best approach?
+A
+Send the same full draft to both audiences
+B
+Produce an executive version leading with decision and impact, and a working-team version keeping detail and method
+C
+Send the executives the raw Claude output to save time
+D
+Ask Claude to pick which audience matters more
+Audience calibration produces distinct versions from the same facts; one draft does not serve both audiences well.
+Q6
+A deliverable depends on a multi-variable financial calculation that must be exactly right. Which output path is most trustworthy?
+A
+Ask Claude to calculate it inline and review the number
+B
+Request the figure as a formatted table
+C
+Use code execution so the calculation is run and the result is verified
+D
+Use Research to find a comparable published figure
+An exact calculation is a reliability problem; code execution returns a computed, verified result rather than a probable-looking one.
+Q7
+A learner pastes six overlapping source files, several are near-duplicate drafts of the same memo, and asks Claude to summarize the policy. The summary comes back muddled and repeats contradictory points. What most improves output quality?
+A
+Switch to a higher model tier and re-run the same six files.
+B
+De-duplicate and prune the sources to the single approved version, label what each remaining input is, then re-run.
+C
+Ask Claude to make the summary longer and more detailed.
+D
+Paste all six files again in a fresh conversation.
+Noisy, redundant inputs produce noisy outputs. Curating the inputs, removing duplicates, keeping the approved source, labeling each input's role, fixes the cause. A bigger model (A) still has to reconcile contradictory inputs; C and D do not address input quality.
+Submit quiz
+Skip for now
+Full marks · 7/7
+Full command of the evaluation framework: accuracy and completeness, failure patterns, fact-checking, review thresholds, audience editing, format by reliability, and input curation.
+
+Module 3
+Key Takeaways
+Key Takeaways
+Six things that hold across this module:
+
+01
+Accountability stays with you.
+You own every claim in what you ship, whether you wrote it or Claude did. That is why this is the exam's largest section.
+
+02
+Evaluate against three references.
+Requirements, source material, and professional standards. Run the same check every time and calibrate depth of review to what is at stake.
+
+03
+Plausible is not verified.
+Fabricated specifics, confident uncertainty, and completeness gaps all read as competent. Learn the signs so you can spot them fast.
+
+04
+Build verification into the prompt.
+Permit "I don't know," restrict to sources, and require auditable citations. Prevention is cheaper than reconstruction.
+
+05
+Know the thresholds in advance.
+Stakes, reversibility, audience, and regulatory exposure decide when human review is mandatory. Set the line before the moment, not after.
+
+06
+Pick the format by reliability.
+When numbers must be right, compute them with code execution rather than generating them as prose.
+
+Sources
+All product behavior descriptions are based on claude.ai features as of June 2026. Feature availability and behavior should be verified against current Anthropic documentation at publish:
+
+AI Fluency Framework: Discernment and Diligence competencies and behavioral indicators
+Anthropic docs: reducing hallucinations, citations, and verification guidance, platform.claude.com/docs
+Claude Help Center: Code execution and Claude for Excel cell-level citations, support.claude.com
+
+
