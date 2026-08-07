@@ -202,6 +202,21 @@ export function runNavClick(id, p, ctx = {}) {
     case "lab_token_cost":
     case "lab_agent_anatomy":
     case "lab_agent_bottlenecks":
+    case "lab_eval_forge":
+    case "lab_context_architect":
+    case "lab_security_arena":
+    case "lab_memory_garden":
+    case "lab_tool_flight_school":
+    case "lab_human_control":
+    case "lab_multi_agent":
+    case "lab_mcp_permissions":
+    case "lab_trace_detective":
+    case "lab_structured_repair":
+    case "lab_model_router":
+    case "lab_grounding_court":
+    case "lab_uncertainty":
+    case "lab_prompt_cache":
+    case "lab_technique_chooser":
       if (p.setActiveLabId) p.setActiveLabId(id);
       if (p.setShowLabs) p.setShowLabs(true);
       break;
