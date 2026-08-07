@@ -94,6 +94,21 @@ const LAB_IDS = new Set([
   "lab_token_cost",
   "lab_agent_anatomy",
   "lab_agent_bottlenecks",
+  "lab_eval_forge",
+  "lab_context_architect",
+  "lab_security_arena",
+  "lab_memory_garden",
+  "lab_tool_flight_school",
+  "lab_human_control",
+  "lab_multi_agent",
+  "lab_mcp_permissions",
+  "lab_trace_detective",
+  "lab_structured_repair",
+  "lab_model_router",
+  "lab_grounding_court",
+  "lab_uncertainty",
+  "lab_prompt_cache",
+  "lab_technique_chooser",
 ]);
 const DEFAULT_LAB_ID = "lab_enterprise_ai_agents";
 

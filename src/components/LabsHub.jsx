@@ -2,6 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Loader2 } from "lucide-react";
 import AgentBottlenecksLab from "../../artifact-5.jsx";
+import EvalForgeLab from "../../artifact-6.jsx";
+import ContextArchitectLab from "../../artifact-7.jsx";
+import AgentSecurityArenaLab from "../../artifact-8.jsx";
+import MemoryGardenLab from "../../artifact-9.jsx";
+import ToolCallingFlightSchoolLab from "../../artifact-10.jsx";
+import HumanControlRoomLab from "../../artifact-11.jsx";
+import MultiAgentMissionControlLab from "../../artifact-12.jsx";
+import McpPermissionWorkshopLab from "../../artifact-13.jsx";
+import TraceDetectiveLab from "../../artifact-14.jsx";
+import StructuredOutputRepairLab from "../../artifact-15.jsx";
+import ModelRouterLab from "../../artifact-16.jsx";
+import GroundingCourtLab from "../../artifact-17.jsx";
+import AgentUncertaintyLab from "../../artifact-18.jsx";
+import PromptCacheWorkshopLab from "../../artifact-19.jsx";
+import TechniqueChooserLab from "../../artifact-20.jsx";
 import "../styles/LabsHub.css";
 
 const LABS = [
@@ -33,10 +48,31 @@ const LABS = [
     id: "lab_agent_bottlenecks",
     title: "20 AI Agent Bottlenecks, Live",
     kind: "react",
+    component: AgentBottlenecksLab,
   },
+  {
+    id: "lab_eval_forge",
+    title: "Eval Forge — Stop Vibe Testing",
+    kind: "react",
+    component: EvalForgeLab,
+  },
+  { id: "lab_context_architect", title: "Context Architect — Pack the Perfect Context", kind: "react", component: ContextArchitectLab },
+  { id: "lab_security_arena", title: "Agent Security Arena — Defend the Toolchain", kind: "react", component: AgentSecurityArenaLab },
+  { id: "lab_memory_garden", title: "Memory Garden — What Should the Agent Remember?", kind: "react", component: MemoryGardenLab },
+  { id: "lab_tool_flight_school", title: "Tool Calling Flight School", kind: "react", component: ToolCallingFlightSchoolLab },
+  { id: "lab_human_control", title: "Human-in-the-Loop Control Room", kind: "react", component: HumanControlRoomLab },
+  { id: "lab_multi_agent", title: "Multi-Agent Mission Control", kind: "react", component: MultiAgentMissionControlLab },
+  { id: "lab_mcp_permissions", title: "MCP Permission Workshop", kind: "react", component: McpPermissionWorkshopLab },
+  { id: "lab_trace_detective", title: "Trace Detective — Debug an Agent Run", kind: "react", component: TraceDetectiveLab },
+  { id: "lab_structured_repair", title: "Structured Output Repair Shop", kind: "react", component: StructuredOutputRepairLab },
+  { id: "lab_model_router", title: "Model Router — Right Model, Right Task", kind: "react", component: ModelRouterLab },
+  { id: "lab_grounding_court", title: "Grounding Court — Claim, Evidence, Verdict", kind: "react", component: GroundingCourtLab },
+  { id: "lab_uncertainty", title: "Agent Uncertainty Lab", kind: "react", component: AgentUncertaintyLab },
+  { id: "lab_prompt_cache", title: "Prompt Cache Workshop", kind: "react", component: PromptCacheWorkshopLab },
+  { id: "lab_technique_chooser", title: "Fine-Tune, RAG, Prompt, or Tool?", kind: "react", component: TechniqueChooserLab },
 ];
 
-function ReactLabFrame({ title, onReady }) {
+function ReactLabFrame({ title, component: LabComponent, onReady }) {
   const frameRef = useRef(null);
   const [mountNode, setMountNode] = useState(null);
 
@@ -59,7 +95,7 @@ function ReactLabFrame({ title, onReady }) {
         setMountNode(frameDocument?.getElementById("lab-root") || null);
       }}
     >
-      {mountNode ? createPortal(<AgentBottlenecksLab />, mountNode) : null}
+      {mountNode ? createPortal(<LabComponent />, mountNode) : null}
     </iframe>
   );
 }
@@ -93,7 +129,7 @@ export default function LabsHub({ activeLabId }) {
             onLoad={() => setIsLoading(false)}
           />
         ) : (
-          <ReactLabFrame title={activeLab.title} onReady={() => setIsLoading(false)} />
+          <ReactLabFrame title={activeLab.title} component={activeLab.component} onReady={() => setIsLoading(false)} />
         )}
       </div>
     </section>

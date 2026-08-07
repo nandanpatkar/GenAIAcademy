@@ -6,6 +6,7 @@ import {
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
+  FlaskConical,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -35,6 +36,21 @@ export const SIDEBAR_ITEM_REGISTRY = {
   lab_token_cost: { icon: ReceiptText, label: "Token Cost Lab — Beat the Bill", description: "Simulate and reduce token costs" },
   lab_agent_anatomy: { icon: Network, label: "Agent Anatomy Lab", description: "Build an agent stage by stage" },
   lab_agent_bottlenecks: { icon: PanelLeft, label: "20 AI Agent Bottlenecks, Live", description: "Run agent failure and recovery simulations" },
+  lab_eval_forge: { icon: FlaskConical, label: "Eval Forge — Stop Vibe Testing", description: "Design eval suites and uncover hidden regressions" },
+  lab_context_architect: { icon: Braces, label: "Context Architect — Pack the Perfect Context", description: "Curate context under a finite token budget" },
+  lab_security_arena: { icon: ShieldCheck, label: "Agent Security Arena — Defend the Toolchain", description: "Defend agents against hijacking and excessive authority" },
+  lab_memory_garden: { icon: Database, label: "Memory Garden — What Should the Agent Remember?", description: "Design useful, private, and revisable memory" },
+  lab_tool_flight_school: { icon: Terminal, label: "Tool Calling Flight School", description: "Design reliable schemas, calls, and outcomes" },
+  lab_human_control: { icon: Users, label: "Human-in-the-Loop Control Room", description: "Place approval gates around consequential actions" },
+  lab_multi_agent: { icon: Workflow, label: "Multi-Agent Mission Control", description: "Coordinate parallel agents and explicit handoffs" },
+  lab_mcp_permissions: { icon: Blocks, label: "MCP Permission Workshop", description: "Scope connectors, resources, and server trust" },
+  lab_trace_detective: { icon: Activity, label: "Trace Detective — Debug an Agent Run", description: "Find root causes across traces and outcomes" },
+  lab_structured_repair: { icon: FileCode2, label: "Structured Output Repair Shop", description: "Validate and repair machine-readable output" },
+  lab_model_router: { icon: Split, label: "Model Router — Right Model, Right Task", description: "Route by complexity, modality, risk, and cost" },
+  lab_grounding_court: { icon: BookMarked, label: "Grounding Court — Claim, Evidence, Verdict", description: "Judge claim-level evidence and citations" },
+  lab_uncertainty: { icon: CircleDashed, label: "Agent Uncertainty Lab", description: "Calibrate when to answer, verify, ask, or abstain" },
+  lab_prompt_cache: { icon: Layers, label: "Prompt Cache Workshop", description: "Structure stable prefixes and safe invalidation" },
+  lab_technique_chooser: { icon: GitBranch, label: "Fine-Tune, RAG, Prompt, or Tool?", description: "Choose the right AI adaptation strategy" },
 
   // Agents — the LangChain Python docs, one entry per library, plus the two
   // agent surfaces that already existed elsewhere in the sidebar.
@@ -82,7 +98,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab", "concurrency_lab"] },
-  { id: "labs", label: "Labs", itemIds: ["lab_enterprise_ai_agents", "lab_chunking_bench", "lab_token_cost", "lab_agent_anatomy", "lab_agent_bottlenecks"] },
+  { id: "labs", label: "Labs", itemIds: ["lab_enterprise_ai_agents", "lab_chunking_bench", "lab_token_cost", "lab_agent_anatomy", "lab_agent_bottlenecks", "lab_eval_forge", "lab_context_architect", "lab_security_arena", "lab_memory_garden", "lab_tool_flight_school", "lab_human_control", "lab_multi_agent", "lab_mcp_permissions", "lab_trace_detective", "lab_structured_repair", "lab_model_router", "lab_grounding_court", "lab_uncertainty", "lab_prompt_cache", "lab_technique_chooser"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "agent_library"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "quiz"] },
@@ -96,6 +112,21 @@ const LAB_ITEM_IDS = [
   "lab_token_cost",
   "lab_agent_anatomy",
   "lab_agent_bottlenecks",
+  "lab_eval_forge",
+  "lab_context_architect",
+  "lab_security_arena",
+  "lab_memory_garden",
+  "lab_tool_flight_school",
+  "lab_human_control",
+  "lab_multi_agent",
+  "lab_mcp_permissions",
+  "lab_trace_detective",
+  "lab_structured_repair",
+  "lab_model_router",
+  "lab_grounding_court",
+  "lab_uncertainty",
+  "lab_prompt_cache",
+  "lab_technique_chooser",
 ];
 
 const AGENT_ITEM_IDS = [
