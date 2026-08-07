@@ -76,14 +76,6 @@ function ReactLabFrame({ title, component: LabComponent, onReady }) {
   const frameRef = useRef(null);
   const [mountNode, setMountNode] = useState(null);
 
-  useEffect(() => {
-    setMountNode(null);
-  }, [title]);
-
-  useEffect(() => {
-    if (mountNode) onReady?.();
-  }, [mountNode, onReady]);
-
   return (
     <iframe
       ref={frameRef}
@@ -93,6 +85,7 @@ function ReactLabFrame({ title, component: LabComponent, onReady }) {
       onLoad={() => {
         const frameDocument = frameRef.current?.contentDocument;
         setMountNode(frameDocument?.getElementById("lab-root") || null);
+        onReady?.();
       }}
     >
       {mountNode ? createPortal(<LabComponent />, mountNode) : null}
@@ -129,7 +122,12 @@ export default function LabsHub({ activeLabId }) {
             onLoad={() => setIsLoading(false)}
           />
         ) : (
-          <ReactLabFrame title={activeLab.title} component={activeLab.component} onReady={() => setIsLoading(false)} />
+          <ReactLabFrame
+            key={activeLab.id}
+            title={activeLab.title}
+            component={activeLab.component}
+            onReady={() => setIsLoading(false)}
+          />
         )}
       </div>
     </section>
