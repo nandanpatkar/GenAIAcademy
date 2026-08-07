@@ -473,6 +473,7 @@ function MainApp() {
   const [showReference, setShowReference] = useState(savedViews.showReference ?? false);
   const [activeReferenceTopic, setActiveReferenceTopic] = useState(null);
   const [showAgentCore, setShowAgentCore] = useState(savedViews.showAgentCore ?? false);
+  const [agentCoreMode, setAgentCoreMode] = useState("docs");
   const [showLangChainDocs, setShowLangChainDocs] = useState(savedViews.showLangChainDocs ?? false);
   const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
   const [showStrandsDocs, setShowStrandsDocs] = useState(savedViews.showStrandsDocs ?? false);
@@ -1338,6 +1339,7 @@ function MainApp() {
           showReference={showReference} setShowReference={setShowReference}
           activeReferenceTopic={activeReferenceTopic} setActiveReferenceTopic={setActiveReferenceTopic}
           showAgentCore={showAgentCore} setShowAgentCore={setShowAgentCore}
+          agentCoreMode={agentCoreMode} setAgentCoreMode={setAgentCoreMode}
           showLangChainDocs={showLangChainDocs} setShowLangChainDocs={setShowLangChainDocs}
           langChainProduct={langChainProduct} setLangChainProduct={setLangChainProduct}
           showStrandsDocs={showStrandsDocs} setShowStrandsDocs={setShowStrandsDocs}
@@ -1458,7 +1460,7 @@ function MainApp() {
                                                         showFreeSystemDesign ? <FreeSystemDesign onClose={() => setShowFreeSystemDesign(false)} /> :
                                                         showManual ? <ManualViewer activePhase={activeManualPhase} onSelectPhase={setActiveManualPhase} onClose={() => setShowManual(false)} /> :
                                                         showReference ? <ReferenceViewer activeTopic={activeReferenceTopic} onSelectTopic={setActiveReferenceTopic} onClose={() => setShowReference(false)} /> :
-                                                        showAgentCore ? <ErrorBoundary><AgentCoreViewer onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
+                                                        showAgentCore ? <ErrorBoundary><AgentCoreViewer initialMode={agentCoreMode} onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :

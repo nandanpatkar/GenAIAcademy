@@ -73,7 +73,7 @@ export default function Sidebar({
   activeManualPhase, setActiveManualPhase,
   showReference, setShowReference,
   activeReferenceTopic, setActiveReferenceTopic,
-  showAgentCore, setShowAgentCore,
+  showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
   showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
   showStrandsDocs, setShowStrandsDocs,
   showOnboarding, setShowOnboarding,
@@ -296,7 +296,7 @@ export default function Sidebar({
     if (showLeetCode) return "leetcode";
     if (showManual) return "manual";
     if (showReference) return "reference";
-    if (showAgentCore) return "aws_agentcore";
+    if (showAgentCore) return agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
     if (showLangChainDocs) return langChainProduct || "langchain";
     if (showStrandsDocs) return "strands";
     if (!activeNode) return "overview";
@@ -395,6 +395,11 @@ export default function Sidebar({
         if (setShowStrandsDocs) setShowStrandsDocs(true);
         break;
       case "aws_agentcore":
+        if (setAgentCoreMode) setAgentCoreMode("docs");
+        if (setShowAgentCore) setShowAgentCore(true);
+        break;
+      case "amazon_connect":
+        if (setAgentCoreMode) setAgentCoreMode("connect");
         if (setShowAgentCore) setShowAgentCore(true);
         break;
       case "nosignups": if (setShowNoSignups) setShowNoSignups(true); break;

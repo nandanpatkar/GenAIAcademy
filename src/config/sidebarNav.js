@@ -76,7 +76,7 @@ export function getActiveNavId(p) {
   if (p.showLeetCode) return "leetcode";
   if (p.showManual) return "manual";
   if (p.showReference) return "reference";
-  if (p.showAgentCore) return "aws_agentcore";
+  if (p.showAgentCore) return p.agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
   // The LangChain product id doubles as the nav id, so the four Agents
   // subsections highlight without any extra mapping.
   if (p.showLangChainDocs) return p.langChainProduct || "langchain";
@@ -167,6 +167,11 @@ export function runNavClick(id, p, ctx = {}) {
       if (p.onOpenToolHome) p.onOpenToolHome("manual"); else if (p.setShowManual) p.setShowManual(true);
       break;
     case "aws_agentcore":
+      if (p.setAgentCoreMode) p.setAgentCoreMode("docs");
+      if (p.setShowAgentCore) p.setShowAgentCore(true);
+      break;
+    case "amazon_connect":
+      if (p.setAgentCoreMode) p.setAgentCoreMode("connect");
       if (p.setShowAgentCore) p.setShowAgentCore(true);
       break;
     case "langchain":

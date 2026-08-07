@@ -5,7 +5,7 @@ import {
   Compass, Boxes, Rocket, Database, Network, KeyRound, CreditCard, Terminal,
   Globe, Activity, Shield, ClipboardCheck, TrendingUp, Library, BookMarked,
   Lock, Gauge, Search, ArrowLeft, ArrowRight, X, FileText, ChevronRight,
-  ChevronDown, List, AlertCircle, Layers, Clock, Code2, BookOpen, Cpu,
+  ChevronDown, List, AlertCircle, Layers, Clock, Code2, BookOpen, Cpu, Headphones,
 } from "lucide-react";
 import {
   AGENTCORE_SECTIONS, AGENTCORE_ALL_PAGES, AGENTCORE_TOTAL_PAGES,
@@ -16,6 +16,7 @@ import {
 } from "../data/agentcoreSamplesData";
 import SampleViewer from "./SampleViewer";
 import { makeMarkdownComponents, extractToc } from "./AgentCoreMarkdown";
+import { useTheme } from "../contexts/ThemeContext";
 import "../styles/AgentCore.css";
 
 // Section icons live in the generated index as names so it stays serializable.
@@ -47,8 +48,9 @@ const SAMPLE_COUNT_BY_SECTION = AGENTCORE_SAMPLES.reduce((acc, s) => {
 
 const PAGE_STEP = 48;
 
-export default function AgentCoreViewer({ onClose }) {
-  const [mode, setMode] = useState("docs");           // "docs" | "samples"
+export default function AgentCoreViewer({ onClose, initialMode = "docs" }) {
+  const { theme } = useTheme();
+  const [mode, setMode] = useState(initialMode);       // "docs" | "samples" | "connect"
   const [activeSlug, setActiveSlug] = useState(null); // docs page
   const [activeSample, setActiveSample] = useState(null);
   const [openSections, setOpenSections] = useState(() => ({ intro: true }));
@@ -68,6 +70,13 @@ export default function AgentCoreViewer({ onClose }) {
 
   const bodyRef = useRef(null);
   const searchRef = useRef(null);
+
+  useEffect(() => {
+    setMode(initialMode);
+    setActiveSlug(null);
+    setActiveSample(null);
+    setQuery("");
+  }, [initialMode]);
 
   const pageBySlug = useMemo(() => {
     const map = {};
@@ -244,24 +253,48 @@ export default function AgentCoreViewer({ onClose }) {
             >
               <Code2 size={12} /> Samples
             </button>
+            <button
+              role="tab"
+              aria-selected={mode === "connect"}
+              className={`ac-mode ${mode === "connect" ? "active" : ""}`}
+              onClick={() => {
+                setMode("connect");
+                setActiveSlug(null);
+                setActiveSample(null);
+                setQuery("");
+              }}
+            >
+              <Headphones size={12} /> Connect
+            </button>
           </div>
 
-          <div className="ac-search">
-            <Search size={13} className="ac-search-icon" />
-            <input
-              ref={searchRef}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={mode === "docs" ? "Search the guide" : "Search samples"}
-            />
-            {query
-              ? <button className="ac-search-clear" onClick={() => setQuery("")}><X size={12} /></button>
-              : <kbd className="ac-kbd">⌘K</kbd>}
-          </div>
+          {mode !== "connect" && (
+            <div className="ac-search">
+              <Search size={13} className="ac-search-icon" />
+              <input
+                ref={searchRef}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={mode === "docs" ? "Search the guide" : "Search samples"}
+              />
+              {query
+                ? <button className="ac-search-clear" onClick={() => setQuery("")}><X size={12} /></button>
+                : <kbd className="ac-kbd">⌘K</kbd>}
+            </div>
+          )}
         </div>
 
         <nav className="ac-tree">
-          {mode === "samples" ? (
+          {mode === "connect" ? (
+            <div className="ac-connect-nav">
+              <div className="ac-tree-grouplabel">Amazon Connect</div>
+              <div className="ac-connect-nav-card">
+                <span className="ac-tree-chip"><Headphones size={12} /></span>
+                <div><strong>Learning path</strong><small>34 course modules</small></div>
+              </div>
+              <p>Routing, flows, channels, analytics, AI, development, and administration.</p>
+            </div>
+          ) : mode === "samples" ? (
             <>
               <div className="ac-tree-grouplabel">Section</div>
               <button
@@ -418,7 +451,9 @@ export default function AgentCoreViewer({ onClose }) {
               <span className="ac-crumb-sec">Amazon Bedrock AgentCore</span>
               <ChevronRight size={11} />
               <span className="ac-crumb-page">
-                {mode === "samples"
+                {mode === "connect"
+                  ? "Amazon Connect learning path"
+                  : mode === "samples"
                   ? `${filteredSamples.length} of ${ALL_ENTRIES.length} entries`
                   : `${AGENTCORE_TOTAL_PAGES} pages`}
               </span>
@@ -427,8 +462,16 @@ export default function AgentCoreViewer({ onClose }) {
           <button className="ac-btn ac-close" onClick={onClose}>Close</button>
         </header>
 
-        <div className="ac-body" ref={bodyRef}>
-          {mode === "samples" ? (
+        <div className={`ac-body ${mode === "connect" ? "ac-body--connect" : ""}`} ref={bodyRef}>
+          {mode === "connect" ? (
+            <section className="ac-connect-workspace" aria-label="Amazon Connect workspace">
+              <iframe
+                src={`/claude-certificate/index.html?theme=${theme === "light" ? "light" : "dark"}&track=amazon-connect`}
+                title="Amazon Connect — course library"
+                loading="eager"
+              />
+            </section>
+          ) : mode === "samples" ? (
             <div className="ac-landing">
               <header className="ac-hero ac-hero-compact">
                 <span className="ac-hero-badge">Samples · Apache-2.0</span>
@@ -541,6 +584,28 @@ export default function AgentCoreViewer({ onClose }) {
                     </button>
                   );
                 })}
+                <button
+                  className="ac-card"
+                  style={{ "--sc": "#00a1c9" }}
+                  onClick={() => {
+                    setMode("connect");
+                    setActiveSlug(null);
+                    setQuery("");
+                  }}
+                >
+                  <span className="ac-card-glow" aria-hidden="true" />
+                  <span className="ac-card-index">{String(AGENTCORE_SECTIONS.length + 1).padStart(2, "0")}</span>
+                  <span className="ac-card-icon"><Headphones size={19} /></span>
+                  <h3 className="ac-card-title">Amazon Connect</h3>
+                  <span className="ac-card-count">34 course modules</span>
+                  <p className="ac-card-blurb">
+                    Learn routing, flows, voice and chat channels, analytics, AI,
+                    development, and administration for the AWS contact center platform.
+                  </p>
+                  <span className="ac-card-cta">
+                    Open learning path <ArrowRight size={13} />
+                  </span>
+                </button>
               </div>
             </div>
           ) : loading ? (
