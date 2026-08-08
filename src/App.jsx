@@ -9,6 +9,7 @@ import {
   HelpCircle
 } from "lucide-react";
 import { PATHS } from "./data/roadmap";
+import { DATA_SCIENCE_LAB_IDS } from "./data/dataScienceLabCatalog";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { supabase } from "./config/supabaseClient";
@@ -89,6 +90,8 @@ const FeatureHome = React.lazy(() => import("./components/FeatureHome"));
 const GenAIPlayground2 = React.lazy(() => import("./pages/playground2/GenAIPlayground2"));
 
 const LAB_IDS = new Set([
+  ...DATA_SCIENCE_LAB_IDS,
+  "lab_retrieval_tuning",
   "lab_enterprise_ai_agents",
   "lab_chunking_bench",
   "lab_token_cost",
@@ -109,8 +112,115 @@ const LAB_IDS = new Set([
   "lab_uncertainty",
   "lab_prompt_cache",
   "lab_technique_chooser",
+  "lab_retrieval_observatory",
+  "lab_graphrag_atlas",
+  "lab_plan_repair",
+  "lab_durable_agent_ops",
+  "lab_tokenization_microscope",
+  "lab_entity_boundary",
+  "lab_semantic_cartographer",
+  "lab_intent_calibration",
+  "lab_bias_variance",
+  "lab_feature_foundry",
+  "lab_cross_validation",
+  "lab_regularization_path",
+  "lab_tree_split",
+  "lab_knn_neighborhood",
+  "lab_imbalance_triage",
+  "lab_drift_monitor",
+  "lab_tensor_shape",
+  "lab_backprop_debugger",
+  "lab_activation_arena",
+  "lab_optimizer_race",
+  "lab_initialization_signal",
+  "lab_attention_mechanism",
+  "lab_autoencoder_latent",
+  "lab_training_stability",
+  "lab_convolution_lens",
+  "lab_detection_iou",
+  "lab_augmentation_lab",
+  "lab_segmentation_pixel",
+  "lab_vit_patch",
+  "lab_distribution_explorer",
+  "lab_bayes_rule",
+  "lab_hypothesis_court",
+  "lab_confidence_factory",
+  "lab_sampling_bias",
+  "lab_causation_lab",
+  "lab_markov_chain",
+  "lab_monte_carlo",
+  "lab_pca_variance",
+  "lab_clustering_workbench",
+  "lab_svm_margin",
+  "lab_ensemble_fusion",
+  "lab_gradient_boosting",
+  "lab_anomaly_detection",
+  "lab_calibration_curve",
+  "lab_feature_selection",
+  "lab_hyperparameter_search",
+  "lab_model_explainability",
+  "lab_cnn_receptive_field",
+  "lab_rnn_sequence",
+  "lab_lstm_gates",
+  "lab_normalization_dynamics",
+  "lab_dropout_uncertainty",
+  "lab_transfer_learning",
+  "lab_quantization_tradeoff",
+  "lab_network_pruning",
+  "lab_distributed_training",
+  "lab_adversarial_robustness",
+  "lab_decoding_strategies",
+  "lab_prompt_versioning",
+  "lab_context_budget",
+  "lab_structured_generation",
+  "lab_hallucination_eval",
+  "lab_synthetic_data",
+  "lab_lora_adaptation",
+  "lab_multimodal_alignment",
+  "lab_diffusion_denoising",
+  "lab_genai_guardrails",
+  "lab_query_rewriting",
+  "lab_metadata_filtering",
+  "lab_reranker_lab",
+  "lab_context_compression",
+  "lab_citation_alignment",
+  "lab_multihop_retrieval",
+  "lab_freshness_versioning",
+  "lab_rag_evaluation",
+  "lab_semantic_cache",
+  "lab_retrieval_acl",
+  "lab_tool_schema_design",
+  "lab_agent_planning",
+  "lab_memory_policy",
+  "lab_agent_handoff",
+  "lab_agent_state_machine",
+  "lab_approval_gates",
+  "lab_agent_retries",
+  "lab_agent_budget",
+  "lab_agent_observability",
+  "lab_agent_sandbox",
+  "lab_container_resources",
+  "lab_autoscaling",
+  "lab_health_probes",
+  "lab_canary_release",
+  "lab_blue_green",
+  "lab_slo_budget",
+  "lab_observability_signals",
+  "lab_incident_response",
+  "lab_chaos_testing",
+  "lab_feature_flags",
+  "lab_ci_quality_gates",
+  "lab_test_pyramid",
+  "lab_contract_testing",
+  "lab_rate_limiting",
+  "lab_cache_architecture",
+  "lab_queue_backpressure",
+  "lab_database_migration",
+  "lab_supply_chain",
+  "lab_distributed_tracing",
+  "lab_cost_performance",
 ]);
-const DEFAULT_LAB_ID = "lab_enterprise_ai_agents";
+const DEFAULT_LAB_ID = null;
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -799,7 +909,7 @@ function MainApp() {
       case "agent_library": setShowAgentLibrary(true); break;
       case "sql_lab": setShowSqlLab(true); break;
       case "concurrency_lab": setShowConcurrencyLab(true); break;
-      case "labs": setShowLabs(true); break;
+      case "labs": setActiveLabId(null); setShowLabs(true); break;
       case "aiml_companion": setShowAimlCompanion(true); break;
       case "gemini_interviewer": setShowGeminiInterviewer(true); break;
       case "emotional_support": setShowEmotionalSupport(true); break;
@@ -1409,7 +1519,7 @@ function MainApp() {
                             showLearnBug ? <LearnBugEmbed onClose={() => setShowLearnBug(false)} /> :
                             showSqlLab ? <SqlLab onClose={() => setShowSqlLab(false)} /> :
                             showConcurrencyLab ? <ConcurrencyLab onClose={() => setShowConcurrencyLab(false)} /> :
-                            showLabs ? <LabsHub activeLabId={activeLabId} /> :
+                            showLabs ? <LabsHub activeLabId={activeLabId} onSelectLab={setActiveLabId} /> :
                             showAgentLibrary ? <AgentLibrary onClose={() => setShowAgentLibrary(false)} /> :
                             showAimlCompanion ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :

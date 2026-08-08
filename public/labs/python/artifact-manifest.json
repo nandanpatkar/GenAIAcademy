@@ -1,0 +1,402 @@
+[
+  {
+    "filename": "01-variables.html",
+    "number": 1,
+    "topic": "Variables",
+    "title": "Memory Box Studio",
+    "summary": "Put a label on a box, store a value, then replace it when your program learns something new.",
+    "color": "#0f766e"
+  },
+  {
+    "filename": "02-data-types.html",
+    "number": 2,
+    "topic": "Data Types",
+    "title": "Type Scanner",
+    "summary": "A scanner identifies what kind of value entered the program so Python knows what operations make sense.",
+    "color": "#7c3aed"
+  },
+  {
+    "filename": "03-strings.html",
+    "number": 3,
+    "topic": "Strings",
+    "title": "String Ribbon Workshop",
+    "summary": "Text is a ribbon of characters: inspect it, join it, repeat it, or cut out a slice.",
+    "color": "#2563eb"
+  },
+  {
+    "filename": "04-lists.html",
+    "number": 4,
+    "topic": "Lists",
+    "title": "List Train Yard",
+    "summary": "A list is a train whose ordered carriages can be added, removed, replaced, and inspected.",
+    "color": "#b45309"
+  },
+  {
+    "filename": "05-tuples.html",
+    "number": 5,
+    "topic": "Tuples",
+    "title": "Tuple Time Capsule",
+    "summary": "A tuple seals an ordered collection so its positions stay dependable after creation.",
+    "color": "#be123c"
+  },
+  {
+    "filename": "06-dictionaries.html",
+    "number": 6,
+    "topic": "Dictionaries",
+    "title": "Dictionary City Map",
+    "summary": "A dictionary connects unique keys to values like named addresses leading to buildings.",
+    "color": "#0369a1"
+  },
+  {
+    "filename": "07-sets.html",
+    "number": 7,
+    "topic": "Sets",
+    "title": "Set Venn Arena",
+    "summary": "A set keeps only unique items and makes overlap, difference, and membership easy to see.",
+    "color": "#15803d"
+  },
+  {
+    "filename": "08-booleans.html",
+    "number": 8,
+    "topic": "Booleans",
+    "title": "Boolean Circuit Bench",
+    "summary": "A Boolean is a two-state signal: True lets current pass and False closes the gate.",
+    "color": "#c2410c"
+  },
+  {
+    "filename": "09-comparisons.html",
+    "number": 9,
+    "topic": "Comparisons",
+    "title": "Comparison Balance Lab",
+    "summary": "Comparison operators place values on a balance and report a Boolean result.",
+    "color": "#4338ca"
+  },
+  {
+    "filename": "10-conditionals.html",
+    "number": 10,
+    "topic": "Conditionals",
+    "title": "Decision Path Maze",
+    "summary": "if, elif, and else open exactly one route based on conditions checked from top to bottom.",
+    "color": "#a21caf"
+  },
+  {
+    "filename": "11-for-loops.html",
+    "number": 11,
+    "topic": "For Loops",
+    "title": "Loop Conveyor",
+    "summary": "A for loop visits each item on a conveyor and performs the same clear job once per item.",
+    "color": "#0f766e"
+  },
+  {
+    "filename": "12-while-loops.html",
+    "number": 12,
+    "topic": "While Loops",
+    "title": "While Orbit Mission",
+    "summary": "A while loop keeps orbiting while its condition remains True, so its state must move toward a stop.",
+    "color": "#7c3aed"
+  },
+  {
+    "filename": "13-range.html",
+    "number": 13,
+    "topic": "The range() Function",
+    "title": "Number Step Factory",
+    "summary": "range produces a predictable stream of integers using start, stop, and step settings.",
+    "color": "#2563eb"
+  },
+  {
+    "filename": "14-functions.html",
+    "number": 14,
+    "topic": "Functions",
+    "title": "Function Machine",
+    "summary": "A function packages instructions into a named machine you can run whenever the job is needed.",
+    "color": "#b45309"
+  },
+  {
+    "filename": "15-parameters.html",
+    "number": 15,
+    "topic": "Parameters and Arguments",
+    "title": "Parameter Mailroom",
+    "summary": "Parameters are labeled mail slots; arguments are the actual packages delivered during a call.",
+    "color": "#be123c"
+  },
+  {
+    "filename": "16-return-values.html",
+    "number": 16,
+    "topic": "Return Values",
+    "title": "Return Delivery Dock",
+    "summary": "return sends a result out of a function so the caller can store, combine, or display it.",
+    "color": "#0369a1"
+  },
+  {
+    "filename": "17-scope.html",
+    "number": 17,
+    "topic": "Variable Scope",
+    "title": "Scope Floor Plan",
+    "summary": "Names live on different floors: local rooms are private to a function, while global names live outside.",
+    "color": "#15803d"
+  },
+  {
+    "filename": "18-lambda.html",
+    "number": 18,
+    "topic": "Lambda Functions",
+    "title": "Lambda Spark Cards",
+    "summary": "A lambda is a tiny unnamed function for one expression, useful when another tool needs quick behavior.",
+    "color": "#c2410c"
+  },
+  {
+    "filename": "19-comprehensions.html",
+    "number": 19,
+    "topic": "List Comprehensions",
+    "title": "Comprehension Garden",
+    "summary": "A comprehension grows a new list by transforming each seed and optionally filtering what gets planted.",
+    "color": "#4338ca"
+  },
+  {
+    "filename": "20-generators.html",
+    "number": 20,
+    "topic": "Generators",
+    "title": "Generator Power Station",
+    "summary": "A generator produces one value only when requested, saving memory like energy made on demand.",
+    "color": "#a21caf"
+  },
+  {
+    "filename": "21-iterators.html",
+    "number": 21,
+    "topic": "Iterators",
+    "title": "Iterator Stepping Stones",
+    "summary": "An iterator remembers its position and hands over the next value each time next is called.",
+    "color": "#0f766e"
+  },
+  {
+    "filename": "22-exceptions.html",
+    "number": 22,
+    "topic": "Exceptions",
+    "title": "Exception Rescue Station",
+    "summary": "try protects risky work; except catches a known problem and guides the program to a safe response.",
+    "color": "#7c3aed"
+  },
+  {
+    "filename": "23-files.html",
+    "number": 23,
+    "topic": "Reading and Writing Files",
+    "title": "File Library Desk",
+    "summary": "A file handle checks a document in, lets Python read or write it, and should always be closed safely.",
+    "color": "#2563eb"
+  },
+  {
+    "filename": "24-context-managers.html",
+    "number": 24,
+    "topic": "Context Managers",
+    "title": "Context Airlock",
+    "summary": "A context manager opens a resource, lets work happen safely, and guarantees cleanup when the block ends.",
+    "color": "#b45309"
+  },
+  {
+    "filename": "25-modules.html",
+    "number": 25,
+    "topic": "Modules",
+    "title": "Module Constellation",
+    "summary": "A module is a Python file whose related names form a reusable constellation for other programs.",
+    "color": "#be123c"
+  },
+  {
+    "filename": "26-imports.html",
+    "number": 26,
+    "topic": "Imports",
+    "title": "Import Harbor",
+    "summary": "Imports bring selected tools from another module into your program, like cargo unloaded at a named port.",
+    "color": "#0369a1"
+  },
+  {
+    "filename": "27-classes.html",
+    "number": 27,
+    "topic": "Classes",
+    "title": "Class Blueprint Table",
+    "summary": "A class is a blueprint describing the data and behavior each future object should receive.",
+    "color": "#15803d"
+  },
+  {
+    "filename": "28-objects.html",
+    "number": 28,
+    "topic": "Objects",
+    "title": "Object Robot Lab",
+    "summary": "An object is one working creation built from a class, with its own state and shared methods.",
+    "color": "#c2410c"
+  },
+  {
+    "filename": "29-inheritance.html",
+    "number": 29,
+    "topic": "Inheritance",
+    "title": "Inheritance Family Tree",
+    "summary": "A child class starts with a parent's features and can add or replace behavior of its own.",
+    "color": "#4338ca"
+  },
+  {
+    "filename": "30-polymorphism.html",
+    "number": 30,
+    "topic": "Polymorphism",
+    "title": "Polymorphism Translation Booth",
+    "summary": "Different objects can answer the same method call in their own way, so callers use one shared interface.",
+    "color": "#a21caf"
+  },
+  {
+    "filename": "31-encapsulation.html",
+    "number": 31,
+    "topic": "Encapsulation",
+    "title": "Encapsulation Vault",
+    "summary": "Encapsulation keeps state and the rules for changing it together behind a small, safe interface.",
+    "color": "#0f766e"
+  },
+  {
+    "filename": "32-dataclasses.html",
+    "number": 32,
+    "topic": "Data Classes",
+    "title": "Data Class Card Press",
+    "summary": "A data class quickly stamps out clear record-like classes with generated setup and display methods.",
+    "color": "#7c3aed"
+  },
+  {
+    "filename": "33-decorators.html",
+    "number": 33,
+    "topic": "Decorators",
+    "title": "Decorator Wrapping Desk",
+    "summary": "A decorator wraps a function with extra behavior without rewriting the original function body.",
+    "color": "#2563eb"
+  },
+  {
+    "filename": "34-recursion.html",
+    "number": 34,
+    "topic": "Recursion",
+    "title": "Recursion Nesting Dolls",
+    "summary": "A recursive function solves a smaller version of its own problem until it reaches a simple base case.",
+    "color": "#b45309"
+  },
+  {
+    "filename": "35-sorting.html",
+    "number": 35,
+    "topic": "Sorting",
+    "title": "Sorting Race Track",
+    "summary": "Sorting arranges values into an order; a key can say which feature controls the finish positions.",
+    "color": "#be123c"
+  },
+  {
+    "filename": "36-searching.html",
+    "number": 36,
+    "topic": "Searching",
+    "title": "Search Treasure Grid",
+    "summary": "Searching checks candidate locations until a wanted value is found or every useful place is exhausted.",
+    "color": "#0369a1"
+  },
+  {
+    "filename": "37-slicing.html",
+    "number": 37,
+    "topic": "Sequence Slicing",
+    "title": "Slice Sandwich Counter",
+    "summary": "A slice selects a new portion using start, stop, and step—like choosing layers without changing the loaf.",
+    "color": "#15803d"
+  },
+  {
+    "filename": "38-unpacking.html",
+    "number": 38,
+    "topic": "Sequence Unpacking",
+    "title": "Unpacking Carousel",
+    "summary": "Unpacking sends sequence values into matching names in one readable move.",
+    "color": "#c2410c"
+  },
+  {
+    "filename": "39-args-kwargs.html",
+    "number": 39,
+    "topic": "*args and **kwargs",
+    "title": "Flexible Mixer Board",
+    "summary": "*args gathers extra positional inputs; **kwargs gathers extra named inputs into separate channels.",
+    "color": "#4338ca"
+  },
+  {
+    "filename": "40-enumerate.html",
+    "number": 40,
+    "topic": "The enumerate() Function",
+    "title": "Enumerate Ticket Counter",
+    "summary": "enumerate pairs every item with a counter so you never need to manage the number by hand.",
+    "color": "#a21caf"
+  },
+  {
+    "filename": "41-zip.html",
+    "number": 41,
+    "topic": "The zip() Function",
+    "title": "Zip Fastener Workshop",
+    "summary": "zip joins items from parallel sequences into pairs, stopping when the shortest side runs out.",
+    "color": "#0f766e"
+  },
+  {
+    "filename": "42-map-filter-reduce.html",
+    "number": 42,
+    "topic": "Map, Filter, and Reduce",
+    "title": "Data Assembly Line",
+    "summary": "Map transforms, filter selects, and reduce combines—three different stations for processing a stream.",
+    "color": "#7c3aed"
+  },
+  {
+    "filename": "43-any-all.html",
+    "number": 43,
+    "topic": "any() and all()",
+    "title": "Logic Control Room",
+    "summary": "any turns on when at least one signal is True; all turns on only when every signal is True.",
+    "color": "#2563eb"
+  },
+  {
+    "filename": "44-f-strings.html",
+    "number": 44,
+    "topic": "Formatted String Literals",
+    "title": "F-String Sign Studio",
+    "summary": "An f-string places live expressions inside braces to build readable text without awkward joining.",
+    "color": "#b45309"
+  },
+  {
+    "filename": "45-datetime.html",
+    "number": 45,
+    "topic": "Dates and Times",
+    "title": "Datetime Time Machine",
+    "summary": "datetime objects represent calendar moments and timedeltas measure safe journeys between them.",
+    "color": "#be123c"
+  },
+  {
+    "filename": "46-random.html",
+    "number": 46,
+    "topic": "Randomness",
+    "title": "Random Probability Lab",
+    "summary": "The random module makes pseudorandom choices—repeatable when a seed is set for experiments.",
+    "color": "#0369a1"
+  },
+  {
+    "filename": "47-json.html",
+    "number": 47,
+    "topic": "JSON Data",
+    "title": "JSON Packing Station",
+    "summary": "JSON packs Python-style data into portable text and unpacks received text back into useful structures.",
+    "color": "#15803d"
+  },
+  {
+    "filename": "48-regex.html",
+    "number": 48,
+    "topic": "Regular Expressions",
+    "title": "Regex Detective Board",
+    "summary": "A regular expression describes a text pattern so clues can be found, validated, or replaced.",
+    "color": "#c2410c"
+  },
+  {
+    "filename": "49-async-await.html",
+    "number": 49,
+    "topic": "Async and Await",
+    "title": "Async Restaurant",
+    "summary": "Async code lets one task wait without blocking the whole kitchen, so other work can progress meanwhile.",
+    "color": "#4338ca"
+  },
+  {
+    "filename": "50-testing.html",
+    "number": 50,
+    "topic": "Unit Testing",
+    "title": "Testing Quality Lab",
+    "summary": "A unit test gives one small piece of code a known input and checks that the actual result matches expectation.",
+    "color": "#a21caf"
+  }
+]

@@ -1,0 +1,1973 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An interactive, beginner-friendly lesson about Python For Loops.">
+    <title>11 · For Loops · Python Concept Lab</title>
+    <style>
+      :root {
+        --primary: #0f766e;
+        --accent: #f59e0b;
+        --canvas: #ecfeff;
+        --ink: #083344;
+        --soft: #5eead4;
+        --white: #ffffff;
+        --muted: color-mix(in srgb, var(--ink) 68%, white);
+        --line: color-mix(in srgb, var(--primary) 24%, white);
+        --shadow: 0 20px 60px color-mix(in srgb, var(--ink) 14%, transparent);
+        --radius-sm: 12px;
+        --radius-md: 20px;
+        --radius-lg: 32px;
+        --ease: cubic-bezier(.2,.8,.2,1);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        background: var(--canvas);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible {
+        outline: 4px solid color-mix(in srgb, var(--accent) 65%, white);
+        outline-offset: 3px;
+      }
+      .skip-link {
+        position: fixed;
+        z-index: 100;
+        top: 12px;
+        left: 12px;
+        padding: 12px 18px;
+        color: var(--white);
+        background: var(--ink);
+        border-radius: 10px;
+        transform: translateY(-150%);
+        transition: transform 180ms var(--ease);
+      }
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+      .topbar {
+        position: sticky;
+        z-index: 30;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 72px;
+        padding: 12px clamp(18px, 5vw, 72px);
+        background: color-mix(in srgb, var(--canvas) 88%, transparent);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(18px);
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .brand-mark {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        color: var(--white);
+        background: var(--primary);
+        border-radius: 11px;
+        box-shadow: 4px 4px 0 var(--accent);
+      }
+      .lesson-count {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 750;
+      }
+      .progress-track {
+        position: absolute;
+        right: 0;
+        bottom: -1px;
+        left: 0;
+        height: 3px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--accent);
+        transition: width 120ms linear;
+      }
+      main {
+        overflow: hidden;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, .9fr) minmax(420px, 1.1fr);
+        gap: clamp(30px, 6vw, 96px);
+        align-items: center;
+        min-height: calc(100svh - 72px);
+        padding: clamp(56px, 9vw, 120px) clamp(20px, 7vw, 110px);
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 20px;
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 850;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+      }
+      .eyebrow::before {
+        width: 34px;
+        height: 3px;
+        content: "";
+        background: var(--accent);
+        border-radius: 10px;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+      h1 {
+        max-width: 740px;
+        margin-bottom: 24px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(48px, 7.3vw, 108px);
+        font-weight: 650;
+        letter-spacing: -.06em;
+        line-height: .94;
+      }
+      .hero-copy {
+        max-width: 660px;
+        margin-bottom: 30px;
+        color: var(--muted);
+        font-size: clamp(18px, 2vw, 23px);
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 50px;
+        padding: 12px 20px;
+        color: var(--white);
+        background: var(--ink);
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        font-weight: 800;
+        text-decoration: none;
+        transition: transform 180ms var(--ease), box-shadow 180ms var(--ease), background 180ms var(--ease);
+      }
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 0 color-mix(in srgb, var(--ink) 18%, transparent);
+      }
+      .button.secondary {
+        color: var(--ink);
+        background: transparent;
+      }
+      .button svg,
+      .icon-button svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+      }
+      .hero-note {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        max-width: 600px;
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .hero-note svg {
+        flex: 0 0 auto;
+        width: 22px;
+        height: 22px;
+        fill: var(--accent);
+      }
+      .visual-card {
+        position: relative;
+        min-height: 550px;
+        padding: clamp(22px, 4vw, 48px);
+        overflow: hidden;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+        isolation: isolate;
+      }
+      .visual-card::before {
+        position: absolute;
+        z-index: -2;
+        inset: 0;
+        content: "";
+        opacity: .55;
+        background-image: radial-gradient(var(--line) 1px, transparent 1px);
+        background-size: 22px 22px;
+      }
+      .visual-card::after {
+        position: absolute;
+        z-index: -1;
+        width: 260px;
+        height: 260px;
+        right: -90px;
+        top: -90px;
+        content: "";
+        background: var(--soft);
+        border-radius: 50%;
+        filter: blur(3px);
+      }
+      .visual-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 34px;
+      }
+      .visual-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 850;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        background: var(--primary);
+        border-radius: 50%;
+        box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary) 14%, transparent);
+      }
+      .visual-controls {
+        display: flex;
+        gap: 8px;
+      }
+      .icon-button {
+        display: grid;
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        place-items: center;
+        color: var(--ink);
+        background: var(--canvas);
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        transition: transform 180ms var(--ease), background 180ms var(--ease);
+      }
+      .icon-button:hover {
+        color: var(--white);
+        background: var(--primary);
+        transform: scale(1.06);
+      }
+      .visual-stage {
+        position: relative;
+        display: grid;
+        min-height: 390px;
+        place-items: center;
+        perspective: 900px;
+      }
+      .visual-piece {
+        position: relative;
+        display: grid;
+        width: clamp(74px, 8vw, 112px);
+        min-height: 82px;
+        padding: 14px 10px;
+        place-items: center;
+        color: var(--ink);
+        background: var(--white);
+        border: 2px solid var(--primary);
+        border-radius: 18px;
+        box-shadow: 0 10px 0 color-mix(in srgb, var(--primary) 18%, transparent);
+        transition: transform 380ms var(--ease), opacity 280ms var(--ease), background 280ms var(--ease), color 280ms var(--ease);
+      }
+      .visual-piece span {
+        position: absolute;
+        top: 7px;
+        left: 9px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 900;
+      }
+      .visual-piece strong {
+        font-size: 13px;
+        text-align: center;
+      }
+      .visual-piece.active {
+        color: var(--white);
+        background: var(--primary);
+        transform: translateY(-14px) rotate(-2deg) scale(1.08);
+      }
+      .memory-shelf,
+      .scan-tray,
+      .ribbon-track,
+      .train-track,
+      .capsule-shell,
+      .city-grid,
+      .balance-arm,
+      .maze-path,
+      .belt,
+      .factory-line,
+      .mail-slots,
+      .dock-line,
+      .spark-field,
+      .garden-bed,
+      .power-grid,
+      .stone-path,
+      .rescue-route,
+      .book-shelf,
+      .blueprint-grid,
+      .robot-bay,
+      .booth-stage,
+      .card-press,
+      .wrapping-table,
+      .race-lanes,
+      .treasure-grid,
+      .slice-board,
+      .mixer-board,
+      .assembly-line,
+      .control-panel,
+      .dice-table,
+      .packing-belt,
+      .quality-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .scanner-beam {
+        position: absolute;
+        z-index: 5;
+        top: 20%;
+        left: 12%;
+        width: 76%;
+        height: 5px;
+        opacity: .8;
+        background: var(--accent);
+        box-shadow: 0 0 22px var(--accent);
+        transform: translateY(-80px);
+        transition: transform 500ms var(--ease);
+      }
+      .visual-stage.running .scanner-beam {
+        transform: translateY(180px);
+      }
+      .ribbon-track,
+      .belt,
+      .factory-line,
+      .assembly-line,
+      .packing-belt {
+        padding: 30px 18px;
+        background: linear-gradient(90deg, transparent 0 8%, var(--line) 8% 12%, transparent 12% 20%);
+        background-size: 70px 100%;
+        border-radius: 999px;
+      }
+      .train-track::after,
+      .race-lanes::after,
+      .dock-line::after {
+        position: absolute;
+        right: 5%;
+        bottom: 24%;
+        left: 5%;
+        height: 4px;
+        content: "";
+        background: var(--ink);
+        border-radius: 10px;
+      }
+      .engine {
+        display: grid;
+        width: 84px;
+        height: 84px;
+        place-items: center;
+        color: var(--white);
+        background: var(--ink);
+        border-radius: 50% 20% 20% 50%;
+        font-weight: 900;
+      }
+      .capsule-shell,
+      .airlock-chamber,
+      .vault-door {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        padding: 48px;
+        border: 10px double var(--primary);
+        border-radius: 44% / 22%;
+        background: color-mix(in srgb, var(--soft) 25%, white);
+      }
+      .city-grid,
+      .treasure-grid,
+      .blueprint-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 30px;
+        background-image: linear-gradient(var(--line) 2px, transparent 2px), linear-gradient(90deg, var(--line) 2px, transparent 2px);
+        background-size: 55px 55px;
+      }
+      .venn-circle {
+        position: absolute;
+        display: grid;
+        width: 220px;
+        height: 220px;
+        place-items: center;
+        color: var(--primary);
+        background: color-mix(in srgb, var(--primary) 22%, transparent);
+        border: 4px solid var(--primary);
+        border-radius: 50%;
+        font-size: 28px;
+        font-weight: 900;
+      }
+      .venn-circle.left {
+        transform: translateX(-70px);
+      }
+      .venn-circle.right {
+        color: var(--accent);
+        border-color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 22%, transparent);
+        transform: translateX(70px);
+      }
+      .circuit-wire {
+        position: absolute;
+        width: 75%;
+        height: 50%;
+        border: 5px solid var(--primary);
+        border-radius: 30px;
+      }
+      .orbit-ring,
+      .carousel-ring,
+      .clock-face {
+        position: relative;
+        display: grid;
+        width: 310px;
+        height: 310px;
+        place-items: center;
+        border: 3px dashed var(--primary);
+        border-radius: 50%;
+        transition: transform 800ms var(--ease);
+      }
+      .orbit-ring .visual-piece,
+      .carousel-ring .visual-piece,
+      .clock-face .visual-piece {
+        position: absolute;
+      }
+      .orbit-ring .piece-1,
+      .carousel-ring .piece-1,
+      .clock-face .piece-1 {
+        top: -22px;
+      }
+      .orbit-ring .piece-2,
+      .carousel-ring .piece-2,
+      .clock-face .piece-2 {
+        right: -22px;
+      }
+      .orbit-ring .piece-3,
+      .carousel-ring .piece-3,
+      .clock-face .piece-3 {
+        bottom: -22px;
+      }
+      .orbit-ring .piece-4,
+      .carousel-ring .piece-4,
+      .clock-face .piece-4 {
+        left: -22px;
+      }
+      .visual-stage.running .orbit-ring,
+      .visual-stage.running .carousel-ring,
+      .visual-stage.running .clock-face {
+        transform: rotate(18deg);
+      }
+      .machine-shell,
+      .control-panel,
+      .mixer-board,
+      .quality-line {
+        padding: 36px;
+        background: var(--ink);
+        border: 9px solid color-mix(in srgb, var(--ink) 75%, white);
+        border-radius: 28px;
+        box-shadow: inset 0 0 0 3px var(--soft);
+      }
+      .floor-stack,
+      .doll-stack,
+      .family-tree {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 12px;
+        align-items: center;
+      }
+      .floor-stack .visual-piece:nth-child(1),
+      .doll-stack .visual-piece:nth-child(1),
+      .family-tree .visual-piece:nth-child(1) {
+        width: 260px;
+      }
+      .floor-stack .visual-piece:nth-child(2),
+      .doll-stack .visual-piece:nth-child(2),
+      .family-tree .visual-piece:nth-child(2) {
+        width: 210px;
+      }
+      .floor-stack .visual-piece:nth-child(3),
+      .doll-stack .visual-piece:nth-child(3),
+      .family-tree .visual-piece:nth-child(3) {
+        width: 160px;
+      }
+      .floor-stack .visual-piece:nth-child(4),
+      .doll-stack .visual-piece:nth-child(4),
+      .family-tree .visual-piece:nth-child(4) {
+        width: 110px;
+      }
+      .constellation,
+      .spark-field,
+      .clue-board {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 90px;
+      }
+      .constellation::before,
+      .spark-field::before,
+      .clue-board::before {
+        position: absolute;
+        z-index: -1;
+        inset: 20%;
+        content: "";
+        border: 3px dashed var(--accent);
+        transform: rotate(35deg);
+      }
+      .harbor-water,
+      .restaurant-floor {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+        padding: 30px;
+        background: repeating-radial-gradient(ellipse at bottom, transparent 0 14px, color-mix(in srgb, var(--primary) 18%, transparent) 15px 17px);
+      }
+      .sign-board {
+        padding: 46px;
+        border: 14px solid var(--ink);
+        background: var(--soft);
+        box-shadow: 16px 16px 0 var(--accent);
+        transform: rotate(-2deg);
+      }
+      .ticket-roll,
+      .zipper-track {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px 42px;
+        padding: 20px;
+        border-left: 5px dashed var(--primary);
+        border-right: 5px dashed var(--accent);
+      }
+      .section {
+        padding: clamp(80px, 10vw, 150px) clamp(20px, 7vw, 110px);
+      }
+      .section.alt {
+        background: var(--white);
+      }
+      .section-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, .55fr);
+        gap: 40px;
+        align-items: end;
+        max-width: 1220px;
+        margin: 0 auto 54px;
+      }
+      .section-heading h2 {
+        margin-bottom: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(38px, 5vw, 72px);
+        letter-spacing: -.045em;
+        line-height: 1;
+      }
+      .section-heading p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+      .fact-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        max-width: 1220px;
+        margin: 0 auto;
+      }
+      .fact-card {
+        min-height: 240px;
+        padding: 28px;
+        background: var(--canvas);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+      }
+      .fact-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 40px color-mix(in srgb, var(--ink) 10%, transparent);
+      }
+      .fact-number {
+        display: inline-block;
+        margin-bottom: 60px;
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: .12em;
+      }
+      .fact-card p {
+        margin-bottom: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 23px;
+        line-height: 1.25;
+      }
+      .playground {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+        gap: 18px;
+        max-width: 1220px;
+        margin: 0 auto;
+      }
+      .code-panel,
+      .output-panel {
+        overflow: hidden;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow);
+      }
+      .panel-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 54px;
+        padding: 10px 18px;
+        color: #cbd5e1;
+        background: #111827;
+        border-bottom: 1px solid #334155;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .panel-dots {
+        display: flex;
+        gap: 7px;
+      }
+      .panel-dots span {
+        width: 10px;
+        height: 10px;
+        background: #64748b;
+        border-radius: 50%;
+      }
+      .panel-dots span:first-child {
+        background: #fb7185;
+      }
+      .panel-dots span:nth-child(2) {
+        background: #fbbf24;
+      }
+      .panel-dots span:nth-child(3) {
+        background: #34d399;
+      }
+      pre {
+        margin: 0;
+        white-space: pre-wrap;
+      }
+      .code {
+        min-height: 330px;
+        padding: 28px;
+        color: #e2e8f0;
+        background: #0f172a;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: clamp(14px, 1.6vw, 18px);
+        line-height: 1.75;
+      }
+      .code .current-line {
+        display: block;
+        margin: 0 -12px;
+        padding: 0 12px;
+        background: color-mix(in srgb, var(--primary) 45%, transparent);
+        border-left: 3px solid var(--accent);
+      }
+      .output-panel {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        color: var(--ink);
+        background: var(--white);
+        border: 1px solid var(--line);
+      }
+      .output-panel .panel-bar {
+        color: var(--ink);
+        background: var(--soft);
+        border-color: var(--line);
+      }
+      .output {
+        min-height: 240px;
+        padding: 30px;
+        color: var(--primary);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 18px;
+        font-weight: 750;
+      }
+      .step-controls {
+        display: flex;
+        gap: 10px;
+        padding: 18px;
+        border-top: 1px solid var(--line);
+      }
+      .step-controls .button {
+        flex: 1;
+        min-height: 46px;
+        padding: 8px 14px;
+        font-size: 14px;
+      }
+      .step-readout {
+        display: block;
+        padding: 0 30px 18px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .practice-shell {
+        max-width: 1220px;
+        margin: 0 auto;
+      }
+      .practice-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        padding: 14px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+      }
+      .filter-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .filter-button {
+        min-height: 44px;
+        padding: 8px 16px;
+        color: var(--muted);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-weight: 750;
+      }
+      .filter-button.active {
+        color: var(--white);
+        background: var(--primary);
+      }
+      .practice-count {
+        padding: 0 12px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 750;
+      }
+      .practice-card {
+        display: grid;
+        grid-template-columns: 100px minmax(0, 1fr) auto;
+        gap: 22px;
+        align-items: center;
+        min-height: 170px;
+        padding: 30px;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow);
+      }
+      .practice-level {
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      .practice-content h3 {
+        margin-bottom: 8px;
+        font-size: clamp(22px, 3vw, 32px);
+      }
+      .practice-content p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+      .practice-nav {
+        display: flex;
+        gap: 8px;
+      }
+      .hint-panel {
+        display: none;
+        margin-top: 16px;
+        padding: 16px;
+        color: var(--ink);
+        background: var(--canvas);
+        border-left: 4px solid var(--accent);
+        border-radius: 0 12px 12px 0;
+      }
+      .hint-panel.visible {
+        display: block;
+        animation: reveal 260ms var(--ease) both;
+      }
+      .quiz-shell {
+        display: grid;
+        grid-template-columns: .65fr 1.35fr;
+        gap: clamp(30px, 6vw, 90px);
+        max-width: 1100px;
+        margin: 0 auto;
+        align-items: center;
+      }
+      .quiz-intro h2 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(42px, 5vw, 70px);
+        letter-spacing: -.05em;
+        line-height: 1;
+      }
+      .quiz-intro p {
+        color: var(--muted);
+      }
+      .quiz-card {
+        padding: clamp(24px, 4vw, 44px);
+        background: var(--canvas);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+      }
+      .quiz-question {
+        margin-bottom: 24px;
+        font-size: clamp(22px, 3vw, 31px);
+        font-weight: 800;
+        line-height: 1.25;
+      }
+      .quiz-options {
+        display: grid;
+        gap: 10px;
+      }
+      .quiz-option {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        min-height: 58px;
+        padding: 10px 14px;
+        color: var(--ink);
+        text-align: left;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        transition: transform 180ms var(--ease), border-color 180ms var(--ease), background 180ms var(--ease);
+      }
+      .quiz-option:hover {
+        border-color: var(--primary);
+        transform: translateX(4px);
+      }
+      .quiz-option span {
+        display: grid;
+        flex: 0 0 auto;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        background: var(--canvas);
+        border-radius: 9px;
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .quiz-option.correct {
+        background: #ecfdf5;
+        border-color: #059669;
+      }
+      .quiz-option.wrong {
+        background: #fff1f2;
+        border-color: #e11d48;
+      }
+      .quiz-feedback {
+        min-height: 28px;
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-weight: 750;
+      }
+      footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 34px clamp(20px, 7vw, 110px);
+        color: #e2e8f0;
+        background: var(--ink);
+      }
+      footer a {
+        color: var(--white);
+        font-weight: 800;
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 500ms var(--ease), transform 500ms var(--ease);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.08);
+        }
+      }
+      .visual-stage.running .active {
+        animation: pulse 460ms var(--ease);
+      }
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .visual-card {
+          min-height: 500px;
+        }
+        .fact-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .playground,
+        .quiz-shell {
+          grid-template-columns: 1fr;
+        }
+        .section-heading {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 640px) {
+        .topbar {
+          min-height: 64px;
+        }
+        .brand span:last-child {
+          display: none;
+        }
+        .hero {
+          min-height: auto;
+          padding-top: 70px;
+        }
+        h1 {
+          font-size: clamp(46px, 16vw, 74px);
+        }
+        .visual-card {
+          min-height: 460px;
+          border-radius: 22px;
+        }
+        .visual-stage {
+          min-height: 330px;
+        }
+        .visual-piece {
+          width: 76px;
+          min-height: 70px;
+        }
+        .fact-grid {
+          grid-template-columns: 1fr;
+        }
+        .fact-card {
+          min-height: 190px;
+        }
+        .fact-number {
+          margin-bottom: 34px;
+        }
+        .practice-toolbar {
+          border-radius: 24px;
+        }
+        .practice-card {
+          grid-template-columns: 1fr;
+        }
+        .practice-nav {
+          justify-content: flex-end;
+        }
+        .capsule-shell,
+        .airlock-chamber,
+        .vault-door {
+          padding: 22px;
+        }
+        .orbit-ring,
+        .carousel-ring,
+        .clock-face {
+          width: 240px;
+          height: 240px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: .01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: .01ms !important;
+        }
+      }
+    </style>
+      <script src="../lab-runtime.js" defer></script>
+  </head>
+  <body data-topic="for-loops" data-mode="conveyor">
+    <a class="skip-link" href="#main">Skip to lesson</a>
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="Back to all Python Concept Lab lessons">
+        <span class="brand-mark">Py</span>
+        <span>Python Concept Lab</span>
+      </a>
+      <span class="lesson-count">Lesson 11 / 50</span>
+      <span class="progress-track" aria-hidden="true"><span class="progress-fill"></span></span>
+    </header>
+    <main id="main">
+      <section class="hero">
+        <div class="hero-text reveal">
+          <p class="eyebrow">One topic · one mental model</p>
+          <h1>For Loops</h1>
+          <p class="hero-copy">A for loop visits each item on a conveyor and performs the same clear job once per item.</p>
+          <div class="hero-actions">
+            <a class="button" href="#playground">Try the example <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+            <a class="button secondary" href="#idea">Learn the idea</a>
+          </div>
+          <p class="hero-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21h6v-2H9v2Zm3-19a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg><span>You do not need to memorize syntax yet. First build a picture of what Python is doing, then connect that picture to the code.</span></p>
+        </div>
+        <div class="visual-card reveal" aria-label="Animated Loop Conveyor model">
+          <div class="visual-head">
+            <span class="visual-status"><span class="status-dot"></span>Loop Conveyor</span>
+            <div class="visual-controls">
+              <button class="icon-button" type="button" id="playVisual" aria-label="Play visual explanation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button>
+              <button class="icon-button" type="button" id="resetVisual" aria-label="Reset visual explanation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5a7 7 0 1 1-6.3 4H3l4-4 4 4H7.7A5 5 0 1 0 12 7z"/></svg></button>
+            </div>
+          </div>
+          <div class="visual-stage" id="visualStage">
+            <div class="belt"><div class="visual-piece piece-1" data-piece="0"><span>1</span><strong>for</strong></div>
+<div class="visual-piece piece-2" data-piece="1"><span>2</span><strong>The</strong></div>
+<div class="visual-piece piece-3" data-piece="2"><span>3</span><strong>The</strong></div>
+<div class="visual-piece piece-4" data-piece="3"><span>4</span><strong>Use</strong></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="section alt" id="idea">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">The small ideas</p>
+            <h2>Four things to notice</h2>
+          </div>
+          <p>Read these in order. Together they are the complete beginner mental model for for loops—nothing extra competing for attention.</p>
+        </div>
+        <div class="fact-grid">
+          
+          <article class="fact-card" data-reveal="0">
+            <span class="fact-number">01</span>
+            <p>for visits items in an iterable.</p>
+          </article>
+          <article class="fact-card" data-reveal="1">
+            <span class="fact-number">02</span>
+            <p>The loop variable changes each turn.</p>
+          </article>
+          <article class="fact-card" data-reveal="2">
+            <span class="fact-number">03</span>
+            <p>The body is indented.</p>
+          </article>
+          <article class="fact-card" data-reveal="3">
+            <span class="fact-number">04</span>
+            <p>Use break to leave early.</p>
+          </article>
+        </div>
+      </section>
+      <section class="section" id="playground">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">Trace the program</p>
+            <h2>Watch code become a result</h2>
+          </div>
+          <p>Use Next line to move at your pace. The highlighted line is the instruction Python is currently considering.</p>
+        </div>
+        <div class="playground reveal">
+          <div class="code-panel">
+            <div class="panel-bar">
+              <span>for-loops.py</span>
+              <span class="panel-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <pre class="code" id="codeView" aria-label="Python example"><code></code></pre>
+          </div>
+          <div class="output-panel">
+            <div class="panel-bar"><span>Friendly output</span><span>Python 3</span></div>
+            <pre class="output" id="outputView" aria-live="polite">Press “Next line” to begin.</pre>
+            <div>
+              <span class="step-readout" id="stepReadout">Ready · 0 steps completed</span>
+              <div class="step-controls">
+                <button class="button secondary" type="button" id="resetCode">Reset</button>
+                <button class="button" type="button" id="nextCode">Next line <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section alt" id="practice">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">Practice trail</p>
+            <h2>One small challenge at a time</h2>
+          </div>
+          <p>Choose a level, reveal a hint only when needed, and explain the result aloud. The page remembers your current card while it stays open.</p>
+        </div>
+        <div class="practice-shell reveal">
+          <div class="practice-toolbar">
+            <div class="filter-group" aria-label="Practice difficulty">
+              <button class="filter-button active" type="button" data-level="Warm up">Warm up</button>
+              <button class="filter-button" type="button" data-level="Build">Build</button>
+              <button class="filter-button" type="button" data-level="Stretch">Stretch</button>
+            </div>
+            <span class="practice-count" id="practiceCount" aria-live="polite"></span>
+          </div>
+          <article class="practice-card">
+            <span class="practice-level" id="practiceLevel"></span>
+            <div class="practice-content">
+              <h3 id="practiceTitle"></h3>
+              <p id="practicePrompt"></p>
+              <div class="hint-panel" id="hintPanel"></div>
+            </div>
+            <div class="practice-nav">
+              <button class="icon-button" type="button" id="showHint" aria-label="Show or hide hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21h6v-2H9v2Zm3-19a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2Z"/></svg></button>
+              <button class="icon-button" type="button" id="nextPractice" aria-label="Next practice challenge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="section" id="check">
+        <div class="quiz-shell reveal">
+          <div class="quiz-intro">
+            <p class="eyebrow">Quick check</p>
+            <h2>Did the picture click?</h2>
+            <p>No score and no pressure. Pick the statement that best explains for loops.</p>
+          </div>
+          <article class="quiz-card">
+            <p class="quiz-question">Which statement belongs in your mental model?</p>
+            <div class="quiz-options">
+              <button class="quiz-option" type="button" data-correct="true">
+                <span>A</span>
+                for visits items in an iterable.
+              </button>
+              <button class="quiz-option" type="button" data-correct="false">
+                <span>B</span>
+                The loop variable changes each turn.
+              </button>
+              <button class="quiz-option" type="button" data-correct="false">
+                <span>C</span>
+                A common mistake about For Loops
+              </button>
+              <button class="quiz-option" type="button" data-correct="false">
+                <span>D</span>
+                The body is indented.
+              </button>
+            </div>
+            <p class="quiz-feedback" id="quizFeedback" aria-live="polite">Choose one answer.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <span>Lesson 11 · For Loops</span>
+      <a href="../index.html">Explore all 50 concepts</a>
+    </footer>
+    <script>
+      const lesson = {
+        topic: "For Loops",
+        analogy: "A for loop visits each item on a conveyor and performs the same clear job once per item.",
+        expectedOutput: "12",
+        code: "total = 0\nfor number in [2, 4, 6]:\n    total += number\nprint(total)"
+      };
+
+      const practices = [
+        {
+          level: "Warm up",
+          title: "Reverse for loops #1",
+          prompt: "Reverse a tiny a game score example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Inspect for loops #2",
+          prompt: "Inspect a tiny a robot command example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Predict for loops #3",
+          prompt: "Predict a tiny a travel plan example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Trace for loops #4",
+          prompt: "Trace a tiny a puzzle clue example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Change for loops #5",
+          prompt: "Change a tiny a classroom list example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Explain for loops #6",
+          prompt: "Explain a tiny a music playlist example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Repair for loops #7",
+          prompt: "Repair a tiny a book tracker example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Compare for loops #8",
+          prompt: "Compare a tiny a weather reading example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Label for loops #9",
+          prompt: "Label a tiny a shop receipt example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Test for loops #10",
+          prompt: "Test a tiny a science log example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Simplify for loops #11",
+          prompt: "Simplify a tiny a game score example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Extend for loops #12",
+          prompt: "Extend a tiny a robot command example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Reverse for loops #13",
+          prompt: "Reverse a tiny a travel plan example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Inspect for loops #14",
+          prompt: "Inspect a tiny a puzzle clue example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Predict for loops #15",
+          prompt: "Predict a tiny a classroom list example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Trace for loops #16",
+          prompt: "Trace a tiny a music playlist example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Change for loops #17",
+          prompt: "Change a tiny a book tracker example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Explain for loops #18",
+          prompt: "Explain a tiny a weather reading example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Repair for loops #19",
+          prompt: "Repair a tiny a shop receipt example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Compare for loops #20",
+          prompt: "Compare a tiny a science log example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Label for loops #21",
+          prompt: "Label a tiny a game score example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Test for loops #22",
+          prompt: "Test a tiny a robot command example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Simplify for loops #23",
+          prompt: "Simplify a tiny a travel plan example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Extend for loops #24",
+          prompt: "Extend a tiny a puzzle clue example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Reverse for loops #25",
+          prompt: "Reverse a tiny a classroom list example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Inspect for loops #26",
+          prompt: "Inspect a tiny a music playlist example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Predict for loops #27",
+          prompt: "Predict a tiny a book tracker example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Trace for loops #28",
+          prompt: "Trace a tiny a weather reading example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Change for loops #29",
+          prompt: "Change a tiny a shop receipt example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Explain for loops #30",
+          prompt: "Explain a tiny a science log example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Repair for loops #31",
+          prompt: "Repair a tiny a game score example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Compare for loops #32",
+          prompt: "Compare a tiny a robot command example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Label for loops #33",
+          prompt: "Label a tiny a travel plan example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Test for loops #34",
+          prompt: "Test a tiny a puzzle clue example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Simplify for loops #35",
+          prompt: "Simplify a tiny a classroom list example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Warm up",
+          title: "Extend for loops #36",
+          prompt: "Extend a tiny a music playlist example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Reverse for loops #37",
+          prompt: "Reverse a tiny a book tracker example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Inspect for loops #38",
+          prompt: "Inspect a tiny a weather reading example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Predict for loops #39",
+          prompt: "Predict a tiny a shop receipt example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Trace for loops #40",
+          prompt: "Trace a tiny a science log example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Change for loops #41",
+          prompt: "Change a tiny a game score example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Explain for loops #42",
+          prompt: "Explain a tiny a robot command example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Repair for loops #43",
+          prompt: "Repair a tiny a travel plan example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Compare for loops #44",
+          prompt: "Compare a tiny a puzzle clue example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Label for loops #45",
+          prompt: "Label a tiny a classroom list example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Test for loops #46",
+          prompt: "Test a tiny a music playlist example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Simplify for loops #47",
+          prompt: "Simplify a tiny a book tracker example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Extend for loops #48",
+          prompt: "Extend a tiny a weather reading example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Reverse for loops #49",
+          prompt: "Reverse a tiny a shop receipt example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Inspect for loops #50",
+          prompt: "Inspect a tiny a science log example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Predict for loops #51",
+          prompt: "Predict a tiny a game score example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Trace for loops #52",
+          prompt: "Trace a tiny a robot command example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Change for loops #53",
+          prompt: "Change a tiny a travel plan example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Explain for loops #54",
+          prompt: "Explain a tiny a puzzle clue example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Repair for loops #55",
+          prompt: "Repair a tiny a classroom list example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Compare for loops #56",
+          prompt: "Compare a tiny a music playlist example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Label for loops #57",
+          prompt: "Label a tiny a book tracker example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Test for loops #58",
+          prompt: "Test a tiny a weather reading example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Simplify for loops #59",
+          prompt: "Simplify a tiny a shop receipt example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Extend for loops #60",
+          prompt: "Extend a tiny a science log example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Reverse for loops #61",
+          prompt: "Reverse a tiny a game score example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Inspect for loops #62",
+          prompt: "Inspect a tiny a robot command example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Predict for loops #63",
+          prompt: "Predict a tiny a travel plan example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Trace for loops #64",
+          prompt: "Trace a tiny a puzzle clue example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Change for loops #65",
+          prompt: "Change a tiny a classroom list example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Explain for loops #66",
+          prompt: "Explain a tiny a music playlist example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Repair for loops #67",
+          prompt: "Repair a tiny a book tracker example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Compare for loops #68",
+          prompt: "Compare a tiny a weather reading example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Label for loops #69",
+          prompt: "Label a tiny a shop receipt example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Test for loops #70",
+          prompt: "Test a tiny a science log example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Simplify for loops #71",
+          prompt: "Simplify a tiny a game score example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Extend for loops #72",
+          prompt: "Extend a tiny a robot command example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Reverse for loops #73",
+          prompt: "Reverse a tiny a travel plan example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Inspect for loops #74",
+          prompt: "Inspect a tiny a puzzle clue example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Predict for loops #75",
+          prompt: "Predict a tiny a classroom list example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Build",
+          title: "Trace for loops #76",
+          prompt: "Trace a tiny a music playlist example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Stretch",
+          title: "Change for loops #77",
+          prompt: "Change a tiny a book tracker example using only for loops.",
+          hint: "for visits items in an iterable. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Stretch",
+          title: "Explain for loops #78",
+          prompt: "Explain a tiny a weather reading example using only for loops.",
+          hint: "The loop variable changes each turn. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Stretch",
+          title: "Repair for loops #79",
+          prompt: "Repair a tiny a shop receipt example using only for loops.",
+          hint: "The body is indented. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        },
+        {
+          level: "Stretch",
+          title: "Compare for loops #80",
+          prompt: "Compare a tiny a science log example using only for loops.",
+          hint: "Use break to leave early. Start with one value, make one clear change, then observe the result.",
+          check: "Can you say why the result follows from for loops in one sentence?"
+        }
+      ];
+
+      const codeLines = lesson.code.split("\n");
+      const codeView = document.querySelector("#codeView code");
+      const outputView = document.querySelector("#outputView");
+      const stepReadout = document.querySelector("#stepReadout");
+      const nextCode = document.querySelector("#nextCode");
+      const resetCode = document.querySelector("#resetCode");
+      const visualStage = document.querySelector("#visualStage");
+      const playVisual = document.querySelector("#playVisual");
+      const resetVisual = document.querySelector("#resetVisual");
+      const visualPieces = [...document.querySelectorAll(".visual-piece")];
+      const progressFill = document.querySelector(".progress-fill");
+      const practiceLevel = document.querySelector("#practiceLevel");
+      const practiceTitle = document.querySelector("#practiceTitle");
+      const practicePrompt = document.querySelector("#practicePrompt");
+      const practiceCount = document.querySelector("#practiceCount");
+      const hintPanel = document.querySelector("#hintPanel");
+      const showHint = document.querySelector("#showHint");
+      const nextPractice = document.querySelector("#nextPractice");
+      const filterButtons = [...document.querySelectorAll(".filter-button")];
+      const quizOptions = [...document.querySelectorAll(".quiz-option")];
+      const quizFeedback = document.querySelector("#quizFeedback");
+
+      let codeStep = 0;
+      let visualStep = 0;
+      let visualTimer = null;
+      let practiceIndex = 0;
+      let activeLevel = "Warm up";
+
+      function safeText(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function renderCode() {
+        codeView.innerHTML = codeLines
+          .map((line, index) => {
+            const className = index === codeStep - 1 ? "current-line" : "";
+            const visibleLine = line.length ? safeText(line) : " ";
+            return '<span class="' + className + '">' + visibleLine + "</span>";
+          })
+          .join("\n");
+      }
+
+      function advanceCode() {
+        if (codeStep < codeLines.length) {
+          codeStep += 1;
+          outputView.textContent = "Python is reading line " + codeStep + "…";
+          stepReadout.textContent = codeStep + " of " + codeLines.length + " lines considered";
+          renderCode();
+          return;
+        }
+        outputView.textContent = lesson.expectedOutput;
+        stepReadout.textContent = "Complete · connect the result to the highlighted instructions";
+        nextCode.disabled = true;
+      }
+
+      function resetCodeDemo() {
+        codeStep = 0;
+        nextCode.disabled = false;
+        outputView.textContent = "Press “Next line” to begin.";
+        stepReadout.textContent = "Ready · 0 steps completed";
+        renderCode();
+      }
+
+      function setVisualPiece(index) {
+        visualPieces.forEach((piece, pieceIndex) => {
+          piece.classList.toggle("active", pieceIndex === index);
+          piece.setAttribute("aria-current", pieceIndex === index ? "step" : "false");
+        });
+      }
+
+      function stopVisual() {
+        if (visualTimer) {
+          window.clearInterval(visualTimer);
+          visualTimer = null;
+        }
+        visualStage.classList.remove("running");
+        playVisual.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M8 5v14l11-7z\"/></svg>";
+        playVisual.setAttribute("aria-label", "Play visual explanation");
+      }
+
+      function startVisual() {
+        if (visualTimer) {
+          stopVisual();
+          return;
+        }
+        visualStage.classList.add("running");
+        playVisual.innerHTML = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 5h4v14H6zm8 0h4v14h-4z\"/></svg>";
+        playVisual.setAttribute("aria-label", "Pause visual explanation");
+        setVisualPiece(visualStep);
+        visualTimer = window.setInterval(() => {
+          visualStep = (visualStep + 1) % visualPieces.length;
+          setVisualPiece(visualStep);
+        }, 850);
+      }
+
+      function resetVisualDemo() {
+        stopVisual();
+        visualStep = 0;
+        setVisualPiece(-1);
+      }
+
+      function filteredPractices() {
+        return practices.filter((practice) => practice.level === activeLevel);
+      }
+
+      function renderPractice() {
+        const available = filteredPractices();
+        if (practiceIndex >= available.length) {
+          practiceIndex = 0;
+        }
+        const practice = available[practiceIndex];
+        practiceLevel.textContent = practice.level;
+        practiceTitle.textContent = practice.title;
+        practicePrompt.textContent = practice.prompt;
+        practiceCount.textContent = practiceIndex + 1 + " / " + available.length;
+        hintPanel.textContent = practice.hint + " " + practice.check;
+        hintPanel.classList.remove("visible");
+        showHint.setAttribute("aria-label", "Show hint for " + practice.title);
+      }
+
+      function chooseLevel(button) {
+        activeLevel = button.dataset.level;
+        practiceIndex = 0;
+        filterButtons.forEach((item) => item.classList.toggle("active", item === button));
+        renderPractice();
+      }
+
+      function answerQuiz(button) {
+        quizOptions.forEach((option) => {
+          option.disabled = true;
+          if (option.dataset.correct === "true") {
+            option.classList.add("correct");
+          }
+        });
+        if (button.dataset.correct === "true") {
+          quizFeedback.textContent = "Exactly. That is the core idea to carry forward.";
+        } else {
+          button.classList.add("wrong");
+          quizFeedback.textContent = "Not quite. The green statement is the dependable mental model.";
+        }
+      }
+
+      function updateReadingProgress() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+        progressFill.style.width = Math.min(100, Math.max(0, ratio * 100)) + "%";
+      }
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.14
+      });
+
+      document.querySelectorAll(".reveal, .fact-card").forEach((element) => {
+        element.classList.add("reveal");
+        revealObserver.observe(element);
+      });
+
+      nextCode.addEventListener("click", advanceCode);
+      resetCode.addEventListener("click", resetCodeDemo);
+      playVisual.addEventListener("click", startVisual);
+      resetVisual.addEventListener("click", resetVisualDemo);
+      showHint.addEventListener("click", () => hintPanel.classList.toggle("visible"));
+      nextPractice.addEventListener("click", () => {
+        practiceIndex = (practiceIndex + 1) % filteredPractices().length;
+        renderPractice();
+      });
+      filterButtons.forEach((button) => button.addEventListener("click", () => chooseLevel(button)));
+      quizOptions.forEach((button) => button.addEventListener("click", () => answerQuiz(button)));
+      window.addEventListener("scroll", updateReadingProgress, {
+        passive: true
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          stopVisual();
+        }
+      });
+
+      resetCodeDemo();
+      resetVisualDemo();
+      renderPractice();
+      updateReadingProgress();
+    </script>
+  </body>
+</html>

@@ -262,7 +262,7 @@ export default function Sidebar({
     if (showLearnBug) return "learnbug";
     if (showSqlLab) return "sql_lab";
     if (showConcurrencyLab) return "concurrency_lab";
-    if (showLabs) return activeLabId || "lab_enterprise_ai_agents";
+    if (showLabs) return "labs";
     if (showAgentLibrary) return "agent_library";
     if (showAimlCompanion) return "aiml_companion";
     if (showLinks) return "links";
@@ -418,6 +418,11 @@ export default function Sidebar({
       case "learnbug": if (onOpenToolHome) onOpenToolHome("visualize"); else if (setShowLearnBug) setShowLearnBug(true); break;
       case "sql_lab": if (setShowSqlLab) setShowSqlLab(true); break;
       case "concurrency_lab": if (setShowConcurrencyLab) setShowConcurrencyLab(true); break;
+      case "labs":
+        if (setActiveLabId) setActiveLabId(null);
+        if (setShowLabs) setShowLabs(true);
+        break;
+      case "lab_retrieval_tuning":
       case "lab_enterprise_ai_agents":
       case "lab_chunking_bench":
       case "lab_token_cost":
@@ -438,6 +443,113 @@ export default function Sidebar({
       case "lab_uncertainty":
       case "lab_prompt_cache":
       case "lab_technique_chooser":
+      case "lab_retrieval_observatory":
+      case "lab_graphrag_atlas":
+      case "lab_plan_repair":
+      case "lab_durable_agent_ops":
+      case "lab_tokenization_microscope":
+      case "lab_entity_boundary":
+      case "lab_semantic_cartographer":
+      case "lab_intent_calibration":
+      case "lab_bias_variance":
+      case "lab_feature_foundry":
+      case "lab_cross_validation":
+      case "lab_regularization_path":
+      case "lab_tree_split":
+      case "lab_knn_neighborhood":
+      case "lab_imbalance_triage":
+      case "lab_drift_monitor":
+      case "lab_tensor_shape":
+      case "lab_backprop_debugger":
+      case "lab_activation_arena":
+      case "lab_optimizer_race":
+      case "lab_initialization_signal":
+      case "lab_attention_mechanism":
+      case "lab_autoencoder_latent":
+      case "lab_training_stability":
+      case "lab_convolution_lens":
+      case "lab_detection_iou":
+      case "lab_augmentation_lab":
+      case "lab_segmentation_pixel":
+      case "lab_vit_patch":
+      case "lab_distribution_explorer":
+      case "lab_bayes_rule":
+      case "lab_hypothesis_court":
+      case "lab_confidence_factory":
+      case "lab_sampling_bias":
+      case "lab_causation_lab":
+      case "lab_markov_chain":
+      case "lab_monte_carlo":
+      case "lab_pca_variance":
+      case "lab_clustering_workbench":
+      case "lab_svm_margin":
+      case "lab_ensemble_fusion":
+      case "lab_gradient_boosting":
+      case "lab_anomaly_detection":
+      case "lab_calibration_curve":
+      case "lab_feature_selection":
+      case "lab_hyperparameter_search":
+      case "lab_model_explainability":
+      case "lab_cnn_receptive_field":
+      case "lab_rnn_sequence":
+      case "lab_lstm_gates":
+      case "lab_normalization_dynamics":
+      case "lab_dropout_uncertainty":
+      case "lab_transfer_learning":
+      case "lab_quantization_tradeoff":
+      case "lab_network_pruning":
+      case "lab_distributed_training":
+      case "lab_adversarial_robustness":
+      case "lab_decoding_strategies":
+      case "lab_prompt_versioning":
+      case "lab_context_budget":
+      case "lab_structured_generation":
+      case "lab_hallucination_eval":
+      case "lab_synthetic_data":
+      case "lab_lora_adaptation":
+      case "lab_multimodal_alignment":
+      case "lab_diffusion_denoising":
+      case "lab_genai_guardrails":
+      case "lab_query_rewriting":
+      case "lab_metadata_filtering":
+      case "lab_reranker_lab":
+      case "lab_context_compression":
+      case "lab_citation_alignment":
+      case "lab_multihop_retrieval":
+      case "lab_freshness_versioning":
+      case "lab_rag_evaluation":
+      case "lab_semantic_cache":
+      case "lab_retrieval_acl":
+      case "lab_tool_schema_design":
+      case "lab_agent_planning":
+      case "lab_memory_policy":
+      case "lab_agent_handoff":
+      case "lab_agent_state_machine":
+      case "lab_approval_gates":
+      case "lab_agent_retries":
+      case "lab_agent_budget":
+      case "lab_agent_observability":
+      case "lab_agent_sandbox":
+      case "lab_container_resources":
+      case "lab_autoscaling":
+      case "lab_health_probes":
+      case "lab_canary_release":
+      case "lab_blue_green":
+      case "lab_slo_budget":
+      case "lab_observability_signals":
+      case "lab_incident_response":
+      case "lab_chaos_testing":
+      case "lab_feature_flags":
+      case "lab_ci_quality_gates":
+      case "lab_test_pyramid":
+      case "lab_contract_testing":
+      case "lab_rate_limiting":
+      case "lab_cache_architecture":
+      case "lab_queue_backpressure":
+      case "lab_database_migration":
+      case "lab_supply_chain":
+      case "lab_distributed_tracing":
+      case "lab_cost_performance":
         if (setActiveLabId) setActiveLabId(id);
         if (setShowLabs) setShowLabs(true);
         break;

@@ -1,0 +1,2361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retrieval Lab — tune the pipeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E8EBEF;
+  --panel:#FFFFFF;
+  --sunk:#F4F6F8;
+  --line:#D9DEE5;
+  --line2:#C2CAD4;
+  --ink:#0F1519;
+  --ink2:#3E4954;
+  --ink3:#79848F;
+  --ink4:#A6AFB9;
+
+  --dense:#0E7C86;
+  --dense-bg:#E4F2F3;
+  --sparse:#B0700A;
+  --sparse-bg:#FAF0DE;
+  --fused:#5B3DF5;
+  --fused-bg:#EDEAFE;
+  --ce:#1B2430;
+
+  --hit:#15794A;
+  --hit-bg:#E5F3EB;
+  --miss:#C2413B;
+  --miss-bg:#FBEAE9;
+  --warn:#9A6209;
+
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --disp:"Archivo",system-ui,sans-serif;
+  --body:"Inter",system-ui,-apple-system,sans-serif;
+
+  --r:9px;
+  --deck:322px;
+  --gauge:352px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;height:100vh;overflow:hidden;
+}
+button,input,select{font-family:inherit;color:inherit}
+button{cursor:pointer}
+::selection{background:#DDD8FE}
+
+/* ─────────── masthead ─────────── */
+.mast{
+  flex:0 0 auto;display:flex;align-items:center;gap:20px;
+  padding:11px 20px;background:var(--panel);border-bottom:1px solid var(--line2);
+  z-index:30;
+}
+.mark{display:flex;align-items:center;gap:11px;flex:0 0 auto}
+.mark .glyph{
+  width:34px;height:34px;border-radius:8px;flex:0 0 34px;
+  background:var(--ink);display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.mark .glyph i{position:absolute;background:#fff;border-radius:1px}
+.mark .glyph i:nth-child(1){width:3px;height:8px;left:8px;top:13px;opacity:.35}
+.mark .glyph i:nth-child(2){width:3px;height:16px;left:14px;top:9px;background:#8C79F8}
+.mark .glyph i:nth-child(3){width:3px;height:6px;left:20px;top:14px;opacity:.35}
+.mark .eyebrow{
+  font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--fused);font-weight:600;
+}
+.mark h1{font-family:var(--disp);font-size:16.5px;font-weight:700;margin:1px 0 0;letter-spacing:-.02em}
+
+.corpusbar{display:flex;gap:0;margin-left:6px;flex:0 0 auto}
+.cstat{padding:0 15px;border-left:1px solid var(--line)}
+.cstat:first-child{border-left:0}
+.cstat .k{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);font-weight:600}
+.cstat .v{font-family:var(--disp);font-size:16px;font-weight:700;letter-spacing:-.02em;line-height:1.15;font-variant-numeric:tabular-nums}
+
+.mastright{margin-left:auto;display:flex;align-items:center;gap:8px}
+.ghost{
+  background:var(--panel);border:1px solid var(--line2);border-radius:7px;
+  padding:7px 13px;font-size:12px;font-weight:600;color:var(--ink2);
+}
+.ghost:hover{border-color:var(--ink3);background:var(--sunk)}
+.ghost.armed{background:var(--fused);border-color:var(--fused);color:#fff}
+.kbd{font-family:var(--mono);font-size:9.5px;color:var(--ink4);letter-spacing:.06em}
+
+/* ─────────── shell ─────────── */
+.shell{flex:1 1 auto;display:flex;min-height:0}
+
+/* ─────────── control deck ─────────── */
+.deck{
+  width:var(--deck);flex:0 0 var(--deck);background:var(--panel);
+  border-right:1px solid var(--line2);display:flex;flex-direction:column;min-height:0;
+}
+.deckscroll{overflow-y:auto;flex:1 1 auto;padding-bottom:22px}
+.deckscroll::-webkit-scrollbar{width:9px}
+.deckscroll::-webkit-scrollbar-thumb{background:#CBD2DA;border-radius:9px;border:2.5px solid var(--panel)}
+
+.presetwrap{padding:12px 14px 13px;border-bottom:1px solid var(--line)}
+.grouplabel{
+  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink4);font-weight:600;margin-bottom:8px;
+}
+.presets{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.preset{
+  border:1px solid var(--line2);background:var(--sunk);border-radius:7px;
+  padding:7px 9px;text-align:left;
+}
+.preset:hover{border-color:var(--fused);background:#fff}
+.preset.on{border-color:var(--fused);background:var(--fused-bg);box-shadow:inset 0 0 0 1px var(--fused)}
+.preset .pn{font-family:var(--disp);font-size:12px;font-weight:700;line-height:1.2;display:block}
+.preset .pd{font-size:10px;color:var(--ink3);line-height:1.35;margin-top:2px;display:block}
+
+.grp{border-bottom:1px solid var(--line)}
+.grphead{
+  display:flex;align-items:center;gap:8px;width:100%;background:none;border:0;
+  padding:11px 14px;text-align:left;
+}
+.grphead:hover{background:var(--sunk)}
+.grphead .gn{
+  font-family:var(--mono);font-size:9px;color:var(--ink4);font-weight:600;
+  border:1px solid var(--line2);border-radius:4px;padding:1px 5px;
+}
+.grphead .gt{font-family:var(--disp);font-size:12.5px;font-weight:700;letter-spacing:-.01em;flex:1}
+.grphead .gx{font-size:11px;color:var(--ink4);transition:transform .18s}
+.grp.open .grphead .gx{transform:rotate(90deg)}
+.grpbody{display:none;padding:2px 14px 15px}
+.grp.open .grpbody{display:block}
+
+.ctl{margin-bottom:13px}
+.ctl:last-child{margin-bottom:2px}
+.ctl .lab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px}
+.ctl .lab span{font-size:11.5px;font-weight:600;color:var(--ink2)}
+.ctl .lab b{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--fused);font-variant-numeric:tabular-nums}
+.ctl .note{font-size:10.5px;color:var(--ink3);line-height:1.45;margin-top:5px}
+input[type=range]{width:100%;height:18px;accent-color:var(--fused);margin:0}
+input[type=range]:disabled{opacity:.35}
+
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{
+  border:1px solid var(--line2);background:var(--sunk);border-radius:6px;
+  padding:5px 9px;font-size:11px;font-weight:600;color:var(--ink3);
+}
+.seg button:hover{border-color:var(--ink3);color:var(--ink2)}
+.seg button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+.switchrow{
+  display:flex;align-items:center;gap:9px;padding:7px 0;
+}
+.switchrow + .switchrow{border-top:1px solid var(--sunk)}
+.sw{
+  width:36px;height:20px;border-radius:999px;border:0;background:#CDD4DC;
+  position:relative;flex:0 0 36px;transition:background .18s;
+}
+.sw i{
+  position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;
+  background:#fff;transition:left .18s;box-shadow:0 1px 2px rgba(0,0,0,.22);
+}
+.sw.on{background:var(--fused)}
+.sw.on i{left:19px}
+.switchrow .st{flex:1}
+.switchrow .st .n{font-size:12px;font-weight:600;line-height:1.25}
+.switchrow .st .d{font-size:10.5px;color:var(--ink3);line-height:1.4;margin-top:1px}
+
+.mixbar{
+  height:22px;border-radius:6px;overflow:hidden;display:flex;margin:2px 0 6px;
+  border:1px solid var(--line2);
+}
+.mixbar i{height:100%;display:block;transition:width .2s}
+.mixbar .s{background:var(--sparse)}
+.mixbar .d{background:var(--dense)}
+.mixlegend{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--ink3)}
+.mixlegend b{font-weight:600}
+.mixlegend .ls b{color:var(--sparse)}
+.mixlegend .ld b{color:var(--dense)}
+
+/* ─────────── main ─────────── */
+.main{flex:1 1 auto;display:flex;flex-direction:column;min-width:0;min-height:0}
+
+.querybar{
+  flex:0 0 auto;background:var(--panel);border-bottom:1px solid var(--line);
+  padding:13px 20px 11px;
+}
+.qrow{display:flex;gap:9px;align-items:stretch}
+.qfield{flex:1;position:relative}
+.qfield input{
+  width:100%;border:1.5px solid var(--line2);border-radius:9px;background:var(--sunk);
+  padding:11px 14px 11px 38px;font-size:14.5px;font-weight:500;outline:none;
+}
+.qfield input:focus{border-color:var(--fused);background:#fff;box-shadow:0 0 0 3px rgba(91,61,245,.1)}
+.qfield .ic{
+  position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;color:var(--ink4);pointer-events:none;
+}
+.runbtn{
+  background:var(--ink);color:#fff;border:0;border-radius:9px;padding:0 20px;
+  font-size:13.5px;font-weight:700;letter-spacing:.01em;flex:0 0 auto;
+}
+.runbtn:hover{background:#26313D}
+
+.goldrow{display:flex;align-items:center;gap:7px;margin-top:10px;flex-wrap:wrap}
+.goldrow .gl{
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink4);font-weight:600;margin-right:2px;
+}
+.gq{
+  border:1px solid var(--line2);background:var(--sunk);border-radius:999px;
+  padding:4px 11px;font-size:11.5px;color:var(--ink2);font-weight:500;
+  max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.gq:hover{border-color:var(--fused);color:var(--fused)}
+.gq.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.gq .qn{font-family:var(--mono);font-size:9.5px;opacity:.55;margin-right:5px}
+
+.rewrite{
+  margin-top:9px;display:none;align-items:baseline;gap:9px;
+  background:var(--fused-bg);border:1px solid #DAD3FD;border-radius:7px;padding:7px 11px;
+}
+.rewrite.show{display:flex}
+.rewrite .rl{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fused);font-weight:600;flex:0 0 auto;
+}
+.rewrite .rt{font-size:12.5px;color:#2A1E70;font-family:var(--mono);word-break:break-word}
+
+/* index strip — the signature element */
+.strip{
+  flex:0 0 auto;background:var(--panel);border-bottom:1px solid var(--line);
+  padding:11px 20px 12px;
+}
+.striphead{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.striphead .sh{
+  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink4);font-weight:600;
+}
+.striphead .sn{font-size:11px;color:var(--ink3)}
+.striphead .sn b{color:var(--ink);font-weight:600;font-family:var(--mono)}
+.striplegend{margin-left:auto;display:flex;gap:11px}
+.striplegend .sl{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--ink3)}
+.striplegend .swx{width:11px;height:11px;border-radius:3px;border:1px solid rgba(0,0,0,.12)}
+
+.stripcells{display:flex;gap:2px;align-items:flex-end;height:34px}
+.doclot{display:flex;gap:1.5px;padding:0 5px 0 0;border-right:1px dotted var(--line2);align-items:flex-end;height:100%}
+.doclot:last-child{border-right:0}
+.cell{
+  flex:1 1 3px;min-width:2px;background:#E3E7EC;border-radius:2px;height:13px;
+  transition:height .22s,background .22s;position:relative;cursor:pointer;
+}
+.cell.gold{background:#B9DDCA;height:19px}
+.cell.cand{background:#C9C0FA;height:22px}
+.cell.ret{background:var(--fused);height:32px}
+.cell.ret.gold{background:var(--hit)}
+.cell.ret.wrong{background:var(--miss)}
+.cell.dropped{background:#DDE2E8;height:9px;opacity:.7}
+.cell:hover{outline:2px solid var(--ink);outline-offset:1px;z-index:5}
+
+/* results */
+.resultwrap{flex:1 1 auto;min-height:0;display:flex}
+.results{
+  flex:1 1 auto;overflow-y:auto;min-width:0;padding:14px 20px 60px;
+}
+.results::-webkit-scrollbar{width:11px}
+.results::-webkit-scrollbar-thumb{background:#CBD2DA;border-radius:9px;border:3px solid var(--paper)}
+
+.stagehead{
+  display:flex;align-items:baseline;gap:10px;margin:0 0 11px;
+}
+.stagehead h2{font-family:var(--disp);font-size:14px;font-weight:700;margin:0;letter-spacing:-.015em}
+.stagehead .pipe{
+  font-family:var(--mono);font-size:10.5px;color:var(--ink3);
+  display:flex;gap:6px;flex-wrap:wrap;align-items:center;
+}
+.stagehead .pipe span{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:2px 7px}
+.stagehead .pipe span.off{opacity:.4;text-decoration:line-through}
+.stagehead .pipe em{color:var(--ink4);font-style:normal}
+
+.hit{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  margin-bottom:9px;overflow:hidden;
+}
+.hit.relevant{border-left:3px solid var(--hit)}
+.hit.noise{border-left:3px solid var(--miss)}
+.hit.partial{border-left:3px solid var(--warn)}
+.hitmain{display:flex;gap:13px;padding:11px 14px;align-items:flex-start;cursor:pointer}
+.hitmain:hover{background:var(--sunk)}
+.rank{
+  flex:0 0 auto;width:30px;text-align:center;
+}
+.rank .rn{font-family:var(--disp);font-size:17px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.rank .rd{font-family:var(--mono);font-size:9px;color:var(--ink4);margin-top:2px}
+.rank .rd.up{color:var(--hit)}
+.rank .rd.down{color:var(--miss)}
+.hitbody{flex:1;min-width:0}
+.hitmeta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:4px}
+.src{font-family:var(--mono);font-size:10.5px;color:var(--ink2);font-weight:500}
+.src b{color:var(--ink);font-weight:600}
+.tagchip{
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--line2);border-radius:4px;padding:1px 5px;color:var(--ink3);
+}
+.gradechip{
+  font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  border-radius:4px;padding:1px 6px;font-weight:600;
+}
+.gradechip.g3{background:var(--hit-bg);color:var(--hit)}
+.gradechip.g1{background:#FBF3E3;color:var(--warn)}
+.gradechip.g0{background:var(--miss-bg);color:var(--miss)}
+.snippet{font-size:12.5px;line-height:1.6;color:var(--ink2)}
+.snippet mark{background:#FFF1B8;color:var(--ink);padding:0 1px;border-radius:2px}
+.snippet mark.cx{background:var(--dense-bg);box-shadow:inset 0 -1.5px 0 var(--dense)}
+.snippet .span{background:var(--hit-bg);box-shadow:inset 0 -1.5px 0 var(--hit);border-radius:2px;padding:0 2px;font-weight:600}
+
+.scorecol{flex:0 0 148px}
+.scorenum{
+  font-family:var(--disp);font-size:15px;font-weight:700;letter-spacing:-.02em;
+  text-align:right;font-variant-numeric:tabular-nums;
+}
+.decomp{display:flex;height:7px;border-radius:4px;overflow:hidden;margin-top:5px;background:#EDF0F3}
+.decomp i{height:100%;display:block}
+.decomp .s{background:var(--sparse)}
+.decomp .d{background:var(--dense)}
+.decomp .c{background:var(--ce)}
+.declabel{
+  display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;
+  color:var(--ink4);margin-top:3px;
+}
+
+.why{display:none;border-top:1px solid var(--line);background:var(--sunk);padding:12px 14px 13px}
+.hit.open .why{display:block}
+.whygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px}
+.whycard{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:9px 11px}
+.whycard .wk{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink4);font-weight:600;margin-bottom:5px;
+}
+.whycard .wv{font-family:var(--mono);font-size:11.5px;line-height:1.7;color:var(--ink2)}
+.whycard .wv .num{color:var(--ink);font-weight:600}
+.termchips{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.tchip{
+  font-family:var(--mono);font-size:10px;border-radius:4px;padding:1px 6px;
+  border:1px solid var(--line2);color:var(--ink3);
+}
+.tchip.match{background:var(--sparse-bg);border-color:#E8D3A8;color:#8A5806}
+.tchip.concept{background:var(--dense-bg);border-color:#BCDDE0;color:#0A5C64}
+.tchip.miss{opacity:.5;text-decoration:line-through}
+.fulltext{
+  margin-top:11px;font-size:12.5px;line-height:1.65;color:var(--ink2);
+  background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:11px 13px;
+  max-height:190px;overflow-y:auto;
+}
+
+.emptystate{
+  background:var(--panel);border:1px dashed var(--line2);border-radius:var(--r);
+  padding:34px 26px;text-align:center;
+}
+.emptystate h3{font-family:var(--disp);font-size:15px;margin:0 0 5px}
+.emptystate p{font-size:13px;color:var(--ink3);margin:0;max-width:46ch;margin-inline:auto;line-height:1.6}
+
+/* ─────────── gauges ─────────── */
+.gauges{
+  width:var(--gauge);flex:0 0 var(--gauge);background:var(--panel);
+  border-left:1px solid var(--line2);display:flex;flex-direction:column;min-height:0;
+}
+.gtabs{display:flex;border-bottom:1px solid var(--line);flex:0 0 auto}
+.gtab{
+  flex:1;background:none;border:0;padding:11px 6px;font-size:11.5px;font-weight:600;
+  color:var(--ink3);border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.gtab:hover{color:var(--ink2)}
+.gtab.on{color:var(--fused);border-bottom-color:var(--fused)}
+.gscroll{flex:1 1 auto;overflow-y:auto;padding:14px 15px 40px}
+.gscroll::-webkit-scrollbar{width:9px}
+.gscroll::-webkit-scrollbar-thumb{background:#CBD2DA;border-radius:9px;border:2.5px solid var(--panel)}
+.gpane{display:none}
+.gpane.show{display:block}
+
+.metricgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.metric{
+  background:var(--sunk);border:1px solid var(--line);border-radius:8px;padding:9px 11px;
+}
+.metric .mk{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink4);font-weight:600;display:flex;align-items:center;gap:4px;
+}
+.metric .mv{
+  font-family:var(--disp);font-size:23px;font-weight:800;letter-spacing:-.035em;
+  line-height:1.15;margin-top:2px;font-variant-numeric:tabular-nums;
+}
+.metric .md{font-family:var(--mono);font-size:10px;font-weight:600;margin-top:1px}
+.metric .md.up{color:var(--hit)}
+.metric .md.down{color:var(--miss)}
+.metric .md.flat{color:var(--ink4)}
+.metric .track{height:3px;background:#DDE2E8;border-radius:2px;margin-top:6px;overflow:hidden}
+.metric .track i{display:block;height:100%;background:var(--fused);width:0;transition:width .35s}
+
+.readout{
+  background:var(--ink);color:#fff;border-radius:8px;padding:13px 15px;margin-bottom:14px;
+}
+.readout .rk{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:#8E9AA6;font-weight:600;
+}
+.readout .rv{font-family:var(--disp);font-size:19px;font-weight:700;letter-spacing:-.025em;margin-top:3px}
+.readout .rv.good{color:#5FD79E}
+.readout .rv.bad{color:#FF9086}
+.readout .rd{font-size:11.5px;color:#AEB8C2;margin-top:5px;line-height:1.5}
+
+.subhead{
+  font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink4);font-weight:600;margin:16px 0 9px;
+  display:flex;align-items:center;gap:8px;
+}
+.subhead:after{content:"";flex:1;height:1px;background:var(--line)}
+.subhead:first-child{margin-top:0}
+
+.mathblock{
+  background:var(--sunk);border:1px solid var(--line);border-radius:8px;
+  padding:11px 12px;font-family:var(--mono);font-size:11px;line-height:1.85;color:var(--ink2);
+  overflow-x:auto;
+}
+.mathblock .lbl{color:var(--ink4)}
+.mathblock .val{color:var(--fused);font-weight:600}
+.mathblock .g{color:var(--hit);font-weight:600}
+.mathblock .b{color:var(--miss);font-weight:600}
+.mathblock hr{border:0;border-top:1px dashed var(--line2);margin:7px 0}
+
+.budget{
+  border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--sunk);
+}
+.budgetbar{height:26px;display:flex;background:#E3E7EC;position:relative}
+.budgetbar i{height:100%;display:block;border-right:1px solid rgba(255,255,255,.75)}
+.budgetbar i.in{background:var(--fused)}
+.budgetbar i.in.gold{background:var(--hit)}
+.budgetbar i.over{background:#E1E5EA}
+.budgetbar .capline{
+  position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--miss);
+}
+.budgetmeta{
+  display:flex;justify-content:space-between;padding:7px 10px;
+  font-family:var(--mono);font-size:10px;color:var(--ink3);
+}
+.budgetmeta b{color:var(--ink);font-weight:600}
+
+.ctxlist{margin-top:9px;display:flex;flex-direction:column;gap:4px}
+.ctxrow{
+  display:flex;align-items:center;gap:8px;padding:6px 9px;border-radius:6px;
+  background:var(--sunk);border:1px solid var(--line);font-size:11.5px;
+}
+.ctxrow.dropped{opacity:.45;border-style:dashed}
+.ctxrow .cn{font-family:var(--mono);font-size:10px;color:var(--ink4);flex:0 0 16px}
+.ctxrow .ct{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink2)}
+.ctxrow .cz{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.ctxrow .dot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+
+.logline{
+  display:flex;gap:9px;padding:7px 0;border-top:1px solid var(--line);font-size:11.5px;
+}
+.logline:first-child{border-top:0}
+.logline .lt{font-family:var(--mono);font-size:9.5px;color:var(--ink4);flex:0 0 46px;padding-top:1px}
+.logline .lb{flex:1;color:var(--ink2);line-height:1.5}
+.logline .lb b{color:var(--ink);font-weight:600}
+.logline .delta{font-family:var(--mono);font-size:10.5px;font-weight:600}
+.logline .delta.up{color:var(--hit)}
+.logline .delta.down{color:var(--miss)}
+
+.tip{
+  font-size:11.5px;color:var(--ink3);line-height:1.55;
+  border-left:2px solid var(--line2);padding-left:10px;margin-top:12px;
+}
+.tip b{color:var(--ink2);font-weight:600}
+
+.hoverpop{
+  position:fixed;z-index:60;background:var(--ink);color:#fff;border-radius:7px;
+  padding:8px 11px;font-size:11.5px;max-width:280px;pointer-events:none;
+  box-shadow:0 8px 26px rgba(15,21,25,.28);display:none;line-height:1.5;
+}
+.hoverpop.show{display:block}
+.hoverpop .hp{font-family:var(--mono);font-size:9.5px;color:#8E9AA6;letter-spacing:.1em;text-transform:uppercase}
+.hoverpop .hb{margin-top:3px}
+
+@media (max-width:1340px){
+  :root{--gauge:300px;--deck:290px}
+}
+@media (max-width:1080px){
+  body{overflow:auto;height:auto}
+  .shell{flex-direction:column}
+  .deck,.gauges{width:100%;flex:0 0 auto;border:0;border-bottom:1px solid var(--line2)}
+  .gauges{border-top:1px solid var(--line2)}
+  .deckscroll,.gscroll{max-height:none;overflow:visible}
+  .results{overflow:visible}
+  .main{min-height:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+button:focus-visible,input:focus-visible{outline:2px solid var(--fused);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="mark">
+    <div class="glyph"><i></i><i></i><i></i></div>
+    <div>
+      <div class="eyebrow">AI engineering lab</div>
+      <h1>Retrieval Lab</h1>
+    </div>
+  </div>
+  <div class="corpusbar">
+    <div class="cstat"><div class="k">Documents</div><div class="v" id="statDocs">—</div></div>
+    <div class="cstat"><div class="k">Chunks</div><div class="v" id="statChunks">—</div></div>
+    <div class="cstat"><div class="k">Vocabulary</div><div class="v" id="statVocab">—</div></div>
+    <div class="cstat"><div class="k">Avg chunk</div><div class="v" id="statAvg">—</div></div>
+  </div>
+  <div class="mastright">
+    <span class="kbd">/ search · 1–9 preset query</span>
+    <button class="ghost" id="pinBtn">Pin as baseline</button>
+    <button class="ghost" id="resetBtn">Reset</button>
+  </div>
+</header>
+
+<div class="shell">
+
+  <!-- ─────────── CONTROL DECK ─────────── -->
+  <aside class="deck">
+    <div class="deckscroll">
+
+      <div class="presetwrap">
+        <div class="grouplabel">Start from a known config</div>
+        <div class="presets" id="presets"></div>
+      </div>
+
+      <section class="grp open" data-grp="chunk">
+        <button class="grphead"><span class="gn">01</span><span class="gt">Corpus &amp; chunking</span><span class="gx">›</span></button>
+        <div class="grpbody">
+          <div class="ctl">
+            <div class="lab"><span>Strategy</span></div>
+            <div class="seg" id="segStrategy"></div>
+            <div class="note" id="strategyNote"></div>
+          </div>
+          <div class="ctl" id="ctlSize">
+            <div class="lab"><span>Target chunk size</span><b id="valSize">450</b></div>
+            <input type="range" id="rngSize" min="120" max="1400" step="10" value="450">
+          </div>
+          <div class="ctl" id="ctlOverlap">
+            <div class="lab"><span>Overlap</span><b id="valOverlap">15%</b></div>
+            <input type="range" id="rngOverlap" min="0" max="40" step="1" value="15">
+            <div class="note">Overlap protects answers that straddle a boundary. It also duplicates tokens you pay for twice.</div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Keep the heading in each chunk</span></div>
+            <div class="switchrow">
+              <button class="sw on" id="swHeading"><i></i></button>
+              <div class="st"><div class="n">Prefix section title</div><div class="d">Costs ~8 tokens. Usually the strongest single retrieval signal in a chunk.</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grp open" data-grp="filter">
+        <button class="grphead"><span class="gn">02</span><span class="gt">Pre-filter</span><span class="gx">›</span></button>
+        <div class="grpbody">
+          <div class="ctl">
+            <div class="lab"><span>Document type</span></div>
+            <div class="seg" id="segType"></div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Owning team</span></div>
+            <div class="seg" id="segTeam"></div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Updated on or after</span><b id="valYear">2024</b></div>
+            <input type="range" id="rngYear" min="2022" max="2026" step="1" value="2024">
+            <div class="note" id="filterNote">Filtering runs before the vector maths, so it shrinks the search space rather than the result list.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grp open" data-grp="retrieve">
+        <button class="grphead"><span class="gn">03</span><span class="gt">Retrieval</span><span class="gx">›</span></button>
+        <div class="grpbody">
+          <div class="ctl">
+            <div class="lab"><span>Rewrite the query first</span></div>
+            <div class="switchrow">
+              <button class="sw" id="swRewrite"><i></i></button>
+              <div class="st"><div class="n">Expand terms and resolve pronouns</div><div class="d">Adds the canonical word for every concept the query touches.</div></div>
+            </div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Signal mix</span><b id="valAlpha">50 / 50</b></div>
+            <div class="mixbar"><i class="s" id="mixS" style="width:50%"></i><i class="d" id="mixD" style="width:50%"></i></div>
+            <div class="mixlegend"><span class="ls">BM25 <b id="lblS">50%</b></span><span class="ld"><b id="lblD">50%</b> vectors</span></div>
+            <input type="range" id="rngAlpha" min="0" max="100" step="5" value="50">
+            <div class="note">All the way left is keyword-only. All the way right is vector-only. Neither end wins on this corpus.</div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Fusion</span></div>
+            <div class="seg" id="segFusion"></div>
+            <div class="note" id="fusionNote"></div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Candidate pool</span><b id="valPool">24</b></div>
+            <input type="range" id="rngPool" min="4" max="60" step="1" value="24">
+            <div class="note">How wide the first pass reaches. Recall is won here; it can never be recovered later.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grp open" data-grp="rank">
+        <button class="grphead"><span class="gn">04</span><span class="gt">Rerank &amp; diversity</span><span class="gx">›</span></button>
+        <div class="grpbody">
+          <div class="switchrow">
+            <button class="sw" id="swRerank"><i></i></button>
+            <div class="st"><div class="n">Cross-encoder rerank</div><div class="d">Scores query and chunk together: term coverage, proximity, exact phrases.</div></div>
+          </div>
+          <div class="switchrow">
+            <button class="sw" id="swMMR"><i></i></button>
+            <div class="st"><div class="n">MMR diversity</div><div class="d">Penalises a chunk for looking like one already selected.</div></div>
+          </div>
+          <div class="ctl" style="margin-top:11px">
+            <div class="lab"><span>MMR λ (relevance vs variety)</span><b id="valLambda">0.70</b></div>
+            <input type="range" id="rngLambda" min="0" max="100" step="5" value="70" disabled>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Score floor</span><b id="valFloor">0.00</b></div>
+            <input type="range" id="rngFloor" min="0" max="80" step="1" value="0">
+            <div class="note">Drop anything below the floor rather than padding the context to k.</div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Chunks sent to the model (k)</span><b id="valK">5</b></div>
+            <input type="range" id="rngK" min="1" max="20" step="1" value="5">
+          </div>
+        </div>
+      </section>
+
+      <section class="grp open" data-grp="budget">
+        <button class="grphead"><span class="gn">05</span><span class="gt">Context budget</span><span class="gx">›</span></button>
+        <div class="grpbody">
+          <div class="ctl">
+            <div class="lab"><span>Token ceiling for context</span><b id="valBudget">1600</b></div>
+            <input type="range" id="rngBudget" min="200" max="6000" step="50" value="1600">
+            <div class="note">Anything past the ceiling is cut, highest rank first. Watch a gold chunk fall off the end.</div>
+          </div>
+          <div class="ctl">
+            <div class="lab"><span>Input price</span><b id="valPrice">$3.00 / M</b></div>
+            <input type="range" id="rngPrice" min="25" max="1500" step="25" value="300">
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </aside>
+
+  <!-- ─────────── MAIN ─────────── -->
+  <main class="main">
+
+    <div class="querybar">
+      <div class="qrow">
+        <div class="qfield">
+          <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4 14 14"/>
+          </svg>
+          <input id="qInput" type="text" placeholder="Ask the corpus something — or pick a labelled query below" autocomplete="off" spellcheck="false">
+        </div>
+        <button class="runbtn" id="goBtn">Retrieve</button>
+      </div>
+      <div class="goldrow" id="goldRow"><span class="gl">Labelled queries</span></div>
+      <div class="rewrite" id="rewriteBox">
+        <span class="rl">Rewritten</span><span class="rt" id="rewriteText"></span>
+      </div>
+    </div>
+
+    <div class="strip">
+      <div class="striphead">
+        <span class="sh">Index</span>
+        <span class="sn" id="stripNote">—</span>
+        <div class="striplegend">
+          <span class="sl"><span class="swx" style="background:#E3E7EC"></span>indexed</span>
+          <span class="sl"><span class="swx" style="background:#DDE2E8;opacity:.7"></span>filtered out</span>
+          <span class="sl"><span class="swx" style="background:#C9C0FA"></span>candidate</span>
+          <span class="sl"><span class="swx" style="background:var(--hit)"></span>sent &amp; relevant</span>
+          <span class="sl"><span class="swx" style="background:var(--miss)"></span>sent &amp; noise</span>
+        </div>
+      </div>
+      <div class="stripcells" id="stripCells"></div>
+    </div>
+
+    <div class="resultwrap">
+      <div class="results" id="results"></div>
+    </div>
+  </main>
+
+  <!-- ─────────── GAUGES ─────────── -->
+  <aside class="gauges">
+    <div class="gtabs">
+      <button class="gtab on" data-pane="score">Scoreboard</button>
+      <button class="gtab" data-pane="math">Metric maths</button>
+      <button class="gtab" data-pane="ctx">Context</button>
+      <button class="gtab" data-pane="log">Changes</button>
+    </div>
+    <div class="gscroll">
+      <div class="gpane show" id="paneScore"></div>
+      <div class="gpane" id="paneMath"></div>
+      <div class="gpane" id="paneCtx"></div>
+      <div class="gpane" id="paneLog"></div>
+    </div>
+  </aside>
+
+</div>
+
+<div class="hoverpop" id="pop"><div class="hp" id="popH"></div><div class="hb" id="popB"></div></div>
+
+<script>
+/* ================================================================
+   ENGINE START
+   Everything below this marker is pure data + maths. No DOM.
+   ================================================================ */
+
+/* ---------------------------------------------------------------
+   1 · CORPUS
+   A small B2B SaaS knowledge base. Fourteen documents, each split
+   into titled sections. Section boundaries are what chunkers work
+   against, and what the gold labels point at.
+   --------------------------------------------------------------- */
+const CORPUS = [
+  {
+    id: "refunds",
+    title: "Refund and Cancellation Policy",
+    type: "policy", team: "finance", updated: 2026,
+    sections: [
+      { h: "4.1 Standard and Pro plans",
+        t: "Customers on Standard and Pro plans may request a full refund within 30 days of the original charge. The window is measured from the invoice date, not the date the subscription was activated. Refunds are returned to the original payment method within ten business days. A plan that has been downgraded mid-cycle is refunded on the pro-rated remainder only, and the credit appears on the following invoice rather than as a cash return." },
+      { h: "4.2 Enterprise agreements",
+        t: "Enterprise agreements carry a longer window. An enterprise customer may request a refund within 45 days of the invoice date, and the request must be countersigned by the named account owner on the contract. Where the agreement includes a committed annual spend, refunds are issued as account credit by default; a cash refund requires finance approval and is processed in the following billing cycle." },
+      { h: "4.3 Exceptions and stacking",
+        t: "A refund and a service credit may not be claimed for the same billing period. Where an outage has already produced service credits under the availability commitment, those credits are deducted from any refund granted for the same month. Requests arising from a billing error are handled outside this policy and are not subject to the 30 or 45 day windows. Chargebacks initiated without a prior support request suspend the account pending review." },
+      { h: "4.4 How to request one",
+        t: "Refund requests are raised through the billing portal or by replying to any invoice email. The request must name the invoice number and the reason code. Finance acknowledges within one business day and issues a decision within five. Escalations go to the assigned customer success manager, who can approve exceptions up to the value of one monthly invoice without further sign-off." }
+    ]
+  },
+  {
+    id: "sla",
+    title: "Availability Commitment and Service Credits",
+    type: "policy", team: "legal", updated: 2026,
+    sections: [
+      { h: "Monthly uptime commitment",
+        t: "Northwind Cloud commits to a monthly uptime percentage of 99.9 percent for the API and the web console, measured across a calendar month. Uptime is calculated as total minutes in the month minus unavailable minutes, divided by total minutes. A minute is counted as unavailable when more than five percent of requests to a region return a server error, sustained for the full minute." },
+      { h: "Service credit schedule",
+        t: "If monthly uptime falls below the commitment, the customer may claim service credits. Uptime at or above 99.0 percent but below 99.9 percent earns a credit of 10% of the monthly fee. Uptime at or above 95.0 percent but below 99.0 percent earns 25% of the monthly fee. Below 95.0 percent the credit is 50% of the monthly fee. Credits are applied against future invoices and are the sole remedy for missed availability." },
+      { h: "Claiming a credit",
+        t: "A credit claim must be submitted within 30 days of the end of the affected month and must include the dates and times of unavailability along with request logs or trace identifiers. Claims are validated against internal availability records. A claim that cannot be corroborated is declined with the measurement data attached to the response." },
+      { h: "Exclusions",
+        t: "The commitment excludes downtime caused by scheduled maintenance announced at least 72 hours ahead, by factors outside reasonable control, by the customer's own equipment or software, or by suspension of the account for non-payment. Beta and preview features carry no availability commitment of any kind and are excluded from credit calculations." }
+    ]
+  },
+  {
+    id: "retention",
+    title: "Data Retention, Deletion and Residency",
+    type: "policy", team: "security", updated: 2026,
+    sections: [
+      { h: "Retention windows",
+        t: "Operational logs are retained for 90 days in hot storage and a further 275 days in cold archive. Audit records covering authentication and permission changes are retained for seven years to satisfy financial reporting requirements. Customer content is retained for the life of the subscription plus the deletion window described below." },
+      { h: "Deletion requests",
+        t: "When a customer deletes a workspace, content is placed in a recoverable state for 30 days before permanent erasure begins. During that period the workspace can be restored by an administrator without a support ticket. After the recovery period, erasure of primary storage completes within 7 days and propagation to backups completes within 35 days. A deletion certificate is available on request once propagation finishes." },
+      { h: "Region pinning",
+        t: "Customer content can be pinned to a single processing region so that it is neither stored nor processed elsewhere. Available regions are eu-central-1, us-east-1, ap-south-1 and ap-northeast-1. Region pinning is set at workspace creation and cannot be changed afterwards without a migration engagement. Telemetry that contains no customer content is aggregated globally regardless of the pinned region." },
+      { h: "Backups",
+        t: "Backups are taken continuously with point-in-time recovery to any second within the previous 35 days. Backup data inherits the region pin of the source workspace. Restores are performed by the platform team on request and are tested quarterly against a randomly selected workspace as part of the disaster recovery drill." }
+    ]
+  },
+  {
+    id: "auth",
+    title: "API Authentication",
+    type: "docs", team: "engineering", updated: 2026,
+    sections: [
+      { h: "API keys",
+        t: "Every request carries an API key in the Authorization header using the Bearer scheme. Keys are scoped to a single workspace and to an explicit list of permissions. A key is shown once at creation and stored only as a hash, so a lost key must be replaced rather than recovered. Keys created before May 2025 carry workspace-wide permissions and are deprecated." },
+      { h: "OAuth for user-facing apps",
+        t: "Applications acting on behalf of a user should use the OAuth 2.0 authorization code flow with PKCE rather than a static key. Access tokens live for one hour and refresh tokens for 30 days of inactivity. The consent screen lists the exact scopes requested. Refresh tokens are rotated on every use and the previous token is revoked after a short grace period." },
+      { h: "Rotating a key without downtime",
+        t: "Rotation is designed to avoid any interruption. Create the replacement key first, then deploy it, then revoke the old one. Both keys stay valid during the overlap window, which defaults to 24 hours and can be extended to 7 days from the console. The last-used timestamp on the old key tells you when it is safe to revoke. Revocation takes effect within 60 seconds across all regions." },
+      { h: "Common authentication errors",
+        t: "A 401 means the key is missing, malformed or revoked. A 403 means the key is valid but lacks the scope for the operation, and the response names the missing scope. Clock skew beyond five minutes on signed requests also produces a 401, which is a frequent cause of failures in containers with no time synchronisation." }
+    ]
+  },
+  {
+    id: "ratelimits",
+    title: "Rate Limits and Throttling",
+    type: "docs", team: "engineering", updated: 2026,
+    sections: [
+      { h: "Limits by plan",
+        t: "Standard workspaces are limited to 60 requests per second sustained. Pro workspaces are limited to 300 requests per second, and Enterprise limits are set contractually with a default of 1,000 requests per second. Limits are enforced per workspace, not per key, so splitting traffic across several keys does not raise the ceiling." },
+      { h: "Burst allowance",
+        t: "A token bucket allows short bursts above the sustained rate. The bucket holds ten seconds of sustained capacity and refills continuously. A client that stays under the sustained rate on average will rarely see throttling even with uneven traffic. Bulk import endpoints use a separate, smaller bucket that is not shared with interactive traffic." },
+      { h: "Handling a 429",
+        t: "When the limit is exceeded the API returns HTTP 429 with a Retry-After header giving the number of seconds to wait. Clients must respect that header rather than retrying immediately; a tight retry loop against a throttled endpoint will extend the throttling window. Recommended practice is exponential backoff with jitter, capped at 60 seconds, with a circuit breaker after five consecutive rejections." },
+      { h: "Rate limit headers",
+        t: "Every response carries X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset. Monitoring the remaining count lets a client slow down before it is rejected rather than after. These headers are present on successful responses too, which makes them suitable for a steady-state dashboard rather than only an error path." }
+    ]
+  },
+  {
+    id: "tiers",
+    title: "Support Tiers and Response Targets",
+    type: "policy", team: "support", updated: 2026,
+    sections: [
+      { h: "Severity definitions",
+        t: "Severity 1 covers a complete loss of service or a security incident affecting production. Severity 2 covers a major function unavailable with no workaround. Severity 3 covers a degraded or partially impaired function with a workaround available. Severity 4 covers questions, documentation gaps and cosmetic issues. The customer proposes the severity and support may adjust it with a written reason." },
+      { h: "First response targets",
+        t: "For Enterprise support, the first response target is 15 minutes for severity 1, one hour for severity 2, four hours for severity 3 and one business day for severity 4. Pro support targets one hour, four hours, one business day and two business days respectively. Standard support is next business day for every severity. Targets apply to the first human response, not to resolution." },
+      { h: "Escalation path",
+        t: "A severity 1 issue pages the on-call engineer immediately and opens a bridge within 15 minutes. If the issue is unresolved after two hours, the incident commander notifies the director of engineering. Customers can escalate directly by replying to the ticket with the word escalate, which triggers a review by the duty manager within 30 minutes." },
+      { h: "Coverage hours",
+        t: "Enterprise support operates 24 hours a day, every day, including public holidays. Pro support operates 07:00 to 21:00 in the customer's registered timezone on business days. Standard support operates 09:00 to 17:00 on business days. Severity 1 issues are handled around the clock for Pro and Enterprise regardless of the stated coverage window." }
+    ]
+  },
+  {
+    id: "postmortem",
+    title: "Incident Postmortem — April Console Outage",
+    type: "incident", team: "engineering", updated: 2026,
+    sections: [
+      { h: "Summary",
+        t: "On 14 April the web console and the write path of the API were unavailable or severely degraded for 47 minutes in eu-central-1. Read traffic was unaffected. Roughly 12 percent of monthly active workspaces experienced errors. Service credits were issued automatically to affected accounts without requiring a claim." },
+      { h: "Root cause",
+        t: "A routine deployment reduced the database connection pool size from 200 to 20 through a configuration default that was silently applied when an environment variable was renamed. Under normal load the smaller pool saturated within seconds. Requests queued behind pool acquisition, health checks timed out, and the orchestrator began cycling healthy instances, which deepened the shortage." },
+      { h: "Detection and response",
+        t: "Automated alerting fired on p95 latency four minutes after the deploy. The on-call engineer opened an incident at minute six. The deploy was identified as the trigger at minute 19 by comparing the configuration diff, and a rollback completed at minute 41. Full recovery followed at minute 47 once connection pools refilled and queued work drained." },
+      { h: "Remediation",
+        t: "Connection pool sizing is now asserted in a startup check that refuses to boot outside a permitted range. Renaming an environment variable requires a migration entry that fails the build if the old name is still referenced. Deployment now runs a canary against five percent of traffic for ten minutes with an automatic rollback on p95 regression." }
+    ]
+  },
+  {
+    id: "pricing",
+    title: "Plans and Pricing",
+    type: "docs", team: "finance", updated: 2026,
+    sections: [
+      { h: "Plan tiers",
+        t: "Standard is billed per seat per month with a minimum of five seats. Pro adds single sign-on, audit export and priority support at a higher per-seat rate. Enterprise is quoted annually against a committed volume and includes a named customer success manager, a contractual availability commitment and custom rate limits." },
+      { h: "Seats and proration",
+        t: "Seats added mid-cycle are charged pro-rata from the day they are added and appear on the next invoice. Seats removed mid-cycle release at the end of the current period; no partial credit is issued for a removed seat. Annual plans lock the per-seat rate for the full term even if list pricing changes." },
+      { h: "Usage overage",
+        t: "Storage and API volume beyond the plan allowance is billed monthly in arrears at the published overage rate. A soft threshold notification is sent at 80 percent of allowance and a second at 100 percent. Enterprise agreements may replace overage with a committed-use discount negotiated at renewal." },
+      { h: "Discounts",
+        t: "Annual prepayment carries a discount against the equivalent monthly spend. Non-profit and education pricing is available on application with proof of status. Multi-year commitments are priced case by case and typically include a rate freeze for the full term." }
+    ]
+  },
+  {
+    id: "security",
+    title: "Security Overview",
+    type: "policy", team: "security", updated: 2025,
+    sections: [
+      { h: "Encryption",
+        t: "Data is encrypted in transit with TLS 1.3 and at rest with AES-256. Encryption keys are managed in a hardware security module and rotated annually. Customers on Enterprise plans may supply their own key through the customer-managed key integration, which allows revocation to render stored content unreadable." },
+      { h: "Access control",
+        t: "Internal access to production follows least privilege and requires an approved just-in-time request tied to a ticket. Standing production access is limited to the on-call rotation. All access is logged to an append-only store and reviewed monthly. Multi-factor authentication is enforced for every internal account without exception." },
+      { h: "Testing and assurance",
+        t: "An independent penetration test is commissioned twice a year and the executive summary is available under NDA. Static analysis and dependency scanning run on every pull request. A public vulnerability disclosure programme accepts reports with a 90 day coordinated disclosure window and a published response time target." },
+      { h: "Incident response",
+        t: "Security incidents follow a documented response plan with defined roles for the incident commander, communications lead and scribe. Customers affected by a confirmed breach of their content are notified within 72 hours of confirmation, in line with regulatory obligations, with a factual account and the remediation taken." }
+    ]
+  },
+  {
+    id: "onboarding",
+    title: "Enterprise Onboarding Runbook",
+    type: "runbook", team: "support", updated: 2026,
+    sections: [
+      { h: "Provisioning the workspace",
+        t: "Create the workspace with the region pin agreed in the contract before importing anything, because the pin cannot be changed later. Apply the contractual rate limit override and confirm it with a synthetic load test. Record the workspace identifier on the account record so support can find it without asking the customer." },
+      { h: "Single sign-on setup",
+        t: "Collect the identity provider metadata, configure the SAML connection, then verify with a test user before enabling enforcement. Enabling enforcement before verification locks every administrator out and requires a support-side break-glass reset. Group mapping is configured after the first successful login so that roles resolve correctly." },
+      { h: "Bulk seat import",
+        t: "Seats are imported from a CSV with an email column and an optional role column. Rows with an existing account are skipped rather than failing the import. The import is asynchronous and reports a per-row outcome; a run over five thousand rows is chunked automatically. Invitations are not sent until the import is explicitly released." },
+      { h: "Frequent failures",
+        t: "The three most common onboarding failures are an unverified SAML connection, a rate limit override that was agreed but never applied, and a CSV exported with a byte order mark that breaks the header row. All three are checked in the pre-flight script, which should be run before the customer is handed the workspace." }
+    ]
+  },
+  {
+    id: "release",
+    title: "Release Notes — Q2",
+    type: "release", team: "engineering", updated: 2026,
+    sections: [
+      { h: "New in this quarter",
+        t: "Customer-managed keys are now generally available on Enterprise plans. The audit export supports incremental cursors so large exports resume rather than restart. A new usage dashboard breaks spend down by workspace, key and endpoint, which makes an unexpected invoice traceable to a specific integration." },
+      { h: "Deprecations",
+        t: "Workspace-wide API keys created before May 2025 are deprecated and stop working at the end of the year. The legacy CSV import endpoint is deprecated in favour of the asynchronous import job. Both deprecations emit a warning header on every response so client teams can find affected code paths from their own logs." },
+      { h: "Breaking changes",
+        t: "The error envelope now always includes a machine-readable code alongside the human message; clients that parsed the message string must move to the code. Pagination cursors are opaque and must not be constructed by clients. The previous offset parameter is removed rather than deprecated because it produced incorrect results under concurrent writes." },
+      { h: "Performance",
+        t: "Median write latency improved by 22 percent after the connection pool sizing work that followed the April incident. Cold start on the export worker dropped from 4.2 seconds to 900 milliseconds. The console first paint improved through code splitting, which mainly benefits customers on high-latency links." }
+    ]
+  },
+  {
+    id: "dpa",
+    title: "Data Processing and Subprocessors",
+    type: "policy", team: "legal", updated: 2025,
+    sections: [
+      { h: "Roles",
+        t: "For customer content, the customer is the controller and Northwind Cloud is the processor. For account and billing records, Northwind Cloud is a controller in its own right. The data processing addendum forms part of the master agreement and does not need to be signed separately unless the customer requires their own template." },
+      { h: "Subprocessors",
+        t: "The current subprocessor list is published and covers infrastructure hosting, email delivery, error tracking and payment processing. Customers may subscribe to change notifications and have 30 days to object to a new subprocessor on reasonable grounds. An unresolved objection allows the customer to terminate the affected service without penalty." },
+      { h: "International transfers",
+        t: "Transfers out of the European Economic Area rely on the standard contractual clauses together with a transfer impact assessment that is refreshed annually. Customers who pin their workspace to eu-central-1 have no routine transfer of content, though metadata used for billing is processed centrally." },
+      { h: "Data subject requests",
+        t: "Requests from data subjects are forwarded to the customer as controller rather than answered directly, unless the request concerns account records where Northwind Cloud is the controller. Tooling is provided to export or erase an individual's content within a workspace so that the customer can respond inside the statutory deadline." }
+    ]
+  },
+  {
+    id: "ticket",
+    title: "Ticket 8891 — Refund request after latency incident",
+    type: "ticket", team: "support", updated: 2026,
+    sections: [
+      { h: "Customer message",
+        t: "The customer writes that write latency was unusable for most of the afternoon of 14 April and asks for their money back for the month. They mention they are on an annual enterprise agreement and that their invoice was issued on 2 April. They also ask whether they can claim the availability credit as well as the refund." },
+      { h: "Agent findings",
+        t: "The agent confirms the workspace is in eu-central-1 and was affected by the April console outage. Availability for the month was 99.4 percent, which sits in the first credit band. Service credits of 10% of the monthly fee were already applied automatically on 16 April. The invoice date places the refund request inside the enterprise window." },
+      { h: "Resolution",
+        t: "The agent explains that a refund and a service credit cannot both be claimed for the same billing period, and that the credit already issued would be deducted from any refund. The customer accepts the credit and withdraws the refund request. The ticket is closed with the policy section quoted in full and a link to the postmortem." }
+    ]
+  },
+  {
+    id: "billing",
+    title: "Billing FAQ",
+    type: "faq", team: "finance", updated: 2026,
+    sections: [
+      { h: "When is my invoice issued",
+        t: "Monthly plans invoice on the anniversary of the subscription start. Annual plans invoice on the anniversary of the contract date. The invoice covers the period ahead for subscription charges and the period behind for usage overage, which is why the first invoice on a new plan often looks larger than expected." },
+      { h: "A payment failed, what happens",
+        t: "A failed payment is retried three times over ten days with an email each time. After the third failure the workspace moves to a restricted state where reads continue but writes are blocked. Full suspension follows 14 days later. Restoring a payment method reinstates the workspace immediately with no data loss." },
+      { h: "Taxes and currency",
+        t: "Prices exclude tax. Tax is applied at the rate for the billing address on the account, and a valid registration number moves eligible customers to a reverse charge. Invoices are issued in the currency chosen at signup, which cannot be changed mid-term because it is fixed in the contract." },
+      { h: "Who can see invoices",
+        t: "Only members with the billing role can view or download invoices. Adding the billing role to a member does not grant any other permission. Invoices can also be sent to a finance mailbox that is not a workspace member, which is the recommended arrangement for accounts payable teams." }
+    ]
+  }
+];
+
+/* ---------------------------------------------------------------
+   2 · CONCEPT LEXICON
+   The dense side is not a hashed bag of words pretending to be
+   semantic. Terms map into named concept dimensions, so a query
+   that says "money back" lands in the same place as a document
+   that says "refund". Unmapped terms fall into hash dimensions,
+   which is what keeps rare literals like ap-south-1 discriminating.
+   --------------------------------------------------------------- */
+const CONCEPTS = [
+  { id: "refund",     canon: "refund",       terms: ["refund", "refunded", "refunds", "money back", "reimburse", "reimbursement", "cash back", "return my money", "chargeback", "repay"] },
+  { id: "credit",     canon: "credit",       terms: ["credit", "credits", "service credit", "rebate", "compensation", "goodwill"] },
+  { id: "uptime",     canon: "uptime",       terms: ["uptime", "availability", "downtime", "outage", "unavailable", "sla", "reliability", "up time"] },
+  { id: "window",     canon: "window",       terms: ["window", "deadline", "period", "timeframe", "within", "days", "how long", "duration", "cutoff"] },
+  { id: "enterprise", canon: "enterprise",   terms: ["enterprise", "annual", "contract", "committed", "corporate", "contractual"] },
+  { id: "plan",       canon: "plan",         terms: ["plan", "plans", "tier", "subscription", "standard", "pro", "package"] },
+  { id: "billing",    canon: "billing",      terms: ["billing", "invoice", "invoiced", "charge", "charged", "payment", "pay", "proration", "prorated", "bill"] },
+  { id: "price",      canon: "pricing",      terms: ["price", "pricing", "cost", "rate", "fee", "spend", "seat", "seats", "discount", "overage"] },
+  { id: "retention",  canon: "retention",    terms: ["retention", "retain", "retained", "keep", "kept", "store", "stored", "archive", "how long do you keep"] },
+  { id: "deletion",   canon: "deletion",     terms: ["delete", "deleted", "deletion", "erase", "erasure", "remove", "removed", "purge", "wipe"] },
+  { id: "region",     canon: "region",       terms: ["region", "regions", "residency", "pinned", "pinning", "locality", "geography", "located", "where is data"] },
+  { id: "backup",     canon: "backup",       terms: ["backup", "backups", "restore", "recovery", "point in time", "snapshot"] },
+  { id: "auth",       canon: "authentication", terms: ["auth", "authentication", "authorization", "api key", "apikey", "key", "keys", "token", "oauth", "bearer", "credential", "credentials"] },
+  { id: "rotate",     canon: "rotation",     terms: ["rotate", "rotation", "rotating", "replace", "roll", "cycling", "swap", "change the key"] },
+  { id: "ratelimit",  canon: "throttling",   terms: ["rate limit", "ratelimit", "throttle", "throttled", "throttling", "429", "too many requests", "quota", "limit", "limits"] },
+  { id: "retry",      canon: "retry",        terms: ["retry", "retries", "backoff", "retry-after", "jitter", "circuit breaker"] },
+  { id: "latency",    canon: "latency",      terms: ["latency", "slow", "slowness", "p95", "response time", "performance", "timeout", "timed out", "lag"] },
+  { id: "incident",   canon: "incident",     terms: ["incident", "postmortem", "post mortem", "root cause", "outage", "failure", "went down", "broke"] },
+  { id: "severity",   canon: "severity",     terms: ["severity", "sev", "sev1", "priority", "critical", "urgent", "p1"] },
+  { id: "response",   canon: "response",     terms: ["response", "respond", "reply", "first response", "target", "sla target", "answer time", "turnaround"] },
+  { id: "support",    canon: "support",      terms: ["support", "helpdesk", "ticket", "escalate", "escalation", "agent", "case"] },
+  { id: "security",   canon: "security",     terms: ["security", "secure", "encryption", "encrypted", "tls", "aes", "vulnerability", "penetration", "breach"] },
+  { id: "access",     canon: "access",       terms: ["access", "permission", "permissions", "scope", "scopes", "role", "roles", "rbac", "least privilege", "mfa"] },
+  { id: "sso",        canon: "sso",          terms: ["sso", "single sign on", "saml", "identity provider", "idp", "federation"] },
+  { id: "onboard",    canon: "onboarding",   terms: ["onboarding", "onboard", "provision", "provisioning", "setup", "set up", "import", "migration"] },
+  { id: "compliance", canon: "compliance",   terms: ["gdpr", "dpa", "processor", "controller", "subprocessor", "compliance", "regulatory", "statutory", "data subject"] },
+  { id: "deprecate",  canon: "deprecation",  terms: ["deprecated", "deprecation", "breaking change", "removed", "legacy", "sunset", "end of life"] },
+  { id: "notify",     canon: "notification", terms: ["notify", "notification", "alert", "alerting", "warned", "email", "announce"] }
+];
+
+/* ---------------------------------------------------------------
+   3 · GOLD SET
+   Ten labelled queries. Each gold entry points at a section, with
+   a graded relevance and, where it matters, the exact span that
+   answers the question. A chunk that comes from the right section
+   but was cut before the span only earns partial credit — which is
+   how chunk size shows up in the numbers.
+   --------------------------------------------------------------- */
+const GOLD = [
+  {
+    q: "How long do enterprise customers have to request a refund?",
+    note: "Straight lookup. Both signals should find it.",
+    gold: [
+      { doc: "refunds", sec: 1, grade: 3, span: "45 days" },
+      { doc: "refunds", sec: 0, grade: 1 },
+      { doc: "ticket",  sec: 1, grade: 1 }
+    ]
+  },
+  {
+    q: "what is the money back window for standard plans",
+    note: "No document contains the phrase 'money back'. Keyword search alone cannot see the answer.",
+    gold: [
+      { doc: "refunds", sec: 0, grade: 3, span: "30 days" },
+      { doc: "refunds", sec: 1, grade: 1 }
+    ]
+  },
+  {
+    q: "how many service credits do we owe if uptime is 99.4 percent",
+    note: "The answer is a band in a table-like paragraph. Chunk boundaries decide whether the band survives.",
+    gold: [
+      { doc: "sla",    sec: 1, grade: 3, span: "10% of the monthly fee" },
+      { doc: "sla",    sec: 0, grade: 1 },
+      { doc: "ticket", sec: 1, grade: 1 }
+    ]
+  },
+  {
+    q: "which regions can customer data be pinned to",
+    note: "Rare literals. BM25 is strong here and vectors add little.",
+    gold: [
+      { doc: "retention", sec: 2, grade: 3, span: "ap-south-1" },
+      { doc: "retention", sec: 3, grade: 1 },
+      { doc: "dpa",       sec: 2, grade: 1 }
+    ]
+  },
+  {
+    q: "what should a client do when it gets a 429",
+    note: "The answer names a header. Watch whether the header survives the split.",
+    gold: [
+      { doc: "ratelimits", sec: 2, grade: 3, span: "Retry-After" },
+      { doc: "ratelimits", sec: 3, grade: 1 },
+      { doc: "ratelimits", sec: 1, grade: 1 }
+    ]
+  },
+  {
+    q: "how do I rotate an API key without downtime",
+    note: "'downtime' pulls the availability policy in as a decoy. A reranker separates them.",
+    gold: [
+      { doc: "auth", sec: 2, grade: 3, span: "overlap window" },
+      { doc: "auth", sec: 0, grade: 1 }
+    ]
+  },
+  {
+    q: "what caused the April outage",
+    note: "Causal question. The right chunk is one paragraph inside a four-part document.",
+    gold: [
+      { doc: "postmortem", sec: 1, grade: 3, span: "connection pool" },
+      { doc: "postmortem", sec: 0, grade: 1 },
+      { doc: "release",    sec: 3, grade: 1 }
+    ]
+  },
+  {
+    q: "first response target for a severity 1 issue on enterprise support",
+    note: "Numbers for four severities sit in one paragraph. A small chunk size can slice them apart.",
+    gold: [
+      { doc: "tiers", sec: 1, grade: 3, span: "15 minutes" },
+      { doc: "tiers", sec: 0, grade: 1 },
+      { doc: "tiers", sec: 2, grade: 1 }
+    ]
+  },
+  {
+    q: "can we claim a refund and service credits for the same month",
+    note: "Multi-hop. The complete answer lives in two documents, so k of 1 can never be right.",
+    gold: [
+      { doc: "refunds", sec: 2, grade: 3, span: "may not be claimed for the same billing period" },
+      { doc: "ticket",  sec: 2, grade: 2 },
+      { doc: "sla",     sec: 1, grade: 1 }
+    ]
+  },
+  {
+    q: "how long do you keep data after a workspace is deleted",
+    note: "'30 days' also appears in the refund policy. A classic precision trap.",
+    gold: [
+      { doc: "retention", sec: 1, grade: 3, span: "30 days" },
+      { doc: "retention", sec: 0, grade: 1 }
+    ]
+  }
+];
+
+/* ---------------------------------------------------------------
+   4 · TEXT PROCESSING
+   --------------------------------------------------------------- */
+const STOP = new Set(("a an the and or but if then than that this these those of to in on at for with without by from as is are was were be been being do does did doing have has had having i we you they it he she them us our your their my me not no so such can could should would may might must will shall about into over under again further once here there when where why how all any both each few more most other some only own same too very s t just don now").split(" "));
+
+function stem(w) {
+  if (w.length <= 3) return w;
+  if (/\d/.test(w)) return w;
+  const rules = [
+    ["ations", "ate"], ["ization", "ize"], ["iveness", "ive"], ["fulness", "ful"],
+    ["ousness", "ous"], ["ations", "ate"], ["ation", "ate"], ["ities", "ity"],
+    ["ies", "y"], ["sses", "ss"], ["ing", ""], ["edly", ""], ["ed", ""],
+    ["ely", ""], ["ly", ""], ["es", ""], ["s", ""]
+  ];
+  for (const [suf, rep] of rules) {
+    if (w.endsWith(suf) && w.length - suf.length >= 3) return w.slice(0, w.length - suf.length) + rep;
+  }
+  return w;
+}
+
+function rawTokens(text) {
+  return String(text).toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\-.]+/g, " ")
+    .split(/\s+/)
+    .map(t => t.replace(/^[.\-]+|[.\-]+$/g, ""))
+    .filter(t => t.length > 0);
+}
+
+function tokenize(text) {
+  const out = [];
+  for (const t of rawTokens(text)) {
+    if (STOP.has(t)) continue;
+    if (t.length < 2 && !/\d/.test(t)) continue;
+    out.push(stem(t));
+  }
+  return out;
+}
+
+function estTokens(text) { return Math.max(1, Math.round(String(text).length / 4)); }
+
+/* concept index: stemmed unigram -> concept ordinals, plus phrases */
+const CONCEPT_UNI = new Map();
+const CONCEPT_PHRASE = [];
+CONCEPTS.forEach((c, ci) => {
+  for (const term of c.terms) {
+    if (term.includes(" ")) {
+      CONCEPT_PHRASE.push({ ci, toks: tokenize(term) });
+      for (const t of tokenize(term)) {
+        if (!CONCEPT_UNI.has(t)) CONCEPT_UNI.set(t, new Set());
+        CONCEPT_UNI.get(t).add(ci);
+      }
+    } else {
+      const t = stem(term.toLowerCase());
+      if (!CONCEPT_UNI.has(t)) CONCEPT_UNI.set(t, new Set());
+      CONCEPT_UNI.get(t).add(ci);
+    }
+  }
+});
+
+const HASH_DIMS = 56;
+const VEC_DIM = CONCEPTS.length + HASH_DIMS;
+
+function hashDim(t) {
+  let h = 2166136261;
+  for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return Math.abs(h) % HASH_DIMS;
+}
+
+function buildVector(tokens, idf) {
+  const v = new Float64Array(VEC_DIM);
+  for (const t of tokens) {
+    const w = idf.has(t) ? idf.get(t) : 2.2;
+    const cs = CONCEPT_UNI.get(t);
+    if (cs) {
+      for (const ci of cs) v[ci] += w / Math.sqrt(cs.size);
+      v[CONCEPTS.length + hashDim(t)] += w * 0.34;
+    } else {
+      v[CONCEPTS.length + hashDim(t)] += w;
+    }
+  }
+  let n = 0; for (let i = 0; i < VEC_DIM; i++) n += v[i] * v[i];
+  n = Math.sqrt(n) || 1;
+  for (let i = 0; i < VEC_DIM; i++) v[i] /= n;
+  return v;
+}
+
+function cosine(a, b) { let s = 0; for (let i = 0; i < VEC_DIM; i++) s += a[i] * b[i]; return s; }
+
+function conceptsOf(tokens) {
+  const set = new Set();
+  for (const t of tokens) { const cs = CONCEPT_UNI.get(t); if (cs) for (const ci of cs) set.add(ci); }
+  return set;
+}
+
+/* ---------------------------------------------------------------
+   5 · CHUNKERS
+   Each returns chunks carrying provenance back to a section, which
+   is what lets the gold labels grade them.
+   --------------------------------------------------------------- */
+function splitSentences(text) {
+  const parts = String(text).split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
+  return parts.map(s => s.trim()).filter(Boolean);
+}
+
+const STRATEGIES = {
+  fixed: {
+    label: "Fixed",
+    note: "Cuts on a token count and nothing else. Fast, reproducible, and completely blind to where a thought ends.",
+    usesSize: true, usesOverlap: true
+  },
+  recursive: {
+    label: "Recursive",
+    note: "Packs whole sentences up to the target, splitting on the largest boundary that still fits.",
+    usesSize: true, usesOverlap: true
+  },
+  sentence: {
+    label: "Sentence window",
+    note: "One sentence per chunk for the search, with neighbours attached so the model still gets context.",
+    usesSize: false, usesOverlap: false
+  },
+  section: {
+    label: "Structural",
+    note: "One chunk per heading. Retrieved units are always complete and quotable, but often long.",
+    usesSize: false, usesOverlap: false
+  },
+  parent: {
+    label: "Parent document",
+    note: "Small children are searched; the parent section is what actually gets sent to the model.",
+    usesSize: true, usesOverlap: false
+  }
+};
+
+/* Flatten a document into words that each remember which section they
+   came from. A fixed-size splitter walks straight over these and has no
+   idea a heading went past — which is the entire point of the strategy. */
+function docWords(doc, keepHeading) {
+  const words = [];
+  doc.sections.forEach((sec, si) => {
+    const head = keepHeading ? sec.h + " — " : "";
+    (head + sec.t).split(/\s+/).filter(Boolean).forEach(w => words.push({ w, si }));
+  });
+  return words;
+}
+
+function chunkCorpus(cfg) {
+  const chunks = [];
+  let seq = 0;
+
+  const emit = (doc, p, pi, parts) => {
+    chunks.push({
+      idx: seq++,
+      docId: doc.id, docTitle: doc.title, type: doc.type, team: doc.team, updated: doc.updated,
+      secs: p.secs,
+      sec: p.secs[0],
+      secTitle: p.secs.length > 1
+        ? doc.sections[p.secs[0]].h + " + " + (p.secs.length - 1) + " more"
+        : doc.sections[p.secs[0]].h,
+      part: pi, parts,
+      text: p.text,
+      sendText: p.send,
+      tokens: tokenize(p.text),
+      nTokens: estTokens(p.send)
+    });
+  };
+
+  for (const doc of CORPUS) {
+
+    /* Document-level: ignores every heading in its path. */
+    if (cfg.strategy === "fixed") {
+      const words = docWords(doc, cfg.keepHeading);
+      const per = Math.max(14, Math.round(cfg.size * 0.75));
+      const step = Math.max(7, Math.round(per * (1 - cfg.overlap / 100)));
+      const pieces = [];
+      for (let i = 0; i < words.length; i += step) {
+        const slice = words.slice(i, i + per);
+        if (slice.length < 8 && pieces.length) break;
+        const text = slice.map(x => x.w).join(" ");
+        pieces.push({ text, send: text, secs: [...new Set(slice.map(x => x.si))] });
+        if (i + per >= words.length) break;
+      }
+      pieces.forEach((p, pi) => emit(doc, p, pi, pieces.length));
+      continue;
+    }
+
+    /* Everything else treats the heading as a hard boundary. */
+    doc.sections.forEach((sec, si) => {
+      const head = cfg.keepHeading ? sec.h + " — " : "";
+      const pieces = [];
+
+      if (cfg.strategy === "section") {
+        pieces.push({ text: head + sec.t, send: head + sec.t, secs: [si] });
+
+      } else if (cfg.strategy === "sentence") {
+        const sents = splitSentences(sec.t);
+        sents.forEach((s, i) => {
+          const win = sents.slice(Math.max(0, i - 1), Math.min(sents.length, i + 2)).join(" ");
+          pieces.push({ text: head + s, send: head + win, secs: [si] });
+        });
+
+      } else if (cfg.strategy === "parent") {
+        const sents = splitSentences(sec.t);
+        const target = Math.max(1, Math.round(cfg.size / 70));
+        for (let i = 0; i < sents.length; i += target) {
+          pieces.push({
+            text: head + sents.slice(i, i + target).join(" "),
+            send: head + sec.t,
+            secs: [si]
+          });
+        }
+
+      } else {
+        const sents = splitSentences(sec.t);
+        const maxChars = cfg.size * 4;
+        const ovChars = Math.round(maxChars * cfg.overlap / 100);
+        let buf = [], len = 0;
+        const flush = () => {
+          if (!buf.length) return;
+          const text = head + buf.join(" ");
+          pieces.push({ text, send: text, secs: [si] });
+          if (ovChars > 0) {
+            let keep = [], klen = 0;
+            for (let i = buf.length - 1; i >= 0; i--) {
+              if (klen + buf[i].length > ovChars) break;
+              keep.unshift(buf[i]); klen += buf[i].length;
+            }
+            buf = keep; len = klen;
+          } else { buf = []; len = 0; }
+        };
+        for (const s of sents) {
+          if (len + s.length > maxChars && buf.length) flush();
+          buf.push(s); len += s.length + 1;
+        }
+        if (buf.length) { const text = head + buf.join(" "); pieces.push({ text, send: text, secs: [si] }); }
+      }
+
+      pieces.forEach((p, pi) => emit(doc, p, pi, pieces.length));
+    });
+  }
+  return chunks;
+}
+
+/* ---------------------------------------------------------------
+   6 · INDEX
+   --------------------------------------------------------------- */
+function buildIndex(chunks) {
+  const df = new Map();
+  let totalLen = 0;
+  for (const c of chunks) {
+    totalLen += c.tokens.length;
+    const seen = new Set(c.tokens);
+    for (const t of seen) df.set(t, (df.get(t) || 0) + 1);
+  }
+  const N = chunks.length || 1;
+  const idf = new Map();
+  for (const [t, d] of df) idf.set(t, Math.log(1 + (N - d + 0.5) / (d + 0.5)));
+  const avgdl = totalLen / N;
+
+  for (const c of chunks) {
+    const tf = new Map();
+    for (const t of c.tokens) tf.set(t, (tf.get(t) || 0) + 1);
+    c.tf = tf;
+    c.vec = buildVector(c.tokens, idf);
+    c.concepts = conceptsOf(c.tokens);
+  }
+  return { idf, avgdl, N, vocab: df.size };
+}
+
+function bm25(chunk, qTokens, ix, k1, b) {
+  let s = 0;
+  const dl = chunk.tokens.length || 1;
+  for (const t of qTokens) {
+    const f = chunk.tf.get(t);
+    if (!f) continue;
+    const w = ix.idf.get(t) || 0;
+    s += w * (f * (k1 + 1)) / (f + k1 * (1 - b + b * dl / ix.avgdl));
+  }
+  return s;
+}
+
+/* ---------------------------------------------------------------
+   7 · QUERY REWRITE
+   --------------------------------------------------------------- */
+function rewriteQuery(q) {
+  let text = " " + q.toLowerCase().trim() + " ";
+  const pron = [
+    [/\bwe\b|\bour\b|\bus\b/g, "customer"],
+    [/\bi\b|\bmy\b|\bme\b/g, "customer"],
+    [/\byou\b|\byour\b/g, "northwind"]
+  ];
+  for (const [re, rep] of pron) text = text.replace(re, rep);
+  text = text.replace(/\bhow long\b/g, "how long duration window");
+  text = text.replace(/\bwhat happens\b/g, "behaviour outcome");
+
+  const toks = tokenize(text);
+  const hit = new Set();
+  for (const t of toks) { const cs = CONCEPT_UNI.get(t); if (cs) for (const ci of cs) hit.add(ci); }
+  for (const p of CONCEPT_PHRASE) {
+    if (p.toks.every(t => toks.includes(t))) hit.add(p.ci);
+  }
+  const added = [];
+  for (const ci of hit) {
+    const canon = stem(CONCEPTS[ci].canon);
+    if (!toks.includes(canon)) added.push(CONCEPTS[ci].canon);
+  }
+  const out = (text.trim() + (added.length ? " " + added.join(" ") : "")).replace(/\s+/g, " ");
+  return { text: out, added };
+}
+
+/* ---------------------------------------------------------------
+   8 · CROSS-ENCODER STAND-IN
+   A real cross-encoder reads the pair together. This one does the
+   same kind of thing with explicit features: how much of the query
+   is present, how tightly it clusters, whether a query bigram
+   appears verbatim, and how much padding surrounds it.
+   --------------------------------------------------------------- */
+function crossEncode(chunk, qTokens, qConcepts) {
+  const uniq = [...new Set(qTokens)];
+  if (!uniq.length) return { score: 0, coverage: 0, proximity: 0, phrase: 0, overlap: 0 };
+
+  const positions = new Map();
+  chunk.tokens.forEach((t, i) => {
+    if (!positions.has(t)) positions.set(t, []);
+    positions.get(t).push(i);
+  });
+
+  let present = 0;
+  const found = [];
+  for (const t of uniq) if (positions.has(t)) { present++; found.push(t); }
+  const coverage = present / uniq.length;
+
+  let proximity = 0;
+  if (found.length > 1) {
+    const all = [];
+    for (const t of found) for (const p of positions.get(t)) all.push({ p, t });
+    all.sort((a, b) => a.p - b.p);
+    let best = Infinity, need = found.length, count = new Map(), have = 0, l = 0;
+    for (let r = 0; r < all.length; r++) {
+      const tr = all[r].t;
+      count.set(tr, (count.get(tr) || 0) + 1);
+      if (count.get(tr) === 1) have++;
+      while (have === need) {
+        best = Math.min(best, all[r].p - all[l].p + 1);
+        const tl = all[l].t;
+        count.set(tl, count.get(tl) - 1);
+        if (count.get(tl) === 0) have--;
+        l++;
+      }
+    }
+    if (best !== Infinity) proximity = Math.min(1, found.length / best * 1.15);
+  } else if (found.length === 1) proximity = 0.4;
+
+  let phrase = 0;
+  const joined = " " + chunk.tokens.join(" ") + " ";
+  for (let i = 0; i < qTokens.length - 1; i++) {
+    if (joined.includes(" " + qTokens[i] + " " + qTokens[i + 1] + " ")) { phrase = 1; break; }
+  }
+
+  let shared = 0;
+  for (const ci of qConcepts) if (chunk.concepts.has(ci)) shared++;
+  const overlap = qConcepts.size ? shared / qConcepts.size : 0;
+
+  const lengthPenalty = 0.16 * Math.max(0, (chunk.tokens.length - 70) / 220);
+
+  const score = Math.max(0, Math.min(1,
+    0.40 * coverage + 0.22 * proximity + 0.20 * overlap + 0.12 * phrase + 0.06 - lengthPenalty
+  ));
+  return { score, coverage, proximity, phrase, overlap, lengthPenalty };
+}
+
+/* ---------------------------------------------------------------
+   9 · GRADING
+   --------------------------------------------------------------- */
+function gradeChunk(chunk, goldEntry) {
+  const hay = (chunk.text + " " + chunk.sendText).toLowerCase();
+  for (const g of goldEntry.gold) {
+    if (g.doc !== chunk.docId || g.sec !== chunk.sec) continue;
+    if (!g.span) return { grade: g.grade, span: false };
+    if (hay.includes(g.span.toLowerCase())) return { grade: g.grade, span: true };
+    return { grade: Math.max(1, g.grade - 2), span: false };
+  }
+  return { grade: 0, span: false };
+}
+
+function goldTargets(goldEntry) {
+  return goldEntry.gold.filter(g => g.grade >= 2).map(g => g.doc + "#" + g.sec);
+}
+
+function dcg(grades) {
+  let s = 0;
+  grades.forEach((g, i) => { s += (Math.pow(2, g) - 1) / Math.log2(i + 2); });
+  return s;
+}
+
+function scoreRun(sent, chunks, goldEntry, k) {
+  if (!goldEntry) return null;
+  const graded = sent.map(h => gradeChunk(h.chunk, goldEntry).grade);
+  const rel = graded.filter(g => g >= 2).length;
+  const precision = sent.length ? rel / sent.length : 0;
+
+  const targets = goldTargets(goldEntry);
+  const covered = new Set();
+  sent.forEach(h => {
+    const key = h.chunk.docId + "#" + h.chunk.sec;
+    if (targets.includes(key) && gradeChunk(h.chunk, goldEntry).grade >= 2) covered.add(key);
+  });
+  const recall = targets.length ? covered.size / targets.length : 0;
+
+  let mrr = 0;
+  for (let i = 0; i < graded.length; i++) if (graded[i] >= 2) { mrr = 1 / (i + 1); break; }
+
+  const ideal = chunks.map(c => gradeChunk(c, goldEntry).grade)
+    .filter(g => g > 0).sort((a, b) => b - a).slice(0, k);
+  const nd = dcg(ideal) > 0 ? dcg(graded.slice(0, k)) / dcg(ideal) : 0;
+
+  const needSpans = goldEntry.gold.filter(g => g.grade >= 3 && g.span);
+  const spanHits = needSpans.filter(g =>
+    sent.some(h => (h.chunk.text + " " + h.chunk.sendText).toLowerCase().includes(g.span.toLowerCase()))
+  ).length;
+  const answerCoverage = needSpans.length ? spanHits / needSpans.length : (rel > 0 ? 1 : 0);
+
+  return {
+    precision, recall, mrr, ndcg: nd, answerCoverage,
+    graded, targets, covered: [...covered], ideal,
+    relCount: rel, targetCount: targets.length
+  };
+}
+
+/* ---------------------------------------------------------------
+   10 · THE PIPELINE
+   --------------------------------------------------------------- */
+function runPipeline(query, cfg, built) {
+  const { chunks, ix } = built;
+  const trace = [];
+
+  const rw = cfg.rewrite ? rewriteQuery(query) : { text: query, added: [] };
+  const qTokens = tokenize(rw.text);
+  const qConcepts = conceptsOf(qTokens);
+  trace.push({ stage: "parse", n: qTokens.length, detail: qTokens.join(" ") });
+
+  const pool = chunks.filter(c =>
+    (cfg.type === "all" || c.type === cfg.type) &&
+    (cfg.team === "all" || c.team === cfg.team) &&
+    c.updated >= cfg.year
+  );
+  trace.push({ stage: "filter", n: pool.length, detail: chunks.length + " indexed, " + pool.length + " searchable" });
+
+  const qVec = buildVector(qTokens, ix.idf);
+  const scored = pool.map(c => {
+    const s = bm25(c, qTokens, ix, 1.2, 0.75);
+    const d = cosine(c.vec, qVec);
+    return { chunk: c, sparseRaw: s, denseRaw: d };
+  });
+
+  const maxS = Math.max(1e-9, ...scored.map(x => x.sparseRaw));
+  const maxD = Math.max(1e-9, ...scored.map(x => x.denseRaw));
+  for (const x of scored) {
+    x.sparse = x.sparseRaw / maxS;
+    x.dense = x.denseRaw / maxD;
+  }
+
+  const a = cfg.alpha / 100;
+  let fused;
+  if (cfg.fusion === "rrf") {
+    const byS = [...scored].sort((x, y) => y.sparseRaw - x.sparseRaw);
+    const byD = [...scored].sort((x, y) => y.denseRaw - x.denseRaw);
+    const rs = new Map(), rd = new Map();
+    byS.forEach((x, i) => rs.set(x.chunk.idx, i + 1));
+    byD.forEach((x, i) => rd.set(x.chunk.idx, i + 1));
+    const K = 60;
+    for (const x of scored) {
+      x.rankS = rs.get(x.chunk.idx);
+      x.rankD = rd.get(x.chunk.idx);
+      x.base = (1 - a) * (1 / (K + x.rankS)) + a * (1 / (K + x.rankD));
+    }
+    const mx = Math.max(1e-9, ...scored.map(x => x.base));
+    for (const x of scored) x.base = x.base / mx;
+    fused = scored;
+  } else {
+    for (const x of scored) x.base = (1 - a) * x.sparse + a * x.dense;
+    fused = scored;
+  }
+
+  const candidates = [...fused].sort((x, y) => y.base - x.base).slice(0, cfg.pool);
+  candidates.forEach((x, i) => { x.firstRank = i + 1; });
+  trace.push({ stage: "search", n: candidates.length, detail: cfg.fusion === "rrf" ? "reciprocal rank fusion, K=60" : "weighted blend a=" + a.toFixed(2) });
+
+  if (cfg.rerank) {
+    for (const x of candidates) {
+      const ce = crossEncode(x.chunk, qTokens, qConcepts);
+      x.ce = ce;
+      x.final = 0.30 * x.base + 0.70 * ce.score;
+    }
+    candidates.sort((x, y) => y.final - x.final);
+    trace.push({ stage: "rerank", n: candidates.length, detail: "cross-encoder over the candidate pool" });
+  } else {
+    for (const x of candidates) { x.ce = null; x.final = x.base; }
+  }
+  candidates.forEach((x, i) => { x.secondRank = i + 1; });
+
+  const floor = cfg.floor / 100;
+  const eligible = candidates.filter(x => x.final >= floor);
+  const droppedByFloor = candidates.length - eligible.length;
+
+  let selected;
+  if (cfg.mmr) {
+    const lam = cfg.lambda / 100;
+    const picked = [];
+    const rest = [...eligible];
+    while (picked.length < cfg.k && rest.length) {
+      let bestI = 0, bestV = -Infinity;
+      for (let i = 0; i < rest.length; i++) {
+        let maxSim = 0;
+        for (const p of picked) maxSim = Math.max(maxSim, cosine(rest[i].chunk.vec, p.chunk.vec));
+        const v = lam * rest[i].final - (1 - lam) * maxSim;
+        if (v > bestV) { bestV = v; bestI = i; }
+      }
+      rest[bestI].mmrValue = bestV;
+      picked.push(rest.splice(bestI, 1)[0]);
+    }
+    selected = picked;
+    trace.push({ stage: "mmr", n: selected.length, detail: "lambda " + lam.toFixed(2) });
+  } else {
+    selected = eligible.slice(0, cfg.k);
+  }
+
+  let used = 0;
+  const sent = [];
+  const dropped = [];
+  for (const x of selected) {
+    if (used + x.chunk.nTokens <= cfg.budget) { used += x.chunk.nTokens; sent.push(x); }
+    else dropped.push(x);
+  }
+  trace.push({ stage: "budget", n: sent.length, detail: used + " of " + cfg.budget + " tokens" });
+
+  const goldEntry = GOLD.find(g => g.q.toLowerCase() === query.toLowerCase()) || null;
+  const metrics = scoreRun(sent, pool, goldEntry, cfg.k);
+
+  return {
+    query, rewrite: rw, qTokens, qConcepts,
+    poolSize: pool.length, indexSize: chunks.length,
+    candidates, selected, sent, dropped, droppedByFloor,
+    contextTokens: used, trace, goldEntry, metrics
+  };
+}
+
+/* ---------------------------------------------------------------
+   11 · PRESETS
+   --------------------------------------------------------------- */
+const PRESETS = {
+  naive: {
+    name: "Naive", desc: "One pass, k=8, no rerank",
+    cfg: { strategy: "fixed", size: 900, overlap: 0, keepHeading: false, type: "all", team: "all", year: 2022,
+           rewrite: false, alpha: 100, fusion: "blend", pool: 20, rerank: false, mmr: false, lambda: 70,
+           floor: 0, k: 8, budget: 4000, price: 300 }
+  },
+  keyword: {
+    name: "Keyword only", desc: "BM25, nothing else",
+    cfg: { strategy: "recursive", size: 450, overlap: 15, keepHeading: true, type: "all", team: "all", year: 2022,
+           rewrite: false, alpha: 0, fusion: "blend", pool: 20, rerank: false, mmr: false, lambda: 70,
+           floor: 0, k: 5, budget: 1600, price: 300 }
+  },
+  hybrid: {
+    name: "Advanced hybrid", desc: "RRF + cross-encoder, k=5",
+    cfg: { strategy: "recursive", size: 450, overlap: 15, keepHeading: true, type: "all", team: "all", year: 2024,
+           rewrite: true, alpha: 55, fusion: "rrf", pool: 24, rerank: true, mmr: false, lambda: 70,
+           floor: 0, k: 5, budget: 1600, price: 300 }
+  },
+  precision: {
+    name: "Precision", desc: "Tight k, high floor",
+    cfg: { strategy: "recursive", size: 320, overlap: 20, keepHeading: true, type: "all", team: "all", year: 2024,
+           rewrite: true, alpha: 50, fusion: "rrf", pool: 30, rerank: true, mmr: false, lambda: 70,
+           floor: 34, k: 3, budget: 900, price: 300 }
+  },
+  recall: {
+    name: "Recall first", desc: "Wide pool, MMR, k=10",
+    cfg: { strategy: "sentence", size: 450, overlap: 15, keepHeading: true, type: "all", team: "all", year: 2022,
+           rewrite: true, alpha: 60, fusion: "rrf", pool: 48, rerank: true, mmr: true, lambda: 55,
+           floor: 0, k: 10, budget: 3200, price: 300 }
+  },
+  cheap: {
+    name: "Budget", desc: "Small context, structural",
+    cfg: { strategy: "parent", size: 260, overlap: 0, keepHeading: true, type: "all", team: "all", year: 2024,
+           rewrite: true, alpha: 45, fusion: "blend", pool: 16, rerank: true, mmr: false, lambda: 70,
+           floor: 20, k: 3, budget: 700, price: 80 }
+  }
+};
+
+/* ================================================================
+   ENGINE END
+   ================================================================ */
+
+
+/* ================================================================
+   UI
+   ================================================================ */
+const $ = id => document.getElementById(id);
+const $$ = sel => [...document.querySelectorAll(sel)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = v => (v * 100).toFixed(0) + "%";
+const pct1 = v => (v * 100).toFixed(1) + "%";
+
+let CFG = JSON.parse(JSON.stringify(PRESETS.hybrid.cfg));
+let BUILT = null;
+let RUN = null;
+let BASELINE = null;
+let LOG = [];
+let ACTIVE_PRESET = "hybrid";
+let CURRENT_Q = GOLD[0].q;
+
+function rebuild() {
+  const chunks = chunkCorpus(CFG);
+  const ix = buildIndex(chunks);
+  BUILT = { chunks, ix };
+}
+
+function execute(reason) {
+  const before = RUN && RUN.metrics ? { ...RUN.metrics } : null;
+  rebuild();
+  RUN = runPipeline(CURRENT_Q, CFG, BUILT);
+  renderAll();
+  if (reason) pushLog(reason, before, RUN.metrics);
+}
+
+/* ---------- log ---------- */
+function pushLog(reason, before, after) {
+  let delta = null;
+  if (before && after) {
+    const d = after.ndcg - before.ndcg;
+    if (Math.abs(d) > 0.001) delta = d;
+  }
+  LOG.unshift({ t: new Date(), reason, delta });
+  if (LOG.length > 40) LOG.pop();
+  renderLog();
+}
+
+/* ---------- deck wiring ---------- */
+function buildPresets() {
+  $("presets").innerHTML = Object.entries(PRESETS).map(([k, p]) =>
+    '<button class="preset' + (k === ACTIVE_PRESET ? " on" : "") + '" data-p="' + k + '">' +
+    '<span class="pn">' + esc(p.name) + '</span><span class="pd">' + esc(p.desc) + '</span></button>'
+  ).join("");
+  $$("#presets .preset").forEach(b => b.onclick = () => {
+    ACTIVE_PRESET = b.dataset.p;
+    CFG = JSON.parse(JSON.stringify(PRESETS[ACTIVE_PRESET].cfg));
+    syncDeck();
+    execute("Loaded the " + PRESETS[ACTIVE_PRESET].name.toLowerCase() + " config");
+    buildPresets();
+  });
+}
+
+function buildSegs() {
+  $("segStrategy").innerHTML = Object.entries(STRATEGIES).map(([k, s]) =>
+    '<button data-v="' + k + '">' + esc(s.label) + '</button>').join("");
+  $$("#segStrategy button").forEach(b => b.onclick = () => {
+    CFG.strategy = b.dataset.v; markDirty(); syncDeck();
+    execute("Chunking switched to " + STRATEGIES[CFG.strategy].label.toLowerCase());
+  });
+
+  const types = ["all", ...new Set(CORPUS.map(d => d.type))];
+  $("segType").innerHTML = types.map(t =>
+    '<button data-v="' + t + '">' + (t === "all" ? "Any" : esc(t)) + '</button>').join("");
+  $$("#segType button").forEach(b => b.onclick = () => {
+    CFG.type = b.dataset.v; markDirty(); syncDeck();
+    execute("Type filter set to " + (CFG.type === "all" ? "any" : CFG.type));
+  });
+
+  const teams = ["all", ...new Set(CORPUS.map(d => d.team))];
+  $("segTeam").innerHTML = teams.map(t =>
+    '<button data-v="' + t + '">' + (t === "all" ? "Any" : esc(t)) + '</button>').join("");
+  $$("#segTeam button").forEach(b => b.onclick = () => {
+    CFG.team = b.dataset.v; markDirty(); syncDeck();
+    execute("Team filter set to " + (CFG.team === "all" ? "any" : CFG.team));
+  });
+
+  $("segFusion").innerHTML =
+    '<button data-v="blend">Weighted blend</button><button data-v="rrf">Reciprocal rank</button>';
+  $$("#segFusion button").forEach(b => b.onclick = () => {
+    CFG.fusion = b.dataset.v; markDirty(); syncDeck();
+    execute("Fusion set to " + (CFG.fusion === "rrf" ? "reciprocal rank" : "weighted blend"));
+  });
+}
+
+function markDirty() {
+  ACTIVE_PRESET = null;
+  $$("#presets .preset").forEach(b => b.classList.remove("on"));
+}
+
+function syncDeck() {
+  $$("#segStrategy button").forEach(b => b.classList.toggle("on", b.dataset.v === CFG.strategy));
+  $$("#segType button").forEach(b => b.classList.toggle("on", b.dataset.v === CFG.type));
+  $$("#segTeam button").forEach(b => b.classList.toggle("on", b.dataset.v === CFG.team));
+  $$("#segFusion button").forEach(b => b.classList.toggle("on", b.dataset.v === CFG.fusion));
+
+  const st = STRATEGIES[CFG.strategy];
+  $("strategyNote").textContent = st.note;
+  $("ctlSize").style.display = st.usesSize ? "block" : "none";
+  $("ctlOverlap").style.display = st.usesOverlap ? "block" : "none";
+
+  $("rngSize").value = CFG.size; $("valSize").textContent = CFG.size;
+  $("rngOverlap").value = CFG.overlap; $("valOverlap").textContent = CFG.overlap + "%";
+  $("rngYear").value = CFG.year; $("valYear").textContent = CFG.year;
+  $("rngAlpha").value = CFG.alpha;
+  $("valAlpha").textContent = (100 - CFG.alpha) + " / " + CFG.alpha;
+  $("lblS").textContent = (100 - CFG.alpha) + "%";
+  $("lblD").textContent = CFG.alpha + "%";
+  $("mixS").style.width = (100 - CFG.alpha) + "%";
+  $("mixD").style.width = CFG.alpha + "%";
+  $("rngPool").value = CFG.pool; $("valPool").textContent = CFG.pool;
+  $("rngLambda").value = CFG.lambda; $("valLambda").textContent = (CFG.lambda / 100).toFixed(2);
+  $("rngLambda").disabled = !CFG.mmr;
+  $("rngFloor").value = CFG.floor; $("valFloor").textContent = (CFG.floor / 100).toFixed(2);
+  $("rngK").value = CFG.k; $("valK").textContent = CFG.k;
+  $("rngBudget").value = CFG.budget; $("valBudget").textContent = CFG.budget;
+  $("rngPrice").value = CFG.price; $("valPrice").textContent = "$" + (CFG.price / 100).toFixed(2) + " / M";
+
+  $("swHeading").classList.toggle("on", CFG.keepHeading);
+  $("swRewrite").classList.toggle("on", CFG.rewrite);
+  $("swRerank").classList.toggle("on", CFG.rerank);
+  $("swMMR").classList.toggle("on", CFG.mmr);
+
+  $("fusionNote").textContent = CFG.fusion === "rrf"
+    ? "Rank based, so the two score scales never have to be comparable. This is why RRF is the default in production."
+    : "Score based. Simple, but it assumes BM25 and cosine live on the same scale, which they do not without normalising.";
+
+  const filtered = CFG.type !== "all" || CFG.team !== "all" || CFG.year > 2022;
+  $("filterNote").textContent = filtered
+    ? "Filter is active. Anything outside it is unreachable no matter how well it matches."
+    : "Filtering runs before the vector maths, so it shrinks the search space rather than the result list.";
+}
+
+function wireRanges() {
+  const bind = (id, key, fmt, label) => {
+    const el = $(id);
+    el.oninput = () => {
+      CFG[key] = +el.value;
+      markDirty(); syncDeck();
+    };
+    el.onchange = () => execute(label + " → " + (fmt ? fmt(CFG[key]) : CFG[key]));
+  };
+  bind("rngSize", "size", v => v + " tokens", "Chunk size");
+  bind("rngOverlap", "overlap", v => v + "%", "Overlap");
+  bind("rngYear", "year", null, "Freshness filter");
+  bind("rngAlpha", "alpha", v => v + "% vectors", "Signal mix");
+  bind("rngPool", "pool", null, "Candidate pool");
+  bind("rngLambda", "lambda", v => (v / 100).toFixed(2), "MMR lambda");
+  bind("rngFloor", "floor", v => (v / 100).toFixed(2), "Score floor");
+  bind("rngK", "k", null, "k");
+  bind("rngBudget", "budget", v => v + " tokens", "Context ceiling");
+  bind("rngPrice", "price", v => "$" + (v / 100).toFixed(2) + "/M", "Input price");
+
+  const sw = (id, key, label) => {
+    $(id).onclick = () => {
+      CFG[key] = !CFG[key];
+      markDirty(); syncDeck();
+      execute(label + " " + (CFG[key] ? "on" : "off"));
+    };
+  };
+  sw("swHeading", "keepHeading", "Heading prefix");
+  sw("swRewrite", "rewrite", "Query rewrite");
+  sw("swRerank", "rerank", "Cross-encoder rerank");
+  sw("swMMR", "mmr", "MMR diversity");
+
+  $$(".grphead").forEach(h => h.onclick = () => h.parentElement.classList.toggle("open"));
+}
+
+/* ---------- query bar ---------- */
+function buildGoldRow() {
+  const row = $("goldRow");
+  row.innerHTML = '<span class="gl">Labelled queries</span>' + GOLD.map((g, i) =>
+    '<button class="gq" data-i="' + i + '" title="' + esc(g.q) + '">' +
+    '<span class="qn">' + (i + 1) + '</span>' + esc(g.q) + '</button>').join("");
+  $$("#goldRow .gq").forEach(b => b.onclick = () => selectGold(+b.dataset.i));
+}
+
+function selectGold(i) {
+  CURRENT_Q = GOLD[i].q;
+  $("qInput").value = CURRENT_Q;
+  execute("Query → " + GOLD[i].q.slice(0, 42) + (GOLD[i].q.length > 42 ? "…" : ""));
+}
+
+/* ---------- render ---------- */
+function renderAll() {
+  renderStats();
+  renderRewrite();
+  renderStrip();
+  renderResults();
+  renderScore();
+  renderMath();
+  renderContext();
+  $$("#goldRow .gq").forEach(b => b.classList.toggle("on", GOLD[+b.dataset.i].q === CURRENT_Q));
+}
+
+function renderStats() {
+  const chunks = BUILT.chunks;
+  $("statDocs").textContent = CORPUS.length;
+  $("statChunks").textContent = chunks.length;
+  $("statVocab").textContent = BUILT.ix.vocab;
+  const avg = Math.round(chunks.reduce((a, c) => a + c.nTokens, 0) / chunks.length);
+  $("statAvg").textContent = avg;
+}
+
+function renderRewrite() {
+  const box = $("rewriteBox");
+  if (!CFG.rewrite || !RUN.rewrite.added.length) { box.classList.remove("show"); return; }
+  box.classList.add("show");
+  $("rewriteText").innerHTML = esc(RUN.query) + '  <span style="color:var(--fused);font-weight:600">+ ' +
+    RUN.rewrite.added.map(esc).join(" + ") + "</span>";
+}
+
+function renderStrip() {
+  const chunks = BUILT.chunks;
+  const sentIds = new Set(RUN.sent.map(x => x.chunk.idx));
+  const candIds = new Set(RUN.candidates.map(x => x.chunk.idx));
+  const poolIds = new Set();
+  chunks.forEach(c => {
+    const ok = (CFG.type === "all" || c.type === CFG.type) &&
+      (CFG.team === "all" || c.team === CFG.team) && c.updated >= CFG.year;
+    if (ok) poolIds.add(c.idx);
+  });
+
+  const byDoc = new Map();
+  chunks.forEach(c => {
+    if (!byDoc.has(c.docId)) byDoc.set(c.docId, []);
+    byDoc.get(c.docId).push(c);
+  });
+
+  let html = "";
+  for (const [docId, list] of byDoc) {
+    html += '<div class="doclot" title="' + esc(list[0].docTitle) + '">';
+    for (const c of list) {
+      const g = RUN.goldEntry ? gradeChunk(c, RUN.goldEntry).grade : 0;
+      const cls = ["cell"];
+      if (!poolIds.has(c.idx)) cls.push("dropped");
+      else if (sentIds.has(c.idx)) { cls.push("ret"); cls.push(g >= 2 ? "gold" : "wrong"); }
+      else if (candIds.has(c.idx)) cls.push("cand");
+      else if (g >= 2) cls.push("gold");
+      html += '<div class="' + cls.join(" ") + '" data-c="' + c.idx + '"></div>';
+    }
+    html += "</div>";
+  }
+  $("stripCells").innerHTML = html;
+
+  const goldTotal = RUN.goldEntry ? chunks.filter(c => gradeChunk(c, RUN.goldEntry).grade >= 2).length : 0;
+  $("stripNote").innerHTML =
+    "<b>" + chunks.length + "</b> chunks · <b>" + poolIds.size + "</b> pass the filter · <b>" +
+    RUN.candidates.length + "</b> in the pool · <b>" + RUN.sent.length + "</b> sent" +
+    (RUN.goldEntry ? " · <b>" + goldTotal + "</b> chunks carry the answer" : "");
+
+  $$("#stripCells .cell").forEach(el => {
+    el.onmouseenter = e => {
+      const c = BUILT.chunks[+el.dataset.c];
+      const hit = RUN.candidates.find(x => x.chunk.idx === c.idx);
+      const g = RUN.goldEntry ? gradeChunk(c, RUN.goldEntry) : { grade: 0 };
+      showPop(e,
+        c.docTitle + " · " + c.secTitle,
+        (hit ? "rank " + hit.secondRank + " · score " + hit.final.toFixed(3) : "not in the candidate pool") +
+        " · " + c.nTokens + " tok" +
+        (g.grade >= 2 ? " · labelled relevant" : g.grade === 1 ? " · partial credit" : ""));
+    };
+    el.onmouseleave = hidePop;
+    el.onclick = () => {
+      const target = document.querySelector('.hit[data-c="' + el.dataset.c + '"]');
+      if (target) { target.classList.add("open"); target.scrollIntoView({ block: "center", behavior: "smooth" }); }
+    };
+  });
+}
+
+function highlight(text, run) {
+  let out = esc(text);
+  if (run.goldEntry) {
+    for (const g of run.goldEntry.gold) {
+      if (!g.span) continue;
+      const re = new RegExp("(" + g.span.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "ig");
+      out = out.replace(re, '<span class="span">$1</span>');
+    }
+  }
+  const seen = new Set();
+  for (const t of run.qTokens) {
+    if (seen.has(t) || t.length < 3) continue;
+    seen.add(t);
+    const re = new RegExp("(?<![\\w>])(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[a-z]{0,4})(?![\\w<])", "ig");
+    out = out.replace(re, "<mark>$1</mark>");
+  }
+  return out;
+}
+
+function renderResults() {
+  const box = $("results");
+  const pipe = [
+    '<span>chunk · ' + STRATEGIES[CFG.strategy].label.toLowerCase() + '</span><em>→</em>',
+    '<span class="' + (CFG.type === "all" && CFG.team === "all" && CFG.year <= 2022 ? "off" : "") + '">filter</span><em>→</em>',
+    '<span class="' + (CFG.rewrite ? "" : "off") + '">rewrite</span><em>→</em>',
+    '<span>' + (CFG.fusion === "rrf" ? "rrf" : "blend") + ' · pool ' + CFG.pool + '</span><em>→</em>',
+    '<span class="' + (CFG.rerank ? "" : "off") + '">rerank</span><em>→</em>',
+    '<span class="' + (CFG.mmr ? "" : "off") + '">mmr</span><em>→</em>',
+    '<span>k=' + CFG.k + '</span>'
+  ].join("");
+
+  let html = '<div class="stagehead"><h2>What the model receives</h2><div class="pipe">' + pipe + '</div></div>';
+
+  if (!RUN.sent.length) {
+    html += '<div class="emptystate"><h3>Nothing cleared the pipeline</h3>' +
+      '<p>The filter, the score floor or the token ceiling removed every candidate. ' +
+      'Lower the floor, widen the filter, or raise the ceiling and run it again.</p></div>';
+    box.innerHTML = html;
+    return;
+  }
+
+  RUN.sent.forEach((x, i) => {
+    const c = x.chunk;
+    const g = RUN.goldEntry ? gradeChunk(c, RUN.goldEntry) : { grade: 0, span: false };
+    const cls = g.grade >= 2 ? "relevant" : g.grade === 1 ? "partial" : "noise";
+    const moved = CFG.rerank ? x.firstRank - x.secondRank : 0;
+    const sW = (1 - CFG.alpha / 100) * x.sparse;
+    const dW = (CFG.alpha / 100) * x.dense;
+    const ceW = x.ce ? x.ce.score * 0.7 : 0;
+    const tot = Math.max(1e-9, sW + dW + ceW);
+
+    const gradeLabel = g.grade >= 3 ? "answer" : g.grade === 2 ? "relevant" : g.grade === 1 ? "partial" : "noise";
+    const gradeCls = g.grade >= 2 ? "g3" : g.grade === 1 ? "g1" : "g0";
+
+    html += '<article class="hit ' + cls + '" data-c="' + c.idx + '">' +
+      '<div class="hitmain">' +
+        '<div class="rank"><div class="rn">' + (i + 1) + '</div>' +
+          (CFG.rerank && moved !== 0
+            ? '<div class="rd ' + (moved > 0 ? "up" : "down") + '">' + (moved > 0 ? "▲" : "▼") + Math.abs(moved) + '</div>'
+            : '<div class="rd">—</div>') +
+        '</div>' +
+        '<div class="hitbody">' +
+          '<div class="hitmeta">' +
+            '<span class="src"><b>' + esc(c.docTitle) + '</b> · ' + esc(c.secTitle) + '</span>' +
+            '<span class="tagchip">' + esc(c.type) + '</span>' +
+            '<span class="tagchip">' + c.nTokens + ' tok</span>' +
+            (c.parts > 1 ? '<span class="tagchip">part ' + (c.part + 1) + '/' + c.parts + '</span>' : "") +
+            (RUN.goldEntry ? '<span class="gradechip ' + gradeCls + '">' + gradeLabel + '</span>' : "") +
+          '</div>' +
+          '<div class="snippet">' + highlight(c.text.slice(0, 260) + (c.text.length > 260 ? "…" : ""), RUN) + '</div>' +
+        '</div>' +
+        '<div class="scorecol">' +
+          '<div class="scorenum">' + x.final.toFixed(3) + '</div>' +
+          '<div class="decomp">' +
+            '<i class="s" style="width:' + (sW / tot * 100) + '%"></i>' +
+            '<i class="d" style="width:' + (dW / tot * 100) + '%"></i>' +
+            '<i class="c" style="width:' + (ceW / tot * 100) + '%"></i>' +
+          '</div>' +
+          '<div class="declabel"><span>bm25 ' + x.sparse.toFixed(2) + '</span>' +
+          '<span>vec ' + x.dense.toFixed(2) + '</span>' +
+          (x.ce ? '<span>ce ' + x.ce.score.toFixed(2) + '</span>' : '') + '</div>' +
+        '</div>' +
+      '</div>' +
+      renderWhy(x, c) +
+    '</article>';
+  });
+
+  if (RUN.dropped.length) {
+    html += '<div class="stagehead" style="margin-top:20px"><h2>Cut by the token ceiling</h2>' +
+      '<div class="pipe"><span>' + RUN.dropped.length + ' selected but not sent</span></div></div>';
+    RUN.dropped.forEach(x => {
+      const c = x.chunk;
+      const g = RUN.goldEntry ? gradeChunk(c, RUN.goldEntry) : { grade: 0 };
+      html += '<article class="hit ' + (g.grade >= 2 ? "relevant" : "") + '" style="opacity:.6">' +
+        '<div class="hitmain"><div class="rank"><div class="rn">–</div></div>' +
+        '<div class="hitbody"><div class="hitmeta"><span class="src"><b>' + esc(c.docTitle) +
+        '</b> · ' + esc(c.secTitle) + '</span><span class="tagchip">' + c.nTokens + ' tok</span>' +
+        (g.grade >= 2 ? '<span class="gradechip g3">would have answered it</span>' : "") +
+        '</div><div class="snippet">' + esc(c.text.slice(0, 150)) + '…</div></div></div></article>';
+    });
+  }
+
+  box.innerHTML = html;
+  $$(".hit .hitmain").forEach(m => m.onclick = () => m.parentElement.classList.toggle("open"));
+}
+
+function renderWhy(x, c) {
+  const qt = [...new Set(RUN.qTokens)];
+  const termChips = qt.map(t =>
+    '<span class="tchip ' + (c.tf && c.tf.has(t) ? "match" : "miss") + '">' + esc(t) + '</span>').join("");
+  const shared = [...RUN.qConcepts].filter(ci => c.concepts.has(ci));
+  const conceptChips = shared.length
+    ? shared.map(ci => '<span class="tchip concept">' + esc(CONCEPTS[ci].id) + '</span>').join("")
+    : '<span class="tchip miss">no shared concept</span>';
+
+  let ceCard = "";
+  if (x.ce) {
+    ceCard = '<div class="whycard"><div class="wk">Cross-encoder</div><div class="wv">' +
+      'coverage <span class="num">' + x.ce.coverage.toFixed(2) + '</span><br>' +
+      'proximity <span class="num">' + x.ce.proximity.toFixed(2) + '</span><br>' +
+      'concept overlap <span class="num">' + x.ce.overlap.toFixed(2) + '</span><br>' +
+      'exact phrase <span class="num">' + (x.ce.phrase ? "yes" : "no") + '</span><br>' +
+      'length penalty <span class="num">−' + x.ce.lengthPenalty.toFixed(2) + '</span>' +
+      '</div></div>';
+  }
+
+  return '<div class="why">' +
+    '<div class="whygrid">' +
+      '<div class="whycard"><div class="wk">First pass</div><div class="wv">' +
+        'bm25 raw <span class="num">' + x.sparseRaw.toFixed(2) + '</span><br>' +
+        'cosine <span class="num">' + x.denseRaw.toFixed(3) + '</span><br>' +
+        (CFG.fusion === "rrf"
+          ? 'rank s/d <span class="num">' + x.rankS + " / " + x.rankD + '</span><br>'
+          : '') +
+        'fused <span class="num">' + x.base.toFixed(3) + '</span><br>' +
+        'entered at rank <span class="num">' + x.firstRank + '</span>' +
+      '</div></div>' +
+      ceCard +
+      '<div class="whycard"><div class="wk">Query terms in chunk</div><div class="termchips">' + termChips + '</div></div>' +
+      '<div class="whycard"><div class="wk">Shared concepts</div><div class="termchips">' + conceptChips + '</div></div>' +
+    '</div>' +
+    '<div class="fulltext">' + highlight(c.sendText, RUN) + '</div>' +
+  '</div>';
+}
+
+/* ---------- scoreboard ---------- */
+function metricCard(key, label, value, base, hint) {
+  let d = "";
+  if (base != null) {
+    const diff = value - base;
+    const cls = Math.abs(diff) < 0.005 ? "flat" : diff > 0 ? "up" : "down";
+    const sign = diff > 0 ? "+" : "";
+    d = '<div class="md ' + cls + '">' + (Math.abs(diff) < 0.005 ? "no change" : sign + (diff * 100).toFixed(1) + " pts") + '</div>';
+  }
+  return '<div class="metric" title="' + esc(hint) + '">' +
+    '<div class="mk">' + label + '</div>' +
+    '<div class="mv">' + pct(value) + '</div>' + d +
+    '<div class="track"><i style="width:' + Math.min(100, value * 100) + '%"></i></div></div>';
+}
+
+function renderScore() {
+  const p = $("paneScore");
+  const m = RUN.metrics;
+
+  if (!m) {
+    p.innerHTML = '<div class="readout"><div class="rk">Unlabelled query</div>' +
+      '<div class="rv">No ground truth</div>' +
+      '<div class="rd">Metrics need labels. Pick one of the ten labelled queries to see precision, recall, MRR and nDCG move as you tune.</div></div>' +
+      renderCostBlock();
+    return;
+  }
+
+  const b = BASELINE ? BASELINE.metrics : null;
+  const answered = m.answerCoverage >= 1;
+
+  let html = '<div class="readout">' +
+    '<div class="rk">Did it find the answer</div>' +
+    '<div class="rv ' + (answered ? "good" : "bad") + '">' +
+      (answered ? "Yes — the answering span is in context" : m.answerCoverage > 0 ? "Partly — one span made it" : "No — the span never reached the model") +
+    '</div>' +
+    '<div class="rd">' + esc(RUN.goldEntry.note) + '</div></div>';
+
+  html += '<div class="metricgrid">' +
+    metricCard("p", "Precision@" + CFG.k, m.precision, b ? b.precision : null, "Share of sent chunks that are labelled relevant") +
+    metricCard("r", "Recall", m.recall, b ? b.recall : null, "Share of labelled relevant sections that made it into context") +
+    metricCard("m", "MRR", m.mrr, b ? b.mrr : null, "1 / rank of the first relevant chunk") +
+    metricCard("n", "nDCG@" + CFG.k, m.ndcg, b ? b.ndcg : null, "Graded relevance discounted by position") +
+    '</div>';
+
+  html += '<div class="subhead">Where it stands</div>';
+  html += '<div class="mathblock">' +
+    '<span class="lbl">relevant sent</span>   <span class="val">' + m.relCount + " / " + RUN.sent.length + '</span><br>' +
+    '<span class="lbl">sections needed</span> <span class="val">' + m.targetCount + '</span><br>' +
+    '<span class="lbl">sections found</span>  <span class="' + (m.covered.length === m.targetCount ? "g" : "b") + '">' + m.covered.length + '</span><br>' +
+    '<span class="lbl">first relevant at</span> <span class="val">' + (m.mrr ? "rank " + Math.round(1 / m.mrr) : "never") + '</span>' +
+    '</div>';
+
+  html += renderCostBlock();
+
+  html += '<div class="tip"><b>Try this.</b> ' + esc(nudge()) + '</div>';
+  p.innerHTML = html;
+}
+
+function nudge() {
+  const m = RUN.metrics;
+  if (!m) return "Pick a labelled query to turn the scoreboard on.";
+  if (m.recall < 1 && CFG.pool < 30) return "Recall is short and the candidate pool is narrow. Widen the pool before touching anything else — recall lost in the first pass cannot be recovered by reranking.";
+  if (m.recall < 1 && CFG.k < 5) return "The right sections are being found but k is too small to carry them. Raise k, then use the floor to trim what does not deserve the slot.";
+  if (m.precision < 0.5 && !CFG.rerank) return "Half of what you are sending is noise. Turn the cross-encoder on and watch the ranks reshuffle without changing what was retrieved.";
+  if (m.precision < 0.6 && CFG.k > 6) return "Precision is low mostly because k is generous. Drop k and let the floor do the trimming.";
+  if (m.answerCoverage < 1 && CFG.strategy === "fixed") return "The answering span is being cut in half. Switch to recursive chunking, or raise the overlap until the span survives.";
+  if (m.answerCoverage < 1 && RUN.dropped.length) return "A chunk that answers the question was selected and then cut by the token ceiling. Raise the ceiling or lower k.";
+  if (m.ndcg > 0.9 && CFG.k > 4) return "Ranking is close to ideal. Now push k down and see how far you can cut the bill before the answer falls out.";
+  return "Pin this as the baseline, then change one thing at a time. Every metric will show its delta against the pin.";
+}
+
+function renderCostBlock() {
+  const tokens = RUN.contextTokens;
+  const cost = tokens / 1e6 * (CFG.price / 100);
+  const perDay = cost * 50000;
+  return '<div class="subhead">What it costs</div>' +
+    '<div class="mathblock">' +
+    '<span class="lbl">context</span>       <span class="val">' + tokens + '</span> tokens<br>' +
+    '<span class="lbl">per query</span>     <span class="val">$' + cost.toFixed(5) + '</span><br>' +
+    '<span class="lbl">at 50k/day</span>    <span class="val">$' + perDay.toFixed(2) + '</span> / day<br>' +
+    '<span class="lbl">per month</span>     <span class="val">$' + (perDay * 30).toFixed(0) + '</span>' +
+    '</div>';
+}
+
+/* ---------- metric maths ---------- */
+function renderMath() {
+  const p = $("paneMath");
+  const m = RUN.metrics;
+  if (!m) {
+    p.innerHTML = '<div class="tip">Metric maths needs a labelled query. Pick one from the row above the index strip.</div>';
+    return;
+  }
+
+  const grades = m.graded;
+  let html = '<div class="subhead">Graded results</div><div class="mathblock">';
+  grades.forEach((g, i) => {
+    const cls = g >= 2 ? "g" : g === 1 ? "val" : "b";
+    html += '<span class="lbl">rank ' + String(i + 1).padStart(2, " ") + '</span>  gain <span class="' + cls + '">' + g + '</span>' +
+      '  <span class="lbl">/ log2(' + (i + 2) + ') = </span><span class="val">' +
+      ((Math.pow(2, g) - 1) / Math.log2(i + 2)).toFixed(3) + '</span><br>';
+  });
+  html += '</div>';
+
+  html += '<div class="subhead">nDCG@' + CFG.k + '</div><div class="mathblock">' +
+    '<span class="lbl">DCG   =</span> <span class="val">' + dcg(grades.slice(0, CFG.k)).toFixed(3) + '</span><br>' +
+    '<span class="lbl">ideal =</span> [' + m.ideal.join(", ") + ']<br>' +
+    '<span class="lbl">IDCG  =</span> <span class="val">' + dcg(m.ideal).toFixed(3) + '</span><hr>' +
+    '<span class="lbl">nDCG  =</span> <span class="val">' + m.ndcg.toFixed(3) + '</span>' +
+    '</div>';
+
+  html += '<div class="subhead">Precision and recall</div><div class="mathblock">' +
+    '<span class="lbl">P@' + CFG.k + ' =</span> ' + m.relCount + ' relevant / ' + RUN.sent.length + ' sent = <span class="val">' + pct1(m.precision) + '</span><hr>' +
+    '<span class="lbl">needed:</span><br>' +
+    m.targets.map(t => '  <span class="' + (m.covered.includes(t) ? "g" : "b") + '">' +
+      (m.covered.includes(t) ? "found " : "missed") + '</span> ' + esc(t)).join("<br>") +
+    '<hr><span class="lbl">recall =</span> ' + m.covered.length + " / " + m.targetCount + ' = <span class="val">' + pct1(m.recall) + '</span>' +
+    '</div>';
+
+  html += '<div class="subhead">Answer spans</div><div class="mathblock">' +
+    RUN.goldEntry.gold.filter(g => g.span).map(g => {
+      const inCtx = RUN.sent.some(h => (h.chunk.text + " " + h.chunk.sendText).toLowerCase().includes(g.span.toLowerCase()));
+      return '<span class="' + (inCtx ? "g" : "b") + '">' + (inCtx ? "in context " : "missing   ") + '</span>"' + esc(g.span) + '"';
+    }).join("<br>") + '</div>';
+
+  html += '<div class="tip"><b>Why both.</b> Faithfulness can look perfect while recall quietly sits at 0.6 — ' +
+    'the model answers honestly from partial context and the user still gets an incomplete answer. ' +
+    'A retrieval metric is the only thing that catches it.</div>';
+
+  p.innerHTML = html;
+}
+
+/* ---------- context ---------- */
+function renderContext() {
+  const p = $("paneCtx");
+  const used = RUN.contextTokens;
+  const cap = CFG.budget;
+  let bars = "";
+  RUN.sent.forEach(x => {
+    const g = RUN.goldEntry ? gradeChunk(x.chunk, RUN.goldEntry).grade : 0;
+    bars += '<i class="in ' + (g >= 2 ? "gold" : "") + '" style="width:' + (x.chunk.nTokens / cap * 100) + '%"></i>';
+  });
+  if (used < cap) bars += '<i class="over" style="width:' + ((cap - used) / cap * 100) + '%"></i>';
+
+  let html = '<div class="subhead">Context window</div>' +
+    '<div class="budget"><div class="budgetbar">' + bars + '</div>' +
+    '<div class="budgetmeta"><span><b>' + used + '</b> of ' + cap + ' tokens</span>' +
+    '<span>' + RUN.sent.length + ' chunks · ' + RUN.dropped.length + ' cut</span></div></div>';
+
+  html += '<div class="ctxlist">';
+  RUN.sent.forEach((x, i) => {
+    const g = RUN.goldEntry ? gradeChunk(x.chunk, RUN.goldEntry).grade : 0;
+    const col = g >= 2 ? "var(--hit)" : g === 1 ? "var(--warn)" : "var(--miss)";
+    html += '<div class="ctxrow"><span class="cn">' + (i + 1) + '</span>' +
+      '<span class="dot" style="background:' + col + '"></span>' +
+      '<span class="ct">' + esc(x.chunk.docTitle) + " · " + esc(x.chunk.secTitle) + '</span>' +
+      '<span class="cz">' + x.chunk.nTokens + '</span></div>';
+  });
+  RUN.dropped.forEach(x => {
+    html += '<div class="ctxrow dropped"><span class="cn">—</span>' +
+      '<span class="dot" style="background:var(--ink4)"></span>' +
+      '<span class="ct">' + esc(x.chunk.docTitle) + " · " + esc(x.chunk.secTitle) + '</span>' +
+      '<span class="cz">' + x.chunk.nTokens + '</span></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="subhead">Pipeline trace</div><div class="mathblock">';
+  RUN.trace.forEach(t => {
+    html += '<span class="lbl">' + t.stage.padEnd(8, " ") + '</span><span class="val">' + t.n + '</span>  ' + esc(t.detail) + '<br>';
+  });
+  html += '</div>';
+
+  if (RUN.droppedByFloor) {
+    html += '<div class="tip"><b>' + RUN.droppedByFloor + ' candidates</b> fell below the score floor and were never considered for a slot.</div>';
+  }
+
+  p.innerHTML = html;
+}
+
+/* ---------- change log ---------- */
+function renderLog() {
+  const p = $("paneLog");
+  if (!LOG.length) {
+    p.innerHTML = '<div class="tip">Every control you move is recorded here with what it did to nDCG. Change one thing at a time and the log becomes an experiment record.</div>';
+    return;
+  }
+  p.innerHTML = LOG.map(l => {
+    const t = l.t.toTimeString().slice(0, 8);
+    const d = l.delta == null ? "" :
+      '<span class="delta ' + (l.delta > 0 ? "up" : "down") + '">' +
+      (l.delta > 0 ? "+" : "") + (l.delta * 100).toFixed(1) + '</span>';
+    return '<div class="logline"><span class="lt">' + t + '</span><span class="lb">' + esc(l.reason) + ' ' + d + '</span></div>';
+  }).join("");
+}
+
+/* ---------- hover pop ---------- */
+function showPop(e, head, body) {
+  const p = $("pop");
+  $("popH").textContent = head;
+  $("popB").textContent = body;
+  p.classList.add("show");
+  const r = e.target.getBoundingClientRect();
+  let left = r.left + r.width / 2 - 140;
+  left = Math.max(8, Math.min(window.innerWidth - 296, left));
+  p.style.left = left + "px";
+  p.style.top = (r.bottom + 9) + "px";
+}
+function hidePop() { $("pop").classList.remove("show"); }
+
+/* ---------- tabs, keys, boot ---------- */
+$$(".gtab").forEach(t => t.onclick = () => {
+  $$(".gtab").forEach(x => x.classList.toggle("on", x === t));
+  $$(".gpane").forEach(x => x.classList.remove("show"));
+  $("pane" + t.dataset.pane.charAt(0).toUpperCase() + t.dataset.pane.slice(1)).classList.add("show");
+});
+
+$("goBtn").onclick = () => {
+  const v = $("qInput").value.trim();
+  if (!v) return;
+  CURRENT_Q = v;
+  execute("Ran a custom query");
+};
+$("qInput").onkeydown = e => { if (e.key === "Enter") $("goBtn").click(); };
+
+$("pinBtn").onclick = () => {
+  if (BASELINE) {
+    BASELINE = null;
+    $("pinBtn").textContent = "Pin as baseline";
+    $("pinBtn").classList.remove("armed");
+    pushLog("Baseline cleared", null, null);
+  } else {
+    BASELINE = { cfg: JSON.parse(JSON.stringify(CFG)), metrics: RUN.metrics ? { ...RUN.metrics } : null };
+    $("pinBtn").textContent = "Baseline pinned";
+    $("pinBtn").classList.add("armed");
+    pushLog("Pinned this config as the baseline", null, null);
+  }
+  renderScore();
+};
+
+$("resetBtn").onclick = () => {
+  ACTIVE_PRESET = "hybrid";
+  CFG = JSON.parse(JSON.stringify(PRESETS.hybrid.cfg));
+  BASELINE = null;
+  $("pinBtn").textContent = "Pin as baseline";
+  $("pinBtn").classList.remove("armed");
+  LOG = [];
+  buildPresets(); syncDeck();
+  execute("Reset to the advanced hybrid config");
+  renderLog();
+};
+
+document.addEventListener("keydown", e => {
+  if (/input|textarea/i.test(e.target.tagName)) {
+    if (e.key === "Escape") e.target.blur();
+    return;
+  }
+  if (e.key === "/") { e.preventDefault(); $("qInput").focus(); $("qInput").select(); return; }
+  const n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 9) selectGold(n - 1);
+  if (e.key === "0") selectGold(9);
+});
+
+/* boot */
+buildPresets();
+buildSegs();
+wireRanges();
+buildGoldRow();
+syncDeck();
+$("qInput").value = CURRENT_Q;
+execute(null);
+renderLog();
+</script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fifty animated, standalone Python concept lessons for visual learners.">
+  <title>Python Concept Lab · 50 Visual Lessons</title>
+  <style>
+    :root { --ink:#102a2a; --canvas:#f0fdfa; --primary:#0f766e; --accent:#d97706; --line:#99f6e4; --white:#fff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; min-width:320px; color:var(--ink); background:var(--canvas); font-family:Inter,ui-sans-serif,system-ui,sans-serif; line-height:1.6; }
+    header { padding:clamp(70px,10vw,150px) clamp(20px,7vw,110px) 65px; }
+    .eyebrow { color:var(--primary); font-size:13px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; }
+    h1 { max-width:1050px; margin:14px 0 24px; font-family:Georgia,serif; font-size:clamp(55px,10vw,145px); font-weight:600; letter-spacing:-.065em; line-height:.88; }
+    .intro { max-width:730px; margin:0; color:#355c5c; font-size:clamp(18px,2vw,24px); }
+    .toolbar { position:sticky; z-index:10; top:0; display:flex; gap:14px; align-items:center; padding:16px clamp(20px,7vw,110px); background:color-mix(in srgb,var(--canvas) 90%,transparent); border-block:1px solid var(--line); backdrop-filter:blur(16px); }
+    .toolbar label { font-weight:800; }
+    input { width:min(520px,100%); min-height:48px; padding:10px 16px; color:var(--ink); background:var(--white); border:1px solid var(--line); border-radius:999px; font:inherit; }
+    input:focus-visible,a:focus-visible { outline:4px solid #fbbf24; outline-offset:3px; }
+    main { padding:55px clamp(20px,7vw,110px) 120px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:1400px; margin:0 auto; }
+    .lesson-card { --card-color:var(--primary); position:relative; display:grid; grid-template-columns:58px 1fr 30px; gap:20px; min-height:260px; padding:30px; overflow:hidden; color:var(--ink); background:var(--white); border:1px solid var(--line); border-radius:28px; text-decoration:none; box-shadow:0 14px 45px rgba(16,42,42,.08); transition:transform 220ms cubic-bezier(.2,.8,.2,1),box-shadow 220ms; }
+    .lesson-card::before { position:absolute; inset:0 auto 0 0; width:7px; content:""; background:var(--card-color); }
+    .lesson-card:hover { transform:translateY(-6px); box-shadow:0 22px 55px rgba(16,42,42,.15); }
+    .lesson-number { display:grid; width:48px; height:48px; place-items:center; color:var(--white); background:var(--card-color); border-radius:15px; font-size:13px; font-weight:900; }
+    .lesson-card p { margin:3px 0 40px; color:var(--card-color); font-size:12px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; }
+    .lesson-card h2 { margin:0 0 10px; font-family:Georgia,serif; font-size:clamp(28px,3vw,42px); letter-spacing:-.035em; line-height:1; }
+    .lesson-card div span { display:block; color:#557070; }
+    .lesson-card svg { width:26px; height:26px; align-self:center; fill:var(--card-color); transition:transform 180ms; }
+    .lesson-card:hover svg { transform:translateX(5px); }
+    .empty { display:none; padding:60px 20px; color:#557070; text-align:center; }
+    footer { padding:35px clamp(20px,7vw,110px); color:#ccfbf1; background:var(--ink); }
+    @media(max-width:800px){.grid{grid-template-columns:1fr}.toolbar{align-items:stretch;flex-direction:column}.toolbar label{align-self:flex-start}.toolbar input{width:100%}}
+    @media(max-width:520px){.lesson-card{grid-template-columns:48px 1fr;padding:22px}.lesson-card>svg{display:none}.lesson-card p{margin-bottom:25px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Python Concept Lab</p>
+    <h1>One concept at a time.</h1>
+    <p class="intro">Fifty focused, animated lessons for people who learn best by seeing what code does. Every artifact is standalone, beginner-friendly, and built around a different mental model.</p>
+  </header>
+  <div class="toolbar">
+    <label for="search">Find a lesson</label>
+    <input id="search" type="search" placeholder="Try “loops”, “files”, or “classes”…" autocomplete="off">
+  </div>
+  <main>
+    <div class="grid" id="lessonGrid">
+        <a class="lesson-card" href="artifacts/01-variables.html" style="--card-color:#0f766e">
+          <span class="lesson-number">01</span>
+          <div>
+            <p>Memory Box Studio</p>
+            <h2>Variables</h2>
+            <span>Put a label on a box, store a value, then replace it when your program learns something new.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/02-data-types.html" style="--card-color:#7c3aed">
+          <span class="lesson-number">02</span>
+          <div>
+            <p>Type Scanner</p>
+            <h2>Data Types</h2>
+            <span>A scanner identifies what kind of value entered the program so Python knows what operations make sense.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/03-strings.html" style="--card-color:#2563eb">
+          <span class="lesson-number">03</span>
+          <div>
+            <p>String Ribbon Workshop</p>
+            <h2>Strings</h2>
+            <span>Text is a ribbon of characters: inspect it, join it, repeat it, or cut out a slice.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/04-lists.html" style="--card-color:#b45309">
+          <span class="lesson-number">04</span>
+          <div>
+            <p>List Train Yard</p>
+            <h2>Lists</h2>
+            <span>A list is a train whose ordered carriages can be added, removed, replaced, and inspected.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/05-tuples.html" style="--card-color:#be123c">
+          <span class="lesson-number">05</span>
+          <div>
+            <p>Tuple Time Capsule</p>
+            <h2>Tuples</h2>
+            <span>A tuple seals an ordered collection so its positions stay dependable after creation.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/06-dictionaries.html" style="--card-color:#0369a1">
+          <span class="lesson-number">06</span>
+          <div>
+            <p>Dictionary City Map</p>
+            <h2>Dictionaries</h2>
+            <span>A dictionary connects unique keys to values like named addresses leading to buildings.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/07-sets.html" style="--card-color:#15803d">
+          <span class="lesson-number">07</span>
+          <div>
+            <p>Set Venn Arena</p>
+            <h2>Sets</h2>
+            <span>A set keeps only unique items and makes overlap, difference, and membership easy to see.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/08-booleans.html" style="--card-color:#c2410c">
+          <span class="lesson-number">08</span>
+          <div>
+            <p>Boolean Circuit Bench</p>
+            <h2>Booleans</h2>
+            <span>A Boolean is a two-state signal: True lets current pass and False closes the gate.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/09-comparisons.html" style="--card-color:#4338ca">
+          <span class="lesson-number">09</span>
+          <div>
+            <p>Comparison Balance Lab</p>
+            <h2>Comparisons</h2>
+            <span>Comparison operators place values on a balance and report a Boolean result.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/10-conditionals.html" style="--card-color:#a21caf">
+          <span class="lesson-number">10</span>
+          <div>
+            <p>Decision Path Maze</p>
+            <h2>Conditionals</h2>
+            <span>if, elif, and else open exactly one route based on conditions checked from top to bottom.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/11-for-loops.html" style="--card-color:#0f766e">
+          <span class="lesson-number">11</span>
+          <div>
+            <p>Loop Conveyor</p>
+            <h2>For Loops</h2>
+            <span>A for loop visits each item on a conveyor and performs the same clear job once per item.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/12-while-loops.html" style="--card-color:#7c3aed">
+          <span class="lesson-number">12</span>
+          <div>
+            <p>While Orbit Mission</p>
+            <h2>While Loops</h2>
+            <span>A while loop keeps orbiting while its condition remains True, so its state must move toward a stop.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/13-range.html" style="--card-color:#2563eb">
+          <span class="lesson-number">13</span>
+          <div>
+            <p>Number Step Factory</p>
+            <h2>The range() Function</h2>
+            <span>range produces a predictable stream of integers using start, stop, and step settings.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/14-functions.html" style="--card-color:#b45309">
+          <span class="lesson-number">14</span>
+          <div>
+            <p>Function Machine</p>
+            <h2>Functions</h2>
+            <span>A function packages instructions into a named machine you can run whenever the job is needed.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/15-parameters.html" style="--card-color:#be123c">
+          <span class="lesson-number">15</span>
+          <div>
+            <p>Parameter Mailroom</p>
+            <h2>Parameters and Arguments</h2>
+            <span>Parameters are labeled mail slots; arguments are the actual packages delivered during a call.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/16-return-values.html" style="--card-color:#0369a1">
+          <span class="lesson-number">16</span>
+          <div>
+            <p>Return Delivery Dock</p>
+            <h2>Return Values</h2>
+            <span>return sends a result out of a function so the caller can store, combine, or display it.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/17-scope.html" style="--card-color:#15803d">
+          <span class="lesson-number">17</span>
+          <div>
+            <p>Scope Floor Plan</p>
+            <h2>Variable Scope</h2>
+            <span>Names live on different floors: local rooms are private to a function, while global names live outside.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/18-lambda.html" style="--card-color:#c2410c">
+          <span class="lesson-number">18</span>
+          <div>
+            <p>Lambda Spark Cards</p>
+            <h2>Lambda Functions</h2>
+            <span>A lambda is a tiny unnamed function for one expression, useful when another tool needs quick behavior.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/19-comprehensions.html" style="--card-color:#4338ca">
+          <span class="lesson-number">19</span>
+          <div>
+            <p>Comprehension Garden</p>
+            <h2>List Comprehensions</h2>
+            <span>A comprehension grows a new list by transforming each seed and optionally filtering what gets planted.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/20-generators.html" style="--card-color:#a21caf">
+          <span class="lesson-number">20</span>
+          <div>
+            <p>Generator Power Station</p>
+            <h2>Generators</h2>
+            <span>A generator produces one value only when requested, saving memory like energy made on demand.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/21-iterators.html" style="--card-color:#0f766e">
+          <span class="lesson-number">21</span>
+          <div>
+            <p>Iterator Stepping Stones</p>
+            <h2>Iterators</h2>
+            <span>An iterator remembers its position and hands over the next value each time next is called.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/22-exceptions.html" style="--card-color:#7c3aed">
+          <span class="lesson-number">22</span>
+          <div>
+            <p>Exception Rescue Station</p>
+            <h2>Exceptions</h2>
+            <span>try protects risky work; except catches a known problem and guides the program to a safe response.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/23-files.html" style="--card-color:#2563eb">
+          <span class="lesson-number">23</span>
+          <div>
+            <p>File Library Desk</p>
+            <h2>Reading and Writing Files</h2>
+            <span>A file handle checks a document in, lets Python read or write it, and should always be closed safely.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/24-context-managers.html" style="--card-color:#b45309">
+          <span class="lesson-number">24</span>
+          <div>
+            <p>Context Airlock</p>
+            <h2>Context Managers</h2>
+            <span>A context manager opens a resource, lets work happen safely, and guarantees cleanup when the block ends.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/25-modules.html" style="--card-color:#be123c">
+          <span class="lesson-number">25</span>
+          <div>
+            <p>Module Constellation</p>
+            <h2>Modules</h2>
+            <span>A module is a Python file whose related names form a reusable constellation for other programs.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/26-imports.html" style="--card-color:#0369a1">
+          <span class="lesson-number">26</span>
+          <div>
+            <p>Import Harbor</p>
+            <h2>Imports</h2>
+            <span>Imports bring selected tools from another module into your program, like cargo unloaded at a named port.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/27-classes.html" style="--card-color:#15803d">
+          <span class="lesson-number">27</span>
+          <div>
+            <p>Class Blueprint Table</p>
+            <h2>Classes</h2>
+            <span>A class is a blueprint describing the data and behavior each future object should receive.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/28-objects.html" style="--card-color:#c2410c">
+          <span class="lesson-number">28</span>
+          <div>
+            <p>Object Robot Lab</p>
+            <h2>Objects</h2>
+            <span>An object is one working creation built from a class, with its own state and shared methods.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/29-inheritance.html" style="--card-color:#4338ca">
+          <span class="lesson-number">29</span>
+          <div>
+            <p>Inheritance Family Tree</p>
+            <h2>Inheritance</h2>
+            <span>A child class starts with a parent's features and can add or replace behavior of its own.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/30-polymorphism.html" style="--card-color:#a21caf">
+          <span class="lesson-number">30</span>
+          <div>
+            <p>Polymorphism Translation Booth</p>
+            <h2>Polymorphism</h2>
+            <span>Different objects can answer the same method call in their own way, so callers use one shared interface.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/31-encapsulation.html" style="--card-color:#0f766e">
+          <span class="lesson-number">31</span>
+          <div>
+            <p>Encapsulation Vault</p>
+            <h2>Encapsulation</h2>
+            <span>Encapsulation keeps state and the rules for changing it together behind a small, safe interface.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/32-dataclasses.html" style="--card-color:#7c3aed">
+          <span class="lesson-number">32</span>
+          <div>
+            <p>Data Class Card Press</p>
+            <h2>Data Classes</h2>
+            <span>A data class quickly stamps out clear record-like classes with generated setup and display methods.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/33-decorators.html" style="--card-color:#2563eb">
+          <span class="lesson-number">33</span>
+          <div>
+            <p>Decorator Wrapping Desk</p>
+            <h2>Decorators</h2>
+            <span>A decorator wraps a function with extra behavior without rewriting the original function body.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/34-recursion.html" style="--card-color:#b45309">
+          <span class="lesson-number">34</span>
+          <div>
+            <p>Recursion Nesting Dolls</p>
+            <h2>Recursion</h2>
+            <span>A recursive function solves a smaller version of its own problem until it reaches a simple base case.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/35-sorting.html" style="--card-color:#be123c">
+          <span class="lesson-number">35</span>
+          <div>
+            <p>Sorting Race Track</p>
+            <h2>Sorting</h2>
+            <span>Sorting arranges values into an order; a key can say which feature controls the finish positions.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/36-searching.html" style="--card-color:#0369a1">
+          <span class="lesson-number">36</span>
+          <div>
+            <p>Search Treasure Grid</p>
+            <h2>Searching</h2>
+            <span>Searching checks candidate locations until a wanted value is found or every useful place is exhausted.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/37-slicing.html" style="--card-color:#15803d">
+          <span class="lesson-number">37</span>
+          <div>
+            <p>Slice Sandwich Counter</p>
+            <h2>Sequence Slicing</h2>
+            <span>A slice selects a new portion using start, stop, and step—like choosing layers without changing the loaf.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/38-unpacking.html" style="--card-color:#c2410c">
+          <span class="lesson-number">38</span>
+          <div>
+            <p>Unpacking Carousel</p>
+            <h2>Sequence Unpacking</h2>
+            <span>Unpacking sends sequence values into matching names in one readable move.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/39-args-kwargs.html" style="--card-color:#4338ca">
+          <span class="lesson-number">39</span>
+          <div>
+            <p>Flexible Mixer Board</p>
+            <h2>*args and **kwargs</h2>
+            <span>*args gathers extra positional inputs; **kwargs gathers extra named inputs into separate channels.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/40-enumerate.html" style="--card-color:#a21caf">
+          <span class="lesson-number">40</span>
+          <div>
+            <p>Enumerate Ticket Counter</p>
+            <h2>The enumerate() Function</h2>
+            <span>enumerate pairs every item with a counter so you never need to manage the number by hand.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/41-zip.html" style="--card-color:#0f766e">
+          <span class="lesson-number">41</span>
+          <div>
+            <p>Zip Fastener Workshop</p>
+            <h2>The zip() Function</h2>
+            <span>zip joins items from parallel sequences into pairs, stopping when the shortest side runs out.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/42-map-filter-reduce.html" style="--card-color:#7c3aed">
+          <span class="lesson-number">42</span>
+          <div>
+            <p>Data Assembly Line</p>
+            <h2>Map, Filter, and Reduce</h2>
+            <span>Map transforms, filter selects, and reduce combines—three different stations for processing a stream.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/43-any-all.html" style="--card-color:#2563eb">
+          <span class="lesson-number">43</span>
+          <div>
+            <p>Logic Control Room</p>
+            <h2>any() and all()</h2>
+            <span>any turns on when at least one signal is True; all turns on only when every signal is True.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/44-f-strings.html" style="--card-color:#b45309">
+          <span class="lesson-number">44</span>
+          <div>
+            <p>F-String Sign Studio</p>
+            <h2>Formatted String Literals</h2>
+            <span>An f-string places live expressions inside braces to build readable text without awkward joining.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/45-datetime.html" style="--card-color:#be123c">
+          <span class="lesson-number">45</span>
+          <div>
+            <p>Datetime Time Machine</p>
+            <h2>Dates and Times</h2>
+            <span>datetime objects represent calendar moments and timedeltas measure safe journeys between them.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/46-random.html" style="--card-color:#0369a1">
+          <span class="lesson-number">46</span>
+          <div>
+            <p>Random Probability Lab</p>
+            <h2>Randomness</h2>
+            <span>The random module makes pseudorandom choices—repeatable when a seed is set for experiments.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/47-json.html" style="--card-color:#15803d">
+          <span class="lesson-number">47</span>
+          <div>
+            <p>JSON Packing Station</p>
+            <h2>JSON Data</h2>
+            <span>JSON packs Python-style data into portable text and unpacks received text back into useful structures.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/48-regex.html" style="--card-color:#c2410c">
+          <span class="lesson-number">48</span>
+          <div>
+            <p>Regex Detective Board</p>
+            <h2>Regular Expressions</h2>
+            <span>A regular expression describes a text pattern so clues can be found, validated, or replaced.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/49-async-await.html" style="--card-color:#4338ca">
+          <span class="lesson-number">49</span>
+          <div>
+            <p>Async Restaurant</p>
+            <h2>Async and Await</h2>
+            <span>Async code lets one task wait without blocking the whole kitchen, so other work can progress meanwhile.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+        <a class="lesson-card" href="artifacts/50-testing.html" style="--card-color:#a21caf">
+          <span class="lesson-number">50</span>
+          <div>
+            <p>Testing Quality Lab</p>
+            <h2>Unit Testing</h2>
+            <span>A unit test gives one small piece of code a known input and checks that the actual result matches expectation.</span>
+          </div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </a>
+    </div>
+    <p class="empty" id="emptyState">No lesson matched that search. Try a broader Python word.</p>
+  </main>
+  <footer>50 topics · 50 standalone files · designed for calm, visual learning</footer>
+  <script>
+    const search = document.querySelector("#search");
+    const cards = [...document.querySelectorAll(".lesson-card")];
+    const emptyState = document.querySelector("#emptyState");
+    search.addEventListener("input", () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const matches = card.textContent.toLowerCase().includes(query);
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      emptyState.style.display = visible ? "none" : "block";
+    });
+  </script>
+</body>
+</html>
