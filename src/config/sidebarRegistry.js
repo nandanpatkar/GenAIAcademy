@@ -6,7 +6,7 @@ import {
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
-  FlaskConical, Headphones, Tags,
+  FlaskConical, Headphones, Tags, Swords,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -23,7 +23,8 @@ export const SIDEBAR_ITEM_REGISTRY = {
   knowledge_graph: { icon: Share2, label: "Concept Connections", description: "See how ideas relate" },
 
   ide: { icon: Terminal, label: "Coding Practice", description: "Write and run code" },
-  leetcode: { icon: Code2, label: "LeetCode", description: "Solve LeetCode problems" },
+  leetcode: { icon: Code2, label: "Code Lab", description: "Practice LeetCode problems" },
+  algowar: { icon: Swords, label: "AlgoWar Arena", description: "Compete in real-time coding battles" },
   playground: { icon: Boxes, label: "AI Playground", description: "Experiment with AI systems" },
   genai_playground2: { icon: Sparkles, label: "Gen AI Playground 2.0", description: "Design systems, diagrams, and AI whiteboards" },
   simulator: { icon: Layers, label: "System Design", description: "Practice architecture decisions" },
@@ -208,6 +209,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab", "concurrency_lab"] },
+  { id: "algowar", label: "AlgoWar", itemIds: ["algowar"] },
   { id: "labs", label: "Labs", itemIds: ["labs"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
@@ -366,6 +368,20 @@ export const resolveEffectiveLayout = (savedLayout) => {
   const source = savedLayout && savedLayout.length ? savedLayout : DEFAULT_SIDEBAR_LAYOUT;
   const groups = source.map((group) => ({ ...group, itemIds: [...group.itemIds] }));
 
+  // AlgoWar owns a dedicated top-level section. Re-home it for saved/custom
+  // layouts too, otherwise newly shipped items are appended under More tools.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => id !== "algowar");
+  });
+  let algoWarGroup = groups.find((group) => group.id === "algowar");
+  if (!algoWarGroup) {
+    algoWarGroup = { id: "algowar", label: "AlgoWar", itemIds: [] };
+    const labsIndex = groups.findIndex((group) => group.id === "labs");
+    groups.splice(labsIndex === -1 ? groups.length : labsIndex, 0, algoWarGroup);
+  }
+  algoWarGroup.label = "AlgoWar";
+  algoWarGroup.itemIds.push("algowar");
+
   // Consolidate older per-lab sidebar items into the single Labs home entry.
   groups.forEach((group) => {
     group.itemIds = group.itemIds.filter((id) => id !== "labs" && !LAB_ITEM_IDS.includes(id));
@@ -397,7 +413,11 @@ export const resolveEffectiveLayout = (savedLayout) => {
   agentsGroup.itemIds.push(...AGENT_ITEM_IDS);
 
   const covered = new Set(groups.flatMap((group) => group.itemIds));
-  const orphanIds = Object.keys(SIDEBAR_ITEM_REGISTRY).filter((id) => !covered.has(id));
+  // Individual lab destinations live inside LabsHub. They are intentionally
+  // absent from the sidebar layout and must not be resurrected as orphans in
+  // More tools after the consolidation above.
+  const orphanIds = Object.keys(SIDEBAR_ITEM_REGISTRY)
+    .filter((id) => !covered.has(id) && !LAB_ITEM_IDS.includes(id));
   if (orphanIds.length) {
     const fallback = groups.find((group) => group.id === "more_tools") || groups[groups.length - 1];
     if (fallback) fallback.itemIds.push(...orphanIds);

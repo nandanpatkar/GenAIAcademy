@@ -74,6 +74,7 @@ export function getActiveNavId(p) {
   if (p.showLegacyIntelligenceHub) return "legacy_hub";
   if (p.showQuiz) return "quiz";
   if (p.showLeetCode) return "leetcode";
+  if (p.showAlgoWar) return "algowar";
   if (p.showManual) return "manual";
   if (p.showReference) return "reference";
   if (p.showAgentCore) return p.agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
@@ -141,6 +142,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowLegacyIntelligenceHub) p.setShowLegacyIntelligenceHub(false);
   if (p.setShowQuiz) p.setShowQuiz(false);
   if (p.setShowLeetCode) p.setShowLeetCode(false);
+  if (p.setShowAlgoWar) p.setShowAlgoWar(false);
   if (p.setShowManual) p.setShowManual(false);
   if (p.setShowReference) p.setShowReference(false);
   if (p.setShowAgentCore) p.setShowAgentCore(false);
@@ -400,6 +402,9 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "leetcode":
       if (p.setShowLeetCode) p.setShowLeetCode(true);
+      break;
+    case "algowar":
+      if (p.setShowAlgoWar) p.setShowAlgoWar(true);
       break;
     case "community":
       if (p.onOpenToolHome) p.onOpenToolHome("community"); else if (p.setShowCommunity) p.setShowCommunity(true);

@@ -71,6 +71,7 @@ const StrandsDocs = React.lazy(() => import("./components/StrandsDocs"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
 const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
+const AlgoWarArena = React.lazy(() => import("./components/AlgoWarArena"));
 const ProjectIDE = React.lazy(() => import("./components/Projects/ProjectIDE"));
 const IntelligenceHub = React.lazy(() => import("./components/IntelligenceHub"));
 const HomeDashboard = React.lazy(() => import("./components/HomeDashboard"));
@@ -299,6 +300,7 @@ function MainApp() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
   const [showLeetCode, setShowLeetCode] = useState(false);
+  const [showAlgoWar, setShowAlgoWar] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingMode, setOnboardingMode] = useState("modal"); // "modal" (first login) | "panel" (sidebar reopen)
   const hasCheckedOnboarding = React.useRef(false);
@@ -810,6 +812,7 @@ function MainApp() {
     setShowLangChainDocs(false);
     setShowStrandsDocs(false);
     setShowLeetCode(false);
+    setShowAlgoWar(false);
     setShowOnboarding(false);
     setInterviewDeepLinkId(null);
   };
@@ -1459,6 +1462,7 @@ function MainApp() {
           activeToolHome={activeToolHome} onOpenToolHome={setActiveToolHome}
           showQuiz={showQuiz} setShowQuiz={setShowQuiz}
           showLeetCode={showLeetCode} setShowLeetCode={setShowLeetCode}
+          showAlgoWar={showAlgoWar} setShowAlgoWar={setShowAlgoWar}
           showProjects={showProjects} setShowProjects={setShowProjects}
           setLinksInitialTab={setLinksInitialTab}
           onHubNav={handleHubNav}
@@ -1575,6 +1579,7 @@ function MainApp() {
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
+                                                      showAlgoWar ? <AlgoWarArena onClose={() => setShowAlgoWar(false)} /> :
                                                       showQuiz ? <QuizApp /> :
                                                       showHome2 ? (
                                                         <Home2Dashboard
@@ -1844,7 +1849,7 @@ function MainApp() {
         !showAIInterviewer && !showGeminiInterviewer && !showEmotionalSupport && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
         !showIntelligenceHub && !showLegacyIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&
-        !showCommunity && (
+        !showCommunity && !showAlgoWar && (
           null
         )}
 

@@ -67,6 +67,7 @@ export default function Sidebar({
   onSectionWalkthrough,
   showQuiz, setShowQuiz,
   showLeetCode, setShowLeetCode,
+  showAlgoWar, setShowAlgoWar,
   showNoSignups, setShowNoSignups,
   showFreeSystemDesign, setShowFreeSystemDesign,
   showManual, setShowManual,
@@ -87,6 +88,7 @@ export default function Sidebar({
   const [expandedGroups, setExpandedGroups] = useState({
     learn: true,
     practice: true,
+    algowar: true,
     labs: true,
     agents: true,
     library: false,
@@ -294,6 +296,7 @@ export default function Sidebar({
     if (showLegacyIntelligenceHub) return "legacy_hub";
     if (showQuiz) return "quiz";
     if (showLeetCode) return "leetcode";
+    if (showAlgoWar) return "algowar";
     if (showManual) return "manual";
     if (showReference) return "reference";
     if (showAgentCore) return agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
@@ -357,6 +360,7 @@ export default function Sidebar({
     if (setShowLegacyIntelligenceHub) setShowLegacyIntelligenceHub(false);
     if (setShowQuiz) setShowQuiz(false);
     if (setShowLeetCode) setShowLeetCode(false);
+    if (setShowAlgoWar) setShowAlgoWar(false);
     if (setShowManual) setShowManual(false);
     if (setShowReference) setShowReference(false);
     if (setShowAgentCore) setShowAgentCore(false);
@@ -616,6 +620,9 @@ export default function Sidebar({
         break;
       case "leetcode":
         if (setShowLeetCode) setShowLeetCode(true);
+        break;
+      case "algowar":
+        if (setShowAlgoWar) setShowAlgoWar(true);
         break;
       case "community":
         if (onOpenToolHome) onOpenToolHome("community"); else if (setShowCommunity) setShowCommunity(true);

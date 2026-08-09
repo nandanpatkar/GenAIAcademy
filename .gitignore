@@ -48,6 +48,12 @@ agentcore-samples-main/
 # empty folder, so it is excluded rather than committed broken.
 /Leetcode/
 
+# Raw scraped/build-input data for the AlgoWar arena and codelab dataset.
+# The generated output that ships lives in src/data/codelab/ and
+# public/codelab/, which ARE committed.
+/Algowar/
+/dsanew/
+
 # Local tool state, not project code
 /.freebuff/
 /supabase/.temp/
