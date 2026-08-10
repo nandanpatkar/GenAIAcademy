@@ -1,0 +1,81 @@
+/**
+ * docs-cdn — serves the documentation archives (AgentCore docs & samples,
+ * LangChain docs, Strands docs, the guides library) out of R2.
+ *
+ * Unlike av-cdn-worker, this Worker is reached only via a same-origin Vercel
+ * rewrite (vercel.json proxies /agentcore-samples/*, /agentcore/*,
+ * /langchain/*, /strands/*, /guides/* here), so there is no browser CORS to
+ * handle — the request the browser sees never leaves the app's own origin.
+ *
+ * Object keys mirror the public/ layout exactly, which is what lets the
+ * generated data files (src/data/agentcoreSamplesData.js etc.) keep the
+ * root-relative paths they already emit — "/langchain/md/x.md" simply
+ * resolves to key "langchain/md/x.md" with no rewriting of that data:
+ *   GET /agentcore-samples/<path>
+ *   GET /agentcore/<path>
+ *   GET /langchain/<path>
+ *   GET /strands/<path>
+ *   GET /guides/<path>
+ */
+
+const IMMUTABLE = "public, max-age=31536000, immutable";
+const ALLOWED_PREFIXES = ["agentcore-samples/", "agentcore/", "langchain/", "strands/", "guides/"];
+
+export default {
+  async fetch(request, env, ctx) {
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      return new Response("Method Not Allowed", { status: 405, headers: { Allow: "GET, HEAD" } });
+    }
+
+    const url = new URL(request.url);
+
+    let key;
+    try {
+      key = decodeURIComponent(url.pathname.slice(1));
+    } catch {
+      return new Response("Bad Request", { status: 400 });
+    }
+
+    if (!key || key.endsWith("/") || key.includes("..")) {
+      return new Response("Not Found", { status: 404 });
+    }
+    if (!ALLOWED_PREFIXES.some((p) => key.startsWith(p))) {
+      return new Response("Not Found", { status: 404 });
+    }
+
+    const cache = caches.default;
+    const cached = await cache.match(request);
+    if (cached) return cached;
+
+    const object = await env.DOCS_BUCKET.get(key, {
+      onlyIf: request.headers,
+      range: request.headers,
+    });
+
+    if (object === null) {
+      return new Response("Not Found", { status: 404 });
+    }
+
+    const headers = new Headers();
+    object.writeHttpMetadata(headers);
+    headers.set("etag", object.httpEtag);
+    if (!headers.has("cache-control")) headers.set("cache-control", IMMUTABLE);
+
+    const hasBody = "body" in object;
+    let status = hasBody ? 200 : 304;
+
+    if (hasBody && object.range && request.headers.has("range")) {
+      status = 206;
+      const { offset = 0, length = object.size - offset } = object.range;
+      headers.set("content-range", `bytes ${offset}-${offset + length - 1}/${object.size}`);
+    }
+
+    const response = new Response(hasBody ? object.body : null, { status, headers });
+
+    if (status === 200) {
+      ctx.waitUntil(cache.put(request, response.clone()));
+    }
+
+    return response;
+  },
+};

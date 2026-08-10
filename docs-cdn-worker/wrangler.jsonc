@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "docs-cdn",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+
+  // Bound privately, reached only through the Vercel rewrite in vercel.json
+  // (same-origin from the browser's perspective) — never exposed directly.
+  "r2_buckets": [
+    {
+      "binding": "DOCS_BUCKET",
+      "bucket_name": "docs-archive"
+    }
+  ],
+
+  "observability": {
+    "enabled": true
+  }
+}

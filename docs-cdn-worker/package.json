@@ -1,0 +1,14 @@
+{
+  "name": "docs-cdn-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker serving the AgentCore/LangChain/Strands/guides documentation archives from R2, reached via a Vercel same-origin rewrite. Deployed separately from the Vercel app — never part of the main build.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

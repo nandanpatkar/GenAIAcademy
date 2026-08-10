@@ -1,5 +1,0 @@
-bedrock-agentcore
-bedrock-agentcore-starter-toolkit
-botocore
-boto3
-python-dotenv
