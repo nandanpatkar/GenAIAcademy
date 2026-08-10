@@ -15,6 +15,7 @@ test_tavily.js
 .env.local
 .vercel
 .env*.local
+/.wrangler/
 __pycache__/
 *.pyc
 
@@ -22,6 +23,19 @@ __pycache__/
 dsa_data.txt
 dsa_data_*.txt
 .angular/
+
+# Orphaned root-level duplicates of the same scraped course content (one
+# raw JSON, one wrapped as `window.courseData = …`), unreferenced by any
+# app code — the only mention was a defensive vercel.json excludeFiles
+# entry that stopped them from being bundled into serverless functions but
+# didn't stop them from being uploaded as static deployment assets. Two
+# 14 MB files with no consumer is exactly the kind of single object that
+# trips Vercel's per-file upload limit ("Request body too large. Limit:
+# 10mb"). `course 1.html`, a local preview scratch file, references
+# differently-named siblings (`course_data.js`, `scraped_data 2.json`)
+# that don't even exist here, confirming none of this is wired up.
+/scraped_data.json
+/course_data 1.js
 
 
 # Ignore AFFiNE embedded repo
