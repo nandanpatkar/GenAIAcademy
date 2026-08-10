@@ -1,11 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
-import { X, ChevronLeft, Clock, Tag, Search, BookOpen, Edit3, Sparkles, ArrowUpRight, Activity, Layers3, Database, SlidersHorizontal } from "lucide-react";
+import { X, ChevronLeft, Clock, Tag, Search, BookOpen, Edit3, Sparkles, ArrowUpRight, Database, SlidersHorizontal, Bookmark, BookmarkCheck, PanelRightClose, PanelRightOpen } from "lucide-react";
 import { supabase } from "../../config/supabaseClient";
 import { useAuth } from "../../contexts/AuthContext";
 import AdminBlogEditor from "./AdminBlogEditor";
 import { generateAI_TLDR } from "../../services/aiService";
 import { loadYears, loadYear, monthLabel } from "../../services/avArchiveService";
 import AVArticle from "./AVArticle";
+import {
+  getFavoriteKey,
+  getFavoriteBlogs,
+  isFavoriteBlog,
+  loadUserFavoriteBlogs,
+  migrateLocalFavoritesToUser,
+  removeUserFavoriteBlog,
+  saveUserFavoriteBlog,
+  toSavedBlog,
+  toggleFavoriteBlog,
+} from "../../store/favoriteBlogsStore";
 import "./BlogPage.css";
 
 const NOTES_TAB = "notes";
@@ -50,10 +61,44 @@ export default function BlogPage({ theme, isEditMode, onClose, initialYear, init
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState(initialTag ? [initialTag] : []);
+  const [favorites, setFavorites] = useState(() => getFavoriteBlogs());
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [favoriteError, setFavoriteError] = useState("");
 
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, loading: authLoading } = useAuth();
   const [showEditor, setShowEditor] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null);
+
+  // Account favorites are the source of truth whenever the reader is signed
+  // in. Existing guest bookmarks are imported once, then removed locally so a
+  // later browser user can never see another account's saved reading list.
+  useEffect(() => {
+    let alive = true;
+    setFavoriteError("");
+
+    // Wait for Supabase to validate a session restored from local storage.
+    // This prevents importing guest bookmarks under an expired session token.
+    if (authLoading) return () => { alive = false; };
+
+    if (!user?.id) {
+      setFavorites(getFavoriteBlogs());
+      return () => { alive = false; };
+    }
+
+    setFavorites([]);
+    (async () => {
+      try {
+        await migrateLocalFavoritesToUser(user.id);
+        const saved = await loadUserFavoriteBlogs(user.id);
+        if (alive) setFavorites(saved);
+      } catch (error) {
+        console.error("Could not load saved blog articles:", error);
+        if (alive) setFavoriteError("Saved articles could not be synced. Please try again.");
+      }
+    })();
+
+    return () => { alive = false; };
+  }, [user?.id, authLoading]);
 
   // The CMS rows and the archive summary are independent, so they load in
   // parallel rather than paying both latencies in series.
@@ -135,6 +180,39 @@ export default function BlogPage({ theme, isEditMode, onClose, initialYear, init
     return matchesSearch && matchesTags;
   });
 
+  const handleToggleFavorite = async (blog) => {
+    const wasFavorite = isFavoriteBlog(blog, favorites);
+    const nextFavorites = wasFavorite
+      ? favorites.filter((favorite) => getFavoriteKey(favorite) !== getFavoriteKey(blog))
+      : [toSavedBlog(blog), ...favorites];
+    setFavorites(nextFavorites);
+    setFavoriteError("");
+
+    if (!user?.id || authLoading) {
+      setFavorites(toggleFavoriteBlog(blog));
+      return;
+    }
+
+    try {
+      if (wasFavorite) await removeUserFavoriteBlog(user.id, blog);
+      else await saveUserFavoriteBlog(user.id, blog);
+    } catch (error) {
+      console.error("Could not update saved blog article:", error);
+      setFavorites(favorites);
+      setFavoriteError("Could not update this saved article. Please try again.");
+    }
+  };
+  const openFavorite = (blog) => {
+    if (blog.source === "av" && blog.archive_year && activeYear !== String(blog.archive_year)) {
+      setPendingSlug(blog.slug);
+      setActiveYear(String(blog.archive_year));
+      setShowFavorites(false);
+      return;
+    }
+    setSelectedBlog(blog);
+    setShowFavorites(false);
+  };
+
   return (
     <div className="blog-shell" style={{ display: "flex", flexDirection: "column", flex: 1, height: "100%", overflow: "hidden", background: "var(--bg)" }}>
       {/* ══ TOP TAB BAR ══════════════════════════════════════════════════════ */}
@@ -166,15 +244,29 @@ export default function BlogPage({ theme, isEditMode, onClose, initialYear, init
           ) : (
             <div className="blog-header-summary">
               <span className="blog-header-year">
-                {activeYear === NOTES_TAB ? "Academy notes" : activeYear}
+                {showFavorites ? "Saved articles" : activeYear === NOTES_TAB ? "Academy notes" : activeYear}
               </span>
               <span className="blog-header-dot" />
-              <span>{filteredBlogs.length.toLocaleString()} articles</span>
+              <span>{(showFavorites ? favorites : filteredBlogs).length.toLocaleString()} articles</span>
             </div>
           )}
         </div>
 
         <div className="blog-header-actions">
+          {!selectedBlog && !showEditor && (
+            <button
+              type="button"
+              className={showFavorites ? "blog-favorites-button active" : "blog-favorites-button"}
+              onClick={() => setShowFavorites((current) => !current)}
+              aria-pressed={showFavorites}
+              aria-label={showFavorites ? "Show all articles" : `Show favorites, ${favorites.length} saved`}
+              title={showFavorites ? "All articles" : "Favorites"}
+            >
+              <Bookmark size={15} fill={showFavorites ? "currentColor" : "none"} />
+              <span>Saved</span>
+              {favorites.length > 0 && <em>{favorites.length}</em>}
+            </button>
+          )}
           {isAdmin && !showEditor && !selectedBlog && (
             <button
               onClick={() => { setEditingBlog(null); setShowEditor(true); }}
@@ -194,7 +286,7 @@ export default function BlogPage({ theme, isEditMode, onClose, initialYear, init
 
       {/* ══ CONTENT AREA ══════════════════════════════════════════════════════ */}
       <div id="blog-scroll-container" className="blog-scroll-container" style={{ flex: 1, overflowY: "auto", position: "relative" }}>
-        {showEditor ? (
+      {showEditor ? (
           <AdminBlogEditor
             blog={editingBlog}
             onClose={() => { setShowEditor(false); setEditingBlog(null); fetchNotes(); }}
@@ -210,22 +302,29 @@ export default function BlogPage({ theme, isEditMode, onClose, initialYear, init
             onEdit={() => { setEditingBlog(selectedBlog); setShowEditor(true); }}
             onTagClick={(tag) => { setSelectedBlog(null); setSelectedTags([tag]); }}
             onSelectRelated={setSelectedBlog}
+            isFavorite={isFavoriteBlog(selectedBlog, favorites)}
+            onToggleFavorite={() => handleToggleFavorite(selectedBlog)}
           />
         ) : (
           <BlogList
-            blogs={filteredBlogs}
-            loading={loading}
+            blogs={showFavorites ? favorites : filteredBlogs}
+            loading={showFavorites ? false : loading}
             years={years}
             activeYear={activeYear}
             setActiveYear={(year) => { setActiveYear(year); setSelectedTags([]); }}
             noteCount={notes.length}
-            onSelect={setSelectedBlog}
+            onSelect={showFavorites ? openFavorite : setSelectedBlog}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
             isAdmin={isAdmin}
             onWrite={() => { setEditingBlog(null); setShowEditor(true); }}
+            favorites={favorites}
+            onToggleFavorite={handleToggleFavorite}
+            showFavorites={showFavorites}
+            onShowAll={() => setShowFavorites(false)}
+            favoriteError={favoriteError}
           />
         )}
       </div>
@@ -233,7 +332,7 @@ export default function BlogPage({ theme, isEditMode, onClose, initialYear, init
   );
 }
 
-function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount, onSelect, searchQuery, setSearchQuery, selectedTags, setSelectedTags, isAdmin, onWrite }) {
+function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount, onSelect, searchQuery, setSearchQuery, selectedTags, setSelectedTags, isAdmin, onWrite, favorites, onToggleFavorite, showFavorites, onShowAll, favoriteError }) {
   const getBlogYear = (blog) => blog.archive_year || (blog.created_at ? new Date(blog.created_at).getFullYear().toString() : "Unsorted");
   const totalArchive = years.reduce((sum, entry) => sum + entry.n, 0);
 
@@ -267,6 +366,17 @@ function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount,
 
   return (
     <div className="blog-list">
+      {favoriteError && <div className="blog-favorite-error" role="status">{favoriteError}</div>}
+      {showFavorites ? (
+        <section className="blog-favorites-hero">
+          <div>
+            <div className="blog-kicker"><BookmarkCheck size={13} /> YOUR READING LIST</div>
+            <h2>Saved for<br /><em>later.</em></h2>
+            <p>Keep the research and notes you want to return to in one personal collection.</p>
+          </div>
+          <button type="button" className="blog-favorites-all-button" onClick={onShowAll}>Browse all articles <ArrowUpRight size={15} /></button>
+        </section>
+      ) : (
       <section className="blog-hero-panel">
         <div className="blog-hero-grid" aria-hidden="true" />
         <div className="blog-hero-copy">
@@ -311,8 +421,9 @@ function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount,
           </div>
         </div>
       </section>
+      )}
 
-      <section className="blog-toolbar" aria-label="Blog filters">
+      {!showFavorites && <section className="blog-toolbar" aria-label="Blog filters">
         <div className="blog-year-filter">
           <span className="toolbar-label"><SlidersHorizontal size={13} /> YEAR VIEW</span>
           {years.map(({ y, n }) => (
@@ -339,8 +450,9 @@ function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount,
           <input type="text" placeholder="Search the repository..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </label>
       </section>
+      }
 
-      {topTags.length > 0 && (
+      {!showFavorites && topTags.length > 0 && (
         <div className="blog-tag-rail" aria-label="Filter by category">
           {topTags.map(([tag, count]) => (
             <button
@@ -358,7 +470,7 @@ function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount,
         </div>
       )}
 
-      {selectedTags.length > 0 && (
+      {!showFavorites && selectedTags.length > 0 && (
         <div className="blog-active-filters">
           <span>FILTERED BY</span>
           {selectedTags.map(tag => (
@@ -369,20 +481,29 @@ function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount,
       )}
 
       {yearSections.length === 0 ? (
-        <div className="blog-empty-state"><BookOpen size={34} /><div>{searchQuery ? "No nodes match that search." : "No published research nodes yet."}</div></div>
+        <div className="blog-empty-state"><Bookmark size={34} /><div>{showFavorites ? "No saved articles yet. Use the bookmark on any article to build your reading list." : searchQuery ? "No nodes match that search." : "No published research nodes yet."}</div></div>
       ) : (
         <div className="blog-year-sections">
           {yearSections.map(({ year, posts }) => (
             <section className="blog-year-section" key={year}>
               <div className="blog-year-heading">
                 <div className="year-heading-mark"><span>{year === "Featured" ? "✦" : year.slice(-2)}</span></div>
-                <div><p>{year === "Featured" ? "CURATED SIGNALS" : "RESEARCH BAND"}</p><h3>{year === "Featured" ? "Featured research" : `${year} archive`}</h3></div>
+                <div><p>{showFavorites ? "YOUR READING LIST" : year === "Featured" ? "CURATED SIGNALS" : "RESEARCH BAND"}</p><h3>{showFavorites ? "Favorite articles" : year === "Featured" ? "Featured research" : `${year} archive`}</h3></div>
                 <span className="blog-year-count">{posts.length.toString().padStart(2, "0")} nodes</span>
               </div>
               <div className="blog-card-grid">
                 {posts.map((blog, index) => (
-                  <article className="blog-card" key={blog.id} onClick={() => onSelect(blog)} tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") onSelect(blog); }}>
+                  <article className="blog-card" key={blog.id} onClick={() => onSelect(blog)} tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onSelect(blog); } }}>
                     <div className="blog-card-glow" />
+                    <button
+                      type="button"
+                      className={isFavoriteBlog(blog, favorites) ? "blog-card-favorite active" : "blog-card-favorite"}
+                      onClick={(event) => { event.stopPropagation(); onToggleFavorite(blog); }}
+                      aria-label={isFavoriteBlog(blog, favorites) ? `Remove ${blog.title} from favorites` : `Add ${blog.title} to favorites`}
+                      title={isFavoriteBlog(blog, favorites) ? "Remove from favorites" : "Add to favorites"}
+                    >
+                      <Bookmark size={16} fill={isFavoriteBlog(blog, favorites) ? "currentColor" : "none"} />
+                    </button>
                     {blog.hero && (
                       <div className="blog-card-cover">
                         <img
@@ -412,11 +533,12 @@ function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount,
   );
 }
 
-function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSelectRelated, dark = true }) {
+function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSelectRelated, isFavorite, onToggleFavorite, dark = true }) {
   const [progress, setProgress] = useState(0);
   const [toc, setToc] = useState([]);
   const [tldr, setTldr] = useState("");
   const [loadingTldr, setLoadingTldr] = useState(false);
+  const [showToc, setShowToc] = useState(true);
   const contentRef = useRef(null);
   // Archive posts are markdown fetched from R2; CMS posts are stored HTML.
   const isArchive = blog.source === "av";
@@ -438,6 +560,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
 
   useEffect(() => {
     setTldr(""); // reset tldr on new blog
+    setShowToc(true);
     if (isArchive) return; // AVArticle reports its own TOC once markdown lands
     if (contentRef.current) {
       const headings = Array.from(contentRef.current.querySelectorAll('h1, h2, h3'));
@@ -489,7 +612,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
         <div className="blog-progress-fill" style={{ width: `${progress}%` }} />
       </div>
 
-      <div className="blog-detail-layout" style={{ display: 'flex', maxWidth: 1200, margin: '0 auto', alignItems: 'flex-start' }}>
+      <div className={showToc ? "blog-detail-layout" : "blog-detail-layout focus-reading"} style={{ display: 'flex', maxWidth: 1200, margin: '0 auto', alignItems: 'flex-start' }}>
         
         {/* Main Content */}
         <div className="blog-detail-main" style={{ flex: 1, padding: '40px 24px 80px', maxWidth: 860 }}>
@@ -508,6 +631,30 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
               Back to articles
             </button>
 
+            <div className="blog-detail-toolbar-actions">
+              <button
+                type="button"
+                onClick={onToggleFavorite}
+                aria-pressed={isFavorite}
+                aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+                title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+              >
+                <Bookmark size={16} fill={isFavorite ? "currentColor" : "none"} />
+                <span>{isFavorite ? "Saved" : "Save"}</span>
+              </button>
+              {toc.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setShowToc((current) => !current)}
+                  aria-pressed={!showToc}
+                  aria-label={showToc ? "Hide On this page and expand the article" : "Show On this page"}
+                  title={showToc ? "Focus reading" : "Show outline"}
+                >
+                  {showToc ? <PanelRightClose size={16} /> : <PanelRightOpen size={16} />}
+                  <span>{showToc ? "Focus" : "Outline"}</span>
+                </button>
+              )}
+
             {isAdmin && !isArchive && (
               <button 
                 onClick={onEdit}
@@ -523,6 +670,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
                 Edit Article
               </button>
             )}
+            </div>
           </div>
 
           {blog.cover_image && (
@@ -627,7 +775,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
         </div>
 
         {/* TOC Sidebar */}
-        {toc.length > 0 && (
+        {showToc && toc.length > 0 && (
           <div className="blog-detail-toc" style={{ width: 280, padding: '40px 24px', position: 'sticky', top: 0, height: 'calc(100vh - 42px)', overflowY: 'auto', display: 'none', '@media (min-width: 1024px)': { display: 'block' } }}>
             <h4 style={{ fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text3)', fontWeight: 700, marginBottom: 20 }}>
               On this page
