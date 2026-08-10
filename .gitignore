@@ -19,6 +19,27 @@ test_tavily.js
 __pycache__/
 *.pyc
 
+# Directories .vercelignore already excludes wholesale — each is a
+# standalone tool/repo folded into this monorepo, with its build output
+# committed separately under public/ (flow-design/ -> public/flow-design/,
+# codeflow/ -> public/codeflow/, Git Visualizer/ -> public/git-visualizer/
+# via `npm run build:git`). temp/ and scratch/ are just dev scratch files.
+#
+# They used to be git-tracked despite being .vercelignore-excluded, which
+# breaks Vercel's deploy: it removes each directory early in the build per
+# .vercelignore, then a later "Deploying outputs" step re-walks the full
+# git-tracked file list and fails with "ENOENT: no such file or directory,
+# lstat '.../codeflow/card/action.yml'" (or any other file inside) because
+# the directory it's looking for is already gone. Untracking them — not
+# just their own nested .gitignore files, every file — is what avoids
+# tripping this path entirely. Reproduced and confirmed fixed locally via
+# a clean clone + `vercel build && vercel deploy --prebuilt`.
+/flow-design/
+/Git Visualizer/
+/codeflow/
+/temp/
+/scratch/
+
 # Data
 dsa_data.txt
 dsa_data_*.txt
