@@ -4,13 +4,13 @@ import {
   Clock3, Code2, Copy, Crown, ExternalLink, Flame, Gamepad2, LockKeyhole,
   Play, ShieldCheck, Sparkles, Swords, Timer, Trophy, Users, X,
 } from "lucide-react";
-import trialData from "../../Algowar/data/trial_problem.json";
-import leaderboardData from "../../Algowar/data/leaderboard.json";
-import dailyChallenges from "../../Algowar/data/daily_challenges.json";
-import logo from "../../Algowar/assets/logo.png";
-import avatarRogue from "../../Algowar/assets/avatars/runtine_rouge.png";
-import avatarQuantum from "../../Algowar/assets/avatars/quantom_hacker.png";
-import avatarSage from "../../Algowar/assets/avatars/syntax_sage.png";
+import trialData from "../data/algowar/trial_problem.json";
+import leaderboardData from "../data/algowar/leaderboard.json";
+import dailyChallenges from "../data/algowar/daily_challenges.json";
+import logo from "../assets/algowar/logo.png";
+import avatarRogue from "../assets/algowar/avatars/runtine_rouge.png";
+import avatarQuantum from "../assets/algowar/avatars/quantom_hacker.png";
+import avatarSage from "../assets/algowar/avatars/syntax_sage.png";
 import "../styles/AlgoWarArena.css";
 
 const LIVE_ARENA_URL = "https://arena.algowars.online/arena";
