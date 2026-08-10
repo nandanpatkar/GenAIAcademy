@@ -4,18 +4,18 @@ import {
   Clock3, Code2, Copy, Crown, ExternalLink, Flame, Gamepad2, LockKeyhole,
   Play, ShieldCheck, Sparkles, Swords, Timer, Trophy, Users, X,
 } from "lucide-react";
-import trialData from "../../Algowar/data/trial_problem.json";
-import leaderboardData from "../../Algowar/data/leaderboard.json";
-import dailyChallenges from "../../Algowar/data/daily_challenges.json";
+import trialData from "../data/algowar/trial_problem.json";
+import leaderboardData from "../data/algowar/leaderboard.json";
+import dailyChallenges from "../data/algowar/daily_challenges.json";
 // 452 KB PNG at 605×499 for a 42×42 render → 8 KB WebP at 168px wide.
-import logo from "../../Algowar/assets/logo.webp";
+import logo from "../assets/algowar/logo.webp";
 // WebP at 256×384 instead of the original 1024×1536 PNGs. These render at 72×72
 // (58×58 on mobile) behind `object-fit: cover`, so the source files were shipping
 // 6.7 MB to paint three thumbnails; the WebP versions total 80 KB.
-// The .png originals are kept in the repo as the masters but are no longer bundled.
-import avatarRogue from "../../Algowar/assets/avatars/runtine_rouge.webp";
-import avatarQuantum from "../../Algowar/assets/avatars/quantom_hacker.webp";
-import avatarSage from "../../Algowar/assets/avatars/syntax_sage.webp";
+// The .png originals are kept in Algowar/ (gitignored scrape reference) as masters.
+import avatarRogue from "../assets/algowar/avatars/runtine_rouge.webp";
+import avatarQuantum from "../assets/algowar/avatars/quantom_hacker.webp";
+import avatarSage from "../assets/algowar/avatars/syntax_sage.webp";
 import "../styles/AlgoWarArena.css";
 
 const LIVE_ARENA_URL = "https://arena.algowars.online/arena";

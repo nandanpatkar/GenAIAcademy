@@ -1,0 +1,362 @@
+[
+  {
+    "id": "85b42100-ec3d-4d4e-a954-0131b7b63ad5",
+    "challenge_date": "2026-06-10",
+    "problem_id": "664cc479-60c4-4593-8a47-2e831904a6d9",
+    "created_at": "2026-06-10T17:55:20.134045"
+  },
+  {
+    "id": "fbe5c03c-bd97-4699-a6d8-5c4bbd7b57b3",
+    "challenge_date": "2026-06-11",
+    "problem_id": "7e1ecb8d-8dc5-45d6-9296-9e1e4d9a2556",
+    "created_at": "2026-06-11T15:02:35.58052"
+  },
+  {
+    "id": "1b013665-7835-4a6a-ac5c-5c34426954cb",
+    "challenge_date": "2026-06-12",
+    "problem_id": "ebf1b91a-7617-43d4-a561-dcadfd67d3e0",
+    "created_at": "2026-06-11T15:22:57.170239"
+  },
+  {
+    "id": "111af11f-4fbe-426f-b6de-2bd6f02a368d",
+    "challenge_date": "2026-06-13",
+    "problem_id": "ef6a8290-b40b-485d-857d-b784fe9d703f",
+    "created_at": "2026-06-12T00:00:00.964919"
+  },
+  {
+    "id": "ff3fd88a-97a9-4f6a-8a62-0422e92ee625",
+    "challenge_date": "2026-06-14",
+    "problem_id": "f9471a44-13e0-4205-b354-3f53a50e4b93",
+    "created_at": "2026-06-13T00:00:01.15872"
+  },
+  {
+    "id": "bc015a26-dad4-48ce-be76-691f847cb4bd",
+    "challenge_date": "2026-06-15",
+    "problem_id": "84b900aa-0c89-4624-a005-0891754c2907",
+    "created_at": "2026-06-14T00:00:00.957993"
+  },
+  {
+    "id": "a100cb15-4ca3-4f47-9393-274b4c008ed3",
+    "challenge_date": "2026-06-16",
+    "problem_id": "cac93e1f-a2ba-4363-891b-b8da11c42d89",
+    "created_at": "2026-06-15T00:00:00.959676"
+  },
+  {
+    "id": "422bd0d4-d884-49a4-b568-bee6523a88c6",
+    "challenge_date": "2026-06-17",
+    "problem_id": "3dc0ec9a-8851-4a96-bd7c-9800fc900a36",
+    "created_at": "2026-06-16T00:00:00.990422"
+  },
+  {
+    "id": "656a78e8-ffa5-485b-9719-fc184cf443f4",
+    "challenge_date": "2026-06-18",
+    "problem_id": "0e3527f3-baef-4b9e-8bf2-e1303e9b0bab",
+    "created_at": "2026-06-17T00:00:01.079793"
+  },
+  {
+    "id": "768ef58b-b71c-4425-8ace-5db0d6920ac1",
+    "challenge_date": "2026-06-19",
+    "problem_id": "8a1332d8-75d6-4067-b5c8-56a028855dec",
+    "created_at": "2026-06-18T00:00:00.973011"
+  },
+  {
+    "id": "38dcf6b3-cef3-482c-8055-9e16f1de0a96",
+    "challenge_date": "2026-06-20",
+    "problem_id": "7251c1c6-e6b6-46df-8656-d79ca7b4318a",
+    "created_at": "2026-06-19T00:00:00.979473"
+  },
+  {
+    "id": "57282436-7cda-4d5d-8935-afe28830b9d1",
+    "challenge_date": "2026-06-21",
+    "problem_id": "309f8a95-b6da-4d17-9bbc-d092e56a7f27",
+    "created_at": "2026-06-20T00:00:01.051152"
+  },
+  {
+    "id": "1eeeef11-99ac-4aae-9670-ad5938bb1517",
+    "challenge_date": "2026-06-22",
+    "problem_id": "a01e13f9-3ebf-4b49-98e0-911600e5ea1b",
+    "created_at": "2026-06-21T00:00:01.037073"
+  },
+  {
+    "id": "14a32adb-c492-432a-ba72-c6112abc2109",
+    "challenge_date": "2026-06-23",
+    "problem_id": "012d4271-78ac-40ac-98c4-d5d034857f7e",
+    "created_at": "2026-06-22T00:00:01.11065"
+  },
+  {
+    "id": "b651ff4a-dfbe-4252-bc01-c6fedcd7044b",
+    "challenge_date": "2026-06-24",
+    "problem_id": "a1d80afc-2dc5-45bb-b928-05393d5ba985",
+    "created_at": "2026-06-23T00:00:01.071049"
+  },
+  {
+    "id": "fcd75022-f2a6-41b5-92ed-0c4a36d4b080",
+    "challenge_date": "2026-06-25",
+    "problem_id": "028040b0-fbee-4ade-af4e-3f9fe2443b79",
+    "created_at": "2026-06-24T00:00:01.098719"
+  },
+  {
+    "id": "13a53bb3-6f90-48d4-8859-1c76511b3c24",
+    "challenge_date": "2026-06-26",
+    "problem_id": "0ab0b95e-d40f-4bde-805d-465d79425320",
+    "created_at": "2026-06-25T00:00:01.138177"
+  },
+  {
+    "id": "8e783d5c-abda-4e20-8712-f7cae487ce30",
+    "challenge_date": "2026-06-27",
+    "problem_id": "f22630cd-6826-4b0e-819a-cafac4d6719b",
+    "created_at": "2026-06-26T00:00:01.092772"
+  },
+  {
+    "id": "d261e2e5-10cf-4eca-bced-ea4496e9f3fa",
+    "challenge_date": "2026-06-28",
+    "problem_id": "372fea2e-8bd2-4537-a79b-28cdcf561dd4",
+    "created_at": "2026-06-27T00:00:01.003998"
+  },
+  {
+    "id": "888a4c64-c35e-48e0-9a88-993d1440ec34",
+    "challenge_date": "2026-06-29",
+    "problem_id": "fed5d880-1cdf-4958-be21-dcfdad3b92e6",
+    "created_at": "2026-06-28T00:00:00.941436"
+  },
+  {
+    "id": "5e3af802-5d54-4c48-8935-dc7e0d632fe8",
+    "challenge_date": "2026-06-30",
+    "problem_id": "5beaf16e-f231-4d1d-b1a7-789122434b25",
+    "created_at": "2026-06-29T00:00:00.978504"
+  },
+  {
+    "id": "9b36cd13-1d88-46ed-9a8d-c2e4f05e9d70",
+    "challenge_date": "2026-07-01",
+    "problem_id": "57acc700-ddb3-4b09-a379-3252c1d1e8be",
+    "created_at": "2026-06-30T00:00:01.0558"
+  },
+  {
+    "id": "0f8e53b7-abe9-4b1f-8eff-010ae462e808",
+    "challenge_date": "2026-07-02",
+    "problem_id": "fed5d880-1cdf-4958-be21-dcfdad3b92e6",
+    "created_at": "2026-07-01T00:00:01.105124"
+  },
+  {
+    "id": "44110b0b-5781-4c5a-a631-22e19c5106f2",
+    "challenge_date": "2026-07-03",
+    "problem_id": "49d592c0-551c-46ee-b98c-ec6724919216",
+    "created_at": "2026-07-02T00:00:00.913744"
+  },
+  {
+    "id": "ff58c324-2120-4322-b84c-025a737d7bb8",
+    "challenge_date": "2026-07-04",
+    "problem_id": "3361ab47-f99a-42be-807a-8f085dc4e84e",
+    "created_at": "2026-07-03T00:00:00.952247"
+  },
+  {
+    "id": "b4066e2d-ae47-497f-8cca-72caf0908c71",
+    "challenge_date": "2026-07-05",
+    "problem_id": "ab372916-a791-48ce-aa9e-bedaa47a9cee",
+    "created_at": "2026-07-04T00:00:01.073496"
+  },
+  {
+    "id": "cb312972-a21f-465b-8b22-d08efe8fa8bf",
+    "challenge_date": "2026-07-06",
+    "problem_id": "a7a6b253-9a24-42e6-9dfa-10c880a4e358",
+    "created_at": "2026-07-05T00:00:01.106439"
+  },
+  {
+    "id": "c9e1204a-1f19-4a09-895d-1924efa942f8",
+    "challenge_date": "2026-07-07",
+    "problem_id": "1f08fc48-4203-44c0-9f61-dc2172f66757",
+    "created_at": "2026-07-06T00:00:01.067034"
+  },
+  {
+    "id": "eede9385-f070-4074-a5d0-2459d8cbbc5a",
+    "challenge_date": "2026-07-08",
+    "problem_id": "f9471a44-13e0-4205-b354-3f53a50e4b93",
+    "created_at": "2026-07-07T00:00:01.0398"
+  },
+  {
+    "id": "23705d56-886d-4faa-acbf-3a6832e4e401",
+    "challenge_date": "2026-07-09",
+    "problem_id": "1139c606-e93d-4319-bc56-bb45296e9dc4",
+    "created_at": "2026-07-08T00:00:01.054248"
+  },
+  {
+    "id": "5e31d862-277d-4a31-93bf-cd2a2a821d2f",
+    "challenge_date": "2026-07-10",
+    "problem_id": "f7bdcde2-3107-4da1-9dd2-c1627ca635d2",
+    "created_at": "2026-07-09T00:00:01.064686"
+  },
+  {
+    "id": "59b5c31d-1e9f-4526-8a43-98f194d47565",
+    "challenge_date": "2026-07-11",
+    "problem_id": "6fe0766f-2fab-454a-80d2-877f1e879d4c",
+    "created_at": "2026-07-10T00:00:00.944562"
+  },
+  {
+    "id": "da651afa-2f3e-4188-922d-bef560193a79",
+    "challenge_date": "2026-07-12",
+    "problem_id": "d2d2145b-0e1e-4b92-bb95-5533f394858c",
+    "created_at": "2026-07-11T00:00:01.038705"
+  },
+  {
+    "id": "d4cd0ed9-e12b-4017-9369-686a1185bff4",
+    "challenge_date": "2026-07-13",
+    "problem_id": "8aba9db3-1625-4484-9a0a-55c887124e09",
+    "created_at": "2026-07-12T07:42:40.31951"
+  },
+  {
+    "id": "d6f345e6-8540-41ba-8275-f72b64a99d76",
+    "challenge_date": "2026-07-14",
+    "problem_id": "72c258cd-22a6-4869-b772-b10926a22456",
+    "created_at": "2026-07-13T00:00:01.73047"
+  },
+  {
+    "id": "c6adc0a7-52e5-4ebe-b4e9-3ede952fe613",
+    "challenge_date": "2026-07-15",
+    "problem_id": "3dc0ec9a-8851-4a96-bd7c-9800fc900a36",
+    "created_at": "2026-07-15T05:22:21.207498"
+  },
+  {
+    "id": "a5e57c2a-4502-49ff-9b9a-f8a63b947226",
+    "challenge_date": "2026-07-16",
+    "problem_id": "3be26b55-2603-43ba-9df5-529da8b1f101",
+    "created_at": "2026-07-16T00:04:48.278437"
+  },
+  {
+    "id": "ea94513c-ba7c-4b05-b3c8-1826908bcdaa",
+    "challenge_date": "2026-07-17",
+    "problem_id": "9210f23a-7089-49c8-a496-3cc19b49259d",
+    "created_at": "2026-07-17T09:58:16.090746"
+  },
+  {
+    "id": "5954287d-04a0-4140-bae2-67169d7db70f",
+    "challenge_date": "2026-07-18",
+    "problem_id": "a5e8c7d6-a707-4d0a-9039-c3e523353ddc",
+    "created_at": "2026-07-18T05:03:04.107506"
+  },
+  {
+    "id": "9c57c8ac-9d57-4d8d-87a3-745144cb9b1c",
+    "challenge_date": "2026-07-19",
+    "problem_id": "63a982db-6d04-4e23-bb2f-875bc9c4096d",
+    "created_at": "2026-07-19T07:20:19.29677"
+  },
+  {
+    "id": "1d144b8d-62e3-47fd-8b75-b98ec85bfb0b",
+    "challenge_date": "2026-07-20",
+    "problem_id": "80329cc9-29bb-4484-887d-a38d416c3e3a",
+    "created_at": "2026-07-19T16:51:59.078336"
+  },
+  {
+    "id": "802e812f-d191-4082-af1c-d0e67391a0de",
+    "challenge_date": "2026-07-21",
+    "problem_id": "6f402a31-17d9-4ad5-9767-0082fbb8088e",
+    "created_at": "2026-07-20T00:00:00.962601"
+  },
+  {
+    "id": "20f9ed6e-08a0-452f-9d69-43b1d0410f2b",
+    "challenge_date": "2026-07-22",
+    "problem_id": "464afbc3-fbdb-4232-9551-cf2928b76cec",
+    "created_at": "2026-07-22T08:50:23.836729"
+  },
+  {
+    "id": "d53f7bc2-d00c-4ce2-9482-ed995855479f",
+    "challenge_date": "2026-07-23",
+    "problem_id": "f7bdcde2-3107-4da1-9dd2-c1627ca635d2",
+    "created_at": "2026-07-23T09:41:10.581233"
+  },
+  {
+    "id": "c43150bd-1f42-4945-bea0-fec41ba2f51d",
+    "challenge_date": "2026-07-24",
+    "problem_id": "5823fcd0-7d6f-4f1c-8368-e5cee4a6aacc",
+    "created_at": "2026-07-24T09:25:15.952479"
+  },
+  {
+    "id": "267779eb-c587-46bc-a317-fe3de143ca7f",
+    "challenge_date": "2026-07-25",
+    "problem_id": "cdaa1270-194b-485a-8fa6-d757d99bce42",
+    "created_at": "2026-07-24T10:11:28.034445"
+  },
+  {
+    "id": "b0b02d78-16bf-49e0-98ab-d3ff2051ec23",
+    "challenge_date": "2026-07-26",
+    "problem_id": "6ee75caf-7d63-4a40-bdc9-ae099957a0ae",
+    "created_at": "2026-07-26T02:31:16.113203"
+  },
+  {
+    "id": "8520940e-182a-4dcc-94f3-35e8f1949236",
+    "challenge_date": "2026-07-27",
+    "problem_id": "fa8f90b7-652d-424e-bc68-43e10eebbebf",
+    "created_at": "2026-07-27T04:44:38.051021"
+  },
+  {
+    "id": "61c72554-f58b-4d30-8964-2a38868b8624",
+    "challenge_date": "2026-07-28",
+    "problem_id": "f9ebc78e-56c7-4326-b722-cd788c1c43c5",
+    "created_at": "2026-07-28T03:47:02.053817"
+  },
+  {
+    "id": "1fb66f39-4188-4742-906d-3631b848f373",
+    "challenge_date": "2026-07-29",
+    "problem_id": "52c731e3-63bf-4ff4-8d10-81be50e3a84a",
+    "created_at": "2026-07-29T00:24:37.60575"
+  },
+  {
+    "id": "a50fdeb2-aba7-46b0-8a5f-81d29969fb73",
+    "challenge_date": "2026-07-30",
+    "problem_id": "a3918bb6-2ec2-400e-9600-6505ba6947c0",
+    "created_at": "2026-07-30T00:01:03.83754"
+  },
+  {
+    "id": "c4450429-bf86-4ca8-a47e-a45d80564cc0",
+    "challenge_date": "2026-07-31",
+    "problem_id": "2fd63e88-4b25-4391-a32b-6eab169a9dd0",
+    "created_at": "2026-07-31T01:26:38.351551"
+  },
+  {
+    "id": "7dd3c664-5e29-47c5-8e45-75722a5913ae",
+    "challenge_date": "2026-08-01",
+    "problem_id": "e58a4858-bdb1-4b7e-94ce-0609461b91ef",
+    "created_at": "2026-08-01T04:03:40.788273"
+  },
+  {
+    "id": "92b0348d-aab6-4e6e-889c-2336a596e6a5",
+    "challenge_date": "2026-08-02",
+    "problem_id": "fc919af9-dda9-45ba-bf59-5f3642b59cf6",
+    "created_at": "2026-08-02T05:18:31.824915"
+  },
+  {
+    "id": "8479bd5c-6015-4d62-b75c-64a7ada2cd6b",
+    "challenge_date": "2026-08-03",
+    "problem_id": "a01e13f9-3ebf-4b49-98e0-911600e5ea1b",
+    "created_at": "2026-08-03T03:42:58.672401"
+  },
+  {
+    "id": "44279158-5c5b-466e-a3da-7fd19ed9739c",
+    "challenge_date": "2026-08-04",
+    "problem_id": "012d4271-78ac-40ac-98c4-d5d034857f7e",
+    "created_at": "2026-08-03T13:22:55.612079"
+  },
+  {
+    "id": "6b02e04a-ce53-40fc-9810-55ded55209ba",
+    "challenge_date": "2026-08-05",
+    "problem_id": "fc4e0f8f-34d3-44c5-b6a1-c82d84207802",
+    "created_at": "2026-08-05T02:23:17.098721"
+  },
+  {
+    "id": "a8b6925c-f10f-459b-8dac-c158321b0bda",
+    "challenge_date": "2026-08-06",
+    "problem_id": "6fe0766f-2fab-454a-80d2-877f1e879d4c",
+    "created_at": "2026-08-06T02:56:33.915246"
+  },
+  {
+    "id": "bce6f857-22b6-4e34-a021-0eec8c2c4066",
+    "challenge_date": "2026-08-07",
+    "problem_id": "7256dd61-3f64-4ffa-8b80-faaf623dd6e2",
+    "created_at": "2026-08-07T02:12:54.468138"
+  },
+  {
+    "id": "499ec366-185a-4657-b077-b31054d68ea6",
+    "challenge_date": "2026-08-08",
+    "problem_id": "312d1a2e-bff3-4a0d-95b8-9aaac7fe7b45",
+    "created_at": "2026-08-08T01:51:06.541739"
+  }
+]
