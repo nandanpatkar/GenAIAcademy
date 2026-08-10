@@ -21,7 +21,7 @@ const CATALOG_URL = '/data/blog-catalog.json';
 // does NOT hold the parsed result itself — see the note above about GC.
 let inflight = null;
 
-/** @returns {Promise<Record<string, Array<{title,url,description}>>>} */
+/** @returns {Promise<Record<string, Array<{title,slug,description}>>>} */
 export function loadBlogCatalog() {
   if (!inflight) {
     inflight = fetch(CATALOG_URL)
