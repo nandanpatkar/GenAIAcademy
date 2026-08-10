@@ -200,3 +200,337 @@
 
 @media (max-width: 900px) { .blog-detail-toc { display: none !important; } }
 @media (max-width: 520px) { .blog-detail-main { padding: 26px 16px 60px !important; } .blog-detail-toolbar { margin-bottom: 25px !important; } }
+
+/* ── Research archive ─────────────────────────────────────────────────────
+   Added when the archive stopped being a list of link-outs and became 8,632
+   locally rendered articles. */
+
+.year-filter-count {
+  font-style: normal;
+  font-size: 10px;
+  opacity: 0.55;
+  margin-left: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Category quick-filters for the loaded year. Horizontally scrollable rather
+   than wrapping, so a year with 100+ categories cannot push the grid down. */
+.blog-tag-rail {
+  display: flex;
+  gap: 8px;
+  padding: 0 32px 16px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.blog-tag-rail::-webkit-scrollbar { height: 4px; }
+.blog-tag-rail::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+.blog-tag-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.blog-tag-chip:hover { color: var(--text); border-color: var(--text3); }
+.blog-tag-chip.active {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.blog-tag-chip em {
+  font-style: normal;
+  opacity: 0.55;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Card cover. width/height are set on the <img> too so the grid does not
+   reflow as 2,018 lazy-loaded thumbnails arrive. */
+.blog-card-cover {
+  margin: -18px -18px 14px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: var(--bg3);
+}
+.blog-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.blog-card:hover .blog-card-cover img { transform: scale(1.04); }
+
+/* Article body */
+.av-article-body { font-size: 18px; line-height: 1.8; color: var(--text); }
+.av-article-body h2 { font-size: 27px; margin: 44px 0 16px; font-weight: 700; scroll-margin-top: 60px; }
+.av-article-body h3 { font-size: 21px; margin: 32px 0 12px; font-weight: 700; scroll-margin-top: 60px; }
+.av-article-body p { margin: 0 0 20px; }
+.av-article-body ul, .av-article-body ol { margin: 0 0 20px; padding-left: 26px; }
+.av-article-body li { margin-bottom: 8px; }
+.av-article-body a { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
+.av-article-body blockquote {
+  margin: 24px 0;
+  padding: 8px 0 8px 20px;
+  border-left: 3px solid var(--primary);
+  color: var(--text2);
+}
+.av-article-body table { border-collapse: collapse; width: 100%; font-size: 15px; }
+.av-article-body th, .av-article-body td {
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  text-align: left;
+}
+.av-article-body th { background: var(--bg2); font-weight: 700; }
+.av-inline-code {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 0.88em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.av-article-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 80px 0;
+  color: var(--text2);
+  font-size: 15px;
+}
+.av-article-state button {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.av-article-state button:hover { border-color: var(--primary); }
+
+/* ── Horizontal overflow containment ──────────────────────────────────────
+   The archive carries scraped code blocks with single lines several hundred
+   characters wide. A flex item defaults to min-width:auto, so such a block
+   widened .blog-detail-main, which widened the layout, which gave the whole
+   page a horizontal scrollbar. Every link in that chain is pinned here. */
+
+.blog-scroll-container { overflow-x: hidden; }
+
+.blog-detail-shell { max-width: 100%; overflow-x: hidden; }
+.blog-detail-layout { min-width: 0; max-width: 100%; }
+.blog-detail-main { min-width: 0; }
+.blog-detail-main > * { min-width: 0; max-width: 100%; }
+
+.av-article-body { min-width: 0; max-width: 100%; }
+
+/* Long unbroken tokens — URLs, IDs, hashes — wrap instead of pushing out. */
+.av-article-body p,
+.av-article-body li,
+.av-article-body h2,
+.av-article-body h3,
+.av-article-body blockquote { overflow-wrap: anywhere; }
+
+/* Code scrolls inside its own box, never the page. */
+.av-article-body pre,
+.av-article-body > div > pre,
+.av-article-body div[class*="language-"] {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.av-article-body pre code { white-space: pre; }
+.av-inline-code { overflow-wrap: anywhere; }
+
+/* Images and embeds cannot exceed the column. */
+.av-article-body img,
+.av-article-body video,
+.av-article-body iframe { max-width: 100%; height: auto; }
+.av-article-body iframe { width: 100%; }
+
+/* ── Header ───────────────────────────────────────────────────────────────
+   The old header put a decorative gradient rule and three dots in the middle
+   slot; at most widths the rule ran straight through the brand subtitle. That
+   space now carries context instead: where you are, or what you are reading. */
+
+.blog-shell { --blog-header-h: 68px; }
+
+.blog-header-rail { display: none; }
+
+.blog-header-context {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  margin-left: 18px;
+  border-left: 1px solid var(--blog-line);
+}
+
+.blog-header-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--blog-muted);
+  font: 11px/1 var(--blog-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.blog-header-year { color: var(--blog-accent); font-weight: 600; }
+.blog-header-dot {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--blog-line-strong);
+}
+
+.blog-header-back {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  padding: 6px 12px 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: none;
+  color: var(--blog-muted);
+  cursor: pointer;
+  transition: background 0.16s, border-color 0.16s, color 0.16s;
+}
+.blog-header-back:hover {
+  background: var(--blog-panel);
+  border-color: var(--blog-line);
+  color: var(--blog-copy);
+}
+.blog-header-back-label {
+  font: 11px/1 var(--blog-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex: 0 0 auto;
+}
+.blog-header-crumb {
+  min-width: 0;
+  padding-left: 11px;
+  border-left: 1px solid var(--blog-line);
+  color: var(--blog-copy);
+  font: 500 13px/1.3 var(--font, system-ui);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 780px) {
+  .blog-header-crumb, .blog-header-summary { display: none; }
+  .blog-header-context { border-left: none; padding-left: 0; margin-left: 6px; }
+}
+
+/* Reading progress, aligned to the bottom edge of the header. */
+.blog-progress-track {
+  position: fixed;
+  top: calc(var(--blog-header-h) - 2px);
+  left: 0; right: 0;
+  height: 2px;
+  background: transparent;
+  z-index: 6;
+  pointer-events: none;
+}
+.blog-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blog-accent), var(--blog-blue));
+  box-shadow: 0 0 12px rgba(141, 231, 209, 0.55);
+  transition: width 0.12s linear;
+}
+
+/* ── Hero: year distribution ──────────────────────────────────────────────
+   The right half of the hero used to hold four labelled nodes joined by lines
+   that represented nothing. It now plots the archive by year and doubles as
+   the year picker. */
+
+.blog-hero-chart {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-end;
+  min-width: 0;
+  padding-left: clamp(16px, 3vw, 40px);
+}
+
+.blog-hero-chart-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--blog-muted);
+  font: 9px/1 var(--blog-mono);
+  letter-spacing: 0.14em;
+}
+.blog-hero-chart-head em {
+  font-style: normal;
+  color: var(--blog-accent);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.blog-hero-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(3px, 0.7vw, 7px);
+  height: 132px;
+}
+
+.hero-bar {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  justify-content: flex-end;
+}
+.hero-bar-fill {
+  width: 100%;
+  height: var(--bar);
+  border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(180deg, rgba(141, 231, 209, 0.5), rgba(121, 201, 232, 0.16));
+  border: 1px solid var(--blog-line);
+  border-bottom: none;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  transform-origin: bottom;
+}
+.hero-bar:hover .hero-bar-fill {
+  background: linear-gradient(180deg, rgba(141, 231, 209, 0.8), rgba(121, 201, 232, 0.3));
+  border-color: var(--blog-line-strong);
+}
+.hero-bar.active .hero-bar-fill {
+  background: linear-gradient(180deg, var(--blog-accent), rgba(121, 201, 232, 0.42));
+  border-color: rgba(141, 231, 209, 0.6);
+  box-shadow: 0 0 18px rgba(141, 231, 209, 0.28);
+}
+.hero-bar em {
+  font: 9px/1 var(--blog-mono);
+  font-style: normal;
+  color: var(--blog-muted);
+  letter-spacing: 0.04em;
+}
+.hero-bar.active em { color: var(--blog-accent); }
+
+@media (max-width: 900px) {
+  .blog-hero-chart { padding-left: 0; margin-top: 26px; }
+  .blog-hero-bars { height: 96px; }
+}

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../config/supabaseClient';
+import { supabase, readPersistedSession } from '../config/supabaseClient';
 import { AI_PROVIDERS } from '../config/aiProviders';
 
 const AuthContext = createContext({});
@@ -53,8 +53,12 @@ function setAiSettingsCookie(name, value) {
 }
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [session, setSession] = useState(null);
+  // Hydrate optimistically from the session supabase-js already persisted, so the
+  // shell can paint without waiting on getSession()'s network round-trip. This is
+  // a rendering hint only — authorisation is enforced by RLS, and the real session
+  // replaces this as soon as getSession()/onAuthStateChange resolves below.
+  const [session, setSession] = useState(readPersistedSession);
+  const [user, setUser] = useState(() => readPersistedSession()?.user ?? null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminsList, setAdminsList] = useState(['nandanpatkar14114@gmail.com']);
   const [lockedUsers, setLockedUsers] = useState([]);
@@ -261,6 +265,10 @@ export const AuthProvider = ({ children }) => {
   const value = {
     session,
     user,
+    // True until getSession() resolves. `user` is already populated optimistically
+    // from the persisted session, so most consumers can ignore this; it exists for
+    // the ones that must not act on an unconfirmed identity.
+    loading,
     isAdmin,
     adminsList,
     setAdminsList,
@@ -292,9 +300,13 @@ export const AuthProvider = ({ children }) => {
     setIsAdminView,
   };
 
+  // Children render immediately. Previously this was `{!loading && children}`,
+  // which meant the entire application — landing page included — waited on a
+  // Supabase round-trip before painting a single pixel. Consumers that genuinely
+  // need a confirmed session read `loading` from context and branch themselves.
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

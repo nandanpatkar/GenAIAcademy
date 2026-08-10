@@ -7,6 +7,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { DiffEditor } from '@monaco-editor/react';
+import { configureMonaco } from "../../config/monacoLoader";
+
+// Point Monaco at its CDN before any editor mounts. Moved out of main.jsx
+// so @monaco-editor/react stays out of the app entry chunk.
+configureMonaco();
 import { Clock, RotateCcw, ChevronLeft } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { listFileVersions, restoreFileVersion } from '../../services/projectService';

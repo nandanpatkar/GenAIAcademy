@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { supabase } from '../config/supabaseClient';
+import { loadCurriculumRow, primeCurriculumCache } from '../services/curriculumCache';
 import { useAuth } from './AuthContext';
 
 // ─── Defaults ────────────────────────────────────────────────────────────────
@@ -252,26 +253,27 @@ export const ThemeProvider = ({ children }) => {
 
   const [appearance, setAppearance] = useState(() => loadFromLocalStorage());
 
-  // Sync from Supabase when user is known
+  // Sync from Supabase when user is known.
+  //
+  // This used to issue its own `select('paths_data')`, downloading the entire
+  // curriculum blob to read a ~40-field theme object — a second full transfer of
+  // the same row App.jsx was already fetching. It now shares that one read.
   useEffect(() => {
-    if (!user) return;
+    if (!user?.id) return;
+    let cancelled = false;
     (async () => {
       try {
-        const { data } = await supabase
-          .from('user_curriculum')
-          .select('paths_data')
-          .eq('id', user.id)
-          .single();
-        if (data?.paths_data?.appearance) {
-          const remote = { ...THEME_DEFAULTS, ...data.paths_data.appearance };
-          // Migration: Reduce Motion defaults off — clear any stale persisted `true`.
-          remote.reduceMotion = false;
-          setAppearance(remote);
-          localStorage.setItem(LS_KEY, JSON.stringify(remote));
-        }
+        const { appearance: remoteAppearance } = await loadCurriculumRow(user.id);
+        if (cancelled || !remoteAppearance) return;
+        const remote = { ...THEME_DEFAULTS, ...remoteAppearance };
+        // Migration: Reduce Motion defaults off — clear any stale persisted `true`.
+        remote.reduceMotion = false;
+        setAppearance(remote);
+        localStorage.setItem(LS_KEY, JSON.stringify(remote));
       } catch (_) {}
     })();
-  }, [user]);
+    return () => { cancelled = true; };
+  }, [user?.id]);
 
   // Apply to DOM whenever appearance changes
   useEffect(() => {
@@ -307,20 +309,17 @@ export const ThemeProvider = ({ children }) => {
 
     if (user) {
       try {
-        // Merge into paths_data without overwriting roadmap data
-        const { data } = await supabase
+        // `appearance` has its own column, so this is a single write of one small
+        // value. It used to be a read-modify-write of the whole paths_data blob:
+        // two serial round-trips, two full transfers of the entire curriculum —
+        // and it raced App.jsx's debounced write of the same blob, so whichever
+        // landed second silently discarded the other's changes.
+        const { error } = await supabase
           .from('user_curriculum')
-          .select('paths_data')
-          .eq('id', user.id)
-          .single();
-        const existing = data?.paths_data || {};
-        await supabase
-          .from('user_curriculum')
-          .upsert({
-            id: user.id,
-            paths_data: { ...existing, appearance: next },
-            updated_at: new Date().toISOString(),
-          });
+          .update({ appearance: next, updated_at: new Date().toISOString() })
+          .eq('id', user.id);
+        if (error) throw error;
+        primeCurriculumCache(user.id, { appearance: next });
       } catch (e) {
         console.warn('ThemeContext: Supabase sync failed', e);
       }
@@ -339,19 +338,13 @@ export const ThemeProvider = ({ children }) => {
 
     if (user) {
       try {
-        const { data } = await supabase
+        // Single-column write, same reasoning as updateAppearance above.
+        const { error } = await supabase
           .from('user_curriculum')
-          .select('paths_data')
-          .eq('id', user.id)
-          .single();
-        const existing = data?.paths_data || {};
-        await supabase
-          .from('user_curriculum')
-          .upsert({
-            id: user.id,
-            paths_data: { ...existing, appearance: THEME_DEFAULTS },
-            updated_at: new Date().toISOString(),
-          });
+          .update({ appearance: THEME_DEFAULTS, updated_at: new Date().toISOString() })
+          .eq('id', user.id);
+        if (error) throw error;
+        primeCurriculumCache(user.id, { appearance: THEME_DEFAULTS });
       } catch (e) {
         console.warn('ThemeContext: reset Supabase sync failed', e);
       }

@@ -8,11 +8,23 @@ import {
   Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit, Mic, BoxSelect,
   HelpCircle
 } from "lucide-react";
-import { PATHS } from "./data/roadmap";
+// The default curriculum (`PATHS`) is ~600 KB — dsa_path + three aicxm paths +
+// the Missing Manual — and was the single largest thing in the entry chunk, even
+// though every use of it is inside an async function that runs after auth
+// resolves. Loading it on demand takes it off the first-paint critical path.
+// One shared promise so the three call sites don't fetch it three times.
+let pathsModulePromise = null;
+const loadDefaultPaths = () => {
+  if (!pathsModulePromise) {
+    pathsModulePromise = import("./data/roadmap").then((m) => m.PATHS);
+  }
+  return pathsModulePromise;
+};
 import { DATA_SCIENCE_LAB_IDS } from "./data/dataScienceLabCatalog";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { supabase } from "./config/supabaseClient";
+import { loadCurriculumRow, resetCurriculumCache, primeCurriculumCache } from "./services/curriculumCache";
 import { MAIN_STEPS, SECTION_STEPS, SIDEBAR_OVERVIEW_STEPS } from "./data/walkthroughSteps";
 import { AnimatePresence } from "framer-motion";
 import useIsMobile from "./hooks/useIsMobile";
@@ -297,6 +309,20 @@ function MainApp() {
     // Only show landing if user hasn't seen it in this session and is not logged in
     return !localStorage.getItem("genai_landing_dismissed");
   });
+  // The command palette is mounted only while open, so the Cmd+K binding lives
+  // here in the always-mounted shell rather than inside the palette itself.
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
+
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
   const [showLeetCode, setShowLeetCode] = useState(false);
@@ -333,7 +359,11 @@ function MainApp() {
   const pathsDataRef = React.useRef(pathsData);
   React.useEffect(() => { pathsDataRef.current = pathsData; }, [pathsData]);
 
-  const hasFetched = React.useRef(false);
+  // Which user id the curriculum has been fetched for. Keyed by id rather than a
+  // plain boolean: the session now hydrates optimistically from localStorage, so
+  // the identity can be corrected once getSession() confirms it, and the fetch
+  // must re-run for the real user rather than stay latched on the optimistic one.
+  const fetchedForUserId = React.useRef(null);
 
   // Flush save to Supabase immediately, then sign out
   const handleSignOut = React.useCallback(async () => {
@@ -351,38 +381,40 @@ function MainApp() {
         console.error("Flush save before sign-out failed:", e);
       }
     }
-    hasFetched.current = false;
+    fetchedForUserId.current = null;
+    // Otherwise the next user to sign in on this browser inherits this user's
+    // cached curriculum promise.
+    resetCurriculumCache();
     setIsDataLoaded(false);
     signOut();
   }, [user, signOut]);
 
   useEffect(() => {
-    if (!user) return;
-    if (hasFetched.current) return;
-    hasFetched.current = true;
+    if (!user?.id) return;
+    if (fetchedForUserId.current === user.id) return;
+    fetchedForUserId.current = user.id;
 
     const fetchCurriculum = async () => {
-      const { data, error } = await supabase
-        .from('user_curriculum')
-        .select('paths_data')
-        .eq('id', user.id)
-        .single();
+      // Shared with ThemeContext — this row used to be fetched twice per load,
+      // transferring the whole paths_data blob each time. See services/curriculumCache.
+      const { paths_data, error } = await loadCurriculumRow(user.id);
 
       // Never treat an unavailable database as a brand-new account: that would
       // replace an existing curriculum with defaults on the next sync.
-      if (error && error.code !== 'PGRST116') {
-        console.error('Could not load curriculum from Supabase:', error);
+      if (error) {
+        // Allow a retry on the next render rather than latching this user as done.
+        fetchedForUserId.current = null;
         return;
       }
 
-      if (data && data.paths_data && Object.keys(data.paths_data).length > 0) {
-        const defaultPaths = injectDefaultIcons(PATHS);
+      if (paths_data && Object.keys(paths_data).length > 0) {
+        const defaultPaths = injectDefaultIcons(await loadDefaultPaths());
         const mergedData = {};
-        const allKeys = new Set([...Object.keys(defaultPaths), ...Object.keys(data.paths_data)]);
+        const allKeys = new Set([...Object.keys(defaultPaths), ...Object.keys(paths_data)]);
 
         for (const key of allKeys) {
           const defaultPath = defaultPaths[key];
-          const savedPath = data.paths_data[key];
+          const savedPath = paths_data[key];
           if (!defaultPath) { mergedData[key] = savedPath; continue; }
           if (!savedPath) { mergedData[key] = defaultPath; continue; }
 
@@ -430,7 +462,7 @@ function MainApp() {
         }
       } else {
         // New user: Use default paths strictly, do NOT pull from localStorage
-        const initialData = injectDefaultIcons(PATHS);
+        const initialData = injectDefaultIcons(await loadDefaultPaths());
         setPathsData(initialData);
         const keys = Object.keys(initialData).filter(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance", "leetcode"].includes(k));
         if (keys.length > 0) setActivePath(keys[0]);
@@ -475,6 +507,9 @@ function MainApp() {
             updated_at: new Date().toISOString()
           });
         if (error) throw error;
+        // Keep the shared cache in step so anything reading it later this session
+        // sees what was just written, not what was loaded at startup.
+        primeCurriculumCache(user.id, { paths_data: dataToSync });
       } catch (e) {
         console.error("Supabase sync failed:", e);
       }
@@ -543,55 +578,62 @@ function MainApp() {
   let savedViews = {};
   try { if (savedViewsStr) savedViews = JSON.parse(savedViewsStr); } catch (e) {}
 
-  const [showCurriculumMap, setShowCurriculumMap] = useState(savedViews.showCurriculumMap ?? false);
-  const [showRoadmap2, setShowRoadmap2] = useState(savedViews.showRoadmap2 ?? false);
-  const [showRoadmap3, setShowRoadmap3] = useState(savedViews.showRoadmap3 ?? false);
-  const [showIDE, setShowIDE] = useState(savedViews.showIDE ?? false);
-  const [showResources, setShowResources] = useState(savedViews.showResources ?? false);
-  const [showProgress, setShowProgress] = useState(savedViews.showProgress ?? false);
-  const [showPlayground, setShowPlayground] = useState(savedViews.showPlayground ?? false);
-  const [showGenAIPlayground2, setShowGenAIPlayground2] = useState(false);
-  const [showDSAAnimator, setShowDSAAnimator] = useState(savedViews.showDSAAnimator ?? false);
-  const [showLearnBug, setShowLearnBug] = useState(savedViews.showLearnBug ?? false);
-  const [showSqlLab, setShowSqlLab] = useState(savedViews.showSqlLab ?? false);
-  const [showConcurrencyLab, setShowConcurrencyLab] = useState(savedViews.showConcurrencyLab ?? false);
-  const [showLabs, setShowLabs] = useState(savedViews.showLabs ?? false);
+  const [showCurriculumMap, setShowCurriculumMap] = useViewState(savedViews.showCurriculumMap ?? false);
+  const [showRoadmap2, setShowRoadmap2] = useViewState(savedViews.showRoadmap2 ?? false);
+  const [showRoadmap3, setShowRoadmap3] = useViewState(savedViews.showRoadmap3 ?? false);
+  const [showIDE, setShowIDE] = useViewState(savedViews.showIDE ?? false);
+  const [showResources, setShowResources] = useViewState(savedViews.showResources ?? false);
+  const [showProgress, setShowProgress] = useViewState(savedViews.showProgress ?? false);
+  const [showPlayground, setShowPlayground] = useViewState(savedViews.showPlayground ?? false);
+  const [showGenAIPlayground2, setShowGenAIPlayground2] = useViewState(false);
+  const [showDSAAnimator, setShowDSAAnimator] = useViewState(savedViews.showDSAAnimator ?? false);
+  const [showLearnBug, setShowLearnBug] = useViewState(savedViews.showLearnBug ?? false);
+  const [showSqlLab, setShowSqlLab] = useViewState(savedViews.showSqlLab ?? false);
+  const [showConcurrencyLab, setShowConcurrencyLab] = useViewState(savedViews.showConcurrencyLab ?? false);
+  const [showLabs, setShowLabs] = useViewState(savedViews.showLabs ?? false);
   const [activeLabId, setActiveLabId] = useState(() => {
     const savedLabId = typeof window !== "undefined" ? localStorage.getItem("genai_active_lab") : null;
     return LAB_IDS.has(savedLabId) ? savedLabId : DEFAULT_LAB_ID;
   });
-  const [showAgentLibrary, setShowAgentLibrary] = useState(savedViews.showAgentLibrary ?? false);
-  const [showAimlCompanion, setShowAimlCompanion] = useState(savedViews.showAimlCompanion ?? false);
-  const [showLinks, setShowLinks] = useState(savedViews.showLinks ?? false);
-  const [showBlog, setShowBlog] = useState(savedViews.showBlog ?? false);
-  const [showAdminManagement, setShowAdminManagement] = useState(savedViews.showAdminManagement ?? false);
-  const [showSimulator, setShowSimulator] = useState(savedViews.showSimulator ?? false);
-  const [showAwsSimulator, setShowAwsSimulator] = useState(savedViews.showAwsSimulator ?? false);
-  const [showGalaxy, setShowGalaxy] = useState(savedViews.showGalaxy ?? false);
-  const [showAIInterviewer, setShowAIInterviewer] = useState(savedViews.showAIInterviewer ?? false);
-  const [showGeminiInterviewer, setShowGeminiInterviewer] = useState(false);
-  const [showEmotionalSupport, setShowEmotionalSupport] = useState(false);
-  const [showAlgoStudio, setShowAlgoStudio] = useState(savedViews.showAlgoStudio ?? false);
-  const [showAlgoVisualizer, setShowAlgoVisualizer] = useState(savedViews.showAlgoVisualizer ?? false);
-  const [showK8sGames, setShowK8sGames] = useState(savedViews.showK8sGames ?? false);
-  const [showGitVisualizer, setShowGitVisualizer] = useState(savedViews.showGitVisualizer ?? false);
-  const [showFlowDesign, setShowFlowDesign] = useState(savedViews.showFlowDesign ?? false);
-  const [showCommunity, setShowCommunity] = useState(savedViews.showCommunity ?? false);
-  const [showNotion, setShowNotion] = useState(savedViews.showNotion ?? false);
-  const [showNoSignups, setShowNoSignups] = useState(savedViews.showNoSignups ?? false);
-  const [showFreeSystemDesign, setShowFreeSystemDesign] = useState(savedViews.showFreeSystemDesign ?? false);
-  const [showManual, setShowManual] = useState(savedViews.showManual ?? false);
+  const [showAgentLibrary, setShowAgentLibrary] = useViewState(savedViews.showAgentLibrary ?? false);
+  const [showAimlCompanion, setShowAimlCompanion] = useViewState(savedViews.showAimlCompanion ?? false);
+  const [showLinks, setShowLinks] = useViewState(savedViews.showLinks ?? false);
+  const [showBlog, setShowBlog] = useViewState(savedViews.showBlog ?? false);
+  // Year the blog archive should open on, set by the sidebar year sub-items.
+  const [blogYear, setBlogYear] = useState(null);
+  // Slug of an archive article to open directly, set by surfaces that
+  // link to a specific piece (Intelligence Hub, home screen).
+  const [blogSlug, setBlogSlug] = useState(null);
+  // Category chip to pre-select, set when a topic node in the galaxy is opened.
+  const [blogTag, setBlogTag] = useState(null);
+  const [showAdminManagement, setShowAdminManagement] = useViewState(savedViews.showAdminManagement ?? false);
+  const [showSimulator, setShowSimulator] = useViewState(savedViews.showSimulator ?? false);
+  const [showAwsSimulator, setShowAwsSimulator] = useViewState(savedViews.showAwsSimulator ?? false);
+  const [showGalaxy, setShowGalaxy] = useViewState(savedViews.showGalaxy ?? false);
+  const [showAIInterviewer, setShowAIInterviewer] = useViewState(savedViews.showAIInterviewer ?? false);
+  const [showGeminiInterviewer, setShowGeminiInterviewer] = useViewState(false);
+  const [showEmotionalSupport, setShowEmotionalSupport] = useViewState(false);
+  const [showAlgoStudio, setShowAlgoStudio] = useViewState(savedViews.showAlgoStudio ?? false);
+  const [showAlgoVisualizer, setShowAlgoVisualizer] = useViewState(savedViews.showAlgoVisualizer ?? false);
+  const [showK8sGames, setShowK8sGames] = useViewState(savedViews.showK8sGames ?? false);
+  const [showGitVisualizer, setShowGitVisualizer] = useViewState(savedViews.showGitVisualizer ?? false);
+  const [showFlowDesign, setShowFlowDesign] = useViewState(savedViews.showFlowDesign ?? false);
+  const [showCommunity, setShowCommunity] = useViewState(savedViews.showCommunity ?? false);
+  const [showNotion, setShowNotion] = useViewState(savedViews.showNotion ?? false);
+  const [showNoSignups, setShowNoSignups] = useViewState(savedViews.showNoSignups ?? false);
+  const [showFreeSystemDesign, setShowFreeSystemDesign] = useViewState(savedViews.showFreeSystemDesign ?? false);
+  const [showManual, setShowManual] = useViewState(savedViews.showManual ?? false);
   const [activeManualPhase, setActiveManualPhase] = useState(null);
-  const [showReference, setShowReference] = useState(savedViews.showReference ?? false);
+  const [showReference, setShowReference] = useViewState(savedViews.showReference ?? false);
   const [activeReferenceTopic, setActiveReferenceTopic] = useState(null);
-  const [showAgentCore, setShowAgentCore] = useState(savedViews.showAgentCore ?? false);
+  const [showAgentCore, setShowAgentCore] = useViewState(savedViews.showAgentCore ?? false);
   const [agentCoreMode, setAgentCoreMode] = useState("docs");
-  const [showLangChainDocs, setShowLangChainDocs] = useState(savedViews.showLangChainDocs ?? false);
+  const [showLangChainDocs, setShowLangChainDocs] = useViewState(savedViews.showLangChainDocs ?? false);
   const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
-  const [showStrandsDocs, setShowStrandsDocs] = useState(savedViews.showStrandsDocs ?? false);
-  const [showInterviewPrep, setShowInterviewPrep] = useState(savedViews.showInterviewPrep ?? false);
+  const [showStrandsDocs, setShowStrandsDocs] = useViewState(savedViews.showStrandsDocs ?? false);
+  const [showInterviewPrep, setShowInterviewPrep] = useViewState(savedViews.showInterviewPrep ?? false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
-  const [showProjects, setShowProjects] = useState(savedViews.showProjects ?? false);
+  const [showProjects, setShowProjects] = useViewState(savedViews.showProjects ?? false);
   const [activeToolHome, setActiveToolHome] = useState(null);
   const [sidebarBeforeGenAI2, setSidebarBeforeGenAI2] = useState(null);
 
@@ -608,14 +650,16 @@ function MainApp() {
     setSidebarBeforeGenAI2(null);
   }, [sidebarBeforeGenAI2]);
 
-  const [showGitHubHub, setShowGitHubHub] = useState(savedViews.showGitHubHub ?? false);
+  const [showGitHubHub, setShowGitHubHub] = useViewState(savedViews.showGitHubHub ?? false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Plain useState on purpose: this is a mobile panel toggle, not a lazy view.
+  // A transition would make the tap feel unresponsive for no benefit.
   const [showModuleDetails, setShowModuleDetails] = useState(false);
-  const [showIntelligenceHub, setShowIntelligenceHub] = useState(savedViews.showIntelligenceHub ?? true);
-  const [showHome2, setShowHome2] = useState(false);
-  const [showLegacyIntelligenceHub, setShowLegacyIntelligenceHub] = useState(false);
-  const [showWorkplaceLab, setShowWorkplaceLab] = useState(savedViews.showWorkplaceLab ?? false);
-  const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(savedViews.showKnowledgeGraph ?? false);
+  const [showIntelligenceHub, setShowIntelligenceHub] = useViewState(savedViews.showIntelligenceHub ?? true);
+  const [showHome2, setShowHome2] = useViewState(false);
+  const [showLegacyIntelligenceHub, setShowLegacyIntelligenceHub] = useViewState(false);
+  const [showWorkplaceLab, setShowWorkplaceLab] = useViewState(savedViews.showWorkplaceLab ?? false);
+  const [showKnowledgeGraph, setShowKnowledgeGraph] = useViewState(savedViews.showKnowledgeGraph ?? false);
   const [hubConfig, setHubConfig] = useState(() => {
     try {
       const saved = localStorage.getItem("genai_hub_config");
@@ -757,7 +801,11 @@ function MainApp() {
     }
   };
 
-  const closeAllPanels = () => {
+  // useCallback because this is passed into the memoized sidebar (directly and via
+  // handleSidebarPathChange). Every setter it calls is referentially stable — the
+  // plain useState setters by definition, and the useViewState ones by construction
+  // — so `sidebarBeforeGenAI2` is the only real dependency.
+  const closeAllPanels = useCallback(() => {
     setActiveToolHome(null);
     setShowCurriculumMap(false);
     setShowRoadmap2(false);
@@ -815,7 +863,30 @@ function MainApp() {
     setShowAlgoWar(false);
     setShowOnboarding(false);
     setInterviewDeepLinkId(null);
-  };
+  }, [sidebarBeforeGenAI2]);
+
+  // Stable identities for the four handlers the sidebar receives as inline arrows.
+  // React.memo on the sidebar is a no-op while props are recreated every render,
+  // so these have to be memoized together with it.
+  const handleSidebarPathChange = useCallback((p) => {
+    setActivePath(p);
+    closeAllPanels();
+  }, [closeAllPanels]);
+
+  const handleAddPath = useCallback(() => {
+    setEditData(null);
+    setEditingPath(true);
+  }, []);
+
+  const handleEditPath = useCallback((p) => {
+    setEditData({ ...p, id: activePath });
+    setEditingPath(true);
+  }, [activePath]);
+
+  const handleSidebarOnboarding = useCallback((v) => {
+    if (v) setOnboardingMode("panel");
+    setShowOnboarding(v);
+  }, []);
 
   const launchToolFromHome = (feature) => {
     closeAllPanels();
@@ -1069,9 +1140,9 @@ function MainApp() {
 
   const completedCount = (pathData?.nodes || []).filter(n => getNodeState(n.id) === "done").length;
 
-  const handleResetData = () => {
+  const handleResetData = async () => {
     if (window.confirm("Reset all pathways to original defaults?")) {
-      setPathsData(injectDefaultIcons(PATHS));
+      setPathsData(injectDefaultIcons(await loadDefaultPaths()));
       setActiveNode(null); setActiveModule(null); setEditingNode(false); setEditingModule(false); setNodeStates({});
     }
   };
@@ -1345,20 +1416,28 @@ function MainApp() {
     });
   };
 
-  if (!user && showLanding) return <LandingWrapper theme={theme} toggleTheme={toggleTheme} onEnter={() => {
-    setShowLanding(false);
-    localStorage.setItem("genai_landing_dismissed", "true");
-  }} />;
+  // Landing and auth get their own boundaries so that moving between them (and
+  // into the app) doesn't unwind to the root fallback and blank the window.
+  if (!user && showLanding) return (
+    <React.Suspense fallback={<ViewLoadingSkeleton />}>
+      <LandingWrapper theme={theme} toggleTheme={toggleTheme} onEnter={() => {
+        setShowLanding(false);
+        localStorage.setItem("genai_landing_dismissed", "true");
+      }} />
+    </React.Suspense>
+  );
 
   if (!user) return (
-    <AuthInterface
-      theme={theme}
-      toggleTheme={toggleTheme}
-      onBackToLanding={() => {
-        setShowLanding(true);
-        localStorage.removeItem("genai_landing_dismissed");
-      }}
-    />
+    <React.Suspense fallback={<ViewLoadingSkeleton />}>
+      <AuthInterface
+        theme={theme}
+        toggleTheme={toggleTheme}
+        onBackToLanding={() => {
+          setShowLanding(true);
+          localStorage.removeItem("genai_landing_dismissed");
+        }}
+      />
+    </React.Suspense>
   );
 
 
@@ -1374,21 +1453,32 @@ function MainApp() {
 
   return (
     <div className={`app ${isEditMode ? "edit-mode-active" : ""}${showOnboarding ? " onboarding-active" : ""}`}>
-      <GlobalSearchPalette items={searchItems} onNavigate={handleSearchNavigate} />
-      {showOnboarding && (
-        <OnboardingChatbot
-          mode={onboardingMode}
-          onClose={handleOnboardingDismiss}
-          onComplete={handleOnboardingComplete}
-          navigateToSection={navigateToSection}
-          setActivePath={setActivePath}
-          setShowCurriculumMap={setShowCurriculumMap}
-          setShowManual={setShowManual}
-          setActiveManualPhase={setActiveManualPhase}
-          setShowReference={setShowReference}
-          setActiveReferenceTopic={setActiveReferenceTopic}
-        />
-      )}
+      {/* Mounted only while open — see the Cmd+K effect above and the note in
+          GlobalSearchPalette for why it no longer lives here unconditionally. */}
+      <OverlayBoundary>
+        {isSearchOpen && (
+          <GlobalSearchPalette
+            open
+            onClose={() => setIsSearchOpen(false)}
+            items={searchItems}
+            onNavigate={handleSearchNavigate}
+          />
+        )}
+        {showOnboarding && (
+          <OnboardingChatbot
+            mode={onboardingMode}
+            onClose={handleOnboardingDismiss}
+            onComplete={handleOnboardingComplete}
+            navigateToSection={navigateToSection}
+            setActivePath={setActivePath}
+            setShowCurriculumMap={setShowCurriculumMap}
+            setShowManual={setShowManual}
+            setActiveManualPhase={setActiveManualPhase}
+            setShowReference={setShowReference}
+            setActiveReferenceTopic={setActiveReferenceTopic}
+          />
+        )}
+      </OverlayBoundary>
       {isEditMode && (
         <div style={{
           position: 'fixed', top: 0, left: 0, width: '100%', height: '2px',
@@ -1402,11 +1492,14 @@ function MainApp() {
         setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
       <div className="app-layout-root">
+        {/* Its own boundary: the sidebar is lazy, and switching between Sidebar and
+            SidebarModern must not take the rest of the app down with it. */}
+        <React.Suspense fallback={<aside className="app-sidebar-placeholder" aria-hidden="true" />}>
         <ActiveSidebar
-          activePath={activePath} setActivePath={p => { setActivePath(p); closeAllPanels(); }}
+          activePath={activePath} setActivePath={handleSidebarPathChange}
           paths={pathsData} onReset={handleResetData} isEditMode={isEditMode} setIsEditMode={setIsEditMode}
-          onAddPath={() => { setEditData(null); setEditingPath(true); }}
-          onEditPath={p => { setEditData({ ...p, id: activePath }); setEditingPath(true); }}
+          onAddPath={handleAddPath}
+          onEditPath={handleEditPath}
           showCurriculumMap={showCurriculumMap} setShowCurriculumMap={setShowCurriculumMap}
           showRoadmap2={showRoadmap2} setShowRoadmap2={setShowRoadmap2}
           showRoadmap3={showRoadmap3} setShowRoadmap3={setShowRoadmap3}
@@ -1425,6 +1518,7 @@ function MainApp() {
           showAimlCompanion={showAimlCompanion} setShowAimlCompanion={setShowAimlCompanion}
           showLinks={showLinks} setShowLinks={setShowLinks}
           showBlog={showBlog} setShowBlog={setShowBlog}
+          onOpenBlogYear={(year) => { closeAllPanels(); setBlogSlug(null); setBlogTag(null); setBlogYear(year); setShowBlog(true); }}
           showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
           showAwsSimulator={showAwsSimulator} setShowAwsSimulator={setShowAwsSimulator}
           showSimulator={showSimulator} setShowSimulator={setShowSimulator}
@@ -1457,7 +1551,7 @@ function MainApp() {
           langChainProduct={langChainProduct} setLangChainProduct={setLangChainProduct}
           showStrandsDocs={showStrandsDocs} setShowStrandsDocs={setShowStrandsDocs}
           showOnboarding={showOnboarding}
-          setShowOnboarding={(v) => { if (v) setOnboardingMode("panel"); setShowOnboarding(v); }}
+          setShowOnboarding={handleSidebarOnboarding}
           showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
           activeToolHome={activeToolHome} onOpenToolHome={setActiveToolHome}
           showQuiz={showQuiz} setShowQuiz={setShowQuiz}
@@ -1472,8 +1566,18 @@ function MainApp() {
           isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed}
           onSectionWalkthrough={handleSectionWalkthrough}
         />
+        </React.Suspense>
 
         <main className="app-primary-content">
+          {/*
+            Every view below is React.lazy(). Without a boundary here, a view whose
+            chunk isn't downloaded yet suspends and unwinds all the way to the root
+            boundary in App() — blanking the entire window and remounting the
+            sidebar, header, and providers' children on every single navigation.
+            Scoping the boundary to the content area keeps the shell alive and
+            confines the loading state to the region that is actually changing.
+          */}
+          <React.Suspense fallback={<ViewLoadingSkeleton />}>
           {showAdminManagement && isAdmin ? (
             <AdminManagement
               onClose={() => setShowAdminManagement(false)}
@@ -1481,7 +1585,7 @@ function MainApp() {
               setPathsData={setPathsData}
             />
           ) :
-            showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} onClose={() => setShowBlog(false)} /> :
+            showBlog ? <BlogPage theme={theme} isEditMode={isEditMode} initialYear={blogYear} initialSlug={blogSlug} initialTag={blogTag} onClose={() => setShowBlog(false)} /> :
               showCommunity ? (
                 <Community isSidebarCollapsed={isSidebarCollapsed} />
               ) :
@@ -1509,6 +1613,20 @@ function MainApp() {
                         setActiveNode(node);
                         setActiveModule(mod);
                         setActiveTopic(topic);
+                      }}
+                      onArticleClick={(slug) => {
+                        closeAllPanels();
+                        setBlogYear(null);
+                        setBlogTag(null);
+                        setBlogSlug(slug);
+                        setShowBlog(true);
+                      }}
+                      onTopicClick={(tag, year) => {
+                        closeAllPanels();
+                        setBlogSlug(null);
+                        setBlogYear(year);
+                        setBlogTag(tag);
+                        setShowBlog(true);
                       }}
                       onClose={() => setShowGalaxy(false)}
                     />
@@ -1607,6 +1725,13 @@ function MainApp() {
                                                       ) :
                                                       showLegacyIntelligenceHub ? (
                                                         <IntelligenceHub
+                                                          onOpenArticle={(slug) => {
+                                                            closeAllPanels();
+                                                            setBlogYear(null);
+                                                            setBlogTag(null);
+                                                            setBlogSlug(slug);
+                                                            setShowBlog(true);
+                                                          }}
                                                           paths={pathsData}
                                                           pathsData={pathsData}
                                                           activePath={activePath}
@@ -1770,6 +1895,7 @@ function MainApp() {
                                                         )}
                                                       </>
           }
+          </React.Suspense>
         </main>
       </div>
 
@@ -1785,15 +1911,18 @@ function MainApp() {
         }}
       />
 
-      <FullContextChatbot
-        user={user}
-        pathsData={pathsData}
-        activePath={activePath}
-        activeNode={freshActiveNode}
-        activeModule={freshActiveModule}
-        activeTopic={activeTopic}
-      />
+      <OverlayBoundary>
+        <FullContextChatbot
+          user={user}
+          pathsData={pathsData}
+          activePath={activePath}
+          activeNode={freshActiveNode}
+          activeModule={freshActiveModule}
+          activeTopic={activeTopic}
+        />
+      </OverlayBoundary>
 
+      <OverlayBoundary>
       <AnimatePresence>
         {focusNodeId && freshActiveNode && freshActiveModule && (
           <FocusPulse
@@ -1809,7 +1938,9 @@ function MainApp() {
           />
         )}
       </AnimatePresence>
+      </OverlayBoundary>
 
+      <OverlayBoundary>
       <AnimatePresence>
         {activeVideo && (
           <VideoModal
@@ -1833,13 +1964,14 @@ function MainApp() {
           />
         )}
       </AnimatePresence>
+      </OverlayBoundary>
 
-
-
-      {editingPath && <EditorModal type="path" data={editData} pathColor={editData?.color || "#3b82f6"} onClose={() => setEditingPath(false)} onSave={handleSavePath} onDelete={handleDeletePath} />}
-      {editingNode && <EditorModal type="node" data={editData} pathColor={pathData.color} onClose={() => setEditingNode(false)} onSave={handleSaveNode} onDelete={handleDeleteNode} />}
-      {editingModule && <EditorModal type="module" data={editData} pathColor={pathData.color} onClose={() => setEditingModule(false)} onSave={handleSaveModule} onDelete={handleDeleteModule} />}
-      {editingTopic && <EditorModal type="topic" data={editData} pathColor={pathData.color} onClose={() => setEditingTopic(false)} onSave={handleSaveTopic} />}
+      <OverlayBoundary>
+        {editingPath && <EditorModal type="path" data={editData} pathColor={editData?.color || "#3b82f6"} onClose={() => setEditingPath(false)} onSave={handleSavePath} onDelete={handleDeletePath} />}
+        {editingNode && <EditorModal type="node" data={editData} pathColor={pathData.color} onClose={() => setEditingNode(false)} onSave={handleSaveNode} onDelete={handleDeleteNode} />}
+        {editingModule && <EditorModal type="module" data={editData} pathColor={pathData.color} onClose={() => setEditingModule(false)} onSave={handleSaveModule} onDelete={handleDeleteModule} />}
+        {editingTopic && <EditorModal type="topic" data={editData} pathColor={pathData.color} onClose={() => setEditingTopic(false)} onSave={handleSaveTopic} />}
+      </OverlayBoundary>
 
       {/* Re-trigger Walkthrough Button (top-right, hidden until hover) — only on home/roadmap */}
       {!showWalkthrough && !sectionWalkthroughId &&
@@ -1853,6 +1985,7 @@ function MainApp() {
           null
         )}
 
+      <OverlayBoundary>
       {/* Main Walkthrough Overlay */}
       <AnimatePresence>
         {showWalkthrough && (
@@ -1892,6 +2025,61 @@ function MainApp() {
           />
         )}
       </AnimatePresence>
+      </OverlayBoundary>
+    </div>
+  );
+}
+
+/**
+ * Suspense boundary for lazy overlays (modals, palettes, walkthroughs, chatbots).
+ *
+ * These render outside <main>, so without a boundary of their own the first time
+ * one is opened it suspends and unwinds to the root boundary — blanking the whole
+ * application to show a modal. `fallback={null}` is the right fallback here: an
+ * overlay appearing a beat later is correct, a flash of empty page is not.
+ */
+function OverlayBoundary({ children }) {
+  return <React.Suspense fallback={null}>{children}</React.Suspense>;
+}
+
+/**
+ * useState for a view-navigation flag, with the update marked as a transition.
+ *
+ * Every view in this app is React.lazy(). A plain setState that reveals a view
+ * whose chunk hasn't downloaded yet suspends immediately, so the boundary shows
+ * its fallback and the current screen disappears the instant you click. Marking
+ * the update as a transition tells React to keep the *current* view on screen
+ * and swap only once the new chunk is ready — the difference between a flash of
+ * skeleton on every click and a normal-feeling navigation.
+ *
+ * Use this only for navigation flags. Anything driving a text input or another
+ * high-frequency control must stay a plain useState — transitions are allowed to
+ * be delayed, which is exactly wrong for typing.
+ */
+function useViewState(initial) {
+  const [value, setValue] = useState(initial);
+  const setTransitional = useCallback((next) => {
+    React.startTransition(() => setValue(next));
+  }, []);
+  return [value, setTransitional];
+}
+
+/**
+ * Fallback for the content-area Suspense boundary. Deliberately a layout-shaped
+ * skeleton rather than a spinner or an empty div: it occupies the same space the
+ * incoming view will, so the shell doesn't reflow when the chunk arrives.
+ */
+function ViewLoadingSkeleton() {
+  return (
+    <div className="view-skeleton" aria-busy="true" aria-live="polite">
+      <div className="view-skeleton-bar" style={{ width: "38%", height: 28 }} />
+      <div className="view-skeleton-bar" style={{ width: "62%" }} />
+      <div className="view-skeleton-grid">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="view-skeleton-card" />
+        ))}
+      </div>
+      <span className="sr-only">Loading view…</span>
     </div>
   );
 }

@@ -8,19 +8,94 @@
     }
   },
   "rewrites": [
-    { "source": "/notion-api/(.*)", "destination": "https://api.notion.com/$1" },
-    { "source": "/agentcore-samples/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/agentcore-samples/$1" },
-    { "source": "/agentcore/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/agentcore/$1" },
-    { "source": "/langchain/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/langchain/$1" },
-    { "source": "/strands/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/strands/$1" },
-    { "source": "/guides/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/guides/$1" },
-    { "source": "/graphql", "destination": "/api/graphql" },
-    { "source": "/api/copilot/:path*", "destination": "/api/copilot" },
-    { "source": "/api/auth/:path*", "destination": "/api/auth" },
-    { "source": "/manifest.json", "destination": "/editor/manifest.json" },
-    { "source": "/imgs/app-icon-:variant.ico", "destination": "/editor/imgs/app-icon-:variant.ico" }
+    {
+      "source": "/notion-api/(.*)",
+      "destination": "https://api.notion.com/$1"
+    },
+    {
+      "source": "/agentcore-samples/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/agentcore-samples/$1"
+    },
+    {
+      "source": "/agentcore/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/agentcore/$1"
+    },
+    {
+      "source": "/langchain/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/langchain/$1"
+    },
+    {
+      "source": "/strands/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/strands/$1"
+    },
+    {
+      "source": "/guides/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/guides/$1"
+    },
+    {
+      "source": "/graphql",
+      "destination": "/api/graphql"
+    },
+    {
+      "source": "/api/copilot/:path*",
+      "destination": "/api/copilot"
+    },
+    {
+      "source": "/api/auth/:path*",
+      "destination": "/api/auth"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/editor/manifest.json"
+    },
+    {
+      "source": "/imgs/app-icon-:variant.ico",
+      "destination": "/editor/imgs/app-icon-:variant.ico"
+    }
   ],
   "redirects": [
-    { "source": "/draw", "destination": "/k8sgames/draw.html", "permanent": true }
+    {
+      "source": "/draw",
+      "destination": "/k8sgames/draw.html",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/reference/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
   ]
 }

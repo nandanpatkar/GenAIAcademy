@@ -17,7 +17,7 @@ const ADMIN_GROUP_ITEMS = [
 ];
 
 
-export default function Sidebar({
+function Sidebar({
   activePath, setActivePath, paths,
   activeNode, onReset, isEditMode, setIsEditMode, onAddPath, onEditPath,
   showCurriculumMap, setShowCurriculumMap,
@@ -61,6 +61,7 @@ export default function Sidebar({
   setActiveNode, setActiveModule, setActiveTopic,
   onSignOut,
   onHubNav,
+  onOpenBlogYear,
   setLinksInitialTab,
   showGitHubHub, setShowGitHubHub,
   isCollapsed, setIsCollapsed,
@@ -82,12 +83,27 @@ export default function Sidebar({
   onOpenGenAIPlayground2
 }) {
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
+
+  // Archive years for the blog sub-menu. Fetched only when the menu is first
+  // opened — the summary is ~700 bytes, but there is no reason to spend it on
+  // every session that never touches the blog.
+  const [archiveYears, setArchiveYears] = useState([]);
+  useEffect(() => {
+    if (!isBlogExpanded || archiveYears.length) return;
+    let alive = true;
+    import("../services/avArchiveService")
+      .then((mod) => mod.loadYears())
+      .then((summary) => { if (alive) setArchiveYears(summary.years || []); })
+      .catch(() => { /* sub-menu simply stays empty */ });
+    return () => { alive = false; };
+  }, [isBlogExpanded, archiveYears.length]);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [isPathsVisible, setIsPathsVisible] = useState(true);
   const [draggedItem, setDraggedItem] = useState(null); // { id, groupId } while a sidebar item drag is in flight
   const [expandedGroups, setExpandedGroups] = useState({
     learn: true,
     practice: true,
+    python_labs: true,
     algowar: true,
     labs: true,
     agents: true,
@@ -819,14 +835,22 @@ export default function Sidebar({
                           <Sparkles size={12} />
                           <span>Neural Pilot</span>
                         </div>
-                        <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2025', isAI: false })}>
-                          <div className="sub-dot" />
-                          <span>2025 Repository</span>
-                        </div>
-                        <div className="sub-item" onClick={() => onHubNav({ view: 'blog', year: '2024', isAI: false })}>
-                          <div className="sub-dot" />
-                          <span>2024 Repository</span>
-                        </div>
+                        {/* Was two hardcoded entries pointing at the Intelligence
+                            Hub. Now every year in the archive, with real counts
+                            from public/data/av-years.json, opening the article
+                            reader rather than a list of outbound links. */}
+                        {archiveYears.map(({ y, n }) => (
+                          <div
+                            key={y}
+                            className="sub-item"
+                            onClick={() => onOpenBlogYear?.(String(y))}
+                            title={`${n.toLocaleString()} articles`}
+                          >
+                            <div className="sub-dot" />
+                            <span>{y} Repository</span>
+                            <em className="sub-count">{n}</em>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </React.Fragment>
@@ -1670,3 +1694,15 @@ if (typeof document !== 'undefined') {
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 }
+
+/**
+ * Memoized because this sits outside the content Suspense boundary and stays
+ * mounted for the whole session, while every one of the ~90 state values in
+ * App.jsx re-renders its parent. Without memo it re-rendered on every keystroke,
+ * hover flag, and panel toggle anywhere in the app.
+ *
+ * This only works because App.jsx passes referentially stable props: primitives,
+ * useState/useViewState setters, and useCallback-wrapped handlers. If you add a
+ * new prop here, pass it as a stable reference or this reverts to a no-op.
+ */
+export default React.memo(Sidebar);

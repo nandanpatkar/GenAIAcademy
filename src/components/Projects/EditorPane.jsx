@@ -7,6 +7,11 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Editor, { DiffEditor } from '@monaco-editor/react';
+import { configureMonaco } from "../../config/monacoLoader";
+
+// Point Monaco at its CDN before any editor mounts. Moved out of main.jsx
+// so @monaco-editor/react stays out of the app entry chunk.
+configureMonaco();
 import { X, Save, Code2, GitCompare, Play, Settings2, Columns2, RotateCcw, Eye, FileCode } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { saveFile, getFile } from '../../services/projectService';

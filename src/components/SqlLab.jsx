@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
+import { configureMonaco } from "../config/monacoLoader";
+
+// Point Monaco at its CDN before any editor mounts. Moved out of main.jsx
+// so @monaco-editor/react stays out of the app entry chunk.
+configureMonaco();
 import {
   AlertTriangle, Check, ChevronRight, Database, Gauge, Loader2, Play,
   RefreshCw, Table2, Target, Terminal, X, Zap,

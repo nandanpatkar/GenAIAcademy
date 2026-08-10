@@ -37,7 +37,7 @@ const itemVariants = {
  * shared helpers in config/sidebarNav.js so behaviour never diverges. Only the
  * presentation is new.
  */
-export default function SidebarModern(props) {
+function SidebarModern(props) {
   const {
     activePath, setActivePath, paths,
     isEditMode, setIsEditMode, onAddPath, onEditPath,
@@ -1029,3 +1029,15 @@ if (typeof document !== "undefined") {
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 }
+
+/**
+ * Memoized because this sits outside the content Suspense boundary and stays
+ * mounted for the whole session, while every one of the ~90 state values in
+ * App.jsx re-renders its parent. Without memo it re-rendered on every keystroke,
+ * hover flag, and panel toggle anywhere in the app.
+ *
+ * This only works because App.jsx passes referentially stable props: primitives,
+ * useState/useViewState setters, and useCallback-wrapped handlers. If you add a
+ * new prop here, pass it as a stable reference or this reverts to a no-op.
+ */
+export default React.memo(SidebarModern);

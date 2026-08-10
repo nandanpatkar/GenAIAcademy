@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "av-cdn",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+
+  // The bucket is bound privately. It is NOT made public via r2.dev — this
+  // Worker is the only way in, which is why r2.dev's rate limit never applies.
+  "r2_buckets": [
+    {
+      "binding": "AV_BUCKET",
+      "bucket_name": "av-archive"
+    }
+  ],
+
+  "vars": {
+    // Browsers allowed to fetch(). Images in <img> tags ignore CORS entirely,
+    // so this only governs the markdown fetches the reader makes.
+    // Add your production domain here once you have one.
+    "ALLOWED_ORIGINS": "http://localhost:5173,http://localhost:4173,https://gen-ai-academy.vercel.app",
+
+    // Also allow Vercel preview deployments (gen-ai-academy-*.vercel.app).
+    "ALLOWED_ORIGIN_SUFFIX": ".vercel.app"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

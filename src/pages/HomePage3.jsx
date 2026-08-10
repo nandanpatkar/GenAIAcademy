@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { disposeThreeScene } from "../utils/disposeThreeScene";
 import {
   ArrowRight,
   BrainCircuit,
@@ -393,15 +394,9 @@ function WorldCanvas({ scrollRootRef, onActiveChange }) {
       window.cancelAnimationFrame(frameId);
       scrollRoot.removeEventListener("scroll", updateScroll);
       window.removeEventListener("resize", resize);
-      scene.traverse((object) => {
-        if (object.geometry) object.geometry.dispose();
-        if (object.material) {
-          const materials = Array.isArray(object.material) ? object.material : [object.material];
-          materials.forEach((material) => material.dispose());
-        }
-      });
-      renderer.dispose();
-      renderer.domElement.remove();
+      // Also disposes textures and releases the GL context, which
+      // renderer.dispose() on its own does not do. See utils/disposeThreeScene.
+      disposeThreeScene(scene, renderer, mount);
     };
   }, [onActiveChange, scrollRootRef]);
 
