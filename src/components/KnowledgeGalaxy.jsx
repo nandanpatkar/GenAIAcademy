@@ -1,9 +1,16 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import * as d3 from "d3";
 import * as THREE from "three";
-import { X, Sparkles, Orbit, Plus, Minus, Link2, Zap, Eye, EyeOff } from "lucide-react";
+import { disposeThreeScene } from "../utils/disposeThreeScene";
+import { X, Sparkles, Orbit, Plus, Minus, Link2, Zap, Eye, EyeOff, BookOpen, LibraryBig } from "lucide-react";
+import { loadTopics, loadAllTopics } from "../services/avArchiveService";
 
-export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeClick, onModuleClick, onSubtopicClick, onClose, embedded = false }) {
+/** Article titles run long; labels have to stay readable at zoom. */
+const ARTICLE_LABEL_MAX = 46;
+/** Ceiling on labels drawn per frame in 2D. Beyond this it is noise anyway. */
+const LABEL_BUDGET = 320;
+
+export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeClick, onModuleClick, onSubtopicClick, onArticleClick, onTopicClick, onClose, embedded = false }) {
   const canvasRef = useRef(null);
   const threeCanvasRef = useRef(null);
   const svgRef = useRef(null);
@@ -22,6 +29,57 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
   const [saturation3d, setSaturation3d] = useState(1.35);
   const [brightness3d, setBrightness3d] = useState(1.28);
   const transformRef = useRef(d3.zoomIdentity);
+
+  // ── Reading constellations (the blog archive's topic tree) ──
+  // 457 extra nodes, so the embedded dashboard tile starts without them and the
+  // full-screen view starts with them on.
+  const [topicTree, setTopicTree] = useState(null);
+  const [showTopics, setShowTopics] = useState(!embedded);
+  // "ALL": every article instead of six samples per topic. 8,167 more nodes and
+  // a 912 KB payload, so it is opt-in and the file is fetched on first use only.
+  const [showAllPosts, setShowAllPosts] = useState(false);
+  const [allPosts, setAllPosts] = useState(null);
+  const [loadingAll, setLoadingAll] = useState(false);
+
+  const toggleAllPosts = () => {
+    setShowTopics(true);
+    setShowAllPosts(showingAll => !showingAll);
+    setTooltip(null);
+  };
+
+  useEffect(() => {
+    let alive = true;
+    loadTopics().then(data => { if (alive) setTopicTree(data); });
+    return () => { alive = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!showAllPosts || allPosts) return undefined;
+    let alive = true;
+    setLoadingAll(true);
+    loadAllTopics().then(data => {
+      if (!alive) return;
+      // Flattened to `${clusterId}/${topicId}` -> posts so the graph builder
+      // does a map lookup per topic instead of a nested search.
+      const index = new Map();
+      (data.clusters || []).forEach(cluster => {
+        (cluster.topics || []).forEach(topic => {
+          index.set(`${cluster.id}/${topic.id}`, topic.posts || []);
+        });
+      });
+      setAllPosts(index);
+      setLoadingAll(false);
+    });
+    return () => { alive = false; };
+  }, [showAllPosts, allPosts]);
+
+  // Held in refs rather than passed through the render effects' dependency
+  // arrays: App passes these as inline arrows, and rebuilding the whole Three.js
+  // scene on every parent render would be far more expensive than a ref read.
+  const articleClickRef = useRef(onArticleClick);
+  const topicClickRef = useRef(onTopicClick);
+  useEffect(() => { articleClickRef.current = onArticleClick; }, [onArticleClick]);
+  useEffect(() => { topicClickRef.current = onTopicClick; }, [onTopicClick]);
 
   // ── Neural Galaxy Status Colors ──
   const STATUS_COLORS = {
@@ -110,8 +168,71 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
       });
     });
 
+    // ── Reading constellations ──
+    // The archive's topic tree hangs off the same root as the learning paths,
+    // so a concept and the writing about it sit in one map. Depths line up with
+    // the path hierarchy on purpose — the label/zoom thresholds and the 3D
+    // shell radii below are keyed off depth and need no special cases.
+    if (showTopics && topicTree?.clusters?.length) {
+      // In ALL mode articles sit at depth 4 rather than 3. That is not cosmetic:
+      // the 3D renderer builds a sphere mesh plus a glow sprite for every node
+      // above depth 4 and folds depth >= 4 into one Points cloud, and the 2D
+      // label thresholds step down at the same boundary. At six samples per
+      // topic the heavier treatment is worth it; at 8,167 articles it is not.
+      const full = showAllPosts ? allPosts : null;
+      const articleDepth = full ? 4 : 3;
+      const articleSize = full ? 2 : 3.5;
+
+      topicTree.clusters.forEach((cluster) => {
+        const clusterId = `av-cluster-${cluster.id}`;
+        nodes.push({
+          id: clusterId, type: "reading", label: cluster.label,
+          depth: 1, size: 12, color: cluster.color, status: "ready",
+          hint: `${cluster.n} ARTICLES`, archive: true,
+        });
+        links.push({ source: rootId, target: clusterId, depth: 1 });
+
+        cluster.topics.forEach((topic) => {
+          const topicNodeId = `av-topic-${cluster.id}-${topic.id}`;
+          nodes.push({
+            id: topicNodeId, type: "topic", label: topic.label,
+            depth: 2, size: 7, color: cluster.color, statusColor: cluster.color,
+            status: "ready", hint: `${topic.n} ARTICLES`, archive: true,
+            topicLabel: topic.label, topicYear: topic.y,
+            z: Math.random() * 40 - 20,
+          });
+          links.push({ source: clusterId, target: topicNodeId, depth: 2 });
+
+          const posts = full
+            ? (full.get(`${cluster.id}/${topic.id}`) || []).map(([s, t]) => ({ s, t }))
+            : topic.posts;
+
+          posts.forEach((post) => {
+            const postId = `av-post-${post.s}-${cluster.id}-${topic.id}`;
+            nodes.push({
+              id: postId,
+              type: "article",
+              label: post.t.length > ARTICLE_LABEL_MAX
+                ? `${post.t.slice(0, ARTICLE_LABEL_MAX - 1).trimEnd()}…`
+                : post.t,
+              depth: articleDepth, size: articleSize,
+              color: cluster.color, statusColor: cluster.color,
+              status: "ready", hint: "OPEN ARTICLE", archive: true,
+              // In ALL mode these are drawn as a point cloud with no SVG hit
+              // target of their own; the 2D layer picks them up via
+              // simulation.find() instead of 8,167 more DOM nodes.
+              leafHit: articleDepth === 4,
+              slug: post.s, fullTitle: post.t,
+              z: Math.random() * 20 - 10,
+            });
+            links.push({ source: topicNodeId, target: postId, depth: articleDepth });
+          });
+        });
+      });
+    }
+
     return { nodes, links };
-  }, [pathsData]);
+  }, [pathsData, topicTree, showTopics, showAllPosts, allPosts]);
 
   const edgeKey = (source, target) => [source, target].sort().join("::");
   const graphLinks3d = useMemo(() => {
@@ -217,10 +338,14 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
         const size = d.size * (1 + (d.z || 0) * 0.005);
         const isActivePath = activePath && d.pathId === activePath;
 
-        // Glow for Mastered
+        // Glow for Mastered, and for the reading constellations' two upper
+        // levels so they read as landmarks rather than as unvisited path nodes.
         if (d.status === "complete" || isActivePath) {
           ctx.shadowBlur = isActivePath ? 20 : 15;
           ctx.shadowColor = isActivePath ? "#22d3ee" : (d.statusColor || d.color);
+        } else if (d.archive && d.depth <= 2) {
+          ctx.shadowBlur = d.depth === 1 ? 18 : 10;
+          ctx.shadowColor = d.color;
         } else {
           ctx.shadowBlur = 0;
         }
@@ -272,7 +397,10 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
         .on("mouseenter", (event, d) => {
           if (d.depth === 0) return;
           const [mx, my] = d3.pointer(event, containerRef.current);
-          setTooltip({ x: mx, y: my, label: d.label, type: d.type, status: d.status, color: d.color });
+          setTooltip({
+            x: mx, y: my, label: d.fullTitle || d.label, type: d.type,
+            status: d.status, hint: d.hint, color: d.color,
+          });
         })
         .on("mouseleave", () => setTooltip(null))
         .on("click", (event, d) => {
@@ -280,6 +408,11 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
              if (d.type === "star" && onNodeClick) onNodeClick(d.originalData, d.pathId);
              else if (d.type === "satellite" && onModuleClick) onModuleClick(d.originalNode, d.originalModule, d.pathId);
              else if (d.type === "subtopic" && onSubtopicClick) onSubtopicClick(d.originalNode, d.originalModule, d.originalTopic, d.pathId);
+             else if (d.type === "article") articleClickRef.current?.(d.slug);
+             else if (d.type === "topic") topicClickRef.current?.(d.topicLabel, d.topicYear);
+             // A cluster has nothing to open — it only groups its topics — so
+             // clicking one must not dismiss the galaxy.
+             else if (d.type === "reading") return;
              if (d.depth > 0) onClose();
           }
         })
@@ -640,6 +773,9 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
       if (node.type === "star" && onNodeClick) onNodeClick(node.originalData, node.pathId);
       else if (node.type === "satellite" && onModuleClick) onModuleClick(node.originalNode, node.originalModule, node.pathId);
       else if (node.type === "subtopic" && onSubtopicClick) onSubtopicClick(node.originalNode, node.originalModule, node.originalTopic, node.pathId);
+      else if (node.type === "article") articleClickRef.current?.(node.slug);
+      else if (node.type === "topic") topicClickRef.current?.(node.topicLabel, node.topicYear);
+      else if (node.type === "reading") return; // groups topics, opens nothing
       if (node.depth > 0) onClose();
     };
 
@@ -664,9 +800,10 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
       setTooltip(hit ? {
         x: point.x,
         y: point.y,
-        label: hitNode.label,
+        label: hitNode.fullTitle || hitNode.label,
         type: hitNode.type,
         status: hitNode.status,
+        hint: hitNode.hint,
         color: hitNode.statusColor || hitNode.color,
       } : null);
     };
@@ -747,13 +884,13 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
       canvas.removeEventListener("pointerup", onPointerUp);
       canvas.removeEventListener("click", onClick);
       canvas.removeEventListener("wheel", onWheel);
-      renderer.dispose();
-      scene.traverse(object => {
-        object.geometry?.dispose?.();
-        object.material?.dispose?.();
-      });
       glowTexture.dispose();
       labelSprites.forEach(sprite => sprite.material.map?.dispose?.());
+      // Replaces the manual traverse: also handles material arrays and textures,
+      // and releases the GL context, which renderer.dispose() does not.
+      // The canvas is React-owned and reused when graph data changes. Losing
+      // its context here leaves the next renderer attached to a dead canvas.
+      disposeThreeScene(scene, renderer, containerRef.current, { preserveCanvas: true });
     };
   }, [viewMode, graphData, graphLinks3d, dimensions, embedded, edgeEditMode, edgeSelection, showEdges3d, glowEnabled3d, motionEnabled3d, nodeTint3d, saturation3d, brightness3d, onNodeClick, onModuleClick, onSubtopicClick, onClose]);
 
@@ -768,9 +905,35 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
               <p>GenAI Academy Intelligence Grid</p>
             </div>
           </div>
-          <div className="galaxy-mode-switch" role="group" aria-label="Galaxy visualization mode">
-            <button type="button" className={viewMode === "2d" ? "active" : ""} aria-pressed={viewMode === "2d"} onClick={() => { setViewMode("2d"); setEdgeEditMode(null); setEdgeSelection([]); setTooltip(null); }}>2D</button>
-            <button type="button" className={viewMode === "3d" ? "active" : ""} aria-pressed={viewMode === "3d"} onClick={() => { setViewMode("3d"); setEdgeSelection([]); setTooltip(null); }}>3D</button>
+          <div className="galaxy-header-actions">
+            <button
+              type="button"
+              className={`galaxy-topics-toggle ${showTopics ? "active" : ""}`}
+              aria-pressed={showTopics}
+              title={showTopics ? "Hide reading constellations" : "Show reading constellations"}
+              onClick={() => { setShowTopics(on => !on); setTooltip(null); }}
+            >
+              <BookOpen size={13} />
+              <span>TOPICS</span>
+              {topicTree?.total ? <em>{topicTree.total.toLocaleString()}</em> : null}
+            </button>
+            <button
+              type="button"
+              className={`galaxy-posts-toggle ${showAllPosts ? "active" : ""}`}
+              aria-pressed={showAllPosts}
+              aria-label={showAllPosts ? "Show blog categories only" : "Show all blog posts"}
+              title={showAllPosts ? "Show blog categories only" : "Show every blog post"}
+              disabled={loadingAll}
+              onClick={toggleAllPosts}
+            >
+              <LibraryBig size={13} />
+              <span>{loadingAll ? "LOADING" : "ALL BLOGS"}</span>
+              {!loadingAll && topicTree?.total ? <em>{topicTree.total.toLocaleString()}</em> : null}
+            </button>
+            <div className="galaxy-mode-switch" role="group" aria-label="Galaxy visualization mode">
+              <button type="button" className={viewMode === "2d" ? "active" : ""} aria-pressed={viewMode === "2d"} onClick={() => { setViewMode("2d"); setEdgeEditMode(null); setEdgeSelection([]); setTooltip(null); }}>2D</button>
+              <button type="button" className={viewMode === "3d" ? "active" : ""} aria-pressed={viewMode === "3d"} onClick={() => { setViewMode("3d"); setEdgeSelection([]); setTooltip(null); }}>3D</button>
+            </div>
           </div>
           <button className="galaxy-close" onClick={onClose}><X size={20} /></button>
         </div>
@@ -805,6 +968,9 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
           <div className="legend-item"><span className="legend-dot" style={{ background: STATUS_COLORS.mastered, boxShadow: `0 0 10px ${STATUS_COLORS.mastered}` }} /> MASTERED</div>
           <div className="legend-item"><span className="legend-dot" style={{ background: STATUS_COLORS.evolving, boxShadow: `0 0 10px ${STATUS_COLORS.evolving}` }} /> EVOLVING</div>
           <div className="legend-item"><span className="legend-dot" style={{ background: STATUS_COLORS.ready }} /> READY</div>
+          {showTopics && topicTree?.clusters?.length > 0 && (
+            <div className="legend-item"><span className="legend-dot" style={{ background: "#a78bfa", boxShadow: "0 0 10px #a78bfa" }} /> READING</div>
+          )}
         </div>
 
         <div className="galaxy-footer">
@@ -819,13 +985,13 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
 
       {tooltip && (
         <div className="galaxy-tooltip" style={{ left: tooltip.x + 15, top: tooltip.y + 15, "--tooltip-color": tooltip.color }}>
-          <div className="tooltip-type">{tooltip.type.toUpperCase()} • {tooltip.status?.toUpperCase() || 'READY'}</div>
+          <div className="tooltip-type">{tooltip.type.toUpperCase()} • {tooltip.hint || tooltip.status?.toUpperCase() || 'READY'}</div>
           <div className="tooltip-label">{tooltip.label}</div>
           <div className="tooltip-glow" />
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         .knowledge-galaxy-container {
           position: fixed;
           top: 0; left: 0;
@@ -853,7 +1019,11 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
         .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-title-text h1 { display: none; }
         .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-title-text p { margin-top: 3px; font-size: 6px; letter-spacing: 1px; }
         .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-close { display: none; }
-        .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-mode-switch { margin-right: 0; transform: scale(0.82); transform-origin: top right; }
+        .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-header-actions { margin-right: 0; transform: scale(0.82); transform-origin: top right; }
+        .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-topics-toggle span,
+        .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-topics-toggle em,
+        .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-posts-toggle span,
+        .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-posts-toggle em { display: none; }
         .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-controls { right: 16px; top: 72px; gap: 6px; }
         .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-btn { width: 30px; height: 30px; border-radius: 9px; }
         .knowledge-galaxy-container.knowledge-galaxy-embedded .galaxy-btn svg { width: 14px; height: 14px; }
@@ -929,12 +1099,63 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
         }
         .galaxy-title-text p { color: rgba(255,255,255,0.34); font-size: 8px; letter-spacing: 1.5px; margin: 3px 0 0 0; }
 
+        .galaxy-header-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-left: auto;
+          margin-right: 14px;
+        }
+        .galaxy-topics-toggle,
+        .galaxy-posts-toggle {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 10px;
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 9px;
+          background: rgba(15,23,42,0.48);
+          backdrop-filter: blur(14px);
+          color: rgba(255,255,255,0.42);
+          font: 600 9px var(--font, sans-serif);
+          letter-spacing: 0.08em;
+          cursor: pointer;
+          transition: 160ms ease;
+        }
+        .galaxy-topics-toggle em,
+        .galaxy-posts-toggle em {
+          font-style: normal;
+          font-size: 8px;
+          opacity: 0.6;
+        }
+        .galaxy-topics-toggle:hover,
+        .galaxy-posts-toggle:hover { color: rgba(255,255,255,0.8); }
+        .galaxy-topics-toggle.active {
+          color: rgba(238,226,255,0.92);
+          border-color: rgba(167,139,250,0.5);
+          background: rgba(167,139,250,0.14);
+          box-shadow: 0 0 14px rgba(167,139,250,0.12);
+        }
+        .galaxy-posts-toggle.active {
+          color: rgba(220,255,231,0.92);
+          border-color: rgba(142,255,113,0.52);
+          background: rgba(142,255,113,0.13);
+          box-shadow: 0 0 14px rgba(142,255,113,0.12);
+        }
+        .galaxy-posts-toggle:disabled {
+          cursor: wait;
+          opacity: 0.68;
+        }
+        .galaxy-topics-toggle:focus-visible,
+        .galaxy-posts-toggle:focus-visible,
+        .galaxy-mode-switch button:focus-visible {
+          outline: 2px solid #8ff5ff;
+          outline-offset: 2px;
+        }
         .galaxy-mode-switch {
           display: flex;
           align-items: center;
           gap: 3px;
-          margin-left: auto;
-          margin-right: 14px;
           padding: 3px;
           border-radius: 9px;
           background: rgba(15,23,42,0.48);
@@ -955,6 +1176,13 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
           color: rgba(220,255,231,0.9);
           background: rgba(142,255,113,0.13);
           box-shadow: 0 0 14px rgba(142,255,113,0.1);
+        }
+        @media (max-width: 700px) {
+          .galaxy-header-actions { gap: 5px; margin-right: 8px; }
+          .galaxy-topics-toggle,
+          .galaxy-posts-toggle { padding: 6px 7px; gap: 4px; }
+          .galaxy-topics-toggle em,
+          .galaxy-posts-toggle em { display: none; }
         }
 
         .galaxy-3d-controls {

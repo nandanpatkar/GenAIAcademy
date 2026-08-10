@@ -1,0 +1,14 @@
+{
+  "name": "av-cdn-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker serving the Analytics Vidhya archive from R2. Deployed separately from the Vercel app — never part of the main build.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

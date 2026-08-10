@@ -144,6 +144,27 @@ export default defineConfig(({ mode }) => {
     // modules still load on demand; they simply aren't preloaded at startup.
     build: {
       modulePreload: false,
+      rollupOptions: {
+        output: {
+          // Split the dependencies that never change into their own chunks, so a
+          // deploy that touches only app code doesn't invalidate them in every
+          // returning visitor's cache. Without this, React, Supabase and the icon
+          // set were rebuilt into the entry chunk under a new hash on every ship.
+          // NOTE: lucide-react is deliberately NOT listed here. Grouping it into
+          // one chunk defeats per-chunk tree-shaking — the union of every icon
+          // imported anywhere in the app (~900 KB) ends up on the startup path
+          // instead of each lazy screen carrying only the icons it renders.
+          // Measured: adding an `icons` chunk made first-load JS worse, not better.
+          manualChunks: {
+            "react-vendor": ["react", "react-dom"],
+            supabase: ["@supabase/supabase-js"],
+            motion: ["framer-motion"],
+          },
+        },
+      },
+      // The entry is large and we are actively splitting it; keep the warning
+      // meaningful rather than firing on chunks we already know about.
+      chunkSizeWarningLimit: 900,
     },
     // PGlite ships its own .wasm / .data payload and must not be pre-bundled,
     // otherwise esbuild rewrites the URLs it uses to locate them at runtime.

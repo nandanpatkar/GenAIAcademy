@@ -6,7 +6,7 @@ import {
   Share2, CheckSquare, Bookmark, Network, GitBranch
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { CHRONOLOGICAL_DB } from '../data/blogData';
+import { loadBlogCatalog, flattenCatalog } from '../services/blogCatalogService';
 import { ALGO_EXAMPLES } from '../data/algoExamples';
 
 const FlickeringGrid = ({ 
@@ -99,21 +99,22 @@ const FlickeringGrid = ({
 };
 
 const RESEARCH_BLOGS = [
-  { id: 'agents-vs-apps', title: 'AI Agents vs Apps', description: 'Exploring the paradigm shift in software architecture.', category: 'Agents', url: 'https://www.analyticsvidhya.com/blog/2025/04/ai-agents-vs-apps/', icon: <Sparkles size={20} /> },
-  { id: 'llm-vs-agents', title: 'LLM vs Agents', description: 'Foundational differences in autonomy and reasoning.', category: 'Foundations', url: 'https://www.analyticsvidhya.com/articles/llm-vs-agents/', icon: <Activity size={20} /> },
-  { id: 'deepseek-vs-llama', title: 'DeepSeek v3 vs Llama 4', description: 'The battle for open-source model supremacy.', category: 'Models', url: 'https://www.analyticsvidhya.com/blog/2025/04/deepseek-v3-vs-llama-4/', icon: <Layers size={20} /> },
-  { id: 'agentic-rag', title: 'Agentic RAG', description: 'Advanced retrieval augmented generation with GPT-4.', category: 'Agents', url: 'https://www.analyticsvidhya.com/blog/2025/04/agentic-rag-using-gpt-4-1/', icon: <Globe size={20} /> },
-  { id: 'mcp-cursor', title: 'MCP with Cursor AI', description: 'Integrating Model Context Protocol in IDEs.', category: 'Tech', url: 'https://www.analyticsvidhya.com/blog/2025/04/mcp-with-cursor-ai/', icon: <Layout size={20} /> },
-  { id: 'deep-research', title: 'Deep Research Agent', description: 'Building autonomous agents for technical research.', category: 'Agents', url: 'https://www.analyticsvidhya.com/blog/2025/02/build-your-own-deep-research-agent/', icon: <Boxes size={20} /> },
-  { id: 'slm-vs-llm', title: 'SLMs vs LLMs', description: 'Why small language models are winning in production.', category: 'Models', url: 'https://www.analyticsvidhya.com/blog/2024/11/slms-vs-llms/', icon: <Zap size={20} /> },
-  { id: 'prompt-engineering', title: 'Prompt Library', description: 'Curated prompt engineering frameworks and books.', category: 'Prompting', url: 'https://www.analyticsvidhya.com/blog/2024/04/top-best-prompt-engineering-books/', icon: <BookOpen size={20} /> },
-  { id: 'production-ai', title: 'Production AI Systems', description: 'Architecting reliable intelligence for millions.', category: 'Tech', url: 'https://www.analyticsvidhya.com/blog/2023/09/production-systems-in-ai/', icon: <Globe size={20} /> },
-  { id: 'ml-learning-path', title: 'ML Masterclass', description: 'End-to-end roadmap to becoming a Data Scientist.', category: 'Roadmap', url: 'https://www.analyticsvidhya.com/blog/2020/12/a-comprehensive-learning-path-to-become-a-data-scientist/', icon: <Users size={20} /> },
-  { id: 'vector-db', title: 'Vector DB Deepdive', description: 'Mastering ChromaDB for semantic search systems.', category: 'Data', url: 'https://www.analyticsvidhya.com/blog/2023/07/guide-to-chroma-db-a-vector-store-for-your-generative-ai-llms/', icon: <Layers size={20} /> },
-  { id: 'knowledge-graphs', title: 'Knowledge Graphs', description: 'Theory and application of connected intelligence.', category: 'Data', url: 'https://www.analyticsvidhya.com/blog/2023/01/knowledge-graphs-deep-dive-into-its-theories-and-applications/', icon: <Globe size={20} /> }
+  { id: 'agents-vs-apps', title: 'AI Agents vs Apps', description: 'Exploring the paradigm shift in software architecture.', category: 'Agents', slug: '2025-04-ai-agents-vs-apps', icon: <Sparkles size={20} /> },
+  { id: 'llm-vs-agents', title: 'LLM vs Agents', description: 'Foundational differences in autonomy and reasoning.', category: 'Foundations', slug: '2024-11-slms-vs-llms', icon: <Activity size={20} /> },
+  { id: 'deepseek-vs-llama', title: 'DeepSeek v3 vs Llama 4', description: 'The battle for open-source model supremacy.', category: 'Models', slug: '2025-04-deepseek-v3-vs-llama-4', icon: <Layers size={20} /> },
+  { id: 'agentic-rag', title: 'Agentic RAG', description: 'Advanced retrieval augmented generation with GPT-4.', category: 'Agents', slug: '2025-04-agentic-rag-using-gpt-4-1', icon: <Globe size={20} /> },
+  { id: 'mcp-cursor', title: 'MCP with Cursor AI', description: 'Integrating Model Context Protocol in IDEs.', category: 'Tech', slug: '2025-04-mcp-with-cursor-ai', icon: <Layout size={20} /> },
+  { id: 'deep-research', title: 'Deep Research Agent', description: 'Building autonomous agents for technical research.', category: 'Agents', slug: '2025-02-build-your-own-deep-research-agent', icon: <Boxes size={20} /> },
+  { id: 'slm-vs-llm', title: 'SLMs vs LLMs', description: 'Why small language models are winning in production.', category: 'Models', slug: '2024-11-slms-vs-llms', icon: <Zap size={20} /> },
+  { id: 'prompt-engineering', title: 'Prompt Library', description: 'Curated prompt engineering frameworks and books.', category: 'Prompting', slug: '2024-04-top-best-prompt-engineering-books', icon: <BookOpen size={20} /> },
+  { id: 'production-ai', title: 'Production AI Systems', description: 'Architecting reliable intelligence for millions.', category: 'Tech', slug: '2023-09-production-systems-in-ai', icon: <Globe size={20} /> },
+  { id: 'ml-learning-path', title: 'ML Masterclass', description: 'End-to-end roadmap to becoming a Data Scientist.', category: 'Roadmap', slug: '2020-12-a-comprehensive-learning-path-to-become-a-data-scientist', icon: <Users size={20} /> },
+  { id: 'vector-db', title: 'Vector DB Deepdive', description: 'Mastering ChromaDB for semantic search systems.', category: 'Data', slug: '2023-07-guide-to-chroma-db-a-vector-store-for-your-generative-ai-llms', icon: <Layers size={20} /> },
+  { id: 'knowledge-graphs', title: 'Knowledge Graphs', description: 'Theory and application of connected intelligence.', category: 'Data', slug: '2023-01-knowledge-graphs-deep-dive-into-its-theories-and-applications', icon: <Globe size={20} /> }
 ];
 
 export default function IntelligenceHub({ 
+  onOpenArticle,
   paths, 
   onStudyAction, 
   onDesignAction, 
@@ -170,11 +171,19 @@ export default function IntelligenceHub({
 
 
 
-  const flatBlueprints = useMemo(() => {
-    return Object.entries(CHRONOLOGICAL_DB).flatMap(([year, articles]) => 
-      articles.map(article => ({ ...article, year }))
-    );
-  }, []);
+  // The 2.9 MB blog catalog is fetched only once the Research Repository view is
+  // actually opened. It used to be a static import in this file — a home screen —
+  // so every visitor downloaded and parsed the whole archive to render a dashboard
+  // that may never show it. See services/blogCatalogService.
+  const [blogCatalog, setBlogCatalog] = useState({});
+  useEffect(() => {
+    if (view !== 'blog') return;
+    let cancelled = false;
+    loadBlogCatalog().then(catalog => { if (!cancelled) setBlogCatalog(catalog); });
+    return () => { cancelled = true; };
+  }, [view]);
+
+  const flatBlueprints = useMemo(() => flattenCatalog(blogCatalog), [blogCatalog]);
 
   const getOverallProgress = () => {
     const EXCLUDED = ["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx"];
@@ -575,10 +584,10 @@ export default function IntelligenceHub({
                           .slice(0, 100)
                           .map((article, i) => (
                             <motion.div
-                              key={article.url}
+                              key={article.slug}
                               className="hub-sub-card article-node"
                               whileHover={{ scale: 1.02 }}
-                              onClick={() => window.open(article.url, '_blank')}
+                              onClick={() => onOpenArticle?.(article.slug)}
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0, transition: { delay: (i % 20) * 0.02 } }}
                             >
@@ -624,7 +633,7 @@ export default function IntelligenceHub({
                   </div>
                     <div className="hub-scroll-area">
                       <div className="hub-sub-grid">
-                        {Object.keys(CHRONOLOGICAL_DB)
+                        {Object.keys(blogCatalog)
                         .sort((a, b) => {
                           if (a === 'Featured') return 1;
                           if (b === 'Featured') return -1;
@@ -646,7 +655,7 @@ export default function IntelligenceHub({
                           <div className="year-val">{year}</div>
                           <div className="sub-info">
                             <h3>{year === 'Featured' ? 'Latest / Featured' : `${year} Repository`}</h3>
-                            <p>{CHRONOLOGICAL_DB[year].length} Deep-dives found.</p>
+                            <p>{(blogCatalog[year] || []).length} Deep-dives found.</p>
                           </div>
                           <div className="year-action">EXPLORE ARCHIVE</div>
                         </motion.div>
@@ -677,7 +686,7 @@ export default function IntelligenceHub({
                   <div className="hub-scroll-area repo-area">
                     <div className="hub-sub-grid">
                       {(() => {
-                        const filtered = CHRONOLOGICAL_DB[blogYear].filter(item => 
+                        const filtered = (blogCatalog[blogYear] || []).filter(item => 
                           item.title.toLowerCase().includes(blogSearch.toLowerCase()) ||
                           item.description.toLowerCase().includes(blogSearch.toLowerCase())
                         );
@@ -686,15 +695,15 @@ export default function IntelligenceHub({
                           <>
                             {filtered.slice(0, blogLimit).map((article, i) => (
                               <motion.div
-                                key={article.url}
+                                key={article.slug}
                                 className="hub-sub-card article-node"
                                 whileHover={{ scale: 1.02 }}
-                                onClick={() => window.open(article.url, '_blank')}
+                                onClick={() => onOpenArticle?.(article.slug)}
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0, transition: { delay: (i % 20) * 0.02 } }}
                               >
                                 <div className="article-meta">
-                                  <span className="source-tag">AL_VIDHYA</span>
+                                  <span className="source-tag">ARCHIVE</span>
                                   <Zap size={14} className="emerald-flicker" />
                                 </div>
                                 <h3>{article.title}</h3>

@@ -1,16 +1,11 @@
-import { loader } from "@monaco-editor/react";
-
-// Configure Monaco Editor at the absolute top of the application entry point
-// This resolves "MonacoEnvironment is not defined" and web worker fallback warnings
-loader.config({
-  paths: {
-    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
-  }
-});
-
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
+
+// NOTE: Monaco's `loader.config()` used to run here, at the top of the entry.
+// It pulled @monaco-editor/react into the entry chunk for every visitor, even
+// though only editor screens need it. It now lives in config/monacoLoader.js and
+// is invoked by the components that actually mount an editor.
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

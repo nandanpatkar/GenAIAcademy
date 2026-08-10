@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { disposeThreeScene } from "../../utils/disposeThreeScene";
 import { ArrowRight, Compass, Flag, Layers3, Target } from "lucide-react";
 import "./Roadmap3.css";
 
@@ -1038,8 +1039,9 @@ function WorldCanvas({ scrollRef, scenes, accent, onFrame, reducedMotion, apiRef
       apiRef.current = null;
       kit.owned.geometries.forEach((g) => g.dispose());
       kit.owned.materials.forEach((m) => m.dispose());
-      renderer.dispose();
-      renderer.domElement.remove();
+      // Sweeps anything the kit didn't own, disposes textures, and releases the
+      // GL context — renderer.dispose() leaves the context live.
+      disposeThreeScene(scene, renderer, mountRef.current);
     };
   }, [scenes, accent, reducedMotion, scrollRef, apiRef]);
 

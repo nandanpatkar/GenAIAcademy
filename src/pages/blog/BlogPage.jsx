@@ -4,67 +4,129 @@ import { supabase } from "../../config/supabaseClient";
 import { useAuth } from "../../contexts/AuthContext";
 import AdminBlogEditor from "./AdminBlogEditor";
 import { generateAI_TLDR } from "../../services/aiService";
-import { CHRONOLOGICAL_DB } from "../../data/blogData";
+import { loadYears, loadYear, monthLabel } from "../../services/avArchiveService";
+import AVArticle from "./AVArticle";
 import "./BlogPage.css";
 
-const ARCHIVE_YEARS = Object.keys(CHRONOLOGICAL_DB).sort((a, b) => {
-  if (a === "Featured") return 1;
-  if (b === "Featured") return -1;
-  return b.localeCompare(a);
-});
+const NOTES_TAB = "notes";
 
-const ARCHIVE_BLOGS = ARCHIVE_YEARS.flatMap(year => CHRONOLOGICAL_DB[year].map((article, index) => ({
-    id: `archive-${year}-${index}-${article.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-    title: article.title,
-    content: article.description || `Read ${article.title} on Analytics Vidya.`,
-    description: article.description,
-    tags: [year, "Analytics Vidya"],
-    url: article.url,
-    created_at: `${year === "Featured" ? "2025" : year}-01-01T00:00:00.000Z`,
-    is_external: true,
-    archive_year: year,
-    source: "Intelligence Hub",
-  })));
+/**
+ * Map one archive post onto the card shape this page already renders.
+ *
+ * These used to be outbound link-outs built by Title-Casing a URL
+ * slugs, which is why titles read like "Ai Agents Vs Apps" and every
+ * description was the same generated sentence. They are now real local
+ * articles with real titles, categories and cover images, so `is_external` is
+ * gone and selecting one opens it in place.
+ */
+function toCard(post, year) {
+  return {
+    id: `av-${post.slug}`,
+    slug: post.slug,
+    title: post.title,
+    description: post.excerpt,
+    content: post.excerpt,
+    tags: post.categories,
+    archive_year: String(year),
+    created_at: `${post.month || `${year}-01`}-01T00:00:00.000Z`,
+    month: post.month,
+    hero: post.hero,
+    imageCount: post.imageCount,
+    source: "av",
+  };
+}
 
-export default function BlogPage({ theme, isEditMode, onClose }) {
-  const [blogs, setBlogs] = useState([]);
+export default function BlogPage({ theme, isEditMode, onClose, initialYear, initialSlug, initialTag }) {
+  const [notes, setNotes] = useState([]);        // published CMS posts
+  const [years, setYears] = useState([]);        // archive year summary
+  // A slug carries its own year prefix, so deep-linking to an article needs no
+  // extra lookup — it selects the year that must be loaded to find the post.
+  const [activeYear, setActiveYear] = useState(
+    initialSlug ? initialSlug.slice(0, 4) : (initialYear ? String(initialYear) : null)
+  );
+  const [pendingSlug, setPendingSlug] = useState(initialSlug || null);
+  const [yearPosts, setYearPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
-  
+  const [selectedTags, setSelectedTags] = useState(initialTag ? [initialTag] : []);
+
   const { user, isAdmin } = useAuth();
   const [showEditor, setShowEditor] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null);
 
+  // The CMS rows and the archive summary are independent, so they load in
+  // parallel rather than paying both latencies in series.
+  useEffect(() => { fetchNotes(); }, []);
+
   useEffect(() => {
-    fetchBlogs();
+    let alive = true;
+    loadYears().then((summary) => {
+      if (!alive) return;
+      const list = summary.years || [];
+      setYears(list);
+      // Default to the newest year rather than everything: the whole point of
+      // the per-year split is that 8,632 posts never load at once.
+      setActiveYear((current) => current || (list[0] ? String(list[0].y) : NOTES_TAB));
+    });
+    return () => { alive = false; };
   }, []);
 
-  const fetchBlogs = async () => {
+  useEffect(() => {
+    if (!activeYear || activeYear === NOTES_TAB) { setYearPosts([]); setLoading(false); return undefined; }
+    let alive = true;
     setLoading(true);
+    loadYear(activeYear).then((data) => {
+      if (!alive) return;
+      const cards = data.posts.map((post) => toCard(post, data.year));
+      setYearPosts(cards);
+      setLoading(false);
+      // Deep link: open the requested article as soon as its year is in hand.
+      if (pendingSlug) {
+        const match = cards.find((card) => card.slug === pendingSlug);
+        if (match) setSelectedBlog(match);
+        setPendingSlug(null);
+      }
+    });
+    return () => { alive = false; };
+  }, [activeYear, pendingSlug]);
+
+  // Opening a different article from outside while the page is already mounted.
+  useEffect(() => {
+    if (!initialSlug) return;
+    setPendingSlug(initialSlug);
+    setActiveYear(initialSlug.slice(0, 4));
+  }, [initialSlug]);
+
+  // Same, for a category arriving from a topic node in the galaxy. The year is
+  // applied first because switching years clears the chips.
+  useEffect(() => {
+    if (!initialTag) return;
+    setSelectedBlog(null);
+    if (initialYear) setActiveYear(String(initialYear));
+    setSelectedTags([initialTag]);
+  }, [initialTag, initialYear]);
+
+  const fetchNotes = async () => {
     try {
       const { data, error } = await supabase
         .from('blogs')
         .select('*')
         .eq('status', 'published')
         .order('created_at', { ascending: false });
-
-      if (error) console.error("Error fetching blogs:", error);
-      const published = error ? [] : (data || []);
-      const archiveUrls = new Set(ARCHIVE_BLOGS.map(blog => blog.url).filter(Boolean));
-      // Keep the Intelligence Hub archive as the primary catalogue. Published
-      // in-app posts remain available after it without duplicating archive URLs.
-      setBlogs([...ARCHIVE_BLOGS, ...published.filter(blog => !blog.url || !archiveUrls.has(blog.url))]);
+      if (error) {
+        console.error("Error fetching blogs:", error);
+        return;
+      }
+      setNotes(data || []);
     } catch (err) {
+      // The archive is independent of the CMS, so it must still render.
       console.error("Error connecting to Supabase for blogs:", err);
-      // The Hub archive is local, so it should still render if the CMS is offline.
-      setBlogs(ARCHIVE_BLOGS);
     }
-    setLoading(false);
   };
 
-  const filteredBlogs = blogs.filter(b => {
+  const sourceBlogs = activeYear === NOTES_TAB ? notes : yearPosts;
+  const filteredBlogs = sourceBlogs.filter(b => {
     const search = searchQuery.toLowerCase();
     const matchesSearch = (b.title || '').toLowerCase().includes(search) ||
                           (b.description || '').toLowerCase().includes(search) ||
@@ -88,22 +150,40 @@ export default function BlogPage({ theme, isEditMode, onClose }) {
           </div>
           <div>
             <h1>GenAI Blog</h1>
-            <p>Intelligence Hub · Research repository</p>
+            <p>Research repository</p>
           </div>
         </div>
 
-        <div className="blog-header-rail"><span /><span /><span /></div>
+        {/* Context slot. Replaces a purely decorative rule that used to run
+            straight through the subtitle at this width. */}
+        <div className="blog-header-context">
+          {selectedBlog ? (
+            <button className="blog-header-back" onClick={() => setSelectedBlog(null)}>
+              <ChevronLeft size={15} />
+              <span className="blog-header-back-label">All articles</span>
+              <span className="blog-header-crumb">{selectedBlog.title}</span>
+            </button>
+          ) : (
+            <div className="blog-header-summary">
+              <span className="blog-header-year">
+                {activeYear === NOTES_TAB ? "Academy notes" : activeYear}
+              </span>
+              <span className="blog-header-dot" />
+              <span>{filteredBlogs.length.toLocaleString()} articles</span>
+            </div>
+          )}
+        </div>
 
         <div className="blog-header-actions">
           {isAdmin && !showEditor && !selectedBlog && (
-            <button 
+            <button
               onClick={() => { setEditingBlog(null); setShowEditor(true); }}
               className="blog-write-button"
             >
               <Edit3 size={14} /> WRITE ARTICLE
             </button>
           )}
-          
+
           <div className="blog-header-divider" />
 
           <button onClick={onClose} className="blog-close-button" aria-label="Close Blogs">
@@ -115,32 +195,31 @@ export default function BlogPage({ theme, isEditMode, onClose }) {
       {/* ══ CONTENT AREA ══════════════════════════════════════════════════════ */}
       <div id="blog-scroll-container" className="blog-scroll-container" style={{ flex: 1, overflowY: "auto", position: "relative" }}>
         {showEditor ? (
-          <AdminBlogEditor 
-            blog={editingBlog} 
-            onClose={() => { setShowEditor(false); setEditingBlog(null); fetchBlogs(); }} 
-            theme={theme} 
+          <AdminBlogEditor
+            blog={editingBlog}
+            onClose={() => { setShowEditor(false); setEditingBlog(null); fetchNotes(); }}
+            theme={theme}
           />
         ) : selectedBlog ? (
-          <BlogDetail 
-            blog={selectedBlog} 
-            allBlogs={blogs}
-            onBack={() => setSelectedBlog(null)} 
+          <BlogDetail
+            blog={selectedBlog}
+            allBlogs={sourceBlogs}
+            dark={theme !== "light"}
+            onBack={() => setSelectedBlog(null)}
             isAdmin={isAdmin}
             onEdit={() => { setEditingBlog(selectedBlog); setShowEditor(true); }}
             onTagClick={(tag) => { setSelectedBlog(null); setSelectedTags([tag]); }}
             onSelectRelated={setSelectedBlog}
           />
         ) : (
-          <BlogList 
-            blogs={filteredBlogs} 
-            loading={loading} 
-            onSelect={(blog) => {
-              if (blog.is_external && blog.url) {
-                window.open(blog.url, '_blank', 'noopener,noreferrer');
-              } else {
-                setSelectedBlog(blog);
-              }
-            }}
+          <BlogList
+            blogs={filteredBlogs}
+            loading={loading}
+            years={years}
+            activeYear={activeYear}
+            setActiveYear={(year) => { setActiveYear(year); setSelectedTags([]); }}
+            noteCount={notes.length}
+            onSelect={setSelectedBlog}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             selectedTags={selectedTags}
@@ -154,20 +233,26 @@ export default function BlogPage({ theme, isEditMode, onClose }) {
   );
 }
 
-function BlogList({ blogs, loading, onSelect, searchQuery, setSearchQuery, selectedTags, setSelectedTags, isAdmin, onWrite }) {
-  const [activeYear, setActiveYear] = useState("All");
-
+function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount, onSelect, searchQuery, setSearchQuery, selectedTags, setSelectedTags, isAdmin, onWrite }) {
   const getBlogYear = (blog) => blog.archive_year || (blog.created_at ? new Date(blog.created_at).getFullYear().toString() : "Unsorted");
-  const availableYears = ["All", ...Array.from(new Set(blogs.map(getBlogYear))).sort((a, b) => {
-    if (a === "Featured") return 1;
-    if (b === "Featured") return -1;
-    return b.localeCompare(a);
-  })];
-  const visibleBlogs = activeYear === "All" ? blogs : blogs.filter(blog => getBlogYear(blog) === activeYear);
-  const yearSections = Array.from(new Set(visibleBlogs.map(getBlogYear))).map(year => ({
-    year,
-    posts: visibleBlogs.filter(blog => getBlogYear(blog) === year),
-  }));
+  const totalArchive = years.reduce((sum, entry) => sum + entry.n, 0);
+
+  // Only one year is ever in memory, so the page renders a single band. The
+  // year tabs come from the ~700 byte summary rather than from the loaded
+  // posts, so every year is offered without having fetched any of them.
+  const yearSections = blogs.length
+    ? [{ year: activeYear === NOTES_TAB ? "Notes" : activeYear, posts: blogs }]
+    : [];
+
+  // The most common categories in the loaded year, as quick filters. Capped
+  // because a year can carry well over a hundred distinct ones.
+  const topTags = React.useMemo(() => {
+    const counts = new Map();
+    for (const blog of blogs) {
+      for (const tag of blog.tags || []) counts.set(tag, (counts.get(tag) || 0) + 1);
+    }
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 14);
+  }, [blogs]);
 
   if (loading) {
     return (
@@ -185,39 +270,93 @@ function BlogList({ blogs, loading, onSelect, searchQuery, setSearchQuery, selec
       <section className="blog-hero-panel">
         <div className="blog-hero-grid" aria-hidden="true" />
         <div className="blog-hero-copy">
-          <div className="blog-kicker"><span className="blog-live-dot" /> INTELLIGENCE HUB / RESEARCH REPOSITORY</div>
+          <div className="blog-kicker"><span className="blog-live-dot" /> RESEARCH REPOSITORY</div>
           <h2>Signals worth<br /><em>understanding.</em></h2>
-          <p>Every article that opens from the Intelligence Hub, organized as an explorable system of research nodes.</p>
+          <p>
+            {totalArchive.toLocaleString()} data science and machine learning articles,
+            {years.length ? ` spanning ${years[years.length - 1].y}–${years[0].y}` : ""},
+            readable in full without leaving the app.
+          </p>
           <div className="blog-hero-stats">
-            <span><strong>{blogs.filter(blog => blog.is_external).length}</strong> hub articles</span>
-            <span><strong>{availableYears.length - 1}</strong> year bands</span>
-            <span><strong>01</strong> shared source</span>
+            <span><strong>{totalArchive.toLocaleString()}</strong> articles</span>
+            <span><strong>{years.length}</strong> years</span>
+            <span><strong>{noteCount}</strong> academy notes</span>
           </div>
         </div>
-        <div className="blog-hero-diagram" aria-hidden="true">
-          <div className="diagram-line diagram-line-one" />
-          <div className="diagram-line diagram-line-two" />
-          <div className="diagram-node diagram-node-core"><Activity size={18} /><span>RESEARCH</span></div>
-          <div className="diagram-node diagram-node-top"><Layers3 size={16} /><span>MODELS</span></div>
-          <div className="diagram-node diagram-node-right"><Database size={16} /><span>ARCHIVE</span></div>
-          <div className="diagram-node diagram-node-bottom"><BookOpen size={16} /><span>INSIGHTS</span></div>
+
+        {/* Replaces a purely decorative node diagram. Same space, but it now
+            shows how the archive is distributed and doubles as navigation. */}
+        <div className="blog-hero-chart">
+          <div className="blog-hero-chart-head">
+            <span>ARTICLES PER YEAR</span>
+            <em>{activeYear === NOTES_TAB ? "notes" : activeYear}</em>
+          </div>
+          <div className="blog-hero-bars">
+            {[...years].reverse().map(({ y, n }) => {
+              const peak = Math.max(...years.map((entry) => entry.n), 1);
+              return (
+                <button
+                  key={y}
+                  className={activeYear === String(y) ? "hero-bar active" : "hero-bar"}
+                  style={{ "--bar": `${Math.max(4, (n / peak) * 100)}%` }}
+                  onClick={() => setActiveYear(String(y))}
+                  title={`${y} — ${n.toLocaleString()} articles`}
+                  aria-label={`${y}, ${n} articles`}
+                >
+                  <span className="hero-bar-fill" />
+                  <em>{String(y).slice(2)}</em>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       <section className="blog-toolbar" aria-label="Blog filters">
         <div className="blog-year-filter">
           <span className="toolbar-label"><SlidersHorizontal size={13} /> YEAR VIEW</span>
-          {availableYears.map(year => (
-            <button key={year} className={activeYear === year ? "year-filter active" : "year-filter"} onClick={() => setActiveYear(year)}>
-              {year === "All" ? "All years" : year}
+          {years.map(({ y, n }) => (
+            <button
+              key={y}
+              className={activeYear === String(y) ? "year-filter active" : "year-filter"}
+              onClick={() => setActiveYear(String(y))}
+              title={`${n.toLocaleString()} articles`}
+            >
+              {y}<em className="year-filter-count">{n}</em>
             </button>
           ))}
+          {noteCount > 0 && (
+            <button
+              className={activeYear === NOTES_TAB ? "year-filter active" : "year-filter"}
+              onClick={() => setActiveYear(NOTES_TAB)}
+            >
+              Notes<em className="year-filter-count">{noteCount}</em>
+            </button>
+          )}
         </div>
         <label className="blog-search">
           <Search size={16} />
           <input type="text" placeholder="Search the repository..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </label>
       </section>
+
+      {topTags.length > 0 && (
+        <div className="blog-tag-rail" aria-label="Filter by category">
+          {topTags.map(([tag, count]) => (
+            <button
+              key={tag}
+              className={selectedTags.includes(tag) ? "blog-tag-chip active" : "blog-tag-chip"}
+              onClick={() => setSelectedTags(
+                selectedTags.includes(tag)
+                  ? selectedTags.filter(t => t !== tag)
+                  : [...selectedTags, tag]
+              )}
+            >
+              {tag}<em>{count}</em>
+            </button>
+          ))}
+        </div>
+      )}
 
       {selectedTags.length > 0 && (
         <div className="blog-active-filters">
@@ -244,11 +383,24 @@ function BlogList({ blogs, loading, onSelect, searchQuery, setSearchQuery, selec
                 {posts.map((blog, index) => (
                   <article className="blog-card" key={blog.id} onClick={() => onSelect(blog)} tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") onSelect(blog); }}>
                     <div className="blog-card-glow" />
-                    <div className="blog-card-top"><span className="blog-card-index">{String(index + 1).padStart(2, "0")}</span><span className="blog-card-source">{blog.is_external ? "AL_VIDHYA / HUB" : "ACADEMY / NOTE"}</span><ArrowUpRight size={15} /></div>
-                    <div className="blog-card-icon">{blog.is_external ? <Database size={17} /> : <BookOpen size={17} />}</div>
+                    {blog.hero && (
+                      <div className="blog-card-cover">
+                        <img
+                          src={blog.hero}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width={400}
+                          height={225}
+                          onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }}
+                        />
+                      </div>
+                    )}
+                    <div className="blog-card-top"><span className="blog-card-index">{String(index + 1).padStart(2, "0")}</span><span className="blog-card-source">{blog.source === "av" ? "ARCHIVE / RESEARCH" : "ACADEMY / NOTE"}</span><ArrowUpRight size={15} /></div>
+                    {!blog.hero && <div className="blog-card-icon">{blog.source === "av" ? <Database size={17} /> : <BookOpen size={17} />}</div>}
                     <h4>{blog.title}</h4>
                     <p>{(blog.description || blog.content || "").replace(/<[^>]+>/g, "").substring(0, 150)}{(blog.description || blog.content || "").length > 150 ? "…" : ""}</p>
-                    <div className="blog-card-footer"><span>{blog.is_external ? "OPEN RESEARCH" : "READ ARTICLE"}</span><span className="blog-card-year">{getBlogYear(blog)}</span></div>
+                    <div className="blog-card-footer"><span>READ ARTICLE</span><span className="blog-card-year">{getBlogYear(blog)}</span></div>
                   </article>
                 ))}
               </div>
@@ -260,12 +412,14 @@ function BlogList({ blogs, loading, onSelect, searchQuery, setSearchQuery, selec
   );
 }
 
-function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSelectRelated }) {
+function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSelectRelated, dark = true }) {
   const [progress, setProgress] = useState(0);
   const [toc, setToc] = useState([]);
   const [tldr, setTldr] = useState("");
   const [loadingTldr, setLoadingTldr] = useState(false);
   const contentRef = useRef(null);
+  // Archive posts are markdown fetched from R2; CMS posts are stored HTML.
+  const isArchive = blog.source === "av";
 
   useEffect(() => {
     const container = document.getElementById('blog-scroll-container');
@@ -284,6 +438,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
 
   useEffect(() => {
     setTldr(""); // reset tldr on new blog
+    if (isArchive) return; // AVArticle reports its own TOC once markdown lands
     if (contentRef.current) {
       const headings = Array.from(contentRef.current.querySelectorAll('h1, h2, h3'));
       const tocItems = headings.map((h, i) => {
@@ -299,10 +454,15 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
     }
   }, [blog]);
 
+  // For archive posts this is filled in by AVArticle once the markdown lands,
+  // so the summary runs on the real article rather than the card excerpt.
+  const [articleText, setArticleText] = useState("");
+  useEffect(() => { setArticleText(""); }, [blog?.id]);
+
   const handleGenerateTLDR = async () => {
     setLoadingTldr(true);
     try {
-      const summary = await generateAI_TLDR(blog.content);
+      const summary = await generateAI_TLDR(articleText || blog.content);
       setTldr(summary);
     } catch (err) {
       alert("Failed to summarize");
@@ -322,9 +482,11 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
 
   return (
     <div className="blog-detail-shell" style={{ position: 'relative' }}>
-      {/* Progress Bar */}
-      <div style={{ position: 'fixed', top: 42, left: 0, right: 0, height: 3, background: 'var(--border)', zIndex: 100 }}>
-        <div style={{ height: '100%', background: 'var(--primary)', width: `${progress}%`, transition: 'width 0.1s' }} />
+      {/* Reading progress. Anchored to the header's real height via a CSS
+          variable — it was hardcoded to 42px and drew straight through the
+          68px header's title. */}
+      <div className="blog-progress-track">
+        <div className="blog-progress-fill" style={{ width: `${progress}%` }} />
       </div>
 
       <div className="blog-detail-layout" style={{ display: 'flex', maxWidth: 1200, margin: '0 auto', alignItems: 'flex-start' }}>
@@ -346,7 +508,7 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
               Back to articles
             </button>
 
-            {isAdmin && (
+            {isAdmin && !isArchive && (
               <button 
                 onClick={onEdit}
                 style={{
@@ -392,10 +554,19 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
           <div className="blog-detail-meta" style={{ display: 'flex', alignItems: 'center', gap: 16, color: 'var(--text2)', marginBottom: 24, fontSize: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <Clock size={16} />
-              {new Date(blog.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              {isArchive
+                ? monthLabel(blog.month)
+                : new Date(blog.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
             </div>
-            <span>•</span>
-            <span>{Math.max(1, Math.ceil((blog.content || '').length / 1000))} min read</span>
+            {(articleText || !isArchive) && (
+              <>
+                <span>•</span>
+                <span>{Math.max(1, Math.ceil((articleText || blog.content || '').length / 1100))} min read</span>
+              </>
+            )}
+            {isArchive && blog.imageCount > 0 && (
+              <><span>•</span><span>{blog.imageCount} figures</span></>
+            )}
           </div>
 
           {/* AI TLDR Action */}
@@ -419,12 +590,21 @@ function BlogDetail({ blog, allBlogs, onBack, isAdmin, onEdit, onTagClick, onSel
             )}
           </div>
 
-          <div 
-            ref={contentRef}
-            className="blog-content"
-            style={{ fontSize: 18, lineHeight: 1.8, color: 'var(--text)' }}
-            dangerouslySetInnerHTML={{ __html: blog.content || '<p>No content available.</p>' }}
-          />
+          {isArchive ? (
+            <AVArticle
+              post={blog}
+              dark={dark}
+              onTocChange={setToc}
+              onLoaded={setArticleText}
+            />
+          ) : (
+            <div
+              ref={contentRef}
+              className="blog-content"
+              style={{ fontSize: 18, lineHeight: 1.8, color: 'var(--text)' }}
+              dangerouslySetInnerHTML={{ __html: blog.content || '<p>No content available.</p>' }}
+            />
+          )}
 
           {/* Related Posts Strip */}
           {relatedPosts.length > 0 && (

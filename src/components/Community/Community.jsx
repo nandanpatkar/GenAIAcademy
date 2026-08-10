@@ -130,11 +130,13 @@ const Community = ({ isSidebarCollapsed }) => {
         }
       }
 
-      // Fetch Profiles
+      // Fetch Profiles. Narrowed from select('*') — only these three columns are
+      // ever read (nickname for display, bio for the settings form), so this stays
+      // small regardless of what else the table grows.
       const { data: profileData } = await supabase
         .from('profiles')
-        .select('*');
-      
+        .select('id, nickname, bio');
+
       if (profileData) {
         const profileMap = {};
         profileData.forEach(p => {
@@ -167,17 +169,35 @@ const Community = ({ isSidebarCollapsed }) => {
         setGroupToChannelsMap(gMap);
       }
 
-      // Fetch Active Users (from messages) for DM suggestions
+      // Fetch Active Users (from messages) for DM suggestions.
+      //
+      // This used to download EVERY message ever sent just to derive a distinct
+      // list of emails — a table scan that grows linearly with total chat volume,
+      // running on every mount of this screen. The distinct now happens in
+      // Postgres via the active_chat_users RPC (see the 20260809 migration).
+      //
+      // The fallback keeps the screen working on deployments that haven't applied
+      // the migration yet; it is bounded, so worst case is a stale suggestion list
+      // rather than a multi-megabyte download.
       if (user) {
-        const { data: msgData } = await supabase
-          .from('messages')
-          .select('user_email, user_id')
-          .not('user_email', 'is', null);
-          
+        let msgData = null;
+        const rpc = await supabase.rpc('active_chat_users', { limit_n: 200 });
+        if (rpc.error) {
+          const fallback = await supabase
+            .from('messages')
+            .select('user_email, user_id')
+            .not('user_email', 'is', null)
+            .order('created_at', { ascending: false })
+            .limit(1000);
+          msgData = fallback.data;
+        } else {
+          msgData = rpc.data;
+        }
+
         if (msgData) {
           const uniqueEmails = [...new Set(msgData.map(d => d.user_email))];
           setActiveUsers(uniqueEmails.filter(email => email !== user.email));
-          
+
           const eMap = {};
           msgData.forEach(m => {
             if (m.user_email && m.user_id) eMap[m.user_email] = m.user_id;

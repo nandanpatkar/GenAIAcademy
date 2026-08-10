@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+/* Font families are loaded via a single <link> in index.html.
+   A CSS @import here was a CHAINED request: the browser had to download and
+   parse this 185 KB stylesheet before it could even discover the font URL,
+   and nothing painted until that second round-trip finished. */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -1326,6 +1329,15 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   color: #00ff88;
   background: rgba(0, 255, 136, 0.1);
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.05);
+}
+
+/* Article count on the blog archive year sub-items. */
+.sub-item .sub-count {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 10px;
+  opacity: 0.5;
+  font-variant-numeric: tabular-nums;
 }
 
 .sub-dot {
@@ -7373,4 +7385,54 @@ pre, code,
 @media (max-width: 640px) {
   .progress-overview-card { padding: 18px !important; }
   .progress-overview-donut { transform: scale(.9); margin-top: 10px; margin-bottom: -10px; }
+}
+
+/* ── Suspense fallback for the content-area boundary (App.jsx) ─────────────── */
+/* Shaped like a view rather than a spinner so the shell doesn't reflow when the
+   real chunk arrives. Respects prefers-reduced-motion. */
+.view-skeleton {
+  padding: 32px clamp(16px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.view-skeleton-bar,
+.view-skeleton-card {
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--text, #e6edf3) 6%, transparent) 25%,
+    color-mix(in srgb, var(--text, #e6edf3) 12%, transparent) 37%,
+    color-mix(in srgb, var(--text, #e6edf3) 6%, transparent) 63%
+  );
+  background-size: 400% 100%;
+  animation: view-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.view-skeleton-bar { height: 14px; }
+.view-skeleton-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.view-skeleton-card { height: 132px; }
+
+@keyframes view-skeleton-shimmer {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-skeleton-bar,
+  .view-skeleton-card { animation: none; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

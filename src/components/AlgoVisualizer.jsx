@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Editor from '@monaco-editor/react';
+import { configureMonaco } from "../config/monacoLoader";
+
+// Point Monaco at its CDN before any editor mounts. Moved out of main.jsx
+// so @monaco-editor/react stays out of the app entry chunk.
+configureMonaco();
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, Pause, SkipBack, SkipForward, RotateCcw, 

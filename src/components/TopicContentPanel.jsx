@@ -5,6 +5,11 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { ArrowLeft, Play, Square, Loader, ExternalLink, Terminal as TerminalIcon, Sparkles } from "lucide-react";
 import Editor from "@monaco-editor/react";
+import { configureMonaco } from "../config/monacoLoader";
+
+// Point Monaco at its CDN before any editor mounts. Moved out of main.jsx
+// so @monaco-editor/react stays out of the app entry chunk.
+configureMonaco();
 import { useSimplePyodide } from "./PythonIDE";
 import AITutorPanel from "./AITutorPanel";
 

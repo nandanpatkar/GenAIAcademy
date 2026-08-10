@@ -47,16 +47,34 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     workspace_dir = os.path.dirname(script_dir)
     links_path = os.path.join(workspace_dir, "links.txt")
-    output_path = os.path.join(workspace_dir, "src", "data", "blogData.js")
-    
+    # Emits JSON into public/ rather than a JS module into src/. As a static
+    # import this catalog was ~2.9 MB of the bundle, pulled in by two home
+    # screens; as a fetched file it is off the first-paint path entirely and is
+    # garbage-collectable when the view that uses it unmounts.
+    data_dir = os.path.join(workspace_dir, "public", "data")
+    os.makedirs(data_dir, exist_ok=True)
+    catalog_path = os.path.join(data_dir, "blog-catalog.json")
+    preview_path = os.path.join(data_dir, "blog-preview.json")
+
     blog_db = process_links(links_path)
-    
+
     # Sort years descending
     sorted_years = sorted(blog_db.keys(), reverse=True)
     final_db = {y: blog_db[y] for y in sorted_years}
-    
-    with open(output_path, 'w') as f:
-        f.write("// Auto-generated chronological blog data\n")
-        f.write(f"export const CHRONOLOGICAL_DB = {json.dumps(final_db, indent=2)};\n")
-    
-    print(f"Successfully processed {sum(len(v) for v in blog_db.values())} articles into {output_path}")
+
+    # Full archive — fetched only when the Research Repository view is opened.
+    with open(catalog_path, 'w') as f:
+        json.dump(final_db, f, separators=(',', ':'))
+
+    # Tiny pre-sliced preview for FeatureHome, which shows at most 8 articles and
+    # must never pull the full archive to do it.
+    preview = [
+        {**article, "year": year}
+        for year, articles in final_db.items()
+        for article in articles
+    ][:12]
+    with open(preview_path, 'w') as f:
+        json.dump(preview, f, separators=(',', ':'))
+
+    print(f"Successfully processed {sum(len(v) for v in blog_db.values())} articles into {catalog_path}")
+    print(f"Wrote {len(preview)} preview articles into {preview_path}")

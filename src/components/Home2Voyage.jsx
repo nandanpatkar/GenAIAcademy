@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { disposeThreeScene } from "../utils/disposeThreeScene";
 
 /* Act 03 of Home 2.0: a synthwave voyage rendered fully procedurally —
    shader grid road with noise-displaced terrain walls, scanline sun,
@@ -283,14 +284,9 @@ export default function Home2Voyage() {
       resizeObserver.disconnect();
       viewObserver.disconnect();
       host.removeEventListener("pointermove", onPointerMove);
-      scene.traverse(obj => {
-        obj.geometry?.dispose?.();
-        const material = obj.material;
-        if (Array.isArray(material)) material.forEach(m => m.dispose());
-        else material?.dispose?.();
-      });
-      renderer.dispose();
-      if (renderer.domElement.parentElement === host) host.removeChild(renderer.domElement);
+      // Adds texture disposal and GL context release on top of what this
+      // traverse already did. See utils/disposeThreeScene.
+      disposeThreeScene(scene, renderer, host);
     };
   }, []);
 

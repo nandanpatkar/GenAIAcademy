@@ -31,7 +31,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
   algo_visualizer: { icon: Box, label: "Algorithm Practice", description: "Learn algorithms step by step" },
   learnbug: { icon: Terminal, label: "Visualize", description: "Debug Python code with memory, structure, and timeline views" },
   sql_lab: { icon: DatabaseZap, label: "SQL & Query Plans", description: "Run real Postgres in-browser and read EXPLAIN ANALYZE output" },
-  concurrency_lab: { icon: Split, label: "Concurrency Lab", description: "Step through thread interleavings and watch races happen" },
+  concurrency_lab: { icon: Split, label: "Sync / Async Quest", description: "Learn Python concurrency through animated missions and runnable code" },
   labs: { icon: FlaskConical, label: "Labs", description: "Build and test real AI systems" },
   lab_retrieval_tuning: { icon: Braces, label: "Retrieval Lab — Tune the Pipeline", description: "Tune chunking, retrieval, and reranking" },
   lab_enterprise_ai_agents: { icon: ShieldCheck, label: "Enterprise AI Agent Problems", description: "Explore 30 production AI scenarios" },
@@ -208,7 +208,8 @@ export const SIDEBAR_ITEM_REGISTRY = {
 // (sidebarConfig.layout) has been saved yet.
 export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
-  { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab", "concurrency_lab"] },
+  { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab"] },
+  { id: "python_labs", label: "Python Labs", itemIds: ["concurrency_lab"] },
   { id: "algowar", label: "AlgoWar", itemIds: ["algowar"] },
   { id: "labs", label: "Labs", itemIds: ["labs"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
@@ -367,6 +368,20 @@ const AGENT_ITEM_IDS = [
 export const resolveEffectiveLayout = (savedLayout) => {
   const source = savedLayout && savedLayout.length ? savedLayout : DEFAULT_SIDEBAR_LAYOUT;
   const groups = source.map((group) => ({ ...group, itemIds: [...group.itemIds] }));
+
+  // Python Labs owns the beginner concurrency quest. Re-home the item for
+  // saved/custom layouts as well, so existing users see the new section.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => id !== "concurrency_lab");
+  });
+  let pythonLabsGroup = groups.find((group) => group.id === "python_labs");
+  if (!pythonLabsGroup) {
+    pythonLabsGroup = { id: "python_labs", label: "Python Labs", itemIds: [] };
+    const practiceIndex = groups.findIndex((group) => group.id === "practice");
+    groups.splice(practiceIndex === -1 ? 0 : practiceIndex + 1, 0, pythonLabsGroup);
+  }
+  pythonLabsGroup.label = "Python Labs";
+  pythonLabsGroup.itemIds.push("concurrency_lab");
 
   // AlgoWar owns a dedicated top-level section. Re-home it for saved/custom
   // layouts too, otherwise newly shipped items are appended under More tools.

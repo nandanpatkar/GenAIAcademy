@@ -57,3 +57,11 @@ agentcore-samples-main/
 # Local tool state, not project code
 /.freebuff/
 /supabase/.temp/
+/av-cdn-worker/.wrangler/
+/av-cdn-worker/node_modules/
+
+# Staging output of scripts/build_av_archive.py — roughly 1.5 GB of optimized
+# images plus 10,837 normalized markdown files. It is uploaded to R2 by
+# scripts/upload_av_archive.mjs and never committed or deployed. The small
+# index that DOES ship lives in public/data/av-index.json.
+/.av-build/
