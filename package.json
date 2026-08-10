@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:codelab": "python3 dsanew/tools/build_codelab.py",
+    "build:codelab": "node scripts/build_codelab_guard.mjs",
     "validate:codelab": "node scripts/validate-codelab-manifests.mjs",
     "test:codelab": "node --test tests/leetcodeJudge.test.mjs",
     "verify:codelab": "node dsanew/tools/verify_harness.mjs",
