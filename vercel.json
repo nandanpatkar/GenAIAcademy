@@ -9,6 +9,11 @@
   },
   "rewrites": [
     { "source": "/notion-api/(.*)", "destination": "https://api.notion.com/$1" },
+    { "source": "/agentcore-samples/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/agentcore-samples/$1" },
+    { "source": "/agentcore/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/agentcore/$1" },
+    { "source": "/langchain/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/langchain/$1" },
+    { "source": "/strands/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/strands/$1" },
+    { "source": "/guides/(.*)", "destination": "https://docs-cdn.gen-ai-academy.workers.dev/guides/$1" },
     { "source": "/graphql", "destination": "/api/graphql" },
     { "source": "/api/copilot/:path*", "destination": "/api/copilot" },
     { "source": "/api/auth/:path*", "destination": "/api/auth" },

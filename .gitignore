@@ -33,15 +33,29 @@ AFFiNE/
 agentcore-samples-main/
 
 # Upstream sources used only as build input for the LangChain docs viewer
-# (scripts/build_langchain_docs.py) — together about 1.1 GB. The generated
-# output that actually ships lives in public/langchain/ and IS committed,
-# because without it a fresh clone cannot rebuild the Agents section.
+# (scripts/build_langchain_docs.py) — together about 1.1 GB.
 # Leading slashes matter: an unanchored `Langchain/` also matches
 # `public/langchain/` on a case-insensitive filesystem, which would silently
 # drop the shipped docs.
 /LangChain-website/
 /Langchain/
 /Claude Certeficate/
+
+# Generated output of build_agentcore_samples.py, build_langchain_docs.py,
+# build_strands_docs.py and build_manual_data.py — ~234 MB / ~9,980 files
+# across the AgentCore docs+samples, LangChain docs, Strands docs and guides
+# viewers. Previously committed here and shipped as static files, which is
+# what pushed the Vercel deployment manifest over its request-body limit
+# ("Request body too large. Limit: 10mb") starting with the commit that added
+# public/codelab/. Now served from R2 by docs-cdn-worker/, reached through the
+# vercel.json rewrites for these five paths — same-origin from the browser's
+# point of view, so no code changes were needed. Re-upload after regenerating
+# with: node scripts/upload_docs_archive.mjs
+/public/agentcore-samples/
+/public/agentcore/
+/public/langchain/
+/public/strands/
+/public/guides/
 
 # Third-party clone (github.com/Garvit244/Leetcode) carrying its own git
 # history. Git can only store it as a submodule pointer, which clones as an
@@ -57,3 +71,6 @@ agentcore-samples-main/
 # Local tool state, not project code
 /.freebuff/
 /supabase/.temp/
+/docs-cdn-worker/.wrangler/
+/docs-cdn-worker/node_modules/
+/scripts/.docs-archive-uploaded.json

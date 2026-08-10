@@ -1,7 +1,0 @@
-boto3>=1.43.27
-fastapi
-uvicorn[standard]
-sse-starlette
-pydantic
-bedrock-agentcore
-requests
