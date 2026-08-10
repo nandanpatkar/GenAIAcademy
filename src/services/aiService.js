@@ -281,10 +281,87 @@ const callOpenAICompatible = async (providerId, messages, maxTokens = 800, tempe
   }
 };
 
+// ApiBeam exposes an OpenAI-compatible chat-completions URL, but the browser
+// extension—not an API key—performs the request with the user's active web
+// session. Its room URL is therefore the only required connection setting.
+const LEGACY_APIBEAM_ORIGIN = "https://apibeam.bitsmall.in";
+
+const getApiBeamRequestUrl = (endpoint) => {
+  const cleanEndpoint = endpoint.replace(/\/+$/, "");
+  const url = new URL(cleanEndpoint);
+
+  // The legacy hosted relay only permits the browser extension origin. During
+  // local Vite development, route it through the dev server so the browser
+  // makes a same-origin request and does not fail its CORS preflight. A
+  // self-hosted relay remains the required production configuration.
+  if (import.meta.env.DEV && url.origin === LEGACY_APIBEAM_ORIGIN) {
+    return `/apibeam-hosted${url.pathname}/v1/chat/completions`;
+  }
+
+  return `${cleanEndpoint}/v1/chat/completions`;
+};
+
+const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7) => {
+  const meta = getProviderMeta("apibeam");
+  const cfg = getProviderConfig("apibeam");
+  const endpoint = (cfg.endpoint || "").trim().replace(/\/+$/, "");
+  const model = cfg.model || meta.defaultModel;
+
+  if (!endpoint) {
+    throw new Error("Missing ApiBeam API URL. Install and connect the extension, then add its API URL in Credentials.");
+  }
+
+  let response;
+  try {
+    response = await fetch(getApiBeamRequestUrl(endpoint), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model,
+        messages: messages.map((message) => ({
+          role: message.role === "model" ? "assistant" : message.role,
+          content: message.content,
+        })),
+        max_tokens: maxTokens,
+        temperature,
+        stream: false,
+      }),
+    });
+  } catch (error) {
+    throw new Error(`Could not reach ApiBeam. Check that its relay and browser extension are connected. ${error.message || ""}`.trim());
+  }
+
+  const raw = await response.text();
+  let data;
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch {
+    throw new Error(`ApiBeam returned an unexpected response (${response.status}). Check the relay connection and try again.`);
+  }
+
+  if (!response.ok) {
+    throw new Error(data?.error?.message || data?.message || `ApiBeam Error: ${response.status}`);
+  }
+
+  // Older ApiBeam extension builds can return the captured Markdown response
+  // directly. Newer builds return an OpenAI-compatible JSON object. Support
+  // both formats so a valid assistant reply never turns into a relay timeout.
+  const content = typeof data === "string"
+    ? data
+    : data?.choices?.[0]?.message?.content
+      ?? data?.output?.[0]?.content?.[0]?.text
+      ?? data?.message?.content;
+  if (typeof content !== "string" || !content.trim()) {
+    throw new Error("ApiBeam returned no assistant message. Make sure the extension is connected to a supported chat tab.");
+  }
+  return content;
+};
+
 // ─── Unified AI Caller: routes to the active provider by its adapter ─────────
 const dispatchProvider = async (providerId, messages, maxTokens, temperature, jsonMode) => {
   const meta = getProviderMeta(providerId);
   if (meta.adapter === "azure") return callAzureOpenAI(messages, maxTokens, temperature, jsonMode);
+  if (meta.adapter === "apibeam") return callApiBeam(messages, maxTokens, temperature);
   if (meta.adapter === "openai") return callOpenAICompatible(providerId, messages, maxTokens, temperature, jsonMode);
   return callGemini(messages, maxTokens, temperature, jsonMode);
 };
@@ -365,24 +442,37 @@ export const askContextCopilot = async ({
   chatHistory = [],
   provider = currentAiProvider,
   webResults = [],
+  includeWorkspaceContext = true,
 }) => {
   const webContext = webResults.length > 0
     ? `\n\nLIVE WEB SOURCES (use these when relevant and cite them as [1], [2], etc.):\n${webResults.map((source, index) => `[${index + 1}] ${source.title}\nURL: ${source.url}\n${source.content}`).join("\n\n")}`
     : "";
 
-  const systemPrompt = `You are Atlas, the full-project AI copilot inside GenAI Academy.
-You have access to the learner's current curriculum, roadmap progress, workspace notes, saved projects, and the active screen below.
-Answer directly and practically. Use clean Markdown, short sections, bullets, and code blocks when useful.
+  const contextInstructions = includeWorkspaceContext
+    ? `You have access to the learner's current curriculum, roadmap progress, workspace notes, saved projects, and the active screen below.
 When the question is about the learner's roadmap or progress, ground the answer in the supplied project context instead of inventing details.
-When live web sources are supplied, use them for current facts and add numbered citations like [1] next to the relevant claim. Never invent a citation.
 If the context does not contain enough information, say what is missing and then give the best general guidance.
 
-PROJECT CONTEXT:
-${projectContext}${webContext}`;
+PROJECT CONTEXT:`
+    : `You do not have access to any learner roadmap, current screen, workspace notes, maps, recent activity, saved projects, or other private workspace data. Give general guidance unless the user supplies the details in their message.`;
+
+  const systemPrompt = `You are Atlas, an AI copilot inside GenAI Academy.
+${contextInstructions}
+Answer directly and practically. Use clean Markdown, short sections, bullets, and code blocks when useful.
+When live web sources are supplied, use them for current facts and add numbered citations like [1] next to the relevant claim. Never invent a citation.
+
+${includeWorkspaceContext ? projectContext : ""}${webContext}`;
+
+  const providerHistory = includeWorkspaceContext
+    ? chatHistory
+    : chatHistory.filter((message) => !(
+      message.role === "assistant"
+      && message.content?.startsWith("Hi, I’m Atlas —")
+    ));
 
   const messages = [
     { role: "system", content: systemPrompt },
-    ...chatHistory.map((message) => ({
+    ...providerHistory.map((message) => ({
       role: message.role === "assistant" ? "assistant" : "user",
       content: message.content,
     })),

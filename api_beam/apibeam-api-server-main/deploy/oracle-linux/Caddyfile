@@ -1,0 +1,8 @@
+# Replace relay.example.com with the DNS A record that points to this VM before
+# enabling Caddy. Caddy obtains and renews the TLS certificate automatically.
+relay.example.com {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:3000 {
+        flush_interval -1
+    }
+}

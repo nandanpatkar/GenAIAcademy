@@ -74,7 +74,20 @@ const compactValue = (value, depth = 0) => {
   return value;
 };
 
-const buildProjectContext = ({ pathsData, activePath, activeNode, activeModule, activeTopic }) => {
+const buildProjectContext = ({ pathsData, activePath, activeNode, activeModule, activeTopic, includeWorkspaceContext = true }) => {
+  const currentView = {
+    path: activePath,
+    node: activeNode ? { id: activeNode.id, title: activeNode.title || activeNode.name } : null,
+    module: activeModule ? { id: activeModule.id, title: activeModule.title || activeModule.name } : null,
+    topic: normalizeTopic(activeTopic),
+  };
+
+  // ApiBeam requests are visible in the provider's web chat. The compact mode
+  // intentionally sends no app or workspace data at all.
+  if (!includeWorkspaceContext) {
+    return "";
+  }
+
   const hiddenKeys = new Set(["appearance", "onboarding"]);
   const paths = Object.entries(pathsData || {})
     .filter(([key, value]) => !hiddenKeys.has(key) && value && typeof value === "object")
@@ -100,12 +113,7 @@ const buildProjectContext = ({ pathsData, activePath, activeNode, activeModule, 
 
   const workspace = pathsData?.workspace || {};
   return JSON.stringify(compactValue({
-    currentView: {
-      path: activePath,
-      node: activeNode ? { id: activeNode.id, title: activeNode.title || activeNode.name } : null,
-      module: activeModule ? { id: activeModule.id, title: activeModule.title || activeModule.name } : null,
-      topic: normalizeTopic(activeTopic),
-    },
+    currentView,
     curriculum: paths,
     workspace: {
       notes: workspace.notes || [],
@@ -123,10 +131,11 @@ const createChat = (provider = "gemini") => ({
   updatedAt: Date.now(),
   provider,
   webEnabled: false,
+  workspaceContextEnabled: false,
   messages: [{
     id: makeId(),
     role: "assistant",
-    content: "Hi, I’m Atlas — your project-aware copilot. I can connect the dots across your roadmap, progress, workspace notes, and current topic. What are we working through?",
+    content: "Hi, I’m Atlas — your learning copilot. What are we working through?",
   }],
 });
 
@@ -236,8 +245,20 @@ export default function FullContextChatbot({
 
   const activeChat = chats.find((chat) => chat.id === activeChatId) || chats[0];
   const activeProviderId = activeChat?.provider || aiProvider || "gemini";
+  const activeProvider = getProviderMeta(activeProviderId);
+  // Missing values belong to conversations created before this control existed.
+  // Keep those compact by default as well, so sharing full workspace data is
+  // always an explicit opt-in.
+  const workspaceContextEnabled = activeChat?.workspaceContextEnabled === true;
   const providerReady = isProviderConfigured(activeProviderId, providerConfigs[activeProviderId] || {});
-  const projectContext = useMemo(() => buildProjectContext({ pathsData, activePath, activeNode, activeModule, activeTopic }), [pathsData, activePath, activeNode, activeModule, activeTopic]);
+  const projectContext = useMemo(() => buildProjectContext({
+    pathsData,
+    activePath,
+    activeNode,
+    activeModule,
+    activeTopic,
+    includeWorkspaceContext: workspaceContextEnabled,
+  }), [pathsData, activePath, activeNode, activeModule, activeTopic, workspaceContextEnabled]);
   const currentPathTitle = pathsData?.[activePath]?.title || pathsData?.[activePath]?.name || activePath || "Workspace";
   const currentTopicTitle = normalizeTopic(activeTopic);
 
@@ -303,6 +324,7 @@ export default function FullContextChatbot({
         chatHistory: activeChat.messages,
         provider: activeChat.provider,
         webResults,
+        includeWorkspaceContext: workspaceContextEnabled,
       });
       updateActiveChat({ messages: [...nextMessages, { id: makeId(), role: "assistant", content: response, sources: webResults }] });
     } catch (error) {
@@ -433,10 +455,11 @@ export default function FullContextChatbot({
                 <div className="atlas-header-left">
                   <button className="atlas-icon-button atlas-history-toggle" onClick={() => setIsHistoryOpen((value) => !value)} aria-label="Toggle chat history">{isHistoryOpen ? <PanelLeftClose size={17} /> : <PanelLeftOpen size={17} />}</button>
                   <div className="atlas-avatar"><AtlasLogo size={20} /></div>
-                  <div><div className="atlas-header-kicker">PROJECT-AWARE ASSISTANT</div><h2>Atlas <span>·</span> think it through together</h2><div className="atlas-context-status"><i /> Full workspace context active</div></div>
+                  <div><div className="atlas-header-kicker">PROJECT-AWARE ASSISTANT</div><h2>Atlas <span>·</span> think it through together</h2><div className="atlas-context-status"><i /> {workspaceContextEnabled ? "Full workspace context active" : "Current screen context only"}</div></div>
                 </div>
                 <div className="atlas-header-actions">
                   <div className="atlas-model-select"><Zap size={13} /><span>MODEL</span><select value={activeChat?.provider || "gemini"} onChange={(e) => updateActiveChat({ provider: e.target.value })}>{AI_PROVIDER_LIST.map((p) => (<option key={p.id} value={p.id}>{p.label}</option>))}</select><ChevronDown size={13} /></div>
+                  <button className={`atlas-context-toggle ${workspaceContextEnabled ? "enabled" : ""}`} onClick={() => updateActiveChat({ workspaceContextEnabled: !workspaceContextEnabled })} aria-pressed={workspaceContextEnabled} aria-label={workspaceContextEnabled ? "Turn off roadmap and workspace context" : "Turn on roadmap and workspace context"} title={workspaceContextEnabled ? "Full context on: click to share only the current screen" : "Current screen only: click to share full workspace context"}><Eye size={14} /><span>{workspaceContextEnabled ? "Context on" : "Context off"}</span></button>
                   <button className={`atlas-web-toggle ${activeChat?.webEnabled ? "enabled" : ""}`} onClick={() => updateActiveChat({ webEnabled: !activeChat?.webEnabled })}><Globe2 size={14} /><span>{activeChat?.webEnabled ? "Web on" : "Web off"}</span></button>
                   <button className="atlas-credentials-button" onClick={openCredentials}><KeyRound size={14} /><span>Credentials</span></button>
                   <button className="atlas-icon-button atlas-fullscreen-toggle" onClick={() => setIsFullscreen((value) => !value)} aria-label={isFullscreen ? "Exit full screen" : "Open full screen"} title={isFullscreen ? "Exit full screen" : "Open full screen"}>{isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}</button>
@@ -444,11 +467,11 @@ export default function FullContextChatbot({
                 </div>
               </header>
 
-              <div className="atlas-context-strip"><span className="atlas-context-pulse" /><span className="atlas-context-label">IN CONTEXT</span><strong>{currentPathTitle}</strong><span className="atlas-context-slash">/</span><strong>{activeNode?.title || activeNode?.name || "Roadmap"}</strong><span className="atlas-context-slash">/</span><strong>{activeModule?.title || activeModule?.name || currentTopicTitle}</strong><span className="atlas-context-spacer" /><span className="atlas-context-caption">{activeChat?.webEnabled ? "Live web grounding" : "Roadmap + workspace memory"}</span></div>
+              <div className="atlas-context-strip"><span className="atlas-context-pulse" /><span className="atlas-context-label">IN CONTEXT</span><strong>{currentPathTitle}</strong><span className="atlas-context-slash">/</span><strong>{activeNode?.title || activeNode?.name || "Roadmap"}</strong><span className="atlas-context-slash">/</span><strong>{activeModule?.title || activeModule?.name || currentTopicTitle}</strong><span className="atlas-context-spacer" /><span className="atlas-context-caption">{activeChat?.webEnabled ? "Live web grounding" : workspaceContextEnabled ? "Roadmap + workspace memory" : "Current screen only"}</span></div>
 
               {showCredentials && (
                 <div className="atlas-credentials-panel" role="dialog" aria-label="AI provider credentials">
-                  <div className="atlas-credentials-heading"><div><span className="atlas-eyebrow"><KeyRound size={12} /> PERSONAL CREDENTIALS</span><h3>Connect your AI provider</h3><p>Your credentials are stored only for your signed-in account and used by Atlas for this workspace.</p></div><button className="atlas-icon-button" onClick={() => setShowCredentials(false)} aria-label="Close credentials"><X size={17} /></button></div>
+                  <div className="atlas-credentials-heading"><div><span className="atlas-eyebrow"><KeyRound size={12} /> PERSONAL CONNECTION</span><h3>Connect your AI provider</h3><p>{credentialProvider === "apibeam" ? "ApiBeam routes requests through your connected browser session. Its API URL stays in this browser profile." : "Your credentials are stored only for your signed-in account and used by Atlas for this workspace."}</p></div><button className="atlas-icon-button" onClick={() => setShowCredentials(false)} aria-label="Close credentials"><X size={17} /></button></div>
                   <div className="atlas-provider-tabs">
                     {AI_PROVIDER_LIST.map((p) => (
                       <button key={p.id} className={credentialProvider === p.id ? "active" : ""} onClick={() => setCredentialProvider(p.id)}>
@@ -483,10 +506,11 @@ export default function FullContextChatbot({
                             autoComplete="off"
                           />
                         )}
+                        {field.helpText && <small>{field.helpText}</small>}
                       </label>
                     ))}
                     {getProviderMeta(credentialProvider).docsUrl && (
-                      <a className="atlas-credential-help" href={getProviderMeta(credentialProvider).docsUrl} target="_blank" rel="noopener noreferrer">Get an API key <ArrowUpRight size={12} /></a>
+                      <a className="atlas-credential-help" href={getProviderMeta(credentialProvider).docsUrl} target="_blank" rel="noopener noreferrer">{getProviderMeta(credentialProvider).docsLabel || "Get an API key"} <ArrowUpRight size={12} /></a>
                     )}
                   </div>
                   <div className="atlas-credentials-footer"><span><i /> Atlas will use {getProviderMeta(credentialProvider).label} for new messages.</span><button className="atlas-credentials-save" onClick={saveCredentials}>Save & use provider <ArrowUpRight size={14} /></button></div>
@@ -497,8 +521,8 @@ export default function FullContextChatbot({
                 {activeChat?.messages.length === 1 && !isLoading && (
                   <div className="atlas-welcome-card">
                     <div className="atlas-welcome-orb"><AtlasLogo size={28} /></div>
-                    <div><span className="atlas-eyebrow">ATLAS / READY TO HELP</span><h1>Make your next move<br /><em>make sense.</em></h1><p>Ask about your current topic, turn your roadmap into a plan, or pressure-test an idea. I’ll use the context already in your workspace.</p></div>
-                    <div className="atlas-welcome-meta"><span><i /> {currentPathTitle}</span><span><i /> {activeChat?.webEnabled ? "Web connected" : "Private workspace context"}</span></div>
+                    <div><span className="atlas-eyebrow">ATLAS / READY TO HELP</span><h1>Make your next move<br /><em>make sense.</em></h1><p>Ask about your current topic, turn your roadmap into a plan, or pressure-test an idea. {workspaceContextEnabled ? "I’ll use the context already in your workspace." : "I’ll use only the current screen and conversation."}</p></div>
+                    <div className="atlas-welcome-meta"><span><i /> {currentPathTitle}</span><span><i /> {activeChat?.webEnabled ? "Web connected" : workspaceContextEnabled ? "Private workspace context" : "Current screen only"}</span></div>
                   </div>
                 )}
                 {activeChat?.messages.map((message, index) => (
@@ -517,12 +541,12 @@ export default function FullContextChatbot({
                 <div ref={messagesEndRef} />
               </div>
 
-              {!providerReady && <div className="atlas-credentials-warning"><Zap size={14} /><span><strong>Personal credentials required.</strong> Add a key for {activeChat?.provider === "azure-openai" ? "Azure OpenAI" : "Gemini"} to start chatting.</span><button onClick={openCredentials}>Configure now <ArrowUpRight size={13} /></button></div>}
+              {!providerReady && <div className="atlas-credentials-warning"><Zap size={14} /><span><strong>{activeProviderId === "apibeam" ? "ApiBeam connection required." : "Personal credentials required."}</strong> {activeProvider.setupMessage || `Add a key for ${activeProvider.label} to start chatting.`}</span><button onClick={openCredentials}>Configure now <ArrowUpRight size={13} /></button></div>}
 
               <div className="atlas-composer-area">
                 <div className="atlas-composer">
                   <div className="atlas-composer-label"><span className="atlas-composer-pulse" /> ASK ATLAS</div>
-                  <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} placeholder={!providerReady ? "Configure your personal AI credentials in Settings first" : activeChat?.webEnabled ? "Ask anything — Atlas can search the web too" : "What are you working through?"} rows={1} />
+                  <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} placeholder={!providerReady ? activeProviderId === "apibeam" ? "Connect ApiBeam in Credentials first" : "Configure your personal AI credentials in Settings first" : activeChat?.webEnabled ? "Ask anything — Atlas can search the web too" : "What are you working through?"} rows={1} />
                   <div className="atlas-composer-bottom"><span><span className="atlas-command-key">⌘</span> Enter <span className="atlas-composer-divider" /> Shift + Enter for a new line</span><button className={`atlas-send ${input.trim() ? "ready" : ""}`} onClick={() => sendMessage()} disabled={!input.trim() || isLoading} aria-label="Send message"><ArrowUp size={17} /></button></div>
                 </div>
                 <div className="atlas-disclaimer"><Sparkles size={11} /> Atlas can make mistakes — check important details.</div>

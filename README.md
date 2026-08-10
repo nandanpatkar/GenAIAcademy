@@ -16,6 +16,10 @@
 
 The entire experience is wrapped in a premium **Obsidian/Neon** visual design, engineered to offer immersive dashboards, low-latency code execution, and dynamic flow mapping.
 
+## ApiBeam browser-session provider
+
+Atlas can optionally use a connected ChatGPT, Claude, or z.ai browser session through ApiBeam. See the [ApiBeam setup and extension guide](api_beam/README.md) for installation and usage instructions.
+
 ---
 
 ## 🖼️ System Architecture & Data Flows

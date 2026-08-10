@@ -65,6 +65,38 @@ export const AI_PROVIDERS = {
     ],
   },
 
+  apibeam: {
+    id: "apibeam",
+    label: "ApiBeam",
+    sub: "Browser AI session",
+    adapter: "apibeam",
+    icon: null,
+    color: "#6366f1",
+    mono: "AB",
+    defaultModel: "gpt-4o",
+    docsUrl: "https://github.com/NiteshSingh17/apibeam",
+    docsLabel: "Open extension install guide",
+    setupMessage: "Install and connect the ApiBeam extension, then add the API URL shown in its Settings page.",
+    fields: [
+      {
+        name: "endpoint",
+        label: "ApiBeam API URL",
+        type: "text",
+        placeholder: "https://your-relay.example/app/your-room-id",
+        required: true,
+        helpText: "Copy the full API URL from the ApiBeam extension Settings page. Treat it like a password.",
+      },
+      {
+        name: "model",
+        label: "Model label",
+        type: "text",
+        placeholder: "gpt-4o",
+        required: false,
+        helpText: "This label is sent to the relay; your selected browser provider performs the request.",
+      },
+    ],
+  },
+
   glm: {
     id: "glm",
     label: "GLM (Zhipu AI)",

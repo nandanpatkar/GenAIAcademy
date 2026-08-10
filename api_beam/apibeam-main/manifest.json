@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "ApiBeam",
+  "description": "Turn your ChatGPT or Claude web session into a private, local API for automation, integrations, and developer tooling for free.",
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": {
+      "32": "icon-32.png"
+    }
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["src/pages/content/index.tsx"],
+      "css": ["contentStyle.css"]
+    },
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": ["src/pages/content/claude-index.tsx"],
+      "css": ["contentStyle.css"]
+    },
+    {
+      "matches": ["https://chat.z.ai/*"],
+      "js": ["src/pages/content/zai-index.tsx"],
+      "css": ["contentStyle.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contentStyle.css",
+        "icon-128.png",
+        "icon-32.png"
+      ],
+      "matches": []
+    },
+    {
+      "resources": ["loader.js"],
+      "matches": ["https://chatgpt.com/*"]
+    },
+    {
+      "resources": ["loader-claude.js"],
+      "matches": ["https://claude.ai/*"]
+    },
+    {
+      "resources": ["loader-zai.js"],
+      "matches": ["https://chat.z.ai/*"]
+    },
+    {
+      "resources": ["src/pages/settings/index.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -173,6 +173,15 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
+        // ApiBeam's legacy hosted relay accepts browser-extension requests but
+        // does not allow the Vite development origin. Keep this narrow proxy
+        // for local development; production should use a self-hosted relay
+        // with the deployed app origin in ALLOWED_ORIGINS.
+        "/apibeam-hosted": {
+          target: "https://apibeam.bitsmall.in",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/apibeam-hosted/, ""),
+        },
         "/notion-api": {
           target: "https://api.notion.com",
           changeOrigin: true,

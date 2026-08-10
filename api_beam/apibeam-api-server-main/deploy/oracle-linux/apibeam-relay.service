@@ -1,0 +1,24 @@
+[Unit]
+Description=GenAI Academy ApiBeam relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=apibeam
+Group=apibeam
+WorkingDirectory=/opt/genai-apibeam/app
+EnvironmentFile=/etc/genai-apibeam/relay.env
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+ExecStart=/usr/bin/env node dist/main
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/genai-apibeam/app
+
+[Install]
+WantedBy=multi-user.target
