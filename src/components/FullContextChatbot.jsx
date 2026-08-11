@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import {
   Archive,
   ArrowUp,
@@ -36,6 +38,77 @@ import "../styles/full-context-chatbot-overrides.css";
 
 const STORAGE_PREFIX = "genai_atlas_chats_v1";
 const FAB_POSITION_KEY = "genai_atlas_fab_position_v1";
+
+const LANGUAGE_ALIASES = {
+  js: "javascript", jsx: "jsx", ts: "typescript", tsx: "tsx",
+  py: "python", sh: "bash", shell: "bash", yml: "yaml",
+  html: "markup", xml: "markup", md: "markdown", text: "text", plaintext: "text",
+};
+
+const LANGUAGE_LABELS = {
+  javascript: "JavaScript", jsx: "JSX", typescript: "TypeScript", tsx: "TSX",
+  python: "Python", bash: "Bash", json: "JSON", yaml: "YAML", sql: "SQL",
+  css: "CSS", markup: "HTML", markdown: "Markdown", text: "Text",
+};
+
+function extractText(node) {
+  if (node == null || node === false) return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join("");
+  return extractText(node.props?.children);
+}
+
+function AtlasCodeBlock({ children }) {
+  const [copied, setCopied] = useState(false);
+  const child = React.Children.toArray(children)[0];
+  const className = child?.props?.className || "";
+  const declaredLanguage = (/language-([\w+-]+)/.exec(className) || [])[1]?.toLowerCase();
+  const language = LANGUAGE_ALIASES[declaredLanguage] || declaredLanguage || "text";
+  const code = extractText(child?.props?.children).replace(/\u00a0/g, " ").replace(/\n$/, "");
+  const label = LANGUAGE_LABELS[language] || (language === "text" ? "Code" : language.toUpperCase());
+
+  const copyCode = async () => {
+    try {
+      await navigator.clipboard?.writeText(code);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch (_) {
+      // Copy is a convenience feature; rendering should still work in restricted contexts.
+    }
+  };
+
+  return (
+    <section className="atlas-code-block" aria-label={`${label} code example`}>
+      <header className="atlas-code-block-header">
+        <span>{label}</span>
+        <button type="button" onClick={copyCode} aria-label={`Copy ${label} code`}>
+          {copied ? <Check size={13} /> : <Copy size={13} />}
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </header>
+      <SyntaxHighlighter
+        language={language}
+        style={vscDarkPlus}
+        PreTag="div"
+        className="atlas-code-body"
+        customStyle={{ margin: 0, padding: "14px 16px", background: "transparent" }}
+        codeTagProps={{ style: { fontFamily: "inherit", whiteSpace: "pre" } }}
+        wrapLongLines={false}
+      >
+        {code}
+      </SyntaxHighlighter>
+    </section>
+  );
+}
+
+const markdownComponents = {
+  // Fenced blocks must be handled at the `pre` level. react-markdown v10 does
+  // not pass an `inline` flag to `code`, which otherwise makes fenced blocks
+  // indistinguishable from inline snippets.
+  pre: AtlasCodeBlock,
+  code: ({ children, ...props }) => <code {...props}>{children}</code>,
+  table: ({ children }) => <div className="atlas-table-scroll"><table>{children}</table></div>,
+};
 
 function AtlasLogo({ size = 18 }) {
   return (
@@ -530,7 +603,7 @@ export default function FullContextChatbot({
                     {message.role === "assistant" && <div className="atlas-message-avatar"><AtlasLogo size={16} /></div>}
                     <div className="atlas-message-wrap">
                       {index === 0 && message.role === "assistant" && <span className="atlas-eyebrow">ATLAS / READY</span>}
-                      <div className="atlas-message-bubble"><ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown></div>
+                      <div className="atlas-message-bubble"><ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{message.content}</ReactMarkdown></div>
                       <div className={`atlas-message-actions ${message.role === "user" ? "atlas-user-message-actions" : ""}`}><button onClick={() => copyMessage(message)} aria-label={copiedId === message.id ? "Copied" : "Copy message"} title={copiedId === message.id ? "Copied" : "Copy message"}>{copiedId === message.id ? <Check size={12} /> : <Copy size={12} />}<span>{copiedId === message.id ? "Copied" : "Copy"}</span></button>{message.role === "assistant" && message.sources?.length > 0 && <span className="atlas-source-count"><Globe2 size={12} /> {message.sources.length} sources</span>}</div>
                       {message.role === "assistant" && message.sources?.length > 0 && <div className="atlas-source-list">{message.sources.map((source, sourceIndex) => <a key={`${message.id}-${source.url}`} href={source.url} target="_blank" rel="noopener noreferrer"><span>[{sourceIndex + 1}]</span>{source.title}<ArrowUpRight size={11} /></a>)}</div>}
                     </div>
