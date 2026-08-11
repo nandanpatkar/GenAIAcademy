@@ -16,7 +16,7 @@
     "build:langchain": "python3 scripts/build_langchain_docs.py",
     "build:strands": "python3 scripts/build_strands_docs.py",
     "build:aws-simulator": "cd system-design-simulator/frontend && npm install && npx ng build --configuration production --base-href /aws-simulator/ && cd ../../ && rm -rf public/aws-simulator && mkdir -p public/aws-simulator && cp -r system-design-simulator/frontend/dist/aws-system-design-simulator-client/browser/* public/aws-simulator/",
-    "build": "npm run build:apibeam-extension && npm run build:reference && npm run build:manual-path && npm run build:interview-index && npm run build:codelab && npm run validate:codelab && npm run build:aws-simulator && vite build",
+    "build": "npm run build:apibeam-extension && npm run build:reference && npm run build:manual-path && npm run build:interview-index && npm run build:codelab && npm run validate:codelab && vite build",
     "build:flow-design": "cd flow-design && npm install && npm run build && rm -rf ../public/flow-design/* && mkdir -p ../public/flow-design && cp -r dist/* ../public/flow-design/",
     "build:claude-certificate": "cd 'Claude Certeficate 3' && npm install && npx vite build --base=/claude-certificate/ && cd .. && rm -rf public/claude-certificate/assets && cp -r 'Claude Certeficate 3/dist/assets' public/claude-certificate/assets",
     "build:git": "cd 'Git Visualizer/Git-Mastery' && npm run export-to-main",
