@@ -15,7 +15,11 @@ const ensureExtensionDependencies = async () => {
     return;
   } catch {
     console.log("Installing GenAI Academy Connector build dependencies...");
-    execFileSync(process.platform === "win32" ? "npm.cmd" : "npm", ["install", "--no-package-lock", "--include=dev"], {
+    // The extension's legacy ESLint 7 toolchain has an incompatible peer
+    // declaration with the root project's ESLint 9. It is only a build-time
+    // dependency here, so preserve its lockfile resolution instead of making
+    // npm try to reconcile the two unrelated lint configurations.
+    execFileSync(process.platform === "win32" ? "npm.cmd" : "npm", ["install", "--no-package-lock", "--include=dev", "--legacy-peer-deps"], {
       cwd: extensionRoot,
       stdio: "inherit",
     });
