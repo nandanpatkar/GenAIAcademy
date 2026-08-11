@@ -74,7 +74,7 @@ export const AI_PROVIDERS = {
     color: "#6366f1",
     mono: "AB",
     defaultModel: "gpt-4o",
-    docsUrl: "https://github.com/NiteshSingh17/apibeam",
+    docsUrl: "https://chromewebstore.google.com/detail/apibeam/lppnphjckpnmekbjlciagcebgjempohh?authuser=0&hl=en-GB",
     docsLabel: "Open extension install guide",
     setupMessage: "Install and connect the ApiBeam extension, then add the API URL shown in its Settings page.",
     fields: [
