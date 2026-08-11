@@ -9,6 +9,7 @@ ApiBeam lets the Atlas chatbot send requests through a browser session that is a
 - [Browser extension source](./apibeam-main) — Chrome/Firefox extension that operates the selected AI chat tab.
 - [Relay server source](./apibeam-api-server-main) — NestJS and Socket.IO service between Atlas and the extension.
 - [New laptop setup guide](./NEW_LAPTOP_SETUP.md) — the short, step-by-step process for using the deployed relay from another computer.
+- [Oracle relay troubleshooting](./RELAY_TROUBLESHOOTING.md) — recovery commands for timeouts, 502 responses, WebSocket errors, and a slow VM.
 - [Oracle + Vercel production integration plan](./ORACLE_VERCEL_INTEGRATION_PLAN.md) — detailed Oracle Free Tier, relay security, DNS/TLS, Vercel, extension-distribution, testing, and operations runbook.
 - [Upstream ApiBeam extension](https://github.com/NiteshSingh17/apibeam) — extension repository and release/setup reference.
 
