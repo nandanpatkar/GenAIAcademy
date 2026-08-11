@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Play } from "lucide-react";
+import { Play, Trash2 } from "lucide-react";
 import YouTubeThumbnail from './YouTubeThumbnail';
 
 const FILE_ICONS = { pdf: "📄", doc: "📝", docx: "📝", ipynb: "📓", pptx: "📊", default: "📁" };
@@ -30,6 +30,11 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
     if (!url) return "#";
     if (/^https?:\/\//i.test(url) || url.startsWith('/')) return url;
     return `https://${url}`;
+  };
+
+  const deleteItem = (key, index, label) => {
+    if (!window.confirm(`Remove "${label}"?`)) return;
+    onEditModule({ ...module, [key]: module[key].filter((_, i) => i !== index) });
   };
 
   const handleAddVideo = () => {
@@ -155,6 +160,14 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
                       )}
                     </div>
                   </div>
+                  {isEditMode && (
+                    <button
+                      className="rp-delete-btn"
+                      onClick={(e) => { e.stopPropagation(); deleteItem("videos", i, v.title); }}
+                      aria-label="Remove video"
+                      title="Remove video"
+                    ><Trash2 size={13} /></button>
+                  )}
                 </div>
               )) : (
                 <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No videos added yet</div>
@@ -172,6 +185,14 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
                     <div className="file-size">{f.size}</div>
                   </div>
                   <div className="file-dl">↓</div>
+                  {isEditMode && (
+                    <button
+                      className="rp-delete-btn"
+                      onClick={(e) => { e.stopPropagation(); deleteItem("files", i, f.name); }}
+                      aria-label="Remove file"
+                      title="Remove file"
+                    ><Trash2 size={13} /></button>
+                  )}
                 </div>
               )) : (
                 <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No files attached</div>
@@ -189,6 +210,14 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
                     <div className="link-url">{l.url}</div>
                   </div>
                   <div style={{ fontSize: 11, color: "var(--text3)" }}>↗</div>
+                  {isEditMode && (
+                    <button
+                      className="rp-delete-btn"
+                      onClick={(e) => { e.stopPropagation(); deleteItem("links", i, l.title); }}
+                      aria-label="Remove link"
+                      title="Remove link"
+                    ><Trash2 size={13} /></button>
+                  )}
                 </div>
               )) : (
                 <div style={{ textAlign: "center", color: "var(--text3)", fontSize: 11, padding: "24px 0" }}>No links added</div>
