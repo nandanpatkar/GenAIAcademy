@@ -1745,11 +1745,11 @@ input[type="range"] {
   font-size: 10px;
   line-height: 1.5;
 }
-button:focus-visible,
-select:focus-visible,
-input:focus-visible {
-  outline: 3px solid #ffffff;
-  outline-offset: 3px;
+.graph-atlas button:focus-visible,
+.graph-atlas select:focus-visible,
+.graph-atlas input:focus-visible {
+  outline: 2px solid #b9892c;
+  outline-offset: 2px;
 }
 @media (max-width: 950px) {
   .ga-header {
@@ -1814,4 +1814,3 @@ input:focus-visible {
     `}</style>
   </main>;
 }
-
