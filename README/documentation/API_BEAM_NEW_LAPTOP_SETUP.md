@@ -252,7 +252,7 @@ sudo systemctl restart apibeam-relay
 - The current Oracle relay is for your personal testing. It is not yet a multi-user public API.
 - Never share the full ApiBeam room URL.
 - Keep Atlas context off unless you actively want to send workspace context.
-- For a public launch, move from `sslip.io` to a custom domain and implement authenticated user-to-extension pairing, per-request authorization, rate limits, and request isolation. See [the Oracle + Vercel production plan](./ORACLE_VERCEL_INTEGRATION_PLAN.md).
+- For a public launch, move from `sslip.io` to a custom domain and implement authenticated user-to-extension pairing, per-request authorization, rate limits, and request isolation. See [the Oracle + Vercel production plan](./API_BEAM_ORACLE_VERCEL_IMPLEMENTATION_PLAN.md).
 
 ## Review result
 

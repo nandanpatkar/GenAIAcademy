@@ -285,7 +285,7 @@ A browser-session AI bridge: lets the app send prompts through a browser tab alr
 - `apibeam-main` — Chrome/Firefox MV3 extension (React 19 + TS + Tailwind 4 + Vite 6), content scripts on `chatgpt.com`/`claude.ai`/`chat.z.ai` that inject prompts and scrape streamed responses.
 - `apibeam-api-server-main` — NestJS + Socket.IO relay server. Exposes `/app/:roomId/*` HTTP routes; holds a request open, forwards it over WebSocket to the extension in a "room," and resolves the HTTP response when the extension replies (60s timeout).
 - Flow: `App → HTTP → Relay server → WebSocket → Extension → provider web UI → response bubbles back`.
-- Production reference deployment (per `api_beam/NEW_LAPTOP_SETUP.md`): relay on an Oracle Cloud VM behind Caddy, extension on the Chrome Web Store, frontend on Vercel.
+- Production reference deployment (per `README/documentation/API_BEAM_NEW_LAPTOP_SETUP.md`): relay on an Oracle Cloud VM behind Caddy, extension on the Chrome Web Store, frontend on Vercel.
 - Run locally:
   ```bash
   cd api_beam/apibeam-api-server-main && yarn && NODE_ENV=dev yarn start:dev   # relay, port 3000
@@ -618,7 +618,7 @@ console.log(data, error);
 
 ### 14.6 ApiBeam (optional AI provider)
 
-See [§7.1](#71-apibeam-api_beam) and `api_beam/README.md` for the full extension + relay setup.
+See [§7.1](#71-apibeam-api_beam) and [the centralized ApiBeam guide](README/documentation/API_BEAM.md) for the full extension + relay setup.
 
 ---
 
@@ -757,8 +757,9 @@ The repo root carries several standing planning/runbook docs — read these for 
 | `Data_science_interview_question.md` | Interview question bank content source |
 | `docs/LEETCODE_JUDGE_COVERAGE.md` | Code Lab judge dataset coverage (backed by gitignored `dsanew/`) |
 | `docs/MOBILE_REDESIGN.md` | Mobile UI redesign phase notes |
-| `api_beam/NEW_LAPTOP_SETUP.md` | ApiBeam production deployment reference (Oracle VM + Caddy + Vercel) |
-| `api_beam/ORACLE_VERCEL_INTEGRATION_PLAN.md` | ApiBeam hardening/security plan (auth, rate limiting, CORS) |
+| `README/documentation/API_BEAM_NEW_LAPTOP_SETUP.md` | ApiBeam production deployment reference (Oracle VM + Caddy + Vercel) |
+| `README/documentation/API_BEAM_RELAY_TROUBLESHOOTING.md` | ApiBeam timeout, 502, WebSocket, and slow-VM recovery runbook |
+| `README/documentation/API_BEAM_ORACLE_VERCEL_IMPLEMENTATION_PLAN.md` | ApiBeam hardening/security plan (auth, rate limiting, CORS) |
 | `system-design-simulator/docs/ARCHITECTURE.md`, `docs/CHALLENGES.md` | Simulator's layered architecture and design-challenge format |
 | `Claude Certeficate 3/README-CHATBOT.md`, `design.md`, `plan.md` | Claude cert app's chatbot design and original build plan |
 
@@ -776,4 +777,3 @@ The repo root carries several standing planning/runbook docs — read these for 
 - **`themissingmanual/` and `api_beam/`'s relay server are independently deployed products** sharing this repo's history — do not expect `npm run build` at the root to touch either of them.
 
 ---
-
