@@ -17,6 +17,8 @@ const AI_SETTINGS_COOKIES = {
   aiProvider: 'genai_ai_provider',
   azureEndpoint: 'genai_azure_endpoint',
   azureKey: 'genai_azure_key',
+  apiBeamEndpoint: 'genai_apibeam_endpoint',
+  apiBeamModel: 'genai_apibeam_model',
 };
 
 const personalAiStorageKey = (name, userId) => `genai_${userId}_${name}`;
@@ -81,14 +83,17 @@ export const AuthProvider = ({ children }) => {
   const [isAdminView, setIsAdminView] = useState(() => localStorage.getItem('genai_isAdminView') !== 'false'); // Default to true if not set
 
 
-  // Mirror gemini/azure credentials into cookies so the same-origin Workspace
-  // Notes copilot (api/copilot.js) can read the visitor's own keys. Other
-  // providers are frontend-only (used by aiService) and don't need cookies.
+  // Mirror the providers supported by the same-origin Workspace Notes copilot
+  // into cookies. The embedded editor cannot attach headers to its EventSource
+  // calls, so this is how its server-side handler uses the visitor's selected
+  // provider rather than a shared fallback.
   const syncLegacyCookies = (configs, provider) => {
     setAiSettingsCookie(AI_SETTINGS_COOKIES.aiProvider, provider);
     setAiSettingsCookie(AI_SETTINGS_COOKIES.geminiKey, configs.gemini?.key || "");
     setAiSettingsCookie(AI_SETTINGS_COOKIES.azureEndpoint, configs["azure-openai"]?.endpoint || "");
     setAiSettingsCookie(AI_SETTINGS_COOKIES.azureKey, configs["azure-openai"]?.key || "");
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.apiBeamEndpoint, configs.apibeam?.endpoint || "");
+    setAiSettingsCookie(AI_SETTINGS_COOKIES.apiBeamModel, configs.apibeam?.model || "");
   };
 
   // Generic: merge a patch into one provider's config and persist everything.

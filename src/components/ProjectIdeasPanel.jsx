@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { Lightbulb, RefreshCw, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import { generateProjectIdeas } from "../services/aiService";
+import ApiBeamConnectionNotice from "./ApiBeamConnectionNotice";
 
 const LEVELS = [
   { key: "beginner",     label: "Beginner",      color: "#00ff88", bg: "rgba(0,255,136,0.08)",  border: "rgba(0,255,136,0.25)",  icon: "" },
@@ -128,7 +129,7 @@ export default function ProjectIdeasPanel({ module, pathColor }) {
 
       setIdeas(parsed);
     } catch (err) {
-      setError("Failed to generate ideas. Please try again.");
+      setError(err instanceof Error ? err.message : "Failed to generate ideas. Please try again.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -210,6 +211,8 @@ export default function ProjectIdeasPanel({ module, pathColor }) {
           )}
         </div>
       </div>
+
+      <ApiBeamConnectionNotice compact />
 
       {/* Loading state */}
       {loading && (

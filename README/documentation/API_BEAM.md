@@ -1,6 +1,6 @@
-# Use ApiBeam with the GenAI Academy chatbot
+# Use ApiBeam with GenAI Academy AI tools
 
-ApiBeam lets the Atlas chatbot send requests through a browser session that is already signed in to ChatGPT, Claude, or z.ai. It is an optional provider: Gemini, Azure OpenAI, and the other API-based providers continue to work normally.
+ApiBeam lets GenAI Academy AI tools send requests through a browser session that is already signed in to ChatGPT, Claude, or z.ai. It is an optional provider: Gemini, Azure OpenAI, and the other API-based providers continue to work normally.
 
 > ApiBeam automates a provider's web interface. It is best used as a personal, experimental integration. Keep the official API integrations as the supported option, and make sure your intended use follows the provider's current terms.
 
@@ -64,6 +64,21 @@ The extension opens and controls a provider tab when Atlas sends its first reque
 The API URL includes the room ID. Treat it like a password and do not put it in source control, screenshots, or shared documentation.
 
 After pulling changes to this project, rebuild the extension and click **Reload** on its card in `chrome://extensions`. Atlas supports both normal Markdown replies and OpenAI-compatible JSON replies, so provider answers no longer need to be JSON-only.
+
+## Use ApiBeam in every built-in AI tool
+
+ApiBeam is the active provider for the whole GenAI Academy session, not only Atlas. After saving the connection above, select **ApiBeam** in the sidebar's **AI Provider** settings. The selection is then used by the built-in client-side AI features, including:
+
+- AI Tutor, AI Study Suite, video summaries, detailed notes, and interview coaching
+- Quiz Lab and Interview Prep tutors
+- Project Ideas, Algorithm Templates, Blog TL;DR, and onboarding recommendations
+- System Design / Flow / Architecture generators and the Project IDE assistant
+
+Tools that generate structured data now ask ApiBeam for JSON-only output and validate the result before rendering it. If the extension is disconnected, each affected tool shows an ApiBeam-specific recovery message instead of a generic generation error.
+
+The **Workspace Notes** copilot also supports ApiBeam when GenAI Academy is deployed. It converts ApiBeam's completed response into the editor's existing stream. For that server-side path, use an HTTPS relay URL; a `localhost` relay can only be used by browser-side tools during local development.
+
+Gemini Live and Retell voice interviews remain separate real-time integrations and do not use ApiBeam.
 
 ## Send only the current screen
 
