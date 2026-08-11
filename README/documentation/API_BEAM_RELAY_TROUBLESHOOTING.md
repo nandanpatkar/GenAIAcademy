@@ -123,6 +123,8 @@ Confirm it on Oracle:
 sudo grep -E '^(ALLOWED_ORIGINS|EXTENSION_ID)=' /etc/genai-apibeam/relay.env
 ```
 
+For a limited unpacked-extension beta, you can instead set `ALLOW_ANY_CHROME_EXTENSION_ORIGIN=true`. This avoids adding each Chrome extension ID, but weakens the extension-origin restriction and should not be the long-term public configuration.
+
 ### Chrome Web Store installation
 
 The Chrome Web Store ApiBeam extension uses this stable ID:

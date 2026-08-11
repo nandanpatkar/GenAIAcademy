@@ -67,24 +67,22 @@ export const AI_PROVIDERS = {
 
   apibeam: {
     id: "apibeam",
-    label: "ApiBeam",
-    sub: "Browser AI session",
+    label: "GenAI Academy Connector",
+    sub: "Browser connection",
     adapter: "apibeam",
     icon: null,
     color: "#6366f1",
     mono: "AB",
     defaultModel: "gpt-4o",
-    docsUrl: "https://chromewebstore.google.com/detail/apibeam/lppnphjckpnmekbjlciagcebgjempohh?authuser=0&hl=en-GB",
-    docsLabel: "Open extension install guide",
-    setupMessage: "Install and connect the ApiBeam extension, then add the API URL shown in its Settings page.",
+    setupMessage: "Install and connect GenAI Academy Connector, then paste the private Connector URL shown in its settings.",
     fields: [
       {
         name: "endpoint",
-        label: "ApiBeam API URL",
+        label: "Connector URL",
         type: "text",
         placeholder: "https://your-relay.example/app/your-room-id",
         required: true,
-        helpText: "Copy the full API URL from the ApiBeam extension Settings page. Treat it like a password.",
+        helpText: "Copy the private Connector URL from the extension settings. Treat it like a password.",
       },
       {
         name: "model",

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   X, RotateCcw, Check, Palette, Type, Layers, Grid, Wind, Sparkles,
   Sun, Moon, Monitor, Eye, SlidersHorizontal, Download, Upload, ClipboardCopy,
+  PackageOpen, CheckCircle2,
 } from 'lucide-react';
 import {
   useTheme, ACCENT_PRESETS, FONT_MAP, THEME_DEFAULTS, THEME_PALETTES, LIGHT_PALETTES,
@@ -52,6 +53,7 @@ const TABS = [
   { key: 'typography',    label: 'Typography',      icon: Type },
   { key: 'layout',        label: 'Layout & Effects',icon: Grid },
   { key: 'accessibility', label: 'Accessibility',   icon: Eye },
+  { key: 'apibeam',       label: 'Connector',       icon: PackageOpen },
   { key: 'advanced',      label: 'Advanced',        icon: SlidersHorizontal },
 ];
 
@@ -133,7 +135,7 @@ function LivePreview() {
   );
 }
 
-export default function AppearanceSettings({ onClose }) {
+export default function AppearanceSettings({ onClose, initialTab = 'presets' }) {
   const {
     theme, accentColor, fontFamily, headingFontFamily, monoFontFamily, fontSize, lineHeight,
     borderRadius, themePalette, bgPattern, panelStyle, reduceMotion, highContrast,
@@ -142,7 +144,7 @@ export default function AppearanceSettings({ onClose }) {
     exportAppearanceJSON, importAppearanceJSON,
   } = useTheme();
 
-  const [activeTab, setActiveTab] = useState('presets');
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [customColor, setCustomColor] = useState(accentColor);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [importMsg, setImportMsg] = useState(null); // { ok: bool, text: string }
@@ -159,6 +161,10 @@ export default function AppearanceSettings({ onClose }) {
       document.body.style.overflow = prevOverflow;
     };
   }, [onClose]);
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab]);
 
   const handleReset = () => {
     if (!resetConfirm) {
@@ -541,6 +547,32 @@ export default function AppearanceSettings({ onClose }) {
                       </div>
                     </section>
                   </>
+                )}
+
+                {activeTab === 'apibeam' && (
+                  <section className="as-panel apibeam-setup-panel">
+                    <div className="apibeam-setup-heading">
+                      <div className="apibeam-setup-icon"><PackageOpen size={20} /></div>
+                      <div>
+                        <h2 className="as-panel-title">Use GenAI Academy Connector on this Chrome profile</h2>
+                        <p className="as-panel-desc">Download the Atlas-compatible extension, then connect it to your own ChatGPT session. The extension runs locally in your browser.</p>
+                      </div>
+                    </div>
+
+                    <a className="apibeam-download-btn" href="/downloads/apibeam-chrome-extension.zip" download>
+                      <Download size={16} /> Download Connector for Chrome
+                    </a>
+                    <p className="apibeam-download-note">The download is a ZIP file. Chrome requires you to extract it before loading the extension.</p>
+
+                    <div className="apibeam-steps" aria-label="GenAI Academy Connector installation steps">
+                      <div className="apibeam-step"><span>1</span><div><strong>Extract the ZIP</strong><small>Keep the extracted folder somewhere you can leave it.</small></div></div>
+                      <div className="apibeam-step"><span>2</span><div><strong>Open <code>chrome://extensions</code></strong><small>Turn on Developer mode in the top-right corner.</small></div></div>
+                      <div className="apibeam-step"><span>3</span><div><strong>Select “Load unpacked”</strong><small>Choose the extracted <code>apibeam-chrome-extension</code> folder.</small></div></div>
+                      <div className="apibeam-step"><span>4</span><div><strong>Open Connector and connect</strong><small>Sign in to ChatGPT in the same Chrome profile, then enter your relay URL in Connector Settings.</small></div></div>
+                    </div>
+
+                    <div className="apibeam-security-note"><CheckCircle2 size={15} /><span>Each person connects their own browser session. Do not share the private Connector URL shown after connecting.</span></div>
+                  </section>
                 )}
 
                 {activeTab === 'advanced' && (

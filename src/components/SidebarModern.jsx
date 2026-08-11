@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import {
   Shield, Cpu, Sparkles, Search, ChevronLeft, ChevronRight, ChevronDown,
   Settings2, Sun, Moon, Palette, RotateCcw, LogOut, Eye, Edit3, ExternalLink,
-  Plus, Pencil, Trash2, GripVertical, HelpCircle, Compass, X,
+  Plus, Pencil, Trash2, GripVertical, HelpCircle, Compass, X, PackageOpen,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../contexts/AuthContext";
@@ -51,6 +51,7 @@ function SidebarModern(props) {
   const [isBlogExpanded, setIsBlogExpanded] = useState(false);
   const [resetConfirm, setResetConfirm] = useState(false);
   const [showAppearance, setShowAppearance] = useState(false);
+  const [appearanceInitialTab, setAppearanceInitialTab] = useState('presets');
   const [showSettings, setShowSettings] = useState(false);
   const [draggedItem, setDraggedItem] = useState(null);
   const [collapsedGroups, setCollapsedGroups] = useState({});
@@ -551,8 +552,12 @@ function SidebarModern(props) {
                   <span>{theme === "dark" ? "Dark theme" : "Light theme"}</span>
                 </button>
 
-                <button className="sb-menu-row" onClick={() => { setShowAppearance(true); setShowSettings(false); }}>
+                <button className="sb-menu-row" onClick={() => { setAppearanceInitialTab('presets'); setShowAppearance(true); setShowSettings(false); }}>
                   <Palette size={14} /> <span>Appearance</span>
+                </button>
+
+                <button className="sb-menu-row" onClick={() => { setAppearanceInitialTab('apibeam'); setShowAppearance(true); setShowSettings(false); }}>
+                  <PackageOpen size={14} /> <span>Extension setup</span>
                 </button>
 
                 <button className={`sb-menu-row${resetConfirm ? " is-danger" : ""}`} onClick={handleResetClick}>
@@ -604,7 +609,7 @@ function SidebarModern(props) {
         </div>
       </aside>
 
-      {showAppearance && <AppearanceSettings onClose={() => setShowAppearance(false)} />}
+      {showAppearance && <AppearanceSettings initialTab={appearanceInitialTab} onClose={() => setShowAppearance(false)} />}
     </>
   );
 }

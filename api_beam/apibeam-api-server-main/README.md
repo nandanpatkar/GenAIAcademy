@@ -95,6 +95,9 @@ This single command will:
 |----------|---------|-------------|
 | `PORT` | `3000` | Port the HTTP server listens on |
 | `NODE_ENV` | — | Set to `dev` to allow CORS from any origin |
+| `ALLOWED_ORIGINS` | — | Comma-separated website origins permitted to call the relay in production |
+| `EXTENSION_ID` | — | Optional stable Chrome Web Store extension ID permitted in production |
+| `ALLOW_ANY_CHROME_EXTENSION_ORIGIN` | `false` | Temporary beta option to permit any valid `chrome-extension://` origin in production |
 
 **Example: run on a custom port**
 
@@ -105,7 +108,8 @@ PORT=8080 yarn start:dev
 ### CORS
 
 - In **development** (`NODE_ENV=dev`), all origins are allowed (`*`).
-- In **production**, only the ApiBeam Chrome extension (`chrome-extension://lppnphjckpnmekbjlciagcebgjempohh`) is permitted.
+- In **production**, configure `ALLOWED_ORIGINS` and either `EXTENSION_ID` or an explicit Chrome extension origin.
+- Set `ALLOW_ANY_CHROME_EXTENSION_ORIGIN=true` only when distributing unpacked builds during a limited beta. It permits `chrome-extension://` origins with valid Chrome extension IDs, but not arbitrary website origins. Disable it when a stable Chrome Web Store ID or authenticated device pairing is available.
 
 ---
 

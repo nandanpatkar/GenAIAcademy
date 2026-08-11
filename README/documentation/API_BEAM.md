@@ -80,6 +80,12 @@ The **Workspace Notes** copilot also supports ApiBeam when GenAI Academy is depl
 
 Gemini Live and Retell voice interviews remain separate real-time integrations and do not use ApiBeam.
 
+## Generate images in Atlas with ChatGPT
+
+When ApiBeam is connected to a signed-in ChatGPT tab that has image generation enabled, ask Atlas naturally, for example: `Generate an image of a calm futuristic AI study desk`. Atlas sends the request to ChatGPT through ApiBeam and shows the generated image below ChatGPT's reply. Select the image or **Open** to view it at full size. Image generation can take up to three minutes; leave the ChatGPT tab open until Atlas finishes.
+
+This requires the current ApiBeam extension build: run `yarn build:chrome` in `api_beam/apibeam-main`, then click **Reload** in `chrome://extensions`. The extension captures image URLs from the ChatGPT response, so image availability follows the ChatGPT session and its generated-image links may expire over time.
+
 ## Send only the current screen
 
 Atlas has a **Context on / Context off** button beside its model selector. Turn it off before sending a request if you do not want to include the roadmap, current screen, workspace notes, maps, recent activity, saved algorithms, or saved projects. Atlas will send only its generic instructions, the actual conversation, and your new question.
@@ -100,6 +106,8 @@ ALLOWED_ORIGINS=https://your-genai-academy.example,chrome-extension://your-exten
 PORT=3000 \
 yarn build && yarn start:prod
 ```
+
+For a temporary beta that distributes unpacked extensions with different Chrome IDs, keep the Atlas website in `ALLOWED_ORIGINS` and set `ALLOW_ANY_CHROME_EXTENSION_ORIGIN=true`. This admits any `chrome-extension://` origin, not arbitrary websites. It is a short-term compatibility option; use a stable Chrome Web Store ID or authenticated device pairing before a public launch.
 
 Find `your-extension-id` on the Chrome extensions page after loading the unpacked build. Then use the relay's HTTPS URL in the extension settings and copy the resulting HTTPS API URL into Atlas. A public deployment should add authenticated rooms, rate limiting, request correlation, and connection health checks before it is shared with other people.
 

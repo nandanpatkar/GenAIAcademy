@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, Code2, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe, Palette, HeartHandshake, GripVertical, Plus, Trash2, Pencil, X } from "lucide-react";
+import { LayoutDashboard, Network, CheckSquare, CircleDashed, BookOpen, Users, Hexagon, Edit2, Edit3, Eye, RotateCcw, Terminal, Code2, LogOut, Sun, Moon, Boxes, Box, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Clapperboard, BookMarked, Database, Shield, Cpu, Orbit, GraduationCap, Layers, BoxSelect, Sparkles, ExternalLink, Share2, Bookmark, GitCommit, GitBranch, HelpCircle, FileText, Search, Globe, Palette, HeartHandshake, GripVertical, Plus, Trash2, Pencil, X, PackageOpen } from "lucide-react";
 // Note: Sparkles was already imported above — kept as a single import line to avoid duplicate-identifier errors.
 import { useAuth } from "../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -113,6 +113,7 @@ function Sidebar({
     more_tools: false,
   });
   const [showAppearance, setShowAppearance] = useState(false);
+  const [appearanceInitialTab, setAppearanceInitialTab] = useState('presets');
   const { theme, toggleTheme } = useTheme();
   const { isAdmin, isAdminView, setIsAdminView, allowAimlForAll, sidebarConfig, persistSidebarConfig, aiProvider, updateAiProvider, providerConfigs, updateProviderConfig } = useAuth();
   const [localProvider, setLocalProvider] = useState(aiProvider || "gemini");
@@ -1030,10 +1031,19 @@ function Sidebar({
             <button
               id="sidebar-appearance-btn"
               className="popout-item overlay-item"
-              onClick={() => setShowAppearance(true)}
+              onClick={() => { setAppearanceInitialTab('presets'); setShowAppearance(true); }}
             >
               <Palette size={14} />
               <span>Appearance</span>
+            </button>
+
+            <button
+              id="sidebar-apibeam-extension-btn"
+              className="popout-item overlay-item"
+              onClick={() => { setAppearanceInitialTab('apibeam'); setShowAppearance(true); }}
+            >
+              <PackageOpen size={14} />
+              <span>Extension setup</span>
             </button>
 
 
@@ -1167,7 +1177,7 @@ function Sidebar({
       </div>
     </aside>
     {showAppearance && (
-      <AppearanceSettings onClose={() => setShowAppearance(false)} />
+      <AppearanceSettings initialTab={appearanceInitialTab} onClose={() => setShowAppearance(false)} />
     )}
   </>
   );

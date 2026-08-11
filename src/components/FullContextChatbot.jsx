@@ -25,7 +25,10 @@ import {
   X,
   Eye,
   EyeOff,
+  Image as ImageIcon,
   Zap,
+  Download,
+  PackageOpen,
 } from "lucide-react";
 import { askContextCopilot } from "../services/aiService";
 import { searchWeb } from "../services/webSearchService";
@@ -131,6 +134,8 @@ function AtlasFabLogo({ size = 26 }) {
 }
 
 const makeId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+const isImageGenerationRequest = (value) => /\b(generate|create|make|draw|design|illustrate|render)\b[\s\S]{0,80}\b(image|picture|illustration|artwork|photo|visual|poster|logo)\b|\b(image|picture|illustration|artwork|photo|visual|poster|logo)\b[\s\S]{0,80}\b(generate|create|make|draw|design|illustrate|render)\b/i.test(value);
 
 const normalizeTopic = (topic) => {
   if (!topic) return "No topic selected";
@@ -243,6 +248,7 @@ export default function FullContextChatbot({
   const [activeChatId, setActiveChatId] = useState(null);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [historyQuery, setHistoryQuery] = useState("");
   const [copiedId, setCopiedId] = useState(null);
   const [showCredentials, setShowCredentials] = useState(false);
@@ -380,6 +386,7 @@ export default function FullContextChatbot({
     const text = (preset || input).trim();
     if (!text || isLoading || !activeChat || !providerReady) return;
     setInput("");
+    setIsGeneratingImage(activeChat.provider === "apibeam" && isImageGenerationRequest(text));
     const userMessage = { id: makeId(), role: "user", content: text };
     const nextMessages = [...activeChat.messages, userMessage];
     updateActiveChat({
@@ -399,11 +406,12 @@ export default function FullContextChatbot({
         webResults,
         includeWorkspaceContext: workspaceContextEnabled,
       });
-      updateActiveChat({ messages: [...nextMessages, { id: makeId(), role: "assistant", content: response, sources: webResults }] });
+      updateActiveChat({ messages: [...nextMessages, { id: makeId(), role: "assistant", content: response.content, images: response.images, sources: webResults }] });
     } catch (error) {
       updateActiveChat({ messages: [...nextMessages, { id: makeId(), role: "assistant", content: `I couldn’t complete that request. ${error.message || "Please try again."}` }] });
     } finally {
       setIsLoading(false);
+      setIsGeneratingImage(false);
     }
   };
 
@@ -544,7 +552,7 @@ export default function FullContextChatbot({
 
               {showCredentials && (
                 <div className="atlas-credentials-panel" role="dialog" aria-label="AI provider credentials">
-                  <div className="atlas-credentials-heading"><div><span className="atlas-eyebrow"><KeyRound size={12} /> PERSONAL CONNECTION</span><h3>Connect your AI provider</h3><p>{credentialProvider === "apibeam" ? "ApiBeam routes requests through your connected browser session. Its API URL stays in this browser profile." : "Your credentials are stored only for your signed-in account and used by Atlas for this workspace."}</p></div><button className="atlas-icon-button" onClick={() => setShowCredentials(false)} aria-label="Close credentials"><X size={17} /></button></div>
+                  <div className="atlas-credentials-heading"><div><span className="atlas-eyebrow"><KeyRound size={12} /> PERSONAL CONNECTION</span><h3>Connect your AI provider</h3><p>{credentialProvider === "apibeam" ? "GenAI Academy Connector routes requests through your connected browser session. Its private Connector URL stays in this browser profile." : "Your credentials are stored only for your signed-in account and used by Atlas for this workspace."}</p></div><button className="atlas-icon-button" onClick={() => setShowCredentials(false)} aria-label="Close credentials"><X size={17} /></button></div>
                   <div className="atlas-provider-tabs">
                     {AI_PROVIDER_LIST.map((p) => (
                       <button key={p.id} className={credentialProvider === p.id ? "active" : ""} onClick={() => setCredentialProvider(p.id)}>
@@ -554,6 +562,25 @@ export default function FullContextChatbot({
                     ))}
                   </div>
                   <div className="atlas-credential-fields">
+                    {credentialProvider === "apibeam" && (
+                      <section className="atlas-extension-setup" aria-labelledby="atlas-extension-setup-title">
+                        <div className="atlas-extension-setup-head">
+                          <span className="atlas-extension-setup-icon"><PackageOpen size={15} /></span>
+                          <div>
+                            <h4 id="atlas-extension-setup-title">GenAI Academy Connector</h4>
+                            <p>Install the browser bridge before adding this device’s private connection URL.</p>
+                          </div>
+                        </div>
+                        <a className="atlas-extension-download" href="/downloads/apibeam-chrome-extension.zip" download>
+                          <Download size={13} /> Download extension
+                        </a>
+                        <ol className="atlas-extension-steps">
+                          <li>Extract the ZIP, open <code>chrome://extensions</code>, enable Developer mode, then choose <strong>Load unpacked</strong>.</li>
+                          <li>Open the extension, set your relay URL, and select <strong>Connect</strong>.</li>
+                          <li>Copy its private connection URL and paste it below. Do not share that URL.</li>
+                        </ol>
+                      </section>
+                    )}
                     {getProviderMeta(credentialProvider).fields.map((field) => (
                       <label key={field.name} className="atlas-credential-field">
                         <span>{field.label}</span>
@@ -604,22 +631,34 @@ export default function FullContextChatbot({
                     <div className="atlas-message-wrap">
                       {index === 0 && message.role === "assistant" && <span className="atlas-eyebrow">ATLAS / READY</span>}
                       <div className="atlas-message-bubble"><ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{message.content}</ReactMarkdown></div>
+                      {message.role === "assistant" && message.images?.length > 0 && (
+                        <div className="atlas-generated-images" aria-label={`${message.images.length} generated image${message.images.length === 1 ? "" : "s"}`}>
+                          {message.images.map((image, imageIndex) => (
+                            <figure key={`${message.id}-${image.url}`} className="atlas-generated-image">
+                              <a href={image.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${image.alt} in a new tab`}>
+                                <img src={image.url} alt={image.alt || `Generated image ${imageIndex + 1}`} loading="lazy" referrerPolicy="no-referrer" />
+                              </a>
+                              <figcaption><span><ImageIcon size={12} /> Generated with GPT</span><a href={image.url} target="_blank" rel="noopener noreferrer">Open <ArrowUpRight size={11} /></a></figcaption>
+                            </figure>
+                          ))}
+                        </div>
+                      )}
                       <div className={`atlas-message-actions ${message.role === "user" ? "atlas-user-message-actions" : ""}`}><button onClick={() => copyMessage(message)} aria-label={copiedId === message.id ? "Copied" : "Copy message"} title={copiedId === message.id ? "Copied" : "Copy message"}>{copiedId === message.id ? <Check size={12} /> : <Copy size={12} />}<span>{copiedId === message.id ? "Copied" : "Copy"}</span></button>{message.role === "assistant" && message.sources?.length > 0 && <span className="atlas-source-count"><Globe2 size={12} /> {message.sources.length} sources</span>}</div>
                       {message.role === "assistant" && message.sources?.length > 0 && <div className="atlas-source-list">{message.sources.map((source, sourceIndex) => <a key={`${message.id}-${source.url}`} href={source.url} target="_blank" rel="noopener noreferrer"><span>[{sourceIndex + 1}]</span>{source.title}<ArrowUpRight size={11} /></a>)}</div>}
                     </div>
                   </div>
                 ))}
                 {activeChat?.messages.length === 1 && !isLoading && <div className="atlas-suggestions"><div className="atlas-suggestion-heading"><Sparkles size={13} /> START WITH A PROMPT</div>{suggestions.map((suggestion) => <button key={suggestion} onClick={() => sendMessage(suggestion)}><span>{suggestion}</span><ArrowUpRight size={14} /></button>)}</div>}
-                {isLoading && <div className="atlas-message-row assistant"><div className="atlas-message-avatar"><AtlasLogo size={16} /></div><div className="atlas-typing"><span /><span /><span /> <em>Atlas is connecting the dots…</em></div></div>}
+                {isLoading && <div className="atlas-message-row assistant"><div className="atlas-message-avatar"><AtlasLogo size={16} /></div><div className="atlas-typing"><span /><span /><span /> <em>{isGeneratingImage ? "Atlas is generating your image…" : "Atlas is connecting the dots…"}</em></div></div>}
                 <div ref={messagesEndRef} />
               </div>
 
-              {!providerReady && <div className="atlas-credentials-warning"><Zap size={14} /><span><strong>{activeProviderId === "apibeam" ? "ApiBeam connection required." : "Personal credentials required."}</strong> {activeProvider.setupMessage || `Add a key for ${activeProvider.label} to start chatting.`}</span><button onClick={openCredentials}>Configure now <ArrowUpRight size={13} /></button></div>}
+              {!providerReady && <div className="atlas-credentials-warning"><Zap size={14} /><span><strong>{activeProviderId === "apibeam" ? "Connector connection required." : "Personal credentials required."}</strong> {activeProvider.setupMessage || `Add a key for ${activeProvider.label} to start chatting.`}</span><button onClick={openCredentials}>Configure now <ArrowUpRight size={13} /></button></div>}
 
               <div className="atlas-composer-area">
                 <div className="atlas-composer">
                   <div className="atlas-composer-label"><span className="atlas-composer-pulse" /> ASK ATLAS</div>
-                  <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} placeholder={!providerReady ? activeProviderId === "apibeam" ? "Connect ApiBeam in Credentials first" : "Configure your personal AI credentials in Settings first" : activeChat?.webEnabled ? "Ask anything — Atlas can search the web too" : "What are you working through?"} rows={1} />
+                  <textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} placeholder={!providerReady ? activeProviderId === "apibeam" ? "Connect GenAI Academy Connector in Credentials first" : "Configure your personal AI credentials in Settings first" : activeChat?.webEnabled ? "Ask anything — Atlas can search the web too" : activeProviderId === "apibeam" ? "Ask Atlas — or say “Generate an image…”" : "What are you working through?"} rows={1} />
                   <div className="atlas-composer-bottom"><span><span className="atlas-command-key">⌘</span> Enter <span className="atlas-composer-divider" /> Shift + Enter for a new line</span><button className={`atlas-send ${input.trim() ? "ready" : ""}`} onClick={() => sendMessage()} disabled={!input.trim() || isLoading} aria-label="Send message"><ArrowUp size={17} /></button></div>
                 </div>
                 <div className="atlas-disclaimer"><Sparkles size={11} /> Atlas can make mistakes — check important details.</div>

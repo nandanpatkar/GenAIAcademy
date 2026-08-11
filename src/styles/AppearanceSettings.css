@@ -639,6 +639,24 @@
   color: #ef4444;
 }
 
+/* ── ApiBeam extension setup ── */
+.apibeam-setup-heading { display: flex; align-items: flex-start; gap: 12px; }
+.apibeam-setup-heading .as-panel-desc { margin-bottom: 0; }
+.apibeam-setup-icon { width: 40px; height: 40px; display: grid; place-items: center; flex: 0 0 auto; border: 1px solid var(--neon); border-radius: var(--radius, 8px); background: var(--neon-dim); color: var(--neon); }
+.apibeam-download-btn { min-height: 44px; width: fit-content; margin-top: 18px; padding: 0 15px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: var(--radius, 8px); background: var(--neon); color: #071108; font-size: 12px; font-weight: 800; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease; }
+.apibeam-download-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px color-mix(in srgb, var(--neon) 28%, transparent); }
+.apibeam-download-btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--neon) 42%, transparent); outline-offset: 3px; }
+.apibeam-download-note { margin: 9px 0 0; color: var(--text3); font-size: 10px; line-height: 1.45; }
+.apibeam-steps { display: grid; gap: 8px; margin-top: 20px; }
+.apibeam-step { display: flex; align-items: flex-start; gap: 10px; padding: 11px 12px; border: 1px solid var(--border); border-radius: var(--radius, 8px); background: var(--bg3); }
+.apibeam-step > span { width: 22px; height: 22px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; background: var(--neon-dim); color: var(--neon); font-size: 10px; font-weight: 900; }
+.apibeam-step div { display: grid; gap: 3px; min-width: 0; }
+.apibeam-step strong { color: var(--text); font-size: 11px; }
+.apibeam-step small { color: var(--text3); font-size: 10px; line-height: 1.45; }
+.apibeam-step code { padding: 1px 4px; border-radius: 3px; background: var(--bg2); color: var(--neon); font-family: var(--font-mono); font-size: .95em; }
+.apibeam-security-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--neon) 36%, var(--border)); border-radius: var(--radius, 8px); background: var(--neon-dim); color: var(--text2); font-size: 10px; line-height: 1.5; }
+.apibeam-security-note svg { margin-top: 1px; flex: 0 0 auto; color: var(--neon); }
+
 /* ═══════════════════════════════════════════════════════
    Shared card components (reused across tabs)
 ═══════════════════════════════════════════════════════ */
@@ -942,4 +960,5 @@
   .as-content-inner { padding: 20px 16px 40px; }
   .as-subtitle { display: none; }
   .as-preset-grid, .as-mode-grid, .ap-palette-grid { grid-template-columns: 1fr; }
+  .apibeam-download-btn { width: 100%; }
 }

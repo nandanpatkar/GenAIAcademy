@@ -1,6 +1,6 @@
 body {
   width: 300px;
-  height: 260px;
+  min-height: 280px;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,3 +10,18 @@ body {
 
   position: relative;
 }
+
+.academy-popup {
+  background: linear-gradient(145deg, #f7fdf4 0%, #edf8e8 100%);
+}
+
+.academy-popup__brand { display: flex; align-items: center; gap: 10px; padding: 18px 20px 8px; }
+.academy-popup__logo { width: 40px; height: 40px; }
+.academy-popup__eyebrow { margin: 0 0 2px; color: #4d7c0f; font-size: 10px; font-weight: 700; letter-spacing: 0.13em; }
+.academy-popup__brand h1 { margin: 0; color: #163020; font-size: 19px; font-weight: 750; letter-spacing: -0.02em; }
+.academy-popup :is(.bg-blue-600, .hover\\:bg-blue-700:hover) { background-color: #4d7c0f; }
+.academy-popup :is(.text-blue-600, .text-blue-500) { color: #4d7c0f; }
+.academy-popup :is(.bg-blue-100, .border-blue-500) { border-color: #65a30d; background-color: #ecfccb; }
+.academy-popup__settings { min-height: 44px; border: 1px solid #a3c98d; background: #fff; color: #294334; }
+.academy-popup__settings:hover { background: #f1f9eb; box-shadow: 0 4px 14px rgba(41, 67, 52, 0.12); }
+.academy-popup button:focus-visible { outline: 3px solid #84cc16; outline-offset: 2px; }

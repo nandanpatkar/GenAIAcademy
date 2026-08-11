@@ -342,14 +342,50 @@ const apiBeamMessages = (messages, jsonMode) => {
   return jsonMode ? ensureJsonInstruction(normalized) : normalized;
 };
 
-const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
+const readApiBeamImages = (data) => {
+  const rawImages = data?.images
+    ?? data?.choices?.[0]?.message?.images
+    ?? data?.output?.[0]?.images
+    ?? [];
+
+  if (!Array.isArray(rawImages)) return [];
+
+  const seen = new Set();
+  return rawImages.flatMap((image, index) => {
+    const url = typeof image === "string" ? image : image?.url ?? image?.src;
+    const alt = typeof image === "object" && typeof image?.alt === "string"
+      ? image.alt
+      : `Generated image ${index + 1}`;
+    if (typeof url !== "string") return [];
+
+    const isInlineImage = /^data:image\/(?:avif|gif|jpe?g|png|webp);base64,/i.test(url);
+    if (isInlineImage && url.length <= 900000 && !seen.has(url)) {
+      seen.add(url);
+      return [{ url, alt }];
+    }
+
+    try {
+      const parsed = new URL(url);
+      if (!/^https?:$/.test(parsed.protocol) || seen.has(parsed.href)) return [];
+      seen.add(parsed.href);
+      return [{ url: parsed.href, alt }];
+    } catch (_) {
+      return [];
+    }
+  });
+};
+
+// This is intentionally separate from callApiBeam so existing consumers of
+// callAI continue to receive text. Atlas is the one view that understands the
+// additional image metadata emitted by the updated browser extension.
+const callApiBeamResponse = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
   const meta = getProviderMeta("apibeam");
   const cfg = getProviderConfig("apibeam");
   const endpoint = (cfg.endpoint || "").trim().replace(/\/+$/, "");
   const model = cfg.model || meta.defaultModel;
 
   if (!endpoint) {
-    throw new Error("Missing ApiBeam API URL. Install and connect the extension, then add its API URL in Credentials.");
+    throw new Error("Missing Connector URL. Install and connect GenAI Academy Connector, then add its private Connector URL in Credentials.");
   }
 
   let response;
@@ -366,7 +402,7 @@ const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7, jsonMod
       }),
     });
   } catch (error) {
-    throw new Error(`Could not reach ApiBeam. Check that its relay and browser extension are connected. ${error.message || ""}`.trim());
+    throw new Error(`Could not reach GenAI Academy Connector. Check that its relay and browser extension are connected. ${error.message || ""}`.trim());
   }
 
   const raw = await response.text();
@@ -376,12 +412,12 @@ const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7, jsonMod
   } catch {
     // Older ApiBeam extension builds return the captured Markdown reply as
     // plain text rather than an OpenAI-shaped JSON response.
-    if (response.ok && raw.trim()) return raw;
-    throw new Error(`ApiBeam returned an unexpected response (${response.status}). Check the relay connection and try again.`);
+    if (response.ok && raw.trim()) return { content: raw, images: [] };
+    throw new Error(`GenAI Academy Connector returned an unexpected response (${response.status}). Check the relay connection and try again.`);
   }
 
   if (!response.ok) {
-    throw new Error(data?.error?.message || data?.message || `ApiBeam Error: ${response.status}`);
+    throw new Error(data?.error?.message || data?.message || `Connector Error: ${response.status}`);
   }
 
   // Older ApiBeam extension builds can return the captured Markdown response
@@ -391,11 +427,17 @@ const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7, jsonMod
     ? data
     : data?.choices?.[0]?.message?.content
       ?? data?.output?.[0]?.content?.[0]?.text
-      ?? data?.message?.content;
+      ?? data?.message?.content
+      ?? data?.content;
   if (typeof content !== "string" || !content.trim()) {
-    throw new Error("ApiBeam returned no assistant message. Make sure the extension is connected to a supported chat tab.");
+    throw new Error("GenAI Academy Connector returned no assistant message. Make sure the extension is connected to a supported chat tab.");
   }
-  return content;
+  return { content, images: readApiBeamImages(data) };
+};
+
+const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
+  const response = await callApiBeamResponse(messages, maxTokens, temperature, jsonMode);
+  return response.content;
 };
 
 // ─── Unified AI Caller: routes to the active provider by its adapter ─────────
@@ -524,7 +566,13 @@ ${includeWorkspaceContext ? projectContext : ""}${webContext}`;
     { role: "user", content: userMessage },
   ];
 
-  return await dispatchProvider(provider, messages, 1200, 0.65, false);
+  const response = provider === "apibeam"
+    ? await callApiBeamResponse(messages, 1200, 0.65)
+    : await dispatchProvider(provider, messages, 1200, 0.65, false);
+
+  return typeof response === "string"
+    ? { content: response, images: [] }
+    : response;
 };
 
 // ─── Public: Project Ideas ───────────────────────────────────────────────────

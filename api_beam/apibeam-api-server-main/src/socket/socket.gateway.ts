@@ -8,7 +8,15 @@ import { GatewayTimeoutException } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { socketCorsOrigin } from '../config/cors';
 
+// ChatGPT image generation commonly takes longer than a normal text reply.
+// Keep the HTTP request open long enough for the extension to capture the
+// finished image, while still preventing a lost browser tab from hanging it.
+const REQUEST_TIMEOUT_MS = 3 * 60 * 1000;
+
 @WebSocketGateway({
+  // Inline generated-image previews are capped in the extension. Give their
+  // Socket.IO response room without accepting arbitrarily large payloads.
+  maxHttpBufferSize: 2_000_000,
   cors: {
     origin: socketCorsOrigin,
     credentials: true,
@@ -42,7 +50,7 @@ export class SocketGateway {
             ),
           );
         }
-      }, 60000);
+      }, REQUEST_TIMEOUT_MS);
 
       // Emit event to room
       this.server.to(roomId).emit('serverMessage', message);

@@ -31,8 +31,8 @@ export const ApiUrlSection = () => {
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
         {/* Header */}
         <div className="mb-4">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-1">Your API URL</h2>
-          <p className="text-gray-600 text-sm">Use this URL to connect your application to ApiBeam</p>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-1">Your Connector URL</h2>
+          <p className="text-gray-600 text-sm">Paste this private URL into Atlas → Credentials → GenAI Academy Connector.</p>
         </div>
 
         {/* API URL with Copy Button */}
@@ -42,7 +42,7 @@ export const ApiUrlSection = () => {
           </div>
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-lime-700 hover:bg-lime-800 text-white font-medium px-4 py-3 rounded-lg transition-colors"
           >
             {copied ? (
               <>
@@ -72,7 +72,7 @@ export const ApiUrlSection = () => {
             onClick={() => {
               window.open(testApiUrl, "_blank");
             }}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-3 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-lime-700 hover:bg-lime-800 text-white font-medium px-4 py-3 rounded-lg transition-colors"
           >
            <ExternalLinkIcon />
           </button>
@@ -81,16 +81,16 @@ export const ApiUrlSection = () => {
 
 
         {/* Instructions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <div className="bg-lime-50 border border-lime-200 rounded-lg p-4 mb-4">
           <div className="flex items-start gap-3">
-            <Info className="text-blue-600 flex-shrink-0 mt-0.5" size={20} />
+            <Info className="text-lime-700 flex-shrink-0 mt-0.5" size={20} />
             <div>
               <h3 className="font-medium text-gray-900 mb-2">How to Use</h3>
               <ol className="text-sm text-gray-700 space-y-1 list-decimal list-inside">
-                <li>Copy the API URL above</li>
-                <li>Paste it as the <code className="bg-white px-2 py-0.5 rounded text-blue-600 font-mono text-xs">base_url</code> parameter in your OpenAI client configuration</li>
-                <li>Make sure your Chrome extension is running</li>
-                <li>Start making requests!</li>
+                <li>Copy the private URL above</li>
+                <li>Open Atlas → Credentials → GenAI Academy Connector</li>
+                <li>Paste the URL into the Connector URL field</li>
+                <li>Keep this Chrome extension connected, then chat with Atlas</li>
               </ol>
             </div>
           </div>
@@ -113,12 +113,12 @@ client = OpenAI(
 
         {/* Documentation Link */}
         <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-          <p className="text-sm text-gray-600">Need more help with configuration?</p>
+          <p className="text-sm text-gray-600">Need help connecting Atlas?</p>
           <a
             href="https://github.com/openai/openai-python?tab=readme-ov-file#configuring-the-http-client"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors"
+            className="flex items-center gap-2 text-lime-700 hover:text-lime-800 font-medium text-sm transition-colors"
           >
             View Documentation
             <ExternalLink size={16} />

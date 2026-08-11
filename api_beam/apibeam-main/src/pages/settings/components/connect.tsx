@@ -139,7 +139,7 @@ export const ConnectButton = ({ popup }: { popup?: boolean }) => {
                 status === "connected"
                   ? "bg-green-100 border-4 border-green-500 animate-pulse"
                   : status === "pending"
-                  ? "bg-blue-100 border-4 border-blue-500"
+                  ? "bg-lime-100 border-4 border-lime-600"
                   : "bg-gray-100 border-4 border-gray-300"
               }`}
             >
@@ -147,7 +147,7 @@ export const ConnectButton = ({ popup }: { popup?: boolean }) => {
                 <Check className="text-green-600" size={32} strokeWidth={3} />
               )}
               {status === "pending" && (
-                <Loader2 className="text-blue-600 animate-spin" size={32} />
+                <Loader2 className="text-lime-700 animate-spin" size={32} />
               )}
               {status === "disconnected" && (
                 <WifiOff className="text-gray-400" size={32} />
@@ -162,7 +162,7 @@ export const ConnectButton = ({ popup }: { popup?: boolean }) => {
                 status === "connected"
                   ? "text-green-600"
                   : status === "pending"
-                  ? "text-blue-600"
+                  ? "text-lime-700"
                   : "text-gray-900"
               }`}
             >
@@ -172,11 +172,11 @@ export const ConnectButton = ({ popup }: { popup?: boolean }) => {
             </h2>
             <p className="text-gray-600 text-sm">
               {status === "connected" &&
-                "Your ApiBeam connection is active and ready"}
+                "Your GenAI Academy connection is active and ready"}
               {status === "pending" &&
-                "Establishing connection to ApiBeam server"}
+                "Establishing a connection to the GenAI Academy relay"}
               {status === "disconnected" &&
-                "Click connect to start using ApiBeam"}
+                "Connect this browser to Atlas"}
             </p>
             {errorMessage && (
               <p className="text-red-600 text-sm">{errorMessage}</p>
@@ -191,8 +191,8 @@ export const ConnectButton = ({ popup }: { popup?: boolean }) => {
               status === "connected"
                 ? "bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-200"
                 : status === "pending"
-                ? "bg-blue-600 text-white cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700 text-white hover:shadow-lg"
+                ? "bg-lime-700 text-white cursor-not-allowed"
+                : "bg-lime-700 hover:bg-lime-800 text-white hover:shadow-lg"
             }`}
           >
             {status === "connected" && (
@@ -237,7 +237,7 @@ export const ConnectButton = ({ popup }: { popup?: boolean }) => {
 
                   <div className="flex items-center gap-3 bg-gray-50 rounded-lg p-3">
                     <div className="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-lg">
-                      <Server className="text-blue-600" size={20} />
+                      <Server className="text-lime-700" size={20} />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500 font-medium">

@@ -47,7 +47,7 @@ export const CustomSettingsModal = ({ apiBaseUrl, onSave, onReset, onClose }: Pr
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <Settings size={20} className="text-gray-700" />
-            <h2 className="text-lg font-semibold text-gray-900">Custom Settings</h2>
+            <h2 className="text-lg font-semibold text-gray-900">Connection Settings</h2>
           </div>
           <button
             onClick={onClose}
@@ -75,19 +75,19 @@ export const CustomSettingsModal = ({ apiBaseUrl, onSave, onReset, onClose }: Pr
                 onClick={() => handleProviderChange(id)}
                 className={`flex-1 flex items-center gap-3 px-4 py-3 rounded-lg border-2 transition-all text-left ${
                   provider === id
-                    ? "border-blue-500 bg-blue-50"
+                    ? "border-lime-600 bg-lime-50"
                     : "border-gray-200 hover:border-gray-300 bg-white"
                 }`}
               >
                 <span className="text-xl">{icon}</span>
                 <div>
-                  <p className={`text-sm font-medium ${provider === id ? "text-blue-700" : "text-gray-800"}`}>
+                  <p className={`text-sm font-medium ${provider === id ? "text-lime-800" : "text-gray-800"}`}>
                     {label}
                   </p>
                   <p className="text-xs text-gray-400">{sublabel}</p>
                 </div>
                 {provider === id && (
-                  <span className="ml-auto text-blue-500 text-xs font-semibold">Active</span>
+                  <span className="ml-auto text-lime-700 text-xs font-semibold">Active</span>
                 )}
               </button>
             ))}
@@ -105,13 +105,13 @@ export const CustomSettingsModal = ({ apiBaseUrl, onSave, onReset, onClose }: Pr
         {/* Divider */}
         <div className="border-t border-gray-100 mb-5" />
 
-        {/* Custom API Base URL */}
+        {/* Connector relay URL */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            Custom API Base URL
+            Connector Relay URL
           </label>
           <p className="text-xs text-gray-500 mb-3">
-            Override the default ApiBeam server. Paste your self-hosted server URL here.
+            Override the default GenAI Academy relay. Paste your HTTPS relay URL here.
           </p>
 
           {editing ? (
@@ -120,9 +120,9 @@ export const CustomSettingsModal = ({ apiBaseUrl, onSave, onReset, onClose }: Pr
                 type="text"
                 value={tempUrl}
                 onChange={(e) => setTempUrl(e.target.value)}
-                placeholder="https://your-custom-api.com/"
+                placeholder="https://your-relay.example/"
                 autoFocus
-                className="w-full mb-3 bg-gray-50 border border-gray-300 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full mb-3 bg-gray-50 border border-gray-300 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-lime-600"
               />
               <div className="flex gap-2">
                 <button
@@ -159,7 +159,7 @@ export const CustomSettingsModal = ({ apiBaseUrl, onSave, onReset, onClose }: Pr
             <div className="flex items-center gap-2">
               <div className="flex-1 bg-gray-50 border border-gray-300 rounded-lg px-4 py-2.5 font-mono text-sm text-gray-900 break-all min-h-[42px] flex items-center">
                 {apiBaseUrl || (
-                  <span className="text-gray-400 italic">Using default ApiBeam server</span>
+                  <span className="text-gray-400 italic">Using the default GenAI Academy relay</span>
                 )}
               </div>
               <button
