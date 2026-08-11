@@ -11,6 +11,7 @@ import {
   X, RotateCcw,
 } from "lucide-react";
 import { AIResult } from "./AIStudyContent";
+import ApiBeamConnectionNotice from "./ApiBeamConnectionNotice";
 
 // ── NotebookLM helpers ────────────────────────────────────────────────────────
 
@@ -208,6 +209,7 @@ export function AIStudyPanel({ module, pathColor }) {
 
       {expanded && (
         <div style={{ padding: "14px 10px" }}>
+          <ApiBeamConnectionNotice compact />
           {/* Mode selector */}
           <div style={{ display: "flex", gap: "8px", marginBottom: 16, flexWrap: "wrap" }}>
             {AI_MODES.map((m) => {

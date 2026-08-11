@@ -1,4 +1,4 @@
-import { AI_PROVIDERS, getProviderMeta } from "../config/aiProviders";
+import { AI_PROVIDERS, getProviderMeta, isProviderConfigured } from "../config/aiProviders";
 
 const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
 const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
@@ -25,6 +25,19 @@ export const setProviderConfig = (providerId, config) => {
 };
 
 const getProviderConfig = (providerId) => providerConfigs[providerId] || {};
+
+// Exposed so any AI surface can show the same actionable connection state as
+// Atlas instead of discovering a missing provider only after a generation
+// attempt has failed.
+export const getActiveAIProviderStatus = () => {
+  const provider = getProviderMeta(currentAiProvider);
+  return {
+    id: provider.id,
+    label: provider.label,
+    configured: isProviderConfigured(provider.id, getProviderConfig(provider.id)),
+    setupMessage: provider.setupMessage || `Configure ${provider.label} in the sidebar to use AI features.`,
+  };
+};
 
 // ─── Backward-compatible setters (legacy call sites) ─────────────────────────
 export const setDynamicGeminiKey = (key) => {
@@ -104,6 +117,17 @@ const parseSafety = (clean, raw) => {
     
     throw new Error("The AI returned a malformed data format. Please try generating again.");
   }
+};
+
+// Keep provider connection and relay errors actionable in every tool. Most
+// generators have a feature-specific fallback message, but hiding "ApiBeam is
+// disconnected" behind one of those messages makes setup unnecessarily hard.
+const userFacingAIError = (error, fallback) => {
+  const message = error instanceof Error ? error.message : String(error || "");
+  if (/ApiBeam|not configured|Missing .*API|Could not reach/i.test(message)) {
+    return new Error(message);
+  }
+  return new Error(fallback);
 };
 
 // Normalize AI variations (choices vs options, etc)
@@ -288,7 +312,12 @@ const LEGACY_APIBEAM_ORIGIN = "https://apibeam.bitsmall.in";
 
 const getApiBeamRequestUrl = (endpoint) => {
   const cleanEndpoint = endpoint.replace(/\/+$/, "");
-  const url = new URL(cleanEndpoint);
+  let url;
+  try {
+    url = new URL(cleanEndpoint);
+  } catch {
+    throw new Error("Invalid ApiBeam API URL. Paste the complete /app/<room-id> URL from the extension Settings page.");
+  }
 
   // The legacy hosted relay only permits the browser extension origin. During
   // local Vite development, route it through the dev server so the browser
@@ -301,7 +330,19 @@ const getApiBeamRequestUrl = (endpoint) => {
   return `${cleanEndpoint}/v1/chat/completions`;
 };
 
-const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7) => {
+const apiBeamMessages = (messages, jsonMode) => {
+  const normalized = messages.map((message) => ({
+    role: message.role === "model" ? "assistant" : message.role,
+    content: message.content,
+  }));
+
+  // ApiBeam relays through browser chat sessions, which do not offer a
+  // response_format parameter. A prompt-level instruction keeps JSON-based
+  // generators (study sets, diagrams, recommendations, etc.) compatible.
+  return jsonMode ? ensureJsonInstruction(normalized) : normalized;
+};
+
+const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
   const meta = getProviderMeta("apibeam");
   const cfg = getProviderConfig("apibeam");
   const endpoint = (cfg.endpoint || "").trim().replace(/\/+$/, "");
@@ -318,10 +359,7 @@ const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model,
-        messages: messages.map((message) => ({
-          role: message.role === "model" ? "assistant" : message.role,
-          content: message.content,
-        })),
+        messages: apiBeamMessages(messages, jsonMode),
         max_tokens: maxTokens,
         temperature,
         stream: false,
@@ -336,6 +374,9 @@ const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7) => {
   try {
     data = raw ? JSON.parse(raw) : {};
   } catch {
+    // Older ApiBeam extension builds return the captured Markdown reply as
+    // plain text rather than an OpenAI-shaped JSON response.
+    if (response.ok && raw.trim()) return raw;
     throw new Error(`ApiBeam returned an unexpected response (${response.status}). Check the relay connection and try again.`);
   }
 
@@ -361,12 +402,16 @@ const callApiBeam = async (messages, maxTokens = 800, temperature = 0.7) => {
 const dispatchProvider = async (providerId, messages, maxTokens, temperature, jsonMode) => {
   const meta = getProviderMeta(providerId);
   if (meta.adapter === "azure") return callAzureOpenAI(messages, maxTokens, temperature, jsonMode);
-  if (meta.adapter === "apibeam") return callApiBeam(messages, maxTokens, temperature);
+  if (meta.adapter === "apibeam") return callApiBeam(messages, maxTokens, temperature, jsonMode);
   if (meta.adapter === "openai") return callOpenAICompatible(providerId, messages, maxTokens, temperature, jsonMode);
   return callGemini(messages, maxTokens, temperature, jsonMode);
 };
 
 export const callAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false, onStatus = null) => {
+  const status = getActiveAIProviderStatus();
+  if (!status.configured) {
+    throw new Error(`${status.label} is not configured. ${status.setupMessage}`);
+  }
   return await dispatchProvider(currentAiProvider, messages, maxTokens, temperature, jsonMode);
 };
 
@@ -396,7 +441,7 @@ export const askAITutor = async (userMessage, contextData, chatHistory = []) => 
     return await callAI(messages, 800);
   } catch (error) {
     console.error("AI Tutor Error:", error);
-    throw new Error("I hit a temporary snag. Please try again.");
+    throw userFacingAIError(error, "I hit a temporary snag. Please try again.");
   }
 };
 
@@ -429,7 +474,7 @@ Use clean Markdown sparingly. Never call yourself a replacement for human suppor
     return await callAI(messages, 700, 0.7);
   } catch (error) {
     console.error("Emotional support companion error:", error);
-    throw new Error("I couldn't reply just now. Please try again in a moment.");
+    throw userFacingAIError(error, "I couldn't reply just now. Please try again in a moment.");
   }
 };
 
@@ -503,7 +548,7 @@ export const generateProjectIdeas = async (moduleTitle, subtopics) => {
     return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Project Ideas Error:", error);
-    throw new Error("Failed to generate project ideas.");
+    throw userFacingAIError(error, "Failed to generate project ideas.");
   }
 };
 
@@ -794,7 +839,7 @@ Schema:
     }
   } catch (error) {
     console.error("Flow Architecture Error:", error);
-    throw new Error("Failed to generate architecture.");
+    throw userFacingAIError(error, "Failed to generate architecture.");
   }
 };
 
@@ -812,7 +857,7 @@ Return 5-7 sentences max. Use markdown formatting.`;
     return await callAI(messages, 512, 0.3);
   } catch (error) {
     console.error("TL;DR Generation Error:", error);
-    throw new Error("Failed to generate article summary.");
+    throw userFacingAIError(error, "Failed to generate article summary.");
   }
 };
 
@@ -963,7 +1008,7 @@ Rules:
     return JSON.parse(clean.trim());
   } catch (error) {
     console.error("Architecture Diagram Error:", error);
-    throw new Error("Failed to generate architecture diagram.");
+    throw userFacingAIError(error, "Failed to generate architecture diagram.");
   }
 };
 
@@ -1009,7 +1054,7 @@ Schema:
     return JSON.parse(clean.trim());
   } catch (error) {
     console.error("Video Intelligence Error:", error);
-    throw new Error("Failed to generate video summary.");
+    throw userFacingAIError(error, "Failed to generate video summary.");
   }
 };
 
@@ -1063,7 +1108,7 @@ Use sensible spacing for nodes. Nodes should have a modern look.`;
     return json;
   } catch (error) {
     console.error("Interview Coach Error:", error);
-    throw new Error("Failed to generate interview coaching content.");
+    throw userFacingAIError(error, "Failed to generate interview coaching content.");
   }
 };
 
@@ -1126,7 +1171,7 @@ Schema:
     return JSON.parse(clean);
   } catch (error) {
     console.error("Detailed Notes Error:", error);
-    throw new Error("Failed to generate detailed study notes.");
+    throw userFacingAIError(error, "Failed to generate detailed study notes.");
   }
 };
 // ─── Public: Retell AI Integration ──────────────────────────────────────────
@@ -1252,7 +1297,7 @@ Schema:
     return JSON.parse(extractJSON(raw));
   } catch (error) {
     console.error("Interview Analysis Error:", error);
-    throw new Error("Failed to generate interview analysis.");
+    throw userFacingAIError(error, "Failed to generate interview analysis.");
   }
 };
 
@@ -1294,7 +1339,7 @@ Rules:
     return JSON.parse(clean);
   } catch (error) {
     console.error("Algorithm Template Error:", error);
-    throw new Error("Failed to discover algorithm templates.");
+    throw userFacingAIError(error, "Failed to discover algorithm templates.");
   }
 };
 
@@ -1326,7 +1371,7 @@ Maintain an encouraging and educational tone.`;
     return await callAI(messages, 1000, 0.6, false);
   } catch (error) {
     console.error("Quiz Chatbot Error:", error);
-    throw new Error("Failed to get answer from AI tutor.");
+    throw userFacingAIError(error, "Failed to get answer from AI tutor.");
   }
 };
 
@@ -1383,7 +1428,7 @@ Maintain an encouraging, senior-mentor tone.`;
     return await callAI(messages, 1200, 0.6, false);
   } catch (error) {
     console.error("Interview Prep Chatbot Error:", error);
-    throw new Error("Failed to get answer from AI tutor.");
+    throw userFacingAIError(error, "Failed to get answer from AI tutor.");
   }
 };
 
@@ -1454,7 +1499,7 @@ Schema:
     };
   } catch (error) {
     console.error("Onboarding Recommendation Error:", error);
-    throw new Error("Couldn't generate a recommendation right now. Please try again.");
+    throw userFacingAIError(error, "Couldn't generate a recommendation right now. Please try again.");
   }
 };
 

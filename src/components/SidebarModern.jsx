@@ -562,7 +562,7 @@ function SidebarModern(props) {
 
                 <div className="sb-menu-divider" />
                 <div className="sb-menu-kicker">Personal AI credentials</div>
-                <p className="sb-menu-note">Required for Atlas. Stored only for your signed-in account.</p>
+                <p className="sb-menu-note">Used by Atlas and every built-in AI tool. ApiBeam stays connected through this browser profile.</p>
 
                 <div className="sb-cred">
                   <div className="sb-cred-provider">

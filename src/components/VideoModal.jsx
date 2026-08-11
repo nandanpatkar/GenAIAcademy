@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import ReactFlow, { Background, Controls, MiniMap, Handle, Position, applyNodeChanges, applyEdgeChanges } from 'reactflow';
 import 'reactflow/dist/style.css';
+import ApiBeamConnectionNotice from "./ApiBeamConnectionNotice";
 
 const extractText = (node) => {
   if (typeof node === "string") return node;
@@ -372,6 +373,7 @@ export default function VideoModal({
         }}
         onClick={(e) => e.stopPropagation()}
       >
+        {!isPip && <div style={{ padding: "0 24px" }}><ApiBeamConnectionNotice compact /></div>}
         {/* Header */}
         <div style={{
           padding: isPip ? "12px 16px" : "20px 24px",

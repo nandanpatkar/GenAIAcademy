@@ -7,6 +7,7 @@ import python from 'react-syntax-highlighter/dist/esm/languages/prism/python';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { askAITutor } from "../services/aiService";
+import ApiBeamConnectionNotice from "./ApiBeamConnectionNotice";
 
 SyntaxHighlighter.registerLanguage('python', python);
 
@@ -90,6 +91,8 @@ export default function AITutorPanel({ isOpen, onClose, activeTopic, activeModul
           <X size={18} />
         </button>
       </div>
+
+      <div style={{ padding: "0 16px" }}><ApiBeamConnectionNotice compact /></div>
 
       <div style={{ display: "flex", gap: 7, padding: "12px 16px 0", overflowX: "auto" }}>
         {["Give me a hint", "Explain the pattern", "Review my code"].map(prompt => (

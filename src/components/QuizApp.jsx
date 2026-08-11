@@ -10,6 +10,7 @@ import { askQuizBot } from "../services/aiService";
 import { supabase } from '../config/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import ApiBeamConnectionNotice from './ApiBeamConnectionNotice';
 import "../styles/QuizApp.css";
 
 const LETTERS = 'ABCDEFGHIJ';
@@ -491,6 +492,8 @@ export default function QuizApp({ onClose }) {
             </div>
             <div className="quiz-topbar-status"><span className="quiz-status-pulse" />Practice mode</div>
           </div>
+
+          <ApiBeamConnectionNotice compact />
 
           {activeTab === "examBank" && <ExamPractice onStartExam={startExamQuiz} theme={theme} onWorkspaceChange={setIsCertificationWorkspaceOpen} />}
 

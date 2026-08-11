@@ -18,6 +18,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { callAI } from '../../services/aiService';
+import ApiBeamConnectionNotice from '../ApiBeamConnectionNotice';
 import { saveFile } from '../../services/projectService';
 
 const MODES = [
@@ -316,6 +317,8 @@ export default function AIAssistant({ onToast, onCollapse }) {
             </button>
           ))}
         </div>
+
+        <ApiBeamConnectionNotice compact />
 
         <div className="ide-ai-context-pills">
           {CONTEXT_OPTIONS.map(c => (

@@ -49,6 +49,8 @@ function getCookieAIConfig(req) {
     aiProvider: cookies['genai_ai_provider'] || '',
     azureEndpoint: cookies['genai_azure_endpoint'] || '',
     azureKey: cookies['genai_azure_key'] || '',
+    apiBeamEndpoint: cookies['genai_apibeam_endpoint'] || '',
+    apiBeamModel: cookies['genai_apibeam_model'] || '',
   };
 }
 
@@ -168,6 +170,73 @@ async function* streamAzure(messages, systemPrompt, endpoint, apiKey, deployment
   }
 }
 
+// ApiBeam completes requests through a browser extension and does not provide
+// an SSE response. The Notes editor still receives a standard SSE stream: the
+// completed reply is yielded as one chunk before the connection closes.
+async function* streamApiBeam(messages, systemPrompt, endpoint, model) {
+  let relay;
+  try {
+    relay = new URL(endpoint.replace(/\/+$/, ''));
+  } catch {
+    throw new Error('Invalid ApiBeam API URL. Add the full /app/<room-id> URL in Settings.');
+  }
+
+  // This handler runs on Vercel in production. Restrict the user-provided URL
+  // to HTTPS so the server cannot be used to reach local or metadata services.
+  if (relay.protocol !== 'https:') {
+    throw new Error('ApiBeam API URL must use HTTPS for Workspace Notes.');
+  }
+
+  const chatMessages = [];
+  if (systemPrompt) chatMessages.push({ role: 'system', content: systemPrompt });
+  for (const message of messages) {
+    chatMessages.push({ role: message.role === 'assistant' ? 'assistant' : 'user', content: message.content || '' });
+  }
+
+  let response;
+  try {
+    response = await fetch(`${relay.toString().replace(/\/+$/, '')}/v1/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: model || 'gpt-4o',
+        messages: chatMessages,
+        max_tokens: 4096,
+        temperature: 0.7,
+        stream: false,
+      }),
+    });
+  } catch (error) {
+    throw new Error(`Could not reach ApiBeam. Check that its relay and browser extension are connected. ${error.message || ''}`.trim());
+  }
+
+  const raw = await response.text();
+  let data;
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch {
+    if (response.ok && raw.trim()) {
+      yield raw;
+      return;
+    }
+    throw new Error(`ApiBeam returned an unexpected response (${response.status}).`);
+  }
+
+  if (!response.ok) {
+    throw new Error(data?.error?.message || data?.message || `ApiBeam error: ${response.status}`);
+  }
+
+  const content = typeof data === 'string'
+    ? data
+    : data?.choices?.[0]?.message?.content
+      ?? data?.output?.[0]?.content?.[0]?.text
+      ?? data?.message?.content;
+  if (typeof content !== 'string' || !content.trim()) {
+    throw new Error('ApiBeam returned no assistant message. Make sure the extension is connected to a supported chat tab.');
+  }
+  yield content;
+}
+
 // ─── Prompt builder ──────────────────────────────────────────────────────────
 function buildSystemPrompt(action) {
   if (!action) return 'You are a helpful AI assistant embedded in a note-taking application. Answer clearly and helpfully.';
@@ -234,18 +303,25 @@ export default async function handler(req, res) {
   const globalConfig = await getGlobalAIConfig();
 
   const rawProvider = cookieConfig.aiProvider || globalConfig.aiProvider || process.env.AI_PROVIDER || process.env.VITE_AI_PROVIDER || 'gemini';
-  const aiProvider = (rawProvider === 'azure-openai' || rawProvider === 'azure') ? 'azure' : 'gemini';
+  const aiProvider = rawProvider === 'apibeam'
+    ? 'apibeam'
+    : (rawProvider === 'azure-openai' || rawProvider === 'azure') ? 'azure' : 'gemini';
   const geminiKey = cookieConfig.geminiKey || globalConfig.geminiKey || process.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || '';
   const azureEndpoint = cookieConfig.azureEndpoint || globalConfig.azureEndpoint || process.env.VITE_AZURE_OPENAI_ENDPOINT || '';
   const azureKey = cookieConfig.azureKey || globalConfig.azureKey || process.env.VITE_AZURE_OPENAI_KEY || '';
   const azureDeployment = process.env.VITE_AZURE_OPENAI_DEPLOYMENT || 'gpt-5.2';
   const azureApiVersion = process.env.VITE_AZURE_OPENAI_API_VERSION || '2024-02-15-preview';
+  const apiBeamEndpoint = cookieConfig.apiBeamEndpoint;
+  const apiBeamModel = cookieConfig.apiBeamModel || 'gpt-4o';
 
   const hasGemini = !!geminiKey && !geminiKey.includes('your-api-key');
   const hasAzure = !!(azureEndpoint && azureKey);
+  const hasApiBeam = !!apiBeamEndpoint;
 
-  if (!hasGemini && !hasAzure) {
-    sendMessageChunk(res, '⚠️ No AI provider configured. Please add VITE_GEMINI_API_KEY to your .env.local file.');
+  if ((aiProvider === 'apibeam' && !hasApiBeam) || (!hasGemini && !hasAzure && !hasApiBeam)) {
+    sendMessageChunk(res, aiProvider === 'apibeam'
+      ? '⚠️ ApiBeam is not configured. In the GenAI Academy sidebar, save the full ApiBeam API URL from the extension Settings page.'
+      : '⚠️ No AI provider configured. Please add a provider connection in the GenAI Academy sidebar.');
     res.end();
     return;
   }
@@ -270,11 +346,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const effectiveProvider = (aiProvider === 'azure' && hasAzure) ? 'azure'
-      : hasGemini ? 'gemini'
-      : 'azure';
+    const effectiveProvider = aiProvider === 'apibeam' && hasApiBeam ? 'apibeam'
+      : (aiProvider === 'azure' && hasAzure) ? 'azure'
+        : hasGemini ? 'gemini'
+          : 'azure';
 
-    if (effectiveProvider === 'gemini') {
+    if (effectiveProvider === 'apibeam') {
+      for await (const chunk of streamApiBeam(messages, systemPrompt, apiBeamEndpoint, apiBeamModel)) {
+        sendMessageChunk(res, chunk);
+      }
+    } else if (effectiveProvider === 'gemini') {
       for await (const chunk of streamGemini(messages, systemPrompt, geminiKey)) {
         sendMessageChunk(res, chunk);
       }

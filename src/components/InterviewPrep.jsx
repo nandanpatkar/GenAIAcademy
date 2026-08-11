@@ -15,6 +15,7 @@ import useIsMobile from "../hooks/useIsMobile";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../config/supabaseClient";
 import { askInterviewPrepBot } from "../services/aiService";
+import ApiBeamConnectionNotice from "./ApiBeamConnectionNotice";
 import { searchWeb } from "../services/webSearchService";
 import { tiptapToText, extractKeywords, keywordOverlapScore } from "../utils/tiptapToText";
 import "../styles/InterviewPrep.css";
@@ -857,6 +858,8 @@ export default function InterviewPrep({ onClose, initialLessonId = null, pathsDa
                         <h4><Bot size={16} /> AI Tutor — {activeLesson.lesson_title}</h4>
                         <button onClick={() => setAiChatOpen(false)}><X size={15} /></button>
                       </div>
+
+                      <div style={{ padding: "0 12px" }}><ApiBeamConnectionNotice compact /></div>
 
                       <div className="ip-ai-toggles">
                         <button
