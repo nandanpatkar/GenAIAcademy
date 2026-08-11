@@ -3347,11 +3347,39 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   overflow: hidden;
   cursor: pointer;
   transition: all 0.18s;
+  position: relative;
 }
 .vid-card:hover {
   border-color: var(--border2);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px var(--black-35);
+}
+
+.rp-delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  border: none;
+  background: var(--black-65, rgba(0, 0, 0, 0.55));
+  color: #ef4444;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+}
+.vid-card:hover .rp-delete-btn,
+.file-card:hover .rp-delete-btn,
+.link-card:hover .rp-delete-btn {
+  opacity: 1;
+}
+.rp-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
 }
 
 .vid-thumb {
@@ -3421,6 +3449,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   padding: 12px;
   cursor: pointer;
   transition: all 0.15s;
+  position: relative;
 }
 .file-card:hover {
   border-color: var(--border2);
@@ -3470,6 +3499,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   padding: 11px 12px;
   cursor: pointer;
   transition: all 0.15s;
+  position: relative;
 }
 .link-card:hover {
   border-color: var(--border2);
@@ -5773,6 +5803,41 @@ ut-wrapper {
 
 .video-premium-card:hover .video-play-overlay {
   opacity: 1;
+}
+
+.asset-delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ef4444;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+}
+
+.video-premium-card:hover .asset-delete-btn {
+  opacity: 1;
+}
+
+.asset-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 0.8s linear infinite;
 }
 
 .video-meta-glass {

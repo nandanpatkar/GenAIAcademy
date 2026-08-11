@@ -240,6 +240,7 @@ GenAIAcademy/
 | `api/prices.js` | GET | Cloudflare KV | AWS pricing data by region for the System Design Simulator |
 | `api/regions.js` | (module) | — | Shared `SUPPORTED_REGIONS` allowlist |
 | `api/upload.js` | POST | AWS S3 | Raw file-upload proxy for the editor |
+| `api/youtube-playlist.js` | GET | YouTube Data API v3 | Fetches all videos (title/channel/duration/views) in a playlist by `?url=` for the Resources panel's playlist import |
 
 `api/_lib/` holds the shared logic: `examScraper.js` (scrape/parse/cache), `leetcodeJudge.js` (manifest lookup, rate limiting, hidden-test redaction), `pythonHarness.js` (generates the Python judge harness with `ListNode`/`TreeNode`/`Node` decoders). `api/_data/` mirrors judge manifests (`codelabManifests.json`, `leetcodeManifests.json`) generated at build time from `src/data/`.
 
@@ -541,6 +542,7 @@ Adjacent scripts not wired to `npm run` (invoked manually as needed): `scripts/b
 | `JDOODLE_CLIENT_ID` / `JDOODLE_CLIENT_SECRET` | `api/execute.js` | JDoodle code-execution credentials |
 | `AWS_REGION` / `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` / `AWS_S3_BUCKET_NAME` | `api/blob.js`, `api/upload.js` | S3 storage for editor blobs/uploads |
 | `CF_ACCOUNT_ID` / `CF_KV_NAMESPACE_ID` / `CF_API_TOKEN` | `api/prices.js` | Cloudflare KV credentials for AWS pricing cache |
+| `YOUTUBE_API_KEY` | `api/youtube-playlist.js` | YouTube Data API v3 key for the Resources panel's "Import Playlist" feature |
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | `api/graphql.js`, `api/copilot.js`, `api/exam.js` | Server-side Supabase access bypassing RLS for cache writes |
 | `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` | same functions (fallback) | Reused server-side if service-role vars are unset |
 | `AI_PROVIDER`, `VITE_AZURE_OPENAI_API_VERSION/DEPLOYMENT/ENDPOINT/KEY` | `api/copilot.js`/`api/graphql.js` | Legacy/global AI provider config fallbacks |

@@ -1,11 +1,12 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Folder, File, Download, Upload, Video, Search, Globe, BookOpen, Trash2, 
-  ArrowLeft, Play, FolderOpen, FileText, Link, ChevronRight, ChevronDown, 
+  Folder, File, Download, Upload, Video, Search, Globe, BookOpen, Trash2,
+  ArrowLeft, Play, FolderOpen, FileText, Link, ChevronRight, ChevronDown,
   FolderPlus, X, Plus, Info, Database, Layers, Activity, Clapperboard, Monitor,
   FileCode, FileArchive, MousePointer2, ExternalLink, Brain, Sparkles,
-  ChevronLeft, Library, CheckSquare, Network, AlignLeft, Clock
+  ChevronLeft, Library, CheckSquare, Network, AlignLeft, Clock,
+  ListVideo, Loader2, AlertCircle
 } from "lucide-react";
 import { getSavedSets, deleteSavedSet, MODE_LABELS } from "../store/savedStudyStore";
 import { AIResult } from "./AIStudyContent";
@@ -112,17 +113,18 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
         const p = pathsData[pKey] || {};
         const pColor = p.color || "#3b82f6";
         const src = obj.title || p.title || `Path ${pKey}`;
-        (obj.videos || []).forEach(v => videos.push({ 
-          ...v, 
-          parentId: obj.id, 
-          source: src, 
+        (obj.videos || []).forEach((v, _idx) => videos.push({
+          ...v,
+          _idx,
+          parentId: obj.id,
+          source: src,
           pathColor: pColor,
           pathKey: pKey,
           nodeId: nId,
           moduleId: mId || (obj.subtopics ? obj.id : null) // If obj is a module, it has subtopics
         }));
-        (obj.files || []).forEach(f => files.push({ ...f, parentId: obj.id, source: src, pathColor: pColor, pathKey: pKey, nodeId: nId, moduleId: mId }));
-        (obj.links || []).forEach(l => links.push({ ...l, parentId: obj.id, source: src, pathColor: pColor, pathKey: pKey, nodeId: nId, moduleId: mId }));
+        (obj.files || []).forEach((f, _idx) => files.push({ ...f, _idx, parentId: obj.id, source: src, pathColor: pColor, pathKey: pKey, nodeId: nId, moduleId: mId }));
+        (obj.links || []).forEach((l, _idx) => links.push({ ...l, _idx, parentId: obj.id, source: src, pathColor: pColor, pathKey: pKey, nodeId: nId, moduleId: mId }));
       };
 
       if (selected.type === 'path') {
@@ -184,23 +186,58 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
   const extractYTId = (url) => url?.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1];
   const getSafeUrl = (url) => /^https?:\/\//i.test(url) ? url : `https://${url}`;
 
-  const addAsset = (type, data) => {
+  const addAssets = (type, dataArray) => {
+    if (!dataArray.length) return;
     if (selected.type === 'custom_folder') {
-      saveCustom({ ...customData, assets: [...customData.assets, { id: 'a-'+Date.now(), folderId: selected.folderId, assetType: type, ...data }] });
+      const newAssets = dataArray.map(d => ({ id: 'a-'+Date.now()+'-'+Math.random().toString(36).slice(2), folderId: selected.folderId, assetType: type, ...d }));
+      saveCustom({ ...customData, assets: [...customData.assets, ...newAssets] });
       return;
     }
     setPathsData(prev => {
       const next = { ...prev };
       const p = { ...next[selected.pathKey] };
       const key = type === 'video' ? 'videos' : type === 'file' ? 'files' : 'links';
-      
-      const push = (obj) => ({ ...obj, [key]: [...(obj[key] || []), data] });
+
+      const push = (obj) => ({ ...obj, [key]: [...(obj[key] || []), ...dataArray] });
 
       if (selected.type === 'path') next[selected.pathKey] = push(p);
       else if (selected.type === 'node') p.nodes = p.nodes.map(n => n.id === selected.nodeId ? push(n) : n);
       else if (selected.type === 'module') p.nodes = p.nodes.map(n => n.id === selected.nodeId ? { ...n, modules: n.modules.map(m => m.id === selected.module.id ? push(m) : m) } : n);
-      
+
       next[selected.pathKey] = p;
+      return next;
+    });
+  };
+
+  const addAsset = (type, data) => addAssets(type, [data]);
+
+  const deleteAsset = (type, item) => {
+    if (!window.confirm(`Remove "${item.title || item.name}" from this collection?`)) return;
+
+    if (selected.type === 'custom_folder') {
+      saveCustom({ ...customData, assets: customData.assets.filter(a => a.id !== item.id) });
+      return;
+    }
+
+    const key = type === 'video' ? 'videos' : type === 'file' ? 'files' : 'links';
+    const removeAt = (arr) => (arr || []).filter((_, idx) => idx !== item._idx);
+
+    setPathsData(prev => {
+      const next = { ...prev };
+      const p = { ...next[item.pathKey] };
+
+      if (!item.nodeId) {
+        p[key] = removeAt(p[key]);
+      } else if (!item.moduleId) {
+        p.nodes = p.nodes.map(n => n.id === item.nodeId ? { ...n, [key]: removeAt(n[key]) } : n);
+      } else {
+        p.nodes = p.nodes.map(n => n.id === item.nodeId ? {
+          ...n,
+          modules: n.modules.map(m => m.id === item.moduleId ? { ...m, [key]: removeAt(m[key]) } : m)
+        } : n);
+      }
+
+      next[item.pathKey] = p;
       return next;
     });
   };
@@ -215,6 +252,56 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
       addAsset('file', { name: f.name, size: (f.size/1048576).toFixed(2)+" MB", type: f.name.split('.').pop(), url: data.url });
     } catch { alert("Upload failed"); }
     finally { setUploading(false); }
+  };
+
+  // ── YouTube Playlist Import ──
+  const [showPlaylistModal, setShowPlaylistModal] = useState(false);
+  const [playlistUrlInput, setPlaylistUrlInput] = useState("");
+  const [playlistLoading, setPlaylistLoading] = useState(false);
+  const [playlistError, setPlaylistError] = useState("");
+  const [playlistResult, setPlaylistResult] = useState(null); // { videos: [{...,checked}], skipped }
+
+  const existingVideoIds = useMemo(
+    () => new Set(resources.videos.map(v => extractYTId(v.url)).filter(Boolean)),
+    [resources.videos]
+  );
+
+  const closePlaylistModal = () => {
+    setShowPlaylistModal(false);
+    setPlaylistUrlInput("");
+    setPlaylistError("");
+    setPlaylistResult(null);
+    setPlaylistLoading(false);
+  };
+
+  const handleFetchPlaylist = async () => {
+    if (!playlistUrlInput.trim()) return;
+    setPlaylistLoading(true);
+    setPlaylistError("");
+    setPlaylistResult(null);
+    try {
+      const res = await fetch(`/api/youtube-playlist?url=${encodeURIComponent(playlistUrlInput.trim())}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to fetch playlist");
+      const videos = data.videos.map(v => ({ ...v, checked: !existingVideoIds.has(v.videoId) }));
+      setPlaylistResult({ videos, skipped: data.skipped });
+    } catch (err) {
+      setPlaylistError(err.message || "Something went wrong while fetching the playlist");
+    } finally {
+      setPlaylistLoading(false);
+    }
+  };
+
+  const togglePlaylistVideo = (videoId) => {
+    setPlaylistResult(r => ({ ...r, videos: r.videos.map(v => v.videoId === videoId ? { ...v, checked: !v.checked } : v) }));
+  };
+
+  const handleImportPlaylist = () => {
+    const toImport = playlistResult.videos
+      .filter(v => v.checked)
+      .map(({ checked, videoId, ...rest }) => rest);
+    addAssets('video', toImport);
+    closePlaylistModal();
   };
 
   const activeColor = selected?.type === 'custom_folder' ? '#f59e0b' : pathsData[selected?.pathKey]?.color || "#3b82f6";
@@ -445,13 +532,21 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                       <div key={i} className="video-premium-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v) : window.open(getSafeUrl(v.url), '_blank')}>
                         <div className="video-thumb-container">
                           {extractYTId(v.url) ? (
-                            <YouTubeThumbnail 
-                              url={v.url} 
+                            <YouTubeThumbnail
+                              url={v.url}
                               alt={v.title}
                               style={{ width: '100%', height: '100%' }}
                             />
                           ) : <div style={{ width: '100%', height: '100%', background: 'linear-gradient(45deg, #111, #222)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Video size={32} color="var(--text3)" /></div>}
                           <div className="video-play-overlay" style={{ opacity: 1, background: 'rgba(0,0,0,0.2)' }}><Play size={20} fill="currentColor" /></div>
+                          {(isEditMode || selected.type === 'custom_folder') && (
+                            <button
+                              className="asset-delete-btn"
+                              onClick={(e) => { e.stopPropagation(); deleteAsset('video', v); }}
+                              aria-label="Remove video"
+                              title="Remove video"
+                            ><Trash2 size={13} /></button>
+                          )}
                         </div>
                         <div className="video-meta-glass">
                           <div className="video-title">{v.title}</div>
@@ -463,11 +558,19 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                       </div>
                     ))}
                     {(isEditMode || selected.type === 'custom_folder') && (
-                      <div className="video-premium-card" style={{ border: '1px dashed var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 160, background: 'transparent' }} onClick={() => {
-                        const u = window.prompt("YouTube URL:");
-                        if (u) addAsset('video', { title: "New Asset", url: u, channel: "System", duration: "--", views: "0" });
-                      }}>
-                        <Plus size={24} color="var(--text3)" />
+                      <div className="video-premium-card add-tile" style={{ border: '1px dashed var(--border)', display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center', justifyContent: 'center', minHeight: 160, background: 'transparent' }}>
+                        <div onClick={() => {
+                          const u = window.prompt("YouTube URL:");
+                          if (u) addAsset('video', { title: "New Asset", url: u, channel: "System", duration: "--", views: "0" });
+                        }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: 8 }}>
+                          <Plus size={22} color="var(--text3)" />
+                          <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)' }}>ADD VIDEO</span>
+                        </div>
+                        <div style={{ width: '60%', height: 1, background: 'var(--border)' }} />
+                        <div onClick={() => setShowPlaylistModal(true)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: 8 }}>
+                          <ListVideo size={22} color="var(--text3)" />
+                          <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)' }}>IMPORT PLAYLIST</span>
+                        </div>
                       </div>
                     )}
                   </div>
@@ -487,6 +590,15 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                            <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--text3)', cursor: 'pointer' }}>DOWNLOAD</div>
                            <ExternalLink size={14} color="var(--text3)" opacity={0.5} />
+                           {(isEditMode || selected.type === 'custom_folder') && (
+                             <Trash2
+                               size={14}
+                               color="#ef4444"
+                               style={{ opacity: 0.5, cursor: 'pointer' }}
+                               onClick={(e) => { e.stopPropagation(); deleteAsset('file', f); }}
+                               aria-label="Remove file"
+                             />
+                           )}
                         </div>
                       </div>
                     ))}
@@ -509,6 +621,15 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                             <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 4 }}>{l.source}</div>
                          </div>
                          <ExternalLink size={14} color="var(--text3)" opacity={0.5} />
+                         {(isEditMode || selected.type === 'custom_folder') && (
+                           <Trash2
+                             size={14}
+                             color="#ef4444"
+                             style={{ opacity: 0.5, cursor: 'pointer' }}
+                             onClick={(e) => { e.stopPropagation(); deleteAsset('link', l); }}
+                             aria-label="Remove link"
+                           />
+                         )}
                       </div>
                     ))}
                     {(isEditMode || selected.type === 'custom_folder') && (
@@ -633,6 +754,112 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
           </div>
         </section>
       </main>
+
+      {showPlaylistModal && (
+        <div
+          className="playlist-modal-overlay"
+          onClick={closePlaylistModal}
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+          }}
+        >
+          <div
+            className="playlist-modal"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: 'min(560px, 92vw)', maxHeight: '80vh', display: 'flex', flexDirection: 'column',
+              background: 'var(--bg2, #14151a)', border: '1px solid var(--border)', borderRadius: 16,
+              padding: 24, gap: 16, boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <ListVideo size={18} color={activeColor} />
+                <h3 style={{ margin: 0, fontSize: 15, fontWeight: 800 }}>Import YouTube playlist</h3>
+              </div>
+              <button
+                onClick={closePlaylistModal}
+                aria-label="Close"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text3)' }}
+              ><X size={18} /></button>
+            </div>
+
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input
+                autoFocus
+                placeholder="Paste a YouTube playlist URL..."
+                value={playlistUrlInput}
+                onChange={(e) => setPlaylistUrlInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && !playlistLoading && handleFetchPlaylist()}
+                style={{
+                  flex: 1, padding: '10px 12px', borderRadius: 10, border: '1px solid var(--border)',
+                  background: 'var(--bg4)', color: 'var(--text)', fontSize: 13
+                }}
+              />
+              <button
+                onClick={handleFetchPlaylist}
+                disabled={playlistLoading || !playlistUrlInput.trim()}
+                style={{
+                  padding: '10px 16px', borderRadius: 10, border: 'none',
+                  background: activeColor, color: '#0a0a0a', fontWeight: 800, fontSize: 12,
+                  cursor: playlistLoading ? 'not-allowed' : 'pointer', opacity: playlistLoading || !playlistUrlInput.trim() ? 0.6 : 1,
+                  display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap'
+                }}
+              >
+                {playlistLoading ? <Loader2 size={14} className="spin" /> : null}
+                {playlistLoading ? 'FETCHING' : 'FETCH'}
+              </button>
+            </div>
+
+            {playlistError && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#ef4444', fontSize: 12, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 10, padding: '10px 12px' }}>
+                <AlertCircle size={14} /> {playlistError}
+              </div>
+            )}
+
+            {playlistResult && (
+              <>
+                <div style={{ fontSize: 11, color: 'var(--text3)', fontWeight: 700 }}>
+                  {playlistResult.videos.length} video{playlistResult.videos.length !== 1 ? 's' : ''} found
+                  {playlistResult.skipped > 0 ? ` · ${playlistResult.skipped} unavailable video${playlistResult.skipped !== 1 ? 's' : ''} skipped` : ''}
+                </div>
+                <div className="mini-scrollbar" style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 6, minHeight: 0 }}>
+                  {playlistResult.videos.map(v => (
+                    <label
+                      key={v.videoId}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 10,
+                        background: 'var(--bg4)', cursor: 'pointer', opacity: existingVideoIds.has(v.videoId) ? 0.55 : 1
+                      }}
+                    >
+                      <input type="checkbox" checked={v.checked} onChange={() => togglePlaylistVideo(v.videoId)} />
+                      <img src={`https://img.youtube.com/vi/${v.videoId}/default.jpg`} alt="" style={{ width: 44, height: 33, objectFit: 'cover', borderRadius: 4, flexShrink: 0 }} />
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        <div style={{ fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{v.title}</div>
+                        <div style={{ fontSize: 10, color: 'var(--text3)' }}>
+                          {v.channel} · {v.duration}{existingVideoIds.has(v.videoId) ? ' · already added' : ''}
+                        </div>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+                <button
+                  onClick={handleImportPlaylist}
+                  disabled={!playlistResult.videos.some(v => v.checked)}
+                  style={{
+                    padding: '12px', borderRadius: 10, border: 'none', background: activeColor, color: '#0a0a0a',
+                    fontWeight: 800, fontSize: 12, cursor: 'pointer',
+                    opacity: playlistResult.videos.some(v => v.checked) ? 1 : 0.5
+                  }}
+                >
+                  IMPORT {playlistResult.videos.filter(v => v.checked).length} SELECTED
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
