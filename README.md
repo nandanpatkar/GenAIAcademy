@@ -774,6 +774,3 @@ The repo root carries several standing planning/runbook docs — read these for 
 
 ---
 
-## License
-
-This command center is privately developed and maintained. Vendored third-party tools inside `public/` (OpenFlowKit, GitMastery, K8s Games, CodeFlow, AFFiNE) retain their own upstream licenses — see each tool's bundled README/LICENSE where present.
