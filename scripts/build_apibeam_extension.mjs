@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { access, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import JSZip from "jszip";
@@ -8,6 +8,19 @@ const projectRoot = dirname(dirname(fileURLToPath(import.meta.url)));
 const extensionRoot = join(projectRoot, "api_beam", "apibeam-main");
 const extensionBuild = join(extensionRoot, "dist_chrome");
 const archivePath = join(projectRoot, "public", "downloads", "apibeam-chrome-extension.zip");
+
+const ensureExtensionDependencies = async () => {
+  try {
+    await access(join(extensionRoot, "node_modules", "@crxjs", "vite-plugin"));
+    return;
+  } catch {
+    console.log("Installing GenAI Academy Connector build dependencies...");
+    execFileSync(process.platform === "win32" ? "npm.cmd" : "npm", ["install", "--no-package-lock", "--include=dev"], {
+      cwd: extensionRoot,
+      stdio: "inherit",
+    });
+  }
+};
 
 const addDirectoryToArchive = async (zip, directory) => {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -22,6 +35,8 @@ const addDirectoryToArchive = async (zip, directory) => {
   }));
 };
 
+await ensureExtensionDependencies();
+
 execFileSync(process.platform === "win32" ? "npm.cmd" : "npm", ["run", "build:chrome"], {
   cwd: extensionRoot,
   stdio: "inherit",
@@ -29,7 +44,7 @@ execFileSync(process.platform === "win32" ? "npm.cmd" : "npm", ["run", "build:ch
 
 const zip = new JSZip();
 await addDirectoryToArchive(zip, extensionBuild);
-zip.file("README.txt", `ApiBeam for Chrome\n\n1. Extract this ZIP file.\n2. In Chrome, open chrome://extensions.\n3. Turn on Developer mode.\n4. Click Load unpacked and select the extracted folder.\n5. Open ApiBeam Settings, enter your Atlas relay URL, then connect.\n\nSign in to ChatGPT in the same Chrome profile. Do not share the private API URL shown by ApiBeam after connecting.\n`);
+zip.file("README.txt", `GenAI Academy Connector for Chrome\n\n1. Extract this ZIP file.\n2. In Chrome, open chrome://extensions.\n3. Turn on Developer mode.\n4. Click Load unpacked and select the extracted folder.\n5. Open GenAI Academy Connector Settings, enter your Atlas relay URL, then connect.\n\nSign in to ChatGPT in the same Chrome profile. Do not share the private Connector URL shown after connecting.\n`);
 
 await mkdir(dirname(archivePath), { recursive: true });
 await writeFile(archivePath, await zip.generateAsync({
