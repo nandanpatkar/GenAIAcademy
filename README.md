@@ -268,6 +268,7 @@ GenAIAcademy/
 | `20260807_shared_labs.sql` | `shared_labs` (community-submitted lab HTML) |
 | `20260809_perf_indexes_and_split.sql` | `appearance` jsonb column on `user_curriculum` (splits theme data out of the monolithic blob) + perf indexes across `messages`/`channels`/`community_members`/`quiz_metrics`/`user_curriculum` + `active_chat_users()` function |
 | `20260810_blog_favorites.sql` | `blog_favorites` (favorite-blogs store) |
+| `20260811_custom_resources.sql` | `user_custom_resources` (synced "My Folders" custom resource library, Resources sidebar) |
 
 Full column-level schema for the core tables is in [§16](#16-database-schema-reference).
 

@@ -127,7 +127,7 @@ export default function ResourcePanel({ module, pathColor, onClose, onEditModule
           {tab === "videos" && (
             <>
               {module.videos?.length ? module.videos.map((v, i) => (
-                <div key={i} className="vid-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v) : window.open(getSafeUrl(v.url), '_blank')}>
+                <div key={i} className="vid-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v, module.videos) : window.open(getSafeUrl(v.url), '_blank')}>
                   <div className="vid-thumb">
                     {v.url && extractYTId(v.url) ? (
                       <>
