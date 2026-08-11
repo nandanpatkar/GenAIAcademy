@@ -304,6 +304,10 @@ function MainApp() {
   const [nodeStates, setNodeStates] = useState({});
   const [focusNodeId, setFocusNodeId] = useState(null);
   const [activeVideo, setActiveVideo] = useState(null);
+  // Explicit playback queue for videos opened from a broader scope (e.g. a
+  // path/node/custom-folder in the Resources panel) where there's no single
+  // active module for VideoModal to derive an auto-advance playlist from.
+  const [activeVideoQueue, setActiveVideoQueue] = useState(null);
   const [lastCompletedNodeId, setLastCompletedNodeId] = useState(null);
   const [showLanding, setShowLanding] = useState(() => {
     // Only show landing if user hasn't seen it in this session and is not logged in
@@ -331,7 +335,7 @@ function MainApp() {
   const [onboardingMode, setOnboardingMode] = useState("modal"); // "modal" (first login) | "panel" (sidebar reopen)
   const hasCheckedOnboarding = React.useRef(false);
 
-  const handleVideoSelect = (video) => {
+  const handleVideoSelect = (video, queue) => {
     if (video.pathKey) setActivePath(video.pathKey);
     if (video.nodeId) {
       const p = pathsData[video.pathKey] || activePathData;
@@ -351,9 +355,13 @@ function MainApp() {
         if (mod) setActiveModule(mod);
       }
     }
+    // A video without a moduleId (browsed at path/node/custom-folder scope)
+    // has no single module for VideoModal to derive a playlist from, so an
+    // explicit queue keeps "up next"/auto-advance working there too.
+    setActiveVideoQueue(!video.moduleId && queue?.length ? queue : null);
     setActiveVideo(video);
   };
-  const handleCloseVideo = () => setActiveVideo(null);
+  const handleCloseVideo = () => { setActiveVideo(null); setActiveVideoQueue(null); };
 
   // Keep a ref to latest pathsData so the flush function always has current data
   const pathsDataRef = React.useRef(pathsData);
@@ -1951,6 +1959,7 @@ function MainApp() {
             onSaveNote={(note) => handleSaveVideoNote(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], note)}
             onDeleteNote={(noteId) => handleDeleteVideoNote(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], noteId)}
             moduleContext={freshActiveModule}
+            queueOverride={activeVideoQueue}
             pathsData={pathsData}
             onNavigate={(p, n, m) => {
               if (p) setActivePath(p);

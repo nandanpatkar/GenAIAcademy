@@ -6,9 +6,17 @@ import {
   FolderPlus, X, Plus, Info, Database, Layers, Activity, Clapperboard, Monitor,
   FileCode, FileArchive, MousePointer2, ExternalLink, Brain, Sparkles,
   ChevronLeft, Library, CheckSquare, Network, AlignLeft, Clock,
-  ListVideo, Loader2, AlertCircle
+  ListVideo, Loader2, AlertCircle, RefreshCw, Pin, Tag, CheckCircle2, Circle
 } from "lucide-react";
 import { getSavedSets, deleteSavedSet, MODE_LABELS } from "../store/savedStudyStore";
+import {
+  getLocalCustomResources,
+  saveLocalCustomResources,
+  loadUserCustomResources,
+  saveUserCustomResources,
+  migrateLocalCustomResourcesToUser,
+} from "../store/customResourcesStore";
+import { useAuth } from "../contexts/AuthContext";
 import { AIResult } from "./AIStudyContent";
 import YouTubeThumbnail from './YouTubeThumbnail';
 import "../styles/ResourceManager.css";
@@ -39,16 +47,65 @@ const getFileIcon = (type) => {
 export default function ResourceManager({ pathsData, setPathsData, onClose, isEditMode, onVideoSelect }) {
   const [expandedPaths, setExpandedPaths] = useState({});
   const [expandedNodes, setExpandedNodes] = useState({});
-  const [customData, setCustomData] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('genai_custom_resources')) || { folders: [], assets: [] };
-    } catch { return { folders: [], assets: [] }; }
-  });
+  const { user, loading: authLoading } = useAuth();
+  const [customData, setCustomData] = useState(() => getLocalCustomResources());
+  const [customSyncError, setCustomSyncError] = useState("");
 
-  const saveCustom = (data) => {
-    setCustomData(data);
-    localStorage.setItem('genai_custom_resources', JSON.stringify(data));
+  // Signed-in users sync "My Folders" to Supabase so it follows their
+  // account across devices; guest bookmarks are imported once on first
+  // sign-in, same pattern as favoriteBlogsStore/BlogPage.jsx.
+  useEffect(() => {
+    let alive = true;
+    setCustomSyncError("");
+    if (authLoading) return () => { alive = false; };
+
+    if (!user?.id) {
+      setCustomData(getLocalCustomResources());
+      return () => { alive = false; };
+    }
+
+    (async () => {
+      try {
+        await migrateLocalCustomResourcesToUser(user.id);
+        const remote = await loadUserCustomResources(user.id);
+        if (alive) setCustomData(remote);
+      } catch (err) {
+        console.error("Could not sync custom resources:", err);
+        if (alive) setCustomSyncError("Your folders could not be synced. Changes are saved on this device only.");
+      }
+    })();
+
+    return () => { alive = false; };
+  }, [user?.id, authLoading]);
+
+  // Accepts either a plain object or an updater fn (prev => next), mirroring
+  // React's own setState so callers can safely base changes off the latest
+  // state rather than a value closed over at click-time. The state updater
+  // itself stays pure (React may invoke it more than once, e.g. StrictMode)
+  // — it just drops the computed value in a ref "mailbox" for the effect
+  // below to actually persist, exactly once per real change.
+  const pendingCustomSaveRef = useRef(null);
+  const saveCustom = (updater) => {
+    setCustomData(prev => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      pendingCustomSaveRef.current = next;
+      return next;
+    });
   };
+
+  useEffect(() => {
+    if (pendingCustomSaveRef.current === null) return;
+    const payload = pendingCustomSaveRef.current;
+    pendingCustomSaveRef.current = null;
+    if (user?.id) {
+      saveUserCustomResources(user.id, payload).catch((err) => {
+        console.error("Could not save custom resources:", err);
+        setCustomSyncError("Your latest change could not be synced.");
+      });
+    } else {
+      saveLocalCustomResources(payload);
+    }
+  }, [customData]);
 
   const [selected, setSelected] = useState(null);
   const [tab, setTab] = useState("videos");
@@ -185,61 +242,212 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
   // ── Actions ──
   const extractYTId = (url) => url?.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1];
   const getSafeUrl = (url) => /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  const keyOf = (type) => type === 'video' ? 'videos' : type === 'file' ? 'files' : 'links';
+  const genId = () => 'a-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  // A stable identity for both custom-folder assets (which carry a real id)
+  // and pathsData-embedded resources (addressed by their recorded location).
+  const keyFor = (item) => item.id || `${item.pathKey}|${item.nodeId || ''}|${item.moduleId || ''}|${item._idx}`;
 
-  const addAssets = (type, dataArray) => {
-    if (!dataArray.length) return;
-    if (selected.type === 'custom_folder') {
-      const newAssets = dataArray.map(d => ({ id: 'a-'+Date.now()+'-'+Math.random().toString(36).slice(2), folderId: selected.folderId, assetType: type, ...d }));
-      saveCustom({ ...customData, assets: [...customData.assets, ...newAssets] });
-      return;
-    }
+  /** Applies `transformObj` to whichever path/node/module is currently selected in the tree. */
+  const updateSelectedCollection = (transformObj) => {
     setPathsData(prev => {
       const next = { ...prev };
       const p = { ...next[selected.pathKey] };
-      const key = type === 'video' ? 'videos' : type === 'file' ? 'files' : 'links';
-
-      const push = (obj) => ({ ...obj, [key]: [...(obj[key] || []), ...dataArray] });
-
-      if (selected.type === 'path') next[selected.pathKey] = push(p);
-      else if (selected.type === 'node') p.nodes = p.nodes.map(n => n.id === selected.nodeId ? push(n) : n);
-      else if (selected.type === 'module') p.nodes = p.nodes.map(n => n.id === selected.nodeId ? { ...n, modules: n.modules.map(m => m.id === selected.module.id ? push(m) : m) } : n);
-
+      if (selected.type === 'path') next[selected.pathKey] = transformObj(p);
+      else if (selected.type === 'node') p.nodes = p.nodes.map(n => n.id === selected.nodeId ? transformObj(n) : n);
+      else if (selected.type === 'module') p.nodes = p.nodes.map(n => n.id === selected.nodeId ? { ...n, modules: n.modules.map(m => m.id === selected.module.id ? transformObj(m) : m) } : n);
       next[selected.pathKey] = p;
       return next;
     });
   };
 
-  const addAsset = (type, data) => addAssets(type, [data]);
+  /** Applies `transform` to the exact array (videos/files/links) an already-extracted item was read from. */
+  const applyAssetArrayMutation = (pd, item, key, transform) => {
+    const next = { ...pd };
+    const p = { ...next[item.pathKey] };
+    if (!item.nodeId) {
+      p[key] = transform(p[key] || []);
+    } else if (!item.moduleId) {
+      p.nodes = p.nodes.map(n => n.id === item.nodeId ? { ...n, [key]: transform(n[key] || []) } : n);
+    } else {
+      p.nodes = p.nodes.map(n => n.id === item.nodeId ? {
+        ...n,
+        modules: n.modules.map(m => m.id === item.moduleId ? { ...m, [key]: transform(m[key] || []) } : m)
+      } : n);
+    }
+    next[item.pathKey] = p;
+    return next;
+  };
 
-  const deleteAsset = (type, item) => {
-    if (!window.confirm(`Remove "${item.title || item.name}" from this collection?`)) return;
+  const pushIntoSelected = (fieldKey, items) => updateSelectedCollection(obj => ({ ...obj, [fieldKey]: [...(obj[fieldKey] || []), ...items] }));
 
+  const addAssets = (type, dataArray) => {
+    if (!dataArray.length) return;
     if (selected.type === 'custom_folder') {
-      saveCustom({ ...customData, assets: customData.assets.filter(a => a.id !== item.id) });
+      const newAssets = dataArray.map(d => ({ id: genId(), folderId: selected.folderId, assetType: type, ...d }));
+      saveCustom(cur => ({ ...cur, assets: [...cur.assets, ...newAssets] }));
       return;
     }
+    pushIntoSelected(keyOf(type), dataArray);
+  };
 
-    const key = type === 'video' ? 'videos' : type === 'file' ? 'files' : 'links';
-    const removeAt = (arr) => (arr || []).filter((_, idx) => idx !== item._idx);
+  const addAsset = (type, data) => addAssets(type, [data]);
 
-    setPathsData(prev => {
-      const next = { ...prev };
-      const p = { ...next[item.pathKey] };
+  const isDuplicateVideo = (url) => {
+    const vid = extractYTId(url);
+    return vid ? existingVideoIds.has(vid) : false;
+  };
+  const isDuplicateLink = (url) => resources.links.some(l => (l.url || '').trim().toLowerCase() === (url || '').trim().toLowerCase());
 
-      if (!item.nodeId) {
-        p[key] = removeAt(p[key]);
-      } else if (!item.moduleId) {
-        p.nodes = p.nodes.map(n => n.id === item.nodeId ? { ...n, [key]: removeAt(n[key]) } : n);
-      } else {
-        p.nodes = p.nodes.map(n => n.id === item.nodeId ? {
-          ...n,
-          modules: n.modules.map(m => m.id === item.moduleId ? { ...m, [key]: removeAt(m[key]) } : m)
-        } : n);
-      }
+  const stripMeta = (item) => {
+    const { _idx, parentId, source, pathColor, pathKey, nodeId, moduleId, ...clean } = item;
+    return clean;
+  };
 
-      next[item.pathKey] = p;
+  const deleteAssets = (type, items) => {
+    if (!items.length) return;
+    if (selected.type === 'custom_folder') {
+      const ids = new Set(items.map(i => i.id));
+      saveCustom(cur => ({ ...cur, assets: cur.assets.filter(a => !ids.has(a.id)) }));
+    } else {
+      const key = keyOf(type);
+      const groups = new Map();
+      items.forEach(item => {
+        const gKey = `${item.pathKey}|${item.nodeId || ''}|${item.moduleId || ''}`;
+        if (!groups.has(gKey)) groups.set(gKey, { sample: item, idxs: new Set() });
+        groups.get(gKey).idxs.add(item._idx);
+      });
+      setPathsData(prev => {
+        let next = prev;
+        groups.forEach(({ sample, idxs }) => {
+          next = applyAssetArrayMutation(next, sample, key, arr => arr.filter((_, idx) => !idxs.has(idx)));
+        });
+        return next;
+      });
+    }
+    showUndoToast(type, items);
+  };
+
+  const deleteAsset = (type, item) => deleteAssets(type, [item]);
+
+  // Restores by the deleted items' own recorded origin, not the currently
+  // selected collection — the user may have navigated elsewhere before
+  // clicking Undo on the toast, so `selected` can no longer be trusted here.
+  const restoreAssets = (type, items) => {
+    const customItems = items.filter(i => i.folderId !== undefined);
+    const pathItems = items.filter(i => i.folderId === undefined);
+
+    if (customItems.length) {
+      saveCustom(cur => ({ ...cur, assets: [...cur.assets, ...customItems.map(stripMeta)] }));
+    }
+
+    if (pathItems.length) {
+      const key = keyOf(type);
+      const groups = new Map();
+      pathItems.forEach(item => {
+        const gKey = `${item.pathKey}|${item.nodeId || ''}|${item.moduleId || ''}`;
+        if (!groups.has(gKey)) groups.set(gKey, { sample: item, entries: [] });
+        groups.get(gKey).entries.push(item);
+      });
+      setPathsData(prev => {
+        let next = prev;
+        groups.forEach(({ sample, entries }) => {
+          const sorted = [...entries].sort((a, b) => a._idx - b._idx);
+          next = applyAssetArrayMutation(next, sample, key, arr => {
+            const copy = [...arr];
+            sorted.forEach(it => copy.splice(Math.min(it._idx, copy.length), 0, stripMeta(it)));
+            return copy;
+          });
+        });
+        return next;
+      });
+    }
+  };
+
+  const patchAsset = (type, item, patch) => {
+    if (selected.type === 'custom_folder') {
+      saveCustom(cur => ({ ...cur, assets: cur.assets.map(a => a.id === item.id ? { ...a, ...patch } : a) }));
+      return;
+    }
+    const key = keyOf(type);
+    setPathsData(prev => applyAssetArrayMutation(prev, item, key, arr => arr.map((x, idx) => idx === item._idx ? { ...x, ...patch } : x)));
+  };
+
+  const togglePin = (type, item) => patchAsset(type, item, { pinned: !item.pinned });
+  const toggleWatched = (item) => patchAsset('video', item, { watched: !item.watched });
+  const editTags = (type, item) => {
+    const input = window.prompt("Tags (comma-separated):", (item.tags || []).join(", "));
+    if (input === null) return;
+    const tags = input.split(",").map(t => t.trim()).filter(Boolean);
+    patchAsset(type, item, { tags });
+  };
+
+  // ── Undo toast for deletes ──
+  const [undoToast, setUndoToast] = useState(null); // { id, type, items }
+  const undoTimeoutRef = useRef(null);
+
+  const showUndoToast = (type, items) => {
+    if (undoTimeoutRef.current) clearTimeout(undoTimeoutRef.current);
+    const id = Date.now() + Math.random();
+    setUndoToast({ id, type, items });
+    undoTimeoutRef.current = setTimeout(() => {
+      setUndoToast(t => (t && t.id === id ? null : t));
+    }, 6000);
+  };
+
+  const handleUndo = () => {
+    if (!undoToast) return;
+    if (undoTimeoutRef.current) clearTimeout(undoTimeoutRef.current);
+    restoreAssets(undoToast.type, undoToast.items);
+    setUndoToast(null);
+  };
+
+  // ── Bulk select ──
+  const [selectMode, setSelectMode] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState(() => new Set());
+
+  const toggleSelectMode = () => { setSelectMode(m => !m); setSelectedKeys(new Set()); };
+  const toggleSelectItem = (item) => {
+    setSelectedKeys(prev => {
+      const next = new Set(prev);
+      const k = keyFor(item);
+      if (next.has(k)) next.delete(k); else next.add(k);
       return next;
     });
+  };
+  const handleBulkDelete = (type, list) => {
+    const items = list.filter(it => selectedKeys.has(keyFor(it)));
+    if (!items.length) return;
+    deleteAssets(type, items);
+    setSelectedKeys(new Set());
+    setSelectMode(false);
+  };
+
+  // ── Linked playlists (for re-sync) ──
+  const linkedPlaylists = useMemo(() => {
+    if (!selected) return [];
+    if (selected.type === 'custom_folder') {
+      return customData.folders.find(f => f.id === selected.folderId)?.playlists || [];
+    }
+    const p = pathsData[selected.pathKey];
+    if (!p) return [];
+    if (selected.type === 'path') return p._playlists || [];
+    const n = p.nodes?.find(nx => nx.id === selected.nodeId);
+    if (!n) return [];
+    if (selected.type === 'node') return n._playlists || [];
+    const m = n.modules?.find(mx => mx.id === selected.module.id);
+    return m?._playlists || [];
+  }, [selected, pathsData, customData]);
+
+  const linkPlaylist = (playlistId, url) => {
+    if (!playlistId) return;
+    const entry = { id: playlistId, url, importedAt: new Date().toISOString() };
+    const upsert = (list) => [...(list || []).filter(pl => pl.id !== playlistId), entry];
+    if (selected.type === 'custom_folder') {
+      saveCustom(cur => ({ ...cur, folders: cur.folders.map(f => f.id === selected.folderId ? { ...f, playlists: upsert(f.playlists) } : f) }));
+      return;
+    }
+    updateSelectedCollection(obj => ({ ...obj, _playlists: upsert(obj._playlists) }));
   };
 
   const handleUpload = async (e) => {
@@ -274,22 +482,33 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
     setPlaylistLoading(false);
   };
 
-  const handleFetchPlaylist = async () => {
-    if (!playlistUrlInput.trim()) return;
+  const fetchPlaylist = async (url) => {
     setPlaylistLoading(true);
     setPlaylistError("");
     setPlaylistResult(null);
     try {
-      const res = await fetch(`/api/youtube-playlist?url=${encodeURIComponent(playlistUrlInput.trim())}`);
+      const res = await fetch(`/api/youtube-playlist?url=${encodeURIComponent(url)}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to fetch playlist");
       const videos = data.videos.map(v => ({ ...v, checked: !existingVideoIds.has(v.videoId) }));
-      setPlaylistResult({ videos, skipped: data.skipped });
+      setPlaylistResult({ videos, skipped: data.skipped, playlistId: data.playlistId });
     } catch (err) {
       setPlaylistError(err.message || "Something went wrong while fetching the playlist");
     } finally {
       setPlaylistLoading(false);
     }
+  };
+
+  const handleFetchPlaylist = () => {
+    if (!playlistUrlInput.trim()) return;
+    fetchPlaylist(playlistUrlInput.trim());
+  };
+
+  /** Re-opens the import modal pre-filled with a previously linked playlist, to pull in anything new. */
+  const openPlaylistModalFor = (url) => {
+    setShowPlaylistModal(true);
+    setPlaylistUrlInput(url);
+    fetchPlaylist(url);
   };
 
   const togglePlaylistVideo = (videoId) => {
@@ -301,8 +520,37 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
       .filter(v => v.checked)
       .map(({ checked, videoId, ...rest }) => rest);
     addAssets('video', toImport);
+    linkPlaylist(playlistResult.playlistId, playlistUrlInput.trim());
     closePlaylistModal();
   };
+
+  const canEdit = Boolean(selected) && (isEditMode || selected.type === 'custom_folder');
+
+  // ── Pins + tag filter (applied on top of search-filtered results) ──
+  const sortPinned = (arr) => [...arr].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+  const [activeTags, setActiveTags] = useState(() => new Set());
+  useEffect(() => { setActiveTags(new Set()); setSelectMode(false); setSelectedKeys(new Set()); }, [selected]);
+  const toggleTagFilter = (tag) => {
+    setActiveTags(prev => {
+      const next = new Set(prev);
+      if (next.has(tag)) next.delete(tag); else next.add(tag);
+      return next;
+    });
+  };
+  const applyTagFilter = (arr) => activeTags.size === 0 ? arr : arr.filter(it => (it.tags || []).some(t => activeTags.has(t)));
+
+  const visible = useMemo(() => ({
+    videos: sortPinned(applyTagFilter(filtered.videos)),
+    files: sortPinned(applyTagFilter(filtered.files)),
+    links: sortPinned(applyTagFilter(filtered.links)),
+    knowledge: filtered.knowledge,
+  }), [filtered, activeTags]);
+
+  const allTagsForTab = useMemo(() => {
+    const set = new Set();
+    (filtered[tab] || []).forEach(it => (it.tags || []).forEach(t => set.add(t)));
+    return [...set].sort();
+  }, [filtered, tab]);
 
   const activeColor = selected?.type === 'custom_folder' ? '#f59e0b' : pathsData[selected?.pathKey]?.color || "#3b82f6";
   const selectedLabel = selected?.type === 'custom_folder'
@@ -350,6 +598,16 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
           <button className="vault-close-btn" onClick={onClose} aria-label="Close resources"><X size={17} /></button>
         </div>
       </header>
+
+      {customSyncError && (
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 8, padding: '8px 24px',
+          background: 'rgba(239,68,68,0.08)', borderBottom: '1px solid rgba(239,68,68,0.2)',
+          color: '#ef4444', fontSize: 11, fontWeight: 600
+        }}>
+          <AlertCircle size={13} /> {customSyncError}
+        </div>
+      )}
 
       <main className="vault-main">
         {/* Sidebar: Tactical Directory */}
@@ -471,7 +729,7 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                    <button 
                      key={t.id}
                      onMouseEnter={() => setHoveredTab(t.id)}
-                     onClick={() => { setTab(t.id); setViewingSet(null); }}
+                     onClick={() => { setTab(t.id); setViewingSet(null); if (t.id === 'knowledge') { setSelectMode(false); setSelectedKeys(new Set()); } }}
                      style={{
                        position: 'relative',
                        zIndex: 1,
@@ -491,7 +749,7 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                    >
                      <Icon size={14} style={{ opacity: isActive ? 1 : 0.6 }} />
                      {t.label}
-                     <small>{filtered[t.id]?.length || 0}</small>
+                     <small>{(t.id === 'knowledge' ? filtered.knowledge?.length : visible[t.id]?.length) || 0}</small>
                      {isActive && (
                        <motion.div
                          layoutId="activePill_res"
@@ -513,7 +771,79 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                <Search size={14} />
                <input placeholder="Search your library..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} style={{ padding: '8px 12px 8px 40px', borderRadius: 10, fontSize: 13 }} />
             </div>
+            {canEdit && tab !== 'knowledge' && (visible[tab]?.length > 0 || selectMode) && (
+              <button
+                onClick={toggleSelectMode}
+                style={{
+                  padding: '8px 14px', borderRadius: 10, fontSize: 11, fontWeight: 800,
+                  border: `1px solid ${selectMode ? activeColor : 'var(--border)'}`,
+                  background: selectMode ? `${activeColor}15` : 'transparent',
+                  color: selectMode ? activeColor : 'var(--text3)', cursor: 'pointer', whiteSpace: 'nowrap'
+                }}
+              >
+                {selectMode ? 'CANCEL' : 'SELECT'}
+              </button>
+            )}
           </div>
+
+          {selectMode && tab !== 'knowledge' && (
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12,
+              padding: '10px 16px', margin: '0 0 14px', borderRadius: 12,
+              background: `${activeColor}12`, border: `1px solid ${activeColor}30`
+            }}>
+              <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--text2)' }}>
+                {selectedKeys.size} selected
+              </span>
+              <button
+                onClick={() => handleBulkDelete(tab === 'videos' ? 'video' : tab === 'files' ? 'file' : 'link', visible[tab])}
+                disabled={selectedKeys.size === 0}
+                style={{
+                  padding: '7px 14px', borderRadius: 8, border: 'none', background: 'rgba(239,68,68,0.15)',
+                  color: '#ef4444', fontSize: 11, fontWeight: 800, cursor: selectedKeys.size ? 'pointer' : 'not-allowed',
+                  opacity: selectedKeys.size ? 1 : 0.5, display: 'flex', alignItems: 'center', gap: 6
+                }}
+              ><Trash2 size={12} /> DELETE SELECTED</button>
+            </div>
+          )}
+
+          {tab !== 'knowledge' && allTagsForTab.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 14 }}>
+              {allTagsForTab.map(tag => (
+                <button
+                  key={tag}
+                  onClick={() => toggleTagFilter(tag)}
+                  style={{
+                    padding: '5px 10px', borderRadius: 999, fontSize: 10, fontWeight: 700, cursor: 'pointer',
+                    border: `1px solid ${activeTags.has(tag) ? activeColor : 'var(--border)'}`,
+                    background: activeTags.has(tag) ? `${activeColor}20` : 'transparent',
+                    color: activeTags.has(tag) ? activeColor : 'var(--text3)'
+                  }}
+                >#{tag}</button>
+              ))}
+            </div>
+          )}
+
+          {tab === 'videos' && linkedPlaylists.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
+              {linkedPlaylists.map(pl => (
+                <div key={pl.id} style={{
+                  display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', borderRadius: 10,
+                  background: 'var(--bg4)', border: '1px solid var(--border)', fontSize: 10, color: 'var(--text3)'
+                }}>
+                  <ListVideo size={12} />
+                  <span>Linked playlist · synced {fmtDate(pl.importedAt)}</span>
+                  {canEdit && (
+                    <button
+                      onClick={() => openPlaylistModalFor(pl.url)}
+                      title="Check for new videos"
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: activeColor, display: 'flex', alignItems: 'center' }}
+                    ><RefreshCw size={12} /></button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="asset-scroll-area mini-scrollbar">
             {!selected ? (
@@ -528,8 +858,18 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
               <>
                 {tab === 'videos' && (
                   <div className="video-grid">
-                    {filtered.videos.map((v, i) => (
-                      <div key={i} className="video-premium-card" onClick={() => v.url && onVideoSelect ? onVideoSelect(v) : window.open(getSafeUrl(v.url), '_blank')}>
+                    {visible.videos.map((v, i) => {
+                      return (
+                      <div
+                        key={i}
+                        className="video-premium-card"
+                        style={{ opacity: v.watched ? 0.6 : 1 }}
+                        onClick={() => {
+                          if (selectMode) { toggleSelectItem(v); return; }
+                          if (v.url && onVideoSelect) onVideoSelect(v, resources.videos);
+                          else window.open(getSafeUrl(v.url), '_blank');
+                        }}
+                      >
                         <div className="video-thumb-container">
                           {extractYTId(v.url) ? (
                             <YouTubeThumbnail
@@ -539,29 +879,68 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                             />
                           ) : <div style={{ width: '100%', height: '100%', background: 'linear-gradient(45deg, #111, #222)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Video size={32} color="var(--text3)" /></div>}
                           <div className="video-play-overlay" style={{ opacity: 1, background: 'rgba(0,0,0,0.2)' }}><Play size={20} fill="currentColor" /></div>
-                          {(isEditMode || selected.type === 'custom_folder') && (
+                          {selectMode && (
                             <button
                               className="asset-delete-btn"
-                              onClick={(e) => { e.stopPropagation(); deleteAsset('video', v); }}
-                              aria-label="Remove video"
-                              title="Remove video"
-                            ><Trash2 size={13} /></button>
+                              style={{ left: 8, right: 'auto', opacity: 1, color: selectedKeys.has(keyFor(v)) ? activeColor : '#fff' }}
+                              onClick={(e) => { e.stopPropagation(); toggleSelectItem(v); }}
+                            >{selectedKeys.has(keyFor(v)) ? <CheckCircle2 size={14} /> : <Circle size={14} />}</button>
+                          )}
+                          {canEdit && !selectMode && (
+                            <>
+                              <button
+                                className="asset-delete-btn"
+                                style={{ right: 40, color: v.pinned ? '#f59e0b' : '#fff' }}
+                                onClick={(e) => { e.stopPropagation(); togglePin('video', v); }}
+                                aria-label="Pin video"
+                                title="Pin to top"
+                              ><Pin size={13} fill={v.pinned ? '#f59e0b' : 'none'} /></button>
+                              <button
+                                className="asset-delete-btn"
+                                onClick={(e) => { e.stopPropagation(); deleteAsset('video', v); }}
+                                aria-label="Remove video"
+                                title="Remove video"
+                              ><Trash2 size={13} /></button>
+                            </>
                           )}
                         </div>
                         <div className="video-meta-glass">
                           <div className="video-title">{v.title}</div>
+                          {v.tags?.length > 0 && (
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 6 }}>
+                              {v.tags.map(t => <span key={t} style={{ fontSize: 9, fontWeight: 700, color: activeColor, background: `${activeColor}15`, borderRadius: 999, padding: '2px 7px' }}>#{t}</span>)}
+                            </div>
+                          )}
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
                              <span style={{ fontSize: 10, color: 'var(--text3)', fontWeight: 600 }}>{v.source}</span>
-                             <ExternalLink size={12} color="var(--text3)" />
+                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                               {canEdit && (
+                                 <button
+                                   onClick={(e) => { e.stopPropagation(); toggleWatched(v); }}
+                                   title={v.watched ? "Mark as unwatched" : "Mark as watched"}
+                                   style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: v.watched ? '#34d399' : 'var(--text3)', display: 'flex' }}
+                                 >{v.watched ? <CheckCircle2 size={13} /> : <Circle size={13} />}</button>
+                               )}
+                               {canEdit && (
+                                 <button
+                                   onClick={(e) => { e.stopPropagation(); editTags('video', v); }}
+                                   title="Edit tags"
+                                   style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text3)', display: 'flex' }}
+                                 ><Tag size={12} /></button>
+                               )}
+                               <ExternalLink size={12} color="var(--text3)" />
+                             </div>
                           </div>
                         </div>
                       </div>
-                    ))}
-                    {(isEditMode || selected.type === 'custom_folder') && (
+                    );})}
+                    {canEdit && !selectMode && (
                       <div className="video-premium-card add-tile" style={{ border: '1px dashed var(--border)', display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center', justifyContent: 'center', minHeight: 160, background: 'transparent' }}>
                         <div onClick={() => {
                           const u = window.prompt("YouTube URL:");
-                          if (u) addAsset('video', { title: "New Asset", url: u, channel: "System", duration: "--", views: "0" });
+                          if (!u) return;
+                          if (isDuplicateVideo(u) && !window.confirm("This video is already in this collection. Add it anyway?")) return;
+                          addAsset('video', { title: "New Asset", url: u, channel: "System", duration: "--", views: "0" });
                         }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer', padding: 8 }}>
                           <Plus size={22} color="var(--text3)" />
                           <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--text3)' }}>ADD VIDEO</span>
@@ -578,31 +957,65 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
 
                 {tab === 'files' && (
                   <div className="file-list">
-                    {filtered.files.map((f, i) => (
-                      <div key={i} className="file-premium-row" onClick={() => f.url && window.open(getSafeUrl(f.url), '_blank')}>
+                    {visible.files.map((f, i) => (
+                      <div
+                        key={i}
+                        className="file-premium-row"
+                        onClick={() => {
+                          if (selectMode) { toggleSelectItem(f); return; }
+                          if (f.url) window.open(getSafeUrl(f.url), '_blank');
+                        }}
+                      >
                         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                           {selectMode && (
+                             <span onClick={(e) => { e.stopPropagation(); toggleSelectItem(f); }} style={{ color: selectedKeys.has(keyFor(f)) ? activeColor : 'var(--text3)', display: 'flex', cursor: 'pointer' }}>
+                               {selectedKeys.has(keyFor(f)) ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                             </span>
+                           )}
                            <div className="file-icon-shell">{getFileIcon(f.type)}</div>
                            <div>
-                             <div style={{ fontSize: 13, fontWeight: 700 }}>{f.name}</div>
+                             <div style={{ fontSize: 13, fontWeight: 700 }}>{f.name}{f.pinned ? ' 📌' : ''}</div>
                              <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 4 }}>{f.size} · {f.source}</div>
+                             {f.tags?.length > 0 && (
+                               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
+                                 {f.tags.map(t => <span key={t} style={{ fontSize: 9, fontWeight: 700, color: activeColor, background: `${activeColor}15`, borderRadius: 999, padding: '2px 7px' }}>#{t}</span>)}
+                               </div>
+                             )}
                            </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                            <div style={{ fontSize: 11, fontWeight: 800, color: 'var(--text3)', cursor: 'pointer' }}>DOWNLOAD</div>
                            <ExternalLink size={14} color="var(--text3)" opacity={0.5} />
-                           {(isEditMode || selected.type === 'custom_folder') && (
-                             <Trash2
-                               size={14}
-                               color="#ef4444"
-                               style={{ opacity: 0.5, cursor: 'pointer' }}
-                               onClick={(e) => { e.stopPropagation(); deleteAsset('file', f); }}
-                               aria-label="Remove file"
-                             />
+                           {canEdit && !selectMode && (
+                             <>
+                               <Pin
+                                 size={13}
+                                 fill={f.pinned ? '#f59e0b' : 'none'}
+                                 color={f.pinned ? '#f59e0b' : 'var(--text3)'}
+                                 style={{ opacity: f.pinned ? 1 : 0.5, cursor: 'pointer' }}
+                                 onClick={(e) => { e.stopPropagation(); togglePin('file', f); }}
+                                 aria-label="Pin file"
+                               />
+                               <Tag
+                                 size={13}
+                                 color="var(--text3)"
+                                 style={{ opacity: 0.5, cursor: 'pointer' }}
+                                 onClick={(e) => { e.stopPropagation(); editTags('file', f); }}
+                                 aria-label="Edit tags"
+                               />
+                               <Trash2
+                                 size={14}
+                                 color="#ef4444"
+                                 style={{ opacity: 0.5, cursor: 'pointer' }}
+                                 onClick={(e) => { e.stopPropagation(); deleteAsset('file', f); }}
+                                 aria-label="Remove file"
+                               />
+                             </>
                            )}
                         </div>
                       </div>
                     ))}
-                    {(isEditMode || selected.type === 'custom_folder') && (
+                    {canEdit && !selectMode && (
                       <button className="rg-btn" style={{ padding: '12px', border: '1px dashed var(--border)', background: 'transparent', color: 'var(--text3)', borderRadius: 12 }} onClick={() => fileInputRef.current.click()}>
                         {uploading ? "SYNCING..." : "+ ATTACH PAYLOAD"}
                         <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleUpload} />
@@ -613,29 +1026,66 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
 
                 {tab === 'links' && (
                   <div className="link-hub-grid">
-                    {filtered.links.map((l, i) => (
-                      <div key={i} className="link-hub-card" onClick={() => l.url && window.open(getSafeUrl(l.url), '_blank')}>
-                         <div style={{ background: 'var(--bg4)', padding: 10, borderRadius: 10 }}><Link size={14} color="var(--text2)" /></div>
+                    {visible.links.map((l, i) => (
+                      <div
+                        key={i}
+                        className="link-hub-card"
+                        onClick={() => {
+                          if (selectMode) { toggleSelectItem(l); return; }
+                          if (l.url) window.open(getSafeUrl(l.url), '_blank');
+                        }}
+                      >
+                         {selectMode ? (
+                           <span onClick={(e) => { e.stopPropagation(); toggleSelectItem(l); }} style={{ color: selectedKeys.has(keyFor(l)) ? activeColor : 'var(--text3)', display: 'flex', cursor: 'pointer' }}>
+                             {selectedKeys.has(keyFor(l)) ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+                           </span>
+                         ) : (
+                           <div style={{ background: 'var(--bg4)', padding: 10, borderRadius: 10 }}><Link size={14} color="var(--text2)" /></div>
+                         )}
                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ fontSize: 13, fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.title}</div>
+                            <div style={{ fontSize: 13, fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.pinned ? '📌 ' : ''}{l.title}</div>
                             <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 4 }}>{l.source}</div>
+                            {l.tags?.length > 0 && (
+                              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
+                                {l.tags.map(t => <span key={t} style={{ fontSize: 9, fontWeight: 700, color: activeColor, background: `${activeColor}15`, borderRadius: 999, padding: '2px 7px' }}>#{t}</span>)}
+                              </div>
+                            )}
                          </div>
                          <ExternalLink size={14} color="var(--text3)" opacity={0.5} />
-                         {(isEditMode || selected.type === 'custom_folder') && (
-                           <Trash2
-                             size={14}
-                             color="#ef4444"
-                             style={{ opacity: 0.5, cursor: 'pointer' }}
-                             onClick={(e) => { e.stopPropagation(); deleteAsset('link', l); }}
-                             aria-label="Remove link"
-                           />
+                         {canEdit && !selectMode && (
+                           <>
+                             <Pin
+                               size={13}
+                               fill={l.pinned ? '#f59e0b' : 'none'}
+                               color={l.pinned ? '#f59e0b' : 'var(--text3)'}
+                               style={{ opacity: l.pinned ? 1 : 0.5, cursor: 'pointer' }}
+                               onClick={(e) => { e.stopPropagation(); togglePin('link', l); }}
+                               aria-label="Pin link"
+                             />
+                             <Tag
+                               size={13}
+                               color="var(--text3)"
+                               style={{ opacity: 0.5, cursor: 'pointer' }}
+                               onClick={(e) => { e.stopPropagation(); editTags('link', l); }}
+                               aria-label="Edit tags"
+                             />
+                             <Trash2
+                               size={14}
+                               color="#ef4444"
+                               style={{ opacity: 0.5, cursor: 'pointer' }}
+                               onClick={(e) => { e.stopPropagation(); deleteAsset('link', l); }}
+                               aria-label="Remove link"
+                             />
+                           </>
                          )}
                       </div>
                     ))}
-                    {(isEditMode || selected.type === 'custom_folder') && (
+                    {canEdit && !selectMode && (
                       <button className="link-hub-card" style={{ border: '1px dashed var(--border)', background: 'transparent', justifyContent: 'center' }} onClick={() => {
                         const u = window.prompt("Target URL:");
-                        if (u) addAsset('link', { title: u, url: u });
+                        if (!u) return;
+                        if (isDuplicateLink(u) && !window.confirm("This link is already in this collection. Add it anyway?")) return;
+                        addAsset('link', { title: u, url: u });
                       }}><Plus size={16} color="var(--text3)" /></button>
                     )}
                   </div>
@@ -858,6 +1308,25 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
               </>
             )}
           </div>
+        </div>
+      )}
+
+      {undoToast && (
+        <div
+          style={{
+            position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)', zIndex: 1100,
+            display: 'flex', alignItems: 'center', gap: 14, padding: '12px 18px', borderRadius: 12,
+            background: 'var(--bg2, #14151a)', border: '1px solid var(--border)',
+            boxShadow: '0 12px 30px rgba(0,0,0,0.4)'
+          }}
+        >
+          <span style={{ fontSize: 12, color: 'var(--text2)', fontWeight: 600 }}>
+            Removed {undoToast.items.length > 1 ? `${undoToast.items.length} items` : `"${undoToast.items[0].title || undoToast.items[0].name}"`}
+          </span>
+          <button
+            onClick={handleUndo}
+            style={{ padding: '6px 14px', borderRadius: 8, border: 'none', background: activeColor, color: '#0a0a0a', fontWeight: 800, fontSize: 11, cursor: 'pointer' }}
+          >UNDO</button>
         </div>
       )}
     </div>

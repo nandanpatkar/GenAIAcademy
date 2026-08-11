@@ -102,6 +102,7 @@ export default function VideoModal({
   onSaveNote, 
   onDeleteNote,
   moduleContext: initialModuleContext,
+  queueOverride,
   pathsData,
   onNavigate
 }) {
@@ -252,7 +253,7 @@ export default function VideoModal({
     }
   };
 
-  const playlist = useMemo(() => moduleContext?.videos || [], [moduleContext]);
+  const playlist = useMemo(() => (queueOverride?.length ? queueOverride : moduleContext?.videos) || [], [queueOverride, moduleContext]);
   const currentIdx = playlist.findIndex(v => v.url === currentVideo?.url);
   const nextVideo = currentIdx !== -1 && currentIdx < playlist.length - 1 ? playlist[currentIdx + 1] : null;
 
