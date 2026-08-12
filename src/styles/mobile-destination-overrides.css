@@ -1,6 +1,16 @@
 /* Phone-only refinements for destinations that remain in More. The desktop
    implementations are intentionally untouched. */
 @media (max-width: 768px) {
+  /* The desktop app intentionally locks the root viewport and lets each
+     workspace own its scroll surface. On phones the Home dashboard is a
+     document-length view, so the root must be allowed to grow; otherwise the
+     global `#root { height: 100%; overflow: hidden; }` clips the page. */
+  #root {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
   .app-primary-content {
     height: auto;
     min-height: 0;

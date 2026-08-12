@@ -666,7 +666,10 @@ function MainApp() {
   // A transition would make the tap feel unresponsive for no benefit.
   const [showModuleDetails, setShowModuleDetails] = useState(false);
   const [showIntelligenceHub, setShowIntelligenceHub] = useViewState(savedViews.showIntelligenceHub ?? true);
-  const [showHome2, setShowHome2] = useViewState(false);
+  // Home 2.0 is the phone-first dashboard. Keep the existing Intelligence Hub
+  // as the desktop default, but enter Home 2.0 whenever the app starts or is
+  // resized into the mobile breakpoint.
+  const [showHome2, setShowHome2] = useViewState(isMobile);
   const [showLegacyIntelligenceHub, setShowLegacyIntelligenceHub] = useViewState(false);
   const [showWorkplaceLab, setShowWorkplaceLab] = useViewState(savedViews.showWorkplaceLab ?? false);
   const [showKnowledgeGraph, setShowKnowledgeGraph] = useViewState(savedViews.showKnowledgeGraph ?? false);
@@ -676,6 +679,13 @@ function MainApp() {
       return saved ? JSON.parse(saved) : { view: 'main', year: null, isAI: false };
     } catch(e) { return { view: 'main', year: null, isAI: false }; }
   });
+
+  useEffect(() => {
+    if (isMobile && !showHome2 && showIntelligenceHub) {
+      setShowIntelligenceHub(false);
+      setShowHome2(true);
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     try {
@@ -1884,10 +1894,13 @@ function MainApp() {
       </div>
 
       <MobileBottomNav
-        activeView={isMobileMenuOpen ? "more" : showIntelligenceHub ? "home" : showProgress ? "progress" : showQuiz ? "practice" : "roadmap"}
+        activeView={isMobileMenuOpen ? "more" : (showHome2 || showIntelligenceHub) ? "home" : showProgress ? "progress" : showQuiz ? "practice" : "roadmap"}
         setView={v => {
           closeAllPanels();
-          if (v === "home") setShowIntelligenceHub(true);
+          if (v === "home") {
+            if (isMobile) setShowHome2(true);
+            else setShowIntelligenceHub(true);
+          }
           else if (v === "progress") setShowProgress(true);
           else if (v === "practice") setShowQuiz(true);
         }}
