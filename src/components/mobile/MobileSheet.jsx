@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, useId } from "react";
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import "../../styles/mobile-foundation.css";
 
 /**
@@ -46,6 +46,10 @@ export default function MobileSheet({
   const dragStartY = useRef(null);
   const [dragOffset, setDragOffset] = useState(0);
   const sheetRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const lastFocusedElement = useRef(null);
+  const titleId = useId();
+  const shouldReduceMotion = useReducedMotion();
 
   const handleTouchStart = useCallback((e) => {
     dragStartY.current = e.touches[0].clientY;
@@ -70,6 +74,48 @@ export default function MobileSheet({
     if (open) setDragOffset(0);
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return undefined;
+
+    lastFocusedElement.current = document.activeElement;
+    document.body.classList.add("msheet-open");
+    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.classList.remove("msheet-open");
+      lastFocusedElement.current?.focus?.();
+    };
+  }, [open]);
+
+  const handleKeyDown = useCallback((event) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      onClose?.();
+      return;
+    }
+
+    if (event.key !== "Tab" || !sheetRef.current) return;
+    const focusable = sheetRef.current.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }, [onClose]);
+
+  const sheetTransition = shouldReduceMotion
+    ? { duration: 0.01 }
+    : { type: "spring", damping: 32, stiffness: 300 };
+
   return (
     <AnimatePresence>
       {open && (
@@ -79,8 +125,9 @@ export default function MobileSheet({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
+            transition={{ duration: shouldReduceMotion ? 0.01 : 0.18 }}
             onClick={onClose}
+            aria-hidden="true"
           />
           <motion.div
             ref={sheetRef}
@@ -92,7 +139,11 @@ export default function MobileSheet({
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
-            transition={{ type: "spring", damping: 32, stiffness: 300 }}
+            transition={sheetTransition}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            onKeyDown={handleKeyDown}
           >
             <div
               className="msheet-drag-zone"
@@ -103,7 +154,7 @@ export default function MobileSheet({
               <div className="msheet-handle" />
               <div className="msheet-header">
                 <div className="msheet-titles">
-                  <div className="msheet-title">{title}</div>
+                  <div id={titleId} className="msheet-title">{title}</div>
                   {subtitle && <div className="msheet-subtitle">{subtitle}</div>}
                 </div>
                 <button
@@ -111,19 +162,22 @@ export default function MobileSheet({
                   className="msheet-close-btn"
                   onClick={onClose}
                   aria-label="Close"
+                  ref={closeButtonRef}
                 >
                   <X size={16} />
                 </button>
               </div>
 
               {tabs && tabs.length > 0 && (
-                <div className="msheet-tabs">
+                <div className="msheet-tabs" role="tablist" aria-label={`${title} sections`}>
                   {tabs.map((t) => (
                     <button
                       key={t.id}
                       type="button"
+                      role="tab"
                       className={`msheet-tab ${activeTab === t.id ? "active" : ""}`}
                       onClick={() => onTabChange?.(t.id)}
+                      aria-selected={activeTab === t.id}
                     >
                       {t.label}
                     </button>

@@ -11,6 +11,7 @@ import {
 } from "../data/strandsDocsData";
 import { makeLangChainComponents, extractToc, langChainUrlTransform } from "./LangChainMarkdown";
 import { useTheme } from "../contexts/ThemeContext";
+import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/LangChainDocs.css";
 import "../styles/StrandsDocs.css";
 
@@ -235,11 +236,7 @@ export default function StrandsDocs({ product: initialProduct = "guide", onClose
 
     setLoading(true);
     setError(null);
-    fetch(activePage.file)
-      .then((response) => {
-        if (!response.ok) throw new Error(`Could not load this page (${response.status})`);
-        return response.text();
-      })
+    fetchMarkdown(activePage.file)
       .then((text) => { cache.set(activePage.slug, text); apply(text); })
       .catch((err) => { if (alive) { setError(err.message); setLoading(false); } });
 
@@ -533,7 +530,10 @@ export default function StrandsDocs({ product: initialProduct = "guide", onClose
                 {loading ? (
                   <p className="lc-status"><Loader2 size={15} className="lc-spin" /> Loading…</p>
                 ) : error ? (
-                  <p className="lc-status lc-status--error"><AlertCircle size={15} /> {error}</p>
+                  <div className="lc-status lc-status--error" role="alert">
+                    <AlertCircle size={15} /> <span>{error}</span>
+                    <button type="button" className="lc-btn" onClick={() => openPage(activeSlug)}>Retry</button>
+                  </div>
                 ) : (
                   <div className="lc-prose">
                     <ReactMarkdown

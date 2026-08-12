@@ -185,6 +185,33 @@
   .blog-favorites-button span { display: none; }
 }
 
+/* Mobile reading mode: content has one clear column and controls remain tappable. */
+@media (max-width: 768px) {
+  .blog-shell { width: 100%; min-width: 0; max-width: 100%; height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)) !important; min-height: 0; }
+  .blog-header { height: auto; min-height: 60px; padding: 8px 12px; gap: 8px; }
+  .blog-brand h1 { font-size: 14px; }
+  .blog-brand-mark { width: 32px; height: 32px; }
+  .blog-header-context, .blog-header-divider { display: none; }
+  .blog-header-actions { gap: 4px; margin-left: auto; }
+  .blog-close-button, .blog-favorites-button { min-width: 44px; min-height: 44px; }
+  .blog-scroll-container { overscroll-behavior-y: contain; }
+  .blog-list { padding: 20px 14px 28px; }
+  .blog-hero-panel { padding: 24px 18px; border-radius: 20px; }
+  .blog-hero-copy h2 { font-size: clamp(36px, 11vw, 48px); }
+  .blog-hero-copy > p { font-size: 14px; line-height: 1.55; }
+  .blog-hero-chart { gap: 12px; margin-top: 18px; }
+  .blog-hero-bars { height: 88px; }
+  .blog-toolbar { gap: 12px; margin: 20px 0 16px; }
+  .blog-year-filter { flex-wrap: nowrap; overflow-x: auto; margin-right: -14px; padding-bottom: 4px; overscroll-behavior-inline: contain; scrollbar-width: none; }
+  .blog-year-filter::-webkit-scrollbar { display: none; }
+  .toolbar-label { display: none; }
+  .year-filter { min-height: 40px; white-space: nowrap; }
+  .blog-search { min-height: 46px; }
+  .blog-tag-rail { margin: 0 -14px; padding: 0 14px 14px; }
+  .blog-tag-chip { min-height: 40px; white-space: nowrap; }
+  .blog-card { min-height: 205px; padding: 16px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blog-card, .blog-write-button, .year-filter, .blog-close-button { transition: none; }
   .blog-loading-orbit { animation: none; }
@@ -220,6 +247,11 @@
 
 @media (max-width: 900px) { .blog-detail-toc { display: none !important; } }
 @media (max-width: 520px) { .blog-detail-main { padding: 26px 16px 60px !important; } .blog-detail-toolbar { margin-bottom: 25px !important; } .blog-detail-toolbar-actions button span { display: none; } .blog-detail-toolbar-actions button { width: 44px; padding: 0; justify-content: center; } }
+
+@media (max-width: 768px) {
+  .blog-detail-main { padding: 24px 16px 32px !important; }
+  .blog-detail-title { font-size: clamp(31px, 10vw, 44px) !important; }
+}
 
 /* ── Research archive ─────────────────────────────────────────────────────
    Added when the archive stopped being a list of link-outs and became 8,632
@@ -553,4 +585,12 @@
 @media (max-width: 900px) {
   .blog-hero-chart { padding-left: 0; margin-top: 26px; }
   .blog-hero-bars { height: 96px; }
+}
+
+/* These rules follow the archive styles above so the phone treatment wins. */
+@media (max-width: 768px) {
+  .blog-hero-chart { gap: 12px; margin-top: 18px; }
+  .blog-hero-bars { height: 88px; }
+  .blog-tag-rail { margin: 0 -14px; padding: 0 14px 14px; }
+  .blog-tag-chip { min-height: 40px; white-space: nowrap; }
 }

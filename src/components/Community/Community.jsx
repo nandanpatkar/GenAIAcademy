@@ -51,7 +51,9 @@ const Community = ({ isSidebarCollapsed }) => {
   const [showCodeModal, setShowCodeModal] = useState(false);
   const [codeSnippet, setCodeSnippet] = useState('');
   const [codeLanguage, setCodeLanguage] = useState('javascript');
-  const [showMemberSidebar, setShowMemberSidebar] = useState(true);
+  const [showMemberSidebar, setShowMemberSidebar] = useState(() =>
+    typeof window === 'undefined' || !window.matchMedia('(max-width: 768px)').matches
+  );
   const [sidebarTab, setSidebarTab] = useState('groups');
   
   // Modals state
@@ -703,6 +705,12 @@ const Community = ({ isSidebarCollapsed }) => {
   const totalUnreads = Object.values(unreadCounts).reduce((a, b) => a + b, 0);
   const groupsUnreadTotal = groups.reduce((sum, g) => sum + getGroupUnreadCount(g.id), 0);
   const dmsUnreadTotal = dms.reduce((sum, d) => sum + getGroupUnreadCount(d.id), 0);
+  const conversations = sidebarTab === 'groups' ? groups : dms;
+
+  const selectConversation = (conversation, tab) => {
+    setSidebarTab(tab);
+    setActiveGroup(conversation);
+  };
 
   return (
     <div className={`community-root ${isSidebarCollapsed ? 'full-width' : ''}`}>
@@ -716,16 +724,22 @@ const Community = ({ isSidebarCollapsed }) => {
             
             <div className="header-status-area">
               <div className="header-actions">
-                <div className="action-icon-wrap" onClick={() => setShowMemberSidebar(!showMemberSidebar)}>
+                <button
+                  type="button"
+                  className={`action-icon-wrap${showMemberSidebar ? ' active' : ''}`}
+                  onClick={() => setShowMemberSidebar((visible) => !visible)}
+                  aria-label={`${showMemberSidebar ? 'Hide' : 'Show'} members`}
+                  aria-pressed={showMemberSidebar}
+                >
                   <Users 
                     size={20} 
                     className={`action-icon ${showMemberSidebar ? 'active' : ''}`} 
-                    title="Members"
+                    aria-hidden="true"
                   />
-                </div>
+                </button>
                 
-                <div className="action-icon-wrap">
-                  <Bell size={20} className="action-icon" title="Notifications" />
+                <button type="button" className="action-icon-wrap" aria-label="Notifications">
+                  <Bell size={20} className="action-icon" aria-hidden="true" />
                   <AnimatePresence>
                     {totalUnreads > 0 && (
                       <motion.span 
@@ -738,20 +752,103 @@ const Community = ({ isSidebarCollapsed }) => {
                       </motion.span>
                     )}
                   </AnimatePresence>
-                </div>
+                </button>
 
-                <div className="action-icon-wrap" onClick={() => {
+                <button type="button" className="action-icon-wrap" onClick={() => {
                    setTempNickname(nickname);
                    setTempBio(bio);
                    setActiveSettingsTab('profile');
                    setShowSettingsModal(true);
-                }}>
-                  <Settings size={20} className="action-icon" title="Settings & Profile" />
-                </div>
+                }} aria-label="Settings and profile">
+                  <Settings size={20} className="action-icon" aria-hidden="true" />
+                </button>
               </div>
             </div>
           </div>
         </header>
+
+        {/* Phone-only conversation selector. Desktop keeps the full navigation
+            rail; on a phone the current group and channel stay one tap away
+            without consuming a permanent column. */}
+        <nav className="community-mobile-navigator" aria-label="Community conversations">
+          <div className="community-mobile-tabs" role="tablist" aria-label="Conversation type">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={sidebarTab === 'groups'}
+              className={sidebarTab === 'groups' ? 'active' : ''}
+              onClick={() => setSidebarTab('groups')}
+            >
+              <Users size={16} aria-hidden="true" /> Groups
+              {groupsUnreadTotal > 0 && <span className="unread-badge">{groupsUnreadTotal}</span>}
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={sidebarTab === 'dms'}
+              className={sidebarTab === 'dms' ? 'active' : ''}
+              onClick={() => setSidebarTab('dms')}
+            >
+              <MessageSquare size={16} aria-hidden="true" /> Messages
+              {dmsUnreadTotal > 0 && <span className="unread-badge">{dmsUnreadTotal}</span>}
+            </button>
+            <button
+              type="button"
+              className="community-mobile-add"
+              onClick={sidebarTab === 'groups' ? openCreateGroupModal : openDmModal}
+              aria-label={sidebarTab === 'groups' ? 'Create group' : 'Start direct message'}
+            >
+              <Plus size={19} aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="community-mobile-strip" aria-label={sidebarTab === 'groups' ? 'Groups' : 'Direct messages'}>
+            {conversations.length ? conversations.map((conversation) => {
+              const isActive = activeGroup?.id === conversation.id;
+              const label = sidebarTab === 'dms'
+                ? (profiles[emailToId[conversation.name]]?.nickname || conversation.name.split('@')[0])
+                : conversation.name;
+              const Icon = sidebarTab === 'dms' ? User : Hash;
+              const unread = getGroupUnreadCount(conversation.id);
+              return (
+                <button
+                  key={conversation.id}
+                  type="button"
+                  className={`community-mobile-conversation${isActive ? ' active' : ''}`}
+                  onClick={() => selectConversation(conversation, sidebarTab)}
+                  aria-pressed={isActive}
+                >
+                  <Icon size={15} aria-hidden="true" />
+                  <span>{label}</span>
+                  {unread > 0 && <b>{unread}</b>}
+                </button>
+              );
+            }) : (
+              <p className="community-mobile-empty">No {sidebarTab === 'groups' ? 'groups' : 'messages'} yet.</p>
+            )}
+          </div>
+
+          {activeGroup && channels.length > 1 && (
+            <div className="community-mobile-strip community-mobile-channels" aria-label="Channels">
+              {channels.map((channel) => {
+                const isActive = activeChannel?.id === channel.id;
+                return (
+                  <button
+                    key={channel.id}
+                    type="button"
+                    className={`community-mobile-conversation${isActive ? ' active' : ''}`}
+                    onClick={() => setActiveChannel(channel)}
+                    aria-pressed={isActive}
+                  >
+                    <Hash size={15} aria-hidden="true" />
+                    <span>{channel.name}</span>
+                    {unreadCounts[channel.id] > 0 && <b>{unreadCounts[channel.id]}</b>}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </nav>
 
         <div className="community-body">
           {/* Pane 2: Channel Sidebar */}
@@ -1329,5 +1426,4 @@ const Community = ({ isSidebarCollapsed }) => {
 };
 
 export default Community;
-
 

@@ -235,7 +235,7 @@ function SidebarModern(props) {
 
   return (
     <>
-      <aside className={`sidebar sb-modern${isCollapsed ? " sb-collapsed sidebar-collapsed" : ""}${isMobileMenuOpen ? " sidebar-mobile-open" : ""}`}>
+      <aside id="app-sidebar" className={`sidebar sb-modern${isCollapsed ? " sb-collapsed sidebar-collapsed" : ""}${isMobileMenuOpen ? " sidebar-mobile-open" : ""}`}>
         <div className="sb-aurora" aria-hidden="true">
           <span className="sb-aurora-blob sb-aurora-1" />
           <span className="sb-aurora-blob sb-aurora-2" />
@@ -1013,9 +1013,30 @@ const styles = `
   .sb-modern .sb-cred-foot a { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; color: var(--neon); text-decoration: none; }
   .sb-modern .sb-spin { animation: sb-spin 3s linear infinite; }
 
-  @media (max-width: 768px) {
-    .sb-modern.sidebar { width: 280px; min-width: 280px; }
-  }
+      @media (max-width: 768px) {
+        /* This stylesheet is injected after the global drawer rules. Keep the
+           sidebar out of the flex row until the mobile menu explicitly opens. */
+        .sb-modern.sidebar {
+          position: fixed;
+          top: var(--mobile-header-height, 56px);
+          left: -280px;
+          bottom: 0;
+          width: 280px;
+          min-width: 280px;
+          height: calc(100dvh - var(--mobile-header-height, 56px));
+          max-height: none;
+          z-index: 2100;
+          visibility: hidden;
+          opacity: 0;
+          transition: left 260ms ease, opacity 180ms ease, visibility 0s linear 260ms;
+        }
+        .sb-modern.sidebar.sidebar-mobile-open {
+          left: 0;
+          visibility: visible;
+          opacity: 1;
+          transition: left 260ms ease, opacity 180ms ease;
+        }
+      }
 
   @media (prefers-reduced-motion: reduce) {
     .sb-modern .sb-aurora-blob, .sb-modern .sb-aurora-scan, .sb-modern .sb-orbit, .sb-modern .sb-orbit-node,

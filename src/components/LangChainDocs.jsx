@@ -11,6 +11,7 @@ import {
 } from "../data/langchainDocsData";
 import { makeLangChainComponents, extractToc, langChainUrlTransform } from "./LangChainMarkdown";
 import { useTheme } from "../contexts/ThemeContext";
+import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/LangChainDocs.css";
 
 /* The LangChain Python documentation, read in-app.
@@ -166,11 +167,7 @@ export default function LangChainDocs({ product: initialProduct = "langchain", o
 
     setLoading(true);
     setError(null);
-    fetch(activePage.file)
-      .then((response) => {
-        if (!response.ok) throw new Error(`Could not load this page (${response.status})`);
-        return response.text();
-      })
+    fetchMarkdown(activePage.file)
       .then((text) => { cache.set(activePage.slug, text); apply(text); })
       .catch((err) => { if (alive) { setError(err.message); setLoading(false); } });
 
@@ -430,7 +427,10 @@ export default function LangChainDocs({ product: initialProduct = "langchain", o
                 {loading ? (
                   <p className="lc-status"><Loader2 size={15} className="lc-spin" /> Loading…</p>
                 ) : error ? (
-                  <p className="lc-status lc-status--error"><AlertCircle size={15} /> {error}</p>
+                  <div className="lc-status lc-status--error" role="alert">
+                    <AlertCircle size={15} /> <span>{error}</span>
+                    <button type="button" className="lc-btn" onClick={() => openPage(activeSlug)}>Retry</button>
+                  </div>
                 ) : (
                   <div className="lc-prose">
                     <ReactMarkdown

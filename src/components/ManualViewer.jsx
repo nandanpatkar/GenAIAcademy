@@ -9,6 +9,7 @@ import { getCategoryIcon } from "./ManualTree";
 import MermaidDiagram from "./MermaidDiagram";
 import RunnableCodeBlock from "./RunnableCodeBlock";
 import { executeCode } from "../services/jdoodleService";
+import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/Manual.css";
 
 // Helper for deep equality in JSON exercise validation
@@ -524,6 +525,7 @@ export default function ManualViewer({ activePhase, onSelectPhase, onClose }) {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [retryKey, setRetryKey] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const scrollContainerRef = useRef(null);
 
@@ -545,11 +547,7 @@ export default function ManualViewer({ activePhase, onSelectPhase, onClose }) {
     setError(null);
     setContent("");
 
-    fetch(activePhase.filePath)
-      .then(res => {
-        if (!res.ok) throw new Error(`Failed to load file: ${res.statusText}`);
-        return res.text();
-      })
+    fetchMarkdown(activePhase.filePath)
       .then(text => {
         const { body } = parseFrontmatter(text);
         setContent(body);
@@ -563,7 +561,7 @@ export default function ManualViewer({ activePhase, onSelectPhase, onClose }) {
         setError(`Error loading guide: ${err.message}`);
         setLoading(false);
       });
-  }, [activePhase]);
+  }, [activePhase, retryKey]);
 
   // Intercept relative links for SPA navigation
   const handleAnchorClick = useCallback((e, href) => {
@@ -813,11 +811,11 @@ export default function ManualViewer({ activePhase, onSelectPhase, onClose }) {
               <span style={{ fontSize: 13, color: "var(--text3)" }}>Loading manual phase...</span>
             </div>
           ) : error ? (
-            <div style={{ padding: "40px 24px", textAlign: "center", border: "1px solid rgba(239, 68, 68, 0.2)", background: "rgba(239, 68, 68, 0.02)", borderRadius: 12 }}>
+            <div role="alert" style={{ padding: "40px 24px", textAlign: "center", border: "1px solid rgba(239, 68, 68, 0.2)", background: "rgba(239, 68, 68, 0.02)", borderRadius: 12 }}>
               <X size={32} color="#ef4444" style={{ margin: "0 auto 12px" }} />
               <div style={{ fontSize: 14, color: "#ef4444", fontWeight: 700, marginBottom: 8 }}>{error}</div>
               <button 
-                onClick={() => setContent("")}
+                onClick={() => setRetryKey((key) => key + 1)}
                 style={{ padding: "6px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", borderRadius: 6, color: "var(--text)", fontSize: 11, cursor: "pointer" }}
               >
                 Retry Loading

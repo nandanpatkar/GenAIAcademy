@@ -1,0 +1,174 @@
+/* Phone-only refinements for destinations that remain in More. The desktop
+   implementations are intentionally untouched. */
+@media (max-width: 768px) {
+  .app-primary-content {
+    height: auto;
+    min-height: 0;
+    box-sizing: border-box;
+    padding-bottom: var(--mobile-nav-height);
+    overflow: hidden;
+  }
+
+  .app,
+  .app-layout-root {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .app { height: 100dvh; }
+  .app-layout-root { height: auto; flex: 1 1 auto; }
+
+  /* Roadmap and the bottom-nav Practice quiz each own the vertical scroll
+     surface. A constrained app shell keeps gestures inside that surface and
+     prevents the fixed navigation from stealing the final content rows. */
+  .mshell-scroll,
+  .quiz-container {
+    min-height: 0;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+  .quiz-container {
+    height: 100%;
+    padding-bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
+  /* Coding / simulation workspaces: make the primary work area the only
+     scrollable region and keep controls reachable above the tab bar. */
+  .studio-shell,
+  .studio-pro-shell,
+  .concurrency-quest,
+  .labs-hub,
+  .agent-library,
+  .ac-panel,
+  .lc-root,
+  .strands-shell,
+  .pg-workspace-shell {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height));
+  }
+
+  .studio-header,
+  .cq-topbar,
+  .lc-topbar,
+  .ac-topbar {
+    min-height: 60px;
+    height: auto !important;
+    padding-inline: 12px !important;
+  }
+
+  .studio-header,
+  .cq-topbar { flex-wrap: wrap; gap: 10px; }
+  .studio-header > *, .cq-topbar > * { min-width: 0; }
+
+  .studio-body,
+  .studio-main,
+  .cq-shell,
+  .ac-panel,
+  .lc-root {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .studio-sidebar,
+  .cq-mission-rail,
+  .ac-rail,
+  .lc-toc,
+  .ac-toc {
+    display: none !important;
+  }
+
+  .cq-shell {
+    display: block;
+  }
+
+  .cq-main { padding: 16px 14px calc(88px + env(safe-area-inset-bottom)); }
+  .cq-view-tabs,
+  .lc-tabs,
+  .ac-modes {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cq-view-tabs::-webkit-scrollbar,
+  .lc-tabs::-webkit-scrollbar,
+  .ac-modes::-webkit-scrollbar { display: none; }
+
+  .cq-view-tabs button,
+  .lc-icon-btn,
+  .ac-btn,
+  .agent-library button {
+    min-height: 44px;
+  }
+
+  .cq-hero,
+  .cq-practice-layout,
+  .cq-reference-layout,
+  .cq-theory-plain,
+  .cq-reading-example,
+  .cq-field-grid,
+  .cq-lesson-cards {
+    grid-template-columns: 1fr !important;
+  }
+  .cq-orbit-stage { min-height: 230px; }
+  .cq-hero h1 { font-size: clamp(32px, 10vw, 44px); }
+
+  /* Agent documentation: the existing rail toggle becomes the mobile entry to
+     navigation; reading stays full width with a comfortable measure. */
+  .ac-main,
+  .lc-main { width: 100%; min-width: 0; }
+  .ac-body,
+  .lc-scroll { padding: 18px 14px calc(92px + env(safe-area-inset-bottom)); }
+  .ac-grid,
+  .ac-samples-grid,
+  .lc-grid { grid-template-columns: 1fr !important; }
+  .ac-hero-title,
+  .lc-hero h1 { font-size: clamp(32px, 10vw, 44px); }
+  .ac-article-main,
+  .lc-article { max-width: 100%; }
+  .lc-status--error { flex-wrap: wrap; }
+  .lc-status--error .lc-btn { width: 100%; min-height: 44px; justify-content: center; }
+
+  .labs-hub { min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)); }
+  .labs-directory, .labs-hub-canvas { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .labs-card-grid { grid-template-columns: 1fr !important; }
+
+  .agent-library { padding-bottom: var(--mobile-nav-height); }
+  .al-home-inner, .al-library-context { width: 100%; max-width: 100%; }
+
+  /* Code Lab becomes a readable, vertical practice flow. The desktop split
+     panes remain untouched above this breakpoint. */
+  .leetcode-shell { height: auto !important; min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)); }
+  .leetcode-lab-topbar { height: auto !important; min-height: 60px; flex-wrap: wrap; padding: 8px 12px; }
+  .leetcode-lab-navigation { order: 2; width: 100%; overflow-x: auto; }
+  .leetcode-lab-actions { position: static; order: 3; width: 100%; transform: none; justify-content: stretch; }
+  .leetcode-lab-actions button { flex: 1; min-height: 44px; }
+  .leetcode-workspace-view { overflow: visible; }
+  .leetcode-workspace { display: block !important; min-height: auto; overflow: visible; padding: 0; }
+  .leetcode-horizontal-splitter, .leetcode-output-splitter { display: none; }
+  .leetcode-description { min-height: 320px; max-height: none; border-right: 0; }
+  .leetcode-description-scroll { max-height: 440px; }
+  .leetcode-editor-pane { min-height: 560px; margin-top: 10px; }
+  .leetcode-editor { min-height: 280px; flex: none; }
+  .leetcode-output { height: 240px !important; min-height: 220px !important; }
+
+  /* Embed and reading destinations use the full phone canvas and avoid the
+     desktop side gutters. */
+  .git-visualizer-shell { min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)); }
+  .git-visualizer-shell iframe { min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)); }
+  .notion-reading-surface { padding: 0 14px calc(88px + env(safe-area-inset-bottom)) !important; }
+  .notion-reading-surface h1 { font-size: clamp(28px, 9vw, 38px) !important; line-height: 1.12; }
+
+  /* Concept Connections keeps its map full-screen; filters become a compact
+     horizontal control strip instead of squeezing into multiple columns. */
+  .knowledge-graph-shell { min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)) !important; }
+  .knowledge-graph-toolbar { flex-wrap: nowrap !important; overflow-x: auto; padding: 10px 14px !important; scrollbar-width: none; }
+  .knowledge-graph-toolbar::-webkit-scrollbar { display: none; }
+  .knowledge-graph-toolbar .kg-title { flex: 0 0 auto; }
+  .knowledge-graph-toolbar .kg-tabs, .knowledge-graph-toolbar .kg-path-filters, .knowledge-graph-toolbar .kg-status-filters { flex: 0 0 auto; }
+  .knowledge-graph-toolbar .kg-search { width: 140px !important; flex: 0 0 auto; font-size: 16px !important; }
+  .knowledge-graph-toolbar .kg-divider { display: none; }
+  .kg-zoom-controls button { width: 44px !important; height: 44px !important; }
+  .kg-legend { display: none; }
+}

@@ -3,9 +3,9 @@ import { buildSearchIndex } from "./utils/buildSearchIndex";
 import { ProjectsProvider } from "./contexts/ProjectsContext";
 import {
   Box, BookOpen, Brain, Loader2, ChevronDown, ChevronUp,
-  ExternalLink, X, CheckSquare, Library, Network, AlignLeft,
+  ExternalLink, CheckSquare, Library, Network, AlignLeft,
   Sparkles, Bookmark, Video, FileText, Link2, CheckCircle2,
-  Menu, Map, Layout, User, Settings, PieChart, FlaskConical, PenTool, Lock, Orbit, Mic, BoxSelect,
+  Map, Layout, User, PieChart, FlaskConical, Lock, Orbit, BoxSelect, House, MoreHorizontal,
   HelpCircle
 } from "lucide-react";
 // The default curriculum (`PATHS`) is ~600 KB — dsa_path + three aicxm paths +
@@ -30,11 +30,13 @@ import { AnimatePresence } from "framer-motion";
 import useIsMobile from "./hooks/useIsMobile";
 import "./styles/global.css";
 import "./styles/mobile-foundation.css";
+import "./styles/mobile-destination-overrides.css";
 
 // Product surfaces are loaded only when the user opens them. This keeps Monaco,
 // graphing libraries, editors, and simulators out of the landing-page download.
 const Sidebar = React.lazy(() => import("./components/Sidebar"));
 const SidebarModern = React.lazy(() => import("./components/SidebarModern"));
+const MobileNavigationSheet = React.lazy(() => import("./components/mobile/MobileNavigationSheet"));
 const GlobalSearchPalette = React.lazy(() => import("./components/GlobalSearchPalette"));
 const RoadmapGraph = React.lazy(() => import("./components/RoadmapGraph"));
 const Roadmap2 = React.lazy(() => import("./components/Roadmap2"));
@@ -1459,6 +1461,52 @@ function MainApp() {
     );
   }
 
+  const sidebarProps = {
+    activePath, setActivePath: handleSidebarPathChange,
+    paths: pathsData, onReset: handleResetData, isEditMode, setIsEditMode,
+    onAddPath: handleAddPath, onEditPath: handleEditPath,
+    showCurriculumMap, setShowCurriculumMap,
+    showRoadmap2, setShowRoadmap2, showRoadmap3, setShowRoadmap3,
+    showIDE, setShowIDE, showResources, setShowResources,
+    showProgress, setShowProgress, showPlayground, setShowPlayground,
+    onOpenGenAIPlayground2: openGenAIPlayground2,
+    showDSAAnimator, setShowDSAAnimator, showLearnBug, setShowLearnBug,
+    showSqlLab, setShowSqlLab, showConcurrencyLab, setShowConcurrencyLab,
+    showLabs, setShowLabs, activeLabId, setActiveLabId,
+    showAgentLibrary, setShowAgentLibrary, showAimlCompanion, setShowAimlCompanion,
+    showLinks, setShowLinks, showBlog, setShowBlog,
+    onOpenBlogYear: (year) => { closeAllPanels(); setBlogSlug(null); setBlogTag(null); setBlogYear(year); setShowBlog(true); },
+    showAdminManagement, setShowAdminManagement,
+    showAwsSimulator, setShowAwsSimulator, showSimulator, setShowSimulator,
+    showGalaxy, setShowGalaxy, showAIInterviewer, setShowAIInterviewer,
+    showGeminiInterviewer, setShowGeminiInterviewer,
+    showEmotionalSupport, setShowEmotionalSupport,
+    showAlgoStudio, setShowAlgoStudio, showAlgoVisualizer, setShowAlgoVisualizer,
+    showK8sGames, setShowK8sGames, showGitVisualizer, setShowGitVisualizer,
+    showFlowDesign, setShowFlowDesign, showGitHubHub, setShowGitHubHub,
+    showIntelligenceHub, setShowIntelligenceHub, showHome2, setShowHome2,
+    showLegacyIntelligenceHub, setShowLegacyIntelligenceHub,
+    showWorkplaceLab, setShowWorkplaceLab, showKnowledgeGraph, setShowKnowledgeGraph,
+    showCommunity, setShowCommunity, showNotion, setShowNotion,
+    showNoSignups, setShowNoSignups, showFreeSystemDesign, setShowFreeSystemDesign,
+    showManual, setShowManual, activeManualPhase, setActiveManualPhase,
+    showReference, setShowReference, activeReferenceTopic, setActiveReferenceTopic,
+    showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
+    showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
+    showStrandsDocs, setShowStrandsDocs,
+    showOnboarding, setShowOnboarding: handleSidebarOnboarding,
+    showInterviewPrep, setShowInterviewPrep,
+    activeToolHome, onOpenToolHome: setActiveToolHome,
+    showQuiz, setShowQuiz, showLeetCode, setShowLeetCode,
+    showAlgoWar, setShowAlgoWar, showProjects, setShowProjects,
+    setLinksInitialTab, onHubNav: handleHubNav,
+    isMobileMenuOpen, setIsMobileMenuOpen,
+    activeNode, setActiveNode, setActiveModule, setActiveTopic,
+    onSignOut: handleSignOut,
+    isCollapsed: isSidebarCollapsed, setIsCollapsed: setIsSidebarCollapsed,
+    onSectionWalkthrough: handleSectionWalkthrough,
+  };
+
   return (
     <div className={`app ${isEditMode ? "edit-mode-active" : ""}${showOnboarding ? " onboarding-active" : ""}`}>
       {/* Mounted only while open — see the Cmd+K effect above and the note in
@@ -1496,85 +1544,13 @@ function MainApp() {
       <MobileHeader
         user={user}
         onSignOut={handleSignOut}
-        isMobileMenuOpen={isMobileMenuOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
       <div className="app-layout-root">
-        {/* Its own boundary: the sidebar is lazy, and switching between Sidebar and
-            SidebarModern must not take the rest of the app down with it. */}
-        <React.Suspense fallback={<aside className="app-sidebar-placeholder" aria-hidden="true" />}>
-        <ActiveSidebar
-          activePath={activePath} setActivePath={handleSidebarPathChange}
-          paths={pathsData} onReset={handleResetData} isEditMode={isEditMode} setIsEditMode={setIsEditMode}
-          onAddPath={handleAddPath}
-          onEditPath={handleEditPath}
-          showCurriculumMap={showCurriculumMap} setShowCurriculumMap={setShowCurriculumMap}
-          showRoadmap2={showRoadmap2} setShowRoadmap2={setShowRoadmap2}
-          showRoadmap3={showRoadmap3} setShowRoadmap3={setShowRoadmap3}
-          showIDE={showIDE} setShowIDE={setShowIDE}
-          showResources={showResources} setShowResources={setShowResources}
-          showProgress={showProgress} setShowProgress={setShowProgress}
-          showPlayground={showPlayground} setShowPlayground={setShowPlayground}
-          onOpenGenAIPlayground2={openGenAIPlayground2}
-          showDSAAnimator={showDSAAnimator} setShowDSAAnimator={setShowDSAAnimator}
-          showLearnBug={showLearnBug} setShowLearnBug={setShowLearnBug}
-          showSqlLab={showSqlLab} setShowSqlLab={setShowSqlLab}
-          showConcurrencyLab={showConcurrencyLab} setShowConcurrencyLab={setShowConcurrencyLab}
-          showLabs={showLabs} setShowLabs={setShowLabs}
-          activeLabId={activeLabId} setActiveLabId={setActiveLabId}
-          showAgentLibrary={showAgentLibrary} setShowAgentLibrary={setShowAgentLibrary}
-          showAimlCompanion={showAimlCompanion} setShowAimlCompanion={setShowAimlCompanion}
-          showLinks={showLinks} setShowLinks={setShowLinks}
-          showBlog={showBlog} setShowBlog={setShowBlog}
-          onOpenBlogYear={(year) => { closeAllPanels(); setBlogSlug(null); setBlogTag(null); setBlogYear(year); setShowBlog(true); }}
-          showAdminManagement={showAdminManagement} setShowAdminManagement={setShowAdminManagement}
-          showAwsSimulator={showAwsSimulator} setShowAwsSimulator={setShowAwsSimulator}
-          showSimulator={showSimulator} setShowSimulator={setShowSimulator}
-          showGalaxy={showGalaxy} setShowGalaxy={setShowGalaxy}
-          showAIInterviewer={showAIInterviewer} setShowAIInterviewer={setShowAIInterviewer}
-          showGeminiInterviewer={showGeminiInterviewer} setShowGeminiInterviewer={setShowGeminiInterviewer}
-          showEmotionalSupport={showEmotionalSupport} setShowEmotionalSupport={setShowEmotionalSupport}
-          showAlgoStudio={showAlgoStudio} setShowAlgoStudio={setShowAlgoStudio}
-          showAlgoVisualizer={showAlgoVisualizer} setShowAlgoVisualizer={setShowAlgoVisualizer}
-          showK8sGames={showK8sGames} setShowK8sGames={setShowK8sGames}
-          showGitVisualizer={showGitVisualizer} setShowGitVisualizer={setShowGitVisualizer}
-          showFlowDesign={showFlowDesign} setShowFlowDesign={setShowFlowDesign}
-          showGitHubHub={showGitHubHub} setShowGitHubHub={setShowGitHubHub}
-          showIntelligenceHub={showIntelligenceHub} setShowIntelligenceHub={setShowIntelligenceHub}
-          showHome2={showHome2} setShowHome2={setShowHome2}
-          showLegacyIntelligenceHub={showLegacyIntelligenceHub} setShowLegacyIntelligenceHub={setShowLegacyIntelligenceHub}
-          showWorkplaceLab={showWorkplaceLab} setShowWorkplaceLab={setShowWorkplaceLab}
-          showKnowledgeGraph={showKnowledgeGraph} setShowKnowledgeGraph={setShowKnowledgeGraph}
-          showCommunity={showCommunity} setShowCommunity={setShowCommunity}
-          showNotion={showNotion} setShowNotion={setShowNotion}
-          showNoSignups={showNoSignups} setShowNoSignups={setShowNoSignups}
-          showFreeSystemDesign={showFreeSystemDesign} setShowFreeSystemDesign={setShowFreeSystemDesign}
-          showManual={showManual} setShowManual={setShowManual}
-          activeManualPhase={activeManualPhase} setActiveManualPhase={setActiveManualPhase}
-          showReference={showReference} setShowReference={setShowReference}
-          activeReferenceTopic={activeReferenceTopic} setActiveReferenceTopic={setActiveReferenceTopic}
-          showAgentCore={showAgentCore} setShowAgentCore={setShowAgentCore}
-          agentCoreMode={agentCoreMode} setAgentCoreMode={setAgentCoreMode}
-          showLangChainDocs={showLangChainDocs} setShowLangChainDocs={setShowLangChainDocs}
-          langChainProduct={langChainProduct} setLangChainProduct={setLangChainProduct}
-          showStrandsDocs={showStrandsDocs} setShowStrandsDocs={setShowStrandsDocs}
-          showOnboarding={showOnboarding}
-          setShowOnboarding={handleSidebarOnboarding}
-          showInterviewPrep={showInterviewPrep} setShowInterviewPrep={setShowInterviewPrep}
-          activeToolHome={activeToolHome} onOpenToolHome={setActiveToolHome}
-          showQuiz={showQuiz} setShowQuiz={setShowQuiz}
-          showLeetCode={showLeetCode} setShowLeetCode={setShowLeetCode}
-          showAlgoWar={showAlgoWar} setShowAlgoWar={setShowAlgoWar}
-          showProjects={showProjects} setShowProjects={setShowProjects}
-          setLinksInitialTab={setLinksInitialTab}
-          onHubNav={handleHubNav}
-          isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen}
-          activeNode={activeNode} setActiveNode={setActiveNode} setActiveModule={setActiveModule} setActiveTopic={setActiveTopic}
-          onSignOut={handleSignOut}
-          isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed}
-          onSectionWalkthrough={handleSectionWalkthrough}
-        />
-        </React.Suspense>
+        {!isMobile && (
+          <React.Suspense fallback={<aside className="app-sidebar-placeholder" aria-hidden="true" />}>
+            <ActiveSidebar {...sidebarProps} />
+          </React.Suspense>
+        )}
 
         <main className="app-primary-content">
           {/*
@@ -1908,16 +1884,26 @@ function MainApp() {
       </div>
 
       <MobileBottomNav
-        activeView={showAdminManagement ? "admin" : showBlog ? "blog" : showPlayground ? "playground" : showProgress ? "progress" : "roadmap"}
+        activeView={isMobileMenuOpen ? "more" : showIntelligenceHub ? "home" : showProgress ? "progress" : showQuiz ? "practice" : "roadmap"}
         setView={v => {
           closeAllPanels();
-          if (v === "admin") setShowAdminManagement(true);
-          else if (v === "blog") setShowBlog(true);
-          else if (v === "interviewer") setShowAIInterviewer(true);
-          else if (v === "playground") setShowPlayground(true);
+          if (v === "home") setShowIntelligenceHub(true);
           else if (v === "progress") setShowProgress(true);
+          else if (v === "practice") setShowQuiz(true);
         }}
+        onMore={() => setIsMobileMenuOpen((open) => !open)}
+        isMoreOpen={isMobileMenuOpen}
       />
+
+      <OverlayBoundary>
+        {isMobile && isMobileMenuOpen && (
+          <MobileNavigationSheet
+            open
+            onClose={() => setIsMobileMenuOpen(false)}
+            navigationProps={sidebarProps}
+          />
+        )}
+      </OverlayBoundary>
 
       <OverlayBoundary>
         <FullContextChatbot
@@ -2093,54 +2079,67 @@ function ViewLoadingSkeleton() {
   );
 }
 
-function MobileHeader({ user, onSignOut, isMobileMenuOpen, setIsMobileMenuOpen }) {
+function MobileHeader({ user, onSignOut }) {
   const { theme, toggleTheme } = useTheme();
   return (
-    <div className="mobile-header mobile-only">
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          style={{ background: "none", border: "none", color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center", padding: 4 }}
-        >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 28, height: 28, borderRadius: 8, background: "linear-gradient(135deg, #00ff88, #0088ff)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 15px rgba(0,255,136,0.2)" }}>
+    <header className="mobile-header mobile-only">
+      <div className="mobile-header__brand">
+        <div className="mobile-header__identity" aria-label="GenAI Academy">
+          <div className="mobile-header__mark" aria-hidden="true">
             <Sparkles size={16} color="black" />
           </div>
-          <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: 0.5 }}>GEN<span>AI</span> ACADEMY</div>
+          <div className="mobile-header__wordmark">GEN<span>AI</span> ACADEMY</div>
         </div>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div className={`theme-switch ${theme === "dark" ? "active" : ""}`} onClick={toggleTheme}>
+      <div className="mobile-header__actions">
+        <button
+          type="button"
+          className={`theme-switch mobile-header__theme-switch ${theme === "dark" ? "active" : ""}`}
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+        >
           <div className="theme-switch-icon left"><Brain size={12} /></div>
           <div className="theme-switch-icon right"><Sparkles size={12} /></div>
           <div className="theme-switch-thumb"></div>
-        </div>
-        <div onClick={onSignOut} style={{ cursor: "pointer", opacity: 0.6 }}><User size={18} /></div>
+        </button>
+        <button
+          type="button"
+          className="mobile-header__icon-button mobile-header__account-button"
+          onClick={onSignOut}
+          aria-label={`Sign out${user?.email ? ` ${user.email}` : ""}`}
+        >
+          <User size={18} />
+        </button>
       </div>
-    </div>
+    </header>
   );
 }
 
-function MobileBottomNav({ activeView, setView }) {
+function MobileBottomNav({ activeView, setView, onMore, isMoreOpen }) {
   const items = [
+    { id: "home", icon: House, label: "Home" },
     { id: "roadmap", icon: Map, label: "Roadmap" },
     { id: "progress", icon: PieChart, label: "Progress" },
-    { id: "playground", icon: FlaskConical, label: "Lab" },
-    { id: "blog", icon: PenTool, label: "Blog" },
-    { id: "interviewer", icon: Mic, label: "Interview" },
-    { id: "admin", icon: Settings, label: "Admin" },
+    { id: "practice", icon: FlaskConical, label: "Practice" },
+    { id: "more", icon: MoreHorizontal, label: "More" },
   ];
   return (
-    <div className="mobile-nav mobile-only">
+    <nav className="mobile-nav mobile-only" aria-label="Primary navigation">
       {items.map(item => (
-        <div key={item.id} className={`mobile-nav-item ${activeView === item.id ? "active" : ""}`} onClick={() => setView(item.id)}>
+        <button
+          key={item.id}
+          type="button"
+          className={`mobile-nav-item ${activeView === item.id ? "active" : ""}`}
+          onClick={() => item.id === "more" ? onMore() : setView(item.id)}
+          aria-current={activeView === item.id ? "page" : undefined}
+          aria-expanded={item.id === "more" ? isMoreOpen : undefined}
+          aria-controls={item.id === "more" ? "mobile-navigation-sheet" : undefined}
+        >
           <div className="mobile-nav-icon"><item.icon size={20} /></div>
           <span>{item.label}</span>
-        </div>
+        </button>
       ))}
-    </div>
+    </nav>
   );
 }
 

@@ -17,6 +17,7 @@ import {
 import SampleViewer from "./SampleViewer";
 import { makeMarkdownComponents, extractToc } from "./AgentCoreMarkdown";
 import { useTheme } from "../contexts/ThemeContext";
+import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/AgentCore.css";
 
 // Section icons live in the generated index as names so it stays serializable.
@@ -166,8 +167,7 @@ export default function AgentCoreViewer({ onClose, initialMode = "docs" }) {
     let alive = true;
     setLoading(true);
     setError(null);
-    fetch(activePage.file)
-      .then((r) => { if (!r.ok) throw new Error(`Could not load this page (${r.status})`); return r.text(); })
+    fetchMarkdown(activePage.file)
       .then((text) => {
         if (!alive) return;
         const idx = text.indexOf("\n---\n");   // drop generated title/source block

@@ -1,0 +1,92 @@
+@media (max-width: 768px) {
+  .mobile-navigation-sheet {
+    display: grid;
+    gap: 24px;
+    padding: 4px 0 12px;
+  }
+
+  .mobile-navigation-group h2 {
+    margin: 0 0 9px;
+    color: var(--text3);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+
+  .mobile-navigation-list {
+    display: grid;
+    gap: 8px;
+  }
+
+  .mobile-navigation-item {
+    width: 100%;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    color: var(--text);
+    text-align: left;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--bg3) 82%, transparent);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: border-color .18s ease, background-color .18s ease, color .18s ease;
+  }
+
+  .mobile-navigation-item:active { background: var(--white-5); }
+  .mobile-navigation-item.active {
+    color: var(--neon);
+    border-color: color-mix(in srgb, var(--neon) 50%, var(--border));
+    background: color-mix(in srgb, var(--neon) 10%, var(--bg3));
+  }
+  .mobile-navigation-item:focus-visible,
+  .mobile-navigation-account button:focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: 2px;
+  }
+
+  .mobile-navigation-item__icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--neon);
+    background: var(--bg2);
+  }
+
+  .mobile-navigation-item__copy { min-width: 0; display: grid; gap: 3px; }
+  .mobile-navigation-item__copy strong { font-size: 14px; line-height: 1.2; }
+  .mobile-navigation-item__copy small {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--text3);
+    font-size: 11px;
+    line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  .mobile-navigation-item__chevron { flex: 0 0 auto; margin-left: auto; color: var(--text3); }
+
+  .mobile-navigation-account { padding-top: 4px; border-top: 1px solid var(--border); }
+  .mobile-navigation-account button {
+    width: 100%;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .mobile-navigation-account button:active { color: var(--text); background: var(--white-5); }
+}

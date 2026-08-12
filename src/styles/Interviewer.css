@@ -1063,3 +1063,27 @@
   .transcript-section { grid-column: span 1; }
 }
 @media (prefers-reduced-motion: reduce) { .start-btn, .scorecard-mini, .analysis-card, .language-option { transition: none; } }
+
+/* The interview setup becomes a deliberate single-column mobile flow. */
+@media (max-width: 768px) {
+  .interviewer-page { width: 100%; min-width: 0; max-width: 100%; min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)); overflow: hidden; }
+  .interviewer-header { height: 60px; min-height: 60px; padding: 0 12px; }
+  .interviewer-brand-mark { width: 32px; height: 32px; }
+  .interviewer-close { width: 44px; height: 44px; }
+  .setup-container { display: block; padding: 24px 16px 32px; }
+  .setup-shell { display: block; width: 100%; max-width: 100%; }
+  .setup-intro { min-height: 0; padding: 4px 2px 28px; }
+  .setup-intro-orb { width: 54px; height: 54px; margin-top: 24px; border-radius: 17px; }
+  .setup-intro h2 { max-width: 11ch; font-size: clamp(38px, 11vw, 48px); }
+  .setup-intro > p { font-size: 14px; line-height: 1.55; }
+  .setup-intro-stats { gap: 8px; margin-top: 24px; }
+  .setup-blueprint { display: none; }
+  .setup-card { padding: 20px 16px; border-radius: 20px; }
+  .setup-card-header { gap: 12px; padding-bottom: 20px; }
+  .setup-card-header h3 { font-size: 23px; }
+  .form-group input, .form-group select, .form-group textarea { font-size: 16px; }
+  .language-switcher { grid-template-columns: 1fr; }
+  .language-option { min-height: 48px; }
+  .setup-footer-note { align-items: flex-start; line-height: 1.45; }
+  .start-btn { min-height: 54px; }
+}

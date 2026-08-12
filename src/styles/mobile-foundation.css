@@ -44,8 +44,8 @@
 
 .mshell-back-btn {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--bg3);
@@ -99,6 +99,7 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding: 16px;
+  overscroll-behavior-y: contain;
 }
 
 /* ── MobileSheet ─────────────────────────────────────────────── */
@@ -116,7 +117,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  max-height: 88vh;
+  max-height: min(88dvh, 760px);
   z-index: 2500;
   background: var(--bg2);
   border-top-left-radius: 20px;
@@ -170,8 +171,8 @@
 
 .msheet-close-btn {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   border-radius: 7px;
   border: 1px solid var(--border);
   background: var(--bg3);
@@ -198,6 +199,7 @@
 
 .msheet-tab {
   flex-shrink: 0;
+  min-height: 44px;
   padding: 7px 14px;
   border-radius: 20px;
   border: 1px solid var(--border);
@@ -221,8 +223,9 @@
   min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 4px 16px 20px;
+  padding: 4px 16px calc(20px + env(safe-area-inset-bottom));
   touch-action: pan-y;
+  overscroll-behavior-y: contain;
 }
 
 .msheet-footer {
@@ -230,4 +233,19 @@
   padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
   background: var(--bg2);
+}
+
+.mshell-back-btn:focus-visible,
+.msheet-close-btn:focus-visible,
+.msheet-tab:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--neon) 70%, white);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msheet,
+  .msheet-backdrop,
+  .msheet-tab {
+    transition-duration: 0.01ms !important;
+  }
 }

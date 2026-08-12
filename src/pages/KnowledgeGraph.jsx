@@ -405,11 +405,11 @@ function GraphCanvas({ nodes, edges, isNotesTab, onNavigate, highlightedIds }) {
   }, [highlightedIds, isNotesTab]);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+    <div className="graph-canvas" style={{ position: "relative", width: "100%", height: "100%" }}>
       <svg ref={svgRef} style={{ width: "100%", height: "100%", display: "block" }} />
 
       {/* Zoom controls */}
-      <div style={{ position: "absolute", right: 20, top: 20, display: "flex", flexDirection: "column", gap: 4 }}>
+      <div className="kg-zoom-controls" style={{ position: "absolute", right: 20, top: 20, display: "flex", flexDirection: "column", gap: 4 }}>
         {[
           { icon: <ZoomIn size={13}/>,    action: zoomIn,    title: "Zoom in"  },
           { icon: <ZoomOut size={13}/>,   action: zoomOut,   title: "Zoom out" },
@@ -430,7 +430,7 @@ function GraphCanvas({ nodes, edges, isNotesTab, onNavigate, highlightedIds }) {
       </div>
 
       {/* Legend */}
-      <div style={{
+      <div className="kg-legend" style={{
         position: "absolute", left: 20, top: 20,
         background: "rgba(13,17,23,0.85)", border: "1px solid rgba(255,255,255,0.08)",
         borderRadius: 10, padding: "10px 14px", backdropFilter: "blur(8px)",
@@ -554,7 +554,7 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
   const isEmpty      = activeNodes.length === 0;
 
   return (
-    <div style={{
+    <div className="knowledge-graph-shell" style={{
       flex: 1,
       background: "var(--bg,#0d1117)",
       display: "flex", flexDirection: "column",
@@ -563,14 +563,14 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
     }}>
 
       {/* ── Top bar ── */}
-      <div style={{
+      <div className="knowledge-graph-toolbar" style={{
         display: "flex", alignItems: "center", gap: 10, padding: "10px 20px",
         borderBottom: "1px solid var(--border,rgba(255,255,255,0.08))",
         background: "rgba(13,17,23,0.95)", backdropFilter: "blur(12px)",
         flexShrink: 0, flexWrap: "wrap",
       }}>
         {/* Title */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginRight: 4 }}>
+        <div className="kg-title" style={{ display: "flex", alignItems: "center", gap: 10, marginRight: 4 }}>
           <div style={{ width: 28, height: 28, borderRadius: 8, background: "linear-gradient(135deg,#6366f1,#8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <GitBranch size={14} color="#fff" />
           </div>
@@ -583,7 +583,7 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
         </div>
 
         {/* Tab switcher */}
-        <div style={{ display: "flex", gap: 2, padding: 3, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9 }}>
+        <div className="kg-tabs" style={{ display: "flex", gap: 2, padding: 3, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9 }}>
           {[
             { id: "curriculum", label: "STUDY PATH", icon: <BookOpen size={11}/> },
             { id: "notes",      label: "MY NOTES",   icon: <FileText size={11}/> },
@@ -605,10 +605,10 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
           ))}
         </div>
 
-        <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
+        <div className="kg-divider" style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
 
         {/* Path filters */}
-        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+        <div className="kg-path-filters" style={{ display: "flex", gap: 4, alignItems: "center" }}>
           <span style={{ fontSize: 9, fontWeight: 700, color: "var(--text3,#8b949e)", letterSpacing: "0.5px" }}>PATH</span>
           {availablePaths.map(key => {
             const active = filterPaths.length === 0 || filterPaths.includes(key);
@@ -626,10 +626,10 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
           })}
         </div>
 
-        <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
+        <div className="kg-divider" style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
 
         {/* Status filters */}
-        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+        <div className="kg-status-filters" style={{ display: "flex", gap: 4, alignItems: "center" }}>
           <span style={{ fontSize: 9, fontWeight: 700, color: "var(--text3,#8b949e)", letterSpacing: "0.5px" }}>SHOW</span>
           {[["complete","Complete","#00ff88"],["in_progress","In Progress","#f59e0b"]].map(([s,label,color]) => (
             <button key={s} onClick={() => toggleStatus(s)} style={{
@@ -641,9 +641,9 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
           ))}
         </div>
 
-        <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
+        <div className="kg-divider" style={{ width: 1, height: 18, background: "rgba(255,255,255,0.08)" }} />
 
-        <input type="text" placeholder="Search concepts…" value={search} onChange={e => setSearch(e.target.value)}
+        <input className="kg-search" type="text" placeholder="Search concepts…" value={search} onChange={e => setSearch(e.target.value)}
           style={{ padding: "5px 12px", borderRadius: 8, fontSize: 11, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "var(--text,#e6edf3)", outline: "none", width: 160 }} />
 
         <button onClick={onClose} style={{ marginLeft: "auto", padding: "6px 8px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)", background: "transparent", color: "var(--text2,#8b949e)", cursor: "pointer", display: "flex", alignItems: "center" }}>

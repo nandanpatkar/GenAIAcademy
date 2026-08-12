@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function GitVisualizer({ onClose }) {
   return (
-    <div style={{
+    <div className="git-visualizer-shell" style={{
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
@@ -11,7 +11,7 @@ export default function GitVisualizer({ onClose }) {
       position: 'relative'
     }}>
 
-      <div style={{ flex: 1, position: 'relative' }}>
+      <div className="git-visualizer-frame" style={{ flex: 1, position: 'relative' }}>
         <iframe 
           src="/git-visualizer/index.html" 
           style={{ width: '100%', height: '100%', border: 'none' }}

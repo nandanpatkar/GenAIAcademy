@@ -3103,16 +3103,29 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 /* ── MOBILE RESPONSIVE OVERRIDES ─────────────────────────── */
 @media (max-width: 768px) {
   html, body { overflow: auto; height: auto; }
+  body.msheet-open { overflow: hidden; }
   .app {
+    --mobile-header-height: calc(56px + env(safe-area-inset-top));
+    --mobile-nav-height: calc(64px + env(safe-area-inset-bottom));
     flex-direction: column;
     height: auto;
-    min-height: 100vh;
+    min-height: 100dvh;
     overflow: visible;
+  }
+
+  .app-layout-root,
+  .app-primary-content {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .app-primary-content {
+    width: 100%;
   }
 
   .sidebar {
     position: fixed;
-    top: 56px;
+    top: var(--mobile-header-height);
     left: -280px;
     bottom: 0;
     width: 280px;
@@ -3121,7 +3134,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     border-right: 1px solid var(--border);
     transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     box-shadow: 20px 0 50px var(--black-50);
-    height: calc(100vh - 56px);
+    height: calc(100dvh - var(--mobile-header-height));
     display: flex !important;
     visibility: hidden;
     opacity: 0;
@@ -3135,7 +3148,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 
   .roadmap-graph {
     border-right: none;
-    height: calc(100vh - 120px); /* Leave room for header/nav */
+    height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height)); /* Leave room for header/nav */
     width: 100%;
   }
 
@@ -3175,12 +3188,13 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
 
   /* Navigation Components */
   .mobile-header {
-    height: 56px;
+    box-sizing: border-box;
+    min-height: var(--mobile-header-height);
     background: var(--bg2);
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding: env(safe-area-inset-top) 16px 0;
     justify-content: space-between;
     position: sticky;
     top: 0;
@@ -3193,19 +3207,22 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     bottom: 0;
     left: 0;
     right: 0;
-    height: 64px;
+    box-sizing: border-box;
+    min-height: var(--mobile-nav-height);
     background: color-mix(in srgb, var(--bg3) 90%, transparent);
     backdrop-filter: blur(20px);
     border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding-bottom: env(safe-area-inset-bottom);
+    padding: 0 8px env(safe-area-inset-bottom);
     z-index: 1050;
     box-shadow: 0 -10px 30px var(--black-50);
   }
 
   .mobile-nav-item {
+    border: 0;
+    background: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3214,13 +3231,22 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     font-size: 9px;
     font-weight: 700;
     text-decoration: none;
-    transition: all 0.2s;
+    min-height: 48px;
+    transition: color 0.2s ease, background-color 0.15s ease;
     flex: 1;
     padding: 8px 0;
+    cursor: pointer;
+    font: inherit;
   }
 
   .mobile-nav-item.active {
     color: var(--neon);
+  }
+
+  .mobile-nav-item:active { background: var(--white-5); }
+  .mobile-nav-item:focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: -3px;
   }
 
   .mobile-nav-icon {
@@ -3229,6 +3255,57 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .mobile-header__brand,
+  .mobile-header__actions,
+  .mobile-header__identity {
+    display: flex;
+    align-items: center;
+  }
+
+  .mobile-header__brand { gap: 8px; min-width: 0; }
+  .mobile-header__actions { gap: 8px; }
+  .mobile-header__identity { gap: 8px; min-width: 0; }
+  .mobile-header__mark {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #00ff88, #0088ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0,255,136,0.2);
+    flex: 0 0 auto;
+  }
+  .mobile-header__wordmark {
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .mobile-header__icon-button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .mobile-header__icon-button:active { background: var(--white-5); }
+  .mobile-header__icon-button:focus-visible,
+  .mobile-header__theme-switch:focus-visible {
+    outline: 2px solid var(--neon);
+    outline-offset: 2px;
+  }
+  .mobile-header__theme-switch {
+    border: 0;
+    cursor: pointer;
   }
 
   .rg-cta {

@@ -389,7 +389,7 @@ export default function NotionRenderer({ passedPageId }) {
             <Eye size={16} /> Show UI
           </button>
         )}
-        <div className="notion-renderer-container" style={{ padding: isFocusMode ? '0 20px' : '0 40px', margin: '0 auto', maxWidth: '100%', overflowY: 'auto', flex: 1, width: '100%', boxSizing: 'border-box' }}>
+        <div className="notion-renderer-container notion-reading-surface" style={{ padding: isFocusMode ? '0 20px' : '0 40px', margin: '0 auto', maxWidth: '100%', overflowY: 'auto', flex: 1, width: '100%', boxSizing: 'border-box' }}>
           <style>
             {`
               .notion-blocks > *:first-child {

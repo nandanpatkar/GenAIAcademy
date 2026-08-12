@@ -1522,6 +1522,35 @@
     .quiz-trust-row { gap: 10px; }
 }
 
+/* Content-first mobile layout. Keeps Quiz Lab clear of the fixed app navigation. */
+@media (max-width: 768px) {
+    .quiz-container {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        min-height: calc(100dvh - var(--mobile-header-height) - var(--mobile-nav-height));
+        height: auto;
+        padding: 16px 14px calc(88px + env(safe-area-inset-bottom));
+        overflow-x: clip;
+        overscroll-behavior-y: contain;
+    }
+    .quiz-start-screen { padding: 8px 0 28px; }
+    .quiz-topbar { gap: 12px; padding-bottom: 16px; }
+    .quiz-topbar-tabs {
+        max-width: 100%;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scrollbar-width: none;
+    }
+    .quiz-topbar-tabs::-webkit-scrollbar { display: none; }
+    .quiz-tab { min-height: 44px; flex: 0 0 auto; }
+    .quiz-bank-hero { padding: 24px 18px; border-radius: 20px; }
+    .quiz-bank-hero h1 { font-size: clamp(32px, 10vw, 44px); line-height: .98; }
+    .quiz-bank-hero-copy > p { font-size: 14px; line-height: 1.55; }
+    .quiz-hero-actions { width: 100%; }
+    .quiz-hero-actions .quiz-btn { min-height: 46px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .quiz-container *,
     .quiz-container *::before,

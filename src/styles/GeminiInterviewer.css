@@ -191,6 +191,18 @@
   .gemini-code-button { font-size: 0; width: 37px; padding: 0; justify-content: center; }
   .gemini-interviewer h1 { font-size: 28px; }
 }
+
+@media (max-width: 768px) {
+  .gemini-interviewer__header { height: 60px; padding: 0 12px; }
+  .gemini-interviewer__close { width: 44px; height: 44px; }
+  .gemini-interviewer h1 { font-size: clamp(30px, 10vw, 40px); }
+  .gemini-interviewer input, .gemini-interviewer select, .gemini-interviewer textarea { font-size: 16px; }
+  .gemini-role-chips, .gemini-language-picker { gap: 8px; }
+  .gemini-role-chips button, .gemini-language-picker button { min-height: 40px; }
+  .gemini-primary-action, .gemini-end-action { min-height: 52px; }
+  .gemini-room-top { gap: 12px; }
+  .gemini-live-controls { gap: 8px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .gemini-interviewer * { animation: none !important; transition: none !important; }
 }

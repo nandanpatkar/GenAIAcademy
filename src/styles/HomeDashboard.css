@@ -202,9 +202,9 @@
 
 @media (max-width: 768px) {
   .app-layout-root:has(.hub-redesign) { display: block; overflow: visible; }
-  .app-layout-root:has(.hub-redesign) .sidebar { position: fixed; top: 56px; left: -280px; bottom: 0; width: 280px; min-width: 280px; height: calc(100vh - 56px); }
+  .app-layout-root:has(.hub-redesign) .sidebar { position: fixed; top: var(--mobile-header-height); left: -280px; bottom: 0; width: 280px; min-width: 280px; height: calc(100dvh - var(--mobile-header-height)); }
   .app-layout-root:has(.hub-redesign) .sidebar.sidebar-mobile-open { left: 0; }
-  .app-layout-root:has(.hub-redesign) .app-primary-content { width: 100%; height: auto; min-height: calc(100vh - 56px); overflow: visible; }
+  .app-layout-root:has(.hub-redesign) .app-primary-content { width: 100%; height: auto; min-height: calc(100dvh - var(--mobile-header-height)); overflow: visible; }
 }
 
 /* Home discovery additions: keep every surface self-contained and prevent

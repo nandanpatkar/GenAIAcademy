@@ -173,6 +173,29 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
+        // Mirror Vercel's same-origin documentation rewrites in development.
+        // Without these, Vite returns index.html for a missing archive file and
+        // the in-app markdown reader renders the SPA markup as documentation.
+        "/agentcore-samples": {
+          target: "https://docs-cdn.gen-ai-academy.workers.dev",
+          changeOrigin: true,
+        },
+        "/agentcore": {
+          target: "https://docs-cdn.gen-ai-academy.workers.dev",
+          changeOrigin: true,
+        },
+        "/langchain": {
+          target: "https://docs-cdn.gen-ai-academy.workers.dev",
+          changeOrigin: true,
+        },
+        "/strands": {
+          target: "https://docs-cdn.gen-ai-academy.workers.dev",
+          changeOrigin: true,
+        },
+        "/guides": {
+          target: "https://docs-cdn.gen-ai-academy.workers.dev",
+          changeOrigin: true,
+        },
         // ApiBeam's legacy hosted relay accepts browser-extension requests but
         // does not allow the Vite development origin. Keep this narrow proxy
         // for local development; production should use a self-hosted relay

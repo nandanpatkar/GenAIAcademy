@@ -15,3 +15,48 @@
   .gemini-interviewer__room { padding: 18px 16px; }
   .gemini-interviewer__workspace.is-active .gemini-voice-orb { margin-top: 5vh; }
 }
+
+/* Atlas is a desktop takeover, but a normal mobile destination. This leaves the
+   shared bottom navigation available and turns the setup into one scroll flow. */
+@media (max-width: 768px) {
+  .app:has(.gemini-interviewer) .mobile-header { display: none; }
+  .gemini-interviewer {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: calc(100dvh - var(--mobile-nav-height)) !important;
+    z-index: auto !important;
+    overflow: visible !important;
+  }
+  .app-layout-root:has(.gemini-interviewer) > .app-primary-content {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .gemini-interviewer__workspace {
+    display: block;
+    min-height: calc(100dvh - var(--mobile-nav-height));
+    padding: 14px 14px calc(88px + env(safe-area-inset-bottom));
+  }
+  .gemini-interviewer__brief {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: 20px 16px;
+  }
+  .gemini-interviewer__room {
+    min-height: 520px;
+    height: auto;
+    margin-top: 14px;
+    padding: 16px;
+    border-radius: 20px;
+  }
+  .gemini-interviewer__workspace.is-active .gemini-interviewer__room {
+    min-height: calc(100dvh - var(--gi-header, 60px) - var(--mobile-nav-height));
+  }
+  .gemini-interviewer__workspace.is-active .gemini-voice-orb { margin-top: 4vh; }
+  .gemini-interviewer__transcript { max-height: 32vh; }
+}

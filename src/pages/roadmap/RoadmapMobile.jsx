@@ -91,13 +91,14 @@ export default function RoadmapMobile({
       title={title}
       subtitle={`${completedCount}/${total} completed · ${pct}%`}
       accentColor={color}
-      scrollPadBottom={90}
+      scrollPadBottom="calc(92px + env(safe-area-inset-bottom))"
       rightSlot={
         <button
           type="button"
           className="rgm-jump-btn"
           style={{ "--rgm-accent": color }}
           onClick={handleJumpToCurrent}
+          aria-label="Jump to current lesson"
         >
           <Target size={13} />
         </button>
