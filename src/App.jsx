@@ -646,6 +646,7 @@ function MainApp() {
   const [showStrandsDocs, setShowStrandsDocs] = useViewState(savedViews.showStrandsDocs ?? false);
   const [showAiFromScratch, setShowAiFromScratch] = useViewState(savedViews.showAiFromScratch ?? false);
   const [aifsTrack, setAifsTrack] = useState(savedViews.aifsTrack ?? "curriculum");
+  const [aifsLesson, setAifsLesson] = useState(null);
   const [showInterviewPrep, setShowInterviewPrep] = useViewState(savedViews.showInterviewPrep ?? false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
   const [showProjects, setShowProjects] = useViewState(savedViews.showProjects ?? false);
@@ -1144,6 +1145,15 @@ function MainApp() {
   };
 
   const handleTopicSelect = (topic) => {
+    // AI from Scratch sections carry "<lesson slug>#<heading>", so a click in
+    // the roadmap opens the reader on that lesson instead of the topic drawer.
+    if (topic && typeof topic.aifs === "string") {
+      const [slug, hash] = topic.aifs.split("#");
+      setAifsLesson({ slug, hash, at: Date.now() });
+      setAifsTrack(slug.startsWith("certification/") ? "certification" : "curriculum");
+      setShowAiFromScratch(true);
+      return;
+    }
     if (topic && topic.categorySlug && topic.guideSlug && topic.phaseSlug) {
       setActiveManualPhase({
         categorySlug: topic.categorySlug,
@@ -1701,7 +1711,7 @@ function MainApp() {
                                                         showAgentCore ? <ErrorBoundary><AgentCoreViewer initialMode={agentCoreMode} onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
-                                                        showAiFromScratch ? <ErrorBoundary><AiFromScratch track={aifsTrack} onClose={() => setShowAiFromScratch(false)} /></ErrorBoundary> :
+                                                        showAiFromScratch ? <ErrorBoundary><AiFromScratch track={aifsTrack} lesson={aifsLesson} onClose={() => { setAifsLesson(null); setShowAiFromScratch(false); }} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showAlgoWar ? <AlgoWarArena onClose={() => setShowAlgoWar(false)} /> :

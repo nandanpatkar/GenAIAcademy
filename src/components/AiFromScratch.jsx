@@ -55,7 +55,7 @@ const formatMinutes = (minutes) => {
   return rest ? `${hours}h ${rest}m` : `${hours}h`;
 };
 
-export default function AiFromScratch({ track: initialTrack = "curriculum", onClose }) {
+export default function AiFromScratch({ track: initialTrack = "curriculum", lesson: deepLink = null, onClose }) {
   const { theme } = useTheme();
   const dark = theme !== "light";
 
@@ -81,6 +81,7 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", onCl
 
   const bodyRef = useRef(null);
   const searchRef = useRef(null);
+  const pendingHash = useRef(null);
 
   const lesson = activeSlug ? LESSON_BY_SLUG[activeSlug] : null;
   const phase = activeSlug ? PHASE_BY_SLUG[activeSlug] : null;
@@ -105,6 +106,14 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", onCl
     setQuery("");
     try { localStorage.setItem(LS_LAST, slug); } catch { /* ignore */ }
   }, []);
+
+  /* A study-path click arrives as { slug, hash } — open that lesson and, once
+     its body is in, scroll to the section the reader clicked. */
+  useEffect(() => {
+    if (!deepLink?.slug || !LESSON_BY_SLUG[deepLink.slug]) return;
+    pendingHash.current = deepLink.hash || null;
+    openLesson(deepLink.slug);
+  }, [deepLink, openLesson]);
 
   const step = useCallback((delta) => {
     const index = ORDER_INDEX[activeSlug];
@@ -147,6 +156,13 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", onCl
       setToc(extractToc(text));
       setLoading(false);
       if (bodyRef.current) bodyRef.current.scrollTop = 0;
+      if (pendingHash.current) {
+        const id = pendingHash.current;
+        pendingHash.current = null;
+        requestAnimationFrame(() => {
+          document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
     };
 
     if (bodyCache.has(lesson.slug)) { setError(null); apply(bodyCache.get(lesson.slug)); return undefined; }
