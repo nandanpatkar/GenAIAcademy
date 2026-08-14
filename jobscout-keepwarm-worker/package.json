@@ -1,0 +1,15 @@
+{
+  "name": "jobscout-keepwarm-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker that pings the Job Scout container on Render every 10 minutes so its free instance never spins down — a cold boot at 0.1 CPU measured 286s. Deployed separately from the Vercel app — never part of the main build.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "test-cron": "wrangler dev --test-scheduled"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

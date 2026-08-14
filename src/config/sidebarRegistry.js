@@ -6,7 +6,7 @@ import {
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
-  FlaskConical, Headphones, Tags, Swords,
+  FlaskConical, Headphones, Tags, Swords, Briefcase,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -184,6 +184,10 @@ export const SIDEBAR_ITEM_REGISTRY = {
   interviewer: { icon: Users, label: "AI Interviewer", description: "Practice realistic interviews" },
   gemini_interviewer: { icon: Sparkles, label: "Gemini Interview", description: "Live data science voice interview" },
   emotional_support: { icon: HeartHandshake, label: "Emotional Support", description: "A calm space to talk things through", defaultVisibility: "admin" },
+  // Admin-only on purpose: the Job Scout service keeps one candidate profile and
+  // one LangGraph checkpoint per process, so two concurrent visitors would share
+  // a session. See JOB_AGENT_PLAN.md.
+  job_scout: { icon: Briefcase, label: "Job Scout", description: "Match your CV against real openings", defaultVisibility: "admin" },
   quiz: { icon: CheckSquare, label: "Quiz", description: "Practice quizzes and certification exams" },
 
   community: { icon: Users, label: "Community", description: "Chat and connect with learners" },
@@ -214,7 +218,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "labs", label: "Labs", itemIds: ["labs"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
-  { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "quiz"] },
+  { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
   { id: "more_tools", label: "More tools", itemIds: ["projects", "aws_simulator", "dsa_animator", "k8s_games", "git_visualizer", "flow_design", "notion", "nosignups", "free_system_design"] },
 ];

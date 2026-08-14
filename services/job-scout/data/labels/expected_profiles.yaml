@@ -1,0 +1,110 @@
+# Hand-verified expected Profile fields for the fixture CVs.
+# Scaffolded by build_extraction_dataset.py --scaffold (LLM DRAFTS — correct them!),
+# then hand-edited. An entry only enters the dataset once `verified: true`.
+# Fields mirror job_scout.graph.schemas.Profile.
+- cv_file: career_changer_in.pdf
+  verified: false
+  expected:
+    name: Priya Nair
+    seniority: junior
+    primary_roles:
+    - data analyst
+    - data scientist
+    - mathematics teacher
+    skills:
+    - statistics
+    - excel
+    - python
+    - sql
+    - data visualization
+    - teaching
+    - communication
+    years_experience: 11.0
+    locations:
+    - Bengaluru, India
+    languages:
+    - english
+    - hindi
+    - malayalam
+    remote_ok: false
+- cv_file: german_pm_de.pdf
+  verified: false
+  expected:
+    name: Sophie Krüger
+    seniority: mid
+    primary_roles:
+    - data product manager
+    - business analyst
+    skills:
+    - sql
+    - python
+    - tableau
+    - produktstrategie
+    - a/b-tests
+    - stakeholder-management
+    - datenanalyse
+    - agile methoden
+    years_experience: 5.0
+    locations:
+    - münchen
+    - remote
+    languages:
+    - deutsch
+    - englisch
+    remote_ok: true
+- cv_file: junior_ds_us.pdf
+  verified: false
+  expected:
+    name: Maya Chen
+    seniority: junior
+    primary_roles:
+    - Data Analyst
+    - Data Scientist
+    skills:
+    - python
+    - sql
+    - pandas
+    - scikit-learn
+    - matplotlib
+    - jupyter
+    - git
+    - aws
+    - tableau
+    years_experience: 1.5
+    locations:
+    - San Francisco, CA, USA
+    - United States
+    languages:
+    - English
+    remote_ok: true
+- cv_file: senior_mle_eu.pdf
+  verified: false
+  expected:
+    name: Lukas Vogel
+    seniority: senior
+    primary_roles:
+    - senior machine learning engineer
+    - machine learning engineer
+    skills:
+    - python
+    - pytorch
+    - tensorflow
+    - kubernetes
+    - docker
+    - aws
+    - gcp
+    - mlflow
+    - kafka
+    - spark
+    - feature stores
+    - model serving
+    - ci/cd
+    - distributed training
+    - llm fine-tuning
+    years_experience: 8.0
+    locations:
+    - Berlin, Germany
+    languages:
+    - English
+    - German
+    remote_ok: true

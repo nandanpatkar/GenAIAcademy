@@ -117,6 +117,13 @@ const apiMiddleware = () => ({
             }
 
             const module = await import(`${filePath}?update=${Date.now()}`);
+            // api/ also holds shared helpers with no handler (regions.js is
+            // imported by prices.js). Fall through instead of 500ing on a path
+            // that was never an endpoint.
+            if (typeof module.default !== "function") {
+              next();
+              return;
+            }
             await module.default(req, res);
             return;
           } catch (err) {
@@ -131,6 +138,30 @@ const apiMiddleware = () => ({
     });
   },
 });
+
+// services/job-scout runs as a separate container; see JOB_AGENT_PLAN.md.
+const JOBSCOUT_TARGET = process.env.JOBSCOUT_TARGET || "http://localhost:8080";
+
+// When that container is not running, an unhandled proxy error tears down the
+// socket and the browser reports an opaque network failure. Answer with a real
+// status instead, so the Job Scout page can show "start the container" rather
+// than a generic error.
+const onJobScoutProxyError = (proxy) => {
+  proxy.on("error", (_err, _req, res) => {
+    if (!res) return;
+    if (typeof res.writeHead === "function") {
+      if (!res.headersSent) {
+        res.writeHead(503, { "Content-Type": "application/json" });
+        // `source` marks this as "the dev proxy could not reach the container",
+        // which is a definitive local answer rather than a cold start, so the
+        // Job Scout page can stop retrying early and say what to run.
+        res.end('{"error":"job-scout is not running","source":"vite-dev-proxy"}');
+      }
+      return;
+    }
+    res.destroy?.(); // websocket upgrades hand back a raw socket
+  });
+};
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -209,6 +240,32 @@ export default defineConfig(({ mode }) => {
           target: "https://api.notion.com",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/notion-api/, ""),
+        },
+        // Job Scout (services/job-scout) — mirrors the /jobscout/ rewrite in
+        // vercel.json so the embed is same-origin in development too. Without
+        // it Vite serves index.html for /jobscout/ and the iframe loads this
+        // app inside itself, recursively. ws:true because Gradio's event
+        // stream upgrades to a websocket.
+        // The Jobvis console is a Next.js export and asks for its chunks at the
+        // absolute path /_next/..., which it cannot be talked out of without
+        // editing the agent's next.config.ts. Nothing else here serves /_next
+        // (Vite emits /assets), so handing the whole prefix to the agent is safe.
+        "/_next": {
+          target: JOBSCOUT_TARGET,
+          changeOrigin: false,
+          configure: onJobScoutProxyError,
+        },
+        "/jobscout": {
+          target: JOBSCOUT_TARGET,
+          // changeOrigin MUST stay false. Gradio builds the absolute API root it
+          // hands the browser from the Host header; rewriting Host to the
+          // container makes it advertise localhost:8080, so the browser leaves
+          // this origin, skips the proxy and trips CORS. Forwarding the real
+          // Host keeps that root on the dev server.
+          changeOrigin: false,
+          ws: true,
+          rewrite: (path) => path.replace(/^\/jobscout/, ""),
+          configure: onJobScoutProxyError,
         },
       },
     },

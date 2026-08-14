@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+
+# Local overrides (NEXT_PUBLIC_JOBVIS_GESTURES lives here)
+.env.local
+
+# Vendored by `make web-assets`: ~35MB of wasm plus a 7MB model, and neither
+# belongs in git history. Only needed if you want gesture control.
+public/mediapipe/

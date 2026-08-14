@@ -1,0 +1,105 @@
+# Render Blueprint for the Job Scout agent (services/job-scout).
+#
+# Only this one service is deployed here — the app itself is on Vercel, which
+# reaches this container through the /jobscout/ rewrite in vercel.json. See
+# JOB_AGENT_DEPLOY.md for the full plan and the measurements behind these choices.
+#
+# The free instance is 512 MB / 0.1 CPU. Measured on this image: 172 MB resident
+# (comfortable) but a 286-second cold boot (not). Render spins a free service down
+# after 15 minutes idle, so jobscout-keepwarm-worker/ pings it every 10 minutes to
+# stop that boot from ever being on a visitor's path. Keep this as the ONLY free
+# service in the workspace: the 750 instance-hours/month are shared across all of
+# them, and one service running continuously already uses ~744.
+
+services:
+  - name: job-scout
+    type: web
+    runtime: docker
+    plan: free
+    # Closest region to the Indian roles this is mostly used to search.
+    region: singapore
+    rootDir: services/job-scout
+    dockerfilePath: ./Dockerfile
+
+    # healthCheckPath is deliberately NOT set. Render would poll it during the
+    # ~5-minute cold boot, when nginx is already answering but the Python process
+    # behind it is not, and mark the deploy failed on the 502s. With no health
+    # check Render only waits for the port to bind — which nginx does in about a
+    # second, because CMD starts it before the interpreter. Port-bind detection is
+    # the accurate signal here; /api/config is not.
+
+    envVars:
+      # nginx listens on a hardcoded 8080; Render looks at 10000 unless told.
+      - key: PORT
+        value: 8080
+
+      # Set to https://<your-vercel-domain>/jobscout after the first deploy.
+      # Gradio derives the absolute API root it hands the browser from the Host
+      # header, and Vercel's external rewrites replace Host with the destination's
+      # — so without this the wizard would advertise onrender.com, leave the app's
+      # origin, and hit the localhost:3000-only CORS rule at api.py:239.
+      # GRADIO_ROOT_PATH accepts a complete URL, which is what makes this work
+      # without touching the agent.
+      - key: GRADIO_ROOT_PATH
+        sync: false
+
+      # Prompted for on Blueprint creation and stored only in Render. This repo is
+      # public, so no value below is ever written to disk here.
+      - key: AZURE_OPENAI_API_KEY
+        sync: false
+      - key: AZURE_OPENAI_ENDPOINT
+        sync: false
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_AGENT_ID
+        sync: false
+      - key: ELEVENLABS_VOICE_ID
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+
+      # Not currently set locally either. ADZUNA is free to register and is the
+      # only source with India coverage; JSEARCH gives the best city-level results;
+      # OPIK is the tracing this project exists to demonstrate. Leave blank and the
+      # agent falls back to Remotive plus the committed data/cached_jobs.json.
+      - key: ADZUNA_APP_ID
+        sync: false
+      - key: ADZUNA_APP_KEY
+        sync: false
+      - key: JSEARCH_API_KEY
+        sync: false
+      - key: OPIK_API_KEY
+        sync: false
+      - key: OPIK_WORKSPACE
+        sync: false
+
+      # Behaviour parity with the local .env — not secrets, so pinned here where
+      # they are reviewable rather than living only in a dashboard.
+      - key: SCOUT_MODEL
+        value: azure_openai:gpt-4o
+      - key: SCOUT_TAILOR_MODEL
+        value: azure_openai:gpt-4o
+      - key: OPENAI_API_VERSION
+        value: "2024-10-21"
+      - key: OPIK_ENABLED
+        value: "true"
+      - key: OPIK_PROJECT_NAME
+        value: job-scout
+      - key: MAX_LLM_CALLS_PER_RUN
+        value: "10"
+      - key: SCOUT_MAX_JOBS
+        value: "10"
+      - key: SCOUT_MAX_REFORMULATIONS
+        value: "2"
+      - key: SCOUT_RANK_BATCH
+        value: "4"
+      - key: SCOUT_CONCURRENT_SOURCES
+        value: "true"
+      - key: SCOUT_SOURCE_SOFT_DEADLINE
+        value: "1.0"
+      - key: SCOUT_FAB_BULLET_RATIO
+        value: "0.65"
+      - key: SCOUT_FAB_SKILL_RATIO
+        value: "0.85"
+      - key: SCOUT_FAB_LETTER_RATIO
+        value: "0.55"

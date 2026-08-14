@@ -1,0 +1,15 @@
+# Never bake secrets or personal data into an image.
+.env
+data/candidate/
+
+# Rebuilt inside the image, or irrelevant to it.
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+node_modules/
+web/.next/
+notebooks/
+.git/
+.DS_Store

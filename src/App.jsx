@@ -69,6 +69,7 @@ const AdminManagement = React.lazy(() => import("./components/AdminManagement"))
 const InterviewerPage = React.lazy(() => import("./pages/interviewer/InterviewerPage"));
 const GeminiInterviewerPage = React.lazy(() => import("./pages/gemini-interviewer/GeminiInterviewerPage"));
 const EmotionalSupportPage = React.lazy(() => import("./pages/emotional-support/EmotionalSupportPage"));
+const JobScoutPage = React.lazy(() => import("./pages/jobscout/JobScoutPage"));
 const AlgoVisualizer = React.lazy(() => import("./components/AlgoVisualizer"));
 const CodeVisualizer = React.lazy(() => import("./components/CodeVisualizer"));
 const K8sGames = React.lazy(() => import("./components/K8sGames"));
@@ -623,6 +624,7 @@ function MainApp() {
   const [showAIInterviewer, setShowAIInterviewer] = useViewState(savedViews.showAIInterviewer ?? false);
   const [showGeminiInterviewer, setShowGeminiInterviewer] = useViewState(false);
   const [showEmotionalSupport, setShowEmotionalSupport] = useViewState(false);
+  const [showJobScout, setShowJobScout] = useViewState(savedViews.showJobScout ?? false);
   const [showAlgoStudio, setShowAlgoStudio] = useViewState(savedViews.showAlgoStudio ?? false);
   const [showAlgoVisualizer, setShowAlgoVisualizer] = useViewState(savedViews.showAlgoVisualizer ?? false);
   const [showK8sGames, setShowK8sGames] = useViewState(savedViews.showK8sGames ?? false);
@@ -692,7 +694,7 @@ function MainApp() {
       localStorage.setItem("genai_active_views", JSON.stringify({
         showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
         showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
-        showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
+        showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showJobScout, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
         showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
@@ -705,7 +707,7 @@ function MainApp() {
   }, [
     showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
     showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
-    showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showAlgoStudio,
+    showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showJobScout, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
     showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
@@ -855,6 +857,7 @@ function MainApp() {
     setShowAIInterviewer(false);
     setShowGeminiInterviewer(false);
     setShowEmotionalSupport(false);
+    setShowJobScout(false);
     setShowAlgoStudio(false);
     setShowAlgoVisualizer(false);
     setShowK8sGames(false);
@@ -1491,6 +1494,7 @@ function MainApp() {
     showGalaxy, setShowGalaxy, showAIInterviewer, setShowAIInterviewer,
     showGeminiInterviewer, setShowGeminiInterviewer,
     showEmotionalSupport, setShowEmotionalSupport,
+    showJobScout, setShowJobScout,
     showAlgoStudio, setShowAlgoStudio, showAlgoVisualizer, setShowAlgoVisualizer,
     showK8sGames, setShowK8sGames, showGitVisualizer, setShowGitVisualizer,
     showFlowDesign, setShowFlowDesign, showGitHubHub, setShowGitHubHub,
@@ -1631,6 +1635,7 @@ function MainApp() {
                         showAIInterviewer ? <InterviewerPage onClose={() => setShowAIInterviewer(false)} /> :
                           showGeminiInterviewer ? <GeminiInterviewerPage onClose={() => setShowGeminiInterviewer(false)} /> :
                           showEmotionalSupport ? <EmotionalSupportPage onClose={() => setShowEmotionalSupport(false)} /> :
+                          showJobScout ? <JobScoutPage onClose={() => setShowJobScout(false)} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} /> :
                           showDSAAnimator ? <DSAAnimator onClose={() => setShowDSAAnimator(false)} /> :
                             showLearnBug ? <LearnBugEmbed onClose={() => setShowLearnBug(false)} /> :
                             showSqlLab ? <SqlLab onClose={() => setShowSqlLab(false)} /> :
@@ -1986,7 +1991,7 @@ function MainApp() {
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
         !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showSqlLab && !showConcurrencyLab && !showAgentLibrary && !showAimlCompanion && !showLinks &&
         !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
-        !showAIInterviewer && !showGeminiInterviewer && !showEmotionalSupport && !showAlgoStudio && !showAlgoVisualizer &&
+        !showAIInterviewer && !showGeminiInterviewer && !showEmotionalSupport && !showJobScout && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
         !showIntelligenceHub && !showLegacyIntelligenceHub && !showWorkplaceLab && !showKnowledgeGraph &&
         !showCommunity && !showAlgoWar && (

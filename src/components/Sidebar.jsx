@@ -44,6 +44,7 @@ function Sidebar({
   showAIInterviewer, setShowAIInterviewer,
   showGeminiInterviewer, setShowGeminiInterviewer,
   showEmotionalSupport, setShowEmotionalSupport,
+  showJobScout, setShowJobScout,
   showAlgoStudio, setShowAlgoStudio,
   showAlgoVisualizer, setShowAlgoVisualizer,
   showK8sGames, setShowK8sGames,
@@ -296,6 +297,7 @@ function Sidebar({
     if (showAIInterviewer) return "interviewer";
     if (showGeminiInterviewer) return "gemini_interviewer";
     if (showEmotionalSupport) return "emotional_support";
+    if (showJobScout) return "job_scout";
     if (showAlgoStudio) return "algo_studio";
     if (showAlgoVisualizer) return "algo_visualizer";
     if (showK8sGames) return "k8s_games";
@@ -359,6 +361,7 @@ function Sidebar({
     if (setShowAIInterviewer) setShowAIInterviewer(false);
     if (setShowGeminiInterviewer) setShowGeminiInterviewer(false);
     if (setShowEmotionalSupport) setShowEmotionalSupport(false);
+    if (setShowJobScout) setShowJobScout(false);
     if (setShowAlgoStudio) setShowAlgoStudio(false);
     if (setShowAlgoVisualizer) setShowAlgoVisualizer(false);
     if (setShowK8sGames) setShowK8sGames(false);
@@ -601,6 +604,9 @@ function Sidebar({
         break;
       case "emotional_support":
         if (setShowEmotionalSupport) setShowEmotionalSupport(true);
+        break;
+      case "job_scout":
+        if (setShowJobScout) setShowJobScout(true);
         break;
       case "algo_studio":
         if (setShowAlgoStudio) setShowAlgoStudio(true);

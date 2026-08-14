@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual envs / uv
+.venv/
+.python-version
+
+# Env & secrets
+.env
+!.env.example
+!.env.test
+
+# Test / tooling caches
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# The locally persisted candidate (CV text + profile) — personal data, never committed
+data/candidate/
+
+# OS
+.DS_Store
+
+# Batch/snapshot output (runtime artifacts; the committed reference copies live in docs/)
+reports/
+# opik.run_tests writes a JSON report per suite run; runtime output, like reports/
+opik_test_suite_reports/
+
+# Blog drafts (published on Substack, not in the repo)
+blog/
+
+# JS deps/build output. web/ has its own ignore file, but that file only
+# ships with the console, so guard it here too.
+node_modules/
+web/out/
+web/.next/

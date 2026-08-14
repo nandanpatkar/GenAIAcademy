@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/**/*.js": {
-      "excludeFiles": "{public/**,dist/**,reference/**,themissingmanual/**,src/**,system-design-simulator/**,course_data*,scraped_data.json}"
+      "excludeFiles": "{public/**,dist/**,reference/**,themissingmanual/**,src/**,services/**,system-design-simulator/**,course_data*,scraped_data.json}"
     }
   },
   "rewrites": [
@@ -28,6 +28,14 @@
     {
       "source": "/guides/(.*)",
       "destination": "https://docs-cdn.gen-ai-academy.workers.dev/guides/$1"
+    },
+    {
+      "source": "/jobscout/(.*)",
+      "destination": "https://REPLACE-WITH-YOUR-JOB-SCOUT-HOST/$1"
+    },
+    {
+      "source": "/_next/(.*)",
+      "destination": "https://REPLACE-WITH-YOUR-JOB-SCOUT-HOST/_next/$1"
     },
     {
       "source": "/graphql",
@@ -91,6 +99,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/jobscout/(.*)",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "0"
         }
       ]
     }

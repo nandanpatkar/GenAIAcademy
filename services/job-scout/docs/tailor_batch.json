@@ -1,0 +1,836 @@
+{
+  "summary": {
+    "cases": 15,
+    "tailored": 14,
+    "search_failures": 0,
+    "graceful_tailor_errors": 1,
+    "runs_with_fabrication_flags": 14,
+    "total_fabrication_flags": 79,
+    "total_claims_checked": 229,
+    "fabrication_rate": 0.345,
+    "mean_cover_letter_words": 197.3,
+    "total_cost_usd": 0.3681
+  },
+  "runs": [
+    {
+      "case_id": "junior_ds_us|top1",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #1",
+      "thread_id": "966a8c8b-fe54-47ce-8976-71b16e38c348",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.029349,
+      "search_latency_s": 286.7,
+      "tailored": true,
+      "selected_job_id": "remotive-2091047",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 15,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Automated data reporting workflows with Python and SQL, enhancing Tableau dashboard efficiency.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.73 < 0.75)",
+          "best_match_ratio": 0.735
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Conducted A/B testing on checkout processes and communicated performance improvements to product teams.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.57 < 0.75)",
+          "best_match_ratio": 0.568
+        },
+        {
+          "where": "skill:AWS",
+          "text": "AWS",
+          "reason": "skill is not in the candidate's corpus (best match 0.50)",
+          "best_match_ratio": 0.5
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "I am excited to apply for the Online Data Analyst position.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.39)",
+          "best_match_ratio": 0.387
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 1.5 years of experience as a Data Analyst at BrightRetail Inc, I have honed my skills in Python, SQL, and Tableau to develop forecasting models and automate reporting pipelines.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.38)",
+          "best_match_ratio": 0.385
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 181,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001702,
+      "tailor_latency_s": 8.87
+    },
+    {
+      "case_id": "senior_mle_eu|top1",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #1",
+      "thread_id": "f0350c5e-05c9-43ad-bb6f-060743afe4e1",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.010104,
+      "search_latency_s": 81.28,
+      "tailored": true,
+      "selected_job_id": "remotive-1919266",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Designed and deployed a real-time recommendation service handling 10 million requests daily on Kubernetes, ensuring high availability and scalability.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.68 < 0.75)",
+          "best_match_ratio": 0.678
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the MLOps stack from the ground up, integrating MLflow, feature stores, and CI/CD pipelines to streamline model development and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.51 < 0.75)",
+          "best_match_ratio": 0.507
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Mentored a team of four engineers and managed on-call responsibilities for the machine learning platform, enhancing operational reliability.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.56 < 0.75)",
+          "best_match_ratio": 0.561
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Developed and trained distributed PyTorch ranking models for search, achieving a 9% improvement in click-through rate.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.75)",
+          "best_match_ratio": 0.526
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience delivering production AI systems and leading MLOps initiatives, I am confident in my ability to contribute effectively to your network of builders.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.38)",
+          "best_match_ratio": 0.382
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 198,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001909,
+      "tailor_latency_s": 13.39
+    },
+    {
+      "case_id": "career_changer_in|top1",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #1",
+      "thread_id": "2a525099-9aa5-458c-861a-5b6d167a8a72",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.030417,
+      "search_latency_s": 250.26,
+      "tailored": true,
+      "selected_job_id": "jsearch-imj8GO4poXZ0caoUAAAAAA==",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 11,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Taught statistics and probability to over 200 students annually, developing strong foundational knowledge in statistical concepts.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.56 < 0.75)",
+          "best_match_ratio": 0.559
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Created and managed spreadsheet-based trackers to analyze and visualize student performance trends, enhancing data-driven decision making.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.60 < 0.75)",
+          "best_match_ratio": 0.6
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With over 11 years of experience as a mathematics teacher and a recent Data Analytics Certificate, I bring a strong foundation in statistics and analytical problem-solving.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.50)",
+          "best_match_ratio": 0.496
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 201,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001494,
+      "tailor_latency_s": 14.64
+    },
+    {
+      "case_id": "german_pm_de|top1",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #1",
+      "thread_id": "4f7c524e-a3be-4d28-82d4-121ff4a5a7b1",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.030315,
+      "search_latency_s": 216.46,
+      "tailored": true,
+      "selected_job_id": "remotive-2091047",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 8,
+      "claims_checked": 16,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Verantwortlich für die Roadmap der internen Analytics-Plattform zur Optimierung datengetriebener Entscheidungen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.47 < 0.75)",
+          "best_match_ratio": 0.47
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Definition relevanter KPIs und Entwicklung von Dashboards mit Tableau zur transparenten Datenvisualisierung.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.65 < 0.75)",
+          "best_match_ratio": 0.647
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Analyse von Lieferketten-Daten mittels SQL und Excel zur Identifikation von Optimierungspotenzialen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.65 < 0.75)",
+          "best_match_ratio": 0.653
+        },
+        {
+          "where": "skill:agile Methoden",
+          "text": "agile Methoden",
+          "reason": "skill is not in the candidate's corpus (best match 0.73)",
+          "best_match_ratio": 0.727
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "mit großem Interesse bewerbe ich mich auf die Position als Online Data Analyst (French Language) bei Ihnen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.47)",
+          "best_match_ratio": 0.473
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Meine fünfjährige Erfahrung als Data Product Manager und Business Analyst hat mich umfassend in der Analyse großer Datenmengen, der Entwicklung von Dashboards mit Tableau sowie im Umgang mit SQL und Python geschult.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.34)",
+          "best_match_ratio": 0.337
+        },
+        {
+          "where": "cover_letter:sentence:6",
+          "text": "Diese Erfahrungen stimmen mit Ihrer Anforderung überein, Datenanalysen durchzuführen und datenbasierte Empfehlungen zu geben.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.40)",
+          "best_match_ratio": 0.402
+        },
+        {
+          "where": "cover_letter:sentence:9",
+          "text": "Meine Offenheit für Remote-Arbeit und internationale Zusammenarbeit sehe ich als Vorteil, um mich schnell in Ihr Team einzufügen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.38)",
+          "best_match_ratio": 0.383
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 190,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.002034,
+      "tailor_latency_s": 10.54
+    },
+    {
+      "case_id": "junior_ds_us|top3",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #3",
+      "thread_id": "ae9cb49d-0b8c-40f8-b583-3731c050b805",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.02926,
+      "search_latency_s": 216.79,
+      "tailored": true,
+      "selected_job_id": "remotive-1919266",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 15,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Developed weekly sales forecasting models using scikit-learn, which contributed to a 12% reduction in stockouts, enhancing inventory management.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.64 < 0.75)",
+          "best_match_ratio": 0.642
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Automated data reporting pipelines with Python and SQL, enabling real-time Tableau dashboards for business stakeholders.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.72 < 0.75)",
+          "best_match_ratio": 0.723
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Designed and analyzed A/B tests on the checkout funnel, providing insights that improved product performance and user experience.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.58 < 0.75)",
+          "best_match_ratio": 0.577
+        },
+        {
+          "where": "skill:AWS",
+          "text": "AWS",
+          "reason": "skill is not in the candidate's corpus (best match 0.50)",
+          "best_match_ratio": 0.5
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 1.5 years of hands-on experience as a Data Scientist and Analyst, I have developed and deployed machine learning models and automated data pipelines that have delivered measurable business value.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.36)",
+          "best_match_ratio": 0.36
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 243,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001838,
+      "tailor_latency_s": 9.54
+    },
+    {
+      "case_id": "senior_mle_eu|top3",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #3",
+      "thread_id": "4f034601-b137-43b2-b09a-4f03e7529baa",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.010044,
+      "search_latency_s": 75.82,
+      "tailored": true,
+      "selected_job_id": "remotive-1919265",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 21,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Designed and deployed a real-time recommendation service handling 10 million daily requests using Kubernetes for scalable orchestration.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.67 < 0.75)",
+          "best_match_ratio": 0.673
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the team's MLOps infrastructure from the ground up, integrating MLflow, feature stores, and CI/CD pipelines to streamline model development and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.52 < 0.75)",
+          "best_match_ratio": 0.516
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Mentored a team of 4 engineers and managed on-call responsibilities for the machine learning platform, ensuring high availability and reliability.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.55 < 0.75)",
+          "best_match_ratio": 0.554
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Developed distributed PyTorch ranking models for search, achieving a 9% improvement in click-through rate through optimized training and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.45 < 0.75)",
+          "best_match_ratio": 0.445
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience as a Senior Machine Learning Engineer, I bring a strong foundation in building scalable, production-grade software systems using Python, Kubernetes, and cloud platforms such as AWS and GCP.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.40)",
+          "best_match_ratio": 0.398
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 179,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001837,
+      "tailor_latency_s": 10.13
+    },
+    {
+      "case_id": "career_changer_in|top3",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #3",
+      "thread_id": "62959aaf-05cc-431e-b3aa-27f34739d181",
+      "search_failed": false,
+      "n_jobs_ranked": 9,
+      "search_cost_usd": 0.003611,
+      "search_latency_s": 41.13,
+      "tailored": true,
+      "selected_job_id": "jsearch-Wty5_lGami2_9-shAAAAAA==",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 4,
+      "claims_checked": 12,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Taught statistics and probability to over 200 students annually, developing strong communication and analytical skills.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.59 < 0.75)",
+          "best_match_ratio": 0.594
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Created spreadsheet trackers to analyze student performance trends, demonstrating data handling and Excel proficiency.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.67 < 0.75)",
+          "best_match_ratio": 0.667
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With over a decade of experience teaching mathematics and statistics, combined with a recent Data Analytics Certificate from Coursera, I have developed a strong foundation in statistics, Python, SQL, and data visualization.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.41)",
+          "best_match_ratio": 0.407
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "In my teaching role, I instructed over 200 students annually in statistics and probability, honing my ability to communicate complex concepts clearly—an essential skill for translating data insights into actionable recommendations for stakeholders.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.36)",
+          "best_match_ratio": 0.364
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 195,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.0014,
+      "tailor_latency_s": 8.08
+    },
+    {
+      "case_id": "german_pm_de|top3",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #3",
+      "thread_id": "82a1221b-cdf4-416d-8788-f3040f3fbed0",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.029992,
+      "search_latency_s": 278.88,
+      "tailored": true,
+      "selected_job_id": "remotive-2069746",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 9,
+      "claims_checked": 17,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Verantwortlich für die Roadmap und Weiterentwicklung der internen Analytics-Plattform zur Unterstützung datengetriebener Entscheidungen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.41 < 0.75)",
+          "best_match_ratio": 0.411
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Definition von KPIs und Entwicklung von Dashboards mit Tableau zur Visualisierung und Analyse von Geschäftsdaten.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.64 < 0.75)",
+          "best_match_ratio": 0.64
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Analyse von Lieferketten-Daten mittels SQL und Excel zur Optimierung von Prozessen und Entscheidungsgrundlagen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.61 < 0.75)",
+          "best_match_ratio": 0.608
+        },
+        {
+          "where": "skill:agile Methoden",
+          "text": "agile Methoden",
+          "reason": "skill is not in the candidate's corpus (best match 0.73)",
+          "best_match_ratio": 0.727
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "mit großem Interesse bewerbe ich mich auf die Position als Tech Lead Full-Stack Rails Engineer.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.49)",
+          "best_match_ratio": 0.486
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "Besonders reizt mich die Möglichkeit, innovative AI-getriebene Tools zu gestalten, wie Sie sie bei Mitre Media entwickeln.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.36)",
+          "best_match_ratio": 0.355
+        },
+        {
+          "where": "cover_letter:sentence:5",
+          "text": "In meiner aktuellen Rolle als Data Product Manager bei HandelsWerk AG habe ich die Roadmap für eine interne Analytics-Plattform verantwortet und eng mit Data Scientists zusammengearbeitet, um Modelle in Produktfeatures zu integrieren.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.33)",
+          "best_match_ratio": 0.334
+        },
+        {
+          "where": "cover_letter:sentence:7",
+          "text": "Diese Erfahrungen passen gut zu Ihrer Anforderung, in einem kleinen, dynamischen Team innovative Lösungen zu entwickeln und AI-Technologien einzubinden.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.26)",
+          "best_match_ratio": 0.264
+        },
+        {
+          "where": "cover_letter:sentence:10",
+          "text": "Ich freue mich darauf, in einem innovativen Umfeld wie Mitre Media meine Fähigkeiten weiterzuentwickeln und gemeinsam die Zukunft des AI-gestützten Investierens zu gestalten.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.28)",
+          "best_match_ratio": 0.281
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 204,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001954,
+      "tailor_latency_s": 10.38
+    },
+    {
+      "case_id": "junior_ds_us|top5",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #5",
+      "thread_id": "7b19724e-0328-449a-bfe6-51c1f23bd2e7",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.029324,
+      "search_latency_s": 237.69,
+      "tailored": true,
+      "selected_job_id": "remotive-1680495",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 6,
+      "claims_checked": 15,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Developed weekly sales forecasting models using scikit-learn, improving inventory management and reducing stockouts by 12%.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.75 < 0.75)",
+          "best_match_ratio": 0.747
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Automated reporting workflows with Python and SQL, delivering timely Tableau dashboards to support business decisions.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.66 < 0.75)",
+          "best_match_ratio": 0.656
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Conducted A/B testing on checkout processes and communicated results to product managers to enhance user experience.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.59 < 0.75)",
+          "best_match_ratio": 0.593
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "I am excited to apply for the Remote Office Assistant position.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.54)",
+          "best_match_ratio": 0.541
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 1.5 years of experience as a Data Analyst, I have developed strong organizational skills and attention to detail through building forecasting models and automating reporting pipelines.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.40)",
+          "best_match_ratio": 0.4
+        },
+        {
+          "where": "cover_letter:sentence:9",
+          "text": "I appreciate Coalition Technologies’ commitment to career development and would welcome the opportunity to advance within your Accounting or other departments.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.28)",
+          "best_match_ratio": 0.282
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 196,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001558,
+      "tailor_latency_s": 8.76
+    },
+    {
+      "case_id": "senior_mle_eu|top5",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #5",
+      "thread_id": "8de7ca7a-ae5b-4854-ae55-4264f6b15efa",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.0104,
+      "search_latency_s": 83.28,
+      "tailored": true,
+      "selected_job_id": "remotive-2091056",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Designed and deployed a real-time recommendation service handling 10 million requests per day on Kubernetes, ensuring high availability and scalability.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.67 < 0.75)",
+          "best_match_ratio": 0.672
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the team's MLOps stack from the ground up, incorporating MLflow, feature stores, and CI/CD pipelines to streamline model development and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.55 < 0.75)",
+          "best_match_ratio": 0.55
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Mentored a team of 4 engineers and managed on-call responsibilities for the ML platform, fostering a culture of ownership and reliability.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.58 < 0.75)",
+          "best_match_ratio": 0.577
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Developed and trained distributed PyTorch ranking models for search, achieving a 9% improvement in click-through rate.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.75)",
+          "best_match_ratio": 0.526
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience as a Senior Machine Learning Engineer, I bring a strong background in building scalable, production-grade systems and leading engineering teams.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.48)",
+          "best_match_ratio": 0.48
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 232,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001955,
+      "tailor_latency_s": 10.79
+    },
+    {
+      "case_id": "career_changer_in|top5",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #5",
+      "thread_id": "b1193f14-a97a-4aa3-be55-10484d943936",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.030692,
+      "search_latency_s": 234.92,
+      "tailored": true,
+      "selected_job_id": "remotive-2090989",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 8,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Taught statistics and probability to over 200 students annually, developing strong analytical and communication skills.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.59 < 0.75)",
+          "best_match_ratio": 0.594
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Created and maintained spreadsheet trackers to analyze student performance trends, demonstrating proficiency in Excel and data management.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.60 < 0.75)",
+          "best_match_ratio": 0.6
+        },
+        {
+          "where": "cover_letter:sentence:8",
+          "text": "I am eager to contribute to your team and support the financial operations of The Obesity Society.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.44)",
+          "best_match_ratio": 0.441
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 202,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001456,
+      "tailor_latency_s": 5.99
+    },
+    {
+      "case_id": "german_pm_de|top5",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #5",
+      "thread_id": "4c3975df-c11b-4bae-b321-84fe998a8d59",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.029952,
+      "search_latency_s": 210.57,
+      "tailored": true,
+      "selected_job_id": "remotive-2091045",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 10,
+      "claims_checked": 17,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Leitung der Roadmap für die interne Analytics-Plattform unter Anwendung agiler Methoden zur effizienten Projektsteuerung.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.63 < 0.75)",
+          "best_match_ratio": 0.629
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Definition von KPIs und Erstellung von Dashboards mit Tableau zur Unterstützung datenbasierter Entscheidungen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.70 < 0.75)",
+          "best_match_ratio": 0.698
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Enge Zusammenarbeit mit Data-Science-Teams zur Priorisierung von Modellen und zur Sicherstellung der Produktqualität.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.72 < 0.75)",
+          "best_match_ratio": 0.72
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Analyse von Lieferketten-Daten mittels SQL und Excel zur Optimierung von Geschäftsprozessen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.69 < 0.75)",
+          "best_match_ratio": 0.691
+        },
+        {
+          "where": "skill:agile Methoden",
+          "text": "agile Methoden",
+          "reason": "skill is not in the candidate's corpus (best match 0.73)",
+          "best_match_ratio": 0.727
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "mit großem Interesse habe ich Ihre Ausschreibung für die Position des Tier III Service Desk Engineers gelesen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.43)",
+          "best_match_ratio": 0.426
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Obwohl mein beruflicher Schwerpunkt als Data Product Manager liegt, bringe ich fundierte Erfahrungen in der Koordination von Projekten und im Stakeholder-Management mit, die ich gewinnbringend in Ihrem Helpdesk-Umfeld einsetzen möchte.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.30)",
+          "best_match_ratio": 0.297
+        },
+        {
+          "where": "cover_letter:sentence:5",
+          "text": "Diese Erfahrung hat meine Fähigkeit gestärkt, als Schnittstelle zwischen Technik und Anwendern zu agieren – eine Kompetenz, die auch in Ihrer Stellenbeschreibung als essenziell hervorgehoben wird.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.36)",
+          "best_match_ratio": 0.364
+        },
+        {
+          "where": "cover_letter:sentence:7",
+          "text": "Ich bin überzeugt, dass ich mit meiner analytischen Denkweise und meiner Leidenschaft für nutzerorientierte Lösungen einen wertvollen Beitrag zu Ihrem Team leisten kann.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.33)",
+          "best_match_ratio": 0.327
+        },
+        {
+          "where": "cover_letter:sentence:8",
+          "text": "Ich freue mich auf die Möglichkeit, meine Fähigkeiten in einem neuen Kontext einzubringen und gemeinsam mit Ihnen die Herausforderungen im Bereich Managed IT Services zu meistern.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.22)",
+          "best_match_ratio": 0.222
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 181,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001922,
+      "tailor_latency_s": 10.5
+    },
+    {
+      "case_id": "junior_ds_us|top1+linkedin",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "with LinkedIn export",
+      "thread_id": "190a60c3-5815-4d06-9e62-0f169b51e31c",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.030056,
+      "search_latency_s": 249.89,
+      "tailored": true,
+      "selected_job_id": "remotive-2091047",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 16,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Developed weekly sales forecasting models using scikit-learn, contributing to a 12% reduction in stockouts.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.74 < 0.75)",
+          "best_match_ratio": 0.736
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Automated reporting pipelines with Python and SQL to feed Tableau dashboards, enhancing data accessibility for stakeholders.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.71 < 0.75)",
+          "best_match_ratio": 0.708
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Conducted A/B tests on the checkout funnel and communicated results to product managers to inform decision-making.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.71 < 0.75)",
+          "best_match_ratio": 0.706
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 1.5 years of experience as a Data Analyst at BrightRetail Inc, I have developed strong skills in Python, SQL, and Tableau, which align well with your requirement for proficiency in data analysis tools.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.36)",
+          "best_match_ratio": 0.357
+        },
+        {
+          "where": "cover_letter:sentence:7",
+          "text": "While I am currently based in San Francisco and do not speak French, I am eager to contribute my analytical skills and adapt to new challenges.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.34)",
+          "best_match_ratio": 0.337
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 187,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.00177,
+      "tailor_latency_s": 8.1
+    },
+    {
+      "case_id": "senior_mle_eu|top1+linkedin",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "with LinkedIn export",
+      "thread_id": "c2d15e4a-b776-493c-9e60-6a188d661986",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.010251,
+      "search_latency_s": 80.64,
+      "tailored": true,
+      "selected_job_id": "remotive-1919266",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 6,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Designed and deployed a real-time recommendation service handling 10 million requests per day on Kubernetes, ensuring high availability and scalability.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.67 < 0.75)",
+          "best_match_ratio": 0.672
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the MLOps stack from the ground up, integrating MLflow, feature stores, and CI/CD pipelines to streamline model development and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.51 < 0.75)",
+          "best_match_ratio": 0.507
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Led and mentored a team of four engineers while managing on-call responsibilities for the ML platform, ensuring operational excellence.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.75)",
+          "best_match_ratio": 0.534
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Developed and trained distributed PyTorch ranking models for search, achieving a 9% improvement in click-through rate.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.75)",
+          "best_match_ratio": 0.526
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience shipping production AI systems and leading MLOps initiatives, I am confident in my ability to contribute effectively to your network of senior AI engineers.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.40)",
+          "best_match_ratio": 0.397
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "At DeepMobility GmbH, I designed a real-time recommendation service on Kubernetes handling 10 million requests per day, demonstrating my expertise in building AI-native products from the ground up.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.45)",
+          "best_match_ratio": 0.454
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 173,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001993,
+      "tailor_latency_s": 10.5
+    },
+    {
+      "case_id": "junior_ds_us|unknown_job",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "unknown job id (graceful error)",
+      "thread_id": "4ba3d7c1-244c-44ec-a5d2-68d7cf9ac601",
+      "search_failed": false,
+      "n_jobs_ranked": 25,
+      "search_cost_usd": 0.029544,
+      "search_latency_s": 253.15,
+      "tailored": false,
+      "selected_job_id": "no-such-job-id",
+      "tailor_failed": false,
+      "tailor_errors": [
+        "tailor: selected job id 'no-such-job-id' is not among the 25 ranked jobs on this thread"
+      ],
+      "fabrication_flags": 0,
+      "claims_checked": 0,
+      "flagged": [],
+      "research_used": false,
+      "cover_letter_words": 0,
+      "n_bullets": 0,
+      "tailor_cost_usd": 0.0,
+      "tailor_latency_s": 0.01
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jobscout-keepwarm",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+
+  // Every 10 minutes, against Render's 15-minute idle spin-down. Cron Triggers
+  // are on the Workers Free plan (5 per account, 100,000 requests/day); 144
+  // pings a day is nothing against that.
+  "triggers": {
+    "crons": ["*/10 * * * *"]
+  },
+
+  // The onrender.com hostname, NOT the Vercel domain — see the note in
+  // src/index.js. Set after the Render service exists:
+  //   npx wrangler deploy --var TARGET:https://<service>.onrender.com/api/config
+  // or edit this value in place.
+  "vars": {
+    "TARGET": "https://REPLACE-WITH-YOUR-RENDER-SERVICE.onrender.com/api/config"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

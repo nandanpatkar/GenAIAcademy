@@ -1,0 +1,541 @@
+{
+  "summary": {
+    "cases": 15,
+    "tailored": 14,
+    "search_failures": 0,
+    "graceful_tailor_errors": 1,
+    "runs_with_fabrication_flags": 13,
+    "total_fabrication_flags": 30,
+    "total_claims_checked": 233,
+    "fabrication_rate": 0.1288,
+    "mean_cover_letter_words": 203.6,
+    "total_cost_usd": 0.0493
+  },
+  "runs": [
+    {
+      "case_id": "junior_ds_us|top1",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #1",
+      "thread_id": "54b80aca-2474-447b-885c-29dd3d905a46",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001579,
+      "search_latency_s": 11.25,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 1,
+      "claims_checked": 15,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With approximately 1.5 years of experience as a Data Analyst and Junior Data Scientist, I have developed strong attention to detail and technical skills that align well with the requirements of this role.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.31)",
+          "best_match_ratio": 0.314
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 203,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001642,
+      "tailor_latency_s": 5.45
+    },
+    {
+      "case_id": "senior_mle_eu|top1",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #1",
+      "thread_id": "9611f879-c827-4957-9894-4b4b59d50f9c",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001687,
+      "search_latency_s": 9.2,
+      "tailored": true,
+      "selected_job_id": "remotive-1919266",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 1,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience shipping production AI systems and leading MLOps efforts, I am confident in my ability to contribute effectively to your network of senior AI engineers.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.47)",
+          "best_match_ratio": 0.472
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 218,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001916,
+      "tailor_latency_s": 6.68
+    },
+    {
+      "case_id": "career_changer_in|top1",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #1",
+      "thread_id": "73552e09-0f6d-4bb9-b5c4-3e0bfdb7e343",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001708,
+      "search_latency_s": 12.48,
+      "tailored": true,
+      "selected_job_id": "jsearch-YU1fdWZnRjFlYmRqbm5IT0FBQUFBQT09OkVzd0JDb3dCUVVwcFZEUjBTVkJ3ZVVkNU1YVldaVmRHVFZOMGJDMWFaRlJEYUc1S2VITllRMlJYU1hCME1DMVBRMDE2YWxaRlFrVnNTR05sVGpaeVVYVnBRa0pOV1VsMmVXWjBiRkZ3VjNwTGRXMVVNbmQ0UkUxNGJuWkdRWFZVYlZwVVdrWjZUelYyYTJwa2VHNTNYMU5TU21OR1dVVlphRVpNV1dwamJIZDJiRGhMTWtOVmIzUXhja2hFTkhZMk5qVVNGMmh6WkhKaGNUWTFSRXh0VURoTU1GQm9MWHBHTmxGekdpSkJSSE55T1daUmJYTmFaRTFwYkZoM2RWaFJTV0V3UzNkSlJGTklNRlZFYTJ0Qg",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 4,
+      "claims_checked": 13,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Taught statistics and probability to over 200 students annually, strengthening foundational knowledge in statistical concepts.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.62 < 0.65)",
+          "best_match_ratio": 0.621
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With over a decade of experience as a high-school mathematics teacher and a recent Data Analytics Certificate from Coursera, I bring a strong foundation in statistics and data analysis, along with effective communication skills.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.39)",
+          "best_match_ratio": 0.387
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "In my teaching role at Vidya Public School, I taught statistics and probability to more than 200 students annually, which has given me a deep understanding of statistical concepts that are essential for data science.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.49)",
+          "best_match_ratio": 0.486
+        },
+        {
+          "where": "cover_letter:sentence:9",
+          "text": "I am confident that my strong work ethic and willingness to grow will make me a valuable asset to Walmart Global Tech India.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.51)",
+          "best_match_ratio": 0.506
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 229,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001399,
+      "tailor_latency_s": 6.09
+    },
+    {
+      "case_id": "german_pm_de|top1",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #1",
+      "thread_id": "c880f19b-6f74-474d-9b62-6741252cc170",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001827,
+      "search_latency_s": 18.35,
+      "tailored": true,
+      "selected_job_id": "jsearch-c19fSVRkbEpZVjROcHBaQkFBQUFBQT09OkVzd0JDb3dCUVVwcFZEUjBTMDFRWVdScVZYbG1OaTF0ZG05bFJuZFZNMEZaV2xOalJGTTNhRzV3YlVSdUxYTm1NekZNTjJ0NVNDMTBVVzFUTkdkdGRVcENhM2hwWkVRNWNYVXhUWHBDUzJ0dE0yMXhaazlTV25SalpVRkdZVWg1ZFZkVVlrWlhjVkYxZWtwMlYzQTFPREpEUTFadE5reHZPVVY1YVZoNU5IcHBiWFJoVTIxUk1YRnZkaTFvV2pjMFltZ1NGMjlqWkhKaGNFTkxTalY2WVd0UVNWQnhZVE5FYTBGckdpSkJSSE55T1daUk5XbEtTRTlRTkVsb2VtWkVSbmMwTTNsUGVXSnRjbEp0T1ZaMw",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 18,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "mit großem Interesse bewerbe ich mich auf die Position als Product Manager – Self-Service.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.53)",
+          "best_match_ratio": 0.53
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Als Data Product Manager mit fünf Jahren Erfahrung an der Schnittstelle von Produkt und Datenanalyse bringe ich fundierte Kenntnisse in SQL und Tableau mit, die ich erfolgreich zur Definition von KPIs und Erstellung von Dashboards eingesetzt habe.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.49)",
+          "best_match_ratio": 0.486
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "Dies entspricht Ihrer Anforderung an starke analytische Fähigkeiten und den Umgang mit Produktanalyse-Tools.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.37)",
+          "best_match_ratio": 0.368
+        },
+        {
+          "where": "cover_letter:sentence:5",
+          "text": "In meiner aktuellen Rolle bei HandelsWerk AG leite ich die Roadmap für eine interne Analytics-Plattform und arbeite eng mit Data Scientists zusammen, um datengetriebene Produktentscheidungen zu treffen und Modelle zu priorisieren.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.54)",
+          "best_match_ratio": 0.542
+        },
+        {
+          "where": "cover_letter:sentence:6",
+          "text": "Diese Erfahrungen haben meine Fähigkeit gestärkt, Daten in Hypothesen zu übersetzen und diese zu validieren – ein zentraler Aspekt Ihrer Stellenbeschreibung.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.34)",
+          "best_match_ratio": 0.341
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 209,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001771,
+      "tailor_latency_s": 6.85
+    },
+    {
+      "case_id": "junior_ds_us|top3",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #3",
+      "thread_id": "4bce6710-7a2b-43d5-b959-d702b7a3005f",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001963,
+      "search_latency_s": 16.67,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 1,
+      "claims_checked": 14,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With approximately 1.5 years of experience as a Data Analyst and Junior Data Scientist, I have developed a strong attention to detail and the ability to follow complex instructions, which I understand are critical for this role.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.35)",
+          "best_match_ratio": 0.354
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 193,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.00158,
+      "tailor_latency_s": 4.69
+    },
+    {
+      "case_id": "senior_mle_eu|top3",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #3",
+      "thread_id": "a1dd41b4-1600-4f1f-84ba-cb62565547d3",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001706,
+      "search_latency_s": 10.49,
+      "tailored": true,
+      "selected_job_id": "remotive-1919265",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 1,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience as a Senior Machine Learning Engineer, I have a strong track record of delivering high-impact software solutions and leading small teams, which aligns well with your mission to connect talented builders with audacious companies.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.49)",
+          "best_match_ratio": 0.488
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 207,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001808,
+      "tailor_latency_s": 6.4
+    },
+    {
+      "case_id": "career_changer_in|top3",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #3",
+      "thread_id": "1a126f96-cdeb-42f8-8528-22b8c2ba3599",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001737,
+      "search_latency_s": 12.98,
+      "tailored": true,
+      "selected_job_id": "remotive-2091075",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 0,
+      "claims_checked": 12,
+      "flagged": [],
+      "research_used": false,
+      "cover_letter_words": 212,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001557,
+      "tailor_latency_s": 4.74
+    },
+    {
+      "case_id": "german_pm_de|top3",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #3",
+      "thread_id": "454a5ab7-8d75-4573-96c4-f468805095f7",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001643,
+      "search_latency_s": 12.92,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 16,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "mit großem Interesse habe ich Ihre Ausschreibung für die Position als Data Labeling Specialist gelesen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.45)",
+          "best_match_ratio": 0.454
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Als Data Product Manager mit fünf Jahren Erfahrung an der Schnittstelle von Produktentwicklung und Datenanalyse bringe ich eine ausgeprägte Detailorientierung und ein hohes Qualitätsbewusstsein mit, die ich in der Leitung der Roadmap für eine interne Analytics-Plattform sowie in der Definition von KPIs und Erstellung von Dashboards unter Beweis gestellt habe.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.46)",
+          "best_match_ratio": 0.463
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "Die Anforderungen Ihrer Stelle, insbesondere die sorgfältige Überprüfung von digitalen Inhalten und das konsequente Befolgen von Anweisungen, entsprechen meinen Stärken.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.34)",
+          "best_match_ratio": 0.34
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 180,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.00178,
+      "tailor_latency_s": 6.81
+    },
+    {
+      "case_id": "junior_ds_us|top5",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #5",
+      "thread_id": "d6033717-e329-4f3d-9458-d08722d65c45",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001619,
+      "search_latency_s": 9.38,
+      "tailored": true,
+      "selected_job_id": "remotive-2091069",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 2,
+      "claims_checked": 15,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 1.5 years of experience as a Data Analyst, I have developed strong computer skills and the ability to work efficiently in fast-paced environments, which I understand are essential for this role.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.27)",
+          "best_match_ratio": 0.275
+        },
+        {
+          "where": "cover_letter:sentence:7",
+          "text": "I am located in San Francisco and meet the requirement of residing within the continental United States.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.37)",
+          "best_match_ratio": 0.37
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 162,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001546,
+      "tailor_latency_s": 5.09
+    },
+    {
+      "case_id": "senior_mle_eu|top5",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #5",
+      "thread_id": "ec23f5d4-34bf-40f0-8f7e-927b62851032",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001673,
+      "search_latency_s": 9.76,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "I am writing to express my interest in the Data Labeling Specialist position.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.50)",
+          "best_match_ratio": 0.495
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience as a Senior Machine Learning Engineer, I have developed a strong attention to detail and a commitment to quality that I believe aligns well with your needs for careful, focused digital work.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.42)",
+          "best_match_ratio": 0.421
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "In my role at DeepMobility GmbH, I built and maintained complex ML systems, including designing a real-time recommendation service handling 10 million requests per day and constructing the MLOps stack from scratch.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.49)",
+          "best_match_ratio": 0.493
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 226,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001765,
+      "tailor_latency_s": 6.31
+    },
+    {
+      "case_id": "career_changer_in|top5",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #5",
+      "thread_id": "85d71dcb-015c-41d1-8daf-c0a9a9525d32",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001759,
+      "search_latency_s": 18.03,
+      "tailored": true,
+      "selected_job_id": "remotive-2091068",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 2,
+      "claims_checked": 12,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With over 11 years of experience as a mathematics teacher, I have developed strong communication skills and the ability to convey complex information clearly, which I believe aligns well with your need to tell the garden3d story across the internet.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.31)",
+          "best_match_ratio": 0.312
+        },
+        {
+          "where": "cover_letter:sentence:9",
+          "text": "I look forward to the opportunity to contribute to garden3d's mission and growth.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.40)",
+          "best_match_ratio": 0.402
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 180,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001534,
+      "tailor_latency_s": 4.43
+    },
+    {
+      "case_id": "german_pm_de|top5",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #5",
+      "thread_id": "2834875b-dd72-49ee-b03b-e657fdfecc82",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001596,
+      "search_latency_s": 10.37,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 16,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "mit großem Interesse habe ich Ihre Ausschreibung für die Position als Data Labeling Specialist gelesen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.45)",
+          "best_match_ratio": 0.454
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Als Data Product Manager mit fünf Jahren Erfahrung an der Schnittstelle von Produkt und Datenanalyse bringe ich eine ausgeprägte Detailorientierung und eine strukturierte Arbeitsweise mit, die ich in meiner Rolle bei HandelsWerk AG unter Beweis gestellt habe.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.27)",
+          "best_match_ratio": 0.266
+        },
+        {
+          "where": "cover_letter:sentence:8",
+          "text": "Ich freue mich darauf, meine analytischen Fähigkeiten und meine strukturierte Arbeitsweise in Ihr Team einzubringen und so zur Verbesserung der Technologie beizutragen, die täglich von vielen Menschen genutzt wird.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.34)",
+          "best_match_ratio": 0.339
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 175,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.00178,
+      "tailor_latency_s": 6.34
+    },
+    {
+      "case_id": "junior_ds_us|top1+linkedin",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "with LinkedIn export",
+      "thread_id": "b79c236a-52e9-4baa-a0d7-a2f4e7a80463",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001584,
+      "search_latency_s": 9.27,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 2,
+      "claims_checked": 14,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "I am writing to express my interest in the Data Labeling Specialist position.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.48)",
+          "best_match_ratio": 0.484
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With approximately 1.5 years of experience as a Data Analyst at BrightRetail Inc, I have developed strong skills in data handling, attention to detail, and following complex project instructions, which align well with the requirements of this role.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.34)",
+          "best_match_ratio": 0.336
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 231,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001725,
+      "tailor_latency_s": 6.15
+    },
+    {
+      "case_id": "senior_mle_eu|top1+linkedin",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "with LinkedIn export",
+      "thread_id": "08707f6b-eaf3-4eae-b00d-5f886a373d67",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001654,
+      "search_latency_s": 9.85,
+      "tailored": true,
+      "selected_job_id": "remotive-1919266",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 2,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience shipping production machine learning systems, including real-time recommendation services and ranking models, I am confident in my ability to contribute effectively to your ambitious projects.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.51)",
+          "best_match_ratio": 0.509
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "At DeepMobility GmbH, I designed a real-time recommendation service handling 10 million requests per day on Kubernetes, demonstrating my capability to build AI-native products from 0 to 1 and operate machine learning platforms at scale.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.53)",
+          "best_match_ratio": 0.535
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 225,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.002112,
+      "tailor_latency_s": 6.58
+    },
+    {
+      "case_id": "junior_ds_us|unknown_job",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "unknown job id (graceful error)",
+      "thread_id": "a95e6a03-0d90-4208-ab2d-6ea4a2e00226",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001612,
+      "search_latency_s": 9.26,
+      "tailored": false,
+      "selected_job_id": "no-such-job-id",
+      "tailor_failed": false,
+      "tailor_errors": [
+        "tailor: selected job id 'no-such-job-id' is not among the 10 ranked jobs on this thread"
+      ],
+      "fabrication_flags": 0,
+      "claims_checked": 0,
+      "flagged": [],
+      "research_used": false,
+      "cover_letter_words": 0,
+      "n_bullets": 0,
+      "tailor_cost_usd": 0.0,
+      "tailor_latency_s": 0.01
+    }
+  ]
+}

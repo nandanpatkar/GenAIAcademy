@@ -1,0 +1,710 @@
+{
+  "summary": {
+    "cases": 15,
+    "tailored": 14,
+    "search_failures": 0,
+    "graceful_tailor_errors": 1,
+    "runs_with_fabrication_flags": 14,
+    "total_fabrication_flags": 58,
+    "total_claims_checked": 227,
+    "fabrication_rate": 0.2555,
+    "mean_cover_letter_words": 197.2,
+    "total_cost_usd": 0.0488
+  },
+  "runs": [
+    {
+      "case_id": "junior_ds_us|top1",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #1",
+      "thread_id": "ea9f67a4-0258-44db-bdbb-e84dffd64474",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001961,
+      "search_latency_s": 14.91,
+      "tailored": true,
+      "selected_job_id": "jsearch-cnVuN0c2UUI0T214TXlXTUFBQUFBQT09OkVzd0JDb3dCUVVwcFZEUjBURk5XTTJwNFRHY3hMWEl5VVhCd1NEWlNWVVpsZEU1UFJsUlFjaTFHV1VoRmMwTjRkazFMU205YVVXUmhSRk5qT1Rsa1dsQjFSMDlyVjJselF6aEdVMHQzTlVGVlpXVjFNVGRJTWpKRFpGUmtVVlpaTkRKVGFHUndjbGhFTTBaT1gybFFWSFY1UlZWbVpHbFNkbWxCYUZNNU9WbHJVMVJqYzFWNlQxUnFkVTlVYmtSNFdVUVNGM2h6VG5KaGRIcEhURGRsVTNObFRWQXdUMGhtYzFGM0dpSkJSSE55T1daVFlTMWlWemhDV2xkNFNXZE9UbHB6VEhKWlQxTklkV2xvTWpSbg",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 1,
+      "claims_checked": 15,
+      "flagged": [
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 1.5 years of experience as a Data Analyst at BrightRetail Inc, I have developed practical skills in Python and SQL, as well as experience with data science libraries such as scikit-learn and pandas, which align well with your requirement for proficiency in these tools.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.37)",
+          "best_match_ratio": 0.374
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 202,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001588,
+      "tailor_latency_s": 10.7
+    },
+    {
+      "case_id": "senior_mle_eu|top1",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #1",
+      "thread_id": "16acd8dd-0ec7-49b6-b8a8-5ed14b162638",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001658,
+      "search_latency_s": 15.39,
+      "tailored": true,
+      "selected_job_id": "remotive-1919266",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 4,
+      "claims_checked": 22,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the MLOps infrastructure from the ground up, integrating MLflow, feature stores, and CI/CD pipelines to streamline model development and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.47 < 0.65)",
+          "best_match_ratio": 0.468
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Mentored a team of four engineers and managed on-call responsibilities for the ML platform, maintaining system reliability and performance.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.56 < 0.65)",
+          "best_match_ratio": 0.564
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Developed and trained distributed PyTorch ranking models for search, achieving a 9% improvement in click-through rate.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.65)",
+          "best_match_ratio": 0.526
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience delivering production AI systems and leading MLOps initiatives, I am confident in my ability to contribute effectively to your network of senior AI engineers.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.45)",
+          "best_match_ratio": 0.447
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 212,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001923,
+      "tailor_latency_s": 10.91
+    },
+    {
+      "case_id": "career_changer_in|top1",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #1",
+      "thread_id": "d2bd7fc4-776d-4a14-9287-c55b107fc482",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001595,
+      "search_latency_s": 21.86,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 11,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Taught statistics and probability to over 200 students annually, developing strong analytical and instructional skills.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.65 < 0.65)",
+          "best_match_ratio": 0.647
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Created and maintained spreadsheet trackers to analyze student performance trends, demonstrating proficiency in data organization and attention to detail.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.56 < 0.65)",
+          "best_match_ratio": 0.556
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With over 11 years of experience as a mathematics teacher and a recent certification in data analytics, I bring a strong foundation in statistics, data organization, and clear communication that aligns well with your team's needs.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.35)",
+          "best_match_ratio": 0.348
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 180,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001456,
+      "tailor_latency_s": 4.87
+    },
+    {
+      "case_id": "german_pm_de|top1",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #1",
+      "thread_id": "477041f3-214a-4551-b697-24c1fa013c97",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001534,
+      "search_latency_s": 10.31,
+      "tailored": true,
+      "selected_job_id": "adzuna-5330307773",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 16,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Verantwortlich für die Roadmap der internen Analytics-Plattform zur Unterstützung datengetriebener Entscheidungen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.46 < 0.65)",
+          "best_match_ratio": 0.464
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Definition relevanter KPIs und Entwicklung von Dashboards mit Tableau zur Visualisierung von Geschäftsdaten.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.65 < 0.65)",
+          "best_match_ratio": 0.647
+        },
+        {
+          "where": "skill:agile Methoden",
+          "text": "agile Methoden",
+          "reason": "skill is not in the candidate's corpus (best match 0.73)",
+          "best_match_ratio": 0.727
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Mit fünf Jahren Erfahrung an der Schnittstelle von Produktmanagement und Datenanalyse, insbesondere in der Leitung von Analytics-Plattformen und der Zusammenarbeit mit Data-Science-Teams, bringe ich fundierte Kenntnisse mit, die ich gewinnbringend in Ihr Team einbringen möchte.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.38)",
+          "best_match_ratio": 0.38
+        },
+        {
+          "where": "cover_letter:sentence:6",
+          "text": "Diese Erfahrungen passen sehr gut zu Ihrer Anforderung, zukünftige Datenprodukte zu entwickeln, die sowohl strukturierte als auch unstrukturierte Daten nutzen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.29)",
+          "best_match_ratio": 0.287
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 184,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001639,
+      "tailor_latency_s": 7.36
+    },
+    {
+      "case_id": "junior_ds_us|top3",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #3",
+      "thread_id": "22548b81-b313-499b-9cf3-054d5a25e588",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001607,
+      "search_latency_s": 10.26,
+      "tailored": true,
+      "selected_job_id": "remotive-2091075",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 14,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Automated reporting workflows with Python and SQL, enabling real-time Tableau dashboard updates for sales and inventory metrics.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.62 < 0.65)",
+          "best_match_ratio": 0.623
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Conducted A/B testing on checkout processes and communicated results to product managers to inform optimization strategies.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.57 < 0.65)",
+          "best_match_ratio": 0.571
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "In my role as a Data Analyst at BrightRetail Inc, I developed predictive sales forecasting models that reduced stockouts by 12%, demonstrating my ability to identify trends and support business objectives.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.53)",
+          "best_match_ratio": 0.53
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 230,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001716,
+      "tailor_latency_s": 6.25
+    },
+    {
+      "case_id": "senior_mle_eu|top3",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #3",
+      "thread_id": "e01f1ef4-c439-48f0-9fe6-9f9f6cd64f10",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001711,
+      "search_latency_s": 11.67,
+      "tailored": true,
+      "selected_job_id": "remotive-1919265",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 4,
+      "claims_checked": 21,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the MLOps stack from the ground up, integrating MLflow, feature stores, and CI/CD pipelines to streamline model development and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.51 < 0.65)",
+          "best_match_ratio": 0.507
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Mentored a team of 4 engineers and managed on-call responsibilities for the ML platform, ensuring operational stability and knowledge sharing.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.57 < 0.65)",
+          "best_match_ratio": 0.566
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Developed and trained distributed PyTorch ranking models for search, achieving a 9% improvement in click-through rate.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.65)",
+          "best_match_ratio": 0.526
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience as a Senior Machine Learning Engineer, I have designed and delivered scalable ML systems in production, including a real-time recommendation service handling 10 million daily requests on Kubernetes.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.54)",
+          "best_match_ratio": 0.543
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 183,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.001776,
+      "tailor_latency_s": 6.57
+    },
+    {
+      "case_id": "career_changer_in|top3",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #3",
+      "thread_id": "48619e20-0140-463b-a103-82b1694acb2d",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001727,
+      "search_latency_s": 12.98,
+      "tailored": true,
+      "selected_job_id": "remotive-2091075",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 3,
+      "claims_checked": 11,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Taught statistics and probability to over 200 students annually, enhancing their analytical skills and understanding of data concepts.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.59 < 0.65)",
+          "best_match_ratio": 0.593
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Developed and maintained spreadsheet trackers to monitor and analyze student performance trends, facilitating data-driven instructional decisions.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.59 < 0.65)",
+          "best_match_ratio": 0.587
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With over 11 years of experience as a mathematics teacher and a recent certification in data analytics, I bring strong communication skills and a data-driven mindset that align well with your focus on building meaningful client relationships and driving growth for Outsite for Teams.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.29)",
+          "best_match_ratio": 0.289
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 204,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001578,
+      "tailor_latency_s": 5.93
+    },
+    {
+      "case_id": "german_pm_de|top3",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #3",
+      "thread_id": "41998c9c-6795-4a54-8bee-3215a2607292",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001539,
+      "search_latency_s": 9.74,
+      "tailored": true,
+      "selected_job_id": "remotive-2091068",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 10,
+      "claims_checked": 19,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Verantwortliche Leitung der Roadmap für die interne Analytics-Plattform zur Unterstützung datengetriebener Produktentscheidungen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.60 < 0.65)",
+          "best_match_ratio": 0.601
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Definition von KPIs und Entwicklung von Dashboards mit Tableau zur transparenten Kommunikation von Produkt- und Geschäftsergebnissen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.58 < 0.65)",
+          "best_match_ratio": 0.576
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Analyse von Lieferketten-Daten mittels SQL und Excel zur Optimierung von Geschäftsprozessen und Entscheidungsgrundlagen.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.57 < 0.65)",
+          "best_match_ratio": 0.575
+        },
+        {
+          "where": "skill:agile Methoden",
+          "text": "agile Methoden",
+          "reason": "skill is not in the candidate's corpus (best match 0.73)",
+          "best_match_ratio": 0.727
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Als Data Product Manager mit fünf Jahren Erfahrung an der Schnittstelle von Produktentwicklung und Datenanalyse bringe ich fundierte Kenntnisse in Produktstrategie und Stakeholder-Management mit, die ich gewinnbringend in Ihre kreative und innovative Organisation einbringen möchte.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.30)",
+          "best_match_ratio": 0.298
+        },
+        {
+          "where": "cover_letter:sentence:5",
+          "text": "Diese Erfahrung hat meine Fähigkeit gestärkt, technische Inhalte zielgruppengerecht aufzubereiten – eine Kompetenz, die essenziell ist, um die Geschichte von garden3d überzeugend über verschiedene Kanäle zu erzählen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.25)",
+          "best_match_ratio": 0.255
+        },
+        {
+          "where": "cover_letter:sentence:7",
+          "text": "Dies entspricht dem Bedarf, bei garden3d als Head of Marketing & Communications die vielfältigen Stakeholder zu koordinieren und die Markenbotschaft weltweit zu verbreiten.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.40)",
+          "best_match_ratio": 0.403
+        },
+        {
+          "where": "cover_letter:sentence:8",
+          "text": "Obwohl mein Hintergrund primär technisch geprägt ist, sehe ich in der Kombination meiner analytischen Fähigkeiten und meiner Erfahrung im Stakeholder-Management eine wertvolle Grundlage, um Ihre Marketing- und Kommunikationsziele erfolgreich umzusetzen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.36)",
+          "best_match_ratio": 0.358
+        },
+        {
+          "where": "cover_letter:sentence:9",
+          "text": "Ich freue mich darauf, meine Kompetenzen in einem kreativen, offenen Umfeld wie garden3d einzubringen und gemeinsam innovative Projekte voranzutreiben.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.42)",
+          "best_match_ratio": 0.418
+        },
+        {
+          "where": "cover_letter:sentence:10",
+          "text": "Vielen Dank für Ihre Zeit und die Berücksichtigung meiner Bewerbung.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.37)",
+          "best_match_ratio": 0.372
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 225,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.002028,
+      "tailor_latency_s": 7.68
+    },
+    {
+      "case_id": "junior_ds_us|top5",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "pick #5",
+      "thread_id": "bda83569-1e33-497c-9b84-c5457f96db91",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001567,
+      "search_latency_s": 9.95,
+      "tailored": true,
+      "selected_job_id": "remotive-2091072",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 4,
+      "claims_checked": 15,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Conducted A/B testing on checkout processes and communicated results to product managers to optimize user experience.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.59 < 0.65)",
+          "best_match_ratio": 0.589
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "I am excited to apply for the Product Sales Specialist position.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.48)",
+          "best_match_ratio": 0.481
+        },
+        {
+          "where": "cover_letter:sentence:6",
+          "text": "I am eager to leverage these skills alongside your top-notch sales training to master the art of selling and represent Tribe Wellness's values with integrity.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.35)",
+          "best_match_ratio": 0.351
+        },
+        {
+          "where": "cover_letter:sentence:8",
+          "text": "I look forward to the possibility of contributing to Tribe Wellness's growth and helping pets live longer, healthier lives.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.38)",
+          "best_match_ratio": 0.379
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 182,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001558,
+      "tailor_latency_s": 5.27
+    },
+    {
+      "case_id": "senior_mle_eu|top5",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "pick #5",
+      "thread_id": "014221f9-9c3d-4016-83b8-f26006e5a288",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001672,
+      "search_latency_s": 8.92,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 21,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the MLOps stack from the ground up, including MLflow, feature stores, and CI/CD pipelines, emphasizing quality and consistency in model deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.47 < 0.65)",
+          "best_match_ratio": 0.472
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Mentored four engineers and managed on-call responsibilities for the ML platform, fostering a culture of reliability and high standards.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.57 < 0.65)",
+          "best_match_ratio": 0.573
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Trained distributed PyTorch ranking models for search, improving click-through rate by 9%, demonstrating attention to detail in model tuning and evaluation.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.65)",
+          "best_match_ratio": 0.529
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "I am writing to express my interest in the Data Labeling Specialist position.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.50)",
+          "best_match_ratio": 0.495
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 8 years of experience as a Senior Machine Learning Engineer, I have developed a strong attention to detail and a commitment to quality that aligns well with your need for careful, focused digital work.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.42)",
+          "best_match_ratio": 0.417
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 208,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.00182,
+      "tailor_latency_s": 6.34
+    },
+    {
+      "case_id": "career_changer_in|top5",
+      "cv_file": "career_changer_in.pdf",
+      "note": "pick #5",
+      "thread_id": "641259a1-14e8-4458-8e53-8f0d6dbbf24e",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001704,
+      "search_latency_s": 16.52,
+      "tailored": true,
+      "selected_job_id": "remotive-2091068",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 13,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Taught statistics and probability to over 200 students annually, enhancing their understanding of complex concepts through clear communication.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.57 < 0.65)",
+          "best_match_ratio": 0.565
+        },
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Developed spreadsheet trackers to monitor and analyze student performance trends, applying data visualization techniques to inform teaching strategies.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.56 < 0.65)",
+          "best_match_ratio": 0.563
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With over a decade of experience as a mathematics teacher and a recent certification in data analytics, I bring a unique blend of strong communication skills and analytical thinking that I believe can contribute to telling the garden3d story effectively across digital platforms.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.31)",
+          "best_match_ratio": 0.314
+        },
+        {
+          "where": "cover_letter:sentence:6",
+          "text": "While my professional background is rooted in education and data analysis rather than traditional marketing, I am eager to leverage my skills in communication, data visualization, and strategic thinking to support garden3d's creative collective.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.40)",
+          "best_match_ratio": 0.4
+        },
+        {
+          "where": "cover_letter:sentence:9",
+          "text": "I look forward to the opportunity to discuss how my skills and experiences can contribute to garden3d's mission.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.37)",
+          "best_match_ratio": 0.373
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 200,
+      "n_bullets": 2,
+      "tailor_cost_usd": 0.001605,
+      "tailor_latency_s": 5.44
+    },
+    {
+      "case_id": "german_pm_de|top5",
+      "cv_file": "german_pm_de.pdf",
+      "note": "pick #5",
+      "thread_id": "e81e74b4-a8b9-4350-a9e9-3bc5940f7fd4",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001666,
+      "search_latency_s": 11.14,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 5,
+      "claims_checked": 14,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-002",
+          "text": "Verantwortlich für die Roadmap der internen Analytics-Plattform, inklusive Definition von KPIs und Erstellung von Tableau-Dashboards zur Datenvisualisierung.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.37 < 0.65)",
+          "best_match_ratio": 0.371
+        },
+        {
+          "where": "skill:agile Methoden",
+          "text": "agile Methoden",
+          "reason": "skill is not in the candidate's corpus (best match 0.73)",
+          "best_match_ratio": 0.727
+        },
+        {
+          "where": "cover_letter:sentence:2",
+          "text": "mit großem Interesse habe ich Ihre Ausschreibung für die Position als Data Labeling Specialist gelesen.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.45)",
+          "best_match_ratio": 0.454
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "Mit meiner fünfjährigen Erfahrung als Data Product Manager und Business Analyst bringe ich eine ausgeprägte Detailorientierung und fundierte Kenntnisse in der Datenanalyse mit, die ich gewinnbringend in Ihre Arbeit einbringen möchte.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.31)",
+          "best_match_ratio": 0.315
+        },
+        {
+          "where": "cover_letter:sentence:8",
+          "text": "Ich freue mich darauf, mit meiner Sorgfalt und meinem Engagement zum Erfolg von Workada beizutragen und die Qualität Ihrer Datenlabels zu sichern.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.36)",
+          "best_match_ratio": 0.36
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 181,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001727,
+      "tailor_latency_s": 8.12
+    },
+    {
+      "case_id": "junior_ds_us|top1+linkedin",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "with LinkedIn export",
+      "thread_id": "5d63011c-6665-4afd-9966-ca7a613609d1",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001628,
+      "search_latency_s": 10.9,
+      "tailored": true,
+      "selected_job_id": "remotive-2090903",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 2,
+      "claims_checked": 14,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Conducted A/B testing on checkout processes and communicated findings to product managers to optimize user experience.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.58 < 0.65)",
+          "best_match_ratio": 0.576
+        },
+        {
+          "where": "cover_letter:sentence:3",
+          "text": "With 1.5 years of experience as a Data Analyst, I have developed strong attention to detail and a commitment to data quality, which align well with your need for individuals who take quality seriously and can spot mistakes or inconsistencies.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.32)",
+          "best_match_ratio": 0.325
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 170,
+      "n_bullets": 3,
+      "tailor_cost_usd": 0.001585,
+      "tailor_latency_s": 4.99
+    },
+    {
+      "case_id": "senior_mle_eu|top1+linkedin",
+      "cv_file": "senior_mle_eu.pdf",
+      "note": "with LinkedIn export",
+      "thread_id": "0f08f836-cf40-4e4f-b636-284516b71fa7",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.001663,
+      "search_latency_s": 9.4,
+      "tailored": true,
+      "selected_job_id": "remotive-1919266",
+      "tailor_failed": false,
+      "tailor_errors": [],
+      "fabrication_flags": 4,
+      "claims_checked": 21,
+      "flagged": [
+        {
+          "where": "cv_bullet:cv-bullet-003",
+          "text": "Built the team's MLOps stack from the ground up, incorporating MLflow, feature stores, and CI/CD pipelines to streamline model development and deployment.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.55 < 0.65)",
+          "best_match_ratio": 0.55
+        },
+        {
+          "where": "cv_bullet:cv-bullet-004",
+          "text": "Mentored four engineers and managed the ML platform on-call rotation, maintaining system reliability and fostering team growth.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.47 < 0.65)",
+          "best_match_ratio": 0.47
+        },
+        {
+          "where": "cv_bullet:cv-bullet-006",
+          "text": "Developed and trained distributed PyTorch ranking models for search, achieving a 9% improvement in click-through rate.",
+          "reason": "rewrite drifted too far from its corpus item (ratio 0.53 < 0.65)",
+          "best_match_ratio": 0.526
+        },
+        {
+          "where": "cover_letter:sentence:4",
+          "text": "At DeepMobility GmbH, I designed and deployed a real-time recommendation service on Kubernetes that handles 10 million requests per day, demonstrating my capability to build AI-native products from the ground up.",
+          "reason": "factual claim not traceable to the corpus or research (best match 0.52)",
+          "best_match_ratio": 0.517
+        }
+      ],
+      "research_used": false,
+      "cover_letter_words": 200,
+      "n_bullets": 4,
+      "tailor_cost_usd": 0.002039,
+      "tailor_latency_s": 6.76
+    },
+    {
+      "case_id": "junior_ds_us|unknown_job",
+      "cv_file": "junior_ds_us.pdf",
+      "note": "unknown job id (graceful error)",
+      "thread_id": "c7fe179b-ba3d-4446-8aa1-e9155b731957",
+      "search_failed": false,
+      "n_jobs_ranked": 10,
+      "search_cost_usd": 0.00158,
+      "search_latency_s": 8.58,
+      "tailored": false,
+      "selected_job_id": "no-such-job-id",
+      "tailor_failed": false,
+      "tailor_errors": [
+        "tailor: selected job id 'no-such-job-id' is not among the 10 ranked jobs on this thread"
+      ],
+      "fabrication_flags": 0,
+      "claims_checked": 0,
+      "flagged": [],
+      "research_used": false,
+      "cover_letter_words": 0,
+      "n_bullets": 0,
+      "tailor_cost_usd": 0.0,
+      "tailor_latency_s": 0.01
+    }
+  ]
+}

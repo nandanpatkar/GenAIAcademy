@@ -57,6 +57,7 @@ export function getActiveNavId(p) {
   if (p.showAIInterviewer) return "interviewer";
   if (p.showGeminiInterviewer) return "gemini_interviewer";
   if (p.showEmotionalSupport) return "emotional_support";
+  if (p.showJobScout) return "job_scout";
   if (p.showAlgoStudio) return "algo_studio";
   if (p.showAlgoVisualizer) return "algo_visualizer";
   if (p.showK8sGames) return "k8s_games";
@@ -366,6 +367,9 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "emotional_support":
       if (p.setShowEmotionalSupport) p.setShowEmotionalSupport(true);
+      break;
+    case "job_scout":
+      if (p.setShowJobScout) p.setShowJobScout(true);
       break;
     case "algo_studio":
       if (p.setShowAlgoStudio) p.setShowAlgoStudio(true);

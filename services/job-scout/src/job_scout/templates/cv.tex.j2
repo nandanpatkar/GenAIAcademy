@@ -1,0 +1,51 @@
+<# The single ATS-friendly CV template: one page, article class, standard
+   fonts, no images/tables/columns. Every user-derived value goes through the
+   |tex escape filter. Swapping this template is a "make it yours" exercise. #>
+\documentclass[10pt]{article}
+\usepackage[margin=1.6cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{parskip}
+\pagestyle{empty}
+\setlist[itemize]{leftmargin=1.2em, itemsep=1pt, topsep=2pt}
+
+\newcommand{\sectionrule}[1]{\vspace{6pt}{\large\bfseries #1}\\[-8pt]\rule{\textwidth}{0.4pt}\vspace{2pt}}
+
+\begin{document}
+
+{\LARGE\bfseries << name | tex >>}\\[2pt]
+{\itshape << cv.headline | tex >>}
+
+\sectionrule{Summary}
+<< cv.summary | tex >>
+
+<% if cv.experience %>
+\sectionrule{Experience}
+<% for entry in cv.experience %>
+{\bfseries << entry.role | tex >>} --- << entry.company | tex >><% if entry.dates %> \hfill << entry.dates | tex >><% endif %>
+<% if entry.bullets %>
+\begin{itemize}
+<% for bullet in entry.bullets %>
+  \item << bullet.text | tex >>
+<% endfor %>
+\end{itemize}
+<% endif %>
+<% endfor %>
+<% endif %>
+
+<% if cv.skills %>
+\sectionrule{Skills}
+<< cv.skills | map('tex') | join(' \\textbullet{} ') >>
+<% endif %>
+
+<% if cv.education %>
+\sectionrule{Education}
+\begin{itemize}
+<% for line in cv.education %>
+  \item << line | tex >>
+<% endfor %>
+\end{itemize}
+<% endif %>
+
+\end{document}
