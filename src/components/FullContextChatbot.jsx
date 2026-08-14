@@ -243,7 +243,11 @@ export default function FullContextChatbot({
   const storageKey = `${STORAGE_PREFIX}_${user?.id || "local"}`;
   const [isOpen, setIsOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(true);
+  // On a phone the history panel is a drawer over the chat. Keep the composer
+  // available by default, while retaining the persistent sidebar on larger screens.
+  const [isHistoryOpen, setIsHistoryOpen] = useState(
+    () => typeof window === "undefined" || window.innerWidth > 760
+  );
   const [chats, setChats] = useState(() => readChats(storageKey, aiProvider));
   const [activeChatId, setActiveChatId] = useState(null);
   const [input, setInput] = useState("");
@@ -480,6 +484,8 @@ export default function FullContextChatbot({
       suppressFabClickRef.current = false;
       return;
     }
+    // Reset the mobile drawer on each open so it can never cover the message field.
+    if (window.innerWidth <= 760) setIsHistoryOpen(false);
     setIsOpen(true);
   };
 
@@ -513,7 +519,7 @@ export default function FullContextChatbot({
                   <div className="atlas-brand-name">ATLAS</div>
                   <div className="atlas-brand-subtitle">LEARNING COPILOT</div>
                 </div>
-                <button className="atlas-icon-button atlas-mobile-close" onClick={() => setIsOpen(false)} aria-label="Close"><X size={16} /></button>
+                <button className="atlas-icon-button atlas-mobile-close" onClick={() => setIsHistoryOpen(false)} aria-label="Close chat history"><X size={16} /></button>
               </div>
               <div className="atlas-sidebar-intro"><span className="atlas-sidebar-kicker">YOUR SPACE</span><p>Bring your roadmap, notes, and next move into one conversation.</p></div>
               <button className="atlas-new-chat" onClick={startNewChat}><MessageSquarePlus size={16} /> New conversation <Plus size={14} /></button>
@@ -530,6 +536,7 @@ export default function FullContextChatbot({
               </div>
               <div className="atlas-history-footer"><Archive size={14} /><span><strong>Private by default</strong><small>Chats stay on this device</small></span></div>
             </aside>
+            {isHistoryOpen && <button className="atlas-history-backdrop" type="button" onClick={() => setIsHistoryOpen(false)} aria-label="Close chat history" />}
 
             <section className="atlas-main">
               <header className="atlas-header">

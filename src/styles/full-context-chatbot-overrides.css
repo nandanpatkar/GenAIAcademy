@@ -50,6 +50,10 @@
   color: #fcd34d;
 }
 
+.atlas-history-backdrop {
+  display: none;
+}
+
 @media (max-width: 760px) {
   .atlas-overlay:not(.atlas-overlay-fullscreen) {
     align-items: stretch;
@@ -57,5 +61,43 @@
 
   .atlas-fullscreen-toggle {
     display: none;
+  }
+
+  /* The history panel is a temporary drawer on phones, not a persistent layer
+     over the composer. Keeping its width stable also avoids reflowing the chat. */
+  .atlas-history {
+    z-index: 3;
+    transition: transform .24s ease, opacity .18s ease;
+    will-change: transform;
+  }
+
+  .atlas-shell.history-hidden .atlas-history {
+    width: min(300px, 86vw);
+    min-width: min(300px, 86vw);
+    padding: 22px 14px 15px;
+    opacity: 0;
+    overflow: hidden;
+    border-right: 1px solid var(--atlas-line);
+    pointer-events: none;
+    transform: translateX(-100%);
+  }
+
+  .atlas-history-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: block;
+    border: 0;
+    background: rgba(5, 7, 11, .5);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .atlas-mobile-close {
+    width: 44px;
+    height: 44px;
+    margin: -6px -6px -6px auto;
+    touch-action: manipulation;
   }
 }
