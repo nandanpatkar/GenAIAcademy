@@ -202,8 +202,15 @@ hit the `localhost:3000`-only CORS rule at `api.py:239`. `GRADIO_ROOT_PATH` acce
 complete URL (verified):
 
 ```
-GRADIO_ROOT_PATH = https://your-domain.vercel.app/jobscout
+GRADIO_ROOT_PATH = https://gen-ai-academy-umber.vercel.app/jobscout
 ```
+
+**Use the production alias, not the project name.** `gen-ai-academy.vercel.app`
+looks right and is not this project — it belongs to someone else, serves none of
+these rewrites, and 404s on `/manifest.json`. The alias this project actually
+deploys to is `gen-ai-academy-umber.vercel.app`; confirm with
+`npx vercel inspect <deployment>` under **Aliases**. If you later attach a custom
+domain, this value has to follow it.
 
 This overrides the `ENV GRADIO_ROOT_PATH=/jobscout` baked into the Dockerfile, which
 stays as the local-development default.
@@ -307,7 +314,7 @@ curl -sI $R/jobvis              # 200
 Then through production, which is where the interesting failures live:
 
 ```bash
-D=https://your-domain.vercel.app
+D=https://gen-ai-academy-umber.vercel.app
 curl -s  $D/jobscout/api/config
 curl -s  $D/jobscout/ | grep -o '"root":"[^"]*"'   # must be your domain, not onrender.com
 curl -sN $D/jobscout/gradio_api/queue/data          # must stay open, not return instantly
