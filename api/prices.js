@@ -1,6 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const { SUPPORTED_REGIONS } = require('./regions');
+// package.json sets "type": "module", so these must be ESM imports — `require`
+// is undefined here and the whole module fails to load, 500ing /api/prices.
+// The local specifier needs its extension: Node's ESM resolver has no
+// CommonJS-style extension guessing.
+import fs from 'fs';
+import path from 'path';
+import { SUPPORTED_REGIONS } from './regions.js';
 
 const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID || '';
 const CF_KV_NAMESPACE_ID = process.env.CF_KV_NAMESPACE_ID || '';

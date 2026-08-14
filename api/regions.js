@@ -1,7 +1,7 @@
 /**
  * Region allowlist shared by the backend routes.
  */
-const SUPPORTED_REGIONS = new Set([
+export const SUPPORTED_REGIONS = new Set([
   'us-east-1', 'us-east-2', 'us-west-1', 'us-west-2', 'ca-central-1',
   'eu-west-1', 'eu-west-2', 'eu-west-3', 'eu-central-1', 'eu-central-2',
   'eu-north-1', 'eu-south-1', 'eu-south-2',
@@ -10,5 +10,3 @@ const SUPPORTED_REGIONS = new Set([
   'ap-southeast-1', 'ap-southeast-2', 'ap-southeast-3', 'ap-southeast-4',
   'me-south-1', 'me-central-1', 'sa-east-1', 'af-south-1',
 ]);
-
-module.exports = { SUPPORTED_REGIONS };
