@@ -21,6 +21,7 @@ const loadDefaultPaths = () => {
   return pathsModulePromise;
 };
 import { DATA_SCIENCE_LAB_IDS } from "./data/dataScienceLabCatalog";
+import { filterVisiblePaths, listPathKeys } from "./config/pathRegistry";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 import { supabase } from "./config/supabaseClient";
@@ -301,6 +302,15 @@ function MainApp() {
   // theme & toggleTheme now come from ThemeContext (see above)
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pathsData, setPathsData] = useState({});
+
+  // What this viewer is allowed to see. Admins get everything; for everyone
+  // else the paths an admin marked admin-only are removed. Only display
+  // surfaces read this — anything that writes paths_data back keeps using
+  // `pathsData`, or a hidden path would be dropped from the saved blob.
+  const visiblePaths = useMemo(
+    () => filterVisiblePaths(pathsData, { overrides: sidebarConfig?.pathVisibility, isAdmin }),
+    [pathsData, sidebarConfig?.pathVisibility, isAdmin]
+  );
   const [activePath, setActivePath] = useState("ds");
   const [activeNode, setActiveNode] = useState(null);
   const [activeModule, setActiveModule] = useState(null);
@@ -1067,8 +1077,8 @@ function MainApp() {
 
   // ── Global Search (Cmd+K) ──────────────────────────────────────────────
   const searchItems = useMemo(
-    () => buildSearchIndex({ pathsData }),
-    [pathsData]
+    () => buildSearchIndex({ pathsData: visiblePaths }),
+    [visiblePaths]
   );
 
   const handleSearchNavigate = useCallback((item) => {
@@ -1106,7 +1116,15 @@ function MainApp() {
     }
   }, [pathsData]);
 
-  const pathData = pathsData[activePath] || pathsData[Object.keys(pathsData).find(k => !["workspace", "videoIntelligence", "saved_algos", "genai-roadmap-campusx", "onboarding", "appearance", "leetcode"].includes(k))] || Object.values(pathsData)[0];
+  const pathData = visiblePaths[activePath] || visiblePaths[listPathKeys(visiblePaths)[0]] || Object.values(visiblePaths)[0];
+
+  // If the path a learner was on gets hidden mid-session, move them to the
+  // first one they can still see rather than leaving a dead selection behind.
+  useEffect(() => {
+    const keys = listPathKeys(visiblePaths);
+    if (!keys.length || keys.includes(activePath)) return;
+    setActivePath(keys[0]);
+  }, [visiblePaths, activePath]);
 
   const handleNodeClick = (node, pathId) => {
     if (pathId) setActivePath(pathId);
@@ -1492,7 +1510,7 @@ function MainApp() {
 
   const sidebarProps = {
     activePath, setActivePath: handleSidebarPathChange,
-    paths: pathsData, onReset: handleResetData, isEditMode, setIsEditMode,
+    paths: visiblePaths, onReset: handleResetData, isEditMode, setIsEditMode,
     onAddPath: handleAddPath, onEditPath: handleEditPath,
     showCurriculumMap, setShowCurriculumMap,
     showRoadmap2, setShowRoadmap2, showRoadmap3, setShowRoadmap3,
@@ -1606,7 +1624,7 @@ function MainApp() {
               ) :
                 showKnowledgeGraph ? (
                   <KnowledgeGraph
-                    pathsData={pathsData}
+                    pathsData={visiblePaths}
                     userId={user?.id}
                     onClose={() => setShowKnowledgeGraph(false)}
                     onNavigate={handleKnowledgeGraphNavigate}
@@ -1614,7 +1632,7 @@ function MainApp() {
                 ) :
                   showGalaxy ? (
                     <KnowledgeGalaxy
-                      nodes={pathsData}
+                      nodes={visiblePaths}
                       activePath={activePath}
                       onNodeClick={handleNodeClick}
                       onModuleClick={(node, mod, pathId) => {
@@ -1664,7 +1682,7 @@ function MainApp() {
                                 showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
                                   showGenAIPlayground2 ? <React.Suspense fallback={<div style={{ display: "grid", placeItems: "center", width: "100%", height: "100%", background: "#f7f8ff", color: "#64748b", fontSize: 12 }}>Loading Gen AI Playground 2.0…</div>}><GenAIPlayground2 theme={theme} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} onClose={closeGenAIPlayground2} /></React.Suspense> :
                                     showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
-                                    showProgress ? <ProgressTracker pathsData={pathsData} onClose={() => setShowProgress(false)} /> :
+                                    showProgress ? <ProgressTracker pathsData={visiblePaths} onClose={() => setShowProgress(false)} /> :
                                       showProjects ? (
                                         <ProjectsProvider>
                                           <ProjectIDE />
@@ -1686,7 +1704,7 @@ function MainApp() {
                                               showGitVisualizer ? <GitVisualizer onClose={() => setShowGitVisualizer(false)} /> :
                                                 showFlowDesign ? <FlowDesign onClose={() => setShowFlowDesign(false)} /> :
                                                 showWorkplaceLab ? <WorkplaceLab
-                                                  pathsData={pathsData}
+                                                  pathsData={visiblePaths}
                                                   history={pathsData.workspace?.history || []}
                                                   notes={pathsData.workspace?.notes || []}
                                                   maps={pathsData.workspace?.maps || []}
@@ -1712,14 +1730,14 @@ function MainApp() {
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
                                                         showAiFromScratch ? <ErrorBoundary><AiFromScratch track={aifsTrack} lesson={aifsLesson} onClose={() => { setAifsLesson(null); setShowAiFromScratch(false); }} /></ErrorBoundary> :
-                                                      showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
+                                                      showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={visiblePaths} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showAlgoWar ? <AlgoWarArena onClose={() => setShowAlgoWar(false)} /> :
                                                       showQuiz ? <QuizApp /> :
                                                       showHome2 ? (
                                                         <Home2Dashboard
                                                           user={user}
-                                                          pathsData={pathsData}
+                                                          pathsData={visiblePaths}
                                                           activePath={activePath}
                                                           setActivePath={setActivePath}
                                                           onContinue={(node, pathId) => { setShowHome2(false); handleNodeClick(node, pathId); }}
@@ -1749,8 +1767,8 @@ function MainApp() {
                                                             setBlogSlug(slug);
                                                             setShowBlog(true);
                                                           }}
-                                                          paths={pathsData}
-                                                          pathsData={pathsData}
+                                                          paths={visiblePaths}
+                                                          pathsData={visiblePaths}
                                                           activePath={activePath}
                                                           onStudyAction={handleHubStudyAction}
                                                           onDesignAction={handleHubDesignAction}
@@ -1764,7 +1782,7 @@ function MainApp() {
                                                       ) : showIntelligenceHub ? (
                                                         <HomeDashboard
                                                           user={user}
-                                                          pathsData={pathsData}
+                                                          pathsData={visiblePaths}
                                                           activePath={activePath}
                                                           setActivePath={setActivePath}
                                                           onContinue={(node, pathId) => { setShowIntelligenceHub(false); handleNodeClick(node, pathId); }}
@@ -1796,31 +1814,31 @@ function MainApp() {
                                                           onOpenOnboarding={() => { setOnboardingMode("panel"); setShowOnboarding(true); }}
                                                         />
                                                       ) :
-                                                      showCurriculumMap ? <CurriculumTreePanel paths={pathsData} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={handleTopicSelect} onClose={() => setShowCurriculumMap(false)} /> :
+                                                      showCurriculumMap ? <CurriculumTreePanel paths={visiblePaths} activePath={activePath} setActivePath={setActivePath} pathData={pathData} activeNode={activeNode} setActiveNode={setActiveNode} activeModule={activeModule} setActiveModule={setActiveModule} activeTopic={activeTopic} setActiveTopic={handleTopicSelect} onClose={() => setShowCurriculumMap(false)} /> :
                                                         <>
                                                           {!freshActiveNode && (
                                                             <>
                                                               {showRoadmap2 ? (
                                                                 <Roadmap2
-                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={visiblePaths}
                                                                   onNodeClick={handleNodeClick} getNodeState={getNodeState}
                                                                   completedCount={completedCount}
                                                                 />
                                                               ) : showRoadmap3 ? (
                                                                 <Roadmap3
-                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={visiblePaths}
                                                                   onNodeClick={handleNodeClick} getNodeState={getNodeState}
                                                                   completedCount={completedCount}
                                                                 />
                                                               ) : isMobile && !isEditMode ? (
                                                                 <RoadmapMobile
-                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={visiblePaths}
                                                                   onNodeClick={handleNodeClick} getNodeState={getNodeState}
                                                                   completedCount={completedCount}
                                                                 />
                                                               ) : (
                                                                 <RoadmapGraph
-                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={pathsData}
+                                                                  path={pathData} activePath={activePath} setActivePath={setActivePath} pathsData={visiblePaths}
                                                                   activeNode={freshActiveNode} onNodeClick={handleNodeClick} getNodeState={getNodeState}
                                                                   completedCount={completedCount} onMarkState={handleMarkState}
                                                                   onAddNode={(idx = -1) => { setEditData(null); setEditingNode(true); setInsertionIndex(idx); }}
@@ -1944,7 +1962,7 @@ function MainApp() {
       <OverlayBoundary>
         <FullContextChatbot
           user={user}
-          pathsData={pathsData}
+          pathsData={visiblePaths}
           activePath={activePath}
           activeNode={freshActiveNode}
           activeModule={freshActiveModule}
@@ -1982,7 +2000,7 @@ function MainApp() {
             onDeleteNote={(noteId) => handleDeleteVideoNote(activeVideo.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]{11})/)?.[1], noteId)}
             moduleContext={freshActiveModule}
             queueOverride={activeVideoQueue}
-            pathsData={pathsData}
+            pathsData={visiblePaths}
             onNavigate={(p, n, m) => {
               if (p) setActivePath(p);
               if (n) setActiveNode(n);

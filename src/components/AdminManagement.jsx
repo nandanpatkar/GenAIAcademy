@@ -2,12 +2,13 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   Activity, AlertCircle, CheckCircle2, ChevronRight, Clock, Database, Download,
   Eye, EyeOff, ExternalLink, FileJson, FileText, Layout, Lock, Map, RefreshCw,
-  RotateCcw, Search, Shield, ShieldCheck, Sparkles, Terminal, Trash2, Unlock,
+  RotateCcw, Route, Search, Shield, ShieldCheck, Sparkles, Terminal, Trash2, Unlock,
   UploadCloud, UserPlus, Users, X, Zap
 } from "lucide-react";
 import { supabase } from "../config/supabaseClient";
 import { useAuth } from "../contexts/AuthContext";
 import { resolveEffectiveLayout, resolveItemVisibility, SIDEBAR_ITEM_REGISTRY } from "../config/sidebarRegistry";
+import { listPathKeys, resolvePathVisibility, pathLabel } from "../config/pathRegistry";
 import "../styles/global.css";
 import "../styles/admin.css";
 
@@ -147,6 +148,17 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     const nextOverrides = { ...(sidebarConfig?.overrides || {}), [itemId]: visibility };
     await persistSidebarConfig({ ...(sidebarConfig || {}), overrides: nextOverrides });
   };
+  // Study paths get the same treatment as sidebar items, stored beside them in
+  // the one admin config blob. There is no fixed registry of paths — the Forge
+  // can import new ones — so the list is whatever paths_data currently holds.
+  const studyPaths = useMemo(
+    () => listPathKeys(pathsData).map(key => ({ key, path: pathsData[key] })),
+    [pathsData]
+  );
+  const handleSetPathVisibility = async (pathKey, visibility) => {
+    const nextVisibility = { ...(sidebarConfig?.pathVisibility || {}), [pathKey]: visibility };
+    await persistSidebarConfig({ ...(sidebarConfig || {}), pathVisibility: nextVisibility });
+  };
   const handleResetSidebarLayout = async () => {
     if (!window.confirm("Reset the sidebar back to its default sections and order? Visibility settings will be kept.")) return;
     await persistSidebarConfig({ ...(sidebarConfig || {}), layout: null });
@@ -230,7 +242,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     { id: "overview", label: "Overview", icon: <Activity size={15} /> },
     { id: "users", label: "People", icon: <Users size={15} /> },
     { id: "infra", label: "Infrastructure", icon: <Terminal size={15} /> },
-    { id: "sidebar", label: "Sidebar", icon: <Layout size={15} /> },
+    { id: "sidebar", label: "Navigation", icon: <Layout size={15} /> },
     { id: "forge", label: "Content forge", icon: <Zap size={15} /> }
   ];
   const currentTab = tabs.find(tab => tab.id === activeTab) || tabs[0];
@@ -238,7 +250,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     overview: ["Workspace overview", "Good morning, operator.", "A quick read on your learning platform, access, and content health."],
     users: ["People", "Identity directory", "Review learner accounts and keep access in good standing."],
     infra: ["Configuration", "Infrastructure", "Manage the services and permissions that power the workspace."],
-    sidebar: ["Navigation", "Sidebar access", "Choose who can see each item. Drag items between sections from Edit Mode in the sidebar."],
+    sidebar: ["Navigation", "Access control", "Choose who can see each study path and each sidebar item. Drag items between sections from Edit Mode in the sidebar."],
     forge: ["Content operations", "Content forge", "Bring new roadmap structures into the platform with confidence."]
   }[activeTab];
   const openTab = tab => { setActiveTab(tab); setErrorInfo(null); setSuccessInfo(null); };
@@ -284,6 +296,30 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
                   <span className="admin-variant-copy"><strong>Legacy</strong><small>The original quantum-glass rail with the settings orb.</small></span>
                   {sidebarVariant === "legacy" && <span className="admin-variant-check"><CheckCircle2 size={16} /></span>}
                 </button>
+              </div>
+            </section>
+            <section className="admin-panel admin-sidebarcfg-group">
+              <div className="admin-panel-heading">
+                <div><span className="admin-card-kicker">Study paths</span><h3>Roadmap access</h3><p>Each path defaults to Everyone. Marking one Admin only hides it from the sidebar, the roadmaps, search, and the dashboards for everybody else — their saved progress on it is kept.</p></div>
+                <span className="admin-panel-meta">{studyPaths.length} path{studyPaths.length === 1 ? "" : "s"}</span>
+              </div>
+              <div className="admin-sidebarcfg-list">
+                {studyPaths.map(({ key, path }) => {
+                  const visibility = resolvePathVisibility(key, { overrides: sidebarConfig?.pathVisibility });
+                  const nodeCount = path?.nodes?.length || 0;
+                  return <div className="admin-sidebarcfg-row" key={key}>
+                    <span className="admin-sidebarcfg-icon" style={path?.color ? { color: path.color, background: `${path.color}1a` } : undefined}><Route size={15} /></span>
+                    <div className="admin-sidebarcfg-copy">
+                      <strong>{pathLabel(path, key)}</strong>
+                      <small>{nodeCount ? `${nodeCount} section${nodeCount === 1 ? "" : "s"}` : "No sections yet"}{path?.estimatedHours ? ` · ${path.estimatedHours}` : ""}</small>
+                    </div>
+                    <div className="admin-segmented" role="group" aria-label={`${pathLabel(path, key)} visibility`}>
+                      <button type="button" className={visibility === "all" ? "active" : ""} onClick={() => handleSetPathVisibility(key, "all")}>Everyone</button>
+                      <button type="button" className={visibility === "admin" ? "active" : ""} onClick={() => handleSetPathVisibility(key, "admin")}>Admin only</button>
+                    </div>
+                  </div>;
+                })}
+                {studyPaths.length === 0 && <p className="admin-sidebarcfg-empty">No study paths yet.</p>}
               </div>
             </section>
             <section className="admin-panel admin-sidebarcfg-intro">
