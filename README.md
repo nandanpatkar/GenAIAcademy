@@ -540,7 +540,8 @@ Adjacent scripts not wired to `npm run` (invoked manually as needed): `scripts/b
 | Variable | Used by | Purpose |
 |---|---|---|
 | `GEMINI_API_KEY` | `api/gemini-live-token.js`, `api/copilot.js` | Server-held key for Gemini Live tokens and copilot fallback |
-| `JDOODLE_CLIENT_ID` / `JDOODLE_CLIENT_SECRET` | `api/execute.js` | JDoodle code-execution credentials |
+| `JDOODLE_CLIENT_ID` / `JDOODLE_CLIENT_SECRET` | `api/execute.js` | JDoodle code-execution credentials (default provider) |
+| `HACKEREARTH_CLIENT_SECRET` | `api/execute.js`, `api/_lib/hackerearth.js` | HackerEarth code-execution credentials (selectable 2nd provider) |
 | `AWS_REGION` / `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` / `AWS_S3_BUCKET_NAME` | `api/blob.js`, `api/upload.js` | S3 storage for editor blobs/uploads |
 | `CF_ACCOUNT_ID` / `CF_KV_NAMESPACE_ID` / `CF_API_TOKEN` | `api/prices.js` | Cloudflare KV credentials for AWS pricing cache |
 | `YOUTUBE_API_KEY` | `api/youtube-playlist.js` | YouTube Data API v3 key for the Resources panel's "Import Playlist" feature |

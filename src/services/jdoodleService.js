@@ -1,9 +1,15 @@
 /**
- * jdoodleService.js — client for the /api/execute JDoodle proxy.
+ * jdoodleService.js — client for the /api/execute code-execution proxy.
  *
  * Credentials live only on the server (Vercel env vars); this file just
- * maps languages and posts the script.
+ * maps languages/providers and posts the script. The proxy supports two
+ * interchangeable execution providers: JDoodle and HackerEarth.
  */
+
+export const RUN_PROVIDERS = [
+  { id: 'jdoodle', label: 'JDoodle' },
+  { id: 'hackerearth', label: 'HackerEarth' },
+];
 
 // UI language options shown in the Run dropdown.
 // `versionIndex` values are JDoodle's latest-at-time-of-writing indices.
@@ -43,7 +49,7 @@ export const getLanguageOption = (id) =>
  * Execute code via the serverless proxy.
  * @returns { output, statusCode, memory, cpuTime } or throws Error.
  */
-export const executeCode = async ({ script, language, versionIndex, stdin = '' }) => {
+export const executeCode = async ({ script, language, versionIndex, stdin = '', provider = 'jdoodle' }) => {
   const opt = getLanguageOption(language);
   const res = await fetch('/api/execute', {
     method: 'POST',
@@ -53,6 +59,7 @@ export const executeCode = async ({ script, language, versionIndex, stdin = '' }
       language,
       versionIndex: versionIndex || opt?.versionIndex || '0',
       stdin,
+      provider,
     }),
   });
 

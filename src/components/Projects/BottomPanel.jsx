@@ -10,7 +10,7 @@ import { useProjects } from '../../contexts/ProjectsContext';
 import GitPanel from './GitPanel';
 import { searchFiles, saveFile } from '../../services/projectService';
 import { callAI } from '../../services/aiService';
-import { RUN_LANGUAGES, languageForFilename, executeCode } from '../../services/jdoodleService';
+import { RUN_LANGUAGES, RUN_PROVIDERS, languageForFilename, executeCode } from '../../services/jdoodleService';
 
 // ─── Terminal ────────────────────────────────────────────────────────────────
 function TerminalTab({ onToast }) {
@@ -280,10 +280,11 @@ function ProblemsTab() {
   );
 }
 
-// ─── Run (JDoodle) ─────────────────────────────────────────────────────────────
+// ─── Run (JDoodle / HackerEarth) ────────────────────────────────────────────
 function RunTab({ onToast }) {
   const { activeFile } = useProjects();
   const [language, setLanguage] = useState('python3');
+  const [provider, setProvider] = useState('jdoodle');
   const [stdin, setStdin] = useState('');
   const [showStdin, setShowStdin] = useState(false);
   const [running, setRunning] = useState(false);
@@ -309,6 +310,7 @@ function RunTab({ onToast }) {
         script: activeFile.content || '',
         language,
         stdin,
+        provider,
       });
       if (abortRef.current) return;
       setResult(res);
@@ -324,7 +326,7 @@ function RunTab({ onToast }) {
     } finally {
       setRunning(false);
     }
-  }, [activeFile, language, stdin, running, onToast]);
+  }, [activeFile, language, stdin, provider, running, onToast]);
 
   // Bridge so the editor's Run button (and Ctrl/Cmd+Enter) can trigger a run.
   useEffect(() => {
@@ -353,6 +355,17 @@ function RunTab({ onToast }) {
         >
           {RUN_LANGUAGES.map(l => (
             <option key={l.id} value={l.id}>{l.label}</option>
+          ))}
+        </select>
+
+        <select
+          className="ide-run-lang"
+          value={provider}
+          onChange={e => setProvider(e.target.value)}
+          title="Execution provider"
+        >
+          {RUN_PROVIDERS.map(p => (
+            <option key={p.id} value={p.id}>{p.label}</option>
           ))}
         </select>
 
