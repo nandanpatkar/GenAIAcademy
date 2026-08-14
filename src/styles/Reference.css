@@ -398,6 +398,24 @@
   box-shadow: 0 0 10px var(--neon-dim);
 }
 
+.runnable-provider-select {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--text3);
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  outline: 0;
+}
+
+.runnable-provider-select:hover,
+.runnable-provider-select:focus {
+  background: rgba(255,255,255,0.08);
+  color: var(--text2);
+}
+
 .runnable-code-output {
   background: #000;
   border-top: 1px solid var(--border);

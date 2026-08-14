@@ -1,7 +1,12 @@
 import manifestData from "../_data/codelabManifests.json" with { type: "json" };
 import { buildPythonHarness, RESULT_MARKER } from "./pythonHarness.js";
+import { executeOnHackerEarth } from "./hackerearth.js";
 
 const JDOODLE_URL = "https://api.jdoodle.com/v1/execute";
+
+export function normalizeProvider(value) {
+  return value === "hackerearth" ? "hackerearth" : "jdoodle";
+}
 
 // Problems are addressed by slug. LeetCode-sourced ones also keep their
 // question number so older clients (and deep links) that send a number resolve.
@@ -73,7 +78,7 @@ export function buildHarness({ code, manifest, tests }) {
   return buildPythonHarness(config, code);
 }
 
-export async function executeHarness(script) {
+async function runOnJDoodle(script) {
   const clientId = process.env.JDOODLE_CLIENT_ID;
   const clientSecret = process.env.JDOODLE_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
@@ -81,7 +86,6 @@ export async function executeHarness(script) {
     error.code = "RUNNER_NOT_CONFIGURED";
     throw error;
   }
-  if (script.length > 200_000) throw new Error("The generated submission exceeds the runner's 200KB limit.");
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15_000);
   let response;
@@ -100,15 +104,40 @@ export async function executeHarness(script) {
   }
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data?.error || `Execution service failed (HTTP ${response.status}).`);
-  const output = String(data.output || "").slice(-1_000_000);
+  return { output: String(data.output || ""), cpuTime: data.cpuTime ?? null, memory: data.memory ?? null };
+}
+
+async function runOnHackerEarth(script) {
+  const clientSecret = process.env.HACKEREARTH_CLIENT_SECRET;
+  if (!clientSecret) {
+    const error = new Error("The code runner is not configured.");
+    error.code = "RUNNER_NOT_CONFIGURED";
+    throw error;
+  }
+  try {
+    const result = await executeOnHackerEarth({ script, language: "python3", stdin: "", clientSecret });
+    return { output: String(result.output || ""), cpuTime: result.cpuTime ?? null, memory: result.memory ?? null };
+  } catch (error) {
+    throw new Error(error.message || "Execution service failed.");
+  }
+}
+
+export async function executeHarness(script, provider = "jdoodle") {
+  if (script.length > 200_000) throw new Error("The generated submission exceeds the runner's 200KB limit.");
+
+  const { output: rawOutput, cpuTime, memory } = provider === "hackerearth"
+    ? await runOnHackerEarth(script)
+    : await runOnJDoodle(script);
+
+  const output = rawOutput.slice(-1_000_000);
   const markerIndex = output.lastIndexOf(RESULT_MARKER);
   if (markerIndex < 0) {
     const syntaxError = /SyntaxError|IndentationError|TabError/.test(output);
-    return { status: syntaxError ? "syntax_error" : "runtime_error", cases: [], summary: { passed: 0, failed: 1, total: 0 }, error: output.slice(-8000) || "The program ended before the judge produced a result.", runtime: data.cpuTime ?? null, memory: data.memory ?? null };
+    return { status: syntaxError ? "syntax_error" : "runtime_error", cases: [], summary: { passed: 0, failed: 1, total: 0 }, error: output.slice(-8000) || "The program ended before the judge produced a result.", runtime: cpuTime, memory };
   }
   try {
     const resultLine = output.slice(markerIndex + RESULT_MARKER.length).split("\n")[0];
-    return { ...JSON.parse(resultLine), runtime: data.cpuTime ?? null, memory: data.memory ?? null };
+    return { ...JSON.parse(resultLine), runtime: cpuTime, memory };
   } catch {
     throw new Error("The judge returned an unreadable result.");
   }

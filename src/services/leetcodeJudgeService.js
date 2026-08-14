@@ -22,18 +22,18 @@ async function postJudge(payload) {
   return data;
 }
 
-export function runLeetCodeTests({ problemId, code, caseIds, customCases = [] }) {
+export function runLeetCodeTests({ problemId, code, caseIds, customCases = [], provider = "jdoodle" }) {
   if (typeof code !== "string" || !code.trim()) {
     return Promise.reject(new Error("Enter a Python solution before you run the tests."));
   }
-  const payload = { action: "run", problemId, code, customCases };
+  const payload = { action: "run", problemId, code, customCases, provider };
   if (Array.isArray(caseIds) && caseIds.length) payload.caseIds = caseIds;
   return postJudge(payload);
 }
 
-export function submitLeetCodeSolution({ problemId, code }) {
+export function submitLeetCodeSolution({ problemId, code, provider = "jdoodle" }) {
   if (typeof code !== "string" || !code.trim()) {
     return Promise.reject(new Error("Enter a Python solution before you submit."));
   }
-  return postJudge({ action: "submit", problemId, code });
+  return postJudge({ action: "submit", problemId, code, provider });
 }

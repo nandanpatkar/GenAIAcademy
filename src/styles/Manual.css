@@ -1205,6 +1205,21 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+.runnable-provider-select {
+  background: #404040;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: 0;
+}
+.runnable-provider-select:hover,
+.runnable-provider-select:focus {
+  background: #555;
+}
 .runnable-code-content {
   position: relative;
 }

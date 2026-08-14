@@ -248,6 +248,8 @@
 .cq-primary, .cq-run { border: 1px solid var(--cq-mint); color: #07110f; background: var(--cq-mint); box-shadow: 0 10px 30px rgba(116,247,194,0.12); }
 .cq-primary:hover:not(:disabled), .cq-run:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(116,247,194,0.22); }
 .cq-ghost, .cq-replay { border: 1px solid var(--cq-line); color: var(--cq-text); background: rgba(255,255,255,0.035); }
+.cq-provider-select { min-height: 38px; border: 1px solid var(--cq-line); color: var(--cq-text); background: rgba(255,255,255,0.035); border-radius: 11px; font-size: 11px; font-weight: 700; padding: 0 10px; cursor: pointer; }
+.cq-provider-select:hover, .cq-provider-select:focus { border-color: rgba(116,247,194,0.35); background: rgba(116,247,194,0.075); outline: 0; }
 .cq-ghost:hover:not(:disabled), .cq-replay:hover:not(:disabled) { border-color: rgba(116,247,194,0.35); background: rgba(116,247,194,0.075); }
 
 .cq-orbit-stage { position: relative; width: min(380px, 100%); aspect-ratio: 1; margin: 0 auto; }
