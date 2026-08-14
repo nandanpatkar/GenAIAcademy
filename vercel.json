@@ -31,11 +31,11 @@
     },
     {
       "source": "/jobscout/(.*)",
-      "destination": "https://REPLACE-WITH-YOUR-JOB-SCOUT-HOST/$1"
+      "destination": "https://job-scout-dhwm.onrender.com/$1"
     },
     {
       "source": "/_next/(.*)",
-      "destination": "https://REPLACE-WITH-YOUR-JOB-SCOUT-HOST/_next/$1"
+      "destination": "https://job-scout-dhwm.onrender.com/_next/$1"
     },
     {
       "source": "/graphql",
