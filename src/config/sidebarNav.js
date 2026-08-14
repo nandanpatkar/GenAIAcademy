@@ -84,6 +84,8 @@ export function getActiveNavId(p) {
   if (p.showLangChainDocs) return p.langChainProduct || "langchain";
   // Strands is one nav item over five in-viewer products, so it does not.
   if (p.showStrandsDocs) return "strands";
+  // The AI from Scratch track id doubles as the nav id, minus the prefix.
+  if (p.showAiFromScratch) return `aifs_${p.aifsTrack === "guides" ? "reference" : p.aifsTrack || "curriculum"}`;
   if (!p.activeNode) return "overview";
   return null;
 }
@@ -149,6 +151,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowAgentCore) p.setShowAgentCore(false);
   if (p.setShowLangChainDocs) p.setShowLangChainDocs(false);
   if (p.setShowStrandsDocs) p.setShowStrandsDocs(false);
+  if (p.setShowAiFromScratch) p.setShowAiFromScratch(false);
   if (p.setShowOnboarding) p.setShowOnboarding(false);
 
   switch (id) {
@@ -189,6 +192,15 @@ export function runNavClick(id, p, ctx = {}) {
     case "strands":
       if (p.setShowStrandsDocs) p.setShowStrandsDocs(true);
       break;
+    case "aifs_curriculum":
+    case "aifs_certification":
+    case "aifs_reference": {
+      // One viewer, entered scoped to the track the reader picked.
+      const track = id === "aifs_reference" ? "guides" : id.replace("aifs_", "");
+      if (p.setAifsTrack) p.setAifsTrack(track);
+      if (p.setShowAiFromScratch) p.setShowAiFromScratch(true);
+      break;
+    }
     case "nosignups": if (p.setShowNoSignups) p.setShowNoSignups(true); break;
     case "free_system_design": window.open("https://freesystemdesign.com/", "_blank", "noopener,noreferrer"); break;
     case "knowledge_graph": if (p.setShowKnowledgeGraph) p.setShowKnowledgeGraph(true); break;

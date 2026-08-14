@@ -32,7 +32,7 @@ const STATE = join(ROOT, "scripts", ".docs-archive-uploaded.json");
 const CONCURRENCY = 32;
 const IMMUTABLE = "public, max-age=31536000, immutable";
 
-const DIRS = ["agentcore-samples", "agentcore", "langchain", "strands", "guides"];
+const DIRS = ["agentcore-samples", "agentcore", "langchain", "strands", "guides", "ai-from-scratch"];
 const SKIP_FILES = new Set([".DS_Store", "build-report.json"]);
 
 const CONTENT_TYPES = {

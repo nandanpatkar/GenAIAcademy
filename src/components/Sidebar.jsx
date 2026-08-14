@@ -79,6 +79,7 @@ function Sidebar({
   showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
   showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
   showStrandsDocs, setShowStrandsDocs,
+  showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
   showOnboarding, setShowOnboarding,
   activeToolHome, onOpenToolHome,
   onOpenGenAIPlayground2
@@ -321,6 +322,7 @@ function Sidebar({
     if (showAgentCore) return agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
     if (showLangChainDocs) return langChainProduct || "langchain";
     if (showStrandsDocs) return "strands";
+    if (showAiFromScratch) return `aifs_${aifsTrack === "guides" ? "reference" : aifsTrack || "curriculum"}`;
     if (!activeNode) return "overview";
     return null;
   };
@@ -386,6 +388,7 @@ function Sidebar({
     if (setShowAgentCore) setShowAgentCore(false);
     if (setShowLangChainDocs) setShowLangChainDocs(false);
     if (setShowStrandsDocs) setShowStrandsDocs(false);
+    if (setShowAiFromScratch) setShowAiFromScratch(false);
     if (setShowOnboarding) setShowOnboarding(false);
 
     switch (id) {
@@ -418,6 +421,14 @@ function Sidebar({
       case "strands":
         if (setShowStrandsDocs) setShowStrandsDocs(true);
         break;
+      case "aifs_curriculum":
+      case "aifs_certification":
+      case "aifs_reference": {
+        const aifsTrackId = id === "aifs_reference" ? "guides" : id.replace("aifs_", "");
+        if (setAifsTrack) setAifsTrack(aifsTrackId);
+        if (setShowAiFromScratch) setShowAiFromScratch(true);
+        break;
+      }
       case "aws_agentcore":
         if (setAgentCoreMode) setAgentCoreMode("docs");
         if (setShowAgentCore) setShowAgentCore(true);

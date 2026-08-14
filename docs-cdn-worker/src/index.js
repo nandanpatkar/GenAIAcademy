@@ -16,10 +16,11 @@
  *   GET /langchain/<path>
  *   GET /strands/<path>
  *   GET /guides/<path>
+ *   GET /ai-from-scratch/<path>
  */
 
 const IMMUTABLE = "public, max-age=31536000, immutable";
-const ALLOWED_PREFIXES = ["agentcore-samples/", "agentcore/", "langchain/", "strands/", "guides/"];
+const ALLOWED_PREFIXES = ["agentcore-samples/", "agentcore/", "langchain/", "strands/", "guides/", "ai-from-scratch/"];
 
 export default {
   async fetch(request, env, ctx) {

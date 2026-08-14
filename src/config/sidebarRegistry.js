@@ -6,7 +6,7 @@ import {
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
-  FlaskConical, Headphones, Tags, Swords, Briefcase,
+  FlaskConical, Headphones, Tags, Swords, Briefcase, BadgeCheck,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -171,6 +171,12 @@ export const SIDEBAR_ITEM_REGISTRY = {
   langchain_samples: { icon: FileCode2, label: "LangChain Samples", description: "The runnable code behind the docs, plus the repo's own guides" },
   strands: { icon: Waypoints, label: "Strands Agents", description: "The Strands Python SDK: agent loop, tools, evals, and deployment" },
 
+  // AI from Scratch — one viewer over three tracks, entered scoped to the one
+  // the reader picked, the same way the Agents section enters LangChainDocs.
+  aifs_curriculum: { icon: GraduationCap, label: "Curriculum", description: "Twenty phases from setup to capstone, every lesson with code, an artifact, and a quiz" },
+  aifs_certification: { icon: BadgeCheck, label: "Certification", description: "The Claude certification study track" },
+  aifs_reference: { icon: Tags, label: "Roadmap & Glossary", description: "The full lesson plan, the vocabulary, and the myths worth unlearning" },
+
   manual: { icon: BookOpen, label: "Manual", description: "Follow guided lessons" },
   reference: { icon: BookMarked, label: "Quick Reference", description: "Look up key concepts" },
   aws_agentcore: { icon: Layers, label: "AWS Agent Core", description: "The full Amazon Bedrock AgentCore developer guide" },
@@ -217,6 +223,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "algowar", label: "AlgoWar", itemIds: ["algowar"] },
   { id: "labs", label: "Labs", itemIds: ["labs"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
+  { id: "ai_from_scratch", label: "AI from Scratch", itemIds: ["aifs_curriculum", "aifs_certification", "aifs_reference"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
@@ -354,6 +361,12 @@ const LAB_ITEM_IDS = [
   "lab_cost_performance",
 ];
 
+const AIFS_ITEM_IDS = [
+  "aifs_curriculum",
+  "aifs_certification",
+  "aifs_reference",
+];
+
 const AGENT_ITEM_IDS = [
   "langchain",
   "langgraph",
@@ -430,6 +443,20 @@ export const resolveEffectiveLayout = (savedLayout) => {
   }
   agentsGroup.label = "Agents";
   agentsGroup.itemIds.push(...AGENT_ITEM_IDS);
+
+  // Same migration for AI from Scratch. Anyone with a saved layout would
+  // otherwise get its three entries appended to "More tools" as orphans.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => !AIFS_ITEM_IDS.includes(id));
+  });
+  let aifsGroup = groups.find((group) => group.id === "ai_from_scratch");
+  if (!aifsGroup) {
+    aifsGroup = { id: "ai_from_scratch", label: "AI from Scratch", itemIds: [] };
+    const agentsIndex = groups.findIndex((group) => group.id === "agents");
+    groups.splice(agentsIndex === -1 ? groups.length : agentsIndex + 1, 0, aifsGroup);
+  }
+  aifsGroup.label = "AI from Scratch";
+  aifsGroup.itemIds.push(...AIFS_ITEM_IDS);
 
   const covered = new Set(groups.flatMap((group) => group.itemIds));
   // Individual lab destinations live inside LabsHub. They are intentionally

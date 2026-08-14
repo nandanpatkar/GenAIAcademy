@@ -26,6 +26,10 @@
       "destination": "https://docs-cdn.gen-ai-academy.workers.dev/strands/$1"
     },
     {
+      "source": "/ai-from-scratch/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/ai-from-scratch/$1"
+    },
+    {
       "source": "/guides/(.*)",
       "destination": "https://docs-cdn.gen-ai-academy.workers.dev/guides/$1"
     },

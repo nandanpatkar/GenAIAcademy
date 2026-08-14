@@ -83,6 +83,7 @@ const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"))
 const AgentCoreViewer = React.lazy(() => import("./components/AgentCoreViewer"));
 const LangChainDocs = React.lazy(() => import("./components/LangChainDocs"));
 const StrandsDocs = React.lazy(() => import("./components/StrandsDocs"));
+const AiFromScratch = React.lazy(() => import("./components/AiFromScratch"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
 const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
@@ -643,6 +644,8 @@ function MainApp() {
   const [showLangChainDocs, setShowLangChainDocs] = useViewState(savedViews.showLangChainDocs ?? false);
   const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
   const [showStrandsDocs, setShowStrandsDocs] = useViewState(savedViews.showStrandsDocs ?? false);
+  const [showAiFromScratch, setShowAiFromScratch] = useViewState(savedViews.showAiFromScratch ?? false);
+  const [aifsTrack, setAifsTrack] = useState(savedViews.aifsTrack ?? "curriculum");
   const [showInterviewPrep, setShowInterviewPrep] = useViewState(savedViews.showInterviewPrep ?? false);
   const [interviewDeepLinkId, setInterviewDeepLinkId] = useState(null);
   const [showProjects, setShowProjects] = useViewState(savedViews.showProjects ?? false);
@@ -699,7 +702,8 @@ function MainApp() {
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
         showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
         showKnowledgeGraph, showReference, showAgentCore,
-        showLangChainDocs, langChainProduct, showStrandsDocs
+        showLangChainDocs, langChainProduct, showStrandsDocs,
+        showAiFromScratch, aifsTrack
       }));
     } catch (e) {
       console.warn("Failed to save genai_active_views to localStorage:", e);
@@ -712,7 +716,8 @@ function MainApp() {
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
     showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
     showKnowledgeGraph, showReference, showAgentCore,
-    showLangChainDocs, langChainProduct, showStrandsDocs
+    showLangChainDocs, langChainProduct, showStrandsDocs,
+    showAiFromScratch, aifsTrack
   ]);
 
   useEffect(() => {
@@ -882,6 +887,7 @@ function MainApp() {
     setShowAgentCore(false);
     setShowLangChainDocs(false);
     setShowStrandsDocs(false);
+    setShowAiFromScratch(false);
     setShowLeetCode(false);
     setShowAlgoWar(false);
     setShowOnboarding(false);
@@ -1508,6 +1514,7 @@ function MainApp() {
     showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
     showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
     showStrandsDocs, setShowStrandsDocs,
+    showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
     showOnboarding, setShowOnboarding: handleSidebarOnboarding,
     showInterviewPrep, setShowInterviewPrep,
     activeToolHome, onOpenToolHome: setActiveToolHome,
@@ -1694,6 +1701,7 @@ function MainApp() {
                                                         showAgentCore ? <ErrorBoundary><AgentCoreViewer initialMode={agentCoreMode} onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
+                                                        showAiFromScratch ? <ErrorBoundary><AiFromScratch track={aifsTrack} onClose={() => setShowAiFromScratch(false)} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={pathsData} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showAlgoWar ? <AlgoWarArena onClose={() => setShowAlgoWar(false)} /> :
