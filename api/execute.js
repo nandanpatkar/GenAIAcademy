@@ -1,14 +1,19 @@
 /**
- * api/execute.js — JDoodle code execution proxy (Vercel serverless)
+ * api/execute.js — code execution proxy (Vercel serverless)
  *
- * Keeps JDoodle credentials server-side. The client posts
- * { script, language, versionIndex, stdin } and gets back JDoodle's result.
+ * Keeps provider credentials server-side. The client posts
+ * { script, language, versionIndex, stdin, provider } and gets back the
+ * result in a common { output, statusCode, memory, cpuTime } shape.
+ * `provider` is "jdoodle" (default) or "hackerearth".
  *
  * Required env vars (add to .env.local for `vercel dev`, and to the Vercel
  * dashboard for production):
  *   JDOODLE_CLIENT_ID
  *   JDOODLE_CLIENT_SECRET
+ *   HACKEREARTH_CLIENT_SECRET
  */
+
+import { executeOnHackerEarth } from "./_lib/hackerearth.js";
 
 const JDOODLE_URL = "https://api.jdoodle.com/v1/execute";
 
@@ -44,22 +49,9 @@ export default async function handler(req, res) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const clientId = process.env.JDOODLE_CLIENT_ID;
-  const clientSecret = process.env.JDOODLE_CLIENT_SECRET;
-  if (!clientId || !clientSecret) {
-    const missing = [
-      !clientId && "JDOODLE_CLIENT_ID",
-      !clientSecret && "JDOODLE_CLIENT_SECRET",
-    ].filter(Boolean).join(", ");
-    return res.status(500).json({
-      error: "Server not configured",
-      details: `Missing env var(s): ${missing}. Add them to .env.local (for \`vercel dev\`) or the Vercel dashboard, then restart.`,
-    });
-  }
-
   try {
     const body = await readBody(req);
-    const { script, language, versionIndex = "0", stdin = "" } = body;
+    const { script, language, versionIndex = "0", stdin = "", provider = "jdoodle" } = body;
 
     if (!script || typeof script !== "string") {
       return res.status(400).json({ error: "Missing 'script' in request body" });
@@ -69,6 +61,38 @@ export default async function handler(req, res) {
     }
     if (script.length > 200_000) {
       return res.status(413).json({ error: "Script too large (200KB limit)" });
+    }
+    if (provider !== "jdoodle" && provider !== "hackerearth") {
+      return res.status(400).json({ error: `Unknown provider: ${provider}` });
+    }
+
+    if (provider === "hackerearth") {
+      const clientSecret = process.env.HACKEREARTH_CLIENT_SECRET;
+      if (!clientSecret) {
+        return res.status(500).json({
+          error: "Server not configured",
+          details: "Missing env var HACKEREARTH_CLIENT_SECRET. Add it to .env.local (for `vercel dev`) or the Vercel dashboard, then restart.",
+        });
+      }
+      try {
+        const result = await executeOnHackerEarth({ script, language, stdin, clientSecret });
+        return res.status(200).json(result);
+      } catch (err) {
+        return res.status(err.statusCode || 500).json({ error: err.message || "Execution failed" });
+      }
+    }
+
+    const clientId = process.env.JDOODLE_CLIENT_ID;
+    const clientSecret = process.env.JDOODLE_CLIENT_SECRET;
+    if (!clientId || !clientSecret) {
+      const missing = [
+        !clientId && "JDOODLE_CLIENT_ID",
+        !clientSecret && "JDOODLE_CLIENT_SECRET",
+      ].filter(Boolean).join(", ");
+      return res.status(500).json({
+        error: "Server not configured",
+        details: `Missing env var(s): ${missing}. Add them to .env.local (for \`vercel dev\`) or the Vercel dashboard, then restart.`,
+      });
     }
 
     const jdoodleRes = await fetch(JDOODLE_URL, {
@@ -100,7 +124,7 @@ export default async function handler(req, res) {
       cpuTime: data.cpuTime ?? null,
     });
   } catch (err) {
-    console.error("JDoodle execute error:", err);
+    console.error("Execute error:", err);
     return res.status(500).json({ error: "Execution failed", details: err.message });
   }
 }
