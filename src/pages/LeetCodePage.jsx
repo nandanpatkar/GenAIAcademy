@@ -16,6 +16,7 @@ import AITutorPanel from "../components/AITutorPanel";
 import TestCasePanel from "../components/leetcode/TestCasePanel";
 import { runLeetCodeTests, submitLeetCodeSolution } from "../services/leetcodeJudgeService";
 import { RUN_PROVIDERS } from "../services/jdoodleService";
+import { loadCodelabProblem } from "../services/codelabProblemService";
 import catalog from "../data/codelab/catalog.json";
 import "../styles/LeetCode.css";
 
@@ -54,22 +55,6 @@ const markdownComponents = {
     return <a {...props} href={href}>{children}</a>;
   },
 };
-
-const payloadCache = new Map();
-async function loadProblemPayload(slug) {
-  if (payloadCache.has(slug)) return payloadCache.get(slug);
-  const request = fetch(`/codelab/problems/${slug}.json`)
-    .then(response => {
-      if (!response.ok) throw new Error(`Could not load this problem (HTTP ${response.status}).`);
-      return response.json();
-    })
-    .catch(error => {
-      payloadCache.delete(slug);
-      throw error;
-    });
-  payloadCache.set(slug, request);
-  return request;
-}
 
 const getDayKey = (date = new Date()) => {
   const year = date.getFullYear();
@@ -127,7 +112,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
     let cancelled = false;
     setDetailLoading(true);
     setDetailError("");
-    loadProblemPayload(selected.slug)
+    loadCodelabProblem(selected.slug)
       .then(payload => {
         if (cancelled) return;
         setDetail(payload);

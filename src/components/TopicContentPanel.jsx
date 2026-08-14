@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { ArrowLeft, Play, Square, Loader, ExternalLink, Terminal as TerminalIcon, Sparkles } from "lucide-react";
+import { ArrowLeft, Play, Square, Loader, ExternalLink, Link2, StickyNote, Terminal as TerminalIcon, Sparkles, BookOpen, Eye, EyeOff, FileCode2 } from "lucide-react";
 import Editor from "@monaco-editor/react";
 import { configureMonaco } from "../config/monacoLoader";
 
@@ -11,9 +11,13 @@ import { configureMonaco } from "../config/monacoLoader";
 // so @monaco-editor/react stays out of the app entry chunk.
 configureMonaco();
 import { useSimplePyodide } from "./PythonIDE";
+import { RUN_PROVIDERS } from "../services/jdoodleService";
+import { codelabStatementBody, findCodelabProblem, loadCodelabProblem } from "../services/codelabProblemService";
 import AITutorPanel from "./AITutorPanel";
 
-export default function TopicContentPanel({ topic, module, pathColor, activePath, onClose, onSaveTopic, isEditMode, onVideoSelect }) {
+const DIFFICULTY_COLORS = { easy: "#00ff88", medium: "#f59e0b", hard: "#ef4444" };
+
+export default function TopicContentPanel({ topic, module, node, pathColor, activePath, onClose, onSaveTopic, isEditMode, onVideoSelect }) {
   // Derive a stable identity for this topic
   const topicIdentity = topic.id || topic.title || "";
 
@@ -23,6 +27,17 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
   const [pythonCode, setPythonCode] = useState(topic.pythonCode || "# Write your python solution here...\n");
   const [saveText, setSaveText] = useState("SAVE CHANGES");
   const [showTutor, setShowTutor] = useState(false);
+  const [runProvider, setRunProvider] = useState("jdoodle");
+
+  // The Pattern Wise DSA path is the one wired to the Code Lab problem set.
+  const isDsaPath = activePath === "dsa";
+  const [codelab, setCodelab] = useState(null);        // catalog metadata for this topic
+  const [codelabDetail, setCodelabDetail] = useState(null); // statement / starter / solution
+  const [codelabState, setCodelabState] = useState("idle"); // idle | loading | ready | error
+  const [showReference, setShowReference] = useState(false);
+  // Notes are written in place on this path, so they need a write/read toggle
+  // of their own — the description above them is no longer the editable part.
+  const [notesTab, setNotesTab] = useState(topic.content ? "preview" : "write");
 
   // Track which topic we last synced from props — prevents re-sync when same topic saves
   const lastSyncedIdentity = useRef(topicIdentity);
@@ -44,11 +59,38 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
       setTitle(topic.title || "");
       setLinkUrl(topic.linkUrl || "");
       setPythonCode(topic.pythonCode || "# Write your python solution here...\n");
+      setNotesTab(topic.content ? "preview" : "write");
       lastSyncedIdentity.current = topicIdentity;
       // Reset autosave guard so the state sync doesn't trigger a spurious save
       hasEdited.current = false;
     }
   }, [topicIdentity, topic]);
+
+  /* Pull the Code Lab problem behind this topic: its statement is the problem
+     description the curriculum itself never carried, and it is the same text
+     the Code Lab shows, so the two surfaces cannot drift apart. */
+  useEffect(() => {
+    if (!isDsaPath || !topic?.title) {
+      setCodelab(null); setCodelabDetail(null); setCodelabState("idle");
+      return;
+    }
+    let cancelled = false;
+    setCodelab(null); setCodelabDetail(null); setShowReference(false); setCodelabState("loading");
+    findCodelabProblem({ category: node?.title, pattern: module?.title, title: topic.title })
+      .then(problem => {
+        if (cancelled) return null;
+        setCodelab(problem);
+        if (!problem) { setCodelabState("idle"); return null; }
+        return loadCodelabProblem(problem.slug);
+      })
+      .then(detail => {
+        if (cancelled || !detail) return;
+        setCodelabDetail(detail);
+        setCodelabState("ready");
+      })
+      .catch(() => { if (!cancelled) setCodelabState("error"); });
+    return () => { cancelled = true; };
+  }, [isDsaPath, topic?.title, module?.title, node?.title]);
 
   const practiceLinks = [
     ...(module?.links?.filter(l => {
@@ -99,10 +141,38 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
   }, []);
 
   const handleRun = () => {
-    runPython(pythonCode);
+    runPython(pythonCode, runProvider);
   };
 
-  const showIDE = activePath === "dsa";
+  const loadStarterCode = () => {
+    if (codelabDetail?.starterCode) setPythonCode(codelabDetail.starterCode);
+  };
+
+  const showIDE = isDsaPath;
+
+  const markdownComponents = {
+    code({ node, inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || "");
+      return !inline && match ? (
+        <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div" customStyle={{ borderRadius: "12px", padding: "16px", margin: "20px 0", background: "#1e1e1e", border: "1px solid var(--border)", fontSize: 13, fontFamily: "var(--mono)", lineHeight: 1.5 }} {...props}>{String(children).replace(/\n$/, "")}</SyntaxHighlighter>
+      ) : (
+        <code className={className} style={{ background: "var(--bg4)", padding: inline ? "2px 6px" : "16px", borderRadius: inline ? 6 : 12, display: inline ? "inline" : "block", overflowX: inline ? "visible" : "auto", fontFamily: "var(--mono)", fontSize: 13, border: inline ? "none" : "1px solid var(--border)", color: inline ? "var(--neon)" : "var(--text)", lineHeight: 1.5 }} {...props}>{children}</code>
+      );
+    },
+    h1: ({ node, ...props }) => <h1 style={{ fontSize: 24, marginTop: 32, marginBottom: 16, fontWeight: 800, borderBottom: "1px solid var(--border)", paddingBottom: 8 }} {...props} />,
+    h2: ({ node, ...props }) => <h2 style={{ fontSize: 20, marginTop: 24, marginBottom: 16, fontWeight: 700 }} {...props} />,
+    h3: ({ node, ...props }) => <h3 style={{ fontSize: 18, marginTop: 20, marginBottom: 12, fontWeight: 700 }} {...props} />,
+    a: ({ node, href, ...props }) => <a href={href} style={{ color: pathColor || "var(--neon)" }} target="_blank" {...props} />,
+    img: ({ node, ...props }) => <img style={{ maxWidth: "100%", borderRadius: 8, border: "1px solid var(--border)", margin: "20px 0" }} {...props} />,
+    blockquote: ({ node, ...props }) => <blockquote style={{ borderLeft: `4px solid ${pathColor || "var(--neon)"}`, paddingLeft: 16, color: "var(--text2)", margin: "20px 0", fontStyle: "italic", background: "rgba(255,255,255,0.02)", padding: "12px 16px", borderRadius: "0 8px 8px 0" }} {...props} />,
+    ul: ({ node, ...props }) => <ul style={{ paddingLeft: 20, margin: "16px 0", color: "var(--text2)" }} {...props} />,
+    ol: ({ node, ...props }) => <ol style={{ paddingLeft: 20, margin: "16px 0", color: "var(--text2)" }} {...props} />,
+    li: ({ node, ...props }) => <li style={{ marginBottom: 8 }} {...props} />,
+    p: ({ node, ...props }) => <p style={{ margin: "0 0 16px 0" }} {...props} />,
+  };
+
+  const difficultyColor = DIFFICULTY_COLORS[String(codelab?.difficulty || "").toLowerCase()] || "var(--text2)";
+  const statementBody = codelabDetail ? codelabStatementBody(codelabDetail.statement) : "";
 
   return (
     <div className="topic-panel" style={{ flex: 1, background: "var(--bg2)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
@@ -173,7 +243,9 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
 
       <div className="tp-body" style={{ flex: 1, overflow: "hidden", display: "flex" }}>
         
-        <div style={{ flex: 1, minHeight: 0, width: showIDE ? (isEditMode ? "50%" : "40%") : "100%", padding: 24, overflowY: "auto", borderRight: showIDE ? "1px solid var(--border)" : "none", display: "flex", flexDirection: "column", gap: 24, margin: showIDE ? 0 : "0 auto", maxWidth: showIDE ? "none" : 960 }}>
+        {/* Half the room for the statement now that it carries the full Code
+            Lab problem rather than a bare title. */}
+        <div style={{ flex: 1, minHeight: 0, width: showIDE ? "50%" : "100%", padding: 24, overflowY: "auto", borderRight: showIDE ? "1px solid var(--border)" : "none", display: "flex", flexDirection: "column", gap: 24, margin: showIDE ? 0 : "0 auto", maxWidth: showIDE ? "none" : 960 }}>
           {isEditMode ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 16, height: "100%" }}>
               <div style={{ fontSize: 10, fontWeight: 800, color: "var(--text3)", letterSpacing: "1px" }}>EDIT PROBLEM STATEMENT</div>
@@ -212,33 +284,97 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
                 </div>
               )}
 
-              {content ? (
-                <ReactMarkdown 
-                  remarkPlugins={[remarkGfm]} 
-                  components={{
-                    code({node, inline, className, children, ...props}) {
-                      const match = /language-(\w+)/.exec(className || "");
-                      return !inline && match ? (
-                        <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div" customStyle={{ borderRadius: "12px", padding: "16px", margin: "20px 0", background: "#1e1e1e", border: "1px solid var(--border)", fontSize: 13, fontFamily: "var(--mono)", lineHeight: 1.5 }} {...props}>{String(children).replace(/\n$/, "")}</SyntaxHighlighter>
-                      ) : (
-                        <code className={className} style={{ background: "var(--bg4)", padding: inline ? "2px 6px" : "16px", borderRadius: inline ? 6 : 12, display: inline ? "inline" : "block", overflowX: inline ? "visible" : "auto", fontFamily: "var(--mono)", fontSize: 13, border: inline ? "none" : "1px solid var(--border)", color: inline ? "var(--neon)" : "var(--text)", lineHeight: 1.5 }} {...props}>{children}</code>
-                      )
-                    },
-                    h1: ({node, ...props}) => <h1 style={{fontSize: 24, marginTop: 32, marginBottom: 16, fontWeight: 800, borderBottom: "1px solid var(--border)", paddingBottom: 8}} {...props} />,
-                    h2: ({node, ...props}) => <h2 style={{fontSize: 20, marginTop: 24, marginBottom: 16, fontWeight: 700}} {...props} />,
-                    h3: ({node, ...props}) => <h3 style={{fontSize: 18, marginTop: 20, marginBottom: 12, fontWeight: 700}} {...props} />,
-                    a: ({node, href, ...props}) => <a href={href} style={{color: pathColor || "var(--neon)"}} target="_blank" {...props} />,
-                    img: ({node, ...props}) => <img style={{maxWidth: "100%", borderRadius: 8, border: "1px solid var(--border)", margin: "20px 0"}} {...props} />,
-                    blockquote: ({node, ...props}) => <blockquote style={{borderLeft: `4px solid ${pathColor || "var(--neon)"}`, paddingLeft: 16, color: "var(--text2)", margin: "20px 0", fontStyle: "italic", background: "rgba(255,255,255,0.02)", padding: "12px 16px", borderRadius: "0 8px 8px 0"}} {...props} />,
-                    ul: ({node, ...props}) => <ul style={{paddingLeft: 20, margin: "16px 0", color: "var(--text2)"}} {...props} />,
-                    ol: ({node, ...props}) => <ol style={{paddingLeft: 20, margin: "16px 0", color: "var(--text2)"}} {...props} />,
-                    li: ({node, ...props}) => <li style={{marginBottom: 8}} {...props} />,
-                    p: ({node, ...props}) => <p style={{margin: "0 0 16px 0"}} {...props} />
-                  }}
-                >
+              {/* The Code Lab problem this topic maps to: same statement, same
+                  tests, same reference solution the Code Lab serves. */}
+              {codelab && (
+                <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
+                  <span style={{ fontSize: 9, fontWeight: 800, color: difficultyColor, background: "rgba(255,255,255,0.03)", border: `1px solid ${difficultyColor}40`, padding: "4px 10px", borderRadius: 6, textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                    {codelab.difficulty}
+                  </span>
+                  {codelab.number && <span style={{ fontSize: 9, fontWeight: 700, color: "var(--text2)", background: "var(--bg3)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 6 }}>#{codelab.number}</span>}
+                  {codelab.testCount ? <span style={{ fontSize: 9, fontWeight: 700, color: "var(--text2)", background: "var(--bg3)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 6 }}>{codelab.testCount} SAMPLE TESTS</span> : null}
+                  {codelab.timeComplexity && <span style={{ fontSize: 9, fontWeight: 700, color: "var(--text2)", background: "var(--bg3)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 6, fontFamily: "var(--mono)" }}>TIME {codelab.timeComplexity}</span>}
+                  {codelab.spaceComplexity && <span style={{ fontSize: 9, fontWeight: 700, color: "var(--text2)", background: "var(--bg3)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 6, fontFamily: "var(--mono)" }}>SPACE {codelab.spaceComplexity}</span>}
+                  {codelab.url && (
+                    <a href={codelab.url} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 9, fontWeight: 700, color: pathColor || "var(--neon)", background: "var(--bg3)", border: "1px solid var(--border)", padding: "4px 10px", borderRadius: 6, textDecoration: "none" }}>
+                      <ExternalLink size={10} /> LEETCODE
+                    </a>
+                  )}
+                </div>
+              )}
+
+              {/* On the DSA path the Code Lab statement is the description and
+                  `content` is the reader's own notes, edited in place below. */}
+              {content && !isDsaPath && (
+                <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
                   {content}
                 </ReactMarkdown>
-              ) : (
+              )}
+
+              {isDsaPath && codelabState === "loading" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text3)", fontSize: 13, padding: "12px 0" }}>
+                  <Loader size={14} className="spin" /> Loading the Code Lab problem…
+                </div>
+              )}
+
+              {isDsaPath && codelabState === "error" && (
+                <div style={{ color: "#ef4444", fontSize: 13, padding: "12px 0" }}>
+                  Could not load the Code Lab problem for this topic. Check your connection and reopen it.
+                </div>
+              )}
+
+              {statementBody && (
+                <>
+                  {content && !isDsaPath && (
+                    <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "32px 0 16px", color: "var(--text3)", fontSize: 10, fontWeight: 800, letterSpacing: "1px" }}>
+                      <BookOpen size={12} /> CODE LAB PROBLEM
+                      <span style={{ flex: 1, height: 1, background: "var(--border)" }} />
+                    </div>
+                  )}
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                    {statementBody}
+                  </ReactMarkdown>
+
+                  {codelabDetail?.approach && (
+                    <div style={{ marginTop: 24, background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)", borderRadius: 12, padding: "16px 20px" }}>
+                      <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "1px", color: "var(--text3)", marginBottom: 10 }}>APPROACH</div>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                        {codelabDetail.approach}
+                      </ReactMarkdown>
+                    </div>
+                  )}
+
+                  {codelabDetail?.solution && (
+                    <div style={{ marginTop: 24 }}>
+                      <button
+                        onClick={() => setShowReference(value => !value)}
+                        style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 14px", background: "var(--bg3)", color: "var(--text2)", border: "1px solid var(--border)", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer" }}
+                      >
+                        {showReference ? <EyeOff size={13} /> : <Eye size={13} />}
+                        {showReference ? "HIDE REFERENCE SOLUTION" : "SHOW REFERENCE SOLUTION"}
+                      </button>
+                      {showReference && (
+                        <SyntaxHighlighter
+                          style={vscDarkPlus}
+                          language="python"
+                          PreTag="div"
+                          customStyle={{ borderRadius: "12px", padding: "16px", margin: "16px 0", background: "#1e1e1e", border: "1px solid var(--border)", fontSize: 13, fontFamily: "var(--mono)", lineHeight: 1.5 }}
+                        >
+                          {codelabDetail.solution}
+                        </SyntaxHighlighter>
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
+
+              {isDsaPath && !statementBody && codelabState !== "loading" && (
+                <div style={{ color: "var(--text3)", fontStyle: "italic", fontSize: 15, padding: "8px 0" }}>
+                  This topic has no Code Lab problem yet — work it through in the notes below.
+                </div>
+              )}
+
+              {!content && !statementBody && !isDsaPath && codelabState !== "loading" && (
                 <div style={{ padding: "40px 20px", display: "flex", flexDirection: "column", gap: 32 }}>
                   <div style={{ color: "var(--text3)", fontStyle: "italic", fontSize: 15 }}>
                     No problem description available. Switch to Edit Mode to add context!
@@ -270,6 +406,99 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
                   )}
                 </div>
               )}
+
+              {/* The description is read-only now, so the two things that were
+                  only reachable through Edit Mode — notes and a pasted link —
+                  stay editable here, on the same autosave as everything else. */}
+              {isDsaPath && (
+                <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 16 }}>
+                  <section style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)", borderRadius: 12, overflow: "hidden" }}>
+                    <header style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px", borderBottom: "1px solid var(--border)" }}>
+                      <StickyNote size={12} color="var(--text3)" />
+                      <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "1px", color: "var(--text3)" }}>MY NOTES</span>
+                      <span style={{ flex: 1 }} />
+                      {["write", "preview"].map(tab => (
+                        <button
+                          key={tab}
+                          onClick={() => setNotesTab(tab)}
+                          style={{ background: notesTab === tab ? "var(--bg3)" : "transparent", color: notesTab === tab ? "var(--text)" : "var(--text3)", border: "1px solid", borderColor: notesTab === tab ? "var(--border)" : "transparent", borderRadius: 6, fontSize: 9, fontWeight: 800, letterSpacing: "0.5px", padding: "4px 10px", cursor: "pointer", textTransform: "uppercase" }}
+                        >
+                          {tab}
+                        </button>
+                      ))}
+                    </header>
+                    {notesTab === "write" ? (
+                      <textarea
+                        value={content}
+                        onChange={e => setContent(e.target.value)}
+                        placeholder="Your approach, the edge case that caught you out, the complexity you landed on… Markdown works here."
+                        style={{ width: "100%", minHeight: 160, background: "transparent", color: "var(--text)", border: "none", padding: 16, fontSize: 13, lineHeight: 1.6, fontFamily: "var(--mono)", outline: "none", resize: "vertical", display: "block" }}
+                      />
+                    ) : (
+                      <div style={{ padding: "4px 16px 16px" }}>
+                        {content ? (
+                          <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>{content}</ReactMarkdown>
+                        ) : (
+                          <div style={{ color: "var(--text3)", fontStyle: "italic", fontSize: 13, paddingTop: 12 }}>No notes on this problem yet.</div>
+                        )}
+                      </div>
+                    )}
+                  </section>
+
+                  <section style={{ background: "rgba(255,255,255,0.02)", border: "1px solid var(--border)", borderRadius: 12, overflow: "hidden" }}>
+                    <header style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px", borderBottom: "1px solid var(--border)" }}>
+                      <Link2 size={12} color="var(--text3)" />
+                      <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "1px", color: "var(--text3)" }}>LINKS & RESOURCES</span>
+                    </header>
+                    <div style={{ padding: 16, display: "flex", flexDirection: "column", gap: 12 }}>
+                      <input
+                        value={linkUrl}
+                        onChange={e => setLinkUrl(e.target.value)}
+                        placeholder="Paste a link — an editorial, a video, your own writeup…"
+                        style={{ width: "100%", background: "var(--bg3)", color: "var(--text)", border: "1px solid var(--border)", borderRadius: 8, padding: "10px 14px", fontSize: 13, outline: "none" }}
+                      />
+                      {linkUrl && (
+                        <a
+                          href={linkUrl.startsWith("http") ? linkUrl : `https://${linkUrl}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ display: "flex", alignItems: "center", gap: 10, color: pathColor || "var(--neon)", textDecoration: "none", fontSize: 13, fontWeight: 600, padding: "10px 14px", background: "var(--bg3)", borderRadius: 8, border: "1px solid var(--border)", wordBreak: "break-all" }}
+                        >
+                          <ExternalLink size={14} /> {linkUrl}
+                        </a>
+                      )}
+                      {practiceLinks.map((link, i) => (
+                        <a
+                          key={`practice-${i}`}
+                          href={link.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => {
+                            if (onVideoSelect && link.type === "video") {
+                              e.preventDefault();
+                              onVideoSelect(link);
+                            }
+                          }}
+                          style={{ display: "flex", alignItems: "center", gap: 10, color: pathColor || "var(--neon)", textDecoration: "none", fontSize: 13, fontWeight: 600, padding: "10px 14px", background: "var(--bg3)", borderRadius: 8, border: "1px solid var(--border)" }}
+                        >
+                          {link.type === "video" ? <Play size={14} /> : <ExternalLink size={14} />}
+                          {link.title.includes("LeetCode") || link.title.includes("Practice") ? "Solve on LeetCode" : link.title}
+                        </a>
+                      ))}
+                      {codelab?.url && !practiceLinks.length && !linkUrl && (
+                        <a
+                          href={codelab.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ display: "flex", alignItems: "center", gap: 10, color: pathColor || "var(--neon)", textDecoration: "none", fontSize: 13, fontWeight: 600, padding: "10px 14px", background: "var(--bg3)", borderRadius: 8, border: "1px solid var(--border)" }}
+                        >
+                          <ExternalLink size={14} /> Solve on LeetCode
+                        </a>
+                      )}
+                    </div>
+                  </section>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -286,6 +515,28 @@ export default function TopicContentPanel({ topic, module, pathColor, activePath
                 >
                   <Sparkles size={12} fill="currentColor" /> ASK AI
                 </button>
+                {codelabDetail?.starterCode && (
+                  <button
+                    onClick={loadStarterCode}
+                    title="Replace the editor with this problem's Code Lab starter code"
+                    style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", background: "var(--bg3)", color: "var(--text2)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer", transition: "all .2s" }}
+                    className="hover-node"
+                  >
+                    <FileCode2 size={12} /> STARTER CODE
+                  </button>
+                )}
+                {/* Which sandbox runs the code — the /api/execute proxy speaks to both. */}
+                <select
+                  value={runProvider}
+                  onChange={e => setRunProvider(e.target.value)}
+                  title="Code execution provider"
+                  aria-label="Code execution provider"
+                  style={{ background: "var(--bg3)", color: "var(--text2)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11, fontWeight: 700, padding: "6px 8px", cursor: "pointer" }}
+                >
+                  {RUN_PROVIDERS.map(p => (
+                    <option key={p.id} value={p.id}>{p.label}</option>
+                  ))}
+                </select>
                 {isLoading && <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--text3)", fontSize: 12 }}><Loader size={14} className="spin" /> Loading Kernel...</div>}
                 {isRunning ? (
                   <button onClick={interruptExecution} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", background: "transparent", color: "#ef4444", border: "1px solid #ef4444", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer" }}>

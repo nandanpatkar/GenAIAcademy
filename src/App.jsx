@@ -1923,7 +1923,7 @@ function MainApp() {
                                                         )}
                                                         {activeTopic && (
                                                           <TopicContentPanel
-                                                            topic={activeTopic} module={freshActiveModule} pathColor={pathData.color}
+                                                            topic={activeTopic} module={freshActiveModule} node={freshActiveNode} pathColor={pathData.color}
                                                             activePath={activePath} onClose={() => setActiveTopic(null)} isEditMode={isEditMode} onSaveTopic={handleSaveTopic}
                                                             onVideoSelect={handleVideoSelect}
                                                           />
