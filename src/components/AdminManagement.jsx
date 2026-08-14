@@ -75,22 +75,24 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     }
   };
 
-  const updateGlobalConfig = async (newAdmins, newLocked, newAllowAiml, newKey, newProvider, newEndpoint, newAzureApiKey) => {
+  // AI credentials are personal and stay in each user's own storage. They used
+  // to be written here too, which nothing ever read back and which would now
+  // publish one admin's key to every signed-in user, since the row is readable
+  // workspace-wide. See supabase/migrations/20260815_global_config_rls.sql.
+  const updateGlobalConfig = async (newAdmins, newLocked, newAllowAiml) => {
     try {
-      await supabase.from("user_curriculum").upsert({
+      const { error } = await supabase.from("user_curriculum").upsert({
         id: "00000000-0000-0000-0000-000000000000",
         paths_data: {
           admins: newAdmins, locked: newLocked, allowAimlForAll: newAllowAiml,
-          geminiKey: newKey !== undefined ? newKey : geminiKey,
-          aiProvider: newProvider !== undefined ? newProvider : aiProvider,
-          azureEndpoint: newEndpoint !== undefined ? newEndpoint : azureEndpoint,
-          azureKey: newAzureApiKey !== undefined ? newAzureApiKey : azureKey,
           sidebarConfig,
           updated_at: new Date().toISOString()
         }
       });
+      if (error) throw error;
     } catch (error) {
       console.error("Could not update global admin config:", error);
+      setErrorInfo(`Could not save: ${error.message || error}. Workspace settings need the admin database policy — see supabase/migrations/20260815_global_config_rls.sql.`);
     }
   };
 
@@ -123,30 +125,43 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
   const handleToggleLock = async (userId) => {
     const nextLocked = lockedUsers.includes(userId) ? lockedUsers.filter(id => id !== userId) : [...lockedUsers, userId];
     setLockedUsers(nextLocked);
-    await updateGlobalConfig(adminsList, nextLocked, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
+    await updateGlobalConfig(adminsList, nextLocked, allowAimlForAll);
   };
   const handleAddAdmin = async () => {
     const email = newAdminEmail.trim();
     if (!email || adminsList.includes(email)) return;
     const nextAdmins = [...adminsList, email];
     setAdminsList(nextAdmins); setNewAdminEmail("");
-    await updateGlobalConfig(nextAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
+    await updateGlobalConfig(nextAdmins, lockedUsers, allowAimlForAll);
   };
   const handleRemoveAdmin = async (email) => {
     if (adminsList.length <= 1) return;
     const nextAdmins = adminsList.filter(item => item !== email);
     setAdminsList(nextAdmins);
-    await updateGlobalConfig(nextAdmins, lockedUsers, allowAimlForAll, geminiKey, aiProvider, azureEndpoint, azureKey);
+    await updateGlobalConfig(nextAdmins, lockedUsers, allowAimlForAll);
   };
   const handleToggleAimlAccess = async () => {
     const nextValue = !allowAimlForAll;
     setAllowAimlForAll(nextValue);
-    await updateGlobalConfig(adminsList, lockedUsers, nextValue, geminiKey, aiProvider, azureEndpoint, azureKey);
+    await updateGlobalConfig(adminsList, lockedUsers, nextValue);
   };
   const effectiveSidebarLayout = useMemo(() => resolveEffectiveLayout(sidebarConfig?.layout), [sidebarConfig]);
+  // persistSidebarConfig reports a rejected write rather than swallowing it —
+  // without this the toggle moved, the save failed, and the old value came back
+  // on the next refresh with nothing on screen to explain it.
+  const reportSave = (result, message) => {
+    if (result?.ok === false) {
+      setErrorInfo(`Could not save: ${result.error}. Workspace settings need the admin database policy — see supabase/migrations/20260815_global_config_rls.sql.`);
+      return false;
+    }
+    setErrorInfo(null);
+    if (message) setSuccessInfo(message);
+    return true;
+  };
   const handleSetItemVisibility = async (itemId, visibility) => {
     const nextOverrides = { ...(sidebarConfig?.overrides || {}), [itemId]: visibility };
-    await persistSidebarConfig({ ...(sidebarConfig || {}), overrides: nextOverrides });
+    const result = await persistSidebarConfig({ ...(sidebarConfig || {}), overrides: nextOverrides });
+    reportSave(result, `${SIDEBAR_ITEM_REGISTRY[itemId]?.label || itemId} is now ${visibility === "admin" ? "admin only" : "visible to everyone"}.`);
   };
   // Study paths get the same treatment as sidebar items, stored beside them in
   // the one admin config blob. There is no fixed registry of paths — the Forge
@@ -157,7 +172,8 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
   );
   const handleSetPathVisibility = async (pathKey, visibility) => {
     const nextVisibility = { ...(sidebarConfig?.pathVisibility || {}), [pathKey]: visibility };
-    await persistSidebarConfig({ ...(sidebarConfig || {}), pathVisibility: nextVisibility });
+    const result = await persistSidebarConfig({ ...(sidebarConfig || {}), pathVisibility: nextVisibility });
+    reportSave(result, `${pathLabel(pathsData?.[pathKey], pathKey)} is now ${visibility === "admin" ? "admin only" : "visible to everyone"}.`);
   };
   const handleResetSidebarLayout = async () => {
     if (!window.confirm("Reset the sidebar back to its default sections and order? Visibility settings will be kept.")) return;
@@ -172,7 +188,7 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
   };
   const handleUpdateAiConfig = async () => {
     updateGeminiKey(newGeminiKey); updateAiProvider(newAiProvider); updateAzureEndpoint(newAzureEndpoint); updateAzureKey(newAzureKey);
-    await updateGlobalConfig(adminsList, lockedUsers, allowAimlForAll, newGeminiKey, newAiProvider, newAzureEndpoint, newAzureKey);
+    await updateGlobalConfig(adminsList, lockedUsers, allowAimlForAll);
     setSuccessInfo("AI configuration saved.");
   };
   // The directory list only holds a narrow projection now (see fetchUsers), so the

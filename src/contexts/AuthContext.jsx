@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useCallback, useEffect, useState } from 'react';
 import { supabase, readPersistedSession } from '../config/supabaseClient';
 import { AI_PROVIDERS } from '../config/aiProviders';
 
@@ -123,21 +123,34 @@ export const AuthProvider = ({ children }) => {
   // always rewrites the whole paths_data blob, so every field it knows about
   // must be included or a concurrent save from the other admin surface would
   // wipe it out.
+  //
+  // Credentials are deliberately NOT written here. `fetchGlobalConfig` has
+  // never read them back (every user configures their own in Settings), and
+  // the row is readable by every signed-in user, so writing one admin's
+  // personal API key into it would publish it to the whole workspace.
+  //
+  // Returns { ok, error } rather than swallowing failures: writing this row
+  // needs the admin RLS policy from
+  // supabase/migrations/20260815_global_config_rls.sql, and before that
+  // migration ran the rejection was invisible — the toggle looked saved and
+  // reverted on the next refresh.
   const persistSidebarConfig = async (nextConfig) => {
+    const previous = sidebarConfig;
     setSidebarConfig(nextConfig);
-    try {
-      await supabase.from('user_curriculum').upsert({
-        id: '00000000-0000-0000-0000-000000000000',
-        paths_data: {
-          admins: adminsList, locked: lockedUsers, allowAimlForAll,
-          geminiKey, aiProvider, azureEndpoint, azureKey,
-          sidebarConfig: nextConfig,
-          updated_at: new Date().toISOString(),
-        },
-      });
-    } catch (error) {
-      console.error("Could not update sidebar config:", error);
+    const { error } = await supabase.from('user_curriculum').upsert({
+      id: '00000000-0000-0000-0000-000000000000',
+      paths_data: {
+        admins: adminsList, locked: lockedUsers, allowAimlForAll,
+        sidebarConfig: nextConfig,
+        updated_at: new Date().toISOString(),
+      },
+    });
+    if (error) {
+      console.error("Could not update sidebar config:", error.message);
+      setSidebarConfig(previous);
+      return { ok: false, error: error.message };
     }
+    return { ok: true };
   };
 
   // Load only this user's personal AI settings. Clearing the generic cookie
@@ -160,8 +173,7 @@ export const AuthProvider = ({ children }) => {
     syncLegacyCookies(personalConfigs, personalProvider);
   }, [user?.id]);
 
-  useEffect(() => {
-    const fetchGlobalConfig = async () => {
+  const fetchGlobalConfig = useCallback(async () => {
       try {
         const { data, error } = await supabase
           .from('user_curriculum')
@@ -184,8 +196,15 @@ export const AuthProvider = ({ children }) => {
       } catch (e) {
         console.warn("Global config not found, using defaults");
       }
-    };
+  }, []);
 
+  // Re-read on every identity change. The row is only readable to a signed-in
+  // user, so the fetch that runs before a session resolves comes back empty —
+  // without this, a fresh sign-in (which arrives through onAuthStateChange,
+  // not getSession) would leave every admin setting on its built-in default.
+  useEffect(() => { fetchGlobalConfig(); }, [user?.id, fetchGlobalConfig]);
+
+  useEffect(() => {
     supabase.auth.getSession()
       .then(({ data: { session } }) => {
         setSession(session);
