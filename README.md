@@ -118,7 +118,7 @@ graph TB
 - **No React Router.** Every "page" is a `useState` boolean toggled from the sidebar/search palette; every panel is `React.lazy()`-loaded. This keeps the initial bundle small at the cost of `App.jsx` being ~2,150 lines of view-state plumbing.
 - **Multi-provider AI, client-orchestrated.** `src/services/aiService.js` is a single dispatcher that can call Gemini, Azure OpenAI, or any OpenAI-compatible endpoint (OpenAI/GLM/Kimi/Grok/Groq/DeepSeek), or relay through the ApiBeam browser extension — selected per-user via `src/config/aiProviders.js` and stored credentials in `AuthContext`.
 - **Heavy data is fetched, not bundled.** Multi-MB datasets (Analytics Vidhya archive, blog catalog, interview-prep bank, docs archives) are deliberately kept out of the JS bundle and lazy-fetched from `public/data/*.json` or a Cloudflare Worker/R2 CDN at runtime — several `*_PLAN.md` docs in the repo root record this optimization work.
-- **Secrets never reach the browser for execution-adjacent features.** Code execution (JDoodle), Gemini Live tokens, and file uploads all proxy through `api/*.js` specifically so `JDOODLE_CLIENT_ID/SECRET`, `GEMINI_API_KEY`, and AWS credentials stay server-side.
+- **Secrets never reach the browser for execution-adjacent features.** Code execution (JDoodle or HackerEarth, user-selectable per run), Gemini Live tokens, and file uploads all proxy through `api/*.js` specifically so `JDOODLE_CLIENT_ID/SECRET`, `HACKEREARTH_CLIENT_SECRET`, `GEMINI_API_KEY`, and AWS credentials stay server-side.
 - **A vendored third-party app (AFFiNE) is repointed at this backend.** `api/graphql.js` and `api/copilot.js` re-implement just enough of AFFiNE's own server API for the iframed `public/editor/` build to work as an in-app "Workspace Notes" tool talking to Supabase instead of a real AFFiNE server.
 
 ---
@@ -540,8 +540,8 @@ Adjacent scripts not wired to `npm run` (invoked manually as needed): `scripts/b
 | Variable | Used by | Purpose |
 |---|---|---|
 | `GEMINI_API_KEY` | `api/gemini-live-token.js`, `api/copilot.js` | Server-held key for Gemini Live tokens and copilot fallback |
-| `JDOODLE_CLIENT_ID` / `JDOODLE_CLIENT_SECRET` | `api/execute.js` | JDoodle code-execution credentials (default provider) |
-| `HACKEREARTH_CLIENT_SECRET` | `api/execute.js`, `api/_lib/hackerearth.js` | HackerEarth code-execution credentials (selectable 2nd provider) |
+| `JDOODLE_CLIENT_ID` / `JDOODLE_CLIENT_SECRET` | `api/execute.js`, `api/_lib/leetcodeJudge.js` | JDoodle code-execution credentials (default provider) |
+| `HACKEREARTH_CLIENT_SECRET` | `api/execute.js`, `api/_lib/leetcodeJudge.js`, `api/_lib/hackerearth.js` | HackerEarth code-execution credentials (selectable 2nd provider) |
 | `AWS_REGION` / `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` / `AWS_S3_BUCKET_NAME` | `api/blob.js`, `api/upload.js` | S3 storage for editor blobs/uploads |
 | `CF_ACCOUNT_ID` / `CF_KV_NAMESPACE_ID` / `CF_API_TOKEN` | `api/prices.js` | Cloudflare KV credentials for AWS pricing cache |
 | `YOUTUBE_API_KEY` | `api/youtube-playlist.js` | YouTube Data API v3 key for the Resources panel's "Import Playlist" feature |

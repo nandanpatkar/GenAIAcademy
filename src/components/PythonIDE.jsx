@@ -12,7 +12,7 @@ import {
   X, Database, Plus, ShieldCheck, Cpu, Braces, Activity, ExternalLink,
   Layers, Command, Zap, LayoutPanelLeft, Edit3, PanelLeft, Cloud, Monitor
 } from 'lucide-react';
-import { executeCode } from '../services/jdoodleService';
+import { executeCode, RUN_PROVIDERS } from '../services/jdoodleService';
 
 const IDE_MODES = [
   { id: 'local', label: 'LOCAL', icon: Monitor, color: 'var(--neon)' },
@@ -28,16 +28,16 @@ export function useSimplePyodide() {
   const [isRunning, setIsRunning] = useState(false);
   const abortRef = useRef(false);
 
-  const runPython = async (code) => {
+  const runPython = async (code, provider = 'jdoodle') => {
     if (isRunning) return;
     setIsRunning(true);
     setStdout("");
     setStderr("");
     abortRef.current = false;
     try {
-      const res = await executeCode({ script: code, language: 'python3' });
+      const res = await executeCode({ script: code, language: 'python3', provider });
       if (abortRef.current) return;
-      // JDoodle merges program stdout + runtime errors into `output`.
+      // Both providers merge program stdout + runtime errors into `output`.
       // statusCode !== 200 signals a compile/runtime error → show as stderr.
       if (res.statusCode && res.statusCode !== 200) {
         setStderr(res.output || 'Execution error');
@@ -59,6 +59,7 @@ export function useSimplePyodide() {
 export default function PythonIDE({ onClose, onSubmitSolution }) {
   const [code, setCode] = useState("# Welcome to the Python Intelligence Studio\n# Redesigned for maximum engineering efficiency\n\nimport time\n\ndef initialize_workflow():\n    print(\"Initializing mission-critical modules...\")\n    time.sleep(0.4)\n    print(\"Accessing Neural Core: OK\")\n    print(\"Ready for engineering protocols.\")\n\ninitialize_workflow()\n");
   const { runPython, stdout, stderr, isLoading, isRunning, interruptExecution } = useSimplePyodide();
+  const [runProvider, setRunProvider] = useState('jdoodle');
 
   const [snippetsData, setSnippetsData] = useState(() => {
     try {
@@ -262,9 +263,21 @@ export default function PythonIDE({ onClose, onSubmitSolution }) {
                  <Square size={12} fill="currentColor" /> TERMINATE
                </button>
              ) : (
-               <button className="studio-btn-primary" style={{ height: 38, padding: '0 18px', fontSize: 10, boxShadow: '0 0 20px rgba(0, 255, 136, 0.2)', border: 'none' }} onClick={() => runPython(code)}>
-                 <Play size={12} fill="currentColor" /> EXECUTE
-               </button>
+               <>
+                 <select
+                   value={runProvider}
+                   onChange={e => setRunProvider(e.target.value)}
+                   title="Code execution provider"
+                   style={{ height: 38, background: 'rgba(255,255,255,0.03)', color: 'var(--text3)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, fontSize: 10, padding: '0 10px' }}
+                 >
+                   {RUN_PROVIDERS.map(p => (
+                     <option key={p.id} value={p.id}>{p.label}</option>
+                   ))}
+                 </select>
+                 <button className="studio-btn-primary" style={{ height: 38, padding: '0 18px', fontSize: 10, boxShadow: '0 0 20px rgba(0, 255, 136, 0.2)', border: 'none' }} onClick={() => runPython(code, runProvider)}>
+                   <Play size={12} fill="currentColor" /> EXECUTE
+                 </button>
+               </>
              )
            ) : (
              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--neon)', fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1.5, background: 'rgba(0, 255, 136, 0.05)', padding: '8px 16px', borderRadius: 10, border: 'none' }}>

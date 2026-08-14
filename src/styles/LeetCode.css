@@ -124,6 +124,9 @@
 .leetcode-pane-title svg{color:#35c864}
 .leetcode-editor-toolbar{height:42px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto;padding:0 15px;border-left:1px solid #38383b;border-right:1px solid #38383b;border-bottom:1px solid #353538;background:#252527}
 .leetcode-editor-toolbar .leetcode-language{display:flex;align-items:center;gap:5px;color:#b6b6bb!important;font:600 11px var(--font)}
+.leetcode-toolbar-left{display:flex;align-items:center;gap:10px}
+.leetcode-provider-select{background:#1a1a1c;color:#b6b6bb;border:1px solid #3a3a3d;border-radius:5px;padding:3px 7px;font:600 10px var(--mono);cursor:pointer;outline:0}
+.leetcode-provider-select:hover,.leetcode-provider-select:focus{border-color:#5c5c61}
 .leetcode-editor-mode{color:#77777d;font:9px var(--mono)}
 .leetcode-editor{min-height:220px;border-left:1px solid #38383b;border-right:1px solid #38383b;background:#1f1f21}
 .leetcode-editor .monaco-editor,.leetcode-editor .monaco-editor-background,.leetcode-editor .monaco-editor .margin{background-color:#1f1f21!important}

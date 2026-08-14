@@ -8,7 +8,7 @@ import {
   TimerReset, Trophy, X, Zap,
 } from "lucide-react";
 import { configureMonaco } from "../config/monacoLoader";
-import { executeCode } from "../services/jdoodleService";
+import { executeCode, RUN_PROVIDERS } from "../services/jdoodleService";
 import { ASYNC_THEORY, MISSION_THEORY, QUEST_MISSIONS, QUICK_REFERENCE } from "../data/concurrencyScenarios";
 import "./ConcurrencyLab.css";
 
@@ -289,6 +289,7 @@ function PracticePanel({ mission, code, setCode, onPass }) {
   const [result, setResult] = useState(null);
   const [solutionOpen, setSolutionOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [provider, setProvider] = useState("jdoodle");
 
   useEffect(() => {
     setOutput("");
@@ -301,7 +302,7 @@ function PracticePanel({ mission, code, setCode, onPass }) {
     setResult(null);
     setOutput("Connecting to the Python runner…");
     try {
-      const response = await executeCode({ script: code, language: "python3" });
+      const response = await executeCode({ script: code, language: "python3", provider });
       const nextOutput = response.output || "Program finished without output.";
       setOutput(nextOutput);
       if (response.statusCode && response.statusCode !== 200) {
@@ -313,7 +314,7 @@ function PracticePanel({ mission, code, setCode, onPass }) {
       }
     } catch (error) {
       setOutput(error.message || "The runner could not execute this program.");
-      setResult({ passed: false, message: "The cloud runner is unavailable. Try again or ask an administrator to check the JDoodle configuration." });
+      setResult({ passed: false, message: "The cloud runner is unavailable. Try again or ask an administrator to check the runner configuration." });
     } finally {
       setRunning(false);
     }
@@ -340,10 +341,20 @@ function PracticePanel({ mission, code, setCode, onPass }) {
       <section className="cq-code-card" aria-labelledby="practice-title">
         <div className="cq-code-toolbar">
           <div>
-            <span className="cq-kicker"><Cloud size={14} /> JDoodle Python 3</span>
+            <span className="cq-kicker"><Cloud size={14} /> Python 3</span>
             <h2 id="practice-title">Ship the code</h2>
           </div>
           <div className="cq-code-actions">
+            <select
+              className="cq-provider-select"
+              value={provider}
+              onChange={(e) => setProvider(e.target.value)}
+              title="Code execution provider"
+            >
+              {RUN_PROVIDERS.map((p) => (
+                <option key={p.id} value={p.id}>{p.label}</option>
+              ))}
+            </select>
             <button className="cq-ghost" onClick={resetCode}><RotateCcw size={14} /> Reset</button>
             <button className="cq-run" onClick={runCode} disabled={running}>
               {running ? <TimerReset className="cq-spin" size={15} /> : <Play size={15} fill="currentColor" />}

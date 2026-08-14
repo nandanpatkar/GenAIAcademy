@@ -1,4 +1,4 @@
-import { allowRequest, buildHarness, executeHarness, getManifest, readJsonBody, redactHiddenResults, validateSubmission } from "./_lib/leetcodeJudge.js";
+import { allowRequest, buildHarness, executeHarness, getManifest, normalizeProvider, readJsonBody, redactHiddenResults, validateSubmission } from "./_lib/leetcodeJudge.js";
 
 // Combines the former leetcode-run and leetcode-submit functions into one —
 // Vercel's Hobby plan caps a deployment at 12 Serverless Functions, and
@@ -23,6 +23,7 @@ export default async function handler(req, res) {
   if (validationError) return res.status(400).json({ error: validationError });
   const manifest = getManifest(body.problemId);
   if (!manifest) return res.status(404).json({ error: "Problem not found." });
+  const provider = normalizeProvider(body.provider);
 
   if (action === "submit") {
     if (!manifest.judgeAvailable) return res.status(422).json({ error: "This problem is not judge-enabled yet." });
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
       ...manifest.hiddenTests.map((test) => ({ ...test, hidden: true })),
     ];
     try {
-      const result = redactHiddenResults(await executeHarness(buildHarness({ code: body.code, manifest, tests })));
+      const result = redactHiddenResults(await executeHarness(buildHarness({ code: body.code, manifest, tests }), provider));
       const accepted = result.summary.total > 0 && result.summary.passed === result.summary.total;
       return res.status(200).json({ ...result, verdict: accepted ? "accepted" : "rejected", accepted });
     } catch (error) {
@@ -54,7 +55,7 @@ export default async function handler(req, res) {
   const tests = visible.length || custom.length ? [...visible, ...custom] : manifest.visibleTests;
   if (!tests.length) return res.status(400).json({ error: "Select at least one test case." });
   try {
-    const result = await executeHarness(buildHarness({ code: body.code, manifest, tests }));
+    const result = await executeHarness(buildHarness({ code: body.code, manifest, tests }), provider);
     return res.status(200).json(result);
   } catch (error) {
     return res.status(error.code === "RUNNER_NOT_CONFIGURED" ? 503 : 502).json({ error: error.message || "Execution failed." });

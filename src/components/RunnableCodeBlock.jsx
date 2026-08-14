@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Play, Copy, Check } from 'lucide-react';
-import { executeCode, RUN_LANGUAGES } from '../services/jdoodleService';
+import { executeCode, RUN_LANGUAGES, RUN_PROVIDERS } from '../services/jdoodleService';
 
 const LANGUAGE_MAP = {
   python: 'python3',
@@ -20,6 +20,7 @@ export default function RunnableCodeBlock({ language, code, ...props }) {
   const [isExecuting, setIsExecuting] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState(false);
+  const [provider, setProvider] = useState('jdoodle');
 
   const mappedLang = LANGUAGE_MAP[language?.toLowerCase()] || null;
   const isRunnable = !!mappedLang;
@@ -32,7 +33,8 @@ export default function RunnableCodeBlock({ language, code, ...props }) {
     try {
       const res = await executeCode({
         script: code,
-        language: mappedLang
+        language: mappedLang,
+        provider
       });
       setOutput(res.output || 'Execution finished with no output.');
     } catch (err) {
@@ -57,6 +59,18 @@ export default function RunnableCodeBlock({ language, code, ...props }) {
           <button className="runnable-action-btn" onClick={handleCopy} title="Copy Code">
             {copied ? <Check size={14} /> : <Copy size={14} />}
           </button>
+          {isRunnable && (
+            <select
+              className="runnable-provider-select"
+              value={provider}
+              onChange={e => setProvider(e.target.value)}
+              title="Code execution provider"
+            >
+              {RUN_PROVIDERS.map(p => (
+                <option key={p.id} value={p.id}>{p.label}</option>
+              ))}
+            </select>
+          )}
           {isRunnable && (
             <button className="runnable-action-btn run-btn" onClick={handleRun} disabled={isExecuting}>
               <Play size={14} />

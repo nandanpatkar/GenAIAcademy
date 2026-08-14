@@ -15,6 +15,7 @@ import {
 import AITutorPanel from "../components/AITutorPanel";
 import TestCasePanel from "../components/leetcode/TestCasePanel";
 import { runLeetCodeTests, submitLeetCodeSolution } from "../services/leetcodeJudgeService";
+import { RUN_PROVIDERS } from "../services/jdoodleService";
 import catalog from "../data/codelab/catalog.json";
 import "../styles/LeetCode.css";
 
@@ -109,6 +110,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
   const [judgeResult, setJudgeResult] = useState(null);
   const [judgeError, setJudgeError] = useState("");
   const [judgeAction, setJudgeAction] = useState(null);
+  const [judgeProvider, setJudgeProvider] = useState("jdoodle");
 
   const selected = problemBySlug.get(selectedSlug) || initial;
   const isRunning = judgeAction === "run";
@@ -192,7 +194,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
     try {
       const selectedVisible = detail.visibleTests.some(test => test.id === activeCaseId);
       const selectedCustom = customCases.filter(test => test.id === activeCaseId);
-      const result = await runLeetCodeTests({ problemId: selected.slug, code, caseIds: selectedVisible ? [activeCaseId] : undefined, customCases: parsedCustomCases(selectedCustom) });
+      const result = await runLeetCodeTests({ problemId: selected.slug, code, caseIds: selectedVisible ? [activeCaseId] : undefined, customCases: parsedCustomCases(selectedCustom), provider: judgeProvider });
       setJudgeResult(result); setJudgeTab("result");
     } catch (error) { setJudgeError(error.message); setJudgeTab("result"); }
     finally { setJudgeAction(null); }
@@ -201,7 +203,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
     if (!judgeReady || judgeAction || !requireCode("submit")) return;
     setJudgeAction("submit"); setJudgeError(""); setJudgeResult(null);
     try {
-      const result = await submitLeetCodeSolution({ problemId: selected.slug, code });
+      const result = await submitLeetCodeSolution({ problemId: selected.slug, code, provider: judgeProvider });
       setJudgeResult(result); setJudgeTab("result");
       if (result.accepted) recordAccepted(result);
     } catch (error) { setJudgeError(error.message); setJudgeTab("result"); }
@@ -481,7 +483,22 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
               <div className="leetcode-horizontal-splitter" onPointerDown={(event) => startDrag("split", event)} title="Drag to resize panels" role="separator" aria-orientation="vertical"><span /></div>
               <section className="leetcode-editor-pane">
                 <div className="leetcode-pane-title"><span><Code2 size={15} /> Code</span></div>
-                <div className="leetcode-editor-toolbar"><span className="leetcode-language">Python3 <ChevronDown size={13} /></span><span className="leetcode-editor-mode">Auto save</span></div>
+                <div className="leetcode-editor-toolbar">
+                  <div className="leetcode-toolbar-left">
+                    <span className="leetcode-language">Python3</span>
+                    <select
+                      className="leetcode-provider-select"
+                      value={judgeProvider}
+                      onChange={e => setJudgeProvider(e.target.value)}
+                      title="Code execution provider"
+                    >
+                      {RUN_PROVIDERS.map(p => (
+                        <option key={p.id} value={p.id}>{p.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <span className="leetcode-editor-mode">Auto save</span>
+                </div>
                 <div className="leetcode-editor"><Editor height="100%" language="python" theme="vs-dark" value={code} onChange={value => setCode(value || "")} options={{ minimap: { enabled: false }, fontSize: 14, lineHeight: 22, padding: { top: 18 }, lineNumbersMinChars: 3, scrollBeyondLastLine: false, automaticLayout: true, tabSize: 4 }} /></div>
                 <div className="leetcode-runbar"><span><Check size={13} /> Saved</span><span>{detail?.hiddenTestCount ? `${detail.visibleTests.length} sample · ${detail.hiddenTestCount} hidden on submit` : "Select a case, then run or submit"}</span></div>
                 <div className="leetcode-output-splitter" onPointerDown={(event) => startDrag("output", event)} title="Drag to resize test panel" role="separator" aria-orientation="horizontal"><span /></div>
