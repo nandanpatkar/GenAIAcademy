@@ -44,7 +44,6 @@ export function getActiveNavId(p) {
   if (p.showConcurrencyLab) return "concurrency_lab";
   if (p.showLabs) return "labs";
   if (p.showAgentLibrary) return "agent_library";
-  if (p.showLangFlow) return "langflow";
   if (p.showAimlCompanion) return "aiml_companion";
   if (p.showLinks) return "links";
   if (p.showPlayground) return "playground";
@@ -119,7 +118,6 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowConcurrencyLab) p.setShowConcurrencyLab(false);
   if (p.setShowLabs) p.setShowLabs(false);
   if (p.setShowAgentLibrary) p.setShowAgentLibrary(false);
-  if (p.setShowLangFlow) p.setShowLangFlow(false);
   if (p.setShowAimlCompanion) p.setShowAimlCompanion(false);
   if (p.setShowLinks) p.setShowLinks(false);
   if (p.setShowBlog) p.setShowBlog(false);
@@ -360,7 +358,6 @@ export function runNavClick(id, p, ctx = {}) {
       if (p.setShowLabs) p.setShowLabs(true);
       break;
     case "agent_library": if (p.setShowAgentLibrary) p.setShowAgentLibrary(true); break;
-    case "langflow": if (p.setShowLangFlow) p.setShowLangFlow(true); break;
     case "aiml_companion": if (p.setShowAimlCompanion) p.setShowAimlCompanion(true); break;
     case "links":
       if (p.setLinksInitialTab) p.setLinksInitialTab("links");

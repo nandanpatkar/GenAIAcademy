@@ -76,7 +76,6 @@ const CodeVisualizer = React.lazy(() => import("./components/CodeVisualizer"));
 const K8sGames = React.lazy(() => import("./components/K8sGames"));
 const GitVisualizer = React.lazy(() => import("./components/GitVisualizer"));
 const FlowDesign = React.lazy(() => import("./components/FlowDesign"));
-const LangFlowEmbed = React.lazy(() => import("./components/LangFlowEmbed"));
 const NotionRenderer = React.lazy(() => import("./components/notion/NotionRenderer"));
 const NoSignups = React.lazy(() => import("./components/NoSignups"));
 const FreeSystemDesign = React.lazy(() => import("./components/FreeSystemDesign"));
@@ -620,7 +619,6 @@ function MainApp() {
     return LAB_IDS.has(savedLabId) ? savedLabId : DEFAULT_LAB_ID;
   });
   const [showAgentLibrary, setShowAgentLibrary] = useViewState(savedViews.showAgentLibrary ?? false);
-  const [showLangFlow, setShowLangFlow] = useViewState(savedViews.showLangFlow ?? false);
   const [showAimlCompanion, setShowAimlCompanion] = useViewState(savedViews.showAimlCompanion ?? false);
   const [showLinks, setShowLinks] = useViewState(savedViews.showLinks ?? false);
   const [showBlog, setShowBlog] = useViewState(savedViews.showBlog ?? false);
@@ -713,7 +711,7 @@ function MainApp() {
     try {
       localStorage.setItem("genai_active_views", JSON.stringify({
         showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
-        showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showLangFlow, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+        showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
         showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showJobScout, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
@@ -727,7 +725,7 @@ function MainApp() {
     }
   }, [
     showCurriculumMap, showRoadmap2, showRoadmap3, showIDE, showResources, showProgress, showPlayground,
-    showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showLangFlow, showAimlCompanion, showLinks, showBlog, showAdminManagement,
+    showDSAAnimator, showLearnBug, showSqlLab, showConcurrencyLab, showLabs, showAgentLibrary, showAimlCompanion, showLinks, showBlog, showAdminManagement,
     showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showJobScout, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
@@ -869,7 +867,6 @@ function MainApp() {
     setShowConcurrencyLab(false);
     setShowLabs(false);
     setShowAgentLibrary(false);
-    setShowLangFlow(false);
     setShowAimlCompanion(false);
     setShowLinks(false);
     setShowBlog(false);
@@ -1051,7 +1048,6 @@ function MainApp() {
         setShowAiFromScratch(true);
         break;
       case "agent_library": setShowAgentLibrary(true); break;
-      case "langflow": setShowLangFlow(true); break;
       case "sql_lab": setShowSqlLab(true); break;
       case "concurrency_lab": setShowConcurrencyLab(true); break;
       case "labs": setActiveLabId(null); setShowLabs(true); break;
@@ -1551,7 +1547,7 @@ function MainApp() {
     showDSAAnimator, setShowDSAAnimator, showLearnBug, setShowLearnBug,
     showSqlLab, setShowSqlLab, showConcurrencyLab, setShowConcurrencyLab,
     showLabs, setShowLabs, activeLabId, setActiveLabId,
-    showAgentLibrary, setShowAgentLibrary, showLangFlow, setShowLangFlow, showAimlCompanion, setShowAimlCompanion,
+    showAgentLibrary, setShowAgentLibrary, showAimlCompanion, setShowAimlCompanion,
     showLinks, setShowLinks, showBlog, setShowBlog,
     onOpenBlogYear: (year) => { closeAllPanels(); setBlogSlug(null); setBlogTag(null); setBlogYear(year); setShowBlog(true); },
     showAdminManagement, setShowAdminManagement,
@@ -1709,7 +1705,6 @@ function MainApp() {
                             showConcurrencyLab ? <ConcurrencyLab onClose={() => setShowConcurrencyLab(false)} /> :
                             showLabs ? <LabsHub activeLabId={activeLabId} onSelectLab={setActiveLabId} /> :
                             showAgentLibrary ? <AgentLibrary onClose={() => setShowAgentLibrary(false)} /> :
-                            showLangFlow && isAdmin ? <LangFlowEmbed /> :
                             showAimlCompanion ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
                                 showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
@@ -2082,7 +2077,7 @@ function MainApp() {
       {/* Re-trigger Walkthrough Button (top-right, hidden until hover) — only on home/roadmap */}
       {!showWalkthrough && !sectionWalkthroughId &&
         !showCurriculumMap && !showIDE && !showResources && !showProgress &&
-        !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showSqlLab && !showConcurrencyLab && !showAgentLibrary && !showLangFlow && !showAimlCompanion && !showLinks &&
+        !showPlayground && !showGenAIPlayground2 && !showDSAAnimator && !showLearnBug && !showSqlLab && !showConcurrencyLab && !showAgentLibrary && !showAimlCompanion && !showLinks &&
         !showBlog && !showAdminManagement && !showAwsSimulator && !showSimulator && !showGalaxy &&
         !showAIInterviewer && !showGeminiInterviewer && !showEmotionalSupport && !showJobScout && !showAlgoStudio && !showAlgoVisualizer &&
         !showK8sGames && !showGitVisualizer && !showFlowDesign && !showGitHubHub &&
