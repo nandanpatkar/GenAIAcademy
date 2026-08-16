@@ -13,7 +13,7 @@ Langflow execution API key.
    It shows a clear setup state until then and preserves an explicit new-tab escape route.
 2. The sidebar and navigation state treat `langflow` as an admin-only destination in the Agents
    group. This applies to both sidebar variants and carries over for saved sidebar layouts.
-3. `langflow-deploy/` supplies a pinned Langflow 1.12.0 Docker image and a Render Blueprint for
+3. `langflow-deploy/` supplies a pinned Langflow 1.11.1 Docker image and a Render Blueprint for
    a **separate** Free Render account.
 4. The existing Cloudflare keep-warm Worker is extended to accept an optional `LANGFLOW_TARGET`,
    so one Worker can keep the separate Render service awake at `/health`.
