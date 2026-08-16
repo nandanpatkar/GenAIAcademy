@@ -33,7 +33,7 @@ function Sidebar({
   showSqlLab, setShowSqlLab,
   showConcurrencyLab, setShowConcurrencyLab,
   showLabs, setShowLabs, activeLabId, setActiveLabId,
-  showAgentLibrary, setShowAgentLibrary,
+  showAgentLibrary, setShowAgentLibrary, showLangFlow, setShowLangFlow,
   showBlog, setShowBlog,
   showAdminManagement, setShowAdminManagement,
   showAwsSimulator, setShowAwsSimulator,
@@ -286,6 +286,7 @@ function Sidebar({
     if (showConcurrencyLab) return "concurrency_lab";
     if (showLabs) return "labs";
     if (showAgentLibrary) return "agent_library";
+    if (showLangFlow) return "langflow";
     if (showAimlCompanion) return "aiml_companion";
     if (showLinks) return "links";
     if (showPlayground) return "playground";
@@ -355,6 +356,7 @@ function Sidebar({
     if (setShowConcurrencyLab) setShowConcurrencyLab(false);
     if (setShowLabs) setShowLabs(false);
     if (setShowAgentLibrary) setShowAgentLibrary(false);
+    if (setShowLangFlow) setShowLangFlow(false);
     if (setShowAimlCompanion) setShowAimlCompanion(false);
     if (setShowLinks) setShowLinks(false);
     if (setShowBlog) setShowBlog(false);
@@ -595,6 +597,7 @@ function Sidebar({
         if (setShowLabs) setShowLabs(true);
         break;
       case "agent_library": if (setShowAgentLibrary) setShowAgentLibrary(true); break;
+      case "langflow": if (setShowLangFlow) setShowLangFlow(true); break;
       case "aiml_companion": if (setShowAimlCompanion) setShowAimlCompanion(true); break;
       case "links": 
         if (setLinksInitialTab) setLinksInitialTab("links");

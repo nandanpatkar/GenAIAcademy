@@ -16,7 +16,9 @@
  * honours upstream cache-control on external rewrites by default (since April
  * 2026), so a ping through the /jobscout/ rewrite could be answered from the
  * CDN and never reach Render at all — the service would sleep while this Worker
- * reported success.
+ * reported success. LANGFLOW_TARGET is optional and points at a Langflow
+ * instance hosted in a separate Render workspace, so its usage does not share
+ * Job Scout's already exhausted keep-warm hour budget.
  *
  * /api/config is the endpoint to hit rather than /: it is served by the FastAPI
  * process, so a 200 proves the Python interpreter is alive. nginx binds the port
@@ -38,21 +40,24 @@ async function ping(target) {
 
 export default {
   async scheduled(_controller, env, ctx) {
-    if (!env.TARGET) {
-      console.error("TARGET is not configured; nothing to keep warm");
+    const targets = [
+      ["Job Scout", env.TARGET],
+      ["Langflow", env.LANGFLOW_TARGET],
+    ].filter(([, target]) => Boolean(target));
+
+    if (!targets.length) {
+      console.error("No keep-warm targets are configured");
       return;
     }
-    // waitUntil so a slow origin cannot fail the scheduled invocation. There is
+    // waitUntil so slow origins cannot fail the scheduled invocation. There is
     // nothing to retry against — the next tick is only ten minutes away.
-    ctx.waitUntil(
-      ping(env.TARGET)
-        .then(status => {
-          // A cold start returns 502 from Render's edge while the container
-          // boots. That is expected right after a deploy and self-corrects.
-          if (status !== 200) console.warn(`keep-warm ping: HTTP ${status}`);
-        })
-        .catch(err => console.warn(`keep-warm ping failed: ${err.message}`)),
-    );
+    ctx.waitUntil(Promise.all(targets.map(([name, target]) => ping(target)
+      .then(status => {
+        // A cold start returns 502 from Render's edge while the container
+        // boots. That is expected right after a deploy and self-corrects.
+        if (status !== 200) console.warn(`${name} keep-warm ping: HTTP ${status}`);
+      })
+      .catch(err => console.warn(`${name} keep-warm ping failed: ${err.message}`)))));
   },
 
   /**
@@ -61,10 +66,14 @@ export default {
    * handler above is what actually does the work.
    */
   async fetch(_request, env) {
-    if (!env.TARGET) return new Response("TARGET not configured\n", { status: 500 });
+    const targets = [
+      ["Job Scout", env.TARGET],
+      ["Langflow", env.LANGFLOW_TARGET],
+    ].filter(([, target]) => Boolean(target));
+    if (!targets.length) return new Response("No keep-warm targets configured\n", { status: 500 });
     try {
-      const status = await ping(env.TARGET);
-      return new Response(`origin returned ${status}\n`, { status: 200 });
+      const statuses = await Promise.all(targets.map(async ([name, target]) => `${name}: ${await ping(target)}`));
+      return new Response(`${statuses.join("\n")}\n`, { status: 200 });
     } catch (err) {
       return new Response(`origin unreachable: ${err.message}\n`, { status: 502 });
     }
