@@ -6,7 +6,7 @@ import {
   Database, Clapperboard, GitCommit, FileText, Globe, Car, Plane,
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
-  FlaskConical, Headphones, Tags, Swords, Briefcase, BadgeCheck,
+  FlaskConical, Headphones, Tags, Swords, Briefcase, BadgeCheck, Zap,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -15,6 +15,7 @@ import {
 export const SIDEBAR_ITEM_REGISTRY = {
   overview: { icon: LayoutDashboard, label: "Home", description: "Continue your learning" },
   home2: { icon: Rocket, label: "Home 2.0", description: "Mission-control view of the whole academy" },
+  home3: { icon: Zap, label: "Home 3.0", description: "A product landing page for your own progress" },
   curriculum_map: { icon: Network, label: "Roadmaps", description: "See the full learning journey" },
   roadmap2: { icon: Car, label: "Roadmap 2.0", description: "Drive your study path down a highway" },
   roadmap3: { icon: Plane, label: "Roadmap 3.0", description: "Scroll to fly through your study path as a world" },
@@ -217,7 +218,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 // The out-of-the-box grouping/order, used whenever no admin customization
 // (sidebarConfig.layout) has been saved yet.
 export const DEFAULT_SIDEBAR_LAYOUT = [
-  { id: "learn", label: "Learn", itemIds: ["overview", "home2", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
+  { id: "learn", label: "Learn", itemIds: ["overview", "home2", "home3", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab"] },
   { id: "python_labs", label: "Python Labs", itemIds: ["concurrency_lab"] },
   { id: "algowar", label: "AlgoWar", itemIds: ["algowar"] },
@@ -385,6 +386,19 @@ const AGENT_ITEM_IDS = [
 export const resolveEffectiveLayout = (savedLayout) => {
   const source = savedLayout && savedLayout.length ? savedLayout : DEFAULT_SIDEBAR_LAYOUT;
   const groups = source.map((group) => ({ ...group, itemIds: [...group.itemIds] }));
+
+  // Home 3.0 belongs next to the other home screens. Without this, everyone
+  // with a saved layout (i.e. anyone who has customized the sidebar) would
+  // find it appended to "More tools" as an orphan instead.
+  if (!groups.some((group) => group.itemIds.includes("home3"))) {
+    const host = groups.find((group) => group.itemIds.includes("home2"))
+      || groups.find((group) => group.id === "learn")
+      || groups[0];
+    if (host) {
+      const anchor = host.itemIds.indexOf("home2");
+      host.itemIds.splice(anchor === -1 ? host.itemIds.length : anchor + 1, 0, "home3");
+    }
+  }
 
   // Python Labs owns the beginner concurrency quest. Re-home the item for
   // saved/custom layouts as well, so existing users see the new section.

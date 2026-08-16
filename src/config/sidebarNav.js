@@ -71,6 +71,7 @@ export function getActiveNavId(p) {
   if (p.showWorkplaceLab) return "tasks";
   if (p.showGitHubHub) return "github";
   if (p.showHome2) return "home2";
+  if (p.showHome3) return "home3";
   if (p.showIntelligenceHub) return "overview";
   if (p.showLegacyIntelligenceHub) return "legacy_hub";
   if (p.showQuiz) return "quiz";
@@ -142,6 +143,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowInterviewPrep) p.setShowInterviewPrep(false);
   if (p.setShowIntelligenceHub) p.setShowIntelligenceHub(false);
   if (p.setShowHome2) p.setShowHome2(false);
+  if (p.setShowHome3) p.setShowHome3(false);
   if (p.setShowLegacyIntelligenceHub) p.setShowLegacyIntelligenceHub(false);
   if (p.setShowQuiz) p.setShowQuiz(false);
   if (p.setShowLeetCode) p.setShowLeetCode(false);
@@ -160,6 +162,9 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "home2":
       if (p.setShowHome2) p.setShowHome2(true);
+      break;
+    case "home3":
+      if (p.setShowHome3) p.setShowHome3(true);
       break;
     case "onboarding_chat":
       if (p.setShowOnboarding) p.setShowOnboarding(true);

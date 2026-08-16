@@ -93,6 +93,7 @@ const ProjectIDE = React.lazy(() => import("./components/Projects/ProjectIDE"));
 const IntelligenceHub = React.lazy(() => import("./components/IntelligenceHub"));
 const HomeDashboard = React.lazy(() => import("./components/HomeDashboard"));
 const Home2Dashboard = React.lazy(() => import("./components/Home2Dashboard"));
+const Home3 = React.lazy(() => import("./components/Home3"));
 const WorkplaceLab = React.lazy(() => import("./components/WorkplaceLab"));
 const OnboardingChatbot = React.lazy(() => import("./components/OnboardingChatbot"));
 const FullContextChatbot = React.lazy(() => import("./components/FullContextChatbot"));
@@ -686,6 +687,9 @@ function MainApp() {
   // as the desktop default, but enter Home 2.0 whenever the app starts or is
   // resized into the mobile breakpoint.
   const [showHome2, setShowHome2] = useViewState(isMobile);
+  // Home 3.0 is the landing-page treatment. Unlike Home 2.0 it has no
+  // breakpoint rule of its own, so it just persists like every other view.
+  const [showHome3, setShowHome3] = useViewState(savedViews.showHome3 ?? false);
   const [showLegacyIntelligenceHub, setShowLegacyIntelligenceHub] = useViewState(false);
   const [showWorkplaceLab, setShowWorkplaceLab] = useViewState(savedViews.showWorkplaceLab ?? false);
   const [showKnowledgeGraph, setShowKnowledgeGraph] = useViewState(savedViews.showKnowledgeGraph ?? false);
@@ -711,7 +715,7 @@ function MainApp() {
         showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showJobScout, showAlgoStudio,
         showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
-        showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
+        showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
         showKnowledgeGraph, showReference, showAgentCore,
         showLangChainDocs, langChainProduct, showStrandsDocs,
         showAiFromScratch, aifsTrack
@@ -725,7 +729,7 @@ function MainApp() {
     showSimulator, showAwsSimulator, showGalaxy, showAIInterviewer, showJobScout, showAlgoStudio,
     showAlgoVisualizer, showK8sGames, showGitVisualizer, showFlowDesign,
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
-    showProjects, showGitHubHub, showIntelligenceHub, showWorkplaceLab,
+    showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
     showKnowledgeGraph, showReference, showAgentCore,
     showLangChainDocs, langChainProduct, showStrandsDocs,
     showAiFromScratch, aifsTrack
@@ -884,6 +888,7 @@ function MainApp() {
     // When closing everything, we usually return to roadmap, so we hide Hub unless specifically requested
     setShowIntelligenceHub(false);
     setShowHome2(false);
+    setShowHome3(false);
     setShowLegacyIntelligenceHub(false);
     setShowWorkplaceLab(false);
     setShowKnowledgeGraph(false);
@@ -989,6 +994,7 @@ function MainApp() {
     switch (sectionId) {
       case "overview": break; // closeAllPanels already returns to the dashboard
       case "home2": setShowHome2(true); break;
+      case "home3": setShowHome3(true); break;
       case "galaxy": setShowGalaxy(true); break;
       case "knowledge_graph": setShowKnowledgeGraph(true); break;
       case "curriculum_map": setShowCurriculumMap(true); break;
@@ -1020,6 +1026,27 @@ function MainApp() {
       case "interview_prep": setActiveToolHome("interview"); break;
       case "quiz": setActiveToolHome("quiz"); break;
       case "leetcode": setShowLeetCode(true); break;
+      case "algowar": setShowAlgoWar(true); break;
+      // The Agents and AI-from-Scratch destinations were reachable from the
+      // sidebar but not from here, so any surface calling navigateToSection
+      // with one of their ids silently did nothing.
+      case "langchain":
+      case "langgraph":
+      case "deepagents":
+      case "langsmith":
+      case "langchain_samples":
+        setLangChainProduct(sectionId);
+        setShowLangChainDocs(true);
+        break;
+      case "strands": setShowStrandsDocs(true); break;
+      case "aws_agentcore": setAgentCoreMode("docs"); setShowAgentCore(true); break;
+      case "amazon_connect": setAgentCoreMode("connect"); setShowAgentCore(true); break;
+      case "aifs_curriculum":
+      case "aifs_certification":
+      case "aifs_reference":
+        setAifsTrack(sectionId === "aifs_reference" ? "guides" : sectionId.replace("aifs_", ""));
+        setShowAiFromScratch(true);
+        break;
       case "agent_library": setShowAgentLibrary(true); break;
       case "sql_lab": setShowSqlLab(true); break;
       case "concurrency_lab": setShowConcurrencyLab(true); break;
@@ -1533,6 +1560,7 @@ function MainApp() {
     showK8sGames, setShowK8sGames, showGitVisualizer, setShowGitVisualizer,
     showFlowDesign, setShowFlowDesign, showGitHubHub, setShowGitHubHub,
     showIntelligenceHub, setShowIntelligenceHub, showHome2, setShowHome2,
+    showHome3, setShowHome3,
     showLegacyIntelligenceHub, setShowLegacyIntelligenceHub,
     showWorkplaceLab, setShowWorkplaceLab, showKnowledgeGraph, setShowKnowledgeGraph,
     showCommunity, setShowCommunity, showNotion, setShowNotion,
@@ -1758,6 +1786,30 @@ function MainApp() {
                                                           onNavigate={navigateToSection}
                                                         />
                                                       ) :
+                                                      showHome3 ? (
+                                                        <Home3
+                                                          user={user}
+                                                          pathsData={visiblePaths}
+                                                          activePath={activePath}
+                                                          setActivePath={setActivePath}
+                                                          onContinue={(node, pathId) => { setShowHome3(false); handleNodeClick(node, pathId); }}
+                                                          onOpenRoadmap={() => setShowHome3(false)}
+                                                          onOpenProgress={() => { closeAllPanels(); setShowProgress(true); }}
+                                                          onOpenDiscovery={(item) => {
+                                                            closeAllPanels();
+                                                            if (item.type === "interview") {
+                                                              setInterviewDeepLinkId(item.lessonId || null);
+                                                              setShowInterviewPrep(true);
+                                                            }
+                                                            if (item.type === "manual") {
+                                                              if (item.phase) setActiveManualPhase(item.phase);
+                                                              setShowManual(true);
+                                                            }
+                                                          }}
+                                                          onOpenOnboarding={() => { setOnboardingMode("panel"); setShowOnboarding(true); }}
+                                                          onNavigate={navigateToSection}
+                                                        />
+                                                      ) :
                                                       showLegacyIntelligenceHub ? (
                                                         <IntelligenceHub
                                                           onOpenArticle={(slug) => {
@@ -1935,7 +1987,7 @@ function MainApp() {
       </div>
 
       <MobileBottomNav
-        activeView={isMobileMenuOpen ? "more" : (showHome2 || showIntelligenceHub) ? "home" : showProgress ? "progress" : showQuiz ? "practice" : "roadmap"}
+        activeView={isMobileMenuOpen ? "more" : (showHome2 || showHome3 || showIntelligenceHub) ? "home" : showProgress ? "progress" : showQuiz ? "practice" : "roadmap"}
         setView={v => {
           closeAllPanels();
           if (v === "home") {

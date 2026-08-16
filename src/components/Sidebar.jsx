@@ -52,6 +52,7 @@ function Sidebar({
   showFlowDesign, setShowFlowDesign,
   showIntelligenceHub, setShowIntelligenceHub,
   showHome2, setShowHome2,
+  showHome3, setShowHome3,
   showLegacyIntelligenceHub, setShowLegacyIntelligenceHub,
   showWorkplaceLab, setShowWorkplaceLab,
   showKnowledgeGraph, setShowKnowledgeGraph,
@@ -312,6 +313,7 @@ function Sidebar({
     if (showWorkplaceLab) return "tasks";
     if (showGitHubHub) return "github";
     if (showHome2) return "home2";
+    if (showHome3) return "home3";
     if (showIntelligenceHub) return "overview";
     if (showLegacyIntelligenceHub) return "legacy_hub";
     if (showQuiz) return "quiz";
@@ -379,6 +381,7 @@ function Sidebar({
     if (setShowInterviewPrep) setShowInterviewPrep(false);
     if (setShowIntelligenceHub) setShowIntelligenceHub(false);
     if (setShowHome2) setShowHome2(false);
+    if (setShowHome3) setShowHome3(false);
     if (setShowLegacyIntelligenceHub) setShowLegacyIntelligenceHub(false);
     if (setShowQuiz) setShowQuiz(false);
     if (setShowLeetCode) setShowLeetCode(false);
@@ -398,6 +401,9 @@ function Sidebar({
         break;
       case "home2":
         if (setShowHome2) setShowHome2(true);
+        break;
+      case "home3":
+        if (setShowHome3) setShowHome3(true);
         break;
       case "onboarding_chat":
         if (setShowOnboarding) setShowOnboarding(true);
