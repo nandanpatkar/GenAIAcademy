@@ -204,7 +204,6 @@ export const SIDEBAR_ITEM_REGISTRY = {
   aiml_companion: { icon: GraduationCap, label: "AIML Companion", description: "Get help while studying", defaultVisibility: "admin" },
 
   agent_library: { icon: Database, label: "Agent Library", description: "Sync GitHub skills, prompts, and MCP definitions" },
-  langflow: { icon: Workflow, label: "LangFlow", description: "Build and manage your agent flows", defaultVisibility: "admin" },
   projects: { icon: Terminal, label: "Cloud Projects", description: "Build and save projects" },
   aws_simulator: { icon: Layers, label: "AWS System Design", description: "Practice AWS architecture" },
   dsa_animator: { icon: Clapperboard, label: "DSA Animator", description: "Animate data structures" },
@@ -224,7 +223,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "python_labs", label: "Python Labs", itemIds: ["concurrency_lab"] },
   { id: "algowar", label: "AlgoWar", itemIds: ["algowar"] },
   { id: "labs", label: "Labs", itemIds: ["labs"] },
-  { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library", "langflow"] },
+  { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
   { id: "ai_from_scratch", label: "AI from Scratch", itemIds: ["aifs_curriculum", "aifs_certification", "aifs_reference"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz"] },
@@ -379,7 +378,6 @@ const AGENT_ITEM_IDS = [
   "aws_agentcore",
   "amazon_connect",
   "agent_library",
-  "langflow",
 ];
 
 // Merges a saved custom layout with the default one so that any item id that
