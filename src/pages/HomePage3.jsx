@@ -130,6 +130,47 @@ function addBuilding(group, x, z, height, accentMaterial, darkMaterial) {
   }
 }
 
+function addGraphLabel(group, label, position, accent) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 320;
+  canvas.height = 72;
+  const context = canvas.getContext("2d");
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "rgba(7, 16, 29, 0.84)";
+  context.strokeStyle = `#${accent.toString(16).padStart(6, "0")}`;
+  context.lineWidth = 2;
+  context.roundRect(3, 5, canvas.width - 6, canvas.height - 10, 12);
+  context.fill();
+  context.stroke();
+  context.fillStyle = "#e6f7ff";
+  context.font = "700 24px Inter, Arial, sans-serif";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText(label, canvas.width / 2, canvas.height / 2 + 1);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false, opacity: 0.92 }));
+  sprite.position.set(...position);
+  sprite.scale.set(2.8, 0.63, 1);
+  group.add(sprite);
+  return sprite;
+}
+
+function addGraphLink(group, from, to, material, pulseMaterial, phase) {
+  const start = new THREE.Vector3(...from);
+  const end = new THREE.Vector3(...to);
+  const midpoint = start.clone().lerp(end, 0.5);
+  midpoint.y += 0.75;
+  const curve = new THREE.QuadraticBezierCurve3(start, midpoint, end);
+  const link = mesh(new THREE.TubeGeometry(curve, 24, 0.055, 7, false), material);
+  group.add(link);
+
+  const pulse = mesh(new THREE.SphereGeometry(0.13, 12, 12), pulseMaterial);
+  pulse.userData.pathPulse = { curve, speed: 0.14, phase };
+  group.add(pulse);
+}
+
 function createDiorama(site, index) {
   const group = new THREE.Group();
   group.position.set(...site.position);
@@ -191,22 +232,57 @@ function createDiorama(site, index) {
   }
 
   if (site.type === "simulate") {
-    const nodes = [[-3.5, 2.6, -1.5], [0, 4.5, 0], [3.6, 2.8, -1], [-2.2, 2, 3], [2.4, 2.2, 3.2]];
-    nodes.forEach(([x, y, z], nodeIndex) => {
-      const server = mesh(new THREE.BoxGeometry(1.8, 1.4, 1.8), nodeIndex === 1 ? accent : dark, [x, y, z]);
-      server.userData.float = { base: y, speed: 0.55 + nodeIndex * 0.08, amount: 0.16 };
-      group.add(server);
-      addBox(server, [1.1, 0.1, 0.05], [0, 0.25, 0.93], accentSoft);
-      addBox(server, [0.7, 0.1, 0.05], [0.2, -0.2, 0.93], pale);
+    // A directed topology has more visual hierarchy than a flat cluster of servers:
+    // traffic enters from the left, fans through the agent core, then branches to tools.
+    const graph = new THREE.Group();
+    // The Systems Lab copy sits to the right at this story beat, so bias the
+    // topology left into the open side of the camera frame.
+    graph.position.set(-17, 0.2, 0);
+    graph.scale.setScalar(0.64);
+    group.add(graph);
+
+    const linkMaterial = createMaterial(0x1c8cb7, { emissive: 0x0b6a8b, roughness: 0.32, metalness: 0.16 });
+    const pulseMaterial = createMaterial(0xe0f8ff, { emissive: 0x6fe8ff, roughness: 0.18, metalness: 0.2 });
+    const violet = createMaterial(0x8b5cf6, { emissive: 0x5b21b6, roughness: 0.28, metalness: 0.16 });
+    const graphNodes = [
+      { label: "INGRESS", position: [-4.8, 2.9, 0], shape: "gateway" },
+      { label: "AGENT CORE", position: [0, 4.45, 0], shape: "core" },
+      { label: "RETRIEVAL", position: [4.7, 5.75, -0.3], shape: "service" },
+      { label: "MEMORY", position: [4.45, 2.55, 1.4], shape: "service" },
+      { label: "TOOLS", position: [1.55, 1.65, 3.9], shape: "service" },
+    ];
+
+    graphNodes.forEach((node, nodeIndex) => {
+      const [x, y, z] = node.position;
+      if (node.shape === "core") {
+        const halo = mesh(new THREE.TorusGeometry(1.62, 0.055, 8, 56), accent, [x, y, z], [Math.PI / 2, 0, 0]);
+        halo.userData.spin = 0.16;
+        graph.add(halo);
+        const core = mesh(new THREE.IcosahedronGeometry(1.05, 1), accent, [x, y, z]);
+        core.userData.float = { base: y, speed: 0.72, amount: 0.18 };
+        core.userData.spin = -0.16;
+        graph.add(core);
+        const innerCore = mesh(new THREE.IcosahedronGeometry(0.46, 1), pale, [x, y, z]);
+        innerCore.userData.float = { base: y, speed: 0.72, amount: 0.18 };
+        graph.add(innerCore);
+      } else {
+        const nodeMaterial = node.shape === "gateway" ? violet : dark;
+        const server = mesh(new THREE.BoxGeometry(1.55, 1.2, 1.55), nodeMaterial, [x, y, z], [0, nodeIndex * 0.24, 0]);
+        server.userData.float = { base: y, speed: 0.5 + nodeIndex * 0.08, amount: 0.12 };
+        graph.add(server);
+        const status = mesh(new THREE.BoxGeometry(0.85, 0.11, 0.06), accentSoft, [x, y + 0.24, z + 0.8]);
+        status.userData.float = { base: y + 0.24, speed: 0.5 + nodeIndex * 0.08, amount: 0.12 };
+        graph.add(status);
+      }
+      addGraphLabel(graph, node.label, [x, y + (node.shape === "core" ? 1.75 : 1.22), z], node.shape === "gateway" ? 0x8b5cf6 : site.accent);
     });
-    const paths = [[0, 1], [1, 2], [1, 3], [1, 4]];
-    paths.forEach(([from, to]) => {
-      const curve = new THREE.LineCurve3(
-        new THREE.Vector3(...nodes[from]),
-        new THREE.Vector3(...nodes[to]),
-      );
-      group.add(mesh(new THREE.TubeGeometry(curve, 10, 0.045, 6, false), accent));
+
+    [[0, 1], [1, 2], [1, 3], [1, 4]].forEach(([from, to], index) => {
+      addGraphLink(graph, graphNodes[from].position, graphNodes[to].position, linkMaterial, pulseMaterial, index * 0.23);
     });
+
+    const baseRing = mesh(new THREE.RingGeometry(2.3, 5.9, 48), createMaterial(0x0d2031, { roughness: 0.8, metalness: 0.08 }), [0, 0.68, 0], [-Math.PI / 2, 0, 0]);
+    graph.add(baseRing);
   }
 
   if (site.type === "prepare") {
@@ -376,6 +452,10 @@ function WorldCanvas({ scrollRootRef, onActiveChange }) {
           if (object.userData.spinAround) {
             const { radius, speed, phase, y } = object.userData.spinAround;
             object.position.set(Math.cos(elapsed * speed + phase) * radius, y, Math.sin(elapsed * speed + phase) * radius);
+          }
+          if (object.userData.pathPulse) {
+            const { curve, speed, phase } = object.userData.pathPulse;
+            object.position.copy(curve.getPointAt((elapsed * speed + phase) % 1));
           }
         });
       }
@@ -585,6 +665,18 @@ export default function HomePage3({ onEnter, onSwitch }) {
                     </div>
                   ))}
                 </div>
+              )}
+
+              {scene.id === "simulate" && (
+                <aside className="hp3-graph-legend" aria-label="Systems Lab topology">
+                  <span className="hp3-graph-kicker">LIVE TOPOLOGY</span>
+                  <strong>Signal flows through one agent core.</strong>
+                  <ul>
+                    <li><i className="is-ingress" />Ingress</li>
+                    <li><i className="is-core" />Agent core</li>
+                    <li><i className="is-service" />Connected services</li>
+                  </ul>
+                </aside>
               )}
 
               {!isFinal && (
