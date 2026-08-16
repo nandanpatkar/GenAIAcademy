@@ -14,7 +14,10 @@
   // The onrender.com hostname, NOT the Vercel domain — see the note in
   // src/index.js. Render service srv-d9va48p42hec738hb7h0.
   "vars": {
-    "TARGET": "https://job-scout-dhwm.onrender.com/api/config"
+    "TARGET": "https://job-scout-dhwm.onrender.com/api/config",
+    // Optional: set this after deploying Langflow in a separate Render account.
+    // It must be the direct Render health endpoint, for example
+    // "LANGFLOW_TARGET": "https://your-langflow.onrender.com/health"
   },
 
   "observability": {
