@@ -17,10 +17,28 @@
  *   GET /strands/<path>
  *   GET /guides/<path>
  *   GET /ai-from-scratch/<path>
+ *   GET /datascience/<path>
+ *   GET /chai-visual/<path>
  */
 
 const IMMUTABLE = "public, max-age=31536000, immutable";
-const ALLOWED_PREFIXES = ["agentcore-samples/", "agentcore/", "langchain/", "strands/", "guides/", "ai-from-scratch/"];
+// Prerendered pages are re-uploaded whenever the mirror is rebuilt, so they
+// must revalidate instead of being pinned for a year like the hashed assets.
+const REVALIDATE = "public, max-age=0, must-revalidate";
+const ALLOWED_PREFIXES = [
+  "agentcore-samples/",
+  "agentcore/",
+  "langchain/",
+  "strands/",
+  "guides/",
+  "ai-from-scratch/",
+  "datascience/",
+  "chai-visual/",
+];
+
+// Both course mirrors are prerendered SPAs whose routers address routes without
+// a file extension, while every route on disk is a .html file.
+const HTML_ROUTED_PREFIXES = ["datascience/", "chai-visual/"];
 
 export default {
   async fetch(request, env, ctx) {
@@ -48,10 +66,19 @@ export default {
     const cached = await cache.match(request);
     if (cached) return cached;
 
-    const object = await env.DOCS_BUCKET.get(key, {
+    let object = await env.DOCS_BUCKET.get(key, {
       onlyIf: request.headers,
       range: request.headers,
     });
+
+    // Both course mirrors address lessons without a file extension, but on disk
+    // each route is a .html file. Vercel's rewrite forwards the extension-less
+    // URL verbatim, so resolve it here the way a static host would.
+    if (object === null && !key.includes(".")
+        && HTML_ROUTED_PREFIXES.some((p) => key.startsWith(p))) {
+      key = `${key}.html`;
+      object = await env.DOCS_BUCKET.get(key, { onlyIf: request.headers });
+    }
 
     if (object === null) {
       return new Response("Not Found", { status: 404 });
@@ -60,7 +87,9 @@ export default {
     const headers = new Headers();
     object.writeHttpMetadata(headers);
     headers.set("etag", object.httpEtag);
-    if (!headers.has("cache-control")) headers.set("cache-control", IMMUTABLE);
+    if (!headers.has("cache-control")) {
+      headers.set("cache-control", key.endsWith(".html") ? REVALIDATE : IMMUTABLE);
+    }
 
     const hasBody = "body" in object;
     let status = hasBody ? 200 : 304;

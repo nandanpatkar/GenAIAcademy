@@ -163,12 +163,46 @@ const onJobScoutProxyError = (proxy) => {
   });
 };
 
+// The Data Science Labs mirror under public/datascience/ is a React SPA that
+// addresses its own routes without a file extension (/datascience/numpy/
+// broadcasting), but on disk every route is a prerendered .html file. In
+// production a vercel.json rewrite maps one to the other; this does the same
+// for `vite dev`, which would otherwise 404 every lesson.
+//
+// Only paths that resolve to a real file are rewritten, so genuine 404s inside
+// the mirror still read as 404s rather than silently serving the wrong page.
+// Both course mirrors under public/ are prerendered SPAs whose routers address
+// lessons without a file extension, while every route on disk is a .html file.
+// In production a vercel.json rewrite maps one to the other; this does the same
+// for `vite dev`, which would otherwise 404 every lesson.
+//
+// Only paths that resolve to a real file are rewritten, so genuine 404s inside
+// a mirror still read as 404s rather than silently serving the wrong page.
+const MIRROR_PREFIXES = ["/datascience/", "/chai-visual/"];
+
+const staticMirrors = () => ({
+  name: "course-mirror-html",
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      const [pathname] = (req.url || "").split("?");
+      if (!MIRROR_PREFIXES.some((p) => pathname.startsWith(p))) return next();
+      if (path.extname(pathname)) return next();
+
+      const candidate = path.join(process.cwd(), "public", `${pathname}.html`);
+      if (fs.existsSync(candidate)) {
+        req.url = `${pathname}.html${req.url.slice(pathname.length)}`;
+      }
+      next();
+    });
+  },
+});
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   process.env = { ...process.env, ...env };
 
   return {
-    plugins: [react(), apiMiddleware()],
+    plugins: [react(), apiMiddleware(), staticMirrors()],
     base: "./",
     // Avoid serializing the dependency map for every lazy feature (including
     // thousands of studio icon assets) into the app's startup bundle. Lazy

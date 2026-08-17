@@ -1,0 +1,1030 @@
+/* ── Data Science Labs course viewer ──────────────────────────────────────
+   The lesson body renders in a frame served from /datascience/, and that
+   mirror ships a single dark palette with no light variant. So the shell
+   below is dark in both app themes and takes its tokens from the mirror's own
+   stylesheet (assets/index-*.css) rather than eyeballed values, which is what
+   makes the rail and the framed lesson read as one surface:
+
+     --color-ink         oklch(14.5% 0 0)      --color-chai   #ff7d0c
+     --color-ink-raised  oklch(19% .004 60)    --color-fg     oklch(98.5% 0 0)
+     --color-ink-sunken  oklch(12% .004 60)    --color-fg-dim oklch(55% .008 60)
+
+   Manrope / JetBrains Mono are the mirror's own faces. The framed document
+   loads them for itself; the parent needs its own copy for the rail and
+   headers to match, hence the import below — same approach ApiHub.css and
+   EmotionalSupport.css already take.
+   ──────────────────────────────────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+.ds-root {
+  --ds-ink: oklch(14.5% 0 0);
+  --ds-raised: oklch(19% 0.004 60);
+  --ds-sunken: oklch(12% 0.004 60);
+  --ds-line: oklch(100% 0 0 / 0.1);
+  --ds-line-strong: oklch(100% 0 0 / 0.18);
+  --ds-fg: oklch(98.5% 0 0);
+  --ds-fg-muted: oklch(72% 0.01 60);
+  --ds-fg-dim: oklch(55% 0.008 60);
+  --ds-accent: #ff7d0c;
+  --ds-accent-soft: rgba(255, 125, 12, 0.12);
+  --ds-keep: #74dfa2;
+
+  /* The per-track accents the source assigns to each card's progress bar. */
+  --ds-c-chai: #ff7d0c;
+  --ds-c-g1: #66aaf9;
+  --ds-c-g2: #74dfa2;
+  --ds-c-g3: #ae7ede;
+
+  --ds-rail: 288px;
+  /* The app's --font / --mono are the preferred fallback, but they must carry
+     their own default: an undefined var() in the middle of a font-family list
+     invalidates the whole declaration, which drops the shell to serif. */
+  --ds-font: "Manrope", var(--font, system-ui), system-ui, sans-serif;
+  --ds-mono: "JetBrains Mono", var(--mono, ui-monospace), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ds-ink);
+  color: var(--ds-fg);
+  font-family: var(--ds-font);
+}
+
+/* ── rail ──
+   Same shape as the Visual Learning rail: a search field, the streak counter,
+   then module headings over two-line entries. Only the open track's modules
+   appear — the four tracks live on the home screen. */
+.ds-rail {
+  display: flex;
+  flex-direction: column;
+  width: var(--ds-rail);
+  flex-shrink: 0;
+  min-height: 0;
+  padding-top: 14px;
+  border-right: 1px solid var(--ds-line);
+  background: var(--ds-sunken);
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s;
+}
+
+.ds-rail--closed {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ds-ring circle {
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── search ── */
+.ds-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px 10px;
+  padding: 0 14px;
+  height: 46px;
+  border: 1px solid var(--ds-line-strong);
+  border-radius: 12px;
+  background: var(--ds-raised);
+  color: var(--ds-fg-dim);
+}
+
+.ds-search:focus-within {
+  border-color: var(--ds-accent);
+  box-shadow: 0 0 0 3px var(--ds-accent-soft);
+}
+
+.ds-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ds-fg);
+  font: 15px var(--ds-font);
+}
+
+.ds-search input::placeholder { color: var(--ds-fg-dim); }
+.ds-search input::-webkit-search-cancel-button { display: none; }
+
+.ds-search kbd {
+  padding: 3px 6px;
+  border: 1px solid var(--ds-line-strong);
+  border-radius: 6px;
+  font: 11px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-search button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 3px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ds-fg-dim);
+}
+
+.ds-search button:hover { color: var(--ds-fg); }
+
+/* ── streak ── */
+.ds-streak-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px 16px;
+}
+
+.ds-streak {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--ds-line-strong);
+  border-radius: 12px;
+  background: var(--ds-raised);
+  color: var(--ds-fg-dim);
+}
+
+.ds-streak strong {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ds-fg);
+}
+
+.ds-streak span { font-size: 14px; }
+.ds-streak-lit { color: var(--ds-accent); }
+
+.ds-streak-info {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border: 1px solid var(--ds-line-strong);
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--ds-raised);
+  color: var(--ds-fg-dim);
+}
+
+.ds-streak-info:hover { color: var(--ds-fg); border-color: var(--ds-accent); }
+
+.ds-streak-note {
+  margin: -8px 16px 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ds-fg-dim);
+}
+
+/* ── module tree ── */
+.ds-tree {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 12px 32px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ds-line-strong) transparent;
+}
+
+.ds-tree::-webkit-scrollbar { width: 8px; }
+.ds-tree::-webkit-scrollbar-thumb {
+  background: var(--ds-line-strong);
+  border-radius: 4px;
+}
+
+.ds-module { margin-bottom: 18px; }
+
+.ds-module-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ds-fg);
+  font: 700 20px var(--ds-font);
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.ds-module-head:hover .ds-module-title { color: var(--ds-accent); }
+.ds-caret { display: grid; place-items: center; color: var(--ds-fg-dim); flex-shrink: 0; }
+
+.ds-module-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.ds-module-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ds-fg-dim);
+}
+
+.ds-lessons {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.ds-lesson {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 8px 14px;
+  margin-bottom: 2px;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  text-align: left;
+  transition: background 0.14s;
+}
+
+.ds-lesson:hover { background: var(--ds-raised); }
+
+/* The active entry inverts to the page colour, as in the source's own rail. */
+.ds-lesson.is-active { background: var(--ds-fg); }
+.ds-lesson.is-active .ds-lesson-title { color: var(--ds-ink); font-weight: 600; }
+.ds-lesson.is-active .ds-lesson-sub,
+.ds-lesson.is-active .ds-lesson-meta { color: rgba(0, 0, 0, 0.6); }
+.ds-lesson.is-active .ds-capstone,
+.ds-lesson.is-active .ds-done { color: var(--ds-ink); }
+
+.ds-lesson-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--ds-fg);
+}
+
+.ds-lesson.is-done .ds-lesson-title { color: var(--ds-fg-dim); }
+.ds-lesson.is-active.is-done .ds-lesson-title { color: var(--ds-ink); }
+
+.ds-lesson-sub {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ds-fg-dim);
+}
+
+.ds-lesson-meta {
+  margin-top: 2px;
+  font: 11px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-capstone { flex-shrink: 0; color: var(--ds-accent); }
+.ds-done { flex-shrink: 0; color: var(--ds-keep); }
+
+.ds-num {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  border: 1px solid var(--ds-line);
+  border-radius: 50%;
+  font: 500 9.5px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+/* ── search results ── */
+.ds-rail-label {
+  margin: 12px 6px 5px;
+  font: 700 10px var(--ds-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ds-fg-dim);
+}
+
+.ds-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 7px 9px;
+  margin-bottom: 2px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  text-align: left;
+}
+
+.ds-result:hover { background: var(--ds-raised); }
+
+.ds-result strong {
+  font: 600 12.5px var(--ds-font);
+  color: var(--ds-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-result span {
+  font: 10.5px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-result--ex strong { font-weight: 500; white-space: normal; }
+
+.ds-empty {
+  padding: 16px 8px;
+  font: 12px var(--ds-font);
+  color: var(--ds-fg-dim);
+}
+
+/* ── main pane ── */
+.ds-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--ds-ink);
+}
+
+.ds-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  height: 50px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--ds-line);
+  background: var(--ds-sunken);
+}
+
+.ds-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ds-fg-dim);
+  transition: background 0.15s, color 0.15s;
+}
+
+.ds-icon-btn:hover {
+  background: var(--ds-raised);
+  border-color: var(--ds-line);
+  color: var(--ds-fg);
+}
+
+.ds-crumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+  font: 12px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-crumb button {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ds-fg-dim);
+  font: inherit;
+}
+
+.ds-crumb button:hover { color: var(--ds-accent); }
+
+.ds-crumb strong {
+  font-weight: 600;
+  color: var(--ds-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-crumb svg { flex-shrink: 0; opacity: 0.5; }
+
+.ds-topbar-end {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--ds-line);
+  border-radius: 7px;
+  cursor: pointer;
+  background: var(--ds-raised);
+  color: var(--ds-fg-muted);
+  font: 500 11.5px var(--ds-font);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ds-btn:hover { border-color: var(--ds-line-strong); color: var(--ds-fg); }
+
+/* ── lesson header ── */
+.ds-lesson-head {
+  flex-shrink: 0;
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid var(--ds-line);
+}
+
+.ds-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 0 8px;
+  font: 500 11.5px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-dot { opacity: 0.45; }
+
+.ds-lesson-head h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.15;
+  color: var(--ds-fg);
+}
+
+.ds-lede {
+  margin: 7px 0 0;
+  max-width: 62ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ds-fg-muted);
+}
+
+.ds-covers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.ds-covers code {
+  padding: 3px 7px;
+  border: 1px solid var(--ds-line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  font: 10.5px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+/* ── frame ── */
+.ds-frame-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: var(--ds-ink);
+}
+
+.ds-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.ds-frame-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: var(--ds-ink);
+  font: 11.5px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+/* ── pager ── */
+.ds-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-top: 1px solid var(--ds-line);
+  background: var(--ds-sunken);
+}
+
+.ds-pager button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 46%;
+  padding: 7px 12px;
+  border: 1px solid var(--ds-line);
+  border-radius: 9px;
+  cursor: pointer;
+  background: var(--ds-raised);
+  color: var(--ds-fg-muted);
+  text-align: left;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.ds-pager button:hover { border-color: var(--ds-accent); color: var(--ds-fg); }
+.ds-pager-next { flex-direction: row; text-align: right; }
+
+.ds-pager span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font: 600 12.5px var(--ds-font);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-pager em {
+  font: 500 9.5px var(--ds-mono);
+  font-style: normal;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ds-fg-dim);
+}
+
+.ds-pager svg { flex-shrink: 0; }
+
+/* ── landing ── */
+.ds-landing {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 32px 28px 60px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ds-line-strong) transparent;
+}
+
+.ds-landing::-webkit-scrollbar { width: 10px; }
+.ds-landing::-webkit-scrollbar-thumb {
+  background: var(--ds-line-strong);
+  border-radius: 5px;
+}
+
+.ds-hero {
+  max-width: 860px;
+  margin-bottom: 34px;
+}
+
+.ds-hero h1 {
+  margin: 0;
+  max-width: 24ch;
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--ds-fg);
+}
+
+.ds-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 26px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ds-line);
+}
+
+.ds-hero-stats > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ds-hero-stats strong {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ds-fg);
+}
+
+.ds-hero-stats span {
+  font: 10.5px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-hero-progress {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px !important;
+  margin-left: auto;
+  padding: 8px 14px;
+  border: 1px solid var(--ds-line);
+  border-radius: 11px;
+  background: var(--ds-raised);
+}
+
+/* ── module cards ── */
+.ds-modules {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  max-width: 860px;
+}
+
+.ds-module-card-head h2 {
+  margin: 3px 0 0;
+  font-size: 16.5px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ds-fg);
+}
+
+.ds-module-card-head p {
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  color: var(--ds-fg-dim);
+}
+
+.ds-module-num {
+  font: 600 10.5px var(--ds-mono);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ds-fg-dim);
+}
+
+.ds-module-card ol {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.ds-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--ds-line);
+  border-radius: 11px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.02);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.ds-card:hover {
+  border-color: var(--ds-accent);
+  background: var(--ds-raised);
+  transform: translateX(2px);
+}
+
+.ds-card--capstone {
+  border-color: rgba(255, 125, 12, 0.28);
+  background: rgba(255, 125, 12, 0.05);
+}
+
+.ds-card-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 20px;
+  color: var(--ds-fg-dim);
+}
+
+.ds-card--capstone .ds-card-mark { color: var(--ds-accent); }
+
+.ds-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-card-body strong {
+  font: 700 13.5px var(--ds-font);
+  letter-spacing: -0.01em;
+  color: var(--ds-fg);
+}
+
+.ds-card-body > span {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ds-fg-dim);
+}
+
+.ds-card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  flex-shrink: 0;
+  font: 10.5px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+/* ── home ──
+   The four tracks live here rather than in the rail, so this is the screen
+   that does the switching. Follows the source's own landing: a two-line
+   headline, then a card per track naming its opening lessons. */
+.ds-home { padding-top: 40px; }
+
+.ds-home-hero {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+/* Bled in from the right and masked away before it reaches the headline —
+   the same treatment the source gives its hero. */
+.ds-home-art {
+  position: absolute;
+  inset-block: -28px;
+  right: -28px;
+  width: 56%;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 16px;
+}
+
+.ds-home-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right;
+  opacity: 0.5;
+  mask-image: linear-gradient(to right, transparent 2%, #000 55%);
+  -webkit-mask-image: linear-gradient(to right, transparent 2%, #000 55%);
+}
+
+@media (max-width: 860px) { .ds-home-art { display: none; } }
+
+.ds-home-hero > *:not(.ds-home-art) { position: relative; }
+
+.ds-home-eyebrow {
+  margin: 0 0 12px;
+  font: 500 13px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-home-hero h1 {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  color: var(--ds-fg);
+}
+
+.ds-home-hero h1 span:last-child { color: var(--ds-accent); }
+
+.ds-home-lede {
+  margin: 20px 0 0;
+  max-width: 60ch;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--ds-fg-muted);
+}
+
+.ds-home-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 26px;
+}
+
+.ds-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--ds-accent);
+  color: var(--ds-ink);
+  font: 600 15px var(--ds-font);
+  transition: filter 0.15s, transform 0.15s;
+}
+
+.ds-cta:hover { filter: brightness(1.08); transform: translateX(2px); }
+
+.ds-home-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font: 12px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-home-stats strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ds-fg);
+}
+
+.ds-section-head {
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.ds-section-head h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ds-fg);
+}
+
+.ds-section-head p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--ds-fg-dim);
+}
+
+.ds-track-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ds-track-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--ds-line);
+  border-radius: 16px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.02);
+  text-align: left;
+  transition: border-color 0.18s, transform 0.18s, background 0.18s;
+}
+
+.ds-track-card:hover {
+  border-color: var(--card-accent, var(--ds-accent));
+  background: var(--ds-raised);
+  transform: translateY(-2px);
+}
+
+/* Illustration across the head of the card, faded out downward so the copy
+   sits on flat ground. Brightens slightly on hover, as the source does. */
+.ds-card-art {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  width: 100%;
+  height: 128px;
+  object-fit: cover;
+  opacity: 0.25;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  mask-image: linear-gradient(to bottom, #000, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+}
+
+.ds-track-card:hover .ds-card-art { opacity: 0.45; }
+.ds-track-card > *:not(.ds-card-art) { position: relative; }
+
+.ds-track-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ds-track-card-head h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ds-fg);
+}
+
+.ds-track-lessons {
+  flex-shrink: 0;
+  font: 12px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-track-tagline {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ds-fg-muted);
+}
+
+.ds-track-preview {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ds-track-preview li {
+  padding-left: 14px;
+  position: relative;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ds-fg-muted);
+}
+
+.ds-track-preview li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ds-line-strong);
+}
+
+.ds-preview-more { color: var(--ds-fg-dim) !important; }
+.ds-preview-more::before { display: none; }
+
+.ds-track-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.ds-track-bar {
+  display: block;
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.ds-track-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--card-accent, var(--ds-accent));
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ds-track-summary {
+  flex-shrink: 0;
+  font: 12px var(--ds-mono);
+  color: var(--ds-fg-dim);
+}
+
+.ds-enter {
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ds-fg);
+}
+
+.ds-track-card:hover .ds-enter { color: var(--ds-accent); }
+
+.ds-home-mode .ds-main { background: var(--ds-ink); }
+
+@media (max-width: 900px) {
+  .ds-rail { position: absolute; z-index: 20; height: 100%; box-shadow: 0 0 40px rgba(0, 0, 0, 0.5); }
+  .ds-lesson-head { padding: 16px 18px 13px; }
+  .ds-landing, .ds-home { padding: 22px 18px 50px; }
+  .ds-hero-progress { margin-left: 0; }
+  .ds-home-hero h1 { font-size: 34px; }
+}

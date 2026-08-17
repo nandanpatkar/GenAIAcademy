@@ -364,7 +364,7 @@ These are pre-built static bundles (some from sources checked out elsewhere in t
 Deployed **separately** from the Vercel app — both `package.json`s state "never part of the main build."
 
 - **`av-cdn-worker/`** — serves the Analytics Vidhya archive (markdown + `.webp` images) from a *private* R2 bucket (`av-archive`) instead of the rate-limited public `pub-*.r2.dev` endpoint. Routes: `/av/md/<slug>.md`, `/av/img/<slug>/<n>.webp`. CORS-restricted to `localhost:5173/4173` and `*.vercel.app`. Fed by `npm run build:av` + `npm run upload:av`; read at runtime by `avArchiveService.js`.
-- **`docs-cdn-worker/`** — serves AgentCore/LangChain/Strands/guides documentation archives from a separate private R2 bucket (`docs-archive`). Reached only via a same-origin `vercel.json` rewrite (`/agentcore/*`, `/langchain/*`, `/strands/*`, `/guides/*` → the Worker), so there's no browser CORS involved.
+- **`docs-cdn-worker/`** — serves AgentCore/LangChain/Strands/guides documentation archives and the Data Science Labs mirror from a separate private R2 bucket (`docs-archive`). Reached only via a same-origin `vercel.json` rewrite (`/agentcore/*`, `/langchain/*`, `/strands/*`, `/guides/*`, `/datascience/*` → the Worker), so there's no browser CORS involved. The `/datascience/*` prefix additionally resolves extension-less URLs to their `.html` file, because that mirror is a prerendered SPA whose router addresses routes without an extension.
 - **`system-design-simulator/worker/`** — weekly-CRON AWS Pricing API scraper into Cloudflare KV, read by `api/prices.js`.
 
 ---
@@ -512,6 +512,9 @@ build:reference → build:manual-path → build:interview-index → build:codela
 | `build:claude-certificate` | Builds `Claude Certeficate 3/`, copies assets to `public/claude-certificate/assets` |
 | `build:langchain` (`scripts/build_langchain_docs.py`) | `src/data/langchainDocsData.js` + `public/langchain/md/*` from a Mintlify docs export |
 | `build:strands` (`scripts/build_strands_docs.py`) | `src/data/strandsDocsData.js` + `public/strands/` from the Strands Agents docs archive |
+| `build:datascience` (`scripts/build_datascience_course.py` + `_mirror.py`) | `src/data/dataScienceCourseData.js` (4 tracks, 111 lessons, 382 exercises) + the staged `public/datascience/` mirror, from a local copy of `datascience.chaicode.com` |
+| `build:chaivisual` (`scripts/build_chaivisual_course.py` + `_mirror.py`) | `src/data/chaiVisualCourseData.js` (4 tracks, 282 lessons, plus the home-screen card metadata) + the staged `public/chai-visual/` mirror, from a local copy of `dsa.chaicode.com`. Surfaces in the sidebar as **Visual Learning** |
+| `fetch:chaivisual` (`scripts/fetch_chaivisual_content.mjs`) | Captures the paywalled Chai Visual lessons into `.chaivisual-fetched/` using a signed-in browser profile at `.chaivisual-session/`. Run before `build:chaivisual`; without it 270 of the 282 lessons stage as "This chapter is locked" |
 | `build:av` (`scripts/build_av_archive.py`) | Incremental AV archive build: `public/data/av-*.json` + optimized `.webp` images |
 | `upload:av` / `deploy:av-cdn` | Uploads the AV archive to R2, deploys `av-cdn-worker/` |
 | `desktop:dev` / `desktop:build` | Tauri dev/build |

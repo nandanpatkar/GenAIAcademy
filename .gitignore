@@ -99,6 +99,27 @@ agentcore-samples-main/
 /public/guides/
 /public/ai-from-scratch/
 
+# Staged output of build_datascience_mirror.py — the Data Science Labs site
+# (~27 MB, 505 prerendered pages, most of it the notes/ diagram images).
+# Served from R2 through the /datascience/ rewrite, same as the archives above.
+# The pristine input mirror stays out of the repo too; regenerate both with:
+#   python3 scripts/build_datascience_mirror.py && node scripts/upload_docs_archive.mjs
+/public/datascience/
+/datascience.chaicode.com/
+
+# Staged output of build_chaivisual_mirror.py — the Chai Visual site
+# (DSA / LLD / networking / operating systems). Served from R2 through the
+# /chai-visual/ rewrite, same as the archives above.
+/public/chai-visual/
+/dsa.chaicode.com/
+
+# Pages captured from a signed-in session by fetch_chaivisual_content.mjs, and
+# the throwaway Chrome profile that session lives in. The profile holds real
+# auth cookies and the captures are paid course content — neither belongs in
+# the repo, and neither is needed to build: re-run the fetch script instead.
+/.chaivisual-fetched/
+/.chaivisual-session/
+
 # Third-party clone (github.com/Garvit244/Leetcode) carrying its own git
 # history. Git can only store it as a submodule pointer, which clones as an
 # empty folder, so it is excluded rather than committed broken.

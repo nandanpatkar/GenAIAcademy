@@ -80,6 +80,8 @@ export function getActiveNavId(p) {
   if (p.showManual) return "manual";
   if (p.showReference) return "reference";
   if (p.showApiHub) return "learn_api";
+  if (p.showDataScience) return "data_science";
+  if (p.showChaiVisual) return "chai_visual";
   if (p.showAgentCore) return p.agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
   // The LangChain product id doubles as the nav id, so the four Agents
   // subsections highlight without any extra mapping.
@@ -152,6 +154,8 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowManual) p.setShowManual(false);
   if (p.setShowReference) p.setShowReference(false);
   if (p.setShowApiHub) p.setShowApiHub(false);
+  if (p.setShowDataScience) p.setShowDataScience(false);
+  if (p.setShowChaiVisual) p.setShowChaiVisual(false);
   if (p.setShowAgentCore) p.setShowAgentCore(false);
   if (p.setShowLangChainDocs) p.setShowLangChainDocs(false);
   if (p.setShowStrandsDocs) p.setShowStrandsDocs(false);
@@ -181,6 +185,12 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "learn_api":
       if (p.setShowApiHub) p.setShowApiHub(true);
+      break;
+    case "data_science":
+      if (p.setShowDataScience) p.setShowDataScience(true);
+      break;
+    case "chai_visual":
+      if (p.setShowChaiVisual) p.setShowChaiVisual(true);
       break;
     case "aws_agentcore":
       if (p.setAgentCoreMode) p.setAgentCoreMode("docs");

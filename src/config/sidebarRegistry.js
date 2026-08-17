@@ -7,7 +7,7 @@ import {
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
   FlaskConical, Headphones, Tags, Swords, Briefcase, BadgeCheck, Zap,
-  Webhook,
+  Webhook, Sigma, Binary,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -180,6 +180,8 @@ export const SIDEBAR_ITEM_REGISTRY = {
   aifs_reference: { icon: Tags, label: "Roadmap & Glossary", description: "The full lesson plan, the vocabulary, and the myths worth unlearning" },
 
   learn_api: { icon: Webhook, label: "Learn API", description: "Browse 168 live REST endpoints and send real requests from the browser" },
+  data_science: { icon: Sigma, label: "Data Science", description: "NumPy, pandas, Matplotlib and machine learning — 111 animated lessons and 382 graded exercises" },
+  chai_visual: { icon: Binary, label: "Visual Learning", description: "DSA patterns, low-level design, networking and operating systems — 282 animated lessons" },
 
   manual: { icon: BookOpen, label: "Manual", description: "Follow guided lessons" },
   reference: { icon: BookMarked, label: "Quick Reference", description: "Look up key concepts" },
@@ -224,6 +226,8 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "home3", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab"] },
   { id: "python_labs", label: "Python Labs", itemIds: ["concurrency_lab"] },
+  { id: "data_science", label: "Data Science", itemIds: ["data_science"] },
+  { id: "chai_visual", label: "Visual Learning", itemIds: ["chai_visual"] },
   { id: "algowar", label: "AlgoWar", itemIds: ["algowar"] },
   { id: "labs", label: "Labs", itemIds: ["labs"] },
   { id: "learn_api", label: "Learn API", itemIds: ["learn_api"] },
@@ -417,6 +421,36 @@ export const resolveEffectiveLayout = (savedLayout) => {
   }
   pythonLabsGroup.label = "Python Labs";
   pythonLabsGroup.itemIds.push("concurrency_lab");
+
+  // Data Science sits directly after Python Labs — both are Python tracks, and
+  // a reader working through concurrency is the same reader who wants NumPy.
+  // Re-homed for saved layouts for the same reason as the migrations around it.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => id !== "data_science");
+  });
+  let dataScienceGroup = groups.find((group) => group.id === "data_science");
+  if (!dataScienceGroup) {
+    dataScienceGroup = { id: "data_science", label: "Data Science", itemIds: [] };
+    const pythonLabsIndex = groups.findIndex((group) => group.id === "python_labs");
+    groups.splice(pythonLabsIndex === -1 ? groups.length : pythonLabsIndex + 1, 0, dataScienceGroup);
+  }
+  dataScienceGroup.label = "Data Science";
+  dataScienceGroup.itemIds.push("data_science");
+
+  // Visual Learning sits after Data Science — the two are the same shape of thing,
+  // an animated course read in-app. Re-homed for saved layouts for the same
+  // reason as the migrations around it.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => id !== "chai_visual");
+  });
+  let chaiVisualGroup = groups.find((group) => group.id === "chai_visual");
+  if (!chaiVisualGroup) {
+    chaiVisualGroup = { id: "chai_visual", label: "Visual Learning", itemIds: [] };
+    const dataScienceIndex = groups.findIndex((group) => group.id === "data_science");
+    groups.splice(dataScienceIndex === -1 ? groups.length : dataScienceIndex + 1, 0, chaiVisualGroup);
+  }
+  chaiVisualGroup.label = "Visual Learning";
+  chaiVisualGroup.itemIds.push("chai_visual");
 
   // AlgoWar owns a dedicated top-level section. Re-home it for saved/custom
   // layouts too, otherwise newly shipped items are appended under More tools.
