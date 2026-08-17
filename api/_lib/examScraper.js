@@ -22,6 +22,13 @@ const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
+// A warm serverless instance can receive several requests at once (the Exam
+// Bank probes availability while loading questions). @sparticuz/chromium
+// extracts to a shared /tmp/chromium path. Keeping this promise at module
+// scope prevents same-instance requests from trying to extract/launch that
+// executable simultaneously.
+let serverlessExecutablePathPromise;
+
 function unescapeChunk(str) {
   return str
     .replace(/\\"/g, '"')
@@ -46,7 +53,7 @@ async function fetchHtmlInBrowser(url) {
   const isServerlessRuntime = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
   const headless = isServerlessRuntime ? "shell" : true;
   const executablePath = isServerlessRuntime
-    ? await chromium.executablePath()
+    ? await (serverlessExecutablePathPromise ||= chromium.executablePath())
     : process.env.CHROME_EXECUTABLE_PATH ||
       (process.platform === "darwin" ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" : null);
 
@@ -54,23 +61,38 @@ async function fetchHtmlInBrowser(url) {
     throw new Error("A local Chrome executable is required for challenged source pages. Set CHROME_EXECUTABLE_PATH.");
   }
 
-  let browser;
-  try {
-    if (isServerlessRuntime) chromium.setGraphicsMode = false;
-    browser = await puppeteer.launch({
-      args: await puppeteer.defaultArgs({
-        ...(isServerlessRuntime ? { args: chromium.args } : {}),
-        headless,
-      }),
-      executablePath,
+  if (isServerlessRuntime) chromium.setGraphicsMode = false;
+  const launchOptions = {
+    args: await puppeteer.defaultArgs({
+      ...(isServerlessRuntime ? { args: chromium.args } : {}),
       headless,
-    });
-    const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 25_000 });
-    return await page.content();
-  } finally {
-    await browser?.close();
+    }),
+    executablePath,
+    headless,
+  };
+
+  // Separate Vercel invocations can still share the same /tmp directory.
+  // In that narrow window the executable exists but is open for extraction,
+  // causing Linux to reject spawn with ETXTBSY. Waiting and retrying gives the
+  // other invocation time to finish, while preserving genuine errors.
+  let lastError;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    let browser;
+    try {
+      browser = await puppeteer.launch(launchOptions);
+      const page = await browser.newPage();
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 25_000 });
+      return await page.content();
+    } catch (error) {
+      lastError = error;
+      if (error?.code !== "ETXTBSY" || attempt === 3) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 300 * (attempt + 1)));
+    } finally {
+      await browser?.close();
+    }
   }
+
+  throw lastError;
 }
 
 async function fetchHtml(url) {

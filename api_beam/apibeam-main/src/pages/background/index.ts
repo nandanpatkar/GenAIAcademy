@@ -29,6 +29,34 @@ export type SettingsSchema = {
   useTemporaryChat?: boolean;
 };
 
+type StoredSettings = Partial<SettingsSchema>;
+
+// chrome.storage.local accepts only about 8 KB for one value. Messages from a
+// page are untrusted and previously stored settings can be stale, so retain
+// only the small, supported settings fields before writing the single item.
+const SETTINGS_TEXT_LIMIT = 256;
+
+const clampSettingText = (value: unknown): string | undefined => {
+  if (typeof value !== "string") return undefined;
+  return value.slice(0, SETTINGS_TEXT_LIMIT);
+};
+
+const sanitizeSettings = (value: unknown): StoredSettings => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const candidate = value as Record<string, unknown>;
+  const settings: StoredSettings = {};
+  const language = clampSettingText(candidate.language);
+  const method = clampSettingText(candidate.method);
+  const roomId = clampSettingText(candidate.roomId);
+  if (language !== undefined) settings.language = language;
+  if (method !== undefined) settings.method = method;
+  if (roomId !== undefined) settings.roomId = roomId;
+  if (typeof candidate.useTemporaryChat === "boolean") {
+    settings.useTemporaryChat = candidate.useTemporaryChat;
+  }
+  return settings;
+};
+
 let socketConnectionStatus: {
   status: "pending" | "connected" | "failed" | "disconnected";
   errorMessage?: string;
@@ -96,8 +124,8 @@ const getProviderUrl = async (): Promise<string> => {
 const getUseTemporaryChat = async (): Promise<boolean> => {
   return new Promise((resolve) => {
     chrome.storage.local.get(["settings"], (result) => {
-      const settings = result.settings as any;
-      resolve(settings?.useTemporaryChat || false);
+      const settings = sanitizeSettings(result.settings);
+      resolve(settings.useTemporaryChat === true);
     });
   });
 };
@@ -266,7 +294,17 @@ chrome.runtime.onMessage.addListener(
       const roomId = await getRoomId();
       socket?.emit("clientResponse", { roomId, message: msg.content });
     } else if (msg.type === "set_settings") {
-      chrome.storage.local.set({ settings: msg.content }, function () {});
+      chrome.storage.local.get("settings", (result) => {
+        const settings = {
+          ...sanitizeSettings(result.settings),
+          ...sanitizeSettings(msg.content),
+        };
+        chrome.storage.local.set({ settings }, () => {
+          if (chrome.runtime.lastError) {
+            console.warn("Could not save extension settings:", chrome.runtime.lastError.message);
+          }
+        });
+      });
     } else if (msg.type === "get_settings") {
       if (tabId) {
         chrome.storage.local.get("settings", function (result) {
