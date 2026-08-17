@@ -2,6 +2,10 @@
   "functions": {
     "api/**/*.js": {
       "excludeFiles": "{public/**,dist/**,reference/**,themissingmanual/**,src/**,services/**,system-design-simulator/**,course_data*,scraped_data.json}"
+    },
+    "api/exam.js": {
+      "maxDuration": 60,
+      "memory": 1536
     }
   },
   "rewrites": [

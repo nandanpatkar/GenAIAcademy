@@ -9,6 +9,14 @@
  * Requires (Vercel dashboard + .env.local for `vercel dev`):
  *   SUPABASE_URL                (or reuse the public anon URL)
  *   SUPABASE_SERVICE_ROLE_KEY   (server-side only — bypasses RLS for cache writes)
+ *
+ * Live scrapes fall back to a headless-browser fetch (@sparticuz/chromium +
+ * puppeteer-core, see fetchHtmlWithBrowser()) when the source site serves
+ * its Vercel bot-challenge shell instead of real content — see
+ * isBotChallengePage(). That path is only exercised on a challenge, so
+ * ordinary scrapes are unaffected, but it does mean api/exam.js needs a
+ * larger memory/duration budget than a typical fetch-only function (set in
+ * vercel.json under functions["api/exam.js"]).
  */
 
 // sanitize-html is imported lazily inside getStudyGuideArticleLive() rather
@@ -22,6 +30,15 @@ const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 
+const BROWSER_LIKE_HEADERS = {
+  "User-Agent": UA,
+  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Site": "none",
+};
+
 function unescapeChunk(str) {
   return str
     .replace(/\\"/g, '"')
@@ -31,10 +48,79 @@ function unescapeChunk(str) {
     .replace(/\\u0027/g, "'");
 }
 
+/**
+ * open-exam-prep.com is a Vercel-hosted site and can front requests with
+ * Vercel's "Security Checkpoint" — a shell page that runs obfuscated
+ * client-side JS before granting access. That's a real bot challenge, not
+ * just an unusual response: no plain HTTP client (including this file's
+ * own fetch() below) can ever pass it, so it has to be detected explicitly
+ * and handed off to fetchHtmlWithBrowser() rather than parsed as content.
+ */
+function isBotChallengePage(html) {
+  return typeof html === "string" && html.includes("Vercel Security Checkpoint");
+}
+
+let browserPromise = null;
+
+/** Lazily launch a serverless-friendly headless Chromium, reused across warm invocations of the function so repeat scrapes in the same instance don't pay the launch cost again. */
+async function getBrowser() {
+  if (!browserPromise) {
+    browserPromise = (async () => {
+      const [{ default: chromium }, { default: puppeteer }] = await Promise.all([
+        import("@sparticuz/chromium"),
+        import("puppeteer-core"),
+      ]);
+      return puppeteer.launch({
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+      });
+    })().catch((err) => {
+      browserPromise = null; // allow retry on the next call instead of caching a permanent failure
+      throw err;
+    });
+  }
+  return browserPromise;
+}
+
+/**
+ * Fetch a URL with a real headless browser so isBotChallengePage()'s
+ * client-side JS actually runs and clears, instead of just being
+ * requested. Only invoked as a fallback when the plain fetch() below hits
+ * the challenge shell, so ordinary scrapes never pay this (much higher)
+ * cost.
+ */
+async function fetchHtmlWithBrowser(url) {
+  const browser = await getBrowser();
+  const page = await browser.newPage();
+  try {
+    await page.setUserAgent(UA);
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 45000 });
+
+    let html = await page.content();
+    const deadline = Date.now() + 15000;
+    while (isBotChallengePage(html) && Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 750));
+      html = await page.content();
+    }
+
+    if (isBotChallengePage(html)) {
+      throw new Error("Source site's bot challenge did not clear in time.");
+    }
+    return html;
+  } finally {
+    await page.close();
+  }
+}
+
 async function fetchHtml(url) {
-  const res = await fetch(url, { headers: { "User-Agent": UA } });
+  const res = await fetch(url, { headers: BROWSER_LIKE_HEADERS });
+  const body = await res.text();
+
+  if (isBotChallengePage(body)) return fetchHtmlWithBrowser(url);
   if (!res.ok) throw new Error(`Source site returned HTTP ${res.status}`);
-  return res.text();
+  return body;
 }
 
 /** Locate a `[{...}, ...]` array embedded in a page's HTML, identified by a marker property name that appears inside its objects (e.g. "front" for flashcards). Returns the raw (unparsed) array substring. */
