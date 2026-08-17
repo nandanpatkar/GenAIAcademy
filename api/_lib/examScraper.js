@@ -31,10 +31,95 @@ function unescapeChunk(str) {
     .replace(/\\u0027/g, "'");
 }
 
+/**
+ * The source is served behind Vercel's JavaScript security checkpoint. A
+ * normal browser is allowed through, while a server-to-server fetch receives
+ * a 429 challenge page. Render only that challenged public page in Chromium;
+ * ordinary requests stay on the lightweight fetch path.
+ */
+async function fetchHtmlInBrowser(url) {
+  const [{ default: puppeteer }, { default: chromium }] = await Promise.all([
+    import("puppeteer-core"),
+    import("@sparticuz/chromium"),
+  ]);
+
+  const isServerlessRuntime = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+  const headless = isServerlessRuntime ? "shell" : true;
+  const executablePath = isServerlessRuntime
+    ? await chromium.executablePath()
+    : process.env.CHROME_EXECUTABLE_PATH ||
+      (process.platform === "darwin" ? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" : null);
+
+  if (!executablePath) {
+    throw new Error("A local Chrome executable is required for challenged source pages. Set CHROME_EXECUTABLE_PATH.");
+  }
+
+  let browser;
+  try {
+    if (isServerlessRuntime) chromium.setGraphicsMode = false;
+    browser = await puppeteer.launch({
+      args: await puppeteer.defaultArgs({
+        ...(isServerlessRuntime ? { args: chromium.args } : {}),
+        headless,
+      }),
+      executablePath,
+      headless,
+    });
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 25_000 });
+    return await page.content();
+  } finally {
+    await browser?.close();
+  }
+}
+
 async function fetchHtml(url) {
   const res = await fetch(url, { headers: { "User-Agent": UA } });
-  if (!res.ok) throw new Error(`Source site returned HTTP ${res.status}`);
-  return res.text();
+  if (res.ok) return res.text();
+
+  // `x-vercel-mitigated: challenge` is the source site's explicit signal
+  // that its public page needs JavaScript rather than an API response.
+  if (res.status === 429 && res.headers.get("x-vercel-mitigated") === "challenge") {
+    return fetchHtmlInBrowser(url);
+  }
+
+  throw new Error(`Source site returned HTTP ${res.status}`);
+}
+
+function findMatchingArrayEnd(source, startPos) {
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = startPos; i < source.length; i++) {
+    const char = source[i];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (char === "\\") escaped = true;
+      else if (char === '"') inString = false;
+      continue;
+    }
+    if (char === '"') {
+      inString = true;
+    } else if (char === "[") {
+      depth++;
+    } else if (char === "]" && --depth === 0) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+/** Extract an array assigned to a named JSON property in the page payload. */
+function extractNamedJsonArray(html, propertyName) {
+  const property = new RegExp(`"${propertyName}"\\s*:\\s*\\[`, "g");
+  const match = property.exec(html);
+  if (!match) throw new Error(`Could not find the ${propertyName} array in the HTML source.`);
+
+  const startPos = html.indexOf("[", match.index + match[0].length - 1);
+  const endPos = findMatchingArrayEnd(html, startPos);
+  if (endPos === -1) throw new Error("Could not find the matching closing bracket.");
+  return html.slice(startPos, endPos + 1);
 }
 
 /** Locate a `[{...}, ...]` array embedded in a page's HTML, identified by a marker property name that appears inside its objects (e.g. "front" for flashcards). Returns the raw (unparsed) array substring. */
@@ -42,22 +127,10 @@ function extractJsonArray(html, marker, windowSize = 250) {
   const startPos = findArrayStart(html, marker, windowSize);
   if (startPos === -1) throw new Error(`Could not find the ${marker} JSON array in the HTML source.`);
 
-  const chunk = html.slice(startPos);
-  let bracketCount = 0;
-  let endPos = -1;
-  for (let i = 0; i < chunk.length; i++) {
-    if (chunk[i] === "[") bracketCount++;
-    else if (chunk[i] === "]") {
-      bracketCount--;
-      if (bracketCount === 0) {
-        endPos = i;
-        break;
-      }
-    }
-  }
+  const endPos = findMatchingArrayEnd(html, startPos);
   if (endPos === -1) throw new Error("Could not find the matching closing bracket.");
 
-  return chunk.slice(0, endPos + 1);
+  return html.slice(startPos, endPos + 1);
 }
 
 /**
@@ -135,11 +208,27 @@ function recoverObjectsByMarker(rawArrayStr, marker) {
   return parsed;
 }
 
+/** Parse the current Next.js payload, while retaining the legacy page format. */
+export function parseExamQuestionsHtml(html) {
+  // OpenExamPrep moved from an Astro payload to a Next.js Flight payload.
+  // The current page puts questions under `initialQuestions`, with every quote
+  // escaped inside a script string. Normalize it before extracting the array.
+  const payload = unescapeChunk(html);
+  let rawArrayStr;
+  try {
+    rawArrayStr = extractNamedJsonArray(payload, "initialQuestions");
+  } catch {
+    // Keep supporting the source's older pages and any page that has not yet
+    // migrated to the Next payload.
+    rawArrayStr = extractJsonArray(payload, "question", 150);
+  }
+  return parseEmbeddedArray(rawArrayStr, "question");
+}
+
 /** Scrape live from open-exam-prep.com and parse the embedded questions array. */
 export async function scrapeLive(examSlug) {
   const html = await fetchHtml(`https://open-exam-prep.com/practice/${examSlug}`);
-  const rawArrayStr = extractJsonArray(html, "question", 150);
-  return parseEmbeddedArray(rawArrayStr, "question");
+  return parseExamQuestionsHtml(html);
 }
 
 /** Scrape live flashcards for an exam. */

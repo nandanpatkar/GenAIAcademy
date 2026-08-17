@@ -200,9 +200,16 @@ export default defineConfig(({ mode }) => {
     // PGlite ships its own .wasm / .data payload and must not be pre-bundled,
     // otherwise esbuild rewrites the URLs it uses to locate them at runtime.
     optimizeDeps: {
+      // This repository also contains standalone AgentCore and ApiBeam apps.
+      // Limit Vite's root-app dependency crawl to our own entry point so their
+      // private aliases/dependencies are not mistaken for root dependencies.
+      entries: ["index.html"],
       exclude: ["@electric-sql/pglite"],
     },
     server: {
+      watch: {
+        ignored: ["**/agentcore-samples-main/**", "**/api_beam/**"],
+      },
       proxy: {
         // Mirror Vercel's same-origin documentation rewrites in development.
         // Without these, Vite returns index.html for a missing archive file and

@@ -27,6 +27,11 @@ import {
   getExamVideos,
 } from "./_lib/examScraper.js";
 
+// A challenged source page may need a short-lived Chromium instance. Keep the
+// route alive long enough for that first uncached fetch; cached requests still
+// return immediately.
+export const config = { maxDuration: 60 };
+
 function toCsv(questions) {
   const header = [
     "ID", "Question", "Option A", "Option B", "Option C", "Option D",
