@@ -7,6 +7,7 @@ import {
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
   FlaskConical, Headphones, Tags, Swords, Briefcase, BadgeCheck, Zap,
+  Webhook,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -178,6 +179,8 @@ export const SIDEBAR_ITEM_REGISTRY = {
   aifs_certification: { icon: BadgeCheck, label: "Certification", description: "The Claude certification study track" },
   aifs_reference: { icon: Tags, label: "Roadmap & Glossary", description: "The full lesson plan, the vocabulary, and the myths worth unlearning" },
 
+  learn_api: { icon: Webhook, label: "Learn API", description: "Browse 168 live REST endpoints and send real requests from the browser" },
+
   manual: { icon: BookOpen, label: "Manual", description: "Follow guided lessons" },
   reference: { icon: BookMarked, label: "Quick Reference", description: "Look up key concepts" },
   aws_agentcore: { icon: Layers, label: "AWS Agent Core", description: "The full Amazon Bedrock AgentCore developer guide" },
@@ -223,6 +226,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "python_labs", label: "Python Labs", itemIds: ["concurrency_lab"] },
   { id: "algowar", label: "AlgoWar", itemIds: ["algowar"] },
   { id: "labs", label: "Labs", itemIds: ["labs"] },
+  { id: "learn_api", label: "Learn API", itemIds: ["learn_api"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
   { id: "ai_from_scratch", label: "AI from Scratch", itemIds: ["aifs_curriculum", "aifs_certification", "aifs_reference"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
@@ -440,6 +444,21 @@ export const resolveEffectiveLayout = (savedLayout) => {
   }
   labsGroup.label = "Labs";
   labsGroup.itemIds.push("labs");
+
+  // Learn API owns a dedicated section, immediately after Labs. Same reason as
+  // the migrations above: without re-homing it, anyone with a saved layout
+  // would find it appended to "More tools" as an orphan.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => id !== "learn_api");
+  });
+  let learnApiGroup = groups.find((group) => group.id === "learn_api");
+  if (!learnApiGroup) {
+    learnApiGroup = { id: "learn_api", label: "Learn API", itemIds: [] };
+    const labsIndex = groups.findIndex((group) => group.id === "labs");
+    groups.splice(labsIndex === -1 ? groups.length : labsIndex + 1, 0, learnApiGroup);
+  }
+  learnApiGroup.label = "Learn API";
+  learnApiGroup.itemIds.push("learn_api");
 
   // Same migration for the Agents subsection. Without this, anyone with a saved
   // layout (which is everyone who has ever customized the sidebar) would get the

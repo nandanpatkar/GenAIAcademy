@@ -1,0 +1,1227 @@
+/* ── Learn API viewer ──────────────────────────────────────────────────────
+   Two-pane layout: a grouped endpoint rail on the left, a reference/playground
+   pane on the right.
+
+   The palette and type are the upstream project's own design language rather
+   than this app's global tokens, so the section reads as a distinct place the
+   way the LangChain and Strands viewers do. Everything below is taken from the
+   published site's stylesheet, not eyeballed:
+
+     canvas   #0a0a0a      panel  #141414 / #1a1a1a
+     border   #262626 / #404040
+     ink      #fafafa      muted  #a1a1aa / #9ca3af
+     accent   #fbbf24      (amber — the single accent, used sparingly)
+     method   #34d399 emerald · #fcd34d amber · #fb7185 rose
+     type     Anton (display, condensed caps) · Manrope (body) · JetBrains Mono
+
+   The design is dark by construction — near-black canvas, one warm accent. The
+   `.light-theme` block near the bottom keeps that character on a light canvas
+   for readers who run the app in light mode, swapping the raw amber for a
+   darker gold wherever it has to be *read* rather than merely seen (#fbbf24
+   sits at ~1.8:1 on white and fails AA outright).
+
+   Fonts are imported here rather than in index.html on purpose: Vite splits
+   this stylesheet into the lazily-loaded ApiHub chunk, so the three extra
+   families are fetched when the reader opens this view and never sit on the
+   app's initial critical path. */
+
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+.ah-panel {
+  /* surfaces */
+  --ah-canvas: #0a0a0a;
+  --ah-panel: #141414;
+  --ah-panel-2: #1a1a1a;
+  --ah-line: #262626;
+  --ah-line-2: #404040;
+
+  /* ink */
+  --ah-ink: #fafafa;
+  --ah-ink-2: #a1a1aa;
+  --ah-ink-3: #71717a;
+
+  /* the one accent */
+  --ah-gold: #fbbf24;
+  --ah-gold-text: #fbbf24;
+  --ah-gold-soft: rgba(251, 191, 36, 0.12);
+  --ah-gold-line: rgba(251, 191, 36, 0.35);
+  --ah-on-gold: #0a0a0a;
+
+  /* method + status family */
+  --ah-emerald: #34d399;
+  --ah-amber: #fcd34d;
+  --ah-rose: #fb7185;
+  --ah-sky: #7dd3fc;
+  --ah-violet: #c4b5fd;
+
+  --ah-display: "Anton", "Syne", sans-serif;
+  --ah-body: "Manrope", system-ui, sans-serif;
+  --ah-mono: "JetBrains Mono", "DM Mono", monospace;
+
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--ah-canvas);
+  color: var(--ah-ink);
+  font-family: var(--ah-body);
+  font-size: 14px;
+}
+
+/* The faint grid the landing page lays under everything. Two hairline
+   gradients on a 56px cell — visible enough to read as texture, far too low
+   contrast to compete with the content sitting on top. */
+.ah-main {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Shared eyebrow treatment: mono, caps, wide tracking. Used for every section
+   label and column header in the view. */
+.ah-h3, .ah-h4, .ah-code-bar, .ah-table th {
+  font-family: var(--ah-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ════════ left rail ════════ */
+
+.ah-rail {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--ah-line);
+  background: var(--ah-panel);
+  transition: width 0.18s ease, opacity 0.18s ease;
+}
+.ah-rail.is-collapsed {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ah-rail-head {
+  padding: 16px 14px 13px;
+  border-bottom: 1px solid var(--ah-line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ah-brand { display: flex; align-items: center; gap: 10px; }
+.ah-brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ah-gold);
+  color: var(--ah-on-gold);
+  flex-shrink: 0;
+}
+.ah-brand-title {
+  font-family: var(--ah-display);
+  font-size: 19px;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ah-ink);
+}
+/* The wordmark's second half is set in the muted ink, the way the site sets
+   its own two-tone lockup. */
+.ah-brand-title span { color: var(--ah-ink-3); margin-left: 0.22em; }
+.ah-brand-sub {
+  font-family: var(--ah-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ah-ink-3);
+  margin-top: 4px;
+}
+
+.ah-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  height: 34px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  background: var(--ah-canvas);
+  color: var(--ah-ink-3);
+}
+.ah-search:focus-within { border-color: var(--ah-gold-line); }
+.ah-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ah-ink);
+  font-family: var(--ah-body);
+  font-size: 12.5px;
+}
+.ah-search input::placeholder { color: var(--ah-ink-3); }
+.ah-search button {
+  border: 0;
+  background: transparent;
+  color: var(--ah-ink-3);
+  cursor: pointer;
+  display: inline-flex;
+  padding: 2px;
+}
+.ah-search button:hover { color: var(--ah-ink); }
+
+/* ── session panel ── */
+
+.ah-session {
+  border: 1px solid var(--ah-line);
+  border-radius: 12px;
+  background: var(--ah-canvas);
+  overflow: hidden;
+}
+.ah-session-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  border: 0;
+  background: transparent;
+  color: var(--ah-ink);
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  text-align: left;
+}
+.ah-session-head:hover { background: var(--ah-panel-2); }
+.ah-session-dot {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ah-line-2);
+  flex-shrink: 0;
+}
+.ah-session-dot.is-on { background: var(--ah-emerald); box-shadow: 0 0 7px var(--ah-emerald); }
+
+.ah-session-body {
+  padding: 11px;
+  border-top: 1px solid var(--ah-line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ah-session-msg { font-size: 11.5px; color: var(--ah-ink-2); line-height: 1.6; }
+.ah-session-msg strong { color: var(--ah-ink); font-weight: 700; }
+.ah-session-msg code {
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  background: var(--ah-panel-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ah-gold-text);
+}
+.ah-session-err { font-size: 11.5px; color: var(--ah-rose); line-height: 1.5; }
+
+/* The published demo accounts. Fifty of them arrive at once, so the list
+   scrolls rather than pushing the endpoint tree off the rail. */
+.ah-accounts {
+  list-style: none;
+  max-height: 188px;
+  overflow-y: auto;
+  border: 1px solid var(--ah-line);
+  border-radius: 9px;
+  background: var(--ah-panel);
+}
+.ah-accounts li + li { border-top: 1px solid var(--ah-line); }
+.ah-account {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+.ah-account:hover:not(:disabled) { background: var(--ah-gold-soft); }
+.ah-account:disabled { opacity: 0.5; cursor: not-allowed; }
+.ah-account-name {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  color: var(--ah-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ah-account-role {
+  font-family: var(--ah-mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+.ah-role-admin { color: var(--ah-gold-text); border-color: var(--ah-gold-line); background: var(--ah-gold-soft); }
+.ah-role-user { color: var(--ah-ink-3); border-color: var(--ah-line); }
+
+.ah-manual { border-top: 1px solid var(--ah-line); padding-top: 9px; }
+.ah-manual summary {
+  font-family: var(--ah-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--ah-ink-3);
+  cursor: pointer;
+  list-style: none;
+}
+.ah-manual summary::-webkit-details-marker { display: none; }
+.ah-manual summary::before { content: "+ "; }
+.ah-manual[open] summary::before { content: "− "; }
+.ah-manual summary:hover { color: var(--ah-ink); }
+.ah-manual > * + * { margin-top: 8px; }
+.ah-manual .ah-input { width: 100%; }
+
+/* ── group tree ── */
+
+.ah-rail-body { flex: 1; overflow-y: auto; padding: 9px 9px 28px; }
+.ah-empty { padding: 16px 9px; font-size: 12.5px; color: var(--ah-ink-2); }
+
+.ah-group { margin-bottom: 3px; }
+.ah-group-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 9px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ah-ink);
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-align: left;
+}
+.ah-group-head:hover { background: var(--ah-panel-2); }
+.ah-group-head > svg:nth-of-type(2) { color: var(--gc, var(--ah-gold)); flex-shrink: 0; }
+.ah-group-label { flex: 1; min-width: 0; }
+.ah-group-count {
+  font-family: var(--ah-mono);
+  font-size: 9.5px;
+  color: var(--ah-ink-3);
+  flex-shrink: 0;
+}
+
+.ah-list {
+  list-style: none;
+  margin: 2px 0 5px 14px;
+  padding-left: 10px;
+  border-left: 1px solid var(--ah-line);
+}
+
+.ah-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ah-ink-2);
+  font-family: var(--ah-body);
+  cursor: pointer;
+  text-align: left;
+}
+.ah-item:hover { background: var(--ah-panel-2); color: var(--ah-ink); }
+/* The active row is the one place the gold reads as a fill rather than a
+   stroke, so the reader's position is unmistakable at a glance. */
+.ah-item.is-active {
+  background: var(--ah-gold-soft);
+  color: var(--ah-ink);
+  box-shadow: inset 2px 0 0 var(--ah-gold);
+}
+.ah-item-path {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ah-item-lock { color: var(--ah-ink-3); flex-shrink: 0; }
+
+/* ── method chips ── */
+
+.ah-method {
+  flex-shrink: 0;
+  font-family: var(--ah-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 6px;
+  border-radius: 5px;
+  min-width: 46px;
+  text-align: center;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+}
+.ah-method-get    { color: var(--ah-emerald); background: rgba(52,211,153,0.1);  border-color: rgba(52,211,153,0.28); }
+.ah-method-post   { color: var(--ah-sky);     background: rgba(125,211,252,0.1); border-color: rgba(125,211,252,0.28); }
+.ah-method-put    { color: var(--ah-amber);   background: rgba(252,211,77,0.1);  border-color: rgba(252,211,77,0.28); }
+.ah-method-patch  { color: var(--ah-violet);  background: rgba(196,181,253,0.1); border-color: rgba(196,181,253,0.28); }
+.ah-method-delete { color: var(--ah-rose);    background: rgba(251,113,133,0.1); border-color: rgba(251,113,133,0.28); }
+
+/* ════════ main pane ════════ */
+
+.ah-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.ah-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--ah-line);
+  background: rgba(20, 20, 20, 0.86);
+  backdrop-filter: blur(8px);
+  flex-shrink: 0;
+}
+.ah-top-path {
+  font-family: var(--ah-mono);
+  font-size: 12px;
+  color: var(--ah-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ah-spacer { flex: 1; }
+
+.ah-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ah-ink-2);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ah-icon-btn:hover { background: var(--ah-panel-2); color: var(--ah-ink); border-color: var(--ah-line-2); }
+
+/* ── auth badges ── */
+
+.ah-auth {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--ah-mono);
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.ah-auth-ok     { color: var(--ah-emerald); border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.08); }
+.ah-auth-soft   { color: var(--ah-ink-2);   border-color: var(--ah-line);        background: var(--ah-panel-2); }
+.ah-auth-warn   { color: var(--ah-gold-text); border-color: var(--ah-gold-line); background: var(--ah-gold-soft); }
+.ah-auth-danger { color: var(--ah-rose);    border-color: rgba(251,113,133,0.3); background: rgba(251,113,133,0.08); }
+
+/* ── tabs ── */
+
+.ah-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--ah-line);
+  background: var(--ah-panel);
+  flex-shrink: 0;
+}
+.ah-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--ah-ink-3);
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+.ah-tabs button:hover { color: var(--ah-ink); }
+.ah-tabs button.is-on { color: var(--ah-gold-text); border-bottom-color: var(--ah-gold); }
+
+/* ── reading column ── */
+
+.ah-body { flex: 1; overflow-y: auto; }
+.ah-column { max-width: 880px; padding: 26px 28px 90px; }
+
+.ah-title-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+/* Anton is a single-weight condensed face built for exactly this: large,
+   tight, all-caps headings. It carries the section's whole identity. */
+.ah-h1 {
+  font-family: var(--ah-display);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.04;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--ah-ink);
+}
+.ah-group-tag {
+  font-family: var(--ah-mono);
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: var(--gc);
+  border: 1px solid var(--gc);
+  background: transparent;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.ah-prose p { font-size: 14px; line-height: 1.75; color: var(--ah-ink-2); margin-bottom: 12px; }
+.ah-prose p:last-child { margin-bottom: 0; }
+
+.ah-section { margin-top: 30px; }
+.ah-h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  color: var(--ah-ink-3);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ah-line);
+  margin-bottom: 14px;
+}
+.ah-ct {
+  font-family: var(--ah-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--ah-ink-3);
+  text-transform: none;
+}
+
+/* ── param table ── */
+
+.ah-table-wrap { overflow-x: auto; border: 1px solid var(--ah-line); border-radius: 12px; }
+.ah-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.ah-table th {
+  text-align: left;
+  padding: 9px 12px;
+  background: var(--ah-panel);
+  color: var(--ah-ink-3);
+  font-size: 9px;
+  border-bottom: 1px solid var(--ah-line);
+  white-space: nowrap;
+}
+.ah-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ah-line);
+  color: var(--ah-ink-2);
+  vertical-align: top;
+  line-height: 1.6;
+}
+.ah-table tr:last-child td { border-bottom: 0; }
+.ah-table code { font-family: var(--ah-mono); font-size: 11px; color: var(--ah-ink); }
+
+.ah-field-type {
+  font-family: var(--ah-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ah-ink-3);
+  background: var(--ah-panel-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.ah-field-req {
+  font-family: var(--ah-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--ah-gold-text);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.ah-dim { color: var(--ah-ink-3); }
+
+/* ── schema field list ── */
+
+.ah-fields { list-style: none; margin-bottom: 14px; }
+.ah-fields-d1, .ah-fields-d2 {
+  margin: 8px 0 0 12px;
+  padding-left: 12px;
+  border-left: 1px solid var(--ah-line);
+}
+.ah-fields > li { padding: 8px 0; border-bottom: 1px solid var(--ah-line); }
+.ah-fields > li:last-child { border-bottom: 0; }
+.ah-fields-d1 > li, .ah-fields-d2 > li { border-bottom: 0; padding: 4px 0; }
+
+.ah-field-head { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+.ah-field-name { font-family: var(--ah-mono); font-size: 11.5px; color: var(--ah-ink); font-weight: 500; }
+.ah-field-desc { font-size: 12px; color: var(--ah-ink-2); line-height: 1.6; margin-top: 4px; }
+.ah-field-example { font-size: 11px; color: var(--ah-ink-3); margin-top: 4px; }
+.ah-field-example code { font-family: var(--ah-mono); font-size: 10.5px; color: var(--ah-ink-2); }
+
+/* ── code blocks ── */
+
+.ah-code-block {
+  border: 1px solid var(--ah-line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ah-panel);
+}
+.ah-code-nested { margin: 0 12px 12px 28px; }
+.ah-code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--ah-line);
+  background: var(--ah-panel-2);
+  font-size: 9px;
+  color: var(--ah-ink-3);
+}
+.ah-code-block pre {
+  margin: 0;
+  padding: 13px 14px;
+  overflow-x: auto;
+  max-height: 460px;
+}
+.ah-code-block code {
+  font-family: var(--ah-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--ah-ink-2);
+  white-space: pre;
+}
+
+.ah-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ah-ink-3);
+  font-family: var(--ah-mono);
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ah-copy:hover { background: var(--ah-canvas); color: var(--ah-ink); border-color: var(--ah-line-2); }
+
+/* ── responses ── */
+
+.ah-responses { border: 1px solid var(--ah-line); border-radius: 12px; overflow: hidden; }
+.ah-response { border-bottom: 1px solid var(--ah-line); }
+.ah-response:last-child { border-bottom: 0; }
+.ah-response-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--ah-ink-2);
+  font-family: var(--ah-body);
+  font-size: 12.5px;
+  cursor: pointer;
+  text-align: left;
+}
+.ah-response-head:hover { background: var(--ah-panel); }
+.ah-response.is-open .ah-response-head { background: var(--ah-panel); }
+.ah-response-desc { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.ah-status {
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+.ah-status-ok     { color: var(--ah-emerald);   border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.08); }
+.ah-status-soft   { color: var(--ah-sky);       border-color: rgba(125,211,252,0.3); background: rgba(125,211,252,0.08); }
+.ah-status-warn   { color: var(--ah-gold-text); border-color: var(--ah-gold-line);   background: var(--ah-gold-soft); }
+.ah-status-danger { color: var(--ah-rose);      border-color: rgba(251,113,133,0.3); background: rgba(251,113,133,0.08); }
+
+/* ════════ playground ════════ */
+
+.ah-play { display: flex; flex-direction: column; gap: 18px; }
+
+.ah-url-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 11px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  background: var(--ah-panel);
+}
+.ah-url {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--ah-mono);
+  font-size: 11px;
+  color: var(--ah-ink-2);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* The site's primary button: a solid amber pill on near-black. */
+.ah-send {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 17px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ah-gold);
+  color: var(--ah-on-gold);
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ah-send:hover:not(:disabled) { filter: brightness(1.09); }
+.ah-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ah-spin { animation: ah-rotate 0.9s linear infinite; }
+@keyframes ah-rotate { to { transform: rotate(360deg); } }
+
+.ah-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 13px;
+  border: 1px solid var(--ah-line);
+  border-left: 2px solid var(--ah-line-2);
+  border-radius: 10px;
+  background: var(--ah-panel);
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--ah-ink-2);
+}
+.ah-note > svg { flex-shrink: 0; margin-top: 2px; color: var(--ah-ink-3); }
+.ah-note strong { color: var(--ah-ink); font-weight: 700; }
+.ah-note code {
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  background: var(--ah-panel-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ah-gold-text);
+}
+.ah-note-warn { border-left-color: var(--ah-gold); }
+.ah-note-warn > svg { color: var(--ah-gold); }
+
+.ah-play-section { display: flex; flex-direction: column; gap: 9px; }
+.ah-h4 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 9.5px;
+  color: var(--ah-ink-3);
+}
+
+.ah-input-row { display: flex; align-items: center; gap: 11px; }
+.ah-input-label {
+  width: 132px;
+  flex-shrink: 0;
+  font-family: var(--ah-mono);
+  font-size: 11px;
+  color: var(--ah-ink-2);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ah-req-dot { color: var(--ah-gold); font-style: normal; margin-left: 2px; }
+
+.ah-input {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  padding: 0 13px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  background: var(--ah-panel);
+  color: var(--ah-ink);
+  font-family: var(--ah-mono);
+  font-size: 11px;
+  outline: 0;
+}
+.ah-input:focus { border-color: var(--ah-gold-line); }
+.ah-input::placeholder { color: var(--ah-ink-3); }
+
+.ah-body-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--ah-line);
+  border-radius: 12px;
+  background: var(--ah-panel);
+  color: var(--ah-ink);
+  font-family: var(--ah-mono);
+  font-size: 11px;
+  line-height: 1.7;
+  resize: vertical;
+  outline: 0;
+}
+.ah-body-input:focus { border-color: var(--ah-gold-line); }
+
+.ah-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  background: var(--ah-panel);
+  color: var(--ah-ink-2);
+  font-family: var(--ah-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  cursor: pointer;
+  align-self: flex-start;
+}
+.ah-mini:hover:not(:disabled) { background: var(--ah-panel-2); color: var(--ah-ink); border-color: var(--ah-line-2); }
+.ah-mini:disabled { opacity: 0.4; cursor: not-allowed; }
+.ah-mini-go { background: var(--ah-gold); color: var(--ah-on-gold); border-color: transparent; font-weight: 700; }
+.ah-mini-go:hover:not(:disabled) { filter: brightness(1.09); background: var(--ah-gold); color: var(--ah-on-gold); }
+.ah-mini-danger { color: var(--ah-rose); border-color: rgba(251,113,133,0.28); }
+.ah-mini-danger:hover:not(:disabled) { color: var(--ah-rose); }
+
+.ah-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  color: var(--ah-ink-2);
+  cursor: pointer;
+}
+.ah-check input { accent-color: var(--ah-gold); cursor: pointer; }
+.ah-check code { font-family: var(--ah-mono); font-size: 10.5px; color: var(--ah-ink); }
+
+.ah-result-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: var(--ah-mono);
+  font-size: 10.5px;
+  color: var(--ah-ink-3);
+}
+.ah-ct-inline { font-size: 10px; }
+.ah-result-image {
+  max-width: 100%;
+  border: 1px solid var(--ah-line);
+  border-radius: 12px;
+  display: block;
+}
+
+/* ════════ home ════════
+   The landing view. Wider measure than the reference column, and the one place
+   the display face runs at full size. */
+
+.ah-home { max-width: 1040px; padding: 0 28px 100px; }
+
+.ah-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ah-mono);
+  font-size: 10px;
+  text-transform: lowercase;
+  letter-spacing: 0.16em;
+  color: var(--ah-ink-3);
+  margin-bottom: 20px;
+}
+.ah-eyebrow-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ah-emerald);
+  box-shadow: 0 0 7px var(--ah-emerald);
+}
+/* Section labels are set as source comments — the device the original uses to
+   mark its own section breaks. */
+.ah-eyebrow-code { color: var(--ah-gold-text); opacity: 0.75; }
+
+.ah-hero { padding: 56px 0 40px; }
+.ah-hero-title {
+  font-family: var(--ah-display);
+  font-weight: 400;
+  font-size: clamp(38px, 6.4vw, 68px);
+  line-height: 0.99;
+  letter-spacing: 0.004em;
+  text-transform: uppercase;
+  color: var(--ah-ink);
+  margin-bottom: 22px;
+}
+.ah-gold-word { color: var(--ah-gold-text); font-style: normal; }
+/* Anton ships upright only; the synthesized slant is the effect the source
+   design uses for this word too. */
+.ah-italic-word { font-style: italic; color: var(--ah-ink); }
+.ah-dim-title { color: var(--ah-ink-3); }
+
+.ah-hero-lead {
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--ah-ink-2);
+  max-width: 620px;
+  margin-bottom: 26px;
+}
+
+.ah-hero-actions { display: flex; gap: 11px; flex-wrap: wrap; margin-bottom: 20px; }
+
+.ah-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--ah-gold);
+  color: var(--ah-on-gold);
+  font-family: var(--ah-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  cursor: pointer;
+}
+.ah-cta:hover { filter: brightness(1.09); }
+.ah-cta-ghost {
+  background: transparent;
+  color: var(--ah-ink);
+  border-color: var(--ah-line-2);
+}
+.ah-cta-ghost:hover { background: var(--ah-panel-2); filter: none; }
+
+.ah-hero-stats {
+  font-family: var(--ah-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ah-ink-3);
+}
+
+/* ── marquee ── */
+
+.ah-marquee {
+  margin: 0 -28px 8px;
+  padding: 16px 0;
+  border-top: 1px solid var(--ah-line);
+  border-bottom: 1px solid var(--ah-line);
+  overflow: hidden;
+  /* Fade both ends so the loop seam never lands on a hard edge. */
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent);
+}
+.ah-marquee-track { display: flex; width: max-content; animation: ah-slide 64s linear infinite; }
+.ah-marquee-run { display: flex; gap: 9px; padding-right: 9px; }
+@keyframes ah-slide { to { transform: translateX(-50%); } }
+.ah-marquee:hover .ah-marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .ah-marquee-track { animation: none; }
+  .ah-marquee { mask-image: linear-gradient(to right, #000 92%, transparent); }
+}
+
+.ah-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 1px solid var(--ah-line);
+  border-radius: 999px;
+  background: var(--ah-panel);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ah-chip:hover { border-color: var(--ah-gold-line); background: var(--ah-panel-2); }
+.ah-chip-path { font-family: var(--ah-mono); font-size: 10.5px; color: var(--ah-ink-2); white-space: nowrap; }
+
+/* ── sections ── */
+
+.ah-home-section { padding: 54px 0 0; }
+.ah-home-h2 {
+  font-family: var(--ah-display);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.06;
+  letter-spacing: 0.004em;
+  text-transform: uppercase;
+  color: var(--ah-ink);
+  margin-bottom: 16px;
+}
+.ah-home-lead {
+  font-size: 14px;
+  line-height: 1.72;
+  color: var(--ah-ink-2);
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+.ah-home-lead code {
+  font-family: var(--ah-mono);
+  font-size: 12px;
+  background: var(--ah-panel-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ah-gold-text);
+}
+
+/* ── category cards ── */
+
+.ah-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 13px;
+}
+.ah-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 18px;
+  border: 1px solid var(--ah-line);
+  border-radius: 14px;
+  background: var(--ah-panel);
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--ah-body);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.ah-card:hover { border-color: var(--gc); transform: translateY(-2px); }
+
+.ah-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ah-card-glyph {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--gc) 14%, transparent);
+  color: var(--gc);
+}
+.ah-card-count {
+  font-family: var(--ah-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ah-ink-3);
+}
+.ah-card-title {
+  font-family: var(--ah-display);
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.008em;
+  color: var(--ah-ink);
+}
+.ah-card-blurb { font-size: 12.5px; line-height: 1.62; color: var(--ah-ink-2); flex: 1; }
+
+.ah-card-routes { list-style: none; display: flex; flex-direction: column; gap: 5px; margin-top: 3px; }
+.ah-card-routes li { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.ah-card-routes svg { color: var(--gc); flex-shrink: 0; }
+.ah-card-method {
+  font-family: var(--ah-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: var(--ah-ink-3);
+  flex-shrink: 0;
+  min-width: 34px;
+}
+.ah-card-routes code {
+  font-family: var(--ah-mono);
+  font-size: 10px;
+  color: var(--ah-ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── anatomy ── */
+
+.ah-anatomy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  align-items: start;
+}
+.ah-ticks { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ah-ticks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ah-ink-2);
+}
+.ah-ticks svg { color: var(--ah-emerald); flex-shrink: 0; margin-top: 3px; }
+
+/* ── stats band ── */
+
+.ah-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 13px;
+}
+.ah-stats > div {
+  padding: 22px 18px;
+  border: 1px solid var(--ah-line);
+  border-radius: 14px;
+  background: var(--ah-panel);
+}
+.ah-stats strong {
+  display: block;
+  font-family: var(--ah-display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--ah-gold-text);
+  margin-bottom: 7px;
+}
+.ah-stats span {
+  font-family: var(--ah-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--ah-ink-3);
+}
+
+/* ── closing CTA ── */
+
+.ah-home-cta {
+  margin-top: 58px;
+  padding: 44px 30px;
+  border: 1px solid var(--ah-line);
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--ah-gold-soft), transparent 62%),
+    var(--ah-panel);
+}
+
+/* ── rail overview row ── */
+
+.ah-overview {
+  gap: 9px;
+  margin-bottom: 6px;
+  font-family: var(--ah-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+.ah-overview svg { flex-shrink: 0; }
+
+/* The brand block doubles as the home affordance once it is a button. */
+.ah-brand {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+.ah-brand:hover .ah-brand-title span { color: var(--ah-gold-text); }
+
+.ah-top-base { color: var(--ah-ink-3); }
+
+/* ════════ light mode ════════
+   The app ships a light theme; this keeps the section's character (gold accent,
+   condensed caps, mono labels) while meeting contrast on a light canvas. The
+   raw #fbbf24 is kept for fills and strokes but replaced by a darker gold
+   anywhere it carries text. */
+
+.light-theme .ah-panel {
+  --ah-canvas: #ffffff;
+  --ah-panel: #fafafa;
+  --ah-panel-2: #f4f4f5;
+  --ah-line: #e4e4e7;
+  --ah-line-2: #d4d4d8;
+
+  --ah-ink: #0a0a0a;
+  --ah-ink-2: #52525b;
+  --ah-ink-3: #71717a;
+
+  /* #fbbf24 is ~1.8:1 on white — fine as a fill, unreadable as text. */
+  --ah-gold-text: #a16207;
+  --ah-gold-soft: rgba(251, 191, 36, 0.16);
+  --ah-gold-line: rgba(161, 98, 7, 0.4);
+
+  --ah-emerald: #047857;
+  --ah-rose: #be123c;
+  --ah-sky: #0369a1;
+  --ah-violet: #6d28d9;
+  --ah-amber: #a16207;
+}
+.light-theme .ah-main {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.028) 1px, transparent 1px);
+}
+.light-theme .ah-top { background: rgba(250, 250, 250, 0.86); }
+
+/* ════════ responsive ════════ */
+
+@media (max-width: 900px) {
+  .ah-rail { position: absolute; z-index: 20; height: 100%; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+  .ah-column { padding: 20px 16px 72px; }
+  .ah-home { padding: 0 16px 80px; }
+  .ah-marquee { margin: 0 -16px 8px; }
+  .ah-hero { padding: 34px 0 30px; }
+  .ah-anatomy { grid-template-columns: 1fr; }
+  .ah-h1 { font-size: 27px; }
+  .ah-input-row { flex-direction: column; align-items: stretch; gap: 5px; }
+  .ah-input-label { width: auto; text-align: left; }
+  .ah-top-path { font-size: 11px; }
+}

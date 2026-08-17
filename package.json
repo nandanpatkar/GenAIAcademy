@@ -17,6 +17,7 @@
     "build:manual-path": "node scripts/build_manual_path.mjs",
     "build:langchain": "python3 scripts/build_langchain_docs.py",
     "build:strands": "python3 scripts/build_strands_docs.py",
+    "build:apihub": "python3 scripts/build_apihub_docs.py",
     "build:aifs": "python3 scripts/build_ai_from_scratch.py",
     "build:aifs-path": "node scripts/build_aifs_path.mjs",
     "build:aws-simulator": "cd system-design-simulator/frontend && npm install && npx ng build --configuration production --base-href /aws-simulator/ && cd ../../ && rm -rf public/aws-simulator && mkdir -p public/aws-simulator && cp -r system-design-simulator/frontend/dist/aws-system-design-simulator-client/browser/* public/aws-simulator/",
