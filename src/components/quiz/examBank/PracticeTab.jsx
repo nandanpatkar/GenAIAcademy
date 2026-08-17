@@ -2,6 +2,39 @@ import React, { useState } from "react";
 import { AlertTriangle, ChevronRight, Loader2 } from "lucide-react";
 import { safeFetchJson } from "./apiHelpers";
 
+const QUESTION_BANK_BASE_URL = "https://open-exam-prep.com/data/question-bank";
+
+/**
+ * OpenExamPrep exposes the exact question bank as a public, CORS-enabled JSON
+ * file. Fetch it from the learner's browser first: the source deliberately
+ * challenges server-to-server traffic from Vercel, while a normal browser can
+ * access this public feed directly. The existing API remains a secondary path
+ * for any source that does not publish a JSON question bank.
+ */
+async function fetchPracticeQuestions(exam) {
+  const questionBankUrl = `${QUESTION_BANK_BASE_URL}/${encodeURIComponent(exam.slug)}.json`;
+  try {
+    const response = await fetch(questionBankUrl);
+    if (!response.ok) throw new Error(`Question-bank source returned HTTP ${response.status}`);
+
+    const questions = await response.json();
+    if (!Array.isArray(questions) || questions.length === 0) {
+      throw new Error("Question-bank source returned no questions.");
+    }
+    return { questions, source: "question-bank" };
+  } catch (directError) {
+    // Do not substitute unrelated/default questions. If a particular source
+    // lacks the static feed, keep the server scraper as a real-source fallback.
+    try {
+      return await safeFetchJson(
+        `/api/exam?resource=scrape&exam=${encodeURIComponent(exam.slug)}&name=${encodeURIComponent(exam.name)}`
+      );
+    } catch (serverError) {
+      throw new Error(`Could not load this exam's question bank. ${directError.message}`);
+    }
+  }
+}
+
 /** Config screen (time limit / marks / AI tutor) + "Start Exam" fetch. */
 export default function PracticeTab({ exam, onStartExam }) {
   const [fetching, setFetching] = useState(false);
@@ -17,7 +50,7 @@ export default function PracticeTab({ exam, onStartExam }) {
     setFetching(true);
     setErrorMsg("");
     try {
-      const data = await safeFetchJson(`/api/exam?resource=scrape&exam=${encodeURIComponent(exam.slug)}&name=${encodeURIComponent(exam.name)}`);
+      const data = await fetchPracticeQuestions(exam);
       if (!data.questions || data.questions.length === 0) throw new Error("No questions were found for this exam.");
 
       onStartExam(exam.name, data.questions, config);
