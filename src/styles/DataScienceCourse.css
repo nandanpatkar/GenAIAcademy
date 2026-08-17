@@ -434,24 +434,6 @@
   margin-left: auto;
 }
 
-.ds-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  height: 30px;
-  padding: 0 10px;
-  border: 1px solid var(--ds-line);
-  border-radius: 7px;
-  cursor: pointer;
-  background: var(--ds-raised);
-  color: var(--ds-fg-muted);
-  font: 500 11.5px var(--ds-font);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.ds-btn:hover { border-color: var(--ds-line-strong); color: var(--ds-fg); }
-
 /* ── lesson header ── */
 .ds-lesson-head {
   flex-shrink: 0;

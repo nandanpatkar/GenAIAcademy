@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-  Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight, ExternalLink,
+  Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight,
   PanelLeft, Trophy, Flame, Info, CheckCircle2, RefreshCw,
 } from "lucide-react";
 import {
@@ -34,7 +34,6 @@ import "../styles/DataScienceCourse.css";
 const SOLVED_KEY = "pandaslabs:solved:v1";
 const LS_LAST_LESSON = "ds_labs_last_lesson";
 const LS_STREAK = "ds_labs_streak";
-const SOURCE_URL = "https://datascience.chaicode.com";
 
 /* Injected into the frame once it loads: the mirror's header duplicates this
    component's rail and its footer repeats on every one of the 505 pages. The
@@ -407,19 +406,14 @@ export default function DataScienceCourse({ onClose }) {
 
           <div className="ds-topbar-end">
             {lesson ? (
-              <>
-                <button
-                  type="button"
-                  className="ds-icon-btn"
-                  onClick={() => { setFrameLoading(true); setFrameKey((k) => k + 1); }}
-                  title="Reload lesson"
-                >
-                  <RefreshCw size={14} />
-                </button>
-                <a className="ds-btn" href={`${SOURCE_URL}/${lesson.path}`} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink size={12} /> <span>Source</span>
-                </a>
-              </>
+              <button
+                type="button"
+                className="ds-icon-btn"
+                onClick={() => { setFrameLoading(true); setFrameKey((k) => k + 1); }}
+                title="Reload lesson"
+              >
+                <RefreshCw size={14} />
+              </button>
             ) : null}
             {onClose ? (
               <button type="button" className="ds-icon-btn" onClick={onClose} title="Close">
