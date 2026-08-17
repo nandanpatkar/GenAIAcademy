@@ -77,6 +77,7 @@ function Sidebar({
   activeManualPhase, setActiveManualPhase,
   showReference, setShowReference,
   activeReferenceTopic, setActiveReferenceTopic,
+  showApiHub, setShowApiHub,
   showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
   showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
   showStrandsDocs, setShowStrandsDocs,
@@ -321,6 +322,7 @@ function Sidebar({
     if (showAlgoWar) return "algowar";
     if (showManual) return "manual";
     if (showReference) return "reference";
+    if (showApiHub) return "learn_api";
     if (showAgentCore) return agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
     if (showLangChainDocs) return langChainProduct || "langchain";
     if (showStrandsDocs) return "strands";
@@ -388,6 +390,7 @@ function Sidebar({
     if (setShowAlgoWar) setShowAlgoWar(false);
     if (setShowManual) setShowManual(false);
     if (setShowReference) setShowReference(false);
+    if (setShowApiHub) setShowApiHub(false);
     if (setShowAgentCore) setShowAgentCore(false);
     if (setShowLangChainDocs) setShowLangChainDocs(false);
     if (setShowStrandsDocs) setShowStrandsDocs(false);
@@ -415,6 +418,9 @@ function Sidebar({
       case "manual":
         if (setActiveManualPhase) setActiveManualPhase(null);
         if (onOpenToolHome) onOpenToolHome("manual"); else if (setShowManual) setShowManual(true);
+        break;
+      case "learn_api":
+        if (setShowApiHub) setShowApiHub(true);
         break;
       case "langchain":
       case "langgraph":

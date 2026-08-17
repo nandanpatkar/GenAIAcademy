@@ -84,6 +84,7 @@ const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"))
 const AgentCoreViewer = React.lazy(() => import("./components/AgentCoreViewer"));
 const LangChainDocs = React.lazy(() => import("./components/LangChainDocs"));
 const StrandsDocs = React.lazy(() => import("./components/StrandsDocs"));
+const ApiHub = React.lazy(() => import("./components/ApiHub"));
 const AiFromScratch = React.lazy(() => import("./components/AiFromScratch"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
@@ -655,6 +656,7 @@ function MainApp() {
   const [showLangChainDocs, setShowLangChainDocs] = useViewState(savedViews.showLangChainDocs ?? false);
   const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
   const [showStrandsDocs, setShowStrandsDocs] = useViewState(savedViews.showStrandsDocs ?? false);
+  const [showApiHub, setShowApiHub] = useViewState(savedViews.showApiHub ?? false);
   const [showAiFromScratch, setShowAiFromScratch] = useViewState(savedViews.showAiFromScratch ?? false);
   const [aifsTrack, setAifsTrack] = useState(savedViews.aifsTrack ?? "curriculum");
   const [aifsLesson, setAifsLesson] = useState(null);
@@ -717,7 +719,7 @@ function MainApp() {
         showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
         showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
         showKnowledgeGraph, showReference, showAgentCore,
-        showLangChainDocs, langChainProduct, showStrandsDocs,
+        showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
         showAiFromScratch, aifsTrack
       }));
     } catch (e) {
@@ -731,7 +733,7 @@ function MainApp() {
     showCommunity, showNotion, showNoSignups, showFreeSystemDesign, showManual, showInterviewPrep,
     showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
     showKnowledgeGraph, showReference, showAgentCore,
-    showLangChainDocs, langChainProduct, showStrandsDocs,
+    showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
     showAiFromScratch, aifsTrack
   ]);
 
@@ -900,6 +902,7 @@ function MainApp() {
     setShowProjects(false);
     setShowManual(false);
     setShowReference(false);
+    setShowApiHub(false);
     setShowAgentCore(false);
     setShowLangChainDocs(false);
     setShowStrandsDocs(false);
@@ -1039,6 +1042,7 @@ function MainApp() {
         setShowLangChainDocs(true);
         break;
       case "strands": setShowStrandsDocs(true); break;
+      case "learn_api": setShowApiHub(true); break;
       case "aws_agentcore": setAgentCoreMode("docs"); setShowAgentCore(true); break;
       case "amazon_connect": setAgentCoreMode("connect"); setShowAgentCore(true); break;
       case "aifs_curriculum":
@@ -1570,6 +1574,7 @@ function MainApp() {
     showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
     showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
     showStrandsDocs, setShowStrandsDocs,
+    showApiHub, setShowApiHub,
     showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
     showOnboarding, setShowOnboarding: handleSidebarOnboarding,
     showInterviewPrep, setShowInterviewPrep,
@@ -1757,6 +1762,7 @@ function MainApp() {
                                                         showAgentCore ? <ErrorBoundary><AgentCoreViewer initialMode={agentCoreMode} onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
+                                                        showApiHub ? <ErrorBoundary><ApiHub onClose={() => setShowApiHub(false)} /></ErrorBoundary> :
                                                         showAiFromScratch ? <ErrorBoundary><AiFromScratch track={aifsTrack} lesson={aifsLesson} onClose={() => { setAifsLesson(null); setShowAiFromScratch(false); }} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={visiblePaths} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
