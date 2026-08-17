@@ -30,6 +30,14 @@
       "destination": "https://docs-cdn.gen-ai-academy.workers.dev/ai-from-scratch/$1"
     },
     {
+      "source": "/datascience/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/datascience/$1"
+    },
+    {
+      "source": "/chai-visual/(.*)",
+      "destination": "https://docs-cdn.gen-ai-academy.workers.dev/chai-visual/$1"
+    },
+    {
       "source": "/guides/(.*)",
       "destination": "https://docs-cdn.gen-ai-academy.workers.dev/guides/$1"
     },

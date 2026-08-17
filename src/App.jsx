@@ -85,6 +85,8 @@ const AgentCoreViewer = React.lazy(() => import("./components/AgentCoreViewer"))
 const LangChainDocs = React.lazy(() => import("./components/LangChainDocs"));
 const StrandsDocs = React.lazy(() => import("./components/StrandsDocs"));
 const ApiHub = React.lazy(() => import("./components/ApiHub"));
+const DataScienceCourse = React.lazy(() => import("./components/DataScienceCourse"));
+const ChaiVisualCourse = React.lazy(() => import("./components/ChaiVisualCourse"));
 const AiFromScratch = React.lazy(() => import("./components/AiFromScratch"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
@@ -657,6 +659,8 @@ function MainApp() {
   const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
   const [showStrandsDocs, setShowStrandsDocs] = useViewState(savedViews.showStrandsDocs ?? false);
   const [showApiHub, setShowApiHub] = useViewState(savedViews.showApiHub ?? false);
+  const [showDataScience, setShowDataScience] = useViewState(savedViews.showDataScience ?? false);
+  const [showChaiVisual, setShowChaiVisual] = useViewState(savedViews.showChaiVisual ?? false);
   const [showAiFromScratch, setShowAiFromScratch] = useViewState(savedViews.showAiFromScratch ?? false);
   const [aifsTrack, setAifsTrack] = useState(savedViews.aifsTrack ?? "curriculum");
   const [aifsLesson, setAifsLesson] = useState(null);
@@ -720,6 +724,7 @@ function MainApp() {
         showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
         showKnowledgeGraph, showReference, showAgentCore,
         showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
+        showDataScience, showChaiVisual,
         showAiFromScratch, aifsTrack
       }));
     } catch (e) {
@@ -734,6 +739,7 @@ function MainApp() {
     showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
     showKnowledgeGraph, showReference, showAgentCore,
     showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
+    showDataScience, showChaiVisual,
     showAiFromScratch, aifsTrack
   ]);
 
@@ -903,6 +909,8 @@ function MainApp() {
     setShowManual(false);
     setShowReference(false);
     setShowApiHub(false);
+    setShowDataScience(false);
+    setShowChaiVisual(false);
     setShowAgentCore(false);
     setShowLangChainDocs(false);
     setShowStrandsDocs(false);
@@ -1043,6 +1051,8 @@ function MainApp() {
         break;
       case "strands": setShowStrandsDocs(true); break;
       case "learn_api": setShowApiHub(true); break;
+      case "data_science": setShowDataScience(true); break;
+      case "chai_visual": setShowChaiVisual(true); break;
       case "aws_agentcore": setAgentCoreMode("docs"); setShowAgentCore(true); break;
       case "amazon_connect": setAgentCoreMode("connect"); setShowAgentCore(true); break;
       case "aifs_curriculum":
@@ -1575,6 +1585,8 @@ function MainApp() {
     showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
     showStrandsDocs, setShowStrandsDocs,
     showApiHub, setShowApiHub,
+    showDataScience, setShowDataScience,
+    showChaiVisual, setShowChaiVisual,
     showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
     showOnboarding, setShowOnboarding: handleSidebarOnboarding,
     showInterviewPrep, setShowInterviewPrep,
@@ -1763,6 +1775,8 @@ function MainApp() {
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
                                                         showApiHub ? <ErrorBoundary><ApiHub onClose={() => setShowApiHub(false)} /></ErrorBoundary> :
+                                                        showDataScience ? <ErrorBoundary><DataScienceCourse onClose={() => setShowDataScience(false)} /></ErrorBoundary> :
+                                                        showChaiVisual ? <ErrorBoundary><ChaiVisualCourse onClose={() => setShowChaiVisual(false)} /></ErrorBoundary> :
                                                         showAiFromScratch ? <ErrorBoundary><AiFromScratch track={aifsTrack} lesson={aifsLesson} onClose={() => { setAifsLesson(null); setShowAiFromScratch(false); }} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={visiblePaths} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :

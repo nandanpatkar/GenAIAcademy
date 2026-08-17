@@ -31,13 +31,24 @@ const BUCKET = "docs-archive";
 const STATE = join(ROOT, "scripts", ".docs-archive-uploaded.json");
 const CONCURRENCY = 32;
 const IMMUTABLE = "public, max-age=31536000, immutable";
+const REVALIDATE = "public, max-age=0, must-revalidate";
 
-const DIRS = ["agentcore-samples", "agentcore", "langchain", "strands", "guides", "ai-from-scratch"];
+const DIRS = [
+  "agentcore-samples",
+  "agentcore",
+  "langchain",
+  "strands",
+  "guides",
+  "ai-from-scratch",
+  "datascience",
+  "chai-visual",
+];
 const SKIP_FILES = new Set([".DS_Store", "build-report.json"]);
 
 const CONTENT_TYPES = {
   md: "text/markdown; charset=utf-8",
   webp: "image/webp",
+  avif: "image/avif",
   png: "image/png",
   jpg: "image/jpeg",
   jpeg: "image/jpeg",
@@ -191,7 +202,9 @@ async function put(file, attempt = 0) {
         Key: file.key,
         Body: readFileSync(file.path),
         ContentType: CONTENT_TYPES[ext] || "application/octet-stream",
-        CacheControl: IMMUTABLE,
+        // Prerendered pages are replaced on every mirror rebuild, so they have
+        // to revalidate. Hashed assets and images keep the immutable year.
+        CacheControl: ext === "html" ? REVALIDATE : IMMUTABLE,
       }),
     );
     state[file.key] = file.digest;

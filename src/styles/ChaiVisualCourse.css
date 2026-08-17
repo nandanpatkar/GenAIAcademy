@@ -1,0 +1,968 @@
+/* ── Chai Visual course viewer ────────────────────────────────────────────
+   The lesson renders in a frame served from /chai-visual/. That mirror ships
+   a real light palette and a real dark one, keyed off data-theme on <html>,
+   so unlike the Data Science viewer this shell follows the app's theme and
+   the framed document is switched to match.
+
+   Both palettes below are the site's own, lifted from its stylesheet rather
+   than eyeballed (_next/static/css/a2d5eb…css):
+
+     light  --paper 250 246 238   --ink 38 30 24    --accent 226 109 58
+     dark   --paper  20  16  12   --ink 236 229 214 --accent 240 130 78
+
+   Its faces are a hand-drawn display pairing; the app's own stack stands in
+   for those, since the frame loads them for itself and the rail should read
+   as app chrome rather than as a second copy of the site's masthead.
+   ──────────────────────────────────────────────────────────────────────── */
+
+.cv-root {
+  --cv-paper: rgb(250 246 238);
+  --cv-surface: rgb(255 252 247);
+  --cv-ink: rgb(38 30 24);
+  --cv-sketch: rgb(92 78 64);
+  --cv-mute: rgb(168 159 140);
+  --cv-accent: rgb(226 109 58);
+  --cv-accent2: rgb(58 120 194);
+  --cv-card: rgba(31, 24, 18, 0.022);
+  --cv-card-hi: rgba(31, 24, 18, 0.045);
+  --cv-line: rgba(31, 24, 18, 0.11);
+  --cv-line-hi: rgba(31, 24, 18, 0.2);
+  --cv-done: rgb(58 157 93);
+
+  --cv-rail: 288px;
+  --cv-font: var(--font, system-ui), system-ui, sans-serif;
+  --cv-mono: var(--mono, ui-monospace), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--cv-paper);
+  color: var(--cv-ink);
+  font-family: var(--cv-font);
+}
+
+.cv-root.cv-dark {
+  --cv-paper: rgb(20 16 12);
+  --cv-surface: rgb(27 22 17);
+  --cv-ink: rgb(236 229 214);
+  --cv-sketch: rgb(184 176 160);
+  --cv-mute: rgb(146 138 123);
+  --cv-accent: rgb(240 130 78);
+  --cv-accent2: rgb(108 160 214);
+  --cv-card: rgba(255, 255, 255, 0.035);
+  --cv-card-hi: rgba(255, 255, 255, 0.06);
+  --cv-line: rgba(255, 255, 255, 0.09);
+  --cv-line-hi: rgba(255, 255, 255, 0.16);
+  --cv-done: rgb(79 179 116);
+}
+
+/* ── rail ──
+   Modelled on the original site's own sidebar: a search field, the streak
+   counter, then hand-lettered section headings over two-line entries. Only
+   the open track's sections appear — the four tracks live on the home
+   screen, which is where you switch between them. */
+.cv-rail {
+  display: flex;
+  flex-direction: column;
+  width: var(--cv-rail);
+  flex-shrink: 0;
+  min-height: 0;
+  padding-top: 14px;
+  border-right: 1px solid var(--cv-line);
+  background: var(--cv-surface);
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s;
+}
+
+.cv-rail--closed {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cv-ring circle { transition: stroke-dashoffset 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ── search ── */
+.cv-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px 10px;
+  padding: 0 14px;
+  height: 46px;
+  border: 1px solid var(--cv-line-hi);
+  border-radius: 12px;
+  background: var(--cv-card);
+  color: var(--cv-mute);
+}
+
+.cv-search:focus-within {
+  border-color: var(--cv-accent);
+  box-shadow: 0 0 0 3px rgba(226, 109, 58, 0.15);
+}
+
+.cv-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--cv-ink);
+  font: 15px var(--cv-font);
+}
+
+.cv-search input::placeholder { color: var(--cv-mute); }
+.cv-search input::-webkit-search-cancel-button { display: none; }
+
+.cv-search kbd {
+  padding: 3px 6px;
+  border: 1px solid var(--cv-line-hi);
+  border-radius: 6px;
+  font: 11px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+.cv-search button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 3px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--cv-mute);
+}
+
+.cv-search button:hover { color: var(--cv-ink); }
+
+/* ── streak ── */
+.cv-streak-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px 16px;
+}
+
+.cv-streak {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--cv-line-hi);
+  border-radius: 12px;
+  background: var(--cv-card);
+  color: var(--cv-mute);
+}
+
+.cv-streak strong {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cv-ink);
+}
+
+.cv-streak span { font-size: 14px; }
+.cv-streak-lit { color: var(--cv-accent); }
+
+.cv-streak-info {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border: 1px solid var(--cv-line-hi);
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--cv-card);
+  color: var(--cv-mute);
+}
+
+.cv-streak-info:hover { color: var(--cv-ink); border-color: var(--cv-accent); }
+
+.cv-streak-note {
+  margin: -8px 16px 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--cv-mute);
+}
+
+/* ── section tree ── */
+.cv-tree {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 12px 32px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cv-line-hi) transparent;
+}
+
+.cv-tree::-webkit-scrollbar { width: 8px; }
+.cv-tree::-webkit-scrollbar-thumb { background: var(--cv-line-hi); border-radius: 4px; }
+
+.cv-group { margin-bottom: 18px; }
+
+.cv-group-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 4px;
+  border: 0;
+  cursor: pointer;
+  background: transparent;
+  color: var(--cv-ink);
+  font: 700 20px var(--cv-font);
+  letter-spacing: -0.02em;
+  text-align: left;
+}
+
+.cv-group-head:hover .cv-group-title { color: var(--cv-accent); }
+.cv-caret { display: grid; place-items: center; color: var(--cv-mute); flex-shrink: 0; }
+
+.cv-group-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.cv-group-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cv-mute);
+}
+
+.cv-items {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.cv-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 8px 14px;
+  margin-bottom: 2px;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  background: transparent;
+  text-align: left;
+  transition: background 0.14s;
+}
+
+.cv-item:hover { background: var(--cv-card-hi); }
+
+/* The active entry inverts to the paper colour, the way the source does. */
+.cv-item.is-active { background: var(--cv-ink); }
+.cv-item.is-active .cv-item-title { color: var(--cv-paper); font-weight: 600; }
+.cv-item.is-active .cv-item-sub { color: color-mix(in srgb, var(--cv-paper) 65%, transparent); }
+
+.cv-item-title {
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--cv-ink);
+}
+
+.cv-item.is-read .cv-item-title { color: var(--cv-mute); }
+.cv-item.is-active.is-read .cv-item-title { color: var(--cv-paper); }
+
+.cv-item-sub {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--cv-mute);
+}
+
+/* ── search results ── */
+.cv-rail-label {
+  margin: 12px 6px 5px;
+  font: 700 10px var(--cv-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cv-mute);
+}
+
+.cv-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 7px 9px;
+  margin-bottom: 2px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  background: transparent;
+  text-align: left;
+}
+
+.cv-result:hover { background: var(--cv-card-hi); }
+
+.cv-result strong {
+  font: 600 12.5px var(--cv-font);
+  color: var(--cv-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cv-result span { font: 10.5px var(--cv-mono); color: var(--cv-mute); }
+
+.cv-empty { padding: 16px 8px; font: 12px var(--cv-font); color: var(--cv-mute); }
+
+/* ── main pane ── */
+.cv-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--cv-paper);
+}
+
+.cv-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  height: 50px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--cv-line);
+  background: var(--cv-surface);
+}
+
+.cv-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--cv-mute);
+  transition: background 0.15s, color 0.15s;
+}
+
+.cv-icon-btn:hover {
+  background: var(--cv-card-hi);
+  border-color: var(--cv-line);
+  color: var(--cv-ink);
+}
+
+.cv-crumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+  font: 12px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+.cv-crumb button {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  color: var(--cv-mute);
+  font: inherit;
+}
+
+.cv-crumb button:hover { color: var(--cv-accent); }
+
+.cv-crumb strong {
+  font-weight: 600;
+  color: var(--cv-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cv-crumb svg { flex-shrink: 0; opacity: 0.5; }
+
+.cv-topbar-end {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.cv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--cv-line);
+  border-radius: 7px;
+  cursor: pointer;
+  background: var(--cv-card);
+  color: var(--cv-sketch);
+  font: 500 11.5px var(--cv-font);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cv-btn:hover { border-color: var(--cv-accent); color: var(--cv-ink); }
+
+/* ── track landing text ──
+   There is no lesson header of our own: a framed lesson brings its own, and
+   that one carries the difficulty, the details disclosure and the complexity
+   panel, so the shell stays out of its way. These two are the track overview. */
+.cv-eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 0 0 7px;
+  font: 500 11.5px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+.cv-lede {
+  margin: 6px 0 0;
+  max-width: 64ch;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--cv-sketch);
+}
+
+/* ── frame ── */
+.cv-frame-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: var(--cv-paper);
+}
+
+.cv-frame-wrap[hidden] { display: none; }
+
+.cv-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.cv-frame-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: var(--cv-paper);
+  font: 11.5px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+/* ── locked notice ── */
+.cv-locked {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 28px;
+  text-align: center;
+  color: var(--cv-mute);
+}
+
+.cv-locked h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cv-ink);
+}
+
+.cv-locked p {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.cv-locked code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--cv-card-hi);
+  font: 11.5px var(--cv-mono);
+  color: var(--cv-accent);
+}
+
+/* ── pager ── */
+.cv-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-top: 1px solid var(--cv-line);
+  background: var(--cv-surface);
+}
+
+.cv-pager button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 46%;
+  padding: 7px 12px;
+  border: 1px solid var(--cv-line);
+  border-radius: 9px;
+  cursor: pointer;
+  background: var(--cv-card);
+  color: var(--cv-sketch);
+  text-align: left;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.cv-pager button:hover { border-color: var(--cv-accent); color: var(--cv-ink); }
+.cv-pager-next { text-align: right; }
+
+.cv-pager span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font: 600 12.5px var(--cv-font);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cv-pager em {
+  font: 500 9.5px var(--cv-mono);
+  font-style: normal;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cv-mute);
+}
+
+.cv-pager svg { flex-shrink: 0; }
+
+/* ── landing ── */
+.cv-landing {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 32px 28px 60px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cv-line-hi) transparent;
+}
+
+.cv-landing::-webkit-scrollbar { width: 10px; }
+.cv-landing::-webkit-scrollbar-thumb { background: var(--cv-line-hi); border-radius: 5px; }
+
+.cv-hero { max-width: 860px; margin-bottom: 32px; }
+
+.cv-hero h1 {
+  margin: 0;
+  max-width: 22ch;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--cv-ink);
+}
+
+.cv-hero .cv-lede { max-width: 68ch; margin-top: 10px; font-size: 14px; }
+
+.cv-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 26px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--cv-line);
+}
+
+.cv-hero-stats > div { display: flex; flex-direction: column; gap: 2px; }
+
+.cv-hero-stats strong {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--cv-ink);
+}
+
+.cv-hero-stats span { font: 10.5px var(--cv-mono); color: var(--cv-mute); }
+
+.cv-hero-progress {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px !important;
+  margin-left: auto;
+  padding: 8px 14px;
+  border: 1px solid var(--cv-line);
+  border-radius: 11px;
+  background: var(--cv-card);
+}
+
+/* ── group cards ── */
+.cv-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 860px;
+}
+
+.cv-group-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.cv-group-card-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--cv-ink);
+}
+
+.cv-group-card-head span {
+  font: 10.5px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+.cv-group-card ol {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 11px 0 0;
+  padding: 0;
+}
+
+.cv-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--cv-line);
+  border-radius: 11px;
+  cursor: pointer;
+  background: var(--cv-card);
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+}
+
+.cv-card:hover {
+  border-color: var(--cv-accent);
+  background: var(--cv-card-hi);
+  transform: translateX(2px);
+}
+
+.cv-card-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 20px;
+  color: var(--cv-mute);
+}
+
+.cv-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cv-card-body strong {
+  font: 700 13.5px var(--cv-font);
+  letter-spacing: -0.01em;
+  color: var(--cv-ink);
+}
+
+.cv-card-body > span {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--cv-mute);
+}
+
+.cv-card-meta {
+  flex-shrink: 0;
+  font: 10.5px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+/* ── home ──
+   The four tracks live here rather than in the rail, so this is the screen
+   that does the switching. Laid out after the source site's own "Pick a
+   track" grid: a card each, with its badge, topic chips and count. */
+.cv-home { padding-top: 40px; }
+
+.cv-home-hero {
+  max-width: 900px;
+  margin: 0 auto 34px;
+}
+
+.cv-home-eyebrow {
+  margin: 0 0 12px;
+  font: 500 13px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+/* Three words, one per line, each opening letter lifted — the source sets
+   D-S-A this way so the initials spell the track out down the page. */
+.cv-home-hero h1 {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  color: var(--cv-ink);
+}
+
+.cv-home-hero h1 em {
+  font-style: normal;
+  color: var(--cv-accent);
+}
+
+.cv-home-lede {
+  margin: 20px 0 0;
+  max-width: 58ch;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--cv-sketch);
+}
+
+.cv-home-chips { margin-top: 20px; }
+
+.cv-home-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px;
+  margin-top: 26px;
+}
+
+.cv-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--cv-accent);
+  color: var(--cv-paper);
+  font: 600 15px var(--cv-font);
+  transition: filter 0.15s, transform 0.15s;
+}
+
+.cv-cta:hover { filter: brightness(1.08); transform: translateX(2px); }
+
+.cv-home-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font: 12px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+.cv-home-stats strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cv-ink);
+}
+
+/* ── the "brute force → better" pitch ── */
+.cv-pitch {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 26px 0;
+  border-top: 1px solid var(--cv-line);
+  border-bottom: 1px solid var(--cv-line);
+}
+
+.cv-pitch h2 {
+  margin: 0;
+  max-width: 20ch;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.032em;
+  line-height: 1.15;
+  color: var(--cv-ink);
+}
+
+.cv-pitch p:last-child {
+  margin: 12px 0 0;
+  max-width: 66ch;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--cv-sketch);
+}
+
+.cv-section-head {
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+
+.cv-section-head h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--cv-ink);
+}
+
+.cv-section-head p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--cv-mute);
+}
+
+.cv-track-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cv-track-card,
+.cv-extra-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--cv-line-hi);
+  border-radius: 16px;
+  cursor: pointer;
+  background: var(--cv-card);
+  text-align: left;
+  transition: border-color 0.18s, transform 0.18s, background 0.18s;
+}
+
+.cv-track-card:hover,
+.cv-extra-card:hover {
+  border-color: var(--cv-accent);
+  background: var(--cv-card-hi);
+  transform: translateY(-2px);
+}
+
+.cv-track-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cv-track-card-head h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--cv-ink);
+}
+
+.cv-track-card-head p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--cv-mute);
+}
+
+.cv-badge {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  border: 1px solid color-mix(in srgb, var(--cv-accent) 45%, transparent);
+  border-radius: 999px;
+  font: 600 10px var(--cv-font);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--cv-accent);
+}
+
+.cv-track-tagline {
+  margin: 14px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--cv-sketch);
+}
+
+.cv-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.cv-chips span {
+  padding: 4px 10px;
+  border: 1px solid var(--cv-line);
+  border-radius: 999px;
+  background: var(--cv-paper);
+  font-size: 12px;
+  color: var(--cv-sketch);
+}
+
+.cv-chips .cv-chip-more {
+  border-color: transparent;
+  background: transparent;
+  color: var(--cv-mute);
+}
+
+.cv-track-card-foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 22px;
+}
+
+.cv-track-summary {
+  font: 12.5px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+.cv-track-progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 11.5px var(--cv-mono);
+  color: var(--cv-mute);
+}
+
+.cv-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cv-ink);
+}
+
+.cv-track-card:hover .cv-enter,
+.cv-extra-card:hover .cv-enter { color: var(--cv-accent); }
+
+.cv-extras {
+  max-width: 900px;
+  margin: 18px auto 0;
+}
+
+/* Home fills the pane, so its own padding replaces the rail's gutter. */
+.cv-home-mode .cv-main { background: var(--cv-paper); }
+
+@media (max-width: 900px) {
+  .cv-rail { position: absolute; z-index: 20; height: 100%; box-shadow: 0 0 40px rgba(0, 0, 0, 0.35); }
+  .cv-landing { padding: 22px 18px 50px; }
+  .cv-hero-progress { margin-left: 0; }
+}
