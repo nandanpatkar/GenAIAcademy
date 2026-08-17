@@ -75,6 +75,7 @@ export function getActiveNavId(p) {
   if (p.showIntelligenceHub) return "overview";
   if (p.showLegacyIntelligenceHub) return "legacy_hub";
   if (p.showQuiz) return "quiz";
+  if (p.showQuiz2) return "quiz2";
   if (p.showLeetCode) return "leetcode";
   if (p.showAlgoWar) return "algowar";
   if (p.showManual) return "manual";
@@ -146,6 +147,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowHome3) p.setShowHome3(false);
   if (p.setShowLegacyIntelligenceHub) p.setShowLegacyIntelligenceHub(false);
   if (p.setShowQuiz) p.setShowQuiz(false);
+  if (p.setShowQuiz2) p.setShowQuiz2(false);
   if (p.setShowLeetCode) p.setShowLeetCode(false);
   if (p.setShowAlgoWar) p.setShowAlgoWar(false);
   if (p.setShowManual) p.setShowManual(false);
@@ -420,6 +422,9 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "quiz":
       if (p.onOpenToolHome) p.onOpenToolHome("quiz"); else if (p.setShowQuiz) p.setShowQuiz(true);
+      break;
+    case "quiz2":
+      if (p.setShowQuiz2) p.setShowQuiz2(true);
       break;
     case "leetcode":
       if (p.setShowLeetCode) p.setShowLeetCode(true);
