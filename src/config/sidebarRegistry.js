@@ -196,6 +196,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
   // a session. See JOB_AGENT_PLAN.md.
   job_scout: { icon: Briefcase, label: "Job Scout", description: "Match your CV against real openings", defaultVisibility: "admin" },
   quiz: { icon: CheckSquare, label: "Quiz", description: "Practice quizzes and certification exams" },
+  quiz2: { icon: CheckSquare, label: "Quiz 2.0", description: "Test build of the Exam Bank on the new bot-challenge-aware scraper" },
 
   community: { icon: Users, label: "Community", description: "Chat and connect with learners" },
   tasks: { icon: CheckSquare, label: "Notes", description: "Capture ideas and reminders" },
@@ -226,7 +227,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
   { id: "ai_from_scratch", label: "AI from Scratch", itemIds: ["aifs_curriculum", "aifs_certification", "aifs_reference"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
-  { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz"] },
+  { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz", "quiz2"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
   { id: "more_tools", label: "More tools", itemIds: ["projects", "aws_simulator", "dsa_animator", "k8s_games", "git_visualizer", "flow_design", "notion", "nosignups", "free_system_design"] },
 ];
