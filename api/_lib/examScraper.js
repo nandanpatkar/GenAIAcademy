@@ -81,8 +81,23 @@ async function fetchHtmlInBrowser(url) {
     try {
       browser = await puppeteer.launch(launchOptions);
       const page = await browser.newPage();
-      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 25_000 });
-      return await page.content();
+      // The source's Vercel Security Checkpoint first serves a small HTML
+      // document, then completes its normal JavaScript navigation. Waiting
+      // only for DOMContentLoaded captures that intermediate page in Lambda,
+      // which has no question payload. Wait until the browser is idle and, if
+      // necessary, until the actual embedded payload is present.
+      await page.goto(url, { waitUntil: "networkidle2", timeout: 35_000 });
+      await page.waitForFunction(
+        () => document.documentElement.innerHTML.includes("initialQuestions") ||
+          document.documentElement.innerHTML.includes('"question"'),
+        { timeout: 12_000 }
+      ).catch(() => {});
+
+      const html = await page.content();
+      if (!html.includes("initialQuestions") && !html.includes('"question"')) {
+        throw new Error(`Browser did not reach the question payload (title: ${await page.title()}).`);
+      }
+      return html;
     } catch (error) {
       lastError = error;
       if (error?.code !== "ETXTBSY" || attempt === 3) throw error;
