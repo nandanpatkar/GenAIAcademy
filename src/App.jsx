@@ -87,10 +87,6 @@ const StrandsDocs = React.lazy(() => import("./components/StrandsDocs"));
 const AiFromScratch = React.lazy(() => import("./components/AiFromScratch"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
-// Standalone test build of the Exam Bank on the new bot-challenge-aware
-// scraper (api/exam2.js) — kept fully separate from QuizApp/api/exam.js so
-// the shipped Quiz section is untouched while this is validated.
-const QuizApp2 = React.lazy(() => import("./components/QuizApp2"));
 const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
 const AlgoWarArena = React.lazy(() => import("./components/AlgoWarArena"));
 const ProjectIDE = React.lazy(() => import("./components/Projects/ProjectIDE"));
@@ -348,7 +344,6 @@ function MainApp() {
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [showQuiz2, setShowQuiz2] = useState(false);
   const [showLeetCode, setShowLeetCode] = useState(false);
   const [showAlgoWar, setShowAlgoWar] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -1579,7 +1574,7 @@ function MainApp() {
     showOnboarding, setShowOnboarding: handleSidebarOnboarding,
     showInterviewPrep, setShowInterviewPrep,
     activeToolHome, onOpenToolHome: setActiveToolHome,
-    showQuiz, setShowQuiz, showQuiz2, setShowQuiz2, showLeetCode, setShowLeetCode,
+    showQuiz, setShowQuiz, showLeetCode, setShowLeetCode,
     showAlgoWar, setShowAlgoWar, showProjects, setShowProjects,
     setLinksInitialTab, onHubNav: handleHubNav,
     isMobileMenuOpen, setIsMobileMenuOpen,
@@ -1767,7 +1762,6 @@ function MainApp() {
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showAlgoWar ? <AlgoWarArena onClose={() => setShowAlgoWar(false)} /> :
                                                       showQuiz ? <QuizApp /> :
-                                                      showQuiz2 ? <QuizApp2 /> :
                                                       showHome2 ? (
                                                         <Home2Dashboard
                                                           user={user}
@@ -1993,7 +1987,7 @@ function MainApp() {
       </div>
 
       <MobileBottomNav
-        activeView={isMobileMenuOpen ? "more" : (showHome2 || showHome3 || showIntelligenceHub) ? "home" : showProgress ? "progress" : (showQuiz || showQuiz2) ? "practice" : "roadmap"}
+        activeView={isMobileMenuOpen ? "more" : (showHome2 || showHome3 || showIntelligenceHub) ? "home" : showProgress ? "progress" : showQuiz ? "practice" : "roadmap"}
         setView={v => {
           closeAllPanels();
           if (v === "home") {
