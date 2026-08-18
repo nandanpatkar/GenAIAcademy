@@ -20,10 +20,10 @@ import "../styles/ExamsDocs.css";
 /* The AWS Machine Learning certification notes, read in-app.
  *
  * Layout follows the LangChain docs viewer: a track-scoped nav rail, a measured
- * reading column, and an "on this page" rail. The sidebar's Exams and
- * Certification section enters here already scoped to one track (Exam Guide /
- * AI Services / Data Engineering / …); the switcher at the top of the rail
- * crosses between them, since the notes cross-reference constantly.
+ * reading column, and an "on this page" rail. Unlike that one, the sidebar holds
+ * a single entry: all seven tracks (Exam Guide / AI Services / Data Engineering
+ * / …) live in the switcher at the top of this rail, which is also what the
+ * prose needs, since the notes cross-reference between tracks constantly.
  *
  * Two things the docs viewers do not have, because a certification corpus needs
  * them: every note is tagged with the MLA-C01 task statements it covers, so the
@@ -36,6 +36,7 @@ import "../styles/ExamsDocs.css";
 
 const LS_RECENT = "exams_docs_recent";
 const LS_READ = "exams_docs_read";
+const LS_TRACK = "exams_docs_track";
 
 const TRACK_ICONS = {
   BadgeCheck, Sparkles, DatabaseZap, Sigma, Boxes, Bot, ShieldCheck,
@@ -99,11 +100,19 @@ const loadSet = (key) => {
 
 const cache = new Map();
 
-export default function ExamsDocs({ track: initialTrack = "exam_guide", onClose }) {
+export default function ExamsDocs({ onClose }) {
   const { theme } = useTheme();
   const dark = theme !== "light";
 
-  const [trackId, setTrackId] = useState(initialTrack);
+  // The sidebar is one entry, so the track lives here rather than in App's view
+  // state — remembered across sessions so reopening lands where you left off.
+  const [trackId, setTrackId] = useState(() => {
+    try {
+      const saved = localStorage.getItem(LS_TRACK);
+      if (saved && TRACK_BY_ID[saved]) return saved;
+    } catch { /* ignore */ }
+    return EXAMS_TRACKS[0].id;
+  });
   const [activeSlug, setActiveSlug] = useState(null);
   const [openGroups, setOpenGroups] = useState({});
   const [openTabs, setOpenTabs] = useState({});
@@ -128,7 +137,11 @@ export default function ExamsDocs({ track: initialTrack = "exam_guide", onClose 
   const track = TRACK_BY_ID[trackId] || EXAMS_TRACKS[0];
   const activePage = activeSlug ? PAGE_BY_SLUG[activeSlug] : null;
 
-  useEffect(() => { setTrackId(initialTrack); setActiveSlug(null); }, [initialTrack]);
+  /* Cross-references move the rail between tracks too, so persist on change
+     rather than only when the switcher is clicked. */
+  useEffect(() => {
+    try { localStorage.setItem(LS_TRACK, trackId); } catch { /* ignore */ }
+  }, [trackId]);
 
   /* ── navigation ── */
 

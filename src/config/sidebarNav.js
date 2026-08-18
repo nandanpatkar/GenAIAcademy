@@ -88,8 +88,8 @@ export function getActiveNavId(p) {
   if (p.showLangChainDocs) return p.langChainProduct || "langchain";
   // Strands is one nav item over five in-viewer products, so it does not.
   if (p.showStrandsDocs) return "strands";
-  // The exams track id doubles as the nav id, same as LangChain's products.
-  if (p.showExamsDocs) return p.examsTrack || "exam_guide";
+  // One nav item over seven in-viewer tracks, so no extra mapping.
+  if (p.showExamsDocs) return "exams";
   // The AI from Scratch track id doubles as the nav id, minus the prefix.
   if (p.showAiFromScratch) return `aifs_${p.aifsTrack === "guides" ? "reference" : p.aifsTrack || "curriculum"}`;
   if (!p.activeNode) return "overview";
@@ -215,15 +215,7 @@ export function runNavClick(id, p, ctx = {}) {
     case "strands":
       if (p.setShowStrandsDocs) p.setShowStrandsDocs(true);
       break;
-    case "exam_guide":
-    case "exam_ai_services":
-    case "exam_data":
-    case "exam_modeling":
-    case "exam_sagemaker":
-    case "exam_genai":
-    case "exam_mlops":
-      // One viewer, entered scoped to the track the reader picked.
-      if (p.setExamsTrack) p.setExamsTrack(id);
+    case "exams":
       if (p.setShowExamsDocs) p.setShowExamsDocs(true);
       break;
     case "aifs_curriculum":

@@ -81,7 +81,7 @@ function Sidebar({
   showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
   showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
   showStrandsDocs, setShowStrandsDocs,
-  showExamsDocs, setShowExamsDocs, examsTrack, setExamsTrack,
+  showExamsDocs, setShowExamsDocs,
   showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
   showOnboarding, setShowOnboarding,
   activeToolHome, onOpenToolHome,
@@ -327,7 +327,7 @@ function Sidebar({
     if (showAgentCore) return agentCoreMode === "connect" ? "amazon_connect" : "aws_agentcore";
     if (showLangChainDocs) return langChainProduct || "langchain";
     if (showStrandsDocs) return "strands";
-    if (showExamsDocs) return examsTrack || "exam_guide";
+    if (showExamsDocs) return "exams";
     if (showAiFromScratch) return `aifs_${aifsTrack === "guides" ? "reference" : aifsTrack || "curriculum"}`;
     if (!activeNode) return "overview";
     return null;
@@ -436,14 +436,7 @@ function Sidebar({
       case "strands":
         if (setShowStrandsDocs) setShowStrandsDocs(true);
         break;
-      case "exam_guide":
-      case "exam_ai_services":
-      case "exam_data":
-      case "exam_modeling":
-      case "exam_sagemaker":
-      case "exam_genai":
-      case "exam_mlops":
-        if (setExamsTrack) setExamsTrack(id);
+      case "exams":
         if (setShowExamsDocs) setShowExamsDocs(true);
         break;
       case "aifs_curriculum":
