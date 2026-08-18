@@ -1,0 +1,40 @@
+{
+  "source": "https://github.com/artreimus/notes-aws-machine-learning",
+  "commit": "273d37e06b77f1109f72db1a494a829f63a83a12",
+  "pages": 299,
+  "tracks": {
+    "exam_guide": 11,
+    "exam_ai_services": 18,
+    "exam_data": 66,
+    "exam_modeling": 59,
+    "exam_sagemaker": 27,
+    "exam_genai": 50,
+    "exam_mlops": 68
+  },
+  "domains": {
+    "1.1": 45,
+    "1.2": 22,
+    "1.3": 21,
+    "2.1": 109,
+    "2.2": 65,
+    "2.3": 15,
+    "3.1": 94,
+    "3.2": 5,
+    "3.3": 37,
+    "4.1": 60,
+    "4.2": 37,
+    "4.3": 27
+  },
+  "statuses": {
+    "draft": 204,
+    "legacy": 10,
+    "out-of-scope": 4,
+    "reviewed": 67,
+    "supplemental": 14
+  },
+  "wikilinks": {
+    "resolved": 365,
+    "unresolved": []
+  },
+  "bytes": 1419623
+}

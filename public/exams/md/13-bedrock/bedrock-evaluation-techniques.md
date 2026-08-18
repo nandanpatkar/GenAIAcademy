@@ -1,0 +1,60 @@
+## Overview
+- Bedrock provides multiple evaluation approaches to compare models, prompts, and RAG pipelines.
+- Techniques span automatic metrics, LLM-as-a-judge, and human evaluation, plus RAG-specific evaluation.
+
+## Core Evaluation Techniques
+
+### 1) Programmatic (Automatic) Evaluation
+- Uses built-in datasets and classic metrics (accuracy, robustness, toxicity, etc.).
+- Best for fast, repeatable baseline comparisons across models or prompt variants.
+
+### 2) LLM-as-a-Judge
+- Uses a separate evaluator model to score the generator model’s outputs.
+- Useful for subjective quality dimensions such as correctness, completeness, helpfulness, and tone.
+- Supports custom metrics via custom judge prompts and rating scales.
+
+### 3) Human Evaluation
+- Human reviewers score outputs for subjective or brand-specific criteria.
+- Used for safety, tone, policy alignment, or high-stakes quality checks.
+
+### 4) RAG Evaluation (Retrieval)
+- Measures how good retrieval is: context relevance, coverage, and recall.
+- Useful for tuning chunking, embeddings, and retrieval parameters.
+
+### 5) RAG Evaluation (Retrieve and Generate)
+- End-to-end evaluation of the full RAG workflow output.
+- Includes faithfulness (hallucination detection), correctness, and completeness.
+
+## Metrics (Common Examples)
+- **Correctness, completeness, relevance** for answer quality.
+- **Faithfulness** to detect hallucinations in RAG outputs.
+- **Helpfulness and tone** for human-aligned quality.
+- **Toxicity/harmfulness** for safety review.
+
+## Datasets
+- Built-in datasets for standard tasks (summarization, QA, classification).
+- Custom prompt datasets to reflect your real workload and edge cases.
+
+## Workflow (Typical)
+1. Choose evaluation type (model or RAG).
+2. Select dataset (built-in or custom).
+3. Pick evaluation technique (programmatic, LLM judge, human).
+4. Run evaluation job and review results.
+5. Compare across models, prompts, or configurations.
+
+## Best Practices
+- Use custom datasets that mirror production inputs.
+- Combine automated metrics with judge-based evaluation for balanced signals.
+- Keep a fixed evaluation suite for regression detection.
+- Re-evaluate when you change models, prompts, or retrieval settings.
+
+## Exam Tips
+- Bedrock supports automatic, LLM-as-judge, and human evaluation techniques.
+- RAG evaluation is split into retrieval-only and retrieve-and-generate.
+- LLM-as-judge is for subjective quality dimensions that classic metrics miss.
+
+## Sources
+
+```ex-sources
+[{"title": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation.html", "href": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation.html"}, {"title": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-tasks.html", "href": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-tasks.html"}, {"title": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-metrics.html", "href": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-metrics.html"}, {"title": "https://docs.aws.amazon.com/bedrock/latest/userguide/evaluation-judge.html", "href": "https://docs.aws.amazon.com/bedrock/latest/userguide/evaluation-judge.html"}, {"title": "https://aws.amazon.com/bedrock/evaluations/", "href": "https://aws.amazon.com/bedrock/evaluations/"}]
+```

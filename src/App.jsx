@@ -83,6 +83,7 @@ const ManualViewer = React.lazy(() => import("./components/ManualViewer"));
 const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"));
 const AgentCoreViewer = React.lazy(() => import("./components/AgentCoreViewer"));
 const LangChainDocs = React.lazy(() => import("./components/LangChainDocs"));
+const ExamsDocs = React.lazy(() => import("./components/ExamsDocs"));
 const StrandsDocs = React.lazy(() => import("./components/StrandsDocs"));
 const ApiHub = React.lazy(() => import("./components/ApiHub"));
 const DataScienceCourse = React.lazy(() => import("./components/DataScienceCourse"));
@@ -658,6 +659,8 @@ function MainApp() {
   const [showLangChainDocs, setShowLangChainDocs] = useViewState(savedViews.showLangChainDocs ?? false);
   const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
   const [showStrandsDocs, setShowStrandsDocs] = useViewState(savedViews.showStrandsDocs ?? false);
+  const [showExamsDocs, setShowExamsDocs] = useViewState(savedViews.showExamsDocs ?? false);
+  const [examsTrack, setExamsTrack] = useState(savedViews.examsTrack ?? "exam_guide");
   const [showApiHub, setShowApiHub] = useViewState(savedViews.showApiHub ?? false);
   const [showDataScience, setShowDataScience] = useViewState(savedViews.showDataScience ?? false);
   const [showChaiVisual, setShowChaiVisual] = useViewState(savedViews.showChaiVisual ?? false);
@@ -724,6 +727,7 @@ function MainApp() {
         showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
         showKnowledgeGraph, showReference, showAgentCore,
         showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
+        showExamsDocs, examsTrack,
         showDataScience, showChaiVisual,
         showAiFromScratch, aifsTrack
       }));
@@ -739,6 +743,7 @@ function MainApp() {
     showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
     showKnowledgeGraph, showReference, showAgentCore,
     showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
+    showExamsDocs, examsTrack,
     showDataScience, showChaiVisual,
     showAiFromScratch, aifsTrack
   ]);
@@ -914,6 +919,7 @@ function MainApp() {
     setShowAgentCore(false);
     setShowLangChainDocs(false);
     setShowStrandsDocs(false);
+    setShowExamsDocs(false);
     setShowAiFromScratch(false);
     setShowLeetCode(false);
     setShowAlgoWar(false);
@@ -1050,6 +1056,16 @@ function MainApp() {
         setShowLangChainDocs(true);
         break;
       case "strands": setShowStrandsDocs(true); break;
+      case "exam_guide":
+      case "exam_ai_services":
+      case "exam_data":
+      case "exam_modeling":
+      case "exam_sagemaker":
+      case "exam_genai":
+      case "exam_mlops":
+        setExamsTrack(sectionId);
+        setShowExamsDocs(true);
+        break;
       case "learn_api": setShowApiHub(true); break;
       case "data_science": setShowDataScience(true); break;
       case "chai_visual": setShowChaiVisual(true); break;
@@ -1584,6 +1600,7 @@ function MainApp() {
     showAgentCore, setShowAgentCore, agentCoreMode, setAgentCoreMode,
     showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
     showStrandsDocs, setShowStrandsDocs,
+    showExamsDocs, setShowExamsDocs, examsTrack, setExamsTrack,
     showApiHub, setShowApiHub,
     showDataScience, setShowDataScience,
     showChaiVisual, setShowChaiVisual,
@@ -1774,6 +1791,7 @@ function MainApp() {
                                                         showAgentCore ? <ErrorBoundary><AgentCoreViewer initialMode={agentCoreMode} onClose={() => setShowAgentCore(false)} /></ErrorBoundary> :
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
+                                                        showExamsDocs ? <ErrorBoundary><ExamsDocs track={examsTrack} onClose={() => setShowExamsDocs(false)} /></ErrorBoundary> :
                                                         showApiHub ? <ErrorBoundary><ApiHub onClose={() => setShowApiHub(false)} /></ErrorBoundary> :
                                                         showDataScience ? <ErrorBoundary><DataScienceCourse onClose={() => setShowDataScience(false)} /></ErrorBoundary> :
                                                         showChaiVisual ? <ErrorBoundary><ChaiVisualCourse onClose={() => setShowChaiVisual(false)} /></ErrorBoundary> :

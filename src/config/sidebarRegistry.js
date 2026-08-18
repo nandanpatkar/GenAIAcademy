@@ -179,6 +179,16 @@ export const SIDEBAR_ITEM_REGISTRY = {
   aifs_certification: { icon: BadgeCheck, label: "Certification", description: "The Claude certification study track" },
   aifs_reference: { icon: Tags, label: "Roadmap & Glossary", description: "The full lesson plan, the vocabulary, and the myths worth unlearning" },
 
+  // Exams and Certification — the AWS ML certification vault, one entry per
+  // track, entered scoped the same way the Agents section enters LangChainDocs.
+  exam_guide: { icon: BadgeCheck, label: "Exam Guide", description: "The MLA-C01 exam shape, its four domains, and a study roadmap" },
+  exam_ai_services: { icon: Sparkles, label: "AI Services", description: "Managed AWS AI: language, vision, search, personalization, forecasting" },
+  exam_data: { icon: DatabaseZap, label: "Data Engineering", description: "Ingestion, streaming, storage, databases, transformation, and SQL" },
+  exam_modeling: { icon: Sigma, label: "Modeling & Algorithms", description: "Training, tuning, evaluation, and the SageMaker built-in algorithms" },
+  exam_sagemaker: { icon: Boxes, label: "SageMaker AI", description: "Studio, features, training, deployment, and model governance" },
+  exam_genai: { icon: Bot, label: "Generative AI", description: "Transformers, Amazon Bedrock, knowledge bases, guardrails, and agents" },
+  exam_mlops: { icon: ShieldCheck, label: "MLOps & Security", description: "CI/CD, orchestration, inference infrastructure, cost, and security" },
+
   learn_api: { icon: Webhook, label: "Learn API", description: "Browse 168 live REST endpoints and send real requests from the browser" },
   data_science: { icon: Sigma, label: "Data Science", description: "NumPy, pandas, Matplotlib and machine learning — 111 animated lessons and 382 graded exercises" },
   chai_visual: { icon: Binary, label: "Visual Learning", description: "DSA patterns, low-level design, networking and operating systems — 282 animated lessons" },
@@ -233,6 +243,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn_api", label: "Learn API", itemIds: ["learn_api"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
   { id: "ai_from_scratch", label: "AI from Scratch", itemIds: ["aifs_curriculum", "aifs_certification", "aifs_reference"] },
+  { id: "exams", label: "Exams and Certification", itemIds: ["exam_guide", "exam_ai_services", "exam_data", "exam_modeling", "exam_sagemaker", "exam_genai", "exam_mlops"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
@@ -374,6 +385,16 @@ const AIFS_ITEM_IDS = [
   "aifs_curriculum",
   "aifs_certification",
   "aifs_reference",
+];
+
+const EXAM_ITEM_IDS = [
+  "exam_guide",
+  "exam_ai_services",
+  "exam_data",
+  "exam_modeling",
+  "exam_sagemaker",
+  "exam_genai",
+  "exam_mlops",
 ];
 
 const AGENT_ITEM_IDS = [
@@ -524,6 +545,21 @@ export const resolveEffectiveLayout = (savedLayout) => {
   }
   aifsGroup.label = "AI from Scratch";
   aifsGroup.itemIds.push(...AIFS_ITEM_IDS);
+
+  // Same migration for Exams and Certification, which sits directly after AI
+  // from Scratch. Without it, anyone with a saved layout would get its seven
+  // entries appended to "More tools" as orphans.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => !EXAM_ITEM_IDS.includes(id));
+  });
+  let examsGroup = groups.find((group) => group.id === "exams");
+  if (!examsGroup) {
+    examsGroup = { id: "exams", label: "Exams and Certification", itemIds: [] };
+    const aifsIndex = groups.findIndex((group) => group.id === "ai_from_scratch");
+    groups.splice(aifsIndex === -1 ? groups.length : aifsIndex + 1, 0, examsGroup);
+  }
+  examsGroup.label = "Exams and Certification";
+  examsGroup.itemIds.push(...EXAM_ITEM_IDS);
 
   const covered = new Set(groups.flatMap((group) => group.itemIds));
   // Individual lab destinations live inside LabsHub. They are intentionally

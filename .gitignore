@@ -76,6 +76,13 @@ agentcore-samples-main/
 /Langchain/
 /Claude Certeficate/
 
+# Upstream vault used only as build input for the Exams and Certification
+# viewer (scripts/build_exams_docs.py). The script clones it here on first run.
+# What ships is the normalized output under public/exams/, which — unlike the
+# doc archives below — is small enough (~1.4 MB, no images) to commit and serve
+# straight from public/ with no CDN rewrite.
+/notes-aws-machine-learning/
+
 # Upstream curriculum used only as build input for the AI from Scratch viewer
 # (scripts/build_ai_from_scratch.py) — 19 MB of lesson sources. What ships is
 # the sanitized output under public/ai-from-scratch/, which is itself served
