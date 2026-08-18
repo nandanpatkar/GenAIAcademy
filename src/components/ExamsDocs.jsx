@@ -3,13 +3,13 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight, List,
-  ExternalLink, FileText, Clock, Layers, PanelLeft, Loader2, AlertCircle,
+  FileText, Clock, Layers, PanelLeft, Loader2, AlertCircle,
   BadgeCheck, Sparkles, DatabaseZap, Sigma, Boxes, Bot, ShieldCheck,
-  Target, CircleCheck, Circle, GitBranch, Filter, Timer,
+  Target, CircleCheck, Circle, Filter, Timer,
 } from "lucide-react";
 import {
   EXAMS_TRACKS, EXAMS_ALL_PAGES, EXAMS_TOTAL_PAGES, EXAMS_DOMAINS,
-  EXAMS_SOURCE_URL, EXAMS_CERTIFICATION, EXAMS_STATUS_LABELS,
+  EXAMS_CERTIFICATION, EXAMS_STATUS_LABELS,
 } from "../data/examsDocsData";
 import { makeExamsComponents, examsUrlTransform } from "./ExamsMarkdown";
 import { extractToc } from "./LangChainMarkdown";
@@ -521,20 +521,15 @@ export default function ExamsDocs({ onClose }) {
 
           <div className="ex-topbar-end">
             {activePage ? (
-              <>
-                <button
-                  type="button"
-                  className={`ex-btn${read.has(activePage.slug) ? " ex-btn--on" : ""}`}
-                  onClick={() => toggleRead(activePage.slug)}
-                  title={read.has(activePage.slug) ? "Mark as unread" : "Mark as read"}
-                >
-                  {read.has(activePage.slug) ? <CircleCheck size={12} /> : <Circle size={12} />}
-                  <span>{read.has(activePage.slug) ? "Read" : "Mark read"}</span>
-                </button>
-                <a className="ex-btn" href={activePage.source} target="_blank" rel="noopener noreferrer">
-                  <GitBranch size={12} /> <span>Source</span>
-                </a>
-              </>
+              <button
+                type="button"
+                className={`ex-btn${read.has(activePage.slug) ? " ex-btn--on" : ""}`}
+                onClick={() => toggleRead(activePage.slug)}
+                title={read.has(activePage.slug) ? "Mark as unread" : "Mark as read"}
+              >
+                {read.has(activePage.slug) ? <CircleCheck size={12} /> : <Circle size={12} />}
+                <span>{read.has(activePage.slug) ? "Read" : "Mark read"}</span>
+              </button>
             ) : null}
             {onClose ? (
               <button type="button" className="ex-icon-btn" onClick={onClose} title="Close"><X size={15} /></button>
@@ -704,10 +699,6 @@ function Landing({ track, recentPages, read, onOpen, onPickDomain }) {
             <FileText size={12} /> {pages.length} notes
             <span className="ex-dot" />
             <CircleCheck size={12} /> {reviewed} reviewed
-            <span className="ex-dot" />
-            <a href={EXAMS_SOURCE_URL} target="_blank" rel="noopener noreferrer">
-              artreimus/notes-aws-machine-learning <ExternalLink size={10} />
-            </a>
           </p>
         </div>
       </header>

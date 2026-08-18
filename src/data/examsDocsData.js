@@ -7,8 +7,6 @@
 //
 // Regenerate with `npm run build:exams` rather than hand-editing.
 
-export const EXAMS_SOURCE_URL = "https://github.com/artreimus/notes-aws-machine-learning";
-
 export const EXAMS_TOTAL_PAGES = 299;
 
 export const EXAMS_CERTIFICATION = {
@@ -1795,8 +1793,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 254,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/exam-overview.md"
+  "words": 254
  },
  {
   "slug": "00-exam-guide/domain-1-data-preparation",
@@ -1830,8 +1827,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 133,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/domain-1-data-preparation.md"
+  "words": 133
  },
  {
   "slug": "00-exam-guide/domain-2-model-development",
@@ -1865,8 +1861,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 113,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/domain-2-model-development.md"
+  "words": 113
  },
  {
   "slug": "00-exam-guide/domain-3-deployment-orchestration",
@@ -1900,8 +1895,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 107,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/domain-3-deployment-orchestration.md"
+  "words": 107
  },
  {
   "slug": "00-exam-guide/domain-4-monitoring-security",
@@ -1935,8 +1929,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 109,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/domain-4-monitoring-security.md"
+  "words": 109
  },
  {
   "slug": "00-exam-guide/in-scope-services",
@@ -1966,8 +1959,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 155,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/in-scope-services.md"
+  "words": 155
  },
  {
   "slug": "00-exam-guide/out-of-scope-services",
@@ -1997,8 +1989,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 55,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/out-of-scope-services.md"
+  "words": 55
  },
  {
   "slug": "00-exam-guide/study-roadmap",
@@ -2028,8 +2019,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 124,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/00-exam-guide/study-roadmap.md"
+  "words": 124
  },
  {
   "slug": "README",
@@ -2064,8 +2054,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 9,
-  "words": 993,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/README.md"
+  "words": 993
  },
  {
   "slug": "NOTE_TEMPLATE",
@@ -2090,13 +2079,12 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "repo-standard",
   "sourceCount": 3,
-  "words": 187,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/NOTE_TEMPLATE.md"
+  "words": 187
  },
  {
   "slug": "PLAN_NOTES_IMPROVEMENT",
   "title": "Plan: Improve AWS MLA-C01 Notes",
-  "desc": "Created: 2026-05-15 Repo: /Users/artreimus/Repositories/notes/notes-aws-ml-associate-mla-c01",
+  "desc": "Improve this vault as a study system for the AWS Certified Machine Learning Engineer - Associate (MLA-C01) exam by:",
   "file": "/exams/md/PLAN_NOTES_IMPROVEMENT.md",
   "track": "exam_guide",
   "tab": "About this vault",
@@ -2121,8 +2109,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "mixed-official-research",
   "sourceCount": 0,
-  "words": 5656,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/PLAN_NOTES_IMPROVEMENT.md"
+  "words": 5656
  },
  {
   "slug": "01-ai-services/comprehend",
@@ -2153,8 +2140,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1086,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/comprehend.md"
+  "words": 1086
  },
  {
   "slug": "01-ai-services/comprehend-medical",
@@ -2190,8 +2176,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 225,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/comprehend-medical.md"
+  "words": 225
  },
  {
   "slug": "01-ai-services/translate",
@@ -2222,8 +2207,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 554,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/translate.md"
+  "words": 554
  },
  {
   "slug": "01-ai-services/transcribe",
@@ -2254,8 +2238,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 435,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/transcribe.md"
+  "words": 435
  },
  {
   "slug": "01-ai-services/polly",
@@ -2286,8 +2269,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 389,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/polly.md"
+  "words": 389
  },
  {
   "slug": "01-ai-services/lex",
@@ -2318,8 +2300,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 502,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/lex.md"
+  "words": 502
  },
  {
   "slug": "01-ai-services/rekognition",
@@ -2350,8 +2331,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1045,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/rekognition.md"
+  "words": 1045
  },
  {
   "slug": "01-ai-services/textract",
@@ -2382,8 +2362,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 425,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/textract.md"
+  "words": 425
  },
  {
   "slug": "01-ai-services/kendra",
@@ -2414,8 +2393,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 518,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/kendra.md"
+  "words": 518
  },
  {
   "slug": "01-ai-services/opensearch",
@@ -2446,8 +2424,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 535,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/opensearch.md"
+  "words": 535
  },
  {
   "slug": "01-ai-services/personalize",
@@ -2478,8 +2455,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 500,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/personalize.md"
+  "words": 500
  },
  {
   "slug": "01-ai-services/forecast",
@@ -2513,8 +2489,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 168,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/forecast.md"
+  "words": 168
  },
  {
   "slug": "01-ai-services/fraud-detector",
@@ -2547,8 +2522,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 233,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/fraud-detector.md"
+  "words": 233
  },
  {
   "slug": "01-ai-services/lookout-for-equipment",
@@ -2581,8 +2555,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 228,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/lookout-for-equipment.md"
+  "words": 228
  },
  {
   "slug": "01-ai-services/lookout-for-metrics",
@@ -2616,8 +2589,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 207,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/lookout-for-metrics.md"
+  "words": 207
  },
  {
   "slug": "01-ai-services/lookout-for-vision",
@@ -2650,8 +2622,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 196,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/lookout-for-vision.md"
+  "words": 196
  },
  {
   "slug": "01-ai-services/healthlake",
@@ -2687,8 +2658,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 234,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/healthlake.md"
+  "words": 234
  },
  {
   "slug": "01-ai-services/amazon-q",
@@ -2725,8 +2695,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 283,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/01-ai-services/amazon-q.md"
+  "words": 283
  },
  {
   "slug": "02-data-ingestion-and-storage/types-of-data",
@@ -2757,8 +2726,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 484,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/types-of-data.md"
+  "words": 484
  },
  {
   "slug": "02-data-ingestion-and-storage/properties-of-data",
@@ -2789,8 +2757,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 552,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/properties-of-data.md"
+  "words": 552
  },
  {
   "slug": "02-data-ingestion-and-storage/data-sources-and-data-formats",
@@ -2821,8 +2788,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 715,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/data-sources-and-data-formats.md"
+  "words": 715
  },
  {
   "slug": "02-data-ingestion-and-storage/data-lake-lakehouses-warehouses",
@@ -2861,8 +2827,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 282,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/data-lake-lakehouses-warehouses.md"
+  "words": 282
  },
  {
   "slug": "02-data-ingestion-and-storage/data-mesh",
@@ -2893,8 +2858,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 666,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/data-mesh.md"
+  "words": 666
  },
  {
   "slug": "02-data-ingestion-and-storage/amazon-datazone",
@@ -2924,8 +2888,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 122,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/amazon-datazone.md"
+  "words": 122
  },
  {
   "slug": "02-data-ingestion-and-storage/etl-and-elt",
@@ -2956,8 +2919,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 666,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/etl-and-elt.md"
+  "words": 666
  },
  {
   "slug": "02-data-ingestion-and-storage/data-pipelines",
@@ -2987,8 +2949,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 133,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/data-pipelines.md"
+  "words": 133
  },
  {
   "slug": "02-data-ingestion-and-storage/feature-engineering",
@@ -3019,8 +2980,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 427,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/feature-engineering.md"
+  "words": 427
  },
  {
   "slug": "02-data-ingestion-and-storage/glue-databrew",
@@ -3055,8 +3015,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 238,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/glue-databrew.md"
+  "words": 238
  },
  {
   "slug": "02-data-ingestion-and-storage/kinesis-data-streams",
@@ -3087,8 +3046,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 880,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/kinesis-data-streams.md"
+  "words": 880
  },
  {
   "slug": "02-data-ingestion-and-storage/kinesis-data-firehose",
@@ -3119,8 +3077,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 700,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/kinesis-data-firehose.md"
+  "words": 700
  },
  {
   "slug": "02-data-ingestion-and-storage/kinesis-data-stream-vs-firehose",
@@ -3151,8 +3108,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 429,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/kinesis-data-stream-vs-firehose.md"
+  "words": 429
  },
  {
   "slug": "02-data-ingestion-and-storage/kinesis-data-analytics",
@@ -3186,8 +3142,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 228,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/kinesis-data-analytics.md"
+  "words": 228
  },
  {
   "slug": "02-data-ingestion-and-storage/kinesis-client-library",
@@ -3218,8 +3173,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 547,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/kinesis-client-library.md"
+  "words": 547
  },
  {
   "slug": "02-data-ingestion-and-storage/kinesis-producer-library",
@@ -3250,8 +3204,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 567,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/kinesis-producer-library.md"
+  "words": 567
  },
  {
   "slug": "02-data-ingestion-and-storage/kinesis-video-streams",
@@ -3286,8 +3239,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 200,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/kinesis-video-streams.md"
+  "words": 200
  },
  {
   "slug": "02-data-ingestion-and-storage/managed-streaming-for-apache-kafka",
@@ -3318,8 +3270,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 656,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/managed-streaming-for-apache-kafka.md"
+  "words": 656
  },
  {
   "slug": "02-data-ingestion-and-storage/managed-service-for-apache-flink",
@@ -3355,8 +3306,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 265,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/managed-service-for-apache-flink.md"
+  "words": 265
  },
  {
   "slug": "02-data-ingestion-and-storage/s3",
@@ -3387,8 +3337,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 619,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/s3.md"
+  "words": 619
  },
  {
   "slug": "02-data-ingestion-and-storage/s3-glacier",
@@ -3422,8 +3371,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 233,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/s3-glacier.md"
+  "words": 233
  },
  {
   "slug": "02-data-ingestion-and-storage/elastic-block-storage",
@@ -3454,8 +3402,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 331,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/elastic-block-storage.md"
+  "words": 331
  },
  {
   "slug": "02-data-ingestion-and-storage/elastic-file-system",
@@ -3486,8 +3433,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 568,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/elastic-file-system.md"
+  "words": 568
  },
  {
   "slug": "02-data-ingestion-and-storage/fsx",
@@ -3521,8 +3467,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 224,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/fsx.md"
+  "words": 224
  },
  {
   "slug": "02-data-ingestion-and-storage/storage-gateway",
@@ -3555,8 +3500,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 201,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/storage-gateway.md"
+  "words": 201
  },
  {
   "slug": "02-data-ingestion-and-storage/datasync",
@@ -3587,8 +3531,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 455,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/datasync.md"
+  "words": 455
  },
  {
   "slug": "02-data-ingestion-and-storage/database-migration-service",
@@ -3619,8 +3562,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 12,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/database-migration-service.md"
+  "words": 12
  },
  {
   "slug": "02-data-ingestion-and-storage/ec2-instance-types",
@@ -3651,8 +3593,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 530,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/ec2-instance-types.md"
+  "words": 530
  },
  {
   "slug": "02-data-ingestion-and-storage/rds",
@@ -3683,8 +3624,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 250,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/rds.md"
+  "words": 250
  },
  {
   "slug": "02-data-ingestion-and-storage/aurora",
@@ -3715,8 +3655,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 284,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/aurora.md"
+  "words": 284
  },
  {
   "slug": "02-data-ingestion-and-storage/dynamodb",
@@ -3747,8 +3686,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 582,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/dynamodb.md"
+  "words": 582
  },
  {
   "slug": "02-data-ingestion-and-storage/documentdb",
@@ -3779,8 +3717,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 429,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/documentdb.md"
+  "words": 429
  },
  {
   "slug": "02-data-ingestion-and-storage/keyspaces",
@@ -3811,8 +3748,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 210,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/keyspaces.md"
+  "words": 210
  },
  {
   "slug": "02-data-ingestion-and-storage/neptune",
@@ -3843,8 +3779,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 195,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/neptune.md"
+  "words": 195
  },
  {
   "slug": "02-data-ingestion-and-storage/timestream",
@@ -3875,8 +3810,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 199,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/timestream.md"
+  "words": 199
  },
  {
   "slug": "02-data-ingestion-and-storage/qldb",
@@ -3907,8 +3841,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 158,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/qldb.md"
+  "words": 158
  },
  {
   "slug": "02-data-ingestion-and-storage/elasticache",
@@ -3939,8 +3872,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 209,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/elasticache.md"
+  "words": 209
  },
  {
   "slug": "02-data-ingestion-and-storage/sql-databases",
@@ -3971,8 +3903,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 536,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/sql-databases.md"
+  "words": 536
  },
  {
   "slug": "02-data-ingestion-and-storage/no-sql-databases",
@@ -4003,8 +3934,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 572,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/no-sql-databases.md"
+  "words": 572
  },
  {
   "slug": "02-data-ingestion-and-storage/jdbc-odbc",
@@ -4035,8 +3965,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 804,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/jdbc-odbc.md"
+  "words": 804
  },
  {
   "slug": "02-data-ingestion-and-storage/redshift",
@@ -4067,8 +3996,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 940,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/redshift.md"
+  "words": 940
  },
  {
   "slug": "02-data-ingestion-and-storage/redshift-spectrum",
@@ -4099,8 +4027,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 466,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/redshift-spectrum.md"
+  "words": 466
  },
  {
   "slug": "02-data-ingestion-and-storage/opensearch-layers",
@@ -4131,8 +4058,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 687,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/opensearch-layers.md"
+  "words": 687
  },
  {
   "slug": "02-data-ingestion-and-storage/quicksight",
@@ -4168,8 +4094,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 236,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/quicksight.md"
+  "words": 236
  },
  {
   "slug": "02-data-ingestion-and-storage/pandas",
@@ -4200,8 +4125,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 917,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/pandas.md"
+  "words": 917
  },
  {
   "slug": "02-data-ingestion-and-storage/scikit-learn",
@@ -4232,8 +4156,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 1449,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/scikit-learn.md"
+  "words": 1449
  },
  {
   "slug": "02-data-ingestion-and-storage/matplotlib-seaborn",
@@ -4264,8 +4187,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 1383,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/02-data-ingestion-and-storage/matplotlib-seaborn.md"
+  "words": 1383
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/glue",
@@ -4297,8 +4219,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1027,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/glue.md"
+  "words": 1027
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/spark",
@@ -4330,8 +4251,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 194,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/spark.md"
+  "words": 194
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/spark-integrations",
@@ -4363,8 +4283,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 953,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/spark-integrations.md"
+  "words": 953
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/elastic-map-reduce",
@@ -4396,8 +4315,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 2498,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/elastic-map-reduce.md"
+  "words": 2498
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/hadoop",
@@ -4429,8 +4347,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 208,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/hadoop.md"
+  "words": 208
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/hive",
@@ -4462,8 +4379,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 183,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/hive.md"
+  "words": 183
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/presto",
@@ -4495,8 +4411,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 191,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/presto.md"
+  "words": 191
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/athena",
@@ -4528,8 +4443,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 529,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/athena.md"
+  "words": 529
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/data-quality-validation",
@@ -4564,8 +4478,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 217,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/data-quality-validation.md"
+  "words": 217
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/glue-data-quality",
@@ -4601,8 +4514,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 258,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/glue-data-quality.md"
+  "words": 258
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/feature-engineering",
@@ -4634,8 +4546,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1304,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/feature-engineering.md"
+  "words": 1304
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/encoding-techniques",
@@ -4669,8 +4580,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 189,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/encoding-techniques.md"
+  "words": 189
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/tf-idf",
@@ -4702,8 +4612,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 891,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/tf-idf.md"
+  "words": 891
  },
  {
   "slug": "03-data-transformation-integrity-and-feature-engineering/l1-and-l2-regularization",
@@ -4735,8 +4644,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 562,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/03-data-transformation-integrity-and-feature-engineering/l1-and-l2-regularization.md"
+  "words": 562
  },
  {
   "slug": "12-sql/sql-fundamentals",
@@ -4767,8 +4675,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 571,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/12-sql/sql-fundamentals.md"
+  "words": 571
  },
  {
   "slug": "12-sql/sql-analytics-patterns",
@@ -4799,8 +4706,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 591,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/12-sql/sql-analytics-patterns.md"
+  "words": 591
  },
  {
   "slug": "12-sql/sql-performance-tuning",
@@ -4831,8 +4737,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 455,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/12-sql/sql-performance-tuning.md"
+  "words": 455
  },
  {
   "slug": "12-sql/sql-on-aws",
@@ -4863,8 +4768,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 548,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/12-sql/sql-on-aws.md"
+  "words": 548
  },
  {
   "slug": "12-sql/sql-quick-reference",
@@ -4895,8 +4799,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 652,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/12-sql/sql-quick-reference.md"
+  "words": 652
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/model-hyperparameters",
@@ -4928,8 +4831,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 731,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/model-hyperparameters.md"
+  "words": 731
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/automatic-model-tuning-and-hyperparameter-tuning",
@@ -4961,8 +4863,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 858,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/automatic-model-tuning-and-hyperparameter-tuning.md"
+  "words": 858
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/model-baselines-and-convergence",
@@ -4996,8 +4897,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 219,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/model-baselines-and-convergence.md"
+  "words": 219
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/training-compiler",
@@ -5030,8 +4930,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 137,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/training-compiler.md"
+  "words": 137
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/efa-and-mics",
@@ -5063,8 +4962,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 550,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/efa-and-mics.md"
+  "words": 550
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/tensorboard-integration-in-sagemaker",
@@ -5096,8 +4994,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 483,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/tensorboard-integration-in-sagemaker.md"
+  "words": 483
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/transfer-learning",
@@ -5129,8 +5026,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 532,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/transfer-learning.md"
+  "words": 532
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/neural-networks",
@@ -5162,8 +5058,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 695,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/neural-networks.md"
+  "words": 695
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/activation-functions",
@@ -5195,8 +5090,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 454,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/activation-functions.md"
+  "words": 454
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/convolutional-neural-networks",
@@ -5228,8 +5122,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 356,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/convolutional-neural-networks.md"
+  "words": 356
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/recurrent-neural-networks",
@@ -5261,8 +5154,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 451,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/recurrent-neural-networks.md"
+  "words": 451
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/model-metrics",
@@ -5294,8 +5186,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 1170,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/model-metrics.md"
+  "words": 1170
  },
  {
   "slug": "04-model-training-tuning-and-evaluation/model-selection-decision-guide",
@@ -5330,8 +5221,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 250,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/04-model-training-tuning-and-evaluation/model-selection-decision-guide.md"
+  "words": 250
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/sagemaker-built-in-algorithms-cheat-sheet",
@@ -5366,8 +5256,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 366,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/sagemaker-built-in-algorithms-cheat-sheet.md"
+  "words": 366
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/supervised-and-unsupervised-models",
@@ -5399,8 +5288,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 877,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/supervised-and-unsupervised-models.md"
+  "words": 877
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/linear-learner",
@@ -5432,8 +5320,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 445,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/linear-learner.md"
+  "words": 445
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/xgboost",
@@ -5465,8 +5352,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 544,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/xgboost.md"
+  "words": 544
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/light-gbm",
@@ -5498,8 +5384,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 342,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/light-gbm.md"
+  "words": 342
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/catboost",
@@ -5534,8 +5419,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 225,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/catboost.md"
+  "words": 225
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/autogluon-tabular",
@@ -5570,8 +5454,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 229,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/autogluon-tabular.md"
+  "words": 229
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/tabtransformer",
@@ -5606,8 +5489,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 221,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/tabtransformer.md"
+  "words": 221
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/factorization-machines",
@@ -5639,8 +5521,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 369,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/factorization-machines.md"
+  "words": 369
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/k-nearest-neighbor",
@@ -5672,8 +5553,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 370,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/k-nearest-neighbor.md"
+  "words": 370
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/blazing-text",
@@ -5705,8 +5585,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 388,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/blazing-text.md"
+  "words": 388
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/text-classification-tensorflow",
@@ -5741,8 +5620,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 225,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/text-classification-tensorflow.md"
+  "words": 225
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/seq2seq",
@@ -5774,8 +5652,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 418,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/seq2seq.md"
+  "words": 418
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/latent-dirichlet-allocation",
@@ -5807,8 +5684,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 585,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/latent-dirichlet-allocation.md"
+  "words": 585
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/neural-topic-model",
@@ -5840,8 +5716,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 403,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/neural-topic-model.md"
+  "words": 403
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/object2vec",
@@ -5873,8 +5748,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 597,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/object2vec.md"
+  "words": 597
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/image-classification",
@@ -5906,8 +5780,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 372,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/image-classification.md"
+  "words": 372
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/image-classification-tensorflow",
@@ -5942,8 +5815,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 215,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/image-classification-tensorflow.md"
+  "words": 215
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/object-detection",
@@ -5975,8 +5847,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 446,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/object-detection.md"
+  "words": 446
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/object-detection-tensorflow",
@@ -6011,8 +5882,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 218,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/object-detection-tensorflow.md"
+  "words": 218
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/semantic-segmentation",
@@ -6044,8 +5914,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 344,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/semantic-segmentation.md"
+  "words": 344
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/deep-ar",
@@ -6077,8 +5946,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 501,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/deep-ar.md"
+  "words": 501
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/random-cut-forest",
@@ -6110,8 +5978,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 277,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/random-cut-forest.md"
+  "words": 277
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/ip-insights",
@@ -6143,8 +6010,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 407,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/ip-insights.md"
+  "words": 407
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/k-means",
@@ -6176,8 +6042,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 238,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/k-means.md"
+  "words": 238
  },
  {
   "slug": "06-sagemaker-built-in-algorithms/principal-component-analysis",
@@ -6209,8 +6074,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 485,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/06-sagemaker-built-in-algorithms/principal-component-analysis.md"
+  "words": 485
  },
  {
   "slug": "common/linear-and-logistic-regression",
@@ -6240,8 +6104,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 447,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/linear-and-logistic-regression.md"
+  "words": 447
  },
  {
   "slug": "common/ensembling-learning-methods",
@@ -6271,8 +6134,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 964,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/ensembling-learning-methods.md"
+  "words": 964
  },
  {
   "slug": "common/boosting",
@@ -6302,8 +6164,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 232,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/boosting.md"
+  "words": 232
  },
  {
   "slug": "common/convolution",
@@ -6333,8 +6194,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 133,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/convolution.md"
+  "words": 133
  },
  {
   "slug": "common/probability-distribution",
@@ -6364,8 +6224,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 353,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/probability-distribution.md"
+  "words": 353
  },
  {
   "slug": "common/bias-and-variance",
@@ -6395,8 +6254,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 622,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/bias-and-variance.md"
+  "words": 622
  },
  {
   "slug": "common/preventing-overfitting",
@@ -6426,8 +6284,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 559,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/preventing-overfitting.md"
+  "words": 559
  },
  {
   "slug": "common/preventing-underfitting",
@@ -6457,8 +6314,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 715,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/preventing-underfitting.md"
+  "words": 715
  },
  {
   "slug": "common/hyperband",
@@ -6488,8 +6344,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 350,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/hyperband.md"
+  "words": 350
  },
  {
   "slug": "common/sparse-data",
@@ -6519,8 +6374,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 138,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/sparse-data.md"
+  "words": 138
  },
  {
   "slug": "common/dense-data",
@@ -6550,8 +6404,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 129,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/dense-data.md"
+  "words": 129
  },
  {
   "slug": "common/gaussian-like-data",
@@ -6581,8 +6434,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 158,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/gaussian-like-data.md"
+  "words": 158
  },
  {
   "slug": "common/normalization-standardization",
@@ -6612,8 +6464,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 771,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/normalization-standardization.md"
+  "words": 771
  },
  {
   "slug": "common/shuffling-data",
@@ -6643,8 +6494,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 497,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/shuffling-data.md"
+  "words": 497
  },
  {
   "slug": "common/sub-sampling",
@@ -6674,8 +6524,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 111,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/sub-sampling.md"
+  "words": 111
  },
  {
   "slug": "common/class-imbalance-and-resampling",
@@ -6710,8 +6559,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 210,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/class-imbalance-and-resampling.md"
+  "words": 210
  },
  {
   "slug": "common/bias-metrics-ci-dpl",
@@ -6745,8 +6593,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 206,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/bias-metrics-ci-dpl.md"
+  "words": 206
  },
  {
   "slug": "common/conditional-demographic-disparity",
@@ -6776,8 +6623,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 218,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/conditional-demographic-disparity.md"
+  "words": 218
  },
  {
   "slug": "common/interpretability-techniques",
@@ -6807,8 +6653,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 564,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/interpretability-techniques.md"
+  "words": 564
  },
  {
   "slug": "common/concept-drift",
@@ -6838,8 +6683,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 277,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/common/concept-drift.md"
+  "words": 277
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-ai-current-capabilities",
@@ -6875,8 +6719,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 259,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-ai-current-capabilities.md"
+  "words": 259
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-studio",
@@ -6911,8 +6754,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 261,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-studio.md"
+  "words": 261
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-domains",
@@ -6947,8 +6789,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 269,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-domains.md"
+  "words": 269
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-canvas",
@@ -6983,8 +6824,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 533,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-canvas.md"
+  "words": 533
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-jumpstart",
@@ -7019,8 +6859,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 634,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-jumpstart.md"
+  "words": 634
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-projects",
@@ -7055,8 +6894,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 436,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-projects.md"
+  "words": 436
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-data-wrangler",
@@ -7091,8 +6929,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 887,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-data-wrangler.md"
+  "words": 887
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-feature-store",
@@ -7127,8 +6964,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 804,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-feature-store.md"
+  "words": 804
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-input-modes",
@@ -7163,8 +6999,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 784,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-input-modes.md"
+  "words": 784
  },
  {
   "slug": "05-sagemaker-ai/spark-with-sagemaker",
@@ -7199,8 +7034,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 672,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/spark-with-sagemaker.md"
+  "words": 672
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-training-techniques",
@@ -7234,8 +7068,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 291,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-training-techniques.md"
+  "words": 291
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-training-compiler",
@@ -7268,8 +7101,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 224,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-training-compiler.md"
+  "words": 224
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-model-parallelism",
@@ -7304,8 +7136,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 672,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-model-parallelism.md"
+  "words": 672
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-spot-training",
@@ -7340,8 +7171,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 257,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-spot-training.md"
+  "words": 257
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-auto-pilot-or-automl",
@@ -7376,8 +7206,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 821,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-auto-pilot-or-automl.md"
+  "words": 821
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-debugger",
@@ -7412,8 +7241,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 377,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-debugger.md"
+  "words": 377
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-experiments",
@@ -7448,8 +7276,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 513,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-experiments.md"
+  "words": 513
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-deployment-modes",
@@ -7484,8 +7311,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 806,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-deployment-modes.md"
+  "words": 806
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-model-endpoints",
@@ -7520,8 +7346,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 632,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-model-endpoints.md"
+  "words": 632
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-elastic-inference",
@@ -7555,8 +7380,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 186,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-elastic-inference.md"
+  "words": 186
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-neo",
@@ -7589,8 +7413,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 213,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-neo.md"
+  "words": 213
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-pipelines",
@@ -7625,8 +7448,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 947,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-pipelines.md"
+  "words": 947
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-model-registry",
@@ -7661,8 +7483,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 854,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-model-registry.md"
+  "words": 854
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-model-cards",
@@ -7697,8 +7518,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 469,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-model-cards.md"
+  "words": 469
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-model-monitor",
@@ -7733,8 +7553,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 981,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-model-monitor.md"
+  "words": 981
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-clarify",
@@ -7769,8 +7588,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 919,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-clarify.md"
+  "words": 919
  },
  {
   "slug": "05-sagemaker-ai/sagemaker-linear-tracking",
@@ -7805,8 +7623,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 272,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/05-sagemaker-ai/sagemaker-linear-tracking.md"
+  "words": 272
  },
  {
   "slug": "07-generative-ai-model-fundamentals/common-llm-terms",
@@ -7837,8 +7654,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 250,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/common-llm-terms.md"
+  "words": 250
  },
  {
   "slug": "07-generative-ai-model-fundamentals/transformer-architecture",
@@ -7869,8 +7685,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 564,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/transformer-architecture.md"
+  "words": 564
  },
  {
   "slug": "07-generative-ai-model-fundamentals/self-attention-mechanism",
@@ -7901,8 +7716,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1937,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/self-attention-mechanism.md"
+  "words": 1937
  },
  {
   "slug": "07-generative-ai-model-fundamentals/decoder-encoder-models",
@@ -7933,8 +7747,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 744,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/decoder-encoder-models.md"
+  "words": 744
  },
  {
   "slug": "07-generative-ai-model-fundamentals/generative-pretrained-transformers",
@@ -7965,8 +7778,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 647,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/generative-pretrained-transformers.md"
+  "words": 647
  },
  {
   "slug": "07-generative-ai-model-fundamentals/application-of-transformers",
@@ -8000,8 +7812,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 186,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/application-of-transformers.md"
+  "words": 186
  },
  {
   "slug": "07-generative-ai-model-fundamentals/foundational-models-in-aws",
@@ -8032,8 +7843,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 882,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/foundational-models-in-aws.md"
+  "words": 882
  },
  {
   "slug": "07-generative-ai-model-fundamentals/imputation-of-data",
@@ -8064,8 +7874,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 148,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/imputation-of-data.md"
+  "words": 148
  },
  {
   "slug": "07-generative-ai-model-fundamentals/transformers-sagemaker",
@@ -8092,8 +7901,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "",
   "sourceType": "repo-notebook",
   "sourceCount": 0,
-  "words": 185,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/07-generative-ai-model-fundamentals/transformers-sagemaker.ipynb"
+  "words": 185
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/bedrock-overview",
@@ -8126,8 +7934,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 946,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/bedrock-overview.md"
+  "words": 946
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/retrieval-augmented-generation",
@@ -8160,8 +7967,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 793,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/retrieval-augmented-generation.md"
+  "words": 793
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/chunking-strategies",
@@ -8194,8 +8000,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1060,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/chunking-strategies.md"
+  "words": 1060
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/bedrock-agents",
@@ -8228,8 +8033,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1121,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/bedrock-agents.md"
+  "words": 1121
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/bedrock-guardrails",
@@ -8262,8 +8066,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 783,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/bedrock-guardrails.md"
+  "words": 783
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/fine-tuning-and-continuous-pre-training",
@@ -8296,8 +8099,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1275,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/fine-tuning-and-continuous-pre-training.md"
+  "words": 1275
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/multi-llm-routing-strategies",
@@ -8330,8 +8132,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 413,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/multi-llm-routing-strategies.md"
+  "words": 413
  },
  {
   "slug": "08-building-gen-ai-apps-with-bedrock/other-bedrock-features",
@@ -8364,8 +8165,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 758,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/08-building-gen-ai-apps-with-bedrock/other-bedrock-features.md"
+  "words": 758
  },
  {
   "slug": "13-bedrock/amazon-bedrock",
@@ -8400,8 +8200,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 1756,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/amazon-bedrock.md"
+  "words": 1756
  },
  {
   "slug": "13-bedrock/bedrock-application-patterns",
@@ -8435,8 +8234,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 238,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-application-patterns.md"
+  "words": 238
  },
  {
   "slug": "13-bedrock/bedrock-cross-region-inference",
@@ -8471,8 +8269,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 6,
-  "words": 369,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-cross-region-inference.md"
+  "words": 369
  },
  {
   "slug": "13-bedrock/bedrock-flows",
@@ -8507,8 +8304,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 10,
-  "words": 427,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-flows.md"
+  "words": 427
  },
  {
   "slug": "13-bedrock/bedrock-prompt-management",
@@ -8543,8 +8339,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 8,
-  "words": 440,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-prompt-management.md"
+  "words": 440
  },
  {
   "slug": "13-bedrock/bedrock-knowledge-base",
@@ -8579,8 +8374,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 1885,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-knowledge-base.md"
+  "words": 1885
  },
  {
   "slug": "13-bedrock/bedrock-rag-decision-guide",
@@ -8615,8 +8409,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 244,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-rag-decision-guide.md"
+  "words": 244
  },
  {
   "slug": "13-bedrock/pre-retrieval-knowledge-base",
@@ -8651,8 +8444,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 20,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/pre-retrieval-knowledge-base.md"
+  "words": 20
  },
  {
   "slug": "13-bedrock/chunking-strategies",
@@ -8687,8 +8479,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 1579,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/chunking-strategies.md"
+  "words": 1579
  },
  {
   "slug": "13-bedrock/optimizing-vector-store-and-embeddings",
@@ -8723,8 +8514,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 1771,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/optimizing-vector-store-and-embeddings.md"
+  "words": 1771
  },
  {
   "slug": "13-bedrock/bedrock-data-automation",
@@ -8759,8 +8549,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 9,
-  "words": 372,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-data-automation.md"
+  "words": 372
  },
  {
   "slug": "13-bedrock/bedrock-agents",
@@ -8798,8 +8587,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 6,
-  "words": 419,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-agents.md"
+  "words": 419
  },
  {
   "slug": "13-bedrock/bedrock-agent-memory",
@@ -8834,8 +8622,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 303,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-agent-memory.md"
+  "words": 303
  },
  {
   "slug": "13-bedrock/bedrock-agent-tracing",
@@ -8870,8 +8657,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 304,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-agent-tracing.md"
+  "words": 304
  },
  {
   "slug": "13-bedrock/bedrock-agentcore",
@@ -8898,8 +8684,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 8,
-  "words": 644,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-agentcore.md"
+  "words": 644
  },
  {
   "slug": "13-bedrock/bedrock-agentcore-production-patterns",
@@ -8934,8 +8719,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 7,
-  "words": 645,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-agentcore-production-patterns.md"
+  "words": 645
  },
  {
   "slug": "13-bedrock/bedrock-multi-agent-collaboration",
@@ -8970,8 +8754,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 439,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-multi-agent-collaboration.md"
+  "words": 439
  },
  {
   "slug": "13-bedrock/bedrock-model-customization",
@@ -9006,8 +8789,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 9,
-  "words": 410,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-model-customization.md"
+  "words": 410
  },
  {
   "slug": "13-bedrock/bedrock-custom-model-import",
@@ -9042,8 +8824,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 306,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-custom-model-import.md"
+  "words": 306
  },
  {
   "slug": "13-bedrock/bedrock-guardrails",
@@ -9078,8 +8859,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 1500,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-guardrails.md"
+  "words": 1500
  },
  {
   "slug": "13-bedrock/bedrock-automated-reasoning-checks",
@@ -9114,8 +8894,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 1732,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-automated-reasoning-checks.md"
+  "words": 1732
  },
  {
   "slug": "13-bedrock/bedrock-token-redaction",
@@ -9150,8 +8929,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 257,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-token-redaction.md"
+  "words": 257
  },
  {
   "slug": "13-bedrock/bedrock-model-evaluations",
@@ -9186,8 +8964,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 7,
-  "words": 342,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-model-evaluations.md"
+  "words": 342
  },
  {
   "slug": "13-bedrock/bedrock-evaluation-techniques",
@@ -9222,8 +8999,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 360,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-evaluation-techniques.md"
+  "words": 360
  },
  {
   "slug": "13-bedrock/bedrock-prompt-caching",
@@ -9258,8 +9034,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 505,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-prompt-caching.md"
+  "words": 505
  },
  {
   "slug": "13-bedrock/bedrock-intelligent-prompt-routing",
@@ -9294,8 +9069,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 369,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-intelligent-prompt-routing.md"
+  "words": 369
  },
  {
   "slug": "13-bedrock/bedrock-edge-caching",
@@ -9330,8 +9104,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 461,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/13-bedrock/bedrock-edge-caching.md"
+  "words": 461
  },
  {
   "slug": "14-agentic-ai/agentic-ai-current-innovation-map",
@@ -9365,8 +9138,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "official-docs",
   "sourceCount": 6,
-  "words": 685,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/14-agentic-ai/agentic-ai-current-innovation-map.md"
+  "words": 685
  },
  {
   "slug": "14-agentic-ai/agentic-rag-patterns",
@@ -9402,8 +9174,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 555,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/14-agentic-ai/agentic-rag-patterns.md"
+  "words": 555
  },
  {
   "slug": "14-agentic-ai/model-context-protocol-mcp",
@@ -9437,8 +9208,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "official-docs",
   "sourceCount": 7,
-  "words": 570,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/14-agentic-ai/model-context-protocol-mcp.md"
+  "words": 570
  },
  {
   "slug": "14-agentic-ai/claude-agentic-ai-on-aws",
@@ -9471,8 +9241,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "official-docs",
   "sourceCount": 5,
-  "words": 597,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/14-agentic-ai/claude-agentic-ai-on-aws.md"
+  "words": 597
  },
  {
   "slug": "14-agentic-ai/agent-squad",
@@ -9497,8 +9266,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 6,
-  "words": 442,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/14-agentic-ai/agent-squad.md"
+  "words": 442
  },
  {
   "slug": "14-agentic-ai/strands-ai",
@@ -9523,8 +9291,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 4,
-  "words": 407,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/14-agentic-ai/strands-ai.md"
+  "words": 407
  },
  {
   "slug": "09-machine-learning-operations/docker",
@@ -9558,8 +9325,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 1435,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/docker.md"
+  "words": 1435
  },
  {
   "slug": "09-machine-learning-operations/elastic-container-registry",
@@ -9593,8 +9359,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 640,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/elastic-container-registry.md"
+  "words": 640
  },
  {
   "slug": "09-machine-learning-operations/elastic-container-service",
@@ -9628,8 +9393,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 1160,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/elastic-container-service.md"
+  "words": 1160
  },
  {
   "slug": "09-machine-learning-operations/elastic-kubernetes-service",
@@ -9663,8 +9427,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 877,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/elastic-kubernetes-service.md"
+  "words": 877
  },
  {
   "slug": "09-machine-learning-operations/sagemaker-kubernetes",
@@ -9698,8 +9461,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 568,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/sagemaker-kubernetes.md"
+  "words": 568
  },
  {
   "slug": "09-machine-learning-operations/aws-batch",
@@ -9733,8 +9495,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 872,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/aws-batch.md"
+  "words": 872
  },
  {
   "slug": "09-machine-learning-operations/lambda-for-ml-workflows",
@@ -9769,8 +9530,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 251,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/lambda-for-ml-workflows.md"
+  "words": 251
  },
  {
   "slug": "09-machine-learning-operations/djl-serving",
@@ -9804,8 +9564,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 10,
-  "words": 450,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/djl-serving.md"
+  "words": 450
  },
  {
   "slug": "09-machine-learning-operations/code-pipeline",
@@ -9839,8 +9598,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 851,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/code-pipeline.md"
+  "words": 851
  },
  {
   "slug": "09-machine-learning-operations/code-build",
@@ -9874,8 +9632,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 16,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/code-build.md"
+  "words": 16
  },
  {
   "slug": "09-machine-learning-operations/code-deploy",
@@ -9909,8 +9666,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 829,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/code-deploy.md"
+  "words": 829
  },
  {
   "slug": "09-machine-learning-operations/codeartifact",
@@ -9944,8 +9700,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 199,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/codeartifact.md"
+  "words": 199
  },
  {
   "slug": "09-machine-learning-operations/codeguru",
@@ -9979,8 +9734,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 200,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/codeguru.md"
+  "words": 200
  },
  {
   "slug": "09-machine-learning-operations/cloud-formation",
@@ -10014,8 +9768,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 1159,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/cloud-formation.md"
+  "words": 1159
  },
  {
   "slug": "09-machine-learning-operations/cloud-development-kit",
@@ -10049,8 +9802,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 983,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/cloud-development-kit.md"
+  "words": 983
  },
  {
   "slug": "09-machine-learning-operations/serverless-application-repository",
@@ -10083,8 +9835,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 195,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/serverless-application-repository.md"
+  "words": 195
  },
  {
   "slug": "09-machine-learning-operations/aws-appconfig",
@@ -10114,8 +9865,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 1,
-  "words": 122,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/aws-appconfig.md"
+  "words": 122
  },
  {
   "slug": "09-machine-learning-operations/git",
@@ -10149,8 +9899,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 941,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/git.md"
+  "words": 941
  },
  {
   "slug": "09-machine-learning-operations/git-branching-strategies",
@@ -10184,8 +9933,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 850,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/git-branching-strategies.md"
+  "words": 850
  },
  {
   "slug": "09-machine-learning-operations/cicd-tests-for-ml-pipelines",
@@ -10222,8 +9970,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 208,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/cicd-tests-for-ml-pipelines.md"
+  "words": 208
  },
  {
   "slug": "09-machine-learning-operations/step-functions",
@@ -10257,8 +10004,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 899,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/step-functions.md"
+  "words": 899
  },
  {
   "slug": "09-machine-learning-operations/apache-managed-workflows-for-apache-airflow",
@@ -10292,8 +10038,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 908,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/apache-managed-workflows-for-apache-airflow.md"
+  "words": 908
  },
  {
   "slug": "09-machine-learning-operations/event-bridge",
@@ -10327,8 +10072,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 994,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/event-bridge.md"
+  "words": 994
  },
  {
   "slug": "09-machine-learning-operations/sns",
@@ -10362,8 +10106,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 219,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/sns.md"
+  "words": 219
  },
  {
   "slug": "09-machine-learning-operations/sqs",
@@ -10396,8 +10139,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 203,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/sqs.md"
+  "words": 203
  },
  {
   "slug": "09-machine-learning-operations/api-gateway",
@@ -10432,8 +10174,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 203,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/api-gateway.md"
+  "words": 203
  },
  {
   "slug": "09-machine-learning-operations/cloudfront",
@@ -10467,8 +10208,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 205,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/cloudfront.md"
+  "words": 205
  },
  {
   "slug": "09-machine-learning-operations/sagemaker-deploying-for-inference",
@@ -10502,8 +10242,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 1100,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/sagemaker-deploying-for-inference.md"
+  "words": 1100
  },
  {
   "slug": "09-machine-learning-operations/sagemaker-inner-details-and-prod-variants",
@@ -10537,8 +10276,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 1207,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/sagemaker-inner-details-and-prod-variants.md"
+  "words": 1207
  },
  {
   "slug": "09-machine-learning-operations/sagemaker-inference-recommender",
@@ -10572,8 +10310,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 732,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/sagemaker-inference-recommender.md"
+  "words": 732
  },
  {
   "slug": "09-machine-learning-operations/inference-pipelines",
@@ -10607,8 +10344,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 496,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/inference-pipelines.md"
+  "words": 496
  },
  {
   "slug": "09-machine-learning-operations/deployment-mode-decision-guide",
@@ -10641,8 +10377,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 251,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/deployment-mode-decision-guide.md"
+  "words": 251
  },
  {
   "slug": "09-machine-learning-operations/deployment-guardrails-and-shadow-test",
@@ -10676,8 +10411,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 733,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/deployment-guardrails-and-shadow-test.md"
+  "words": 733
  },
  {
   "slug": "09-machine-learning-operations/endpoint-autoscaling-metrics",
@@ -10713,8 +10447,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 195,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/endpoint-autoscaling-metrics.md"
+  "words": 195
  },
  {
   "slug": "09-machine-learning-operations/resource-management-and-autoscaling",
@@ -10748,8 +10481,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 635,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/resource-management-and-autoscaling.md"
+  "words": 635
  },
  {
   "slug": "09-machine-learning-operations/aws-auto-scaling",
@@ -10785,8 +10517,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 223,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/aws-auto-scaling.md"
+  "words": 223
  },
  {
   "slug": "09-machine-learning-operations/retraining-triggers-and-drift-response",
@@ -10822,8 +10553,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 217,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/retraining-triggers-and-drift-response.md"
+  "words": 217
  },
  {
   "slug": "09-machine-learning-operations/sagemaker-on-the-edge",
@@ -10857,8 +10587,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 195,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/sagemaker-on-the-edge.md"
+  "words": 195
  },
  {
   "slug": "09-machine-learning-operations/greengrass",
@@ -10888,8 +10617,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 134,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/greengrass.md"
+  "words": 134
  },
  {
   "slug": "09-machine-learning-operations/aws-cost-management-for-ml",
@@ -10924,8 +10652,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 230,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/aws-cost-management-for-ml.md"
+  "words": 230
  },
  {
   "slug": "09-machine-learning-operations/compute-optimizer",
@@ -10958,8 +10685,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 191,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/compute-optimizer.md"
+  "words": 191
  },
  {
   "slug": "09-machine-learning-operations/trusted-advisor",
@@ -10994,8 +10720,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 209,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/trusted-advisor.md"
+  "words": 209
  },
  {
   "slug": "09-machine-learning-operations/devops-guru",
@@ -11029,8 +10754,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 208,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/devops-guru.md"
+  "words": 208
  },
  {
   "slug": "09-machine-learning-operations/aws-chatbot",
@@ -11064,8 +10788,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 219,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/aws-chatbot.md"
+  "words": 219
  },
  {
   "slug": "09-machine-learning-operations/x-ray",
@@ -11100,8 +10823,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 222,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/x-ray.md"
+  "words": 222
  },
  {
   "slug": "09-machine-learning-operations/lake-formation",
@@ -11135,8 +10857,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 838,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/09-machine-learning-operations/lake-formation.md"
+  "words": 838
  },
  {
   "slug": "10-security-identity-and-compliance/IAM",
@@ -11167,8 +10888,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 932,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/IAM.md"
+  "words": 932
  },
  {
   "slug": "10-security-identity-and-compliance/organizations",
@@ -11203,8 +10923,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 213,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/organizations.md"
+  "words": 213
  },
  {
   "slug": "10-security-identity-and-compliance/sagemaker-role-manager",
@@ -11238,8 +10957,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 207,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/sagemaker-role-manager.md"
+  "words": 207
  },
  {
   "slug": "10-security-identity-and-compliance/service-catalog",
@@ -11273,8 +10991,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 196,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/service-catalog.md"
+  "words": 196
  },
  {
   "slug": "10-security-identity-and-compliance/key-management-service",
@@ -11305,8 +11022,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1314,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/key-management-service.md"
+  "words": 1314
  },
  {
   "slug": "10-security-identity-and-compliance/secrets-manager",
@@ -11337,8 +11053,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 965,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/secrets-manager.md"
+  "words": 965
  },
  {
   "slug": "10-security-identity-and-compliance/ssm-parameter-store",
@@ -11369,8 +11084,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 912,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/ssm-parameter-store.md"
+  "words": 912
  },
  {
   "slug": "10-security-identity-and-compliance/macie",
@@ -11401,8 +11115,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 965,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/macie.md"
+  "words": 965
  },
  {
   "slug": "10-security-identity-and-compliance/data-classification-pii-phi-data-residency",
@@ -11440,8 +11153,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 261,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/data-classification-pii-phi-data-residency.md"
+  "words": 261
  },
  {
   "slug": "10-security-identity-and-compliance/vpc",
@@ -11472,8 +11184,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 3125,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/vpc.md"
+  "words": 3125
  },
  {
   "slug": "10-security-identity-and-compliance/private-ml-networking",
@@ -11511,8 +11222,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 3,
-  "words": 224,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/private-ml-networking.md"
+  "words": 224
  },
  {
   "slug": "10-security-identity-and-compliance/direct-connect",
@@ -11546,8 +11256,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 223,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/direct-connect.md"
+  "words": 223
  },
  {
   "slug": "10-security-identity-and-compliance/shield",
@@ -11577,8 +11286,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 131,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/shield.md"
+  "words": 131
  },
  {
   "slug": "10-security-identity-and-compliance/cloudtrail",
@@ -11609,8 +11317,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 12,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/cloudtrail.md"
+  "words": 12
  },
  {
   "slug": "10-security-identity-and-compliance/cloudwatch",
@@ -11641,8 +11348,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 0,
-  "words": 610,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/cloudwatch.md"
+  "words": 610
  },
  {
   "slug": "10-security-identity-and-compliance/aws-config",
@@ -11676,8 +11382,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 196,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/10-security-identity-and-compliance/aws-config.md"
+  "words": 196
  },
  {
   "slug": "11-machine-learning-best-practices/aws-well-architected-framework-ml-lens",
@@ -11708,8 +11413,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 552,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/11-machine-learning-best-practices/aws-well-architected-framework-ml-lens.md"
+  "words": 552
  },
  {
   "slug": "11-machine-learning-best-practices/well-architected-generative-ai-lens",
@@ -11740,8 +11444,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 323,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/11-machine-learning-best-practices/well-architected-generative-ai-lens.md"
+  "words": 323
  },
  {
   "slug": "11-machine-learning-best-practices/well-architected-tool-generative-ai-lens",
@@ -11772,8 +11475,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 5,
-  "words": 327,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/11-machine-learning-best-practices/well-architected-tool-generative-ai-lens.md"
+  "words": 327
  },
  {
   "slug": "11-machine-learning-best-practices/responsible-ai-aws",
@@ -11804,8 +11506,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 13,
-  "words": 519,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/11-machine-learning-best-practices/responsible-ai-aws.md"
+  "words": 519
  },
  {
   "slug": "11-machine-learning-best-practices/amazon-augmented-ai",
@@ -11836,8 +11537,7 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 1025,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/11-machine-learning-best-practices/amazon-augmented-ai.md"
+  "words": 1025
  },
  {
   "slug": "11-machine-learning-best-practices/mechanical-turk",
@@ -11868,7 +11568,6 @@ export const EXAMS_ALL_PAGES = [
   "lastVerified": "2026-05-16",
   "sourceType": "aws-official",
   "sourceCount": 2,
-  "words": 861,
-  "source": "https://github.com/artreimus/notes-aws-machine-learning/blob/main/11-machine-learning-best-practices/mechanical-turk.md"
+  "words": 861
  }
 ];

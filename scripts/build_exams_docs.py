@@ -51,8 +51,9 @@ import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Build input only. The viewer links to AWS documentation, never back to the
+# upstream repository, so no page carries a URL into it.
 SOURCE_REPO = "https://github.com/artreimus/notes-aws-machine-learning"
-SOURCE_BLOB = SOURCE_REPO + "/blob/main/"
 VAULT = os.path.join(ROOT, "notes-aws-machine-learning")
 
 OUT_MD = os.path.join(ROOT, "public", "exams", "md")
@@ -630,6 +631,7 @@ def normalize(body, folder, by_basename, titles, stats):
     # A leading rule right under the title is decoration in the vault and an
     # empty box in the viewer.
     body = re.sub(r"\A\s*(---|\*\*\*|___)\s*\n", "", body)
+    body = strip_meta_block(body)
 
     body = rewrite_wikilinks(body, folder, by_basename, titles, stats)
     body = fence_related_notes(body)
@@ -645,6 +647,22 @@ BOLD_LABEL_RE = re.compile(r"^\*\*[^*\n]{1,60}\*\*:?\s*")
 
 
 RULE_RE = re.compile(r"^(-{3,}|\*{3,}|_{3,})\s*$")
+
+# A leading block of `Key: value` lines is authoring metadata, not prose — one
+# note opens with the author's own `Created:` date and local checkout path. It
+# has no place in the reading pane, and picked up as a description it would put
+# a stranger's filesystem layout on a card.
+META_LINE_RE = re.compile(r"^[A-Z][A-Za-z /]{0,24}:\s*\S")
+
+
+def strip_meta_block(body):
+    blocks = re.split(r"\n\s*\n", body.strip())
+    if not blocks:
+        return body
+    lines = [line for line in blocks[0].split("\n") if line.strip()]
+    if len(lines) >= 2 and all(META_LINE_RE.match(line.strip()) for line in lines):
+        return "\n\n".join(blocks[1:]).strip() + "\n"
+    return body
 
 
 def clean_prose(block):
@@ -879,7 +897,6 @@ def main():
         # them instead of showing a page with no domain at all.
         scope = "" if domains else (raw_domains[0] if raw_domains else "")
         services = [s for s in as_list(meta.get("service")) if s.lower() != "none"]
-        rel = os.path.relpath(path, VAULT).replace(os.sep, "/")
 
         pages.append({
             "slug": slug,
@@ -900,7 +917,6 @@ def main():
             "sourceType": str(meta.get("source_type") or ""),
             "sourceCount": len(sources),
             "words": len(body.split()),
-            "source": SOURCE_BLOB + rel,
         })
 
         if tab not in tree[track["id"]]:
@@ -958,7 +974,6 @@ def main():
 
     with open(OUT_DATA, "w", encoding="utf-8") as handle:
         handle.write(banner)
-        handle.write(f'export const EXAMS_SOURCE_URL = "{SOURCE_REPO}";\n\n')
         handle.write(f"export const EXAMS_TOTAL_PAGES = {len(pages)};\n\n")
         handle.write("export const EXAMS_CERTIFICATION = ")
         handle.write(json.dumps({
@@ -982,7 +997,8 @@ def main():
         handle.write(";\n")
 
     report = {
-        "source": SOURCE_REPO,
+        # No source URL: build-report.json is deployed under public/, and the
+        # viewer deliberately carries no pointer back to the upstream repo.
         "commit": head,
         "pages": len(pages),
         "tracks": {track["id"]: sum(1 for p in pages if p["track"] == track["id"]) for track in TRACKS},
