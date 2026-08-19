@@ -4,7 +4,7 @@
 // CommonJS-style extension guessing.
 import fs from 'fs';
 import path from 'path';
-import { SUPPORTED_REGIONS } from './regions.js';
+import { SUPPORTED_REGIONS } from './_lib/regions.js';
 
 const CF_ACCOUNT_ID = process.env.CF_ACCOUNT_ID || '';
 const CF_KV_NAMESPACE_ID = process.env.CF_KV_NAMESPACE_ID || '';
