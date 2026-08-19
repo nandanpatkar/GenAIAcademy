@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "67cc139f-998c-4171-a492-26de94c4f05d",
+    "title": "Rotate Image",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "math",
+      "matrix"
+    ],
+    "statement": "You are given an n x n 2D matrix representing an image. Rotate the image by 90 degrees (clockwise) and print the resulting matrix.\n\n**Input:**\nThe first line contains two integers \"rows cols\", where rows == cols == n.\nThe next n lines each contain n space-separated integers representing the matrix.\n\n**Output:**\nPrint the rotated matrix as n lines, each containing n space-separated integers (the matrix rotated 90 degrees clockwise).\n\n**Constraints:**\n- n == matrix.length == matrix[i].length\n- 1 <= n <= 20\n- -1000 <= matrix[i][j] <= 1000\n\n**Examples:**\nExample 1:\nInput:\n3 3\n1 2 3\n4 5 6\n7 8 9\nOutput:\n7 4 1\n8 5 2\n9 6 3\n\nExample 2:\nInput:\n4 4\n5 1 9 11\n2 4 8 10\n13 3 6 7\n15 14 12 16\nOutput:\n15 13 2 5\n14 3 4 1\n12 6 8 9\n16 7 10 11",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

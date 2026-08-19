@@ -1,0 +1,22 @@
+{
+  "levelNumber": 297,
+  "displayNumber": 243,
+  "title": "Introduction to Trees",
+  "difficulty": "Easy",
+  "contentStatus": "article",
+  "levelType": "theory",
+  "statementHtml": "6:[\"$\",\"$L18\",null,{\"subjectSlug\":\"binary-tree\",\"contentType\":\"$undefined\",\"initialSidebarOpen\":false,\"showNavbar\":false,\"hideSidebarToggle\":true,\"forceSidebarClosed\":true,\"sheetDetails\":\"$undefined\",\"sheetProgressData\":null,\"children\":[\"$\",\"$L19\",null,{\"data\":{\"aid\":\"2229\",\"title\":\"Introduction to Trees\",\"content\":\"$1a\",\"video\":\"_ANrF3FJm7I\",\"slug\":\"introduction-to-trees\",\"publishedOn\":\"\",\"category_tag\":\"binary-tree\",\"tuf_plus\":\"\",\"preview\":\"In the world of data structures and algorithms, understanding binary trees lays the groundwork for hierarchical organisation and efficient data manipulation. Up until now, we have studied array, li...\",\"likes\":13,\"liked\":false,\"topics\":[{\"topic-id\":\"binary-tree\",\"topic-title\":\"Binary Tree\"},{\"topic-id\":\"data-structure\",\"topic-title\":\"Data Structures\"}]},\"mode\":\"$undefined\",\"blogProgress\":null,\"articleSlug\":\"introduction-to-trees\",\"sheetDetails\":\"$undefined\",\"sheetNotesData\":null,\"meData\":\"$16:props:initialMe\",\"subjectSlug\":\"$undefined\"}]}]\na:{\"metadata\":[[\"$\",\"title\",\"0\",{\"children\":\"Introduction to Trees - Tutorial\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"Detailed solution for Introduction to Trees - In the world of data structures and algorithms, understanding binary trees lays the groundwork for hierarchical organisation and efficient data manipulation. Up until now, we have studied array, li...\"}],[\"$\",\"meta\",\"2\",{\"name\":\"robots\",\"content\":\"max-image-preview:large\"}],[\"$\",\"link\",\"3\",{\"rel\":\"canonical\",\"href\":\"https://takeuforward.org/binary-tree/introduction-to-trees\"}],[\"$\",\"meta\",\"4\",{\"property\":\"og:title\",\"content\":\"Introduction to Trees - Tutorial\"}],[\"$\",\"meta\",\"5\",{\"property\":\"og:description\",\"content\":\"Detailed solution for Introduction to Trees - In the world of data structures and algorithms, understanding binary trees lays the groundwork for hierarchical organisation and efficient data manipulation. Up until now, we have studied array, li...\"}],[\"$\",\"meta\",\"6\",{\"property\":\"og:url\",\"content\":\"https://takeuforward.org/binary-tree/introduction-to-trees\"}],[\"$\",\"meta\",\"7\",{\"property\":\"og:site_name\",\"content\":\"takeUforward - ~ Strive for Excellence\"}],[\"$\",\"meta\",\"8\",{\"property\":\"og:locale\",\"content\":\"en_US\"}],[\"$\",\"meta\",\"9\",{\"property\":\"og:image\",\"content\":\"https://takeuforward-content-images.s3.ap-south-1.amazonaws.com/content/wallpaperYoutube-2.webp\"}],[\"$\",\"meta\",\"10\",{\"property\":\"og:image:width\",\"content\":\"1024\"}],[\"$\",\"meta\",\"11\",{\"property\":\"og:image:height\",\"content\":\"573\"}],[\"$\",\"meta\",\"12\",{\"property\":\"og:image:alt\",\"content\":\"Introduction to Trees - Tutorial\"}],[\"$\",\"meta\",\"13\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"$\",\"meta\",\"14\",{\"name\":\"twitter:card\",\"content\":\"summary\"}],[\"$\",\"meta\",\"15\",{\"name\":\"twitter:title\",\"content\":\"Introduction to Trees - Tutorial\"}],[\"$\",\"meta\",\"16\",{\"name\":\"twitter:description\",\"content\":\"Detailed solution for Introduction to Trees - In the world of data structures and algorithms, understanding binary trees lays the groundwork for hierarchical organisation and efficient data manipulation. Up until now, we have studied array, li...\"}],[\"$\",\"meta\",\"17\",{\"name\":\"twitter:image\",\"content\":\"https://takeuforward-content-images.s3.ap-south-1.amazonaws.com/content/wallpaperYoutube-2.webp\"}],[\"$\",\"link\",\"18\",{\"rel\":\"icon\",\"href\":\"/favicon.ico\",\"type\":\"image/x-icon\",\"sizes\":\"32x32\"}],[\"$\",\"$L1b\",\"19\",{}]],\"error\":null,\"digest\":\"$undefined\"}\n10:\"$a:metadata\"",
+  "examples": [],
+  "constraintsHtml": null,
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

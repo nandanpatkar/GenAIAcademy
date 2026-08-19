@@ -1,0 +1,33 @@
+{
+  "levelNumber": 204,
+  "displayNumber": 150,
+  "title": "Expression Add Operators",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string num<em> </em>consisting of only digits and an integer target.Return all possibilities to insert the binary operators <strong>'+' , '*' , '-' </strong>between the digits of string nums, such that <strong>resultant</strong> expression evaluates to target value.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> num = \"123\", target = 6</p><p><strong>Output :</strong> [\"1*2*3\" , \"1+2+3\"]</p><p><strong>Explanation :</strong> </p><p>Both \"1*2*3\" and \"1+2+3\" evaluate to 6<span style=\"color: rgb(9, 134, 88);\">.</span></p>",
+    "<p><strong>Input :</strong> num = \"0232\", target = 8</p><p><strong>Output :</strong> [\"0+2*3+2\" , \"0+2+3*2\"]</p><p><strong>Explanation :</strong> </p><p>Both \"0+2*3+2\" and \"0+2+3*2\" evaluate to 8.</p>",
+    "<p><strong>Input :</strong> num = \"02\", target = 0</p>"
+  ],
+  "constraintsHtml": "<ul><li>1<= num.length <= 10</li><li>num consist of only digits</li><li>-2<sup>31</sup> <= target <= 2<sup>31</sup> - 1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 175,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

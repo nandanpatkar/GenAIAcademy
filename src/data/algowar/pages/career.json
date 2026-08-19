@@ -1,0 +1,215 @@
+{
+  "route": "/career",
+  "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "description": "Challenge developers in real-time coding duels, climb the leaderboard, improve your DSA skills, and compete against coders worldwide on AlgoWars.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(main)/career/page-990df29d11533b63.js"
+  ],
+  "copy": [
+    "Career Command",
+    "AlgoWars Campaign",
+    "Progress",
+    "Cleared",
+    "XP",
+    "Chapter",
+    "Next",
+    "Streak",
+    "Campaign Chapters",
+    "World Selection",
+    "Levels",
+    "Total XP",
+    "Rank",
+    "Current",
+    "Next world hidden",
+    "Level Inspector",
+    "Difficulty",
+    "Reward",
+    "Content Pending",
+    "Locked",
+    "theory",
+    "Node",
+    "intro",
+    "Loading campaign map...",
+    "Back to Arena"
+  ],
+  "rendered": {
+    "finalUrl": "/career",
+    "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "ALGOWARS"
+      },
+      {
+        "tag": "h1",
+        "text": "AlgoWars Campaign"
+      },
+      {
+        "tag": "h2",
+        "text": "World Selection"
+      },
+      {
+        "tag": "h3",
+        "text": "Foundation Gate"
+      },
+      {
+        "tag": "h3",
+        "text": "Sorting Forge"
+      },
+      {
+        "tag": "h3",
+        "text": "Array Valley"
+      },
+      {
+        "tag": "h3",
+        "text": "Search Mountain"
+      },
+      {
+        "tag": "h3",
+        "text": "String Realm"
+      },
+      {
+        "tag": "h3",
+        "text": "Linked Harbor"
+      },
+      {
+        "tag": "h3",
+        "text": "Recursion Forest"
+      },
+      {
+        "tag": "h3",
+        "text": "Bit Lab"
+      },
+      {
+        "tag": "h3",
+        "text": "Stack Fortress"
+      },
+      {
+        "tag": "h3",
+        "text": "Window Desert"
+      },
+      {
+        "tag": "h3",
+        "text": "Heap Citadel"
+      },
+      {
+        "tag": "h3",
+        "text": "Greedy Kingdom"
+      },
+      {
+        "tag": "h3",
+        "text": "Tree Lands"
+      },
+      {
+        "tag": "h3",
+        "text": "BST Temple"
+      },
+      {
+        "tag": "h3",
+        "text": "Graph Universe"
+      },
+      {
+        "tag": "h3",
+        "text": "DP Dimension"
+      },
+      {
+        "tag": "h3",
+        "text": "Trie Nexus"
+      },
+      {
+        "tag": "h3",
+        "text": "String Trials"
+      },
+      {
+        "tag": "h2",
+        "text": "Array Valley"
+      },
+      {
+        "tag": "h2",
+        "text": "Level 8"
+      }
+    ],
+    "text": "闘 ALGOWARS アルゴウォーズ Placement Leaderboard Career Duo Daily Pricing 🔥 0 notifications bug_report CAREER COMMAND AlgoWars Campaign NandanPatkar, clear coding levels, unlock worlds, defeat boss challenges, and build your long-term DSA rank path. PROGRESS 2% CLEARED 7 XP 195 CHAPTER #2 NEXT #8 STREAK 0 CAMPAIGN CHAPTERS World Selection Pro: every chapter is unlocked — jump in anywhere. sports_martial_arts CHAPTER 0 Foundation Gate lock_open Levels 54 Total XP 655 Rank C 4% CAMPAIGN CLEARED explore CHAPTER 1 Sorting Forge military_tech Levels 7 Total XP 175 Rank C COMPLETED CAMPAIGN explore CHAPTER 2 Array Valley CURRENT Levels 40 Total XP 660 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 3 Search Mountain lock_open Levels 32 Total XP 570 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 4 String Realm lock_open Levels 15 Total XP 290 Rank B 0% CAMPAIGN CLEARED explore CHAPTER 5 Linked Harbor lock_open Levels 31 Total XP 560 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 6 Recursion Forest lock_open Levels 25 Total XP 495 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 7 Bit Lab lock_open Levels 18 Total XP 340 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 8 Stack Fortress lock_open Levels 30 Total XP 545 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 9 Window Desert lock_open Levels 12 Total XP 315 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 10 Heap Citadel lock_open Levels 17 Total XP 360 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 11 Greedy Kingdom lock_open Levels 15 Total XP 320 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 12 Tree Lands lock_open Levels 38 Total XP 640 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 13 BST Temple lock_open Levels 16 Total XP 335 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 14 Graph Universe lock_open Levels 53 Total XP 1045 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 15 DP Dimension lock_open Levels 55 Total XP 1040 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 16 Trie Nexus lock_open Levels 7 Total XP 220 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 17 String Trials lock_open Levels 9 Total XP 265 Rank A 0% CAMPAIGN CLEARED explore CHAPTER 2 Array Valley Clear the core array path from fundamentals to hard optimization patterns. route 40 levels bolt 660 Total XP military_tech Array Raider flag ARRAY VALLEY SOLVE PROBLEMS ON ARRAYS [EASY -> MEDIUM -> HARD] code LEVEL 8 CURRENT - LARGEST ELEMENT code LEVEL 9 OPEN - SECOND LARGEST ELEMENT code LEVEL 10 OPEN - CHECK IF THE ARRAY IS SORTED II code LEVEL 11 OPEN - REMOVE DUPLICATES FROM SORTED ARRAY code LEVEL 12 OPEN - LEFT ROTATE ARRAY BY ONE code LEVEL 13 OPEN - LEFT ROTATE ARRAY BY K PLACES code LEVEL 14 OPEN - MOVE ZEROS TO END code LEVEL 15 OPEN - LINEAR SEARCH code LEVEL 16 OPEN - UNION OF TWO SORTED ARRAYS code LEVEL 17 OPEN - FIND MISSING NUMBER code LEVEL 18 OPEN - MAXIMUM CONSECUTIVE ONES code LEVEL 19 OPEN - FIND THE NUMBER THAT APPEARS ONCE, AND OTHER NUMBERS TWICE. redeem CHECKPOINT CACHE OPEN code LEVEL 20 OPEN - LONGEST SUBARRAY WITH GIVEN SUM K(POSITIVES) code LEVEL 21 OPEN - LONGEST SUBARRAY WITH SUM K code LEVEL 22 OPEN - TWO SUM code LEVEL 23 OPEN - SORT AN ARRAY OF 0'S 1'S AND 2'S code LEVEL 24 OPEN - MAJORITY ELEMENT-I code LEVEL 25 OPEN - KADANE'S ALGORITHM code LEVEL 26 OPEN - PRINT SUBARRAY WITH MAXIMUM SUBARRAY SUM (EXTENDED VERSION OF ABOVE PROBLEM) code LEVEL 27 OPEN - STOCK BUY AND SELL code LEVEL 28 OPEN - REARRANGE ARRAY ELEMENTS BY SIGN code LEVEL 29 OPEN - NEXT PERMUTATION code LEVEL 30 OPEN - LEADERS IN AN ARRAY code LEVEL 31 OPEN - LONGEST CONSECUTIVE SEQUENCE IN AN ARRAY redeem CHECKPOINT CACHE OPEN code LEVEL 32 OPEN - SET MATRIX ZEROES code LEVEL 33 OPEN - ROTATE MATRIX BY 90 DEGREES code LEVEL 34 OPEN - PRINT THE MATRIX IN SPIRAL MANNER code LEVEL 35 OPEN - COUNT SUBARRAYS WITH GIVEN SUM code LEVEL 36 OPEN - PASCAL'S TRIANGLE I code LEVEL 37 OPEN - MAJORITY ELEMENT-II code LEVEL 38 OPEN - 3 SUM code LEVEL 39 OPEN - 4 SUM code LEVEL 40 OPEN - LARGEST SUBARRAY WITH SUM 0 code LEVEL 41 OPEN - COUNT SUBARRAYS WITH GIVEN XOR K code LEVEL 42 OPEN - MERGE OVERLAPPING SUBINTERVALS code LEVEL 43 OPEN - MERGE TWO SORTED ARRAYS WITHOUT EXTRA SPACE redeem CHECKPOINT CACHE OPEN code LEVEL 44 OPEN - FIND THE REPEATING AND MISSING NUMBER code LEVEL 45 OPEN - COUNT INVERSIONS code LEVEL 46 OPEN - REVERSE PAIRS emoji_events LEVEL 47 OPEN BOSS - MAXIMUM PRODUCT SUBARRAY IN AN ARRAY lock NEXT WORLD HIDDEN Complete Array Valley to reveal the next campaign stage. LEVEL INSPECTOR CURRENT Level 8 Campaign node signal_cellular_alt DIFFICULTY Easy bolt REWARD 10 XP Given an array of integers nums , return the value of the largest element in the array Start Level arrow_forward play_arrow Play Level 8",
+    "links": [
+      "/arena",
+      "/placement",
+      "/leaderboard",
+      "/career",
+      "/duo",
+      "/daily",
+      "/pricing",
+      "/profile",
+      "/career/level/62"
+    ],
+    "buttons": [
+      "🔥 0",
+      "notifications",
+      "bug_report",
+      "sports_martial_arts CHAPTER 0 Foundation Gate lock_open Levels 54 Total XP 655 Rank C 4% CAMPAIGN CLEARED",
+      "explore CHAPTER 1 Sorting Forge military_tech Levels 7 Total XP 175 Rank C COMPLETED CAMPAIGN",
+      "explore CHAPTER 2 Array Valley CURRENT Levels 40 Total XP 660 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 3 Search Mountain lock_open Levels 32 Total XP 570 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 4 String Realm lock_open Levels 15 Total XP 290 Rank B 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 5 Linked Harbor lock_open Levels 31 Total XP 560 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 6 Recursion Forest lock_open Levels 25 Total XP 495 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 7 Bit Lab lock_open Levels 18 Total XP 340 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 8 Stack Fortress lock_open Levels 30 Total XP 545 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 9 Window Desert lock_open Levels 12 Total XP 315 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 10 Heap Citadel lock_open Levels 17 Total XP 360 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 11 Greedy Kingdom lock_open Levels 15 Total XP 320 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 12 Tree Lands lock_open Levels 38 Total XP 640 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 13 BST Temple lock_open Levels 16 Total XP 335 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 14 Graph Universe lock_open Levels 53 Total XP 1045 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 15 DP Dimension lock_open Levels 55 Total XP 1040 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 16 Trie Nexus lock_open Levels 7 Total XP 220 Rank A 0% CAMPAIGN CLEARED",
+      "explore CHAPTER 17 String Trials lock_open Levels 9 Total XP 265 Rank A 0% CAMPAIGN CLEARED",
+      "flag ARRAY VALLEY SOLVE PROBLEMS ON ARRAYS [EASY -> MEDIUM -> HARD]",
+      "code LEVEL 8 CURRENT - LARGEST ELEMENT",
+      "code LEVEL 9 OPEN - SECOND LARGEST ELEMENT",
+      "code LEVEL 10 OPEN - CHECK IF THE ARRAY IS SORTED II",
+      "code LEVEL 11 OPEN - REMOVE DUPLICATES FROM SORTED ARRAY",
+      "code LEVEL 12 OPEN - LEFT ROTATE ARRAY BY ONE",
+      "code LEVEL 13 OPEN - LEFT ROTATE ARRAY BY K PLACES",
+      "code LEVEL 14 OPEN - MOVE ZEROS TO END",
+      "code LEVEL 15 OPEN - LINEAR SEARCH",
+      "code LEVEL 16 OPEN - UNION OF TWO SORTED ARRAYS",
+      "code LEVEL 17 OPEN - FIND MISSING NUMBER",
+      "code LEVEL 18 OPEN - MAXIMUM CONSECUTIVE ONES",
+      "code LEVEL 19 OPEN - FIND THE NUMBER THAT APPEARS ONCE, AND OTHER NUMBERS TWICE.",
+      "redeem CHECKPOINT CACHE OPEN",
+      "code LEVEL 20 OPEN - LONGEST SUBARRAY WITH GIVEN SUM K(POSITIVES)",
+      "code LEVEL 21 OPEN - LONGEST SUBARRAY WITH SUM K",
+      "code LEVEL 22 OPEN - TWO SUM",
+      "code LEVEL 23 OPEN - SORT AN ARRAY OF 0'S 1'S AND 2'S",
+      "code LEVEL 24 OPEN - MAJORITY ELEMENT-I",
+      "code LEVEL 25 OPEN - KADANE'S ALGORITHM",
+      "code LEVEL 26 OPEN - PRINT SUBARRAY WITH MAXIMUM SUBARRAY SUM (EXTENDED VERSION OF ABOVE PROBLEM)",
+      "code LEVEL 27 OPEN - STOCK BUY AND SELL",
+      "code LEVEL 28 OPEN - REARRANGE ARRAY ELEMENTS BY SIGN",
+      "code LEVEL 29 OPEN - NEXT PERMUTATION",
+      "code LEVEL 30 OPEN - LEADERS IN AN ARRAY",
+      "code LEVEL 31 OPEN - LONGEST CONSECUTIVE SEQUENCE IN AN ARRAY",
+      "code LEVEL 32 OPEN - SET MATRIX ZEROES",
+      "code LEVEL 33 OPEN - ROTATE MATRIX BY 90 DEGREES",
+      "code LEVEL 34 OPEN - PRINT THE MATRIX IN SPIRAL MANNER",
+      "code LEVEL 35 OPEN - COUNT SUBARRAYS WITH GIVEN SUM",
+      "code LEVEL 36 OPEN - PASCAL'S TRIANGLE I",
+      "code LEVEL 37 OPEN - MAJORITY ELEMENT-II",
+      "code LEVEL 38 OPEN - 3 SUM",
+      "code LEVEL 39 OPEN - 4 SUM",
+      "code LEVEL 40 OPEN - LARGEST SUBARRAY WITH SUM 0",
+      "code LEVEL 41 OPEN - COUNT SUBARRAYS WITH GIVEN XOR K",
+      "code LEVEL 42 OPEN - MERGE OVERLAPPING SUBINTERVALS",
+      "code LEVEL 43 OPEN - MERGE TWO SORTED ARRAYS WITHOUT EXTRA SPACE",
+      "code LEVEL 44 OPEN - FIND THE REPEATING AND MISSING NUMBER",
+      "code LEVEL 45 OPEN - COUNT INVERSIONS",
+      "code LEVEL 46 OPEN - REVERSE PAIRS",
+      "emoji_events LEVEL 47 OPEN BOSS - MAXIMUM PRODUCT SUBARRAY IN AN ARRAY",
+      "Start Level arrow_forward",
+      "play_arrow Play Level 8"
+    ],
+    "redirected": false
+  }
+}

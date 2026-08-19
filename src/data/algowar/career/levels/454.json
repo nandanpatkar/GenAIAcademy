@@ -1,0 +1,26 @@
+{
+  "levelNumber": 454,
+  "displayNumber": 400,
+  "title": "Different Ways to Evaluate a Boolean Expression",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a string expr consisting of the characters</p><ul><li>'T' — represents true</li><li>'F' — represents false</li><li>'&' — the logical AND operator</li><li>'|' — the logical OR operator</li><li>'^' — the logical XOR (exclusive-or) operator</li></ul><p><br></p><p><strong>expr </strong>is guaranteed to follow the pattern operand operator operand operator … operand (i.e. it always starts and ends with an operand and no two operators are adjacent).</p><p><br></p><p>Return the number of distinct ways to fully parenthesize expr such that the whole expression evaluates to true.</p><p>Because the answer can be very large, return it modulo 1e9+7.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> expr = \"T|T&F^T\"</p><p><strong>Output:</strong> 4</p><p><strong>Explanation:</strong></p><p>The expression can be parenthesized as follows (✓ marks variants that evaluate to true):</p><p>1. ((T|T)&(F^T))&nbsp;✓</p><p>2. (T|(T&(F^T)))&nbsp;✓</p><p>3. (((T|T)&F)^T)&nbsp;✓</p><p>4. (T|((T&F)^T))&nbsp;✓</p><p>5. ((T|(T&F))^T)&nbsp;&nbsp;&nbsp;→ false</p><p>6. (T|T)&F^T&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ false</p><p>Therefore 4 distinct parenthesizations evaluate to true.</p>",
+    "<p><strong>Input:</strong> expr = \"T^F|F\"</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:</strong></p><p>Two parenthesizations evaluate to true:</p><p>• ((T ^ F) | F)</p><p>• (T ^ (F | F))</p><p><br></p>",
+    "<p><strong>Input: </strong>expr = \"T^F\" </p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= expr.length <= 100</li><li>expr[i] is 'T', 'F', '&', '|', or '^'.</li><li>Operands ('T' or 'F') and operators alternate, so expr always has odd length.</li><li>The answer fits in a signed 32-bit integer.</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

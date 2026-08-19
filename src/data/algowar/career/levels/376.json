@@ -1,0 +1,33 @@
+{
+  "levelNumber": 376,
+  "displayNumber": 322,
+  "title": "Find eventual safe states",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a directed graph with V vertices labeled from 0 to V-1. The graph is represented using an adjacency list where adj[i] lists all nodes adjacent to node i, meaning there is an edge from node i to each node in adj[i]. A node is a terminal node if there are no outgoing edges. A node is a safe node if every possible path starting from that node leads to a terminal node. Return an array containing all the <strong>safe nodes</strong> of the graph in <strong>ascending</strong> order.</p>",
+  "examples": [
+    "$1c",
+    "<p><strong>Input:</strong>&nbsp;V = 4, adj= [[1], [2], [0,3], []]</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-3KCPYxOn\"></p><p><br></p><p><strong>Output:</strong> [3]</p><p><br></p><p><strong>Explanation: </strong>Node 3 itself is a terminal node and it&nbsp;is a safe node as well. But all the paths&nbsp;from other nodes do not lead to a terminal node.So they are&nbsp;excluded from the answer.</p>",
+    "<p>Input:&nbsp;V = 4, adj= [[1], [2], [0], []]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;V == adj.length</li><li>&nbsp;&nbsp;1 <= V <= 10<sup>4</sup></li><li>&nbsp;&nbsp;0 <= adj[i].length <= n</li><li>&nbsp;&nbsp;0 <= adj[i][j] <= n - 1</li><li>&nbsp;&nbsp;adj[i] is sorted in a strictly increasing order.</li><li>&nbsp;&nbsp;The graph may contain self-loops.</li><li>&nbsp;&nbsp;The number of edges in the graph will be in the range [1, 4 * 10<sup>4</sup>].</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

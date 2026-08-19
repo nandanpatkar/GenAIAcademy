@@ -1,0 +1,33 @@
+{
+  "levelNumber": 417,
+  "displayNumber": 363,
+  "title": "Partition equal subset sum",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of n integers, return <strong>true</strong> if the array can be partitioned into <strong>two subsets</strong> such that the sum of elements in both subsets is equal else return <strong>false</strong>.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>arr = [1, 10, 21, 10]</p><p><strong>Output:</strong> True</p><p><strong>Explanation:</strong> The array can be partitioned as [1, 10, 10] and [21].</p>",
+    "<p><strong>Input: </strong>arr = [1, 2, 3, 5]</p><p><strong>Output: </strong>False</p><p><strong>Explanation:</strong> The array cannot be partitioned into equal sum subsets.</p>",
+    "<p><strong>Input:</strong> arr = [2, 2, 1, 1]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ n ≤ 100</li><li>1 ≤ arr[i] ≤ 1000</li><li>n*sum of elements ≤ 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

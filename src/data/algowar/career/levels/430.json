@@ -1,0 +1,33 @@
+{
+  "levelNumber": 430,
+  "displayNumber": 376,
+  "title": "Longest palindromic subsequence",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string, Find the longest palindromic subsequence length in given string. </p><p><br></p><p>A palindrome is a sequence that reads the same backwards as forward.</p><p>A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> s = \"eeeme\"</p><p><strong>Output:</strong> 4</p><p><strong>Explanation:</strong> The longest palindromic subsequence is \"eeee\", which has a length of 4.</p>",
+    "<p><strong>Input:</strong> s = \"annb\"</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:</strong> The longest palindromic subsequence is \"nn\", which has a length of 2.</p>",
+    "<p><strong>Input:</strong> s = \"s\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ s.length ≤ 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

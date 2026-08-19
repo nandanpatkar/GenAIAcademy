@@ -1,0 +1,13 @@
+{
+  "problem": {
+    "id": "cfe11c8f-d155-4396-af63-3df4505cd4f3",
+    "title": "Create Hello World Function",
+    "difficulty": "Easy",
+    "tags": [],
+    "statement": "Write a program that behaves like a function createHelloWorld. It should always return \"Hello World\" regardless of any arguments passed to it.\n\nYou are given a list of arguments that would be passed to the returned function. Your program must output \"Hello World\" no matter what the arguments are.\n\n**Input:**\nThe first line contains an integer n, the number of arguments.\nThe next n lines each contain one argument serialized as a JSON value (e.g., a number, null, or a JSON object).\n\n**Output:**\nPrint the string \"Hello World\" on a single line.\n\n**Constraints:**\n0 <= n <= 10\n\n**Examples:**\nExample 1:\nInput:\n0\nOutput:\nHello World\n\nExample 2:\nInput:\n3\n{}\nnull\n42\nOutput:\nHello World",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

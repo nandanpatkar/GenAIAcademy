@@ -1,0 +1,33 @@
+{
+  "levelNumber": 320,
+  "displayNumber": 266,
+  "title": "Symmetric Binary Tree",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the root of a binary tree, check whether it is a <strong>mirror</strong> of itself (i.e., symmetric around its center).</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [1, 2, 2, 3, 4, 4, 3]</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-xz280fOG\"></p>",
+    "<p><strong>Input :</strong> root = [1, 2, 2, null, 3, null, 3]</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> When a straight line is drawn through the root node and the tree is folded around it, the rightmost node 3 is overlapped with null node and the node 3 present at left of root node is overlapped with null nodes.</p><p>So both node 3 in tree does not show symmetric behaviour.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-C3w4YXKm\"></p>",
+    "<p><strong>Input:</strong> root = [1, 2, 3]</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-3XcrMCZG\"></p>"
+  ],
+  "constraintsHtml": "<ul><li>1<= Number of Nodes <= 10<sup>4</sup></li><li>-100 <= Node.val <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

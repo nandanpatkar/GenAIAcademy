@@ -1,0 +1,150 @@
+{
+  "route": "/arena",
+  "title": "Arena — Choose Your Battle | AlgoWars",
+  "description": "Pick your game mode and compete in real-time coding duels. Blitz, Classical, Solo, or Private Duel.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(main)/arena/page-efbac7a112cabb7d.js"
+  ],
+  "copy": [
+    "Pro",
+    "Choose Your Avatar",
+    "Blitz",
+    "1 problem, 15 minutes",
+    "Classical",
+    "1 problem, 20 minutes",
+    "Against Time",
+    "Solo, 8 minutes",
+    "Private Duel",
+    "Challenge a friend",
+    "Daily Challenge",
+    "New problem every day",
+    "Dream",
+    "Questions your dream companies ask",
+    "Code Quest",
+    "5 MCQs, 5 minutes",
+    "Puzzle",
+    "Brain teasers & logic",
+    "Group Play",
+    "Collaborative coding",
+    "Placement Chance",
+    "Finish in the top 20 and we'll connect you directly with companies' HR.",
+    "A direct interview opportunity — company revealed soon.",
+    "Avatar",
+    "XP Progress",
+    "Career Mode",
+    "A duo invite is waiting",
+    "Duo",
+    "Friends",
+    "Challenge your friends",
+    "Choose Your Battle",
+    "Select a game mode to start coding.",
+    "Today's Challenge",
+    "Streak open",
+    "Solve once. Keep the fire alive.",
+    "Same problem for everyone today. One clean run keeps your daily streak moving.",
+    "Daily match limit reached",
+    "Free players get 10 ranked matches per day. Upgrade to Pro for unlimited matches.",
+    "Discord connected",
+    "You can return to Discord now and use AlgoWars bot commands like /me.",
+    "Coming Soon",
+    "Try Pro free for 14 days",
+    "Not now"
+  ],
+  "rendered": {
+    "finalUrl": "/arena",
+    "title": "Arena — Choose Your Battle | AlgoWars",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "ALGOWARS"
+      },
+      {
+        "tag": "h2",
+        "text": "NandanPatkar"
+      },
+      {
+        "tag": "h3",
+        "text": "Career Mode"
+      },
+      {
+        "tag": "h3",
+        "text": "Duo"
+      },
+      {
+        "tag": "h3",
+        "text": "Friends"
+      },
+      {
+        "tag": "h1",
+        "text": "Choose Your Battle"
+      },
+      {
+        "tag": "h2",
+        "text": "Solve once. Keep the fire alive."
+      },
+      {
+        "tag": "h3",
+        "text": "Blitz"
+      },
+      {
+        "tag": "h3",
+        "text": "Classical"
+      },
+      {
+        "tag": "h3",
+        "text": "Against Time"
+      },
+      {
+        "tag": "h3",
+        "text": "Private Duel"
+      },
+      {
+        "tag": "h3",
+        "text": "Daily Challenge"
+      },
+      {
+        "tag": "h3",
+        "text": "Dream"
+      },
+      {
+        "tag": "h3",
+        "text": "Code Quest"
+      },
+      {
+        "tag": "h3",
+        "text": "Puzzle"
+      },
+      {
+        "tag": "h3",
+        "text": "Group Play"
+      }
+    ],
+    "text": "闘 ALGOWARS アルゴウォーズ Placement Leaderboard Career Duo Daily Pricing 🔥 0 notifications bug_report edit NandanPatkar SHINOBI XP PROGRESS 63% 195 XP 250 XP social_leaderboard RATING 1000 emoji_events WIN % 0% local_fire_department STREAK 0 route Career Mode LEVEL 8 arrow_forward handshake Duo PAIR UP WITH A FRIEND arrow_forward group Friends CHALLENGE YOUR FRIENDS arrow_forward workspace_premium PLACEMENT CHANCE Finish in the top 20 and we'll connect you directly with companies' HR. A direct interview opportunity — company revealed soon. How it works arrow_forward 戦いを選べ Choose Your Battle Select a game mode to start coding. bolt QUICK PLAY PRO UNLIMITED MATCHES local_fire_department Today's Challenge Streak open Solve once. Keep the fire alive. Same problem for everyone today. One clean run keeps your daily streak moving. Enter Daily arrow_forward bolt Blitz 1 problem, 15 minutes schedule Classical 1 problem, 20 minutes timer Against Time Solo, 8 minutes swords Private Duel Challenge a friend calendar_today Daily Challenge New problem every day rocket_launch Dream Questions your dream companies ask quiz Coming Soon Code Quest 5 MCQs, 5 minutes extension Coming Soon Puzzle Brain teasers & logic groups Coming Soon Group Play Collaborative coding",
+    "links": [
+      "/arena",
+      "/placement",
+      "/leaderboard",
+      "/career",
+      "/duo",
+      "/daily",
+      "/pricing",
+      "/profile",
+      "/friends",
+      "/queue?mode=blitz",
+      "/queue?mode=classical",
+      "/solo",
+      "/friend",
+      "/dream"
+    ],
+    "buttons": [
+      "🔥 0",
+      "notifications",
+      "bug_report",
+      "edit",
+      "bolt QUICK PLAY"
+    ],
+    "redirected": false
+  }
+}

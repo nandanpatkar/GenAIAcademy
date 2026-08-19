@@ -1,0 +1,33 @@
+{
+  "levelNumber": 118,
+  "displayNumber": 64,
+  "title": "Minimum days to make M bouquets",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given n roses and an array nums where nums[i] denotes that the 'ith' rose will bloom on the nums[i]th day, only adjacent bloomed roses can be picked to make a bouquet. Exactly k adjacent bloomed roses are required to make a single bouquet. Find the <strong>minimum number of days</strong> required to make at least m bouquets, each containing k roses. Return -1 if it is not possible.</p>",
+  "examples": [
+    "<p>Input: n = 8, nums = [7, 7, 7, 7, 13, 11, 12, 7], m = 2, k = 3</p><p>Output: 12</p><p>Explanation: On the 12th the first 4 flowers and the last 3 flowers would have already bloomed. So, we can easily make 2 bouquets, one with the first 3 and another with the last 3 flowers.</p>",
+    "<p>Input: n = 5, nums = [1, 10, 3, 10, 2], m = 3, k = 2</p><p>Output: -1</p><p>Explanation: If we want to make 3 bouquets of 2 flowers each, we need at least 6 flowers. But we are given only 5 flowers, so, we cannot make the bouquets.</p>",
+    "<p>Input: n = 5, nums = [1, 10, 3, 10, 2], m = 3, k = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;1 <= n <= 10<sup>5</sup></li><li>&nbsp;1 <= nums[i] <= 10<sup>9</sup></li><li>&nbsp;1 <= m <= 10<sup>6</sup></li><li>&nbsp;1 <= k <= n</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

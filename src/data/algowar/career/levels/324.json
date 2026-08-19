@@ -1,0 +1,26 @@
+{
+  "levelNumber": 324,
+  "displayNumber": 270,
+  "title": "Children Sum Property in Binary Tree",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the root of a binary tree, return true if and only if every node’s value is equal to the sum of the values stored in its left and right children.</p><ul><li>For any missing ( null ) child, its value is treated as 0.</li><li>A leaf node automatically satisfies the rule because both children are null.</li></ul>",
+  "examples": [
+    "<p><strong>Input: </strong>root = [1,4,3,5]</p><p><strong>Output:</strong> false</p><p><strong>Explanation:</strong></p><ul><li>The root is 1, but its children sum to 4 + 3 = 7. Since 1 ≠ 7, the tree violates the property.</li></ul>",
+    "<p><strong>Input:</strong> root = [10,4,6,1,3,2,4]</p><p><strong>Output:</strong> true</p><p><strong>Explanation:</strong></p><ul><li>4 = 1 + 3</li><li>6 = 2 + 4</li><li>10 = 4 + 6</li><li>All internal nodes satisfy the condition.</li></ul>",
+    "<p><strong>Input: </strong>root = [35,20,15,15,5,10,5]</p>"
+  ],
+  "constraintsHtml": "<p>1 ≤ n ≤ 10<sup>4</sup> (n = number of nodes `)</p><p>-10<sup>5</sup> ≤ Node.val ≤ 10<sup>5</sup></p><p><br></p>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

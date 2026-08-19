@@ -1,0 +1,33 @@
+{
+  "levelNumber": 285,
+  "displayNumber": 231,
+  "title": "Valid Paranthesis Checker",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Find the validity of an input string <strong>s</strong> that only contains the letters '(', ')' and '*'.</p><p><br></p><p>A string entered is legitimate if</p><ul><li>Any left parenthesis '(' must have a corresponding right parenthesis ')'.</li><li>Any right parenthesis ')' must have a corresponding left parenthesis '('.</li><li>Left parenthesis '(' must go before the corresponding right parenthesis ')'.</li><li>'*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string \"\".</li></ul>",
+  "examples": [
+    "<p><strong>Input :</strong> s = (*))</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> The * can be replaced by an opening '(' bracket. The string after replacing the * mark is \"(())\" and is a valid string.</p>",
+    "<p><strong>Input :</strong> s = *(()</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> The * replaced with any bracket does not form a valid string.</p>",
+    "<p><strong>Input :</strong> s = (**()))</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>4</sup></li><li>s consist of only '(', ')', '*'.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

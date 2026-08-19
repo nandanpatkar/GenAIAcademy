@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "1524dd4e-930a-415f-8000-d5794b7bda50",
+    "title": "Count the Number of Fair Pairs",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "two-pointers",
+      "binary-search",
+      "sorting"
+    ],
+    "statement": "Count the Number of Fair Pairs\n\nGiven a 0-indexed integer array nums of size n and two integers lower and upper, return the number of fair pairs.\n\nA pair (i, j) is fair if:\n- 0 <= i < j < n, and\n- lower <= nums[i] + nums[j] <= upper\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\nThe third line contains an integer lower.\nThe fourth line contains an integer upper.\n\n**Output:**\nPrint a single integer: the number of fair pairs.\n\n**Constraints:**\n- 1 <= nums.length <= 10^5\n- nums.length == n\n- -10^9 <= nums[i] <= 10^9\n- -10^9 <= lower <= upper <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n6\n0 1 7 4 4 5\n3\n6\nOutput:\n6\n\nExample 2:\nInput:\n5\n1 7 9 2 5\n11\n11\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

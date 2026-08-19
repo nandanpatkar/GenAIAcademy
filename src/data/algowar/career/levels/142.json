@@ -1,0 +1,26 @@
+{
+  "levelNumber": 142,
+  "displayNumber": 88,
+  "title": "Maximum Nesting Depth of the Parentheses",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>A string s is a <strong>valid parentheses string (VPS)</strong> if it meets the following conditions:</p><ul><li>It only contains digits 0-9, arithmetic operators +, -, *, /, and parentheses (, ).</li><li>The parentheses are <strong>balanced </strong>and <strong>correctly </strong>nested.</li></ul><p><br></p><p>Your task is to compute the <strong>maximum nesting depth of parentheses</strong> in s. The nesting depth is the highest number of parentheses that are open at the same time at any point in the string.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> s = \"(1+(2*3)+((8)/4))+1\"</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong> The deepest nested sub-expression is ((8)/4), which has 3 layers of parentheses.</p><p><br></p>",
+    "<p><strong>Input:</strong> s = \"(1)+((2))+(((3)))\"</p><p><strong>Output:</strong> 3</p><p><strong>Explanation: </strong>The digit '3' is enclosed in 3 pairs of parentheses.</p>",
+    "<p><strong>Input:</strong> s = \"()(())((()()))\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 100</li><li>s consists of digits 0-9, arithmetic operators (+, -, *, /), and parentheses ( and ).</li><li>It is guaranteed that s is a valid parentheses string (VPS).</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

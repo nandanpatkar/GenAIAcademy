@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "7761eb7a-fe66-4399-9909-1cd9a05c45ac",
+    "title": "Compare Version Numbers",
+    "difficulty": "Medium",
+    "tags": [
+      "two-pointers",
+      "string"
+    ],
+    "statement": "Compare two version strings, version1 and version2. A version string consists of revisions separated by dots '.'. The value of a revision is its integer conversion, ignoring leading zeros.\n\nTo compare version strings, compare their revision values in left-to-right order. If one of the version strings has fewer revisions, treat the missing revision values as 0.\n\nReturn the following:\n- If version1 < version2, return -1.\n- If version1 > version2, return 1.\n- Otherwise, return 0.\n\n**Input:**\nThe first line contains version1 (raw, not quoted).\nThe second line contains version2 (raw, not quoted).\n\n**Output:**\nPrint a single integer on one line: -1, 0, or 1.\n\n**Constraints:**\n- 1 <= version1.length, version2.length <= 500\n- version1 and version2 only contain digits and '.'.\n- version1 and version2 are valid version numbers.\n- All the given revisions in version1 and version2 can be stored in a 32-bit integer.\n\n**Examples:**\nExample 1:\nInput:\n1.2\n1.10\nOutput:\n-1\n\nExample 2:\nInput:\n1.01\n1.001\nOutput:\n0\n\nExample 3:\nInput:\n1.0\n1.0.0.0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

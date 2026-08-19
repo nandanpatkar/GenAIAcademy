@@ -1,0 +1,22 @@
+{
+  "problem": {
+    "id": "64a52480-78e1-48d9-a76a-0e53057974ec",
+    "title": "Count Ways to Build Rooms in an Ant Colony",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "math",
+      "dynamic-programming",
+      "tree",
+      "depth-first-search",
+      "graph",
+      "topological-sort",
+      "combinatorics"
+    ],
+    "statement": "You are an ant tasked with adding n new rooms numbered 0 to n-1 to your colony. You are given the expansion plan as a 0-indexed integer array of length n, prevRoom, where prevRoom[i] indicates that you must build room prevRoom[i] before building room i, and these two rooms must be connected directly. Room 0 is already built, so prevRoom[0] = -1. The expansion plan is given such that once all the rooms are built, every room will be reachable from room 0.\n\nYou can only build one room at a time, and you can travel freely between rooms you have already built only if they are connected. You can choose to build any room as long as its previous room is already built.\n\nReturn the number of different orders you can build all the rooms in. Since the answer may be large, return it modulo 10^9 + 7.\n\n**Input:**\nThe first line contains an integer n, the length of prevRoom.\nThe second line contains n space-separated integers prevRoom[0] prevRoom[1] ... prevRoom[n-1].\n\n**Output:**\nPrint a single integer: the number of different orders to build all the rooms, modulo 10^9 + 7.\n\n**Constraints:**\n- 2 <= n <= 10^5\n- prevRoom[0] == -1\n- 0 <= prevRoom[i] < n for all 1 <= i < n\n- Every room is reachable from room 0 once all the rooms are built.\n\n**Examples:**\nExample 1:\nInput:\n3\n-1 0 1\nOutput:\n1\n\nExample 2:\nInput:\n5\n-1 0 0 1 2\nOutput:\n6",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

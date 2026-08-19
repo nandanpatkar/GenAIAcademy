@@ -1,0 +1,31 @@
+{
+  "levelNumber": 208,
+  "displayNumber": 154,
+  "title": "Check if a Number is Power of 2 or Not",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer n, <strong>return true if it is a power of two</strong>. Otherwise, return false.</p><p><br></p><p>An integer n is a power of two if there exists an integer x such that<strong> n == 2</strong><sup><strong>x</strong></sup><strong>.</strong></p><p><br></p><p><strong>You must solve it without using loops or recursion.</strong></p>",
+  "examples": [
+    "<p>Input: n = 1</p><p>Output: true</p><p>Explanation: 2<sup>0</sup> = 1</p>",
+    "<p><strong>Input:</strong> n = 16</p><p><strong>Output:</strong> true</p><p><strong>Explanation:</strong> 2<sup>4</sup> = 16</p>",
+    "<p><strong>Input: </strong>n = -8</p>"
+  ],
+  "constraintsHtml": "<p>-2<sup>31</sup> <= n <= 2<sup>31 </sup>- 1</p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

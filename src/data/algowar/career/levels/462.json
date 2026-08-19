@@ -1,0 +1,33 @@
+{
+  "levelNumber": 462,
+  "displayNumber": 408,
+  "title": "Number of distinct substrings in a string",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string s, determine the number of <strong>distinct substrings</strong> (including the empty substring) of the given string.</p><p><br></p><p>A string B is a substring of a string A if B can be obtained by deleting several characters (possibly none) from the start of A and several characters (possibly none) from the end of A. </p><p><br></p><p>Two strings X and Y are considered different if there is at least one index i such that the character of X at index i is different from the character of Y at index i (X[i] != Y[i]).</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"aba\"</p><p><strong>Output :</strong> 6</p><p><strong>Explanation :</strong> </p><p>The distinct substrings are \"a\", \"ab\", \"ba\", \"b\", \"aba\", \"\".</p>",
+    "<p><strong>Input :</strong> s = \"abc\"</p><p><strong>Output :</strong> 7</p><p><strong>Explanation :</strong> </p><p>The distinct substrings are \"a\", \"ab\", \"abc\", \"b\", \"bc\", \"c\", \"\".</p>",
+    "<p><strong>Input :</strong> s = \"aaabc\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>3</sup></li><li>s consist of only lowercase English letters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 17,
+    "title": "Trie Nexus",
+    "theme": "prefix-nexus",
+    "levelCount": 7,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 64,
+  "displayNumber": 10,
+  "title": "Check if the Array is Sorted II",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array <strong>nums</strong> of n integers, return true if the array nums is sorted in non-decreasing order or else false.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [1, 2, 3, 4, 5]</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> For all i (1 <= i <= 4) it holds nums[i] <= nums[i+1], hence it is sorted and we return true.</p>",
+    "<p><strong>Input :</strong> nums = [1, 2, 1, 4, 5]</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> For i == 2 it does not hold nums[i] <= nums[i+1], hence it is not sorted and we return false.</p>",
+    "<p><strong>Input :</strong> nums = [1,9,6,8,5,4,0]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 100</li><li>1 <= nums[i] <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

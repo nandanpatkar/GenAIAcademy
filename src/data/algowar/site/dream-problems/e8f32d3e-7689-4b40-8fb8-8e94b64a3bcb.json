@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+    "title": "Number of Islands",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "depth-first-search",
+      "breadth-first-search",
+      "union-find",
+      "matrix"
+    ],
+    "statement": "Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.\n\nAn island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.\n\n**Input:**\nThe first line contains two integers m and n, the number of rows and columns of the grid.\nThe next m lines each contain n space-separated characters, each being '0' or '1', representing a row of the grid.\n\n**Output:**\nPrint a single integer, the number of islands.\n\n**Constraints:**\n- m == number of rows in the grid\n- n == number of columns in the grid\n- 1 <= m, n <= 300\n- Each grid cell is '0' or '1'.\n\n**Examples:**\nExample 1:\nInput:\n4 5\n1 1 1 1 0\n1 1 0 1 0\n1 1 0 0 0\n0 0 0 0 0\nOutput:\n1\n\nExample 2:\nInput:\n4 5\n1 1 0 0 0\n1 1 0 0 0\n0 0 1 0 0\n0 0 0 1 1\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

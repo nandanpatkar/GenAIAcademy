@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "ab6f700d-59cb-4751-9341-7ff3c251a4f7",
+    "title": "Minimum Path Sum",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "matrix"
+    ],
+    "statement": "Given an m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.\n\nYou can only move either down or right at any point in time.\n\n**Input:**\nThe first line contains two integers m and n, the number of rows and columns of the grid.\nThe next m lines each contain n space-separated integers representing a row of the grid.\n\n**Output:**\nPrint a single integer: the minimum path sum from the top-left cell to the bottom-right cell.\n\n**Constraints:**\n- m == number of rows in the grid\n- n == number of columns in the grid\n- 1 <= m, n <= 200\n- 0 <= grid[i][j] <= 200\n\n**Examples:**\nExample 1:\nInput:\n3 3\n1 3 1\n1 5 1\n4 2 1\nOutput:\n7\n\nExample 2:\nInput:\n2 3\n1 2 3\n4 5 6\nOutput:\n12",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

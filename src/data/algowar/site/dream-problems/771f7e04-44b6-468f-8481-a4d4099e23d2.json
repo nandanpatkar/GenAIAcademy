@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "771f7e04-44b6-468f-8481-a4d4099e23d2",
+    "title": "Parallel Courses III",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "graph",
+      "topological-sort"
+    ],
+    "statement": "You are given an integer n, which indicates that there are n courses labeled from 1 to n. You are also given a list of prerequisite relations where each relation [prevCourse, nextCourse] denotes that course prevCourse has to be completed before course nextCourse. Furthermore, you are given a 0-indexed integer array time where time[i] denotes how many months it takes to complete the (i+1)-th course.\n\nYou must find the minimum number of months needed to complete all the courses following these rules:\n- You may start taking a course at any time if the prerequisites are met.\n- Any number of courses can be taken at the same time.\n\nReturn the minimum number of months needed to complete all the courses.\n\nNote: The test cases are generated such that it is possible to complete every course (i.e., the graph is a directed acyclic graph).\n\n**Input:**\nThe first line contains an integer n, the number of courses.\nThe second line contains an integer m, the number of prerequisite relations.\nThe next m lines each contain two space-separated integers prevCourse and nextCourse, describing a prerequisite relation.\nThe next line contains an integer n (the length of the time array).\nThe next line contains n space-separated integers, the time array (0-indexed, where time[i] is the months needed for course i+1).\n\n**Output:**\nPrint a single integer, the minimum number of months needed to complete all the courses.\n\n**Constraints:**\n- 1 <= n <= 5 * 10^4\n- 0 <= m <= min(n * (n - 1) / 2, 5 * 10^4)\n- 1 <= prevCourse, nextCourse <= n\n- prevCourse != nextCourse\n- All pairs [prevCourse, nextCourse] are unique.\n- time.length == n\n- 1 <= time[i] <= 10^4\n- The given graph is a directed acyclic graph.\n\n**Examples:**\nExample 1:\nInput:\n3\n2\n1 3\n2 3\n3\n3 2 5\nOutput:\n8\n\nExample 2:\nInput:\n5\n5\n1 5\n2 5\n3 5\n3 4\n4 5\n5\n1 2 3 4 5\nOutput:\n12",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

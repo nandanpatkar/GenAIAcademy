@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "78da7ea3-df09-4877-a4d0-b1753bde424b",
+    "title": "Minimum Length of String After Deleting Similar Ends",
+    "difficulty": "Medium",
+    "tags": [
+      "two-pointers",
+      "string"
+    ],
+    "statement": "Minimum Length of String After Deleting Similar Ends\n\nGiven a string s consisting only of characters 'a', 'b', and 'c'. You are asked to apply the following algorithm on the string any number of times:\n\n1. Pick a non-empty prefix from the string s where all the characters in the prefix are equal.\n2. Pick a non-empty suffix from the string s where all the characters in this suffix are equal.\n3. The prefix and the suffix should not intersect at any index.\n4. The characters from the prefix and suffix must be the same.\n5. Delete both the prefix and the suffix.\n\nReturn the minimum length of s after performing the above operation any number of times (possibly zero times).\n\n**Input:**\nThe input consists of a single line containing the string s (which contains only the characters 'a', 'b', and 'c').\n\n**Output:**\nPrint a single integer: the minimum length of s after performing the operations any number of times.\n\n**Constraints:**\n- 1 <= s.length <= 10^5\n- s only consists of characters 'a', 'b', and 'c'.\n\n**Examples:**\nExample 1:\nInput:\nca\nOutput:\n2\n\nExample 2:\nInput:\ncabaabac\nOutput:\n0\n\nExample 3:\nInput:\naabccabba\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

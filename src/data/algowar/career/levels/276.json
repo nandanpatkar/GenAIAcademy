@@ -1,0 +1,31 @@
+{
+  "levelNumber": 276,
+  "displayNumber": 222,
+  "title": "Design Twitter",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "<p><strong>Input</strong>: [postTweet(1, 2), postTweet(2, 6), getNewsFeed(1), follow(1, 2), getNewsFeed(1), unfollow(1, 2), postTweet(1,7), getNewsFeed(1)]</p><p><strong>Output</strong>:[null, null, [2], null, [6, 2], null, [7, 2]]</p><p><strong>Explanation</strong>:</p><p>postTweet(1, 2): User with userId 1 posts tweet with tweetId 2.</p><p>postTweet(2, 6): User with userId 2 posts tweet with tweetId 6.</p><p>getNewsFeed(1): Outputs feed of userId 1 = [2].</p><p>follow(1, 2): User with userId 1 follows user with userId 2.</p><p>getNewsFeed(1): Outputs feed of userId 1 = [6, 2], it contains the news of userId 2 as well.</p><p>unfollow(1, 2): User with userId 1 unfollows user with userId 2.</p><p>postTweet(1,7): User with userId 1 posts tweet with tweetId 7.</p><p>getNewsFeed(1): Outputs feed of userId 1 = [7, 2].</p>",
+    "<p><strong>Input</strong>: [follow(2, 1), follow(1, 2), postTweet(1, 6), getNewsFeed(1), getNewsFeed(2), unfollow(2, 1), getNewsFeed(2)]</p><p><strong>Output</strong>: [null, null, null, [6], [6], null, []]</p><p><strong>Explanation</strong>:</p><p>follow(2, 1): User with userId 2 follows user with userId 1.</p><p>follow(1, 2): User with userId 1 follows user with userId 2.</p><p>postTweet(1, 6): User with userId 1 posts tweet with tweetId 6.</p><p>getNewsFeed(1): Outputs feed of userId 1 = [6].</p><p>getNewsFeed(2): Outputs feed of userId 2 = [6]. This includes tweets of userId 1 as well.</p><p>unfollow(2, 1): User with userId 2 unfollows user with userId 1.</p><p>getNewsFeed(2): Outputs feed of userId 2 = [], its empty as userId 2 no longer follows userId 1.</p>",
+    "<p>Input: [postTweet(1, 1), postTweet(2, 2), follow(1, 2), unfollow(1, 2), follow(1, 2), getNewsFeed(1)]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of instructions <= 10<sup>4</sup></li><li>0 <= tweetId<= 10<sup>4</sup></li><li>1 <= Number of UserId, followerId, followeeId <= 500</li><li>tweetId will all be unique</li><li>followerId != followeeId on the same call</li><li>All input will be valid</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

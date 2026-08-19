@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "1d4d7758-0dff-4518-91e6-2b4b6192953f",
+    "title": "Maximum Number of Visible Points",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "math",
+      "geometry",
+      "sliding-window",
+      "sorting"
+    ],
+    "statement": "You are given an array of points, an integer angle, and your location, where location = [pos_x, pos_y] and points[i] = [x_i, y_i] both denote integral coordinates on the X-Y plane.\n\nInitially, you are facing directly east from your position. You cannot move from your position, but you can rotate. In other words, pos_x and pos_y cannot be changed. Your field of view in degrees is represented by angle, determining how wide you can see from any given view direction. Let d be the amount in degrees that you rotate counterclockwise. Then, your field of view is the inclusive range of angles [d - angle/2, d + angle/2].\n\nYou can see some set of points if, for each point, the angle formed by the point, your position, and the immediate east direction from your position is in your field of view.\n\nThere can be multiple points at one coordinate. There may be points at your location, and you can always see these points regardless of your rotation. Points do not obstruct your vision to other points.\n\nReturn the maximum number of points you can see.\n\n**Input:**\nThe first line contains two integers n and c, where n is the number of points and c is always 2.\nThe next n lines each contain two space-separated integers x_i y_i describing a point.\nThe next line contains a single integer angle.\nThe next line contains a single integer 2 (the length of the location array).\nThe next line contains two space-separated integers pos_x pos_y describing your location.\n\n**Output:**\nPrint a single integer: the maximum number of points you can see.\n\n**Constraints:**\n1 <= points.length <= 10^5\npoints[i].length == 2\nlocation.length == 2\n0 <= angle < 360\n0 <= pos_x, pos_y, x_i, y_i <= 100\n\n**Examples:**\nExample 1:\nInput:\n3 2\n2 1\n2 2\n3 3\n90\n2\n1 1\nOutput:\n3\n\nExample 2:\nInput:\n4 2\n2 1\n2 2\n3 4\n1 1\n90\n2\n1 1\nOutput:\n4\n\nExample 3:\nInput:\n2 2\n1 0\n2 1\n13\n2\n1 1\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

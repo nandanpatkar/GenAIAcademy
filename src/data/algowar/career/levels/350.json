@@ -1,0 +1,33 @@
+{
+  "levelNumber": 350,
+  "displayNumber": 296,
+  "title": "Largest BST in Binary Tree",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a root of Binary Tree, where the nodes have integer values. Return the size of the <strong>largest subtree</strong> of the binary tree which is also a BST.</p><p><br></p><p>A binary search tree (BST) is a binary tree data structure which has the following properties.</p><p><br></p><ul><li>The left subtree of a node contains only nodes with data less than the node’s data.</li></ul><p><br></p><ul><li>The right subtree of a node contains only nodes with data greater than the node’s data.</li></ul><p><br></p><ul><li>Both the left and right subtrees must also be binary search trees.</li></ul>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [2, 1, 3]</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong> </p><p>The given complete binary tree is a BST consisting of 3 nodes.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-WpfYhq7X\"></p>",
+    "<p><strong>Input :</strong> root = [10, null, 20, null, 30, null, 40, null, 50]</p><p><strong>Output :</strong> 5</p><p><strong>Explanation :</strong> </p><p>If we consider the node 10 as root node then it forms the largest BST.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-omJgroxU\"></p>",
+    "<p><strong>Input :</strong> root = [3, 1, 4, null, null, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>1 <= Node.val <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 175,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

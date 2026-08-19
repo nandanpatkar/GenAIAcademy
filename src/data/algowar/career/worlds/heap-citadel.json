@@ -1,0 +1,478 @@
+{
+  "worldNumber": 11,
+  "slug": "heap-citadel",
+  "title": "Heap Citadel",
+  "description": "Use priority queues and heap patterns to dominate ranked selection problems.",
+  "theme": "gold-citadel",
+  "levelCount": 17,
+  "xpAvailable": 360,
+  "difficultySummary": {
+    "Easy": 3,
+    "Hard": 4,
+    "Medium": 10
+  },
+  "contentSummary": {
+    "plus": 14,
+    "article": 1,
+    "missing": 2
+  },
+  "completionReward": {
+    "badgeTitle": "Heap Commander",
+    "xp": 100,
+    "coins": 525
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-11-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Heap Citadel",
+      "subtitle": "Heaps [Learning, Medium, Hard Problems]",
+      "description": "Use priority queues and heap patterns to dominate ranked selection problems.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-265",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Heaps (Theory Video)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 265,
+        "displayNumber": 211,
+        "title": "Heaps (Theory Video)",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-266",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Implement Min Heap",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 266,
+        "displayNumber": 212,
+        "title": "Implement Min Heap",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-267",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Check if an array represents a min heap",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 267,
+        "displayNumber": 213,
+        "title": "Check if an array represents a min heap",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-268",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Convert Min Heap to Max Heap",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 268,
+        "displayNumber": 214,
+        "title": "Convert Min Heap to Max Heap",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-269",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "K-th Largest element in an array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 269,
+        "displayNumber": 215,
+        "title": "K-th Largest element in an array",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-270",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Kth smallest element in an array [use priority queue]",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 270,
+        "displayNumber": 216,
+        "title": "Kth smallest element in an array [use priority queue]",
+        "difficulty": "Medium",
+        "contentStatus": "missing",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-271",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Sort K sorted array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 271,
+        "displayNumber": 217,
+        "title": "Sort K sorted array",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-272",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Merge K sorted Lists",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 272,
+        "displayNumber": 218,
+        "title": "Merge K sorted Lists",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-273",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Replace Elements by Their Rank",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 273,
+        "displayNumber": 219,
+        "title": "Replace Elements by Their Rank",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-274",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Task Scheduler",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 274,
+        "displayNumber": 220,
+        "title": "Task Scheduler",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-275",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Hand of Straights",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 275,
+        "displayNumber": 221,
+        "title": "Hand of Straights",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-276",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Design Twitter",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 276,
+        "displayNumber": 222,
+        "title": "Design Twitter",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-11-checkpoint-276",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 276,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-277",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Minimum Cost to Connect Sticks",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 277,
+        "displayNumber": 223,
+        "title": "Minimum Cost to Connect Sticks",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-278",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Kth largest element in a stream of running integers",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 278,
+        "displayNumber": 224,
+        "title": "Kth largest element in a stream of running integers",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-279",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Maximum Sum Combination",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 279,
+        "displayNumber": 225,
+        "title": "Maximum Sum Combination",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-280",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Find Median from Data Stream",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 280,
+        "displayNumber": 226,
+        "title": "Find Median from Data Stream",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-281",
+      "nodeType": "boss",
+      "order": 19,
+      "mapLane": "center",
+      "title": "Top K Frequent Elements",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 150
+      },
+      "level": {
+        "levelNumber": 281,
+        "displayNumber": 227,
+        "title": "Top K Frequent Elements",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 150,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

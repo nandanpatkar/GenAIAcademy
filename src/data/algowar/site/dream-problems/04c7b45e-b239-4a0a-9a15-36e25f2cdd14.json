@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "04c7b45e-b239-4a0a-9a15-36e25f2cdd14",
+    "title": "Distinct Subsequences",
+    "difficulty": "Hard",
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
+    "statement": "Given two strings s and t, return the number of distinct subsequences of s which equals t.\n\nThe test cases are generated so that the answer fits on a 32-bit signed integer.\n\n**Input:**\n- Line 1: the string s (raw, on its own line).\n- Line 2: the string t (raw, on its own line).\n\n**Output:**\n- A single integer: the number of distinct subsequences of s which equal t.\n\n**Constraints:**\n- 1 <= s.length, t.length <= 1000\n- s and t consist of English letters.\n\n**Examples:**\n\nExample 1:\nInput:\nrabbbit\nrabbit\nOutput:\n3\n\nExample 2:\nInput:\nbabgbag\nbag\nOutput:\n5",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

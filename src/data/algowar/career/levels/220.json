@@ -1,0 +1,33 @@
+{
+  "levelNumber": 220,
+  "displayNumber": 166,
+  "title": "Count primes in range L to R",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an 2D array <strong>queries </strong>of dimension <strong>n</strong>*2.</p><p>The <strong>queries[i]</strong> represents a range from queries[i][0] to queries[i][1] (include the end points).</p><p>Return the count of prime numbers present in between each range in queries array.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> queries = [ [2, 5], [4, 7] ]</p><p><strong>Output :</strong> [3, 2]</p><p><strong>Explanation :</strong> The range 2 to 5 contains three prime numbers 2, 3, 5.</p><p>The range 4 to 7 contains two prime numbers 5, 7.</p>",
+    "<p><strong>Input :</strong> queries = [ [1, 7], [3, 7] ]</p><p><strong>Output :</strong> [4, 3]</p><p><strong>Explanation :</strong> The range 1 to 7 contains four prime numbers 2, 3, 5, 7.</p><p>The range 3 to 7 contains three prime numbers 3, 5, 7.</p>",
+    "<p><strong>Input :</strong> queries = [ [1, 10], [10, 20] ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>5</sup></li><li>1 <= queries[i][0] <= queries[i][1] <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

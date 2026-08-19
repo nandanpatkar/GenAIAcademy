@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "3f035467-f629-457a-a276-73465307f222",
+    "title": "Search Suggestions System",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "string",
+      "binary-search",
+      "trie",
+      "sorting",
+      "heap-priority-queue"
+    ],
+    "statement": "You are given an array of strings products and a string searchWord.\n\nDesign a system that suggests at most three product names from products after each character of searchWord is typed. Suggested products should have a common prefix with searchWord. If there are more than three products with a common prefix, return the three lexicographically minimum products.\n\nReturn a list of lists of the suggested products after each character of searchWord is typed. The result contains one list per character of searchWord (in order), and each list contains at most three product names in lexicographic order.\n\n**Input:**\nThe first line contains an integer n, the number of products.\nThe next n lines each contain one product string.\nThe next line contains the string searchWord.\n\n**Output:**\nPrint exactly len(searchWord) lines. The i-th line (1-indexed) contains the suggested products after typing the first i characters of searchWord, as space-separated strings in lexicographic order (at most three). If no products match, print an empty line.\n\n**Constraints:**\n1 <= products.length <= 1000\n1 <= products[i].length <= 3000\n1 <= sum(products[i].length) <= 2 * 10^4\nAll the strings of products are unique.\nproducts[i] consists of lowercase English letters.\n1 <= searchWord.length <= 1000\nsearchWord consists of lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\n5\nmobile\nmouse\nmoneypot\nmonitor\nmousepad\nmouse\nOutput:\nmobile moneypot monitor\nmobile moneypot monitor\nmouse mousepad\nmouse mousepad\nmouse mousepad\n\nExample 2:\nInput:\n1\nhavana\nhavana\nOutput:\nhavana\nhavana\nhavana\nhavana\nhavana\nhavana",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

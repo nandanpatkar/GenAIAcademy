@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "71148802-ccab-4516-8e9c-558b6e63ce39",
+    "title": "Minimize Malware Spread",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "hash-table",
+      "depth-first-search",
+      "breadth-first-search",
+      "union-find",
+      "graph"
+    ],
+    "statement": "Minimize Malware Spread\n\nYou are given a network of n nodes represented as an n x n adjacency matrix, where the i-th node is directly connected to the j-th node if graph[i][j] == 1.\n\nSome nodes are initially infected by malware. Whenever two nodes are directly connected, and at least one of those two nodes is infected by malware, both nodes will be infected by malware. This spread of malware will continue until no more nodes can be infected in this manner.\n\nSuppose M(initial) is the final number of nodes infected with malware in the entire network after the spread of malware stops. We will remove exactly one node from the initial list of infected nodes.\n\nReturn the node that, if removed, would minimize M(initial). If multiple nodes could be removed to minimize M(initial), return the node with the smallest index.\n\nNote that if a node was removed from the initial list of infected nodes, it might still be infected later due to the malware spread.\n\n**Input:**\nThe first line contains two integers n n (the number of rows and columns of the adjacency matrix, both equal).\nThe next n lines each contain n space-separated integers (0 or 1) representing the adjacency matrix.\nThe next line contains a single integer k, the number of initially infected nodes.\nThe next line contains k space-separated integers, the indices of the initially infected nodes.\n\n**Output:**\nPrint a single integer: the index of the node in the initial list that, when removed, minimizes the final number of infected nodes. If there is a tie, print the smallest index.\n\n**Constraints:**\n- n == graph.length\n- n == graph[i].length\n- 2 <= n <= 300\n- graph[i][j] is 0 or 1.\n- graph[i][j] == graph[j][i]\n- graph[i][i] == 1\n- 1 <= initial.length <= n\n- 0 <= initial[i] <= n - 1\n- All the integers in initial are unique.\n\n**Examples:**\nExample 1:\nInput:\n3 3\n1 1 0\n1 1 0\n0 0 1\n2\n0 1\nOutput:\n0\n\nExample 2:\nInput:\n3 3\n1 0 0\n0 1 0\n0 0 1\n2\n0 2\nOutput:\n0\n\nExample 3:\nInput:\n3 3\n1 1 1\n1 1 1\n1 1 1\n2\n1 2\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

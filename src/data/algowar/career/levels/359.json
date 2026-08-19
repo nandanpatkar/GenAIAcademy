@@ -1,0 +1,33 @@
+{
+  "levelNumber": 359,
+  "displayNumber": 305,
+  "title": "Rotten Oranges",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an n x m grid, where each cell has the following values :&nbsp;</p><p><br></p><p>2&nbsp;-&nbsp;represents a rotten orange</p><p>1&nbsp;-&nbsp;represents a Fresh orange</p><p>0&nbsp;-&nbsp;represents an Empty Cell</p><p>Every minute, if a fresh orange is adjacent to a rotten orange in <strong>4-direction</strong> ( upward, downwards, right, and left ) it becomes rotten.&nbsp;</p><p><br></p><p>Return the <strong>minimum</strong> number of <strong>minutes</strong> required such that none of the cells has a Fresh Orange. If it's not possible, return -1.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> grid = [ [2, 1, 1] , [0, 1, 1] , [1, 0, 1] ]</p><p><strong>Output:</strong> -1</p><p><strong>Explanation:</strong>&nbsp;Orange at (3,0) cannot be rotten.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-NWsocTcc\"></p>",
+    "<p><strong>Input:</strong> grid = [ [2,1,1] , [1,1,0] , [0,1,1] ]&nbsp;</p><p><strong>Output:</strong>&nbsp;4</p><p><strong>Explanation:</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-yuB56suz\"></p>",
+    "<p>Input: grid = [[0,1,2],[0,1,2],[2,1,1]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= n, m <= 500</li><li>&nbsp;&nbsp;grid[i][j] == 0 or 1 or 2</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

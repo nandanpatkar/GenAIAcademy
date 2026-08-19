@@ -1,0 +1,33 @@
+{
+  "levelNumber": 128,
+  "displayNumber": 74,
+  "title": "Kth element of 2 sorted arrays",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two sorted arrays a and b of size m and n respectively. Find the <strong>kth</strong> element of the final sorted array.</p>",
+  "examples": [
+    "<p>Input: a = [2, 3, 6, 7, 9], b = [1, 4, 8, 10], k = 5</p><p>Output: 6</p><p>Explanation: The final sorted array would be [1, 2, 3, 4, 6, 7, 8, 9, 10]. The 5th element of this array is 6.</p>",
+    "<p>Input: a = [100, 112, 256, 349, 770], b = [72, 86, 113, 119, 265, 445, 892], k = 7</p><p>Output: 256</p><p>Explanation: Final sorted array is - [72, 86, 100, 112, 113, 119, 256, 265, 349, 445, 770, 892], 7th element of this array is 256.</p>",
+    "<p>Input: a = [2, 3, 6], b = [7, 9], k = 4</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= m, n <= 10<sup>4</sup></li><li>0 <= arr1[i[, arr2[i] < 10<sup>9</sup></li><li>1 <= k <= m+n</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

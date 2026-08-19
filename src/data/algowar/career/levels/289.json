@@ -1,0 +1,33 @@
+{
+  "levelNumber": 289,
+  "displayNumber": 235,
+  "title": "Minimum number of platforms required for a railway",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the arrival and departure times of all trains reaching a particular railway station, determine the <strong>minimum</strong> number of platforms required so that no train is kept waiting. Consider all trains arrive and depart on the same day.</p><p><br></p><p>In any particular instance, the same platform cannot be used for both the departure of one train and the arrival of another train, necessitating the use of different platforms in such cases.</p><p><br></p><p><strong>Note:</strong> Time intervals are in the minutes , <strong>Leading zeros for minutes less than 1000 are optional (e.g., 0900 is the same as 900).</strong></p>",
+  "examples": [
+    "<p><strong>Input :</strong> Arrival = [900, 940, 950, 1100, 1500, 1800] , Departure = [910, 1200, 1120, 1130, 1900, 2000]</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong> The first , second , fifth number train can use the platform 1.</p><ul><li>The third and sixth train can use the platform 2.</li><li>The fourth train will use platform 3.</li><li>So total we need 3 different platforms for the railway station so that no train is kept waiting.</li></ul>",
+    "<p><strong>Input :</strong> Arrival = [900, 1100, 1235] , Departure = [1000, 1200, 1240]</p><p><strong>Output :</strong> 1</p><p><strong>Explanation :</strong> All the three trains can use the platform 1.</p><ul><li>So we required only 1 platform.</li></ul>",
+    "<p><strong>Input :</strong> Arrival = [900, 1000, 1200] , Departure = [1000, 1200, 1240]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 10<sup>5</sup></li><li>0000 <= Arrival[i] <= Departure[i] <= 2359</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

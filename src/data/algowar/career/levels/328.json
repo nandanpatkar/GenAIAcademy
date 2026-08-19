@@ -1,0 +1,33 @@
+{
+  "levelNumber": 328,
+  "displayNumber": 274,
+  "title": "Requirements needed to construct a unique BT",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a pair of tree traversal, return <strong>true</strong> if a unique binary tree can be constructed otherwise <strong>false</strong>. Each traversal is represented with integer: 1 -> Preorder , 2 -> Inorder , 3 -> Postorder.</p>",
+  "examples": [
+    "<p><strong>Input : </strong>1 2</p><p><strong>Output : </strong>true&nbsp;</p><p><strong>Explanation : </strong>Answer is True.</p><p>It is possible to construct a unique binary tree. This is because the preorder traversal provides the root of the tree, and the inorder traversal helps determine the left and right subtrees.</p>",
+    "<p><strong>Input : </strong>2 2</p><p><strong>Output : </strong>false</p><p><strong>Explanation :</strong> Two inorder traversals are insufficient to uniquely determine a binary tree.</p>",
+    "<p>Input : 1 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= a, b <= 3</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

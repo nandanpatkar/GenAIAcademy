@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "3be10ea9-b85a-4937-adb9-dc9bcd74f46a",
+    "title": "Minimum Number of Chairs in a Waiting Room",
+    "difficulty": "Easy",
+    "tags": [
+      "string",
+      "simulation"
+    ],
+    "statement": "You are given a string s consisting of the letters 'E' and 'L'. Simulate events at each second i:\n\n- If s[i] == 'E', a person enters the waiting room and takes one of the chairs in it.\n- If s[i] == 'L', a person leaves the waiting room, freeing up a chair.\n\nReturn the minimum number of chairs needed so that a chair is available for every person who enters the waiting room, given that it is initially empty.\n\n**Input:**\nThe first line contains the string s (consisting only of 'E' and 'L').\n\n**Output:**\nPrint a single integer: the minimum number of chairs needed.\n\n**Constraints:**\n- 1 <= s.length <= 50\n- s consists only of the letters 'E' and 'L'.\n- s represents a valid sequence of entries and exits.\n\n**Examples:**\nExample 1:\nInput:\nEEEEEEE\nOutput:\n7\n\nExample 2:\nInput:\nELELEEL\nOutput:\n2\n\nExample 3:\nInput:\nELEELEELLL\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 177,
+  "displayNumber": 123,
+  "title": "Rotate a LL",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a singly linked list containing integers, shift the elements of the linked list to the <strong>right</strong> by <strong>k</strong> places and return the head of the modified list. Do not change the values of the nodes, only change the links between nodes.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head -> 1 -> 2 -> 3 -> 4 -> 5, k = 2</p><p><strong>Output</strong>: head -> 4 -> 5 -> 1 -> 2 -> 3</p><p><strong>Explanation</strong>:</p><p>List after 1 shift to right: head -> 5 -> 1 -> 2 -> 3 -> 4.</p><p>List after 2 shift to right: head -> 4 -> 5 -> 1 -> 2 -> 3.</p>",
+    "<p><strong>Input</strong>: head -> 1 -> 2 -> 3 -> 4 -> 5, k = 4</p><p><strong>Output</strong>: head -> 2 -> 3 -> 4 -> 5 -> 1</p><p><strong>Explanation</strong>:</p><p>List after 1 shift to right: head -> 5 -> 1 -> 2 -> 3 -> 4.</p><p>List after 2 shift to right: head -> 4 -> 5 -> 1 -> 2 -> 3.</p><p>List after 3 shift to right: head -> 3 -> 4 -> 5 -> 1 -> 2.</p><p>List after 4 shift to right: head -> 2 -> 3 -> 4 -> 5 -> 1.</p>",
+    "<p>Input: head -> 1 -> 2 -> 3 -> 4 -> 5, k = 7</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes in the linked list <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= ListNode.val <= 10<sup>4</sup></li><li>0 <= k <= 5 * 10<sup>5</sup></li><li>k may have values greater than number of nodes in the linked list.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

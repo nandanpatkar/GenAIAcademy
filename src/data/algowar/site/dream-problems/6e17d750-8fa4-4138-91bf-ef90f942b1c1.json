@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "6e17d750-8fa4-4138-91bf-ef90f942b1c1",
+    "title": "Plus One",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "math"
+    ],
+    "statement": "You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.\n\nIncrement the large integer by one and return the resulting array of digits.\n\n**Input:**\nThe first line contains an integer n, the number of digits.\nThe second line contains n space-separated integers, the digits of the large integer from most significant to least significant.\n\n**Output:**\nPrint the resulting array of digits after incrementing by one, as a single line of space-separated values.\n\n**Constraints:**\n1 <= n <= 100\n0 <= digits[i] <= 9\ndigits does not contain any leading 0's.\n\n**Examples:**\nExample 1:\nInput:\n3\n1 2 3\nOutput:\n1 2 4\n\nExample 2:\nInput:\n4\n4 3 2 1\nOutput:\n4 3 2 2\n\nExample 3:\nInput:\n1\n9\nOutput:\n1 0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

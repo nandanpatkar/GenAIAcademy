@@ -1,0 +1,44 @@
+{
+  "route": "/dsa-practice",
+  "title": "DSA Practice — Algorithm &amp; Data Structure Challenges | AlgoWars",
+  "description": "Practice Data Structures and Algorithms with real-time coding duels on AlgoWars. Improve your DSA skills through competitive 1v1 battles. Perfect for coding interview preparation.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "DSA Practice on AlgoWars",
+  "chunks": [
+    "app/(legal)/dsa-practice/page-02d8ac31c416fec5.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/dsa-practice",
+    "title": "DSA Practice — Algorithm & Data Structure Challenges | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "DSA PRACTICE"
+      },
+      {
+        "tag": "h2",
+        "text": "Practice Under Pressure"
+      },
+      {
+        "tag": "h2",
+        "text": "Topics Covered"
+      },
+      {
+        "tag": "h2",
+        "text": "Why Competitive Practice Works"
+      },
+      {
+        "tag": "h2",
+        "text": "From Practice to Interviews"
+      }
+    ],
+    "text": "← Back to home DSA PRACTICE Master Data Structures and Algorithms through competitive practice. AlgoWars turns DSA practice into a game — compete against real developers and build problem-solving speed that translates directly to coding interviews. Practice Under Pressure Coding interviews are timed. AlgoWars simulates that pressure with 15-minute Blitz duels. You learn to think fast, code clean, and handle edge cases under a deadline — exactly what interviewers look for. Topics Covered Arrays & Strings Sorting & Searching Dynamic Programming Graph Algorithms (BFS, DFS, Dijkstra) Trees & Binary Search Trees Greedy Algorithms Number Theory & Math Two Pointers & Sliding Window Why Competitive Practice Works Research shows that retrieval under pressure strengthens memory. By solving problems competitively against an opponent, you build stronger neural pathways for algorithmic thinking than passive practice alone. AlgoWars makes every practice session count. From Practice to Interviews AlgoWars problems mirror the difficulty and style of FAANG coding interviews (800-1600 rating range). Regular practice on AlgoWars directly improves your performance in technical interviews at top companies. START PRACTICING →",
+    "links": [
+      "/",
+      "/signup"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

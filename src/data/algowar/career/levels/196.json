@@ -1,0 +1,33 @@
+{
+  "levelNumber": 196,
+  "displayNumber": 142,
+  "title": "Letter Combinations of a Phone Number",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string consisting of digits from <strong>2 to 9 (inclusive)</strong>. Return all possible letter combinations that the number can represent.</p><p><br></p><p>Mapping of digits to letters is given in first example.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> digits = \"34\"</p><p><strong>Output :</strong> [ \"dg\", \"dh\", \"di\", \"eg\", \"eh\", \"ei\", \"fg\", \"fh\", \"fi\" ]</p><p><strong>Explanation :</strong> The 3 is mapped with \"def\" and 4 is mapped with \"ghi\".</p><p>So all possible combination by replacing the digits with characters are shown in output.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-WlUD68IM\"></p>",
+    "<p><strong>Input :</strong> digits = \"3\"</p><p><strong>Output :</strong> [ \"d\", \"e\", \"f\" ]</p><p><strong>Explanation :</strong> The 3 is mapped with \"def\".</p>",
+    "<p><strong>Input :</strong> digits = \"8\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= digits.length <= 4</li><li>digts[i] contains digitd from [2,9].</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

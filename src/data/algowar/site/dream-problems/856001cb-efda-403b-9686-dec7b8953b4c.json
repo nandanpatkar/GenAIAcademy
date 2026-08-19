@@ -1,0 +1,21 @@
+{
+  "problem": {
+    "id": "856001cb-efda-403b-9686-dec7b8953b4c",
+    "title": "Word Break II",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "hash-table",
+      "string",
+      "dynamic-programming",
+      "backtracking",
+      "trie",
+      "memoization"
+    ],
+    "statement": "Word Break II\n\nGiven a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences.\n\nNote that the same word in the dictionary may be reused multiple times in the segmentation.\n\nThe sentences in the output must be listed in lexicographic (ascending dictionary) order, one per line.\n\n**Input:**\nThe input is read from stdin as follows:\n- Line 1: the string s (raw, no quotes).\n- Line 2: an integer n, the number of words in the dictionary.\n- The next n lines: one dictionary word per line (raw, no quotes).\n\n**Output:**\nWrite to stdout:\n- Line 1: an integer k, the number of possible sentences.\n- The next k lines: one sentence per line, in lexicographic ascending order. Each sentence is the string s with spaces inserted between words. If k is 0, print only the line \"0\".\n\n**Constraints:**\n- 1 <= s.length <= 20\n- 1 <= wordDict.length <= 1000\n- 1 <= wordDict[i].length <= 10\n- s and wordDict[i] consist of only lowercase English letters.\n- All the strings of wordDict are unique.\n- The input is generated in a way that the length of the answer does not exceed 10^5.\n\n**Examples:**\nExample 1:\nInput:\ncatsanddog\n5\ncat\ncats\nand\nsand\ndog\nOutput:\n2\ncat sand dog\ncats and dog\n\nExample 2:\nInput:\npineapplepenapple\n5\napple\npen\napplepen\npine\npineapple\nOutput:\n3\npine apple pen apple\npine applepen apple\npineapple pen apple\n\nExample 3:\nInput:\ncatsandog\n5\ncats\ndog\nsand\nand\ncat\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

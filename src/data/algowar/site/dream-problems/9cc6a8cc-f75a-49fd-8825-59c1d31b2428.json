@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "9cc6a8cc-f75a-49fd-8825-59c1d31b2428",
+    "title": "Unique Paths II",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "matrix"
+    ],
+    "statement": "You are given an m x n integer grid. There is a robot initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.\n\nAn obstacle and space are marked as 1 or 0 respectively in the grid. A path that the robot takes cannot include any square that is an obstacle.\n\nReturn the number of possible unique paths that the robot can take to reach the bottom-right corner.\n\nThe testcases are generated so that the answer will be less than or equal to 2 * 10^9.\n\n**Input:**\nThe first line contains two integers m and n, the number of rows and columns of the grid.\nThe next m lines each contain n space-separated integers (0 or 1) representing the grid.\n\n**Output:**\nPrint a single integer: the number of possible unique paths the robot can take to reach the bottom-right corner.\n\n**Constraints:**\n- 1 <= m, n <= 100\n- grid[i][j] is 0 or 1.\n\n**Examples:**\nExample 1:\nInput:\n3 3\n0 0 0\n0 1 0\n0 0 0\nOutput:\n2\n\nExample 2:\nInput:\n2 2\n0 1\n0 0\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

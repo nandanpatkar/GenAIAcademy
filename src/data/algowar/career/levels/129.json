@@ -1,0 +1,33 @@
+{
+  "levelNumber": 129,
+  "displayNumber": 75,
+  "title": "Find row with maximum 1's",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a non-empty grid mat consisting of only 0s and 1s, where all the rows are sorted in ascending order, find the <strong>index</strong> of the row with the <strong>maximum number</strong> of ones.</p><p>If two rows have the same number of ones, consider the one with a smaller index. If <strong>no 1 exists</strong> in the matrix, return -1.</p>",
+  "examples": [
+    "<p>Input : mat = [ [1, 1, 1], [0, 0, 1], [0, 0, 0] ]</p><p>Output: 0</p><p>Explanation: The row with the maximum number of ones is 0 (0 - indexed).</p>",
+    "<p>Input: mat =&nbsp;[ [0, 0], [0, 0] ]</p><p>Output: -1</p><p>Explanation: The matrix does not contain any 1. So, -1 is the answer.</p>",
+    "<p>Input : mat = [ [0, 0, 1], [0, 1, 1], [0, 1, 1] ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;n == mat.length&nbsp;</li><li>&nbsp;&nbsp;m == mat[i].length&nbsp;</li><li>&nbsp;&nbsp;1 <= n, m <= 100&nbsp;</li><li>&nbsp;&nbsp;mat[i][j] is either 0 or 1.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

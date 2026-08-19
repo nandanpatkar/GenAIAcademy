@@ -1,0 +1,33 @@
+{
+  "levelNumber": 413,
+  "displayNumber": 359,
+  "title": "Minimum Falling Path Sum",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a <strong>2d</strong> array called <strong>matrix </strong>consisting of <strong>integer </strong>values. Return the <strong>minimum </strong>path sum that can be obtained by <strong>starting </strong>at <strong>any </strong>cell in the <strong>first </strong>row and <strong>ending </strong>at <strong>any </strong>cell in the <strong>last </strong>row.</p><p><br></p><p>Movement is allowed only to the <strong>bottom</strong>, <strong>bottom-right</strong>, or <strong>bottom-left </strong>cell of the current cell.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: matrix = [[1, 2, 10, 4], [100, 3, 2, 1], [1, 1, 20, 2], [1, 2, 2, 1]]</p><p><strong>Output</strong>: 6</p><p><strong>Explanation</strong>: </p><p>One optimal route can be:-</p><p>Start at 1st cell of 1st row -> bottom-right -> bottom -> bottom-left.</p>",
+    "<p><strong>Input</strong>: matrix = [[1, 4, 3, 1], [2, 3, -1, -1], [1, 1, -1, 8]]</p><p><strong>Output</strong>: -1</p><p><strong>Explanation</strong>: </p><p>One optimal route can be:-</p><p>Start at 4th cell of 1st row -> bottom-left -> bottom.</p>",
+    "<p><strong>Input</strong>: matrix = [[4, 3, 4], [4, 5, 1], [4, 6, 2], [4, 1, 4]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>m == number of rows in matrix</li><li>n == number of columns in matrix</li><li>1 <= n, m <= 100</li><li>-1000 <= matrix[i][j] <= 1000</li><li>The answer will not exceed 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "levelNumber": 182,
+  "displayNumber": 128,
+  "title": "Count Good Numbers",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>A digit string is considered good if the digits at even indices<strong> (0-based)</strong> are even digits (0, 2, 4, 6, 8) and the digits at odd indices are prime digits (2, 3, 5, 7).</p><p><br></p><p>Given an integer<strong> n</strong>, return the total number of good digit strings of length n. As the result may be large, return it modulo 10<sup>9</sup> + 7.</p><p><br></p><p><strong>A digit string is a string consisting only of the digits '0' through '9'. It may contain leading zeros.</strong></p>",
+  "examples": [
+    "<p><strong>Input:</strong> n = 1</p><p><strong>Output:</strong> 5</p><p><strong>Explanation:</strong></p><p>Only one index (0) → must be even.</p><p>Valid strings: \"0\", \"2\", \"4\", \"6\", \"8\"</p>",
+    "<p><strong>Input:</strong> n = 2</p><p><strong>Output:</strong> 20</p><p><strong>Explanation:</strong></p><p>Index 0: 5 options (even digits)</p><p>Index 1: 4 options (prime digits)</p><p>Total: 5 * 4 = 20</p>",
+    "<p><strong>Input:</strong> n = 5</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>15</sup></li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

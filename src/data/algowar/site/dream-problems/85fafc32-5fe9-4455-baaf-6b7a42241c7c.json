@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "85fafc32-5fe9-4455-baaf-6b7a42241c7c",
+    "title": "Can I Win",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "dynamic-programming",
+      "bit-manipulation",
+      "memoization",
+      "game-theory",
+      "bitmask"
+    ],
+    "statement": "In the \"100 game\" two players take turns adding, to a running total, any integer from 1 to 10. The player who first causes the running total to reach or exceed 100 wins.\n\nWhat if we change the game so that players cannot re-use integers?\n\nFor example, two players might take turns drawing from a common pool of numbers from 1 to 15 without replacement until they reach a total >= 100.\n\nGiven two integers maxChoosableInteger and desiredTotal, return true if the first player to move can force a win, otherwise return false. Assume both players play optimally.\n\n**Input:**\nThe first line contains an integer maxChoosableInteger.\nThe second line contains an integer desiredTotal.\n\n**Output:**\nPrint \"true\" if the first player can force a win, otherwise print \"false\".\n\n**Constraints:**\n1 <= maxChoosableInteger <= 20\n0 <= desiredTotal <= 300\n\n**Examples:**\nExample 1:\nInput:\n10\n11\nOutput:\nfalse\n\nExample 2:\nInput:\n10\n0\nOutput:\ntrue\n\nExample 3:\nInput:\n10\n1\nOutput:\ntrue",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

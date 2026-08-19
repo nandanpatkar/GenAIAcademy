@@ -1,0 +1,33 @@
+{
+  "levelNumber": 144,
+  "displayNumber": 90,
+  "title": "String to Integer (atoi)",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "<p><strong>Input: </strong>s = \" -12345\"</p><p><strong>Output:</strong> -12345</p><p><strong>Explanation:</strong></p><ul><li>Ignore leading whitespaces.</li><li>The sign '-' is encountered, indicating the number is negative.</li><li>Digits 12345 are read and converted to -12345.</li></ul>",
+    "<p><strong>Input:</strong> s = \"4193 with words\"</p><p><strong>Output:</strong> 4193</p><p><strong>Explanation:</strong></p><ul><li>Read the digits 4193 and stop when encountering the first non-digit character (w).</li></ul>",
+    "<p><strong>Input:</strong> s = \" +004500abc\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 ≤ s.length ≤ 200</li><li>s consists of English letters (both lowercase and uppercase), Digits '0' to '9', Characters: ' ', '+', '-', and '.'</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

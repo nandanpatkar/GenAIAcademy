@@ -1,0 +1,437 @@
+{
+  "_source": "https://api.algowars.online/career — extracted with an authenticated session",
+  "fetchedAt": "2026-08-18T14:45:17.306Z",
+  "worldCount": 18,
+  "levelCount": 474,
+  "worlds": [
+    {
+      "worldNumber": 1,
+      "slug": "foundation-gate",
+      "title": "Foundation Gate",
+      "theme": "neon-dojo",
+      "description": "Master input, conditionals, loops, patterns, recursion basics, and hashing.",
+      "levelCount": 54,
+      "xpAvailable": 655,
+      "difficultySummary": {
+        "Easy": 51,
+        "Medium": 3
+      },
+      "contentSummary": {
+        "plus": 44,
+        "article": 8,
+        "missing": 2
+      },
+      "completionReward": {
+        "badgeTitle": "Foundation Initiate",
+        "xp": 100,
+        "coins": 275
+      },
+      "fetchedLevels": 54
+    },
+    {
+      "worldNumber": 2,
+      "slug": "sorting-forge",
+      "title": "Sorting Forge",
+      "theme": "ember-forge",
+      "description": "Learn to control order with classic comparison and recursive sorting techniques.",
+      "levelCount": 7,
+      "xpAvailable": 175,
+      "difficultySummary": {
+        "Easy": 6,
+        "Medium": 1
+      },
+      "contentSummary": {
+        "plus": 7
+      },
+      "completionReward": {
+        "badgeTitle": "Sorting Smith",
+        "xp": 100,
+        "coins": 300
+      },
+      "fetchedLevels": 7
+    },
+    {
+      "worldNumber": 3,
+      "slug": "array-valley",
+      "title": "Array Valley",
+      "theme": "crimson-valley",
+      "description": "Clear the core array path from fundamentals to hard optimization patterns.",
+      "levelCount": 40,
+      "xpAvailable": 660,
+      "difficultySummary": {
+        "Easy": 14,
+        "Hard": 6,
+        "Medium": 20
+      },
+      "contentSummary": {
+        "plus": 40
+      },
+      "completionReward": {
+        "badgeTitle": "Array Raider",
+        "xp": 100,
+        "coins": 325
+      },
+      "fetchedLevels": 40
+    },
+    {
+      "worldNumber": 4,
+      "slug": "search-mountain",
+      "title": "Search Mountain",
+      "theme": "frost-peak",
+      "description": "Climb through binary search, matrices, and answer-space challenges.",
+      "levelCount": 32,
+      "xpAvailable": 570,
+      "difficultySummary": {
+        "Easy": 10,
+        "Hard": 8,
+        "Medium": 14
+      },
+      "contentSummary": {
+        "plus": 32
+      },
+      "completionReward": {
+        "badgeTitle": "Search Hunter",
+        "xp": 100,
+        "coins": 350
+      },
+      "fetchedLevels": 32
+    },
+    {
+      "worldNumber": 5,
+      "slug": "string-realm",
+      "title": "String Realm",
+      "theme": "violet-realm",
+      "description": "Handle strings, rotations, palindromes, ordering, and frequency logic.",
+      "levelCount": 15,
+      "xpAvailable": 290,
+      "difficultySummary": {
+        "Easy": 7,
+        "Medium": 8
+      },
+      "contentSummary": {
+        "plus": 14,
+        "missing": 1
+      },
+      "completionReward": {
+        "badgeTitle": "String Adept",
+        "xp": 100,
+        "coins": 375
+      },
+      "fetchedLevels": 15
+    },
+    {
+      "worldNumber": 6,
+      "slug": "linked-harbor",
+      "title": "Linked Harbor",
+      "theme": "steel-harbor",
+      "description": "Navigate singly, doubly, medium, and hard linked-list battles.",
+      "levelCount": 31,
+      "xpAvailable": 560,
+      "difficultySummary": {
+        "Easy": 8,
+        "Hard": 7,
+        "Medium": 16
+      },
+      "contentSummary": {
+        "plus": 29,
+        "article": 2
+      },
+      "completionReward": {
+        "badgeTitle": "Linked List Captain",
+        "xp": 100,
+        "coins": 400
+      },
+      "fetchedLevels": 31
+    },
+    {
+      "worldNumber": 7,
+      "slug": "recursion-forest",
+      "title": "Recursion Forest",
+      "theme": "emerald-forest",
+      "description": "Explore recursive branching, subsequences, backtracking, and search trees.",
+      "levelCount": 25,
+      "xpAvailable": 495,
+      "difficultySummary": {
+        "Easy": 4,
+        "Hard": 8,
+        "Medium": 13
+      },
+      "contentSummary": {
+        "plus": 24,
+        "article": 1
+      },
+      "completionReward": {
+        "badgeTitle": "Recursion Ranger",
+        "xp": 100,
+        "coins": 425
+      },
+      "fetchedLevels": 25
+    },
+    {
+      "worldNumber": 8,
+      "slug": "bit-lab",
+      "title": "Bit Lab",
+      "theme": "cyber-lab",
+      "description": "Work with binary tricks, XOR patterns, and bitwise optimization.",
+      "levelCount": 18,
+      "xpAvailable": 340,
+      "difficultySummary": {
+        "Easy": 9,
+        "Hard": 3,
+        "Medium": 6
+      },
+      "contentSummary": {
+        "plus": 16,
+        "article": 1,
+        "missing": 1
+      },
+      "completionReward": {
+        "badgeTitle": "Bit Tactician",
+        "xp": 100,
+        "coins": 450
+      },
+      "fetchedLevels": 18
+    },
+    {
+      "worldNumber": 9,
+      "slug": "stack-fortress",
+      "title": "Stack Fortress",
+      "theme": "iron-fortress",
+      "description": "Conquer stacks, queues, monotonic structures, and expression systems.",
+      "levelCount": 30,
+      "xpAvailable": 545,
+      "difficultySummary": {
+        "Easy": 9,
+        "Hard": 8,
+        "Medium": 13
+      },
+      "contentSummary": {
+        "plus": 30
+      },
+      "completionReward": {
+        "badgeTitle": "Stack Guardian",
+        "xp": 100,
+        "coins": 475
+      },
+      "fetchedLevels": 30
+    },
+    {
+      "worldNumber": 10,
+      "slug": "window-desert",
+      "title": "Window Desert",
+      "theme": "solar-desert",
+      "description": "Race through sliding windows, two pointers, and substring control.",
+      "levelCount": 12,
+      "xpAvailable": 315,
+      "difficultySummary": {
+        "Hard": 7,
+        "Medium": 5
+      },
+      "contentSummary": {
+        "plus": 12
+      },
+      "completionReward": {
+        "badgeTitle": "Window Strider",
+        "xp": 100,
+        "coins": 500
+      },
+      "fetchedLevels": 12
+    },
+    {
+      "worldNumber": 11,
+      "slug": "heap-citadel",
+      "title": "Heap Citadel",
+      "theme": "gold-citadel",
+      "description": "Use priority queues and heap patterns to dominate ranked selection problems.",
+      "levelCount": 17,
+      "xpAvailable": 360,
+      "difficultySummary": {
+        "Easy": 3,
+        "Hard": 4,
+        "Medium": 10
+      },
+      "contentSummary": {
+        "plus": 14,
+        "article": 1,
+        "missing": 2
+      },
+      "completionReward": {
+        "badgeTitle": "Heap Commander",
+        "xp": 100,
+        "coins": 525
+      },
+      "fetchedLevels": 17
+    },
+    {
+      "worldNumber": 12,
+      "slug": "greedy-kingdom",
+      "title": "Greedy Kingdom",
+      "theme": "royal-greedy",
+      "description": "Make locally optimal moves across intervals, scheduling, and allocation.",
+      "levelCount": 15,
+      "xpAvailable": 320,
+      "difficultySummary": {
+        "Easy": 3,
+        "Hard": 2,
+        "Medium": 10
+      },
+      "contentSummary": {
+        "plus": 15
+      },
+      "completionReward": {
+        "badgeTitle": "Greedy Strategist",
+        "xp": 100,
+        "coins": 550
+      },
+      "fetchedLevels": 15
+    },
+    {
+      "worldNumber": 13,
+      "slug": "tree-lands",
+      "title": "Tree Lands",
+      "theme": "ancient-grove",
+      "description": "Travel through traversals, views, path logic, and advanced binary tree missions.",
+      "levelCount": 38,
+      "xpAvailable": 640,
+      "difficultySummary": {
+        "Easy": 14,
+        "Hard": 8,
+        "Medium": 16
+      },
+      "contentSummary": {
+        "plus": 36,
+        "article": 1,
+        "missing": 1
+      },
+      "completionReward": {
+        "badgeTitle": "Tree Explorer",
+        "xp": 100,
+        "coins": 575
+      },
+      "fetchedLevels": 38
+    },
+    {
+      "worldNumber": 14,
+      "slug": "bst-temple",
+      "title": "BST Temple",
+      "theme": "jade-temple",
+      "description": "Unlock ordered-tree search, validation, construction, and iterator mechanics.",
+      "levelCount": 16,
+      "xpAvailable": 335,
+      "difficultySummary": {
+        "Easy": 5,
+        "Hard": 4,
+        "Medium": 7
+      },
+      "contentSummary": {
+        "plus": 14,
+        "article": 1,
+        "missing": 1
+      },
+      "completionReward": {
+        "badgeTitle": "BST Monk",
+        "xp": 100,
+        "coins": 600
+      },
+      "fetchedLevels": 16
+    },
+    {
+      "worldNumber": 15,
+      "slug": "graph-universe",
+      "title": "Graph Universe",
+      "theme": "cosmic-graph",
+      "description": "Fight across traversal, shortest paths, MST, DSU, and directed graph systems.",
+      "levelCount": 53,
+      "xpAvailable": 1045,
+      "difficultySummary": {
+        "Easy": 4,
+        "Hard": 34,
+        "Medium": 15
+      },
+      "contentSummary": {
+        "plus": 49,
+        "article": 4
+      },
+      "completionReward": {
+        "badgeTitle": "Graph Voyager",
+        "xp": 100,
+        "coins": 625
+      },
+      "fetchedLevels": 53
+    },
+    {
+      "worldNumber": 16,
+      "slug": "dp-dimension",
+      "title": "DP Dimension",
+      "theme": "quantum-dp",
+      "description": "Master memoization, tabulation, subsequences, partitions, strings, and grids.",
+      "levelCount": 55,
+      "xpAvailable": 1040,
+      "difficultySummary": {
+        "Easy": 3,
+        "Hard": 26,
+        "Medium": 26
+      },
+      "contentSummary": {
+        "plus": 53,
+        "article": 1,
+        "missing": 1
+      },
+      "completionReward": {
+        "badgeTitle": "DP Architect",
+        "xp": 100,
+        "coins": 650
+      },
+      "fetchedLevels": 55
+    },
+    {
+      "worldNumber": 17,
+      "slug": "trie-nexus",
+      "title": "Trie Nexus",
+      "theme": "prefix-nexus",
+      "description": "Build prefix systems for word search, dictionaries, and XOR missions.",
+      "levelCount": 7,
+      "xpAvailable": 220,
+      "difficultySummary": {
+        "Easy": 1,
+        "Hard": 4,
+        "Medium": 2
+      },
+      "contentSummary": {
+        "plus": 6,
+        "missing": 1
+      },
+      "completionReward": {
+        "badgeTitle": "Trie Operator",
+        "xp": 100,
+        "coins": 675
+      },
+      "fetchedLevels": 7
+    },
+    {
+      "worldNumber": 18,
+      "slug": "string-trials",
+      "title": "String Trials",
+      "theme": "obsidian-strings",
+      "description": "Finish with advanced string matching, hashing, and palindrome missions.",
+      "levelCount": 9,
+      "xpAvailable": 265,
+      "difficultySummary": {
+        "Easy": 1,
+        "Hard": 7,
+        "Medium": 1
+      },
+      "contentSummary": {
+        "plus": 6,
+        "article": 1,
+        "missing": 2
+      },
+      "completionReward": {
+        "badgeTitle": "String Champion",
+        "xp": 100,
+        "coins": 700
+      },
+      "fetchedLevels": 9
+    }
+  ]
+}

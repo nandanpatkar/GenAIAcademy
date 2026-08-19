@@ -1,0 +1,22 @@
+{
+  "levelNumber": 188,
+  "displayNumber": 134,
+  "title": "Learn All Patterns of Subsequences (Theory)",
+  "difficulty": "Easy",
+  "contentStatus": "article",
+  "levelType": "theory",
+  "statementHtml": "<h3><strong>What are Subsequences?</strong></h3>\n\n<p>A <strong>subsequence</strong> is a sequence derived from another sequence by deleting some or no elements without changing the order of the remaining elements. Unlike substrings, the elements of a subsequence are not required to occupy consecutive positions in the original sequence.</p>\n\n<p>For example, in the string <code>\"abc\"</code>, the subsequences include: <code>\"a\"</code>, <code>\"b\"</code>, <code>\"c\"</code>, <code>\"ab\"</code>, <code>\"ac\"</code>, <code>\"bc\"</code>, and <code>\"abc\"</code>.</p>\n\n<h3><strong>Total Subsequences of a String</strong></h3>\n\n<p>For a string of length <code>n</code>, the total number of subsequences (excluding the empty one) is <strong>2ⁿ - 1</strong>.</p>\n\n<p>This is because each character has 2 options: either be included or not. Thus, 2 × 2 × ... (n times) = 2ⁿ. We subtract 1 to exclude the empty subsequence if not required.</p>\n\n<h3><strong>Subsequence vs Substring</strong></h3>\n\n<figure class=\"wp-block-table\"><table>\n<thead><tr><th>Subsequence</th><th>Substring</th></tr></thead>\n<tbody>\n<tr><td>Can skip characters, but order matters</td><td>Must be contiguous</td></tr>\n<tr><td>Number of subsequences is 2ⁿ</td><td>Number of substrings is n(n+1)/2</td></tr>\n<tr><td>\"ace\" is a subsequence of \"abcde\"</td><td>\"abc\" is a substring of \"abcde\"</td></tr>\n</tbody>\n</table></figure>\n\n<h3><strong>Patterns and Problems Based on Subsequences</strong></h3>\n\n<ul>\n  <li><strong>Generate All Subsequences</strong> – Basic recursion or backtracking</li>\n  <li><strong>Count Subsequences with Specific Property</strong> – e.g. sum = target</li>\n  <li><strong>Longest Increasing Subsequence (LIS)</strong> – Classic DP problem</li>\n  <li><strong>Subsequences with K elements</strong> – Use recursion with element count</li>\n  <li><strong>Print all subsequences with sum = K</strong> – Variation of subset sum</li>\n</ul>\n\n<h3><strong>Recursive Structure for Generating Subsequences</strong></h3>\n\n<p>We use the idea of \"pick or not pick\" for each character in the string or element in the array.</p>\n\n<pre>\nfunction recurse(index, current):\n    if index == n:\n        print current\n        return\n    // Pick the current element\n    recurse(index + 1, current + arr[index])\n    // Do not pick the current element\n    recurse(index + 1, current)\n</pre>\n\n<h3><strong>Use Cases in Problem Solving</strong></h3>\n\n<ul>\n  <li>Subset sum problems</li>\n  <li>Count/print subsequences with a given sum</li>\n  <li>Dynamic programming on subsequences (e.g. LIS, LCS, Count Palindromic Subsequences)</li>\n  <li>Bitmasking based optimizations</li>\n</ul>\n\n<h3><strong>Time & Space Complexity</strong></h3>\n\n<figure class=\"wp-block-table\"><table>\n<thead><tr><th>Operation</th><th>Time Complexity</th><th>Space Complexity</th></tr></thead>\n<tbody>\n<tr><td>Generate All Subsequences</td><td>O(2ⁿ)</td><td>O(n)</td></tr>\n<tr><td>Check for specific sum</td><td>O(2ⁿ)</td><td>O(n)</td></tr>\n<tr><td>LIS (DP)</td><td>O(n²) or O(n log n)</td><td>O(n)</td></tr>\n</tbody>\n</table></figure>\n\n<p><strong>Note:</strong> Generating all subsequences has exponential complexity. Use it wisely for small <code>n</code> (usually ≤ 20).</p>\n\n<h3><strong>Conclusion</strong></h3>\n\n<p>Understanding subsequences and the ability to manipulate them through recursion and dynamic programming unlocks solutions to a wide variety of problems. From classic LIS and subset-sum to interview questions on palindromic subsequences, the concept is foundational in problem-solving.</p>",
+  "examples": [],
+  "constraintsHtml": null,
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

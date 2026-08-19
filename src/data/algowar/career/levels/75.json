@@ -1,0 +1,33 @@
+{
+  "levelNumber": 75,
+  "displayNumber": 21,
+  "title": "Longest subarray with sum K",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array nums of size n and an integer k, find the length of the <strong>longest sub-array</strong> that sums to k. If no such sub-array exists, return 0.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [10, 5, 2, 7, 1, 9],&nbsp;&nbsp;k=15</p><p><strong>Output</strong>: 4</p><p><strong>Explanation</strong>: </p><p>The longest sub-array with a sum equal to 15 is [5, 2, 7, 1], which has a length of 4. This sub-array starts at index 1 and ends at index 4, and the sum of its elements (5 + 2 + 7 + 1) equals 15. Therefore, the length of this sub-array is 4.</p>",
+    "<p><strong>Input</strong>: nums = [-3, 2, 1],&nbsp;k=6</p><p><strong>Output</strong>: 0</p><p><strong>Explanation</strong>: </p><p>There is no sub-array in the array that sums to 6. Therefore, the output is 0.</p>",
+    "<p><strong>Input</strong>: nums = [-1, 1, 1],&nbsp;k=1</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;1<=n<=10<sup>5</sup></li><li>&nbsp;-10<sup>5</sup><=nums[i]<=10<sup>5</sup></li><li>&nbsp;-10<sup>9</sup><= k<=10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

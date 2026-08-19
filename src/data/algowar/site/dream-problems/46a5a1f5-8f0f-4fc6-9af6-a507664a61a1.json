@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "46a5a1f5-8f0f-4fc6-9af6-a507664a61a1",
+    "title": "Smallest Range II",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "math",
+      "greedy",
+      "sorting"
+    ],
+    "statement": "You are given an integer array nums and an integer k.\n\nFor each index i where 0 <= i < nums.length, change nums[i] to be either nums[i] + k or nums[i] - k.\n\nThe score of nums is the difference between the maximum and minimum elements in nums.\n\nReturn the minimum score of nums after changing the values at each index.\n\n**Input:**\n- First line: integer n, the length of the array.\n- Second line: n space-separated integers representing the array nums.\n- Third line: integer k.\n\n**Output:**\n- A single integer: the minimum possible score after changing the values at each index.\n\n**Constraints:**\n- 1 <= nums.length <= 10^4\n- 0 <= nums[i] <= 10^4\n- 0 <= k <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n1\n1\n0\nOutput:\n0\n\nExample 2:\nInput:\n2\n0 10\n2\nOutput:\n6\n\nExample 3:\nInput:\n3\n1 3 6\n3\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 436,
+  "displayNumber": 382,
+  "title": "Wildcard matching",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string str and a pattern pat, implement a pattern matching function that supports the following special characters:</p><p><br></p><p>'?' Matches any single character.</p><p>'*' Matches any sequence of characters (including the empty sequence).</p><p><br></p><p>The pattern must match the entire string.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> str = \"xaylmz\", pat = \"x?y*z\"</p><p><strong>Output:</strong> true</p><p><strong>Explanation:&nbsp;</strong></p><p>The pattern \"x?y*z\" matches the string \"xaylmz\":</p><p>- '?' matches 'a'</p><p>- '*' matches \"lm\"</p><p>- 'z' matches 'z'</p>",
+    "<p><strong>Input:</strong> str = \"xyza\", pat = \"x*z\"</p><p><strong>Output:</strong> false</p><p><strong>Explanation:&nbsp;</strong></p><p>The pattern \"x*z\" does not match the string \"xyza\" because there is an extra 'a' at the end of the string that is not matched by the pattern.</p>",
+    "<p><strong>Input: </strong>str = \"abc\", par = \"a?c\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= length of(str, pattern) <= 200</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

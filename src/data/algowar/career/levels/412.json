@@ -1,0 +1,33 @@
+{
+  "levelNumber": 412,
+  "displayNumber": 358,
+  "title": "Unique paths II",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an m x n 2d array named matrix, where each cell is either 0 or 1. Return the number of <strong>unique ways</strong> to go from the top-left cell (matrix[0][0]) to the bottom-right cell (matrix[m-1][n-1]). A cell is blocked if its value is 1, and no path is possible through that cell.</p><p><br></p><p>Movement is allowed in only two directions from a cell - <strong>right</strong> and <strong>bottom</strong>.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: matrix = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]</p><p><strong>Output</strong>: 2</p><p><strong>Explanation</strong>: </p><p>The two possible paths are:</p><p>1) down -> down-> right -> right</p><p>2) right -> right -> down -> down</p>",
+    "<p><strong>Input</strong>: matrix = [[0, 0, 0], [0, 0, 1], [0, 1, 0]]</p><p><strong>Output</strong>: 0</p><p><strong>Explanation</strong>: </p><p>There is no way to reach the bottom-right cell.</p>",
+    "<p><strong>Input</strong>: matrix = [[0, 0, 0, 0], [0, 0, 1, 0]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>m == number of rows in matrix</li><li>n == number of columns in matrix</li><li>1 <= n, m <= 100</li><li>Value of each cell in matrix is either 0 or 1</li><li>The answer will not exceed 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

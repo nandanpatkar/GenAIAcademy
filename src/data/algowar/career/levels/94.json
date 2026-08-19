@@ -1,0 +1,31 @@
+{
+  "levelNumber": 94,
+  "displayNumber": 40,
+  "title": "Largest Subarray with Sum 0",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer array <strong>arr </strong>of size <strong>n</strong> which contains both positive and negative integers. Your task is to find the length of the longest contiguous subarray with sum equal to 0.</p><p><br></p><p>Return the length of such a subarray. If no such subarray exists, return 0.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> arr = [15, -2, 2, -8, 1, 7, 10, 23]</p><p><strong>Output:</strong> 5</p><p><strong>Explanation:</strong></p><p>The subarray [-2, 2, -8, 1, 7] sums up to 0 and has the maximum length among all such subarrays.</p>",
+    "<p><strong>Input:</strong> arr = [2, 10, 4]</p><p><strong>Output:</strong> 0</p><p><strong>Explanation:</strong></p><p>There is no subarray whose elements sum to 0.</p>",
+    "<p><strong>Input:</strong> arr = [1, 0, -4, 3, 1, 0]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= arr.length <= 10<sup>6</sup></li><li>-10<sup>3</sup> <= arr[i] <= 10<sup>3</sup> for each valid index i</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

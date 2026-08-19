@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "ece81ce2-babf-4f95-9b74-c08bb874f07b",
+    "title": "Sqrt(x)",
+    "difficulty": "Easy",
+    "tags": [
+      "math",
+      "binary-search"
+    ],
+    "statement": "Given a non-negative integer x, return the square root of x rounded down to the nearest integer. The returned integer should be non-negative as well.\n\nYou must not use any built-in exponent function or operator. For example, do not use pow(x, 0.5) in C++ or x ** 0.5 in Python.\n\n**Input:**\nA single line containing the non-negative integer x.\n\n**Output:**\nA single line containing the integer square root of x (i.e., floor(sqrt(x))).\n\n**Constraints:**\n0 <= x <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n4\nOutput:\n2\n\nExample 2:\nInput:\n8\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

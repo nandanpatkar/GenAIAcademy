@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "d0edbe31-7fc7-4640-a15a-14ab62d30b8e",
+    "title": "Symmetric Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "breadth-first-search",
+      "binary-tree"
+    ],
+    "statement": "Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).\n\nThe tree is provided in level-order serialization where absent children are represented by the word \"null\" (LeetCode convention, trailing nulls trimmed).\n\n**Input:**\nThe first line contains an integer k, the number of entries in the level-order serialization of the tree.\nThe second line contains k space-separated values, which are either integers (node values) or the word \"null\" for absent children.\n\n**Output:**\nPrint \"true\" if the tree is symmetric around its center, otherwise print \"false\".\n\n**Constraints:**\n- The number of nodes in the tree is in the range [1, 1000].\n- -100 <= Node.val <= 100\n\n**Examples:**\nExample 1:\nInput:\n7\n1 2 2 3 4 4 3\nOutput:\ntrue\n\nExample 2:\nInput:\n7\n1 2 2 null 3 null 3\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "72591df4-28c2-4959-8264-48936c82952d",
+    "title": "Length of Longest Subarray With at Most K Frequency",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "sliding-window"
+    ],
+    "statement": "Length of Longest Subarray With at Most K Frequency\n\nYou are given an integer array nums and an integer k.\n\nThe frequency of an element x is the number of times it occurs in an array.\n\nAn array is called good if the frequency of each element in this array is less than or equal to k.\n\nReturn the length of the longest good subarray of nums.\n\nA subarray is a contiguous non-empty sequence of elements within an array.\n\n**Input:**\nThe first line contains an integer n, the length of the array nums.\nThe second line contains n space-separated integers, the elements of nums.\nThe third line contains an integer k.\n\n**Output:**\nPrint a single integer: the length of the longest good subarray of nums.\n\n**Constraints:**\n- 1 <= nums.length <= 10^5\n- 1 <= nums[i] <= 10^9\n- 1 <= k <= nums.length\n\n**Examples:**\nExample 1:\nInput:\n8\n1 2 3 1 2 3 1 2\n2\nOutput:\n6\n\nExample 2:\nInput:\n8\n1 2 1 2 1 2 1 2\n1\nOutput:\n2\n\nExample 3:\nInput:\n7\n5 5 5 5 5 5 5\n4\nOutput:\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

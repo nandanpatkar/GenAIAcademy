@@ -1,0 +1,32 @@
+{
+  "levelNumber": 257,
+  "displayNumber": 203,
+  "title": "Binary Subarrays With Sum",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a binary array nums and an integer goal. Return the <strong>number</strong> of <strong>non-empty subarrays </strong>with a sum goal.</p><p><br></p><p>A subarray is a continuous part of the array.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [1, 1, 0, 1, 0, 0, 1] , goal = 3</p><p><strong>Output :</strong> 4</p><p><strong>Explanation :</strong> The subarray with sum 3 are</p><p>[1, 1, 0, 1]</p><p>[1, 1, 0, 1, 0]</p><p>[1, 1, 0, 1, 0, 0]</p><p>[1, 0, 1, 0, 0, 1].</p>",
+    "<p><strong>Input :</strong> nums = [0, 0, 0, 0, 1] , goal = 0</p><p><strong>Output :</strong> 10</p><p><strong>Explanation :</strong> Some of the subarray with sum 0 are</p><p>[0]</p><p>[0, 0]</p><p>[0, 0, 0]</p><p>[0, 0, 0, 0]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 3*10<sup>4</sup></li><li>0 <= goal <= nums.length</li><li><em>nums</em> consist of only 0 and 1.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 10,
+    "title": "Window Desert",
+    "theme": "solar-desert",
+    "levelCount": 12,
+    "completionXp": 100
+  }
+}

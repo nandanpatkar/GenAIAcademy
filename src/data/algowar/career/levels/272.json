@@ -1,0 +1,33 @@
+{
+  "levelNumber": 272,
+  "displayNumber": 218,
+  "title": "Merge K sorted Lists",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given heads of <strong>k sorted</strong> linked lists<strong> </strong>as an array called <strong>heads</strong>, merge them into one <strong>single sorted </strong>linked list and return the <strong>head </strong>of that list.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: heads = [[head -> 1 -> 2 -> 3 -> 4], [head -> -4 -> -3], [head -> -5 -> -3 -> 1 -> 2 -> 3 -> 4]]</p><p><strong>Output</strong>: head -> -5 -> -4 -> -3 -> -3 -> 1 -> 1 -> 2 -> 2 -> 3 -> 3 -> 4 -> 4</p><p><strong>Explanation</strong>: </p><p>head -> <strong>-5</strong> -> <u>-4</u> -> <strong>-3</strong> -> <u>-3</u> -> <strong>1</strong> -> 1 -> <strong>2</strong> -> 2 -><strong> 3</strong> -> 3 -> <strong>4 </strong>-> 4</p><p>The nodes in bold come from the 3rd list, the underlined nodes come from the 2nd list, rest are from the 1st list.</p>",
+    "<p><strong>Input</strong>: heads = [[head -> -5 -> -4 -> -1], [head -> 10 -> 11 -> 12]]</p><p><strong>Output</strong>: head -> -5 -> -4 -> -1 -> 10 -> 11 -> 12</p><p><strong>Explanation</strong>: </p><p>head -> <strong>-5</strong> -> <strong>-4</strong> -><strong> -1</strong> -> 10 -> 11 -> 12</p><p>The nodes in bold come from the 1st list, rest are from the 2nd list.</p>",
+    "<p><strong>Input</strong>: heads = [[head -> 10 -> 12], [head -> 10 -> 12], [head -> 10 -> 10 -> 12]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>2 <= k <= 100</li><li>1 <= number of nodes in each list <= 100</li><li>-1000 <= values of each node <= 1000</li><li>All lists are sorted in non-decreasing order.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 90,
+  "displayNumber": 36,
+  "title": "Pascal's Triangle I",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integers<strong> r</strong> and <strong>c</strong>, return the value at the <strong>r</strong><sup><strong>th </strong></sup>row and <strong>c</strong><sup><strong>th</strong></sup><strong> </strong>column (1-indexed) in a Pascal's Triangle.</p><p><br></p><p>In <strong>Pascal's triangle</strong>:</p><p><br></p><ul><li>The first row contains a single element 1.</li></ul><p><br></p><ul><li>Each row has one more element than the previous row.</li></ul><p><br></p><ul><li>Every row starts and ends with 1.</li></ul><p><br></p><p><strong>For all interior elements (i.e., not at the ends), the value at position (r, c) is computed as the sum of the two elements directly above it from the previous row:</strong></p><pre class=\"ql-syntax\" spellcheck=\"false\">Pascal[r][c]=Pascal[r−1][c−1]+Pascal[r−1][c]\n</pre><ul><li>where indexing is 1-based</li></ul>",
+  "examples": [
+    "<p><strong>Input</strong>: r = 4, c = 2</p><p><strong>Output</strong>: 3</p><p><strong>Explanation</strong>: </p><p>The Pascal's Triangle is as follows:</p><p>1</p><p>1 1</p><p>1 2 1</p><p>1 3 3 1</p><p>....</p><p>Thus, value at row 4 and column 2 = 3</p>",
+    "<p><strong>Input</strong>: r = 5, c = 3</p><p><strong>Output</strong>: 6</p><p><strong>Explanation</strong>: </p><p>The Pascal's Triangle is as follows:</p><p>1</p><p>1 1</p><p>1 2 1</p><p>1 3 3 1</p><p>1 4 6 4 1</p><p>....</p><p>Thus, value at row 5 and column 3 = 6</p>",
+    "<p><strong>Input</strong>: r = 6, c = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= r, c <= 30</li><li>c <= r</li><li>All values will fit inside a 32-bit integer.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

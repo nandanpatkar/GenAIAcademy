@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+    "title": "LRU Cache",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "linked-list",
+      "design",
+      "doubly-linked-list"
+    ],
+    "statement": "Design and simulate a Least Recently Used (LRU) cache. The cache has a fixed positive capacity. It supports two operations:\n\n- get(key): Return the value associated with key if it exists in the cache, otherwise return -1. Accessing a key marks it as most recently used.\n- put(key, value): If the key already exists, update its value and mark it as most recently used. Otherwise, insert the key-value pair. If inserting causes the number of keys to exceed capacity, evict the least recently used key before inserting.\n\nBoth operations must run in O(1) average time.\n\n**Input:**\nThe first line contains an integer capacity, the maximum number of key-value pairs the cache can hold.\nThe second line contains an integer q, the number of operations.\nThe next q lines each describe one operation:\n- \"put key value\" — insert or update the key-value pair.\n- \"get key\" — query the value for key.\n\n**Output:**\nFor each get operation, print one line containing the integer result (the value, or -1 if the key is not found). No output is produced for put operations.\n\n**Constraints:**\n- 1 <= capacity <= 3000\n- 0 <= key <= 10^4\n- 0 <= value <= 10^5\n- At most 2 * 10^5 operations will be performed.\n\n**Examples:**\nExample 1:\nInput:\n2\n10\nput 1 1\nput 2 2\nget 1\nput 3 3\nget 2\nput 4 4\nget 1\nget 3\nget 4\nOutput:\n1\n-1\n-1\n3\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

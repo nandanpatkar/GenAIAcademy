@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "4755350d-6735-49e3-b468-be85e551a209",
+    "title": "Subarray Product Less Than K",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search",
+      "sliding-window",
+      "prefix-sum"
+    ],
+    "statement": "Given an array of integers nums and an integer k, return the number of contiguous subarrays where the product of all the elements in the subarray is strictly less than k.\n\n**Input:**\n- First line: integer n, the length of the array nums.\n- Second line: n space-separated integers, the elements of nums.\n- Third line: integer k.\n\n**Output:**\n- A single integer: the number of contiguous subarrays whose product is strictly less than k.\n\n**Constraints:**\n- 1 <= nums.length <= 3 * 10^4\n- 1 <= nums[i] <= 1000\n- 0 <= k <= 10^6\n\n**Examples:**\nExample 1:\nInput:\n4\n10 5 2 6\n100\nOutput:\n8\n\nExample 2:\nInput:\n3\n1 2 3\n0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

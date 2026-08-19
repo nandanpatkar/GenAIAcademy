@@ -1,0 +1,33 @@
+{
+  "levelNumber": 151,
+  "displayNumber": 97,
+  "title": "Deletion of the head of LL",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a singly linked list, delete the head of the linked list and return the head of the modified list. The head is the first node of the linked list.</p><p><br></p><p><strong>Note </strong>: Please note that this section might seem a bit difficult without prior knowledge on what linkedList is, we will soon try to add basics concepts for your ease! If you know the concepts already please go ahead to give a shot to the problem. Cheers!</p>",
+  "examples": [
+    "<p><strong>Input</strong>: linkedList = [1, 2, 3]</p><p><strong>Output</strong>: [2, 3]</p><p><strong>Explanation</strong>:</p><p>The first node was removed.</p>",
+    "<p><strong>Input</strong>: linkedList = [1]</p><p><strong>Output</strong>: []</p><p><strong>Explanation</strong>:</p><p>Note that the head of the linked list gets changed.</p>",
+    "<p><strong>Input</strong>: linkedList = [7, 8]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= number of nodes in the Linked List <= 1000</li><li>0 <= ListNode.data<= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

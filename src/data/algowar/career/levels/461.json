@@ -1,0 +1,33 @@
+{
+  "levelNumber": 461,
+  "displayNumber": 407,
+  "title": "Longest Word with All Prefixes",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string array nums of length n. A string is called a <strong>complete string</strong> if every prefix of this string is also present in the array nums.</p><p><br></p><p>Find the longest complete string in the array nums.</p><p><br></p><p>If there are multiple strings with the same length, return the<strong> lexicographically smallest</strong> one and if no string exists, return \"None\" (without quotes).</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [ \"n\", \"ni\", \"nin\", \"ninj\" , \"ninja\" , \"nil\" ]</p><p><strong>Output :</strong> ninja</p><p><strong>Explanation :</strong></p><p>The word \"ninja\" is the longest word which has all its prefixes present in the array.</p>",
+    "<p><strong>Input :</strong> nums = [ \"ninja\" , \"night\" , \"nil\" ]</p><p><strong>Output :</strong> None</p><p><strong>Explanation :</strong></p><p>There is no string that has all its prefix present in array. So we return None.</p>",
+    "<p><strong>Input :</strong> nums = [ \"cat\" , \"car\" , \"cow\", \"c\", \"ca\", \"t\", \"r\", \"w\" ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>5</sup></li><li>1 <= nums[i].length <= 10<sup>5</sup></li><li>1 <= sum(nums[i].length) <= 10<sup>5</sup></li><li>nums[i] consist only of lowercase English characters</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 17,
+    "title": "Trie Nexus",
+    "theme": "prefix-nexus",
+    "levelCount": 7,
+    "completionXp": 100
+  }
+}

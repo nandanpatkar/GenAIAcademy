@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "01327a9a-89a8-4898-a26f-cfe43a17a01f",
+    "title": "Construct Quad Tree",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "divide-and-conquer",
+      "tree",
+      "matrix"
+    ],
+    "statement": "Construct Quad Tree\n\nGiven an n * n matrix grid of 0's and 1's only, represent grid with a Quad-Tree and output its level-order serialization.\n\nA Quad-Tree is a tree data structure in which each internal node has exactly four children. Each node has two attributes:\n\n- val: True (1) if the node represents a grid of 1's, or False (0) if the node represents a grid of 0's. When isLeaf is False, val can be either 0 or 1.\n- isLeaf: True (1) if the node is a leaf node, or False (0) if the node has four children.\n\nConstruction steps:\n1. If the current grid has the same value (all 1's or all 0's), set isLeaf to 1, set val to the value of the grid, set the four children to null, and stop.\n2. If the current grid has different values, set isLeaf to 0, set val to any value (use 1 by convention), and divide the current grid into four sub-grids (topLeft, topRight, bottomLeft, bottomRight).\n3. Recurse for each of the children with the proper sub-grid.\n\nThe output is the level-order traversal of the Quad-Tree. Each node is serialized as [isLeaf,val]. A null entry signifies a path terminator where no node exists below. Trailing nulls are trimmed.\n\n**Input:**\nThe first line contains two integers rows and cols (both equal to n).\nThe next n lines each contain n space-separated integers (0 or 1), representing the grid.\n\n**Output:**\nPrint a single line containing the level-order serialization of the Quad-Tree. Each node is printed as [isLeaf,val] (with no spaces inside the brackets), and each null entry is printed as the word null. Entries are space-separated. Trailing nulls are omitted.\n\n**Constraints:**\n- n == grid.length == grid[i].length\n- n == 2^x where 0 <= x <= 6 (i.e., n is a power of 2 between 1 and 64)\n\n**Examples:**\nExample 1:\nInput:\n2 2\n0 1\n1 0\nOutput:\n[0,1] [1,0] [1,1] [1,1] [1,0]\n\nExample 2:\nInput:\n8 8\n1 1 1 1 0 0 0 0\n1 1 1 1 0 0 0 0\n1 1 1 1 1 1 1 1\n1 1 1 1 1 1 1 1\n1 1 1 1 0 0 0 0\n1 1 1 1 0 0 0 0\n1 1 1 1 0 0 0 0\n1 1 1 1 0 0 0 0\nOutput:\n[0,1] [1,1] [0,1] [1,1] [1,0] null null null null [1,0] [1,0] [1,1] [1,1]",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

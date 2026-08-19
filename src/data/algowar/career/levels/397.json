@@ -1,0 +1,33 @@
+{
+  "levelNumber": 397,
+  "displayNumber": 343,
+  "title": "Accounts merge",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a list of accounts where each element account [i] is a list of strings, where the first element account [i][0]&nbsp;is a name, and the rest of the elements are emails representing emails of the account.</p><p><br></p><p>Now, <strong>merge</strong> these accounts. Two accounts definitely belong to the same person if there is some common email to both accounts. Note that even if two accounts have the same name, they may belong to different people as people could have the same name. A person can have any number of accounts initially, but all of their accounts definitely have the same name.</p><p><br></p><p>After merging the accounts, return the accounts in the following format: the first element of each account is the name, and the rest of the elements are emails in sorted order.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> N = 4,</p><p>accounts =</p><p>[[\"John\",\"johnsmith@mail.com\",\"john_newyork@mail.com\"],</p><p>[\"John\",\"johnsmith@mail.com\",\"john00@mail.com\"],</p><p>[\"Mary\",\"mary@mail.com\"],</p><p>[\"John\",\"johnnybravo@mail.com\"]]</p><p><br></p><p><strong>Output:</strong> [[\"John\",\"john00@mail.com\",\"john_newyork@mail.com\", \"johnsmith@mail.com\"],</p><p>[\"Mary\",\"mary@mail.com\"],</p><p>[\"John\",\"johnnybravo@mail.com\"]]</p><p><br></p><p><strong>Explanation:</strong> The first and the second John are the same person as they have a common email. But the third Mary and fourth John are not the same as they do not have any common email.&nbsp;The result can be in any order but the emails must be in sorted order. The following is also a valid result:</p><p>[['Mary', 'mary@mail.com'],</p><p>['John', 'johnnybravo@mail.com'],</p><p>['John', 'john00@mail.com' , 'john_newyork@mail.com', 'johnsmith@mail.com' ]]</p>",
+    "<p><strong>Input:</strong> N = 6,</p><p>accounts =</p><p>[[\"John\",\"j1@com\",\"j2@com\",\"j3@com\"],</p><p>[\"John\",\"j4@com\"],</p><p>[\"Raj\",”r1@com”, “r2@com”],</p><p>[\"John\",\"j1@com\",\"j5@com\"],</p><p>[\"Raj\",”r2@com”, “r3@com”],</p><p>[\"Mary\",\"m1@com\"]]</p><p><br></p><p><strong>Output:</strong> [[\"John\",\"j1@com\",\"j2@com\",\"j3@com\",\"j5@com\"],</p><p>[\"John\",\"j4@com\"],</p><p>[\"Raj\",”r1@com”, “r2@com”,&nbsp;“r3@com”],</p><p>[\"Mary\",\"m1@com\"]]</p><p><br></p><p><strong>Explanation:</strong> The first and the fourth John are the same person here as they have a common email. And the third and the fifth Raj are also the same person. So, the same accounts are merged.</p>",
+    "<p><strong>Input:</strong> N = 3,</p><p><br></p><p>accounts = [</p><p>&nbsp;&nbsp;[\"Alice\", \"alice@mail.com\", \"alice_work@mail.com\"],</p><p>&nbsp;&nbsp;[\"Bob\", \"bob@gmail.com\"],</p><p>&nbsp;&nbsp;[\"Alice\", \"alice_personal@mail.com\", \"alice@mail.com\"]</p><p>]</p>"
+  ],
+  "constraintsHtml": "<p>·&nbsp;&nbsp;1 <= N <= 1000</p><p>·&nbsp;&nbsp;2 <= accounts[i].size <= 15</p><p>·&nbsp;&nbsp;1 <= accounts[i][j].size <= 30</p><p>·&nbsp;&nbsp;accounts[i][0] consists of English letters.</p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

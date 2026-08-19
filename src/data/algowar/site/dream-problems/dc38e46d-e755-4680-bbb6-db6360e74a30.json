@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "dc38e46d-e755-4680-bbb6-db6360e74a30",
+    "title": "Missing Number",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "hash-table",
+      "math",
+      "binary-search",
+      "bit-manipulation",
+      "sorting"
+    ],
+    "statement": "Given an array nums containing n distinct numbers in the range [0, n], find and print the only number in the range that is missing from the array.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers, the elements of nums.\n\n**Output:**\nPrint a single integer: the only number in the range [0, n] that is missing from the array.\n\n**Constraints:**\n- n == nums.length\n- 1 <= n <= 10^4\n- 0 <= nums[i] <= n\n- All the numbers of nums are unique.\n\n**Examples:**\nExample 1:\nInput:\n3\n3 0 1\nOutput:\n2\n\nExample 2:\nInput:\n2\n0 1\nOutput:\n2\n\nExample 3:\nInput:\n9\n9 6 4 2 3 5 7 0 1\nOutput:\n8",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

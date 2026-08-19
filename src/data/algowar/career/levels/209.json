@@ -1,0 +1,31 @@
+{
+  "levelNumber": 209,
+  "displayNumber": 155,
+  "title": "Count the Number of Set Bits",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer <strong>n</strong>, return the number of set bits (1s) in its binary representation.</p><p><br></p><p>Can you solve it in <strong>O(log n)</strong> time complexity?</p>",
+  "examples": [
+    "<p><strong>Input:</strong> n = 5</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:</strong> The binary representation of 5 is 101, which has 2 set bits.</p>",
+    "<p><strong>Input:</strong> n = 15</p><p><strong>Output:</strong> 4</p><p><strong>Explanation: </strong>The binary representation of 15 is 1111, which has 4 set bits.</p>",
+    "<p><strong>Input:</strong> n = 32</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 ≤ n ≤ 10⁹</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 340,
+  "displayNumber": 286,
+  "title": "Insert a given node in BST",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>root</strong> node of a binary search tree (BST) and a value <strong>val</strong> to insert into the tree. Return the <strong>root </strong>node<strong> </strong>of the BST after the insertion.</p><p><br></p><p>It is guaranteed that the new value does not exist in the original BST. Note that the compiler output shows true if the node is added correctly, else false.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [4, 2, 7, 1, 3] , val = 5</p><p><strong>Output :</strong> [4, 2, 7, 1, 3, 5]</p><p><strong>Explanation :</strong></p><p>Below is image where the node 5 is inserted</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-E1RInkjk\"></p><p><br></p><p>There is another way to insert the given val as shown below.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-d5Zymok1\"></p>",
+    "<p><strong>Input :</strong> root = [40, 20, 60, 10, 30, 50, 70] , val = 25</p><p><strong>Output : </strong>[40, 20, 60, 10, 30, 50, 70, null, null, 25]</p><p><strong>Explanation :</strong></p><p>Below is image where the node 25 is inserted</p><p><img src=\"https://static.takeuforward.org/content/1771685441_usJdEhTO.png\"></p>",
+    "<p><strong>Input :</strong> root = [4, 2, 7, 1, null, 6] , val = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of nodes <= 10<sup>4</sup></li><li>-10<sup>8</sup> <= Node.val <= 10<sup>8</sup></li><li>All values in tree are <strong>unique</strong>.</li><li>-10<sup>8</sup> <= val <= 10<sup>8</sup></li><li>It is guaranteed that the val does not exists in original BST.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

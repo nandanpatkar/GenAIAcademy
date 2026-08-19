@@ -1,0 +1,33 @@
+{
+  "levelNumber": 254,
+  "displayNumber": 200,
+  "title": "Max Consecutive Ones III",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a binary array <strong>nums</strong> and an integer <strong>k</strong>, flip at most k 0's.</p><p>Return the <strong>maximum</strong> number of <strong>consecutive 1's </strong>after performing the flipping operation.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0] , k = 3</p><p><strong>Output :</strong> 10</p><p><strong>Explanation :</strong> The maximum number of consecutive 1's are obtained only if we flip the 0's present at position 3, 4, 5 (0 base indexing).</p><p>The array after flipping becomes [1, 1, 1, <u>1</u>, <u>1</u>, <u>1</u>, 1, 1, 1, 1, 0].</p><p>The number of consecutive 1's is 10.</p>",
+    "<p><strong>Input :</strong> nums = [0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1] , k = 3</p><p><strong>Output :</strong> 9</p><p><strong>Explanation :</strong> The underlines 1's are obtained by flipping 0's in the new array.</p><p>[<u>1</u>, <u>1</u>, 1, 1, 1, <u>1</u>, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1].</p><p>The number of consecutive 1's is 9.</p>",
+    "<p><strong>Input :</strong> nums = [1, 1, 0, 0, 1] , k = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>0 <= nums[i] <= 1</li><li>0 <= k <= nums.length</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 10,
+    "title": "Window Desert",
+    "theme": "solar-desert",
+    "levelCount": 12,
+    "completionXp": 100
+  }
+}

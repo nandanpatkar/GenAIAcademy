@@ -1,0 +1,33 @@
+{
+  "levelNumber": 166,
+  "displayNumber": 112,
+  "title": "Remove Nth node from the back of the LL",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a singly linked list and an integer n. Remove the n<sup>th</sup> node from the back of the linked List and return the head of the modified list. The value of n will always be less than or equal to the number of nodes in the linked list.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: linkedList = 1 -> 2 -> 3 -> 4 -> 5, n = 2</p><p><strong>Output</strong>: 1 -> 2 -> 3 -> 5</p><p><strong>Explanation</strong>: The 2nd node from the back was the node with value 4.</p>",
+    "<p><strong>Input</strong>: linkedList = 5 -> 4 -> 3 -> 2 -> 1, n = 5</p><p><strong>Output</strong>: 4 -> 3 -> 2 -> 1</p><p><strong>Explanation</strong>: The 5th node from the back is the first node.</p>",
+    "<p><strong>Input</strong>: linkedList = 9 -> 8 -> 7, n = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= number of nodes in the Linked List <= 10<sup>5</sup></li><li>0 <= ListNode.val <= 10<sup>4</sup></li><li>1 <= n <= number of nodes in the Linked List.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 67,
+  "displayNumber": 13,
+  "title": "Left Rotate Array by K Places",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array <strong>nums</strong> and a non-negative integer k, rotate the array to the left by k steps.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [1, 2, 3, 4, 5, 6], k = 2</p><p><strong>Output</strong>: nums = [3, 4, 5, 6, 1, 2]</p><p><strong>Explanation</strong>: </p><p>rotate 1 step to the left: [2, 3, 4, 5, 6, 1]</p><p>rotate 2 steps to the left: [3, 4, 5, 6, 1, 2]</p>",
+    "<p><strong>Input</strong>: nums = [3, 4, 1, 5, 3, -5], k = 8</p><p><strong>Output</strong>: nums = [1, 5, 3, -5, 3, 4]</p><p><strong>Explanation</strong>: </p><p>rotate 1 step to the left: [4, 1, 5, 3, -5, 3]</p><p>rotate 2 steps to the left: [1, 5, 3, -5, 3, 4]</p><p>rotate 3 steps to the left: [5, 3, -5, 3, 4, 1]</p><p>rotate 4 steps to the left: [3, -5, 3, 4, 1, 5]</p><p>rotate 5 steps to the left: [-5, 3, 4, 1, 5, 3]</p><p>rotate 6 steps to the left: [3, 4, 1, 5, 3, -5]</p><p>rotate 7 steps to the left: [4, 1, 5, 3, -5, 3]</p><p>rotate 8 steps to the left: [1, 5, 3, -5, 3, 4]</p>",
+    "<p><strong>Input</strong>: nums = [1, 2, 3, 4, 5], k = 4</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>0 <= k <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

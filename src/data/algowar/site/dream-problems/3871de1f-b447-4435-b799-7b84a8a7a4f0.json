@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "3871de1f-b447-4435-b799-7b84a8a7a4f0",
+    "title": "Subarray Sum Equals K",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "prefix-sum"
+    ],
+    "statement": "Given an array of integers nums and an integer k, return the total number of contiguous non-empty subarrays whose sum equals k.\n\n**Input:**\n- Line 1: an integer n, the length of the array.\n- Line 2: n space-separated integers representing the array nums.\n- Line 3: an integer k.\n\n**Output:**\n- Line 1: a single integer, the total number of subarrays whose sum equals k.\n\n**Constraints:**\n- 1 <= n <= 2 * 10^4\n- -1000 <= nums[i] <= 1000\n- -10^7 <= k <= 10^7\n\n**Examples:**\nExample 1:\nInput:\n3\n1 1 1\n2\nOutput:\n2\n\nExample 2:\nInput:\n3\n1 2 3\n3\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

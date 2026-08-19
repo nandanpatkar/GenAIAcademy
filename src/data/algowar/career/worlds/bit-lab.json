@@ -1,0 +1,503 @@
+{
+  "worldNumber": 8,
+  "slug": "bit-lab",
+  "title": "Bit Lab",
+  "description": "Work with binary tricks, XOR patterns, and bitwise optimization.",
+  "theme": "cyber-lab",
+  "levelCount": 18,
+  "xpAvailable": 340,
+  "difficultySummary": {
+    "Easy": 9,
+    "Hard": 3,
+    "Medium": 6
+  },
+  "contentSummary": {
+    "plus": 16,
+    "article": 1,
+    "missing": 1
+  },
+  "completionReward": {
+    "badgeTitle": "Bit Tactician",
+    "xp": 100,
+    "coins": 450
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-8-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Bit Lab",
+      "subtitle": "Bit Manipulation [Concepts & Problems]",
+      "description": "Work with binary tricks, XOR patterns, and bitwise optimization.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-205",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Introduction to Bits and Tricks",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 205,
+        "displayNumber": 151,
+        "title": "Introduction to Bits and Tricks",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-206",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Check if the i-th bit is Set or Not",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 206,
+        "displayNumber": 152,
+        "title": "Check if the i-th bit is Set or Not",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-207",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Check if a Number is Odd or Not",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 207,
+        "displayNumber": 153,
+        "title": "Check if a Number is Odd or Not",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-208",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Check if a Number is Power of 2 or Not",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 208,
+        "displayNumber": 154,
+        "title": "Check if a Number is Power of 2 or Not",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-209",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Count the Number of Set Bits",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 209,
+        "displayNumber": 155,
+        "title": "Count the Number of Set Bits",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-210",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Set/Unset the rightmost unset bit",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 210,
+        "displayNumber": 156,
+        "title": "Set/Unset the rightmost unset bit",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-211",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Swap Two Numbers",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 211,
+        "displayNumber": 157,
+        "title": "Swap Two Numbers",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-212",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Divide two numbers without multiplication and division",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 212,
+        "displayNumber": 158,
+        "title": "Divide two numbers without multiplication and division",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-213",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Minimum Bit Flips to Convert Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 213,
+        "displayNumber": 159,
+        "title": "Minimum Bit Flips to Convert Number",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-214",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Single Number - I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 214,
+        "displayNumber": 160,
+        "title": "Single Number - I",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-215",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Power Set Bit Manipulation",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 215,
+        "displayNumber": 161,
+        "title": "Power Set Bit Manipulation",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-216",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "XOR of numbers in a given range",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 216,
+        "displayNumber": 162,
+        "title": "XOR of numbers in a given range",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-8-checkpoint-216",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 216,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-217",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Single Number - III",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 217,
+        "displayNumber": 163,
+        "title": "Single Number - III",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-218",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Print Prime Factors of a Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 218,
+        "displayNumber": 164,
+        "title": "Print Prime Factors of a Number",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-219",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Divisors of a Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 219,
+        "displayNumber": 165,
+        "title": "Divisors of a Number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-220",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Count primes in range L to R",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 220,
+        "displayNumber": 166,
+        "title": "Count primes in range L to R",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-221",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Prime factorisation of a Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 221,
+        "displayNumber": 167,
+        "title": "Prime factorisation of a Number",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-222",
+      "nodeType": "boss",
+      "order": 20,
+      "mapLane": "center",
+      "title": "Pow(x,n)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 130
+      },
+      "level": {
+        "levelNumber": 222,
+        "displayNumber": 168,
+        "title": "Pow(x,n)",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 130,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 303,
+  "displayNumber": 249,
+  "title": "Level Order Traversal",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the root of a binary tree, return the <strong>level order</strong> traversal of its nodes' values. (i.e., from left to right, level by level).</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [3, 9, 20, null, null, 15, 7]</p><p><strong>Output :</strong> [ [3] , [9, 20] , [15, 7] ]</p><p><strong>Explanation :</strong></p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-rPjEzBZp\"></p>",
+    "<p><strong>Input :</strong>&nbsp;root = [1, 4, null, 4 2]</p><p><strong>Output :</strong>&nbsp;[ [1] , [4] , [4, 2] ]</p><p><strong>Explanation :</strong></p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-6BBpQBUc\"></p>",
+    "<p><strong>Input :</strong> root = [5, 1, 2, 8, null, 4, 5, null, 6]</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= Number of Nodes <= 2000</li><li>-1000 <= Node.val <= 2000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

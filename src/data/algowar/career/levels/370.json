@@ -1,0 +1,33 @@
+{
+  "levelNumber": 370,
+  "displayNumber": 316,
+  "title": "Cycle Detection in Directed Graph (DFS)",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a <strong>directed</strong> graph with V vertices labeled from 0 to V-1. The graph is represented using an adjacency list where adj[i] lists all nodes connected to node. Determine if the graph contains any <strong>cycles</strong>.</p>",
+  "examples": [
+    "<p>Input:&nbsp;V = 6, adj= [ [1], [2, 5], [3], [4], [1], [ ] ]</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-Do8SOPHS\"></p><p><br></p><p>Output: True</p><p><br></p><p>Explanation: The graph contains a cycle: 1 -> 2 -> 3 -> 4 -> 1.</p>",
+    "<p>Input:&nbsp;V = 4, adj= [[1,2], [2], [], [0,2]]</p><p><br></p><p>Output: False</p><p><br></p><p>Explanation: The graph does not contain a cycle.</p>",
+    "<p>Input:&nbsp;V = 3, adj= [[1], [2], [0]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= V <= 10^4</li><li>adj.size() == V</li><li>0 <= adj[i][j] < V</li><li>1 <= sum(adj[i].size()) <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

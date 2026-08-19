@@ -1,0 +1,22 @@
+{
+  "problem": {
+    "id": "06c87df9-1327-41e4-aeed-1685d45cf9ae",
+    "title": "Number of Increasing Paths in a Grid",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "depth-first-search",
+      "breadth-first-search",
+      "graph",
+      "topological-sort",
+      "memoization",
+      "matrix"
+    ],
+    "statement": "You are given an m x n integer matrix grid, where you can move from a cell to any adjacent cell in all 4 directions.\n\nReturn the number of strictly increasing paths in the grid such that you can start from any cell and end at any cell. Since the answer may be very large, return it modulo 10^9 + 7.\n\nTwo paths are considered different if they do not have exactly the same sequence of visited cells.\n\n**Input:**\nThe first line contains two integers m and n, the number of rows and columns of the grid.\nThe next m lines each contain n space-separated integers representing the grid.\n\n**Output:**\nPrint a single integer: the number of strictly increasing paths modulo 10^9 + 7.\n\n**Constraints:**\n- m == grid.length\n- n == grid[i].length\n- 1 <= m, n <= 1000\n- 1 <= m * n <= 10^5\n- 1 <= grid[i][j] <= 10^5\n\n**Examples:**\nExample 1:\nInput:\n2 2\n1 1\n3 4\nOutput:\n8\n\nExample 2:\nInput:\n2 1\n1\n2\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "1e87b31c-2758-4dac-bfe3-d1a842905c0e",
+    "title": "Valid Parenthesis String",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "dynamic-programming",
+      "stack",
+      "greedy"
+    ],
+    "statement": "Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.\n\nThe following rules define a valid string:\n- Any left parenthesis '(' must have a corresponding right parenthesis ')'.\n- Any right parenthesis ')' must have a corresponding left parenthesis '('.\n- Left parenthesis '(' must go before the corresponding right parenthesis ')'.\n- '*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string \"\".\n\nRead the string s from standard input and print \"true\" or \"false\".\n\n**Input:**\nA single line containing the string s (raw, not quoted).\n\n**Output:**\nA single line containing \"true\" if s is valid, otherwise \"false\".\n\n**Constraints:**\n- 1 <= s.length <= 100\n- s[i] is '(', ')' or '*'.\n\n**Examples:**\nExample 1:\nInput:\n()\nOutput:\ntrue\n\nExample 2:\nInput:\n(*)\nOutput:\ntrue\n\nExample 3:\nInput:\n(*))\nOutput:\ntrue",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

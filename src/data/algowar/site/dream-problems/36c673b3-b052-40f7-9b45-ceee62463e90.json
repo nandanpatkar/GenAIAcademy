@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "36c673b3-b052-40f7-9b45-ceee62463e90",
+    "title": "Successful Pairs of Spells and Potions",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "two-pointers",
+      "binary-search",
+      "sorting"
+    ],
+    "statement": "You are given two positive integer arrays spells and potions, of length n and m respectively, where spells[i] represents the strength of the i-th spell and potions[j] represents the strength of the j-th potion.\n\nYou are also given an integer success. A spell and potion pair is considered successful if the product of their strengths is at least success.\n\nReturn an integer array pairs of length n where pairs[i] is the number of potions that will form a successful pair with the i-th spell.\n\n**Input:**\nThe first line contains an integer n, the length of the spells array.\nThe second line contains n space-separated integers representing the spells array.\nThe third line contains an integer m, the length of the potions array.\nThe fourth line contains m space-separated integers representing the potions array.\nThe fifth line contains an integer success.\n\n**Output:**\nPrint n space-separated integers on a single line, where the i-th integer is the number of potions that form a successful pair with the i-th spell.\n\n**Constraints:**\n- n == spells.length\n- m == potions.length\n- 1 <= n, m <= 10^5\n- 1 <= spells[i], potions[i] <= 10^5\n- 1 <= success <= 10^10\n\n**Examples:**\nExample 1:\nInput:\n3\n5 1 3\n5\n1 2 3 4 5\n7\nOutput:\n4 0 3\n\nExample 2:\nInput:\n3\n3 1 2\n3\n8 5 8\n16\nOutput:\n2 0 2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

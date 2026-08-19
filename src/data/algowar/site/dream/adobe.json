@@ -1,0 +1,378 @@
+{
+  "company": {
+    "slug": "adobe",
+    "name": "Adobe"
+  },
+  "questions": [
+    {
+      "problemId": "0783a4cf-c630-4f94-9a68-5f08dc1f78cf",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "frequency": 92.4,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 92.4,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "dc680705-24bd-4637-9c41-59e1784e2a3a",
+      "title": "Majority Element",
+      "difficulty": "Easy",
+      "frequency": 92.4,
+      "orderIndex": 3,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1145f16c-ebe1-453b-b7f2-c7e54001b335",
+      "title": "Special Binary String",
+      "difficulty": "Hard",
+      "frequency": 92.4,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "10a90554-4510-4c7f-ad7f-dec56d7897c1",
+      "title": "Add Two Numbers",
+      "difficulty": "Medium",
+      "frequency": 90.6,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "42745353-7ad0-4f1d-9262-beae53b674ec",
+      "title": "Median of Two Sorted Arrays",
+      "difficulty": "Hard",
+      "frequency": 90.6,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ccee497c-6bb1-4dc9-9101-df84e1ebc5dc",
+      "title": "3Sum",
+      "difficulty": "Medium",
+      "frequency": 86.5,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e63ff28f-9b27-4ebf-856f-3dd82448a39d",
+      "title": "Climbing Stairs",
+      "difficulty": "Easy",
+      "frequency": 86.5,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d4ae6460-c66c-4be7-8e76-99d4441ece3b",
+      "title": "Reverse Linked List",
+      "difficulty": "Easy",
+      "frequency": 86.5,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "46a5a1f5-8f0f-4fc6-9af6-a507664a61a1",
+      "title": "Smallest Range II",
+      "difficulty": "Medium",
+      "frequency": 86.5,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 84.3,
+      "orderIndex": 11,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ebcdbf8c-f565-48b7-9dd2-930a448ff128",
+      "title": "Nim Game",
+      "difficulty": "Easy",
+      "frequency": 84.3,
+      "orderIndex": 12,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "06c87df9-1327-41e4-aeed-1685d45cf9ae",
+      "title": "Number of Increasing Paths in a Grid",
+      "difficulty": "Hard",
+      "frequency": 84.3,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ba04cdce-d480-40c3-b87f-53a99205bdf8",
+      "title": "Divide Intervals Into Minimum Number of Groups",
+      "difficulty": "Medium",
+      "frequency": 84.3,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 81.7,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "84ac9d99-4627-4857-86bd-f0a4dff9d6b2",
+      "title": "Delete Node in a Linked List",
+      "difficulty": "Medium",
+      "frequency": 81.7,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "8d4e7e85-33e3-4e67-a14b-b3506408487a",
+      "title": "Add Digits",
+      "difficulty": "Easy",
+      "frequency": 81.7,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3fe3fc0c-827a-41e5-b8fb-0610d4cbdd9d",
+      "title": "Kth Largest Element in a Stream",
+      "difficulty": "Easy",
+      "frequency": 81.7,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7856964e-6598-4ba5-bb59-880a2b505099",
+      "title": "Number of Subarrays with Bounded Maximum",
+      "difficulty": "Medium",
+      "frequency": 81.7,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "49c71492-2f87-4453-9429-eec6283cfc2f",
+      "title": "Smallest Range I",
+      "difficulty": "Easy",
+      "frequency": 81.7,
+      "orderIndex": 22,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a74f771d-1869-44a0-bd11-fceb1ae60dc7",
+      "title": "Reverse Substrings Between Each Pair of Parentheses",
+      "difficulty": "Medium",
+      "frequency": 81.7,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "64a52480-78e1-48d9-a76a-0e53057974ec",
+      "title": "Count Ways to Build Rooms in an Ant Colony",
+      "difficulty": "Hard",
+      "frequency": 81.7,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "182848a6-6a89-45ea-92c4-5cf3ec33fe51",
+      "title": "Plates Between Candles",
+      "difficulty": "Medium",
+      "frequency": 81.7,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "05e67b63-2cda-4a7b-bee1-b0fa1fb2a281",
+      "title": "Minimize XOR",
+      "difficulty": "Medium",
+      "frequency": 81.7,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1007caea-34d0-4cdc-ae1c-7e6ecc87a1c3",
+      "title": "Count Subarrays Where Max Element Appears at Least K Times",
+      "difficulty": "Medium",
+      "frequency": 81.7,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 79,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "cba93d6b-5203-4d3a-b445-7c1c87bb2fea",
+      "title": "Minimum Window Substring",
+      "difficulty": "Hard",
+      "frequency": 75.9,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "999012c7-ab32-4b8e-9755-0df5c6035b12",
+      "title": "Threshold Majority Queries",
+      "difficulty": "Hard",
+      "frequency": 75.9,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "6c794e02-10ba-4efd-8119-202be1945020",
+      "title": "Minimum Moves to Equal Array Elements III",
+      "difficulty": "Easy",
+      "frequency": 75.9,
+      "orderIndex": 31,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "89962b7a-0524-49ef-82e3-de35ab2828cf",
+      "title": "Integer to Roman",
+      "difficulty": "Medium",
+      "frequency": 72.4,
+      "orderIndex": 32,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "2a0105e6-35ed-4052-bd6b-9ee176aa7d15",
+      "title": "Next Permutation",
+      "difficulty": "Medium",
+      "frequency": 72.4,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3bb0dcd8-d476-4c5a-869a-a9f6ca6981ba",
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "frequency": 72.4,
+      "orderIndex": 34,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d63cbfb0-1c4a-4c18-a6f0-d87eba02ea7c",
+      "title": "Jump Game",
+      "difficulty": "Medium",
+      "frequency": 72.4,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 72.4,
+      "orderIndex": 36,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b76e18d3-d475-46f2-883a-f162a1b348b4",
+      "title": "Validate IP Address",
+      "difficulty": "Medium",
+      "frequency": 72.4,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b2d4e6a5-26ee-4bcd-a010-9bdb2b140050",
+      "title": "Longest Palindromic Substring",
+      "difficulty": "Medium",
+      "frequency": 68.3,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "05d322ac-f350-47e4-8e68-2e9df344f13c",
+      "title": "Longest Common Prefix",
+      "difficulty": "Easy",
+      "frequency": 68.3,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "206d74c7-42d0-466a-b93c-af519bcd219b",
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "frequency": 68.3,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "9b5f131e-969d-42e5-aa29-6c862411a42c",
+      "title": "Maximum Product Subarray",
+      "difficulty": "Medium",
+      "frequency": 68.3,
+      "orderIndex": 41,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "159ca7e5-f2e9-49dd-a784-acafc7d290d2",
+      "title": "Sort Array by Increasing Frequency",
+      "difficulty": "Easy",
+      "frequency": 68.3,
+      "orderIndex": 42,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f81ca876-684a-4e62-b351-116a2205e5dc",
+      "title": "Spiral Matrix",
+      "difficulty": "Medium",
+      "frequency": 63.6,
+      "orderIndex": 43,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

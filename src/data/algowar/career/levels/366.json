@@ -1,0 +1,33 @@
+{
+  "levelNumber": 366,
+  "displayNumber": 312,
+  "title": "Word ladder I",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given are the two distinct words startWord and targetWord, and a list of size N, denoting wordList of <strong>unique words</strong> of equal size M. Find the length of the shortest transformation sequence from startWord to targetWord.</p><p><br></p><p>Keep the following conditions in mind:</p><p><br></p><ul><li>A word can only consist of lowercase characters.</li><li>Only one letter can be changed in each transformation.</li><li>Each transformed word must exist in the wordList including the targetWord.</li><li>startWord may or may not be part of the wordList</li></ul><p><br></p><p><strong>Note:</strong>&nbsp;If there’s no possible way to transform the sequence from startWord to targetWord return 0.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> wordList = [\"des\",\"der\",\"dfr\",\"dgt\",\"dfs\"], startWord = \"der\", targetWord = \"dfs\"</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong>&nbsp;</p><ul><li>The length of the smallest transformation sequence from \"der\" to&nbsp;\"dfs\" is 3</li><li>i.e. \"der\" -> (replace ‘e’ by ‘f’) -> \"dfr\" -> (replace ‘r’ by ‘s’)&nbsp;-> \"dfs\".</li><li>So, it takes 3 different strings for us to reach the targetWord. Each of these strings are present in the wordList.</li></ul>",
+    "<p><strong>Input:</strong> wordList = [\"geek\", \"gefk\"], startWord = \"gedk\", targetWord= \"geek\"</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:</strong>&nbsp;</p><ul><li>The length of the smallest transformation sequence&nbsp;from \"gedk\" to \"geek\" is 2</li><li>i.e. \"gedk\" -> (replace ‘d’ by ‘e’) -> \"geek\"&nbsp;.</li><li>So, it takes 2 different strings for us to reach the targetWord.&nbsp;Each of these strings are present in the wordList.</li></ul>",
+    "<p><strong>Input:</strong> wordList = [\"hot\", \"dot\", \"dog\", \"lot\", \"log\"], startWord = \"hit\", targetWord = \"cog\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ wordList.length ≤ 100</li><li>1 ≤ wordList[i].length ≤ 10</li><li>startWord.length == targetWord.length == wordList[i].length</li><li>startWord, targetWord, and wordList[i] consist of lowercase English letters.</li><li>startWord!= targetWord</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

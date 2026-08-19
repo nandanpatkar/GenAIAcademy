@@ -1,0 +1,33 @@
+{
+  "levelNumber": 51,
+  "displayNumber": 51,
+  "title": "Fibonacci Number",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>The <strong>Fibonacci</strong> numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,</p><p><br></p><ul><li>F(0) = 0, F(1) = 1</li><li>F(n) = F(n - 1) + F(n - 2), for n > 1.</li></ul><p><br></p><p>Given <strong>n</strong>, calculate <strong>F(n)</strong>.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> n = 2</p><p><strong>Output :</strong> 1</p><p><strong>Explanation :</strong> F(2) = F(1) + F(0) => 1 + 0 => 1.</p>",
+    "<p><strong>Input :</strong> n = 3</p><p><strong>Output :</strong> 2</p><p><strong>Explanation :</strong> F(3) = F(2) + F(1) => 1 + 1 => 2.</p>",
+    "<p><strong>Input :</strong> n = 6</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= n <= 20</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "92477042-8a9b-44f2-b5ee-4d3ac615fb22",
+    "title": "Reverse Integer",
+    "difficulty": "Medium",
+    "tags": [
+      "math"
+    ],
+    "statement": "Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.\n\nAssume the environment does not allow you to store 64-bit integers (signed or unsigned).\n\n**Input:**\nA single line containing the integer x.\n\n**Output:**\nA single line containing the reversed integer, or 0 if the reversed value overflows the signed 32-bit integer range.\n\n**Constraints:**\n- -2^31 <= x <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n123\nOutput:\n321\n\nExample 2:\nInput:\n-123\nOutput:\n-321\n\nExample 3:\nInput:\n120\nOutput:\n21",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

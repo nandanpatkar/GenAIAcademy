@@ -1,0 +1,33 @@
+{
+  "levelNumber": 346,
+  "displayNumber": 292,
+  "title": "Inorder Successor/Predecessor in BST",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the root node of a binary search tree (BST) and an integer key. Return the <strong>Inorder predecessor</strong> and <strong>successor</strong> of the given key from the provided BST.</p><p><br></p><p><strong>Note:</strong> key will always present in given BST.</p><p><br></p><p>If predecessor or successor is missing then return -1.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [5, 2, 10, 1, 4, 7, 12] , key = 10</p><p><strong>Output :</strong> [7, 12]</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-8D_p20dq\"></p>",
+    "<p><strong>Input :</strong> root = [5, 2, 10, 1, 4, 7, 12] , key = 12</p><p><strong>Output :</strong> [10, -1]</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-copgO0cS\"></p>",
+    "<p><strong>Input :</strong> root = [5, 2, 10, 1, 4, 7, 12] , key = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>1 <= Node.val <= 10<sup>5</sup></li><li>All the values Node.val are <strong>unique</strong>.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

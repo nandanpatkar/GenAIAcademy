@@ -1,0 +1,22 @@
+{
+  "levelNumber": 391,
+  "displayNumber": 337,
+  "title": "MST theory",
+  "difficulty": "Easy",
+  "contentStatus": "article",
+  "levelType": "theory",
+  "statementHtml": "<h2>Spanning Tree:</h2>\n\n<p><strong><em>A spanning tree is a </em></strong><a href=\"https://takeuforward.org/data-structure/strivers-tree-series-tree-data-structure/\"><strong><em>tree</em></strong></a><strong><em> in which we have N nodes(i.e. All the nodes present in the original graph) and N-1 edges and all nodes are reachable from each other.</em></strong></p>\n\n<p>Let’s understand this using an example. Assume we are given an undirected weighted graph with N nodes and M edges. Here in this example, we have taken N as 5 and M as 6.</p>\n\n<figure class=\"wp-block-image size-full\"><img src=\"algowar-content:98f4f990200f.webp\" alt=\"\" class=\"wp-image-6967\"/></figure>\n\n<p>For the above graph, if we try to draw a spanning tree, the following illustration will be one:</p>\n\n<figure class=\"wp-block-image size-full\"><img src=\"algowar-content:e8906e258bf3.webp\" alt=\"\" class=\"wp-image-6968\"/></figure>\n\n<p>We can draw more spanning trees for the given graph. Two of them are like the following:</p>\n\n<figure class=\"wp-block-image size-full\"><img src=\"algowar-content:214de8e65bb3.webp\" alt=\"\" class=\"wp-image-6969\"/></figure>\n\n<p><strong>Note:</strong><em> Point to remember is that a graph may have more than one spanning trees.</em></p>\n\n<p>All the above spanning trees contain some edge weights. For each of them, if we add the edge weights we can get the sum for that particular tree. Now, let’s try to figure out the minimum spanning tree:</p>\n\n<h2>Minimum Spanning Tree:</h2>\n\n<p><strong><em>Among all possible spanning trees of a graph, the minimum spanning tree is the one for which the sum of all the edge weights is the minimum.</em></strong><br>Let’s understand the definition using the given graph drawn above. Until now, for the given graph we have drawn three spanning trees with the sum of edge weights 18, 24, and 18. If we can draw all possible spanning trees, we will find that the following spanning tree with the minimum sum of edge weights 16 is the <strong><em>minimum spanning tree</em></strong> for the given graph:</p>\n\n<figure class=\"wp-block-image size-full\"><img src=\"algowar-content:62fe02caec61.webp\" alt=\"\" class=\"wp-image-6970\"/></figure>\n\n<p><strong>Note: </strong><em>There may exist multiple minimum spanning trees for a graph like a graph may have multiple spanning trees.</em></p>\n\n<div id=\"article_examples\">\n    <details class=\"article_example_details\">\n        <summary class=\"article_example_summary\">\n            <span><strong>\n                    Practice Problem\n                </strong>\n            </span>\n            <svg class=\"arrow-svg opacity-75\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 20 20\">\n                <path d=\"M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z\"></path>\n            </svg>\n        </summary>\n        <div class=\"atricle_example_content\">\n            <pre class=\"wp-block-preformatted\">\n<span>Now, in case you have understood the concepts well, you can try to figure out the minimum spanning tree for the following undirected weighted graph:</span>\n<figure class=\"wp-block-image size-full\"><img src=\"algowar-content:1186f5588a92.webp\" alt=\"\" class=\"wp-image-6971\"/></figure>\n<span><strong>Answer:</strong></span>\n<span>Sum of edge weights = 17</span>\n<span>The MST of the given Graph will look like this:</span>\n<figure class=\"wp-block-image size-full\"><img src=\"algowar-content:c9d2ff174dc9.webp\" alt=\"\" class=\"wp-image-6972\"/></figure>\n            </pre>\n        </div>\n    </details>\n</div>\n\n<p>There are a couple of algorithms that help us to find the minimum spanning tree of a graph. One is <strong>Prim’s algorithm</strong> and the other is <strong>Kruskal’s algorithm</strong>. We will be discussing all of them in the upcoming articles.</p>",
+  "examples": [],
+  "constraintsHtml": null,
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

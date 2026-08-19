@@ -1,0 +1,33 @@
+{
+  "levelNumber": 313,
+  "displayNumber": 259,
+  "title": "Check if two trees are identical or not",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the roots of two binary trees p and q, write a function to check if they are the <strong>same </strong>or not.</p><p><br></p><p>Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> p = [1, 2, 3] , q = [1, 2, 3]</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> Both trees images are shown below</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-hF_hLlOD\"></p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-SM8Sx6kZ\"></p>",
+    "<p><strong>Input :</strong> p = [1, 2, 1] , q = [1, 1, 2]</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> Both trees images are shown below</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-ZP4iKHEz\"></p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-D4Rbxpht\"></p>",
+    "<p><strong>Input :</strong> p = [5, 1, 2, 8, null, null, 5, null, 4, null, null, 7 ], q = [5, 1, 2, 8, null, null, 4, null, 5, null, null, 7 ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= Number of Nodes <= 100</li><li>-10<sup>4</sup> <= Node.val <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "1f38d686-847b-4309-99ca-3569f0c44b4d",
+    "title": "Move Zeroes",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "two-pointers"
+    ],
+    "statement": "Given an integer array, move all 0's to the end of it while maintaining the relative order of the non-zero elements.\n\nNote that you must do this in-place without making a copy of the array.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint the resulting array as a single line of n space-separated integers, with all 0's moved to the end while preserving the relative order of non-zero elements.\n\n**Constraints:**\n1 <= nums.length <= 10^4\n-2^31 <= nums[i] <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n5\n0 1 0 3 12\nOutput:\n1 3 12 0 0\n\nExample 2:\nInput:\n1\n0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

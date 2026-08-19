@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "f18366a3-dbdb-47bb-915f-c584f2772381",
+    "title": "Minimum Moves to Capture The Queen",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "enumeration"
+    ],
+    "statement": "Minimum Moves to Capture The Queen\n\nThere is a 1-indexed 8 x 8 chessboard containing 3 pieces.\n\nYou are given 6 integers a, b, c, d, e, and f where:\n- (a, b) denotes the position of the white rook.\n- (c, d) denotes the position of the white bishop.\n- (e, f) denotes the position of the black queen.\n\nGiven that you can only move the white pieces, return the minimum number of moves required to capture the black queen.\n\nNote that:\n- Rooks can move any number of squares either vertically or horizontally, but cannot jump over other pieces.\n- Bishops can move any number of squares diagonally, but cannot jump over other pieces.\n- A rook or a bishop can capture the queen if it is located in a square that they can move to.\n- The queen does not move.\n\n**Input:**\nThe input consists of 6 lines, each containing a single integer:\n- Line 1: a (row of the white rook)\n- Line 2: b (column of the white rook)\n- Line 3: c (row of the white bishop)\n- Line 4: d (column of the white bishop)\n- Line 5: e (row of the black queen)\n- Line 6: f (column of the black queen)\n\n**Output:**\nPrint a single integer: the minimum number of moves required to capture the black queen.\n\n**Constraints:**\n- 1 <= a, b, c, d, e, f <= 8\n- No two pieces are on the same square.\n\n**Examples:**\nExample 1:\nInput:\n1\n1\n8\n8\n2\n3\nOutput:\n2\n\nExample 2:\nInput:\n5\n3\n3\n4\n5\n2\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

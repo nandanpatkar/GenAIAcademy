@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "75830b80-b8f1-452f-9331-34a4812b4963",
+    "title": "Palindrome Number",
+    "difficulty": "Easy",
+    "tags": [
+      "math"
+    ],
+    "statement": "Given an integer x, print \"true\" if x is a palindrome, and \"false\" otherwise. An integer is a palindrome when it reads the same backward as forward. For example, 121 is a palindrome while 123 is not. Negative numbers are not palindromes because of the minus sign.\n\n**Input:**\nA single line containing the integer x.\n\n**Output:**\nA single line containing \"true\" if x is a palindrome, or \"false\" otherwise.\n\n**Constraints:**\n- -2^31 <= x <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n121\nOutput:\ntrue\n\nExample 2:\nInput:\n-121\nOutput:\nfalse\n\nExample 3:\nInput:\n10\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 460,
+  "displayNumber": 406,
+  "title": "Trie Implementation and Advanced Operations",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Implement \"TRIE” data structure from scratch with the following functions.</p><p><br></p><ul><li><strong>Trie():</strong> Initialize the object of this “TRIE” data structure.</li></ul><p><br></p><ul><li><strong>insert(“</strong>WORD<strong>”):</strong> Insert the string “WORD”&nbsp;into this “TRIE” data structure.</li></ul><p><br></p><ul><li><strong>countWordsEqualTo(“</strong>WORD<strong>”):</strong> Return how many times this “WORD” is present in this “TRIE”.</li></ul><p><br></p><ul><li><strong>countWordsStartingWith(“</strong>PREFIX<strong>”):</strong> Return how many words are there in this “TRIE” that have the string “PREFIX” as a prefix.</li></ul><p><br></p><ul><li><strong>erase(“</strong>WORD<strong>”):</strong> Delete one occurrence of the string “WORD” from the “TRIE”.</li></ul>",
+  "examples": [
+    "<p><strong>Input :</strong> [\"Trie\", \"insert\", \"countWordsEqualTo\", \"insert\", \"countWordsStartingWith\", \"erase\", \"countWordsStartingWith\"]</p><p>[ \"apple\", \"apple\", \"app\", \"app\", \"apple\", \"app\" ]</p><p><br></p><p><strong>Output :</strong> [null, null, 1, null, 2, null, 1]</p><p><br></p><p><strong>Explanation :</strong></p><p>Trie trie = new Trie()</p><p>trie.insert(\"apple\")</p><p>trie.countWordsEqualTo(\"apple\")&nbsp;&nbsp;// return 1</p><p>trie.insert(\"app\")&nbsp;</p><p>trie.countWordsStartingWith(\"app\") // return 2</p><p>trie.erase(\"apple\")</p><p>trie.countWordsStartingWith(\"app\")&nbsp;&nbsp;&nbsp;// return 1</p>",
+    "<p><strong>Input :</strong> [\"Trie\", \"insert\", \"countWordsEqualTo\", \"insert\", \"erase\", \"countWordsStartingWith\"]</p><p>[ \"mango\", \"apple\", \"app\", \"app\", \"mango\" ]</p><p><br></p><p><strong>Output :</strong> [null, null, 0, null, null, 1]</p><p><br></p><p><strong>Explanation :</strong></p><p>Trie trie = new Trie()</p><p>trie.insert(\"mango\")</p><p>trie.countWordsEqualTo(\"apple\")&nbsp;&nbsp;// return 0</p><p>trie.insert(\"app\")&nbsp;</p><p>trie.erase(\"app\")</p><p>trie.countWordsStartingWith(\"mango\") // return 1</p>",
+    "<p><strong>Input :</strong> [\"Trie\", \"insert\", \"insert\", \"erase\", \"countWordsEqualTo\", \"insert\", \"countWordsStartingWith\"]</p><p>[\"abcde\",\"fghij\",\"abcde\", \"bcde\", \"abcde\", \"fgh\"]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= word.length , prefix.length <= 2000</li><li>word and prefix consist only of lowercase English letters.</li><li>At most 3*10<sup>4</sup> calls <strong>in total</strong> will be made to insert, countWordsEqualTo , countWordsStartingWith and erase.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 17,
+    "title": "Trie Nexus",
+    "theme": "prefix-nexus",
+    "levelCount": 7,
+    "completionXp": 100
+  }
+}

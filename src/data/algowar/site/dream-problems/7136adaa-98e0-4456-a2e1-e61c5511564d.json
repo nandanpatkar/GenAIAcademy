@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "7136adaa-98e0-4456-a2e1-e61c5511564d",
+    "title": "Copy List with Random Pointer",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "linked-list"
+    ],
+    "statement": "A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or be null.\n\nConstruct a deep copy of the list. The deep copy should consist of exactly n brand new nodes, where each new node has its value set to the value of its corresponding original node. Both the next and random pointers of the new nodes should point to new nodes in the copied list such that the pointers in the original list and copied list represent the same list state. None of the pointers in the new list should point to nodes in the original list.\n\nFor example, if there are two nodes X and Y in the original list, where X.random --> Y, then for the corresponding two nodes x and y in the copied list, x.random --> y.\n\nThe linked list is represented in the input/output as a list of n nodes. Each node is represented as a pair [val, random_index] where:\n- val: an integer representing Node.val\n- random_index: the index of the node (range from 0 to n-1) that the random pointer points to, or null if it does not point to any node (encoded as -1).\n\nReturn the head of the copied linked list, serialized in the same representation.\n\n**Input:**\nThe first line contains an integer n, the number of nodes in the linked list.\nThe next n lines each contain two space-separated integers: val and random_index. random_index is -1 when the random pointer is null.\n\n**Output:**\nPrint n lines, one for each node of the copied list in order from head to tail. Each line contains two space-separated integers: val and random_index, where random_index is -1 when the random pointer is null. The output must describe a list structurally identical to the input.\n\n**Constraints:**\n- 0 <= n <= 1000\n- -10^4 <= Node.val <= 10^4\n- Node.random is null or is pointing to some node in the linked list.\n\n**Examples:**\nExample 1:\nInput:\n5\n7 -1\n13 0\n11 4\n10 2\n1 0\nOutput:\n7 -1\n13 0\n11 4\n10 2\n1 0\n\nExample 2:\nInput:\n2\n1 1\n2 1\nOutput:\n1 1\n2 1\n\nExample 3:\nInput:\n3\n3 -1\n3 0\n3 -1\nOutput:\n3 -1\n3 0\n3 -1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

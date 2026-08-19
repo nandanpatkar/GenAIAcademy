@@ -1,0 +1,33 @@
+{
+  "levelNumber": 442,
+  "displayNumber": 388,
+  "title": "Best time to buy and sell stock with transaction fees",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr where arr[i] represents the price of a given stock on the ith day. Additionally, you are given an integer fee representing a transaction fee for each trade. The task is to determine the maximum profit you can achieve such that<strong> y</strong>ou need to pay a transaction fee for each buy and sell transaction. The Transaction Fee is applied when you sell a stock.</p><p>You may complete as many transactions. You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before buying again).</p>",
+  "examples": [
+    "<p>Input: arr = [1, 3, 4, 0, 2], fee = 1</p><p>Output: 3</p><p>Explanation: Buy at day 1, sell at day 3, then, buy at day 4, sell at day 5.</p><p>Profit calculation: ((4 - 1) - 1) + ((2 - 0) - 1) = 2 + 1 = 3.</p>",
+    "<p>Input: arr = [1, 3, 2, 8, 4, 9], fee = 2</p><p>Output: 8</p><p>Explanation: Buy at day 1 (price = 1), sell at day 4 (price = 8), then<span style=\"color: rgb(245, 245, 245);\"> Buy at day 5 (price = 4), sell at day 6 (price = 9),</span></p><p>Profit calculation: ((9 - 4) - 2) + <span style=\"color: rgb(245, 245, 245);\">((8 - 1) - 2)</span>= 8.</p>",
+    "<p>Input: arr = [10, 3, 7, 5, 1, 3], fee = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n<= 10<sup>5</sup></li><li>0 <= arr[i] ,fee<= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

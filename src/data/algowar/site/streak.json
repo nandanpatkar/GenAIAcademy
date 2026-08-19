@@ -1,0 +1,344 @@
+{
+  "current": 0,
+  "best": 2,
+  "today": "2026-08-18",
+  "freezes": 1,
+  "days": [
+    {
+      "date": "2026-05-27",
+      "active": false
+    },
+    {
+      "date": "2026-05-28",
+      "active": false
+    },
+    {
+      "date": "2026-05-29",
+      "active": false
+    },
+    {
+      "date": "2026-05-30",
+      "active": false
+    },
+    {
+      "date": "2026-05-31",
+      "active": false
+    },
+    {
+      "date": "2026-06-01",
+      "active": false
+    },
+    {
+      "date": "2026-06-02",
+      "active": false
+    },
+    {
+      "date": "2026-06-03",
+      "active": false
+    },
+    {
+      "date": "2026-06-04",
+      "active": false
+    },
+    {
+      "date": "2026-06-05",
+      "active": false
+    },
+    {
+      "date": "2026-06-06",
+      "active": false
+    },
+    {
+      "date": "2026-06-07",
+      "active": false
+    },
+    {
+      "date": "2026-06-08",
+      "active": false
+    },
+    {
+      "date": "2026-06-09",
+      "active": false
+    },
+    {
+      "date": "2026-06-10",
+      "active": false
+    },
+    {
+      "date": "2026-06-11",
+      "active": false
+    },
+    {
+      "date": "2026-06-12",
+      "active": false
+    },
+    {
+      "date": "2026-06-13",
+      "active": false
+    },
+    {
+      "date": "2026-06-14",
+      "active": false
+    },
+    {
+      "date": "2026-06-15",
+      "active": false
+    },
+    {
+      "date": "2026-06-16",
+      "active": false
+    },
+    {
+      "date": "2026-06-17",
+      "active": false
+    },
+    {
+      "date": "2026-06-18",
+      "active": false
+    },
+    {
+      "date": "2026-06-19",
+      "active": false
+    },
+    {
+      "date": "2026-06-20",
+      "active": false
+    },
+    {
+      "date": "2026-06-21",
+      "active": false
+    },
+    {
+      "date": "2026-06-22",
+      "active": false
+    },
+    {
+      "date": "2026-06-23",
+      "active": false
+    },
+    {
+      "date": "2026-06-24",
+      "active": false
+    },
+    {
+      "date": "2026-06-25",
+      "active": false
+    },
+    {
+      "date": "2026-06-26",
+      "active": false
+    },
+    {
+      "date": "2026-06-27",
+      "active": false
+    },
+    {
+      "date": "2026-06-28",
+      "active": false
+    },
+    {
+      "date": "2026-06-29",
+      "active": false
+    },
+    {
+      "date": "2026-06-30",
+      "active": false
+    },
+    {
+      "date": "2026-07-01",
+      "active": false
+    },
+    {
+      "date": "2026-07-02",
+      "active": false
+    },
+    {
+      "date": "2026-07-03",
+      "active": false
+    },
+    {
+      "date": "2026-07-04",
+      "active": false
+    },
+    {
+      "date": "2026-07-05",
+      "active": false
+    },
+    {
+      "date": "2026-07-06",
+      "active": false
+    },
+    {
+      "date": "2026-07-07",
+      "active": false
+    },
+    {
+      "date": "2026-07-08",
+      "active": false
+    },
+    {
+      "date": "2026-07-09",
+      "active": false
+    },
+    {
+      "date": "2026-07-10",
+      "active": false
+    },
+    {
+      "date": "2026-07-11",
+      "active": false
+    },
+    {
+      "date": "2026-07-12",
+      "active": false
+    },
+    {
+      "date": "2026-07-13",
+      "active": false
+    },
+    {
+      "date": "2026-07-14",
+      "active": false
+    },
+    {
+      "date": "2026-07-15",
+      "active": false
+    },
+    {
+      "date": "2026-07-16",
+      "active": false
+    },
+    {
+      "date": "2026-07-17",
+      "active": false
+    },
+    {
+      "date": "2026-07-18",
+      "active": false
+    },
+    {
+      "date": "2026-07-19",
+      "active": false
+    },
+    {
+      "date": "2026-07-20",
+      "active": false
+    },
+    {
+      "date": "2026-07-21",
+      "active": false
+    },
+    {
+      "date": "2026-07-22",
+      "active": false
+    },
+    {
+      "date": "2026-07-23",
+      "active": false
+    },
+    {
+      "date": "2026-07-24",
+      "active": false
+    },
+    {
+      "date": "2026-07-25",
+      "active": false
+    },
+    {
+      "date": "2026-07-26",
+      "active": false
+    },
+    {
+      "date": "2026-07-27",
+      "active": false
+    },
+    {
+      "date": "2026-07-28",
+      "active": false
+    },
+    {
+      "date": "2026-07-29",
+      "active": false
+    },
+    {
+      "date": "2026-07-30",
+      "active": false
+    },
+    {
+      "date": "2026-07-31",
+      "active": false
+    },
+    {
+      "date": "2026-08-01",
+      "active": false
+    },
+    {
+      "date": "2026-08-02",
+      "active": false
+    },
+    {
+      "date": "2026-08-03",
+      "active": false
+    },
+    {
+      "date": "2026-08-04",
+      "active": false
+    },
+    {
+      "date": "2026-08-05",
+      "active": false
+    },
+    {
+      "date": "2026-08-06",
+      "active": true
+    },
+    {
+      "date": "2026-08-07",
+      "active": false
+    },
+    {
+      "date": "2026-08-08",
+      "active": true
+    },
+    {
+      "date": "2026-08-09",
+      "active": false
+    },
+    {
+      "date": "2026-08-10",
+      "active": false
+    },
+    {
+      "date": "2026-08-11",
+      "active": false
+    },
+    {
+      "date": "2026-08-12",
+      "active": false
+    },
+    {
+      "date": "2026-08-13",
+      "active": false
+    },
+    {
+      "date": "2026-08-14",
+      "active": false
+    },
+    {
+      "date": "2026-08-15",
+      "active": false
+    },
+    {
+      "date": "2026-08-16",
+      "active": false
+    },
+    {
+      "date": "2026-08-17",
+      "active": false
+    },
+    {
+      "date": "2026-08-18",
+      "active": false
+    }
+  ]
+}

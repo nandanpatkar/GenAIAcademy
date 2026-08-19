@@ -1,0 +1,32 @@
+{
+  "challengeDate": "2026-08-18",
+  "resetAt": "2026-08-19T00:00:00.000Z",
+  "problem": {
+    "id": "db1ff155-fe5a-4aa8-81ab-8c347db96b86",
+    "oj": "codeforces",
+    "contestId": 1950,
+    "problemIndex": "D",
+    "externalId": "1950D",
+    "title": "Product of Binary Decimals",
+    "difficulty": 1100,
+    "ratingBucket": "0800-1199",
+    "tags": [
+      "brute force",
+      "dp",
+      "implementation",
+      "number theory"
+    ],
+    "url": "https://codeforces.com/problemset/problem/1950/D",
+    "statement": "D. Product of Binary Decimals\ntime limit per test\n3 seconds\nmemory limit per test\n256 megabytes\ninput\nstandard input\noutput\nstandard output\n\nLet's call a number a binary decimal if it is a positive integer and all digits in its decimal notation are either 0 or 1. For example, 1\\,010\\,111 is a binary decimal, while 10\\,201 and 787\\,788 are not.\n\nGiven a number n, you are asked whether or not it is possible to represent n as a product of some (not necessarily distinct) binary decimals.\n\n**Input:**\nThe first line contains a single integer t (1 \\leq t \\leq 5 \\cdot 10^4) — the number of test cases.\n\nThe only line of each test case contains a single integer n (1 \\leq n \\leq 10^5).\n\n**Output:**\nFor each test case, output \"YES\" (without quotes) if n can be represented as a product of binary decimals, and \"NO\" (without quotes) otherwise.\n\nYou can output \"YES\" and \"NO\" in any case (for example, strings \"yES\", \"yes\", and \"Yes\" will be recognized as a positive response).\n\n**Examples:**\nExample 1:\nInput:\n11\n121\n1\n14641\n12221\n10110\n100000\n99\n112\n2024\n12421\n1001\nOutput:\nYES\nYES\nYES\nYES\nYES\nYES\nNO\nNO\nNO\nNO\nYES\n\n\n**Note:**\nThe first five test cases can be represented as a product of binary decimals as follows: \n\n  121 = 11 \\times 11. \n 1 = 1 is already a binary decimal. \n 14\\,641 = 11 \\times 11 \\times 11 \\times 11. \n 12\\,221 = 11 \\times 11 \\times 101. \n 10\\,110 = 10\\,110 is already a binary decimal.",
+    "timeLimit": null,
+    "memoryLimit": null,
+    "solvedCount": 26454,
+    "cachedAt": "2026-04-22T00:41:48.026Z",
+    "statementFetchedAt": "2026-06-20T07:15:32.468Z",
+    "statementVersion": null
+  },
+  "challengeNumber": 70,
+  "solved": false,
+  "attempts": 0,
+  "submissions": []
+}

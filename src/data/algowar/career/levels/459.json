@@ -1,0 +1,33 @@
+{
+  "levelNumber": 459,
+  "displayNumber": 405,
+  "title": "Trie Implementation and Operations",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Implement the Trie class:</p><p><br></p><ul><li><strong>Trie():</strong> Initializes the trie object.</li></ul><p><br></p><ul><li><strong>void insert (String word):</strong> Inserts the string word into the trie.</li></ul><p><br></p><ul><li><strong>boolean search (String word):</strong> Returns true if the string word is in the trie (i.e., was inserted before), and false otherwise.</li></ul><p><br></p><ul><li><strong>boolean startsWith (String prefix):</strong> Returns true if there is a previously inserted string word that has the prefix prefix, and false otherwise.</li></ul>",
+  "examples": [
+    "<p><strong>Input :</strong> [\"Trie\", \"insert\", \"search\", \"search\", \"startsWith\", \"insert\", \"search\"]</p><p>[ [] , \"apple\", \"apple\", \"app\", \"app\", \"app\", \"app\" ]</p><p><br></p><p><strong>Output :</strong> [null, null, true, false, true, null, true]</p><p><br></p><p><strong>Explanation :</strong></p><p>Trie trie = new Trie()</p><p>trie.insert(\"apple\")</p><p>trie.search(\"apple\")&nbsp;&nbsp;// return True</p><p>trie.search(\"app\")&nbsp;&nbsp;&nbsp;// return False</p><p>trie.startsWith(\"app\") // return True</p><p>trie.insert(\"app\")</p><p>trie.search(\"app\")&nbsp;&nbsp;&nbsp;// return True</p>",
+    "<p><strong>Input :</strong> [\"Trie\" , \"insert\" , \"insert\" , \"startsWith\" , \"search\" ]</p><p>[ [] , \"takeu\" , \"banana\" , \"bana\" , \"takeu\" ]</p><p><br></p><p><strong>Output :</strong> [null, null, null, true, true]</p><p><br></p><p><strong>Explanation : </strong></p><p>Trie trie = new Trie()</p><p>trie.insert(\"takeu\")</p><p>trie.insert(\"banana\")</p><p>trie.startsWith(\"bana\") // return True</p><p>trie.search(\"takeu\")&nbsp;&nbsp;&nbsp;// return True</p>",
+    "<p><strong>Input :</strong> [\"Trie\" , \"insert\" , \"insert\" , \"startsWith\" , \"search\" ]</p><p>[ [] , \"caterpiller\" , \"cat\" , \"cat\" , \"cat\" ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= word.length , prefix.length <= 2000</li><li>word and prefix consist only of lowercase English letters.</li><li>At most 3*10<sup>4</sup> calls <strong>in total</strong> will be made to insert, search and startsWith.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 17,
+    "title": "Trie Nexus",
+    "theme": "prefix-nexus",
+    "levelCount": 7,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "8691bdb1-3f54-448b-bc0c-cb6a0189cfee",
+    "title": "Knight Probability in Chessboard",
+    "difficulty": "Medium",
+    "tags": [
+      "dynamic-programming"
+    ],
+    "statement": "On an n x n chessboard, a knight starts at the cell (row, column) and attempts to make exactly k moves. The rows and columns are 0-indexed, so the top-left cell is (0, 0), and the bottom-right cell is (n - 1, n - 1).\n\nA chess knight has eight possible moves it can make. Each move is two cells in a cardinal direction, then one cell in an orthogonal direction.\n\nEach time the knight is to move, it chooses one of eight possible moves uniformly at random (even if the piece would go off the chessboard) and moves there.\n\nThe knight continues moving until it has made exactly k moves or has moved off the chessboard.\n\nReturn the probability that the knight remains on the board after it has stopped moving.\n\n**Input:**\nThe input consists of four lines, each containing one integer:\n- Line 1: n (the size of the chessboard)\n- Line 2: k (the number of moves)\n- Line 3: row (the starting row, 0-indexed)\n- Line 4: column (the starting column, 0-indexed)\n\n**Output:**\nPrint a single line containing the probability that the knight remains on the board after exactly k moves, printed with exactly 5 decimal places.\n\n**Constraints:**\n- 1 <= n <= 25\n- 0 <= k <= 100\n- 0 <= row, column <= n - 1\n\n**Examples:**\nExample 1:\nInput:\n3\n2\n0\n0\nOutput:\n0.06250\n\nExample 2:\nInput:\n1\n0\n0\n0\nOutput:\n1.00000",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

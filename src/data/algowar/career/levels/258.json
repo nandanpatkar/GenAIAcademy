@@ -1,0 +1,33 @@
+{
+  "levelNumber": 258,
+  "displayNumber": 204,
+  "title": "Count number of Nice subarrays",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array nums and an integer k. An array is called nice if and only if it contains k odd numbers. Find the <strong>number</strong> of <strong>nice subarrays</strong> in the given array nums.</p><p><br></p><p>A subarray is continuous part of the array.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [1, 1, 2, 1, 1] , k = 3</p><p><strong>Output :</strong> 2</p><p><strong>Explanation :</strong> The subarrays with three odd numbers are</p><p>[1, 1, 2, 1]</p><p>[1, 2, 1, 1]</p>",
+    "<p><strong>Input :</strong> nums = [4, 8, 2] , k = 1</p><p><strong>Output :</strong> 0</p><p><strong>Explanation :</strong> The array does not contain any odd number.</p>",
+    "<p><strong>Input :</strong> nums = [41, 3, 5] , k = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 5*10<sup>4</sup></li><li>1 <= nums[i] <= 10<sup>5</sup></li><li>1 <= k <= nums.length</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 10,
+    "title": "Window Desert",
+    "theme": "solar-desert",
+    "levelCount": 12,
+    "completionXp": 100
+  }
+}

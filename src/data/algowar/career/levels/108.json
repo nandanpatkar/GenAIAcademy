@@ -1,0 +1,26 @@
+{
+  "levelNumber": 108,
+  "displayNumber": 54,
+  "title": "Count Occurrences in a Sorted Array",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a sorted array of integers <strong>arr </strong>and an integer <strong>target</strong>. Your task is to determine how many times target appears in arr.</p><p><br></p><p>Return the <strong>count of occurrences of target</strong> in the array.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> arr = [0, 0, 1, 1, 1, 2, 3], target = 1</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong> The number 1 appears 3 times in the array.</p>",
+    "<p><strong>Input:</strong> arr = [5, 5, 5, 5, 5, 5], target = 5</p><p><strong>Output: </strong>6</p><p><strong>Explanation: </strong>All elements in the array are 5, so the target appears 6 times.</p>",
+    "<p><strong>Input: </strong>arr = [2, 4, 6, 8, 10], target = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= arr.length <= 10<sup>6</sup></li><li>1 <= arr[i] <= 10<sup>6</sup></li><li>1 <= target <= 10<sup>6</sup></li></ul>",
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

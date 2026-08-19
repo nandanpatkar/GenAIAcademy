@@ -1,0 +1,26 @@
+{
+  "levelNumber": 235,
+  "displayNumber": 181,
+  "title": "Postfix to Infix Conversion",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a valid&nbsp;<strong>postfix expression</strong>&nbsp;as a string, where:</p><p><br></p><ul><li>Operands are&nbsp;<strong>single lowercase English letters</strong>&nbsp;('a' to 'z')</li></ul><p><br></p><ul><li>Operators are&nbsp;<strong>binary</strong>: '+', '-', '*', '/'</li></ul><p><br></p><p>The expression contains&nbsp;<strong>no spaces</strong>&nbsp;and is guaranteed to be&nbsp;<strong>syntactically valid</strong>.</p><p>Write a function to convert the given postfix expression into a&nbsp;<strong>valid infix expression</strong>.</p><p><br></p><p><strong>Use parentheses</strong>&nbsp;to&nbsp;<strong>clearly represent the evaluation order</strong>&nbsp;of the expression.</p>",
+  "examples": [
+    "<p><strong>Input:&nbsp;</strong>\"ab+\"</p><p><strong>Output:</strong> \"(a+b)\"</p><p><strong>Explanation:</strong></p><ul><li>&nbsp;postfix : a&nbsp;b&nbsp;+</li><li>&nbsp;infix&nbsp;&nbsp;: (a + b)</li></ul>",
+    "<p><strong>Input:</strong>&nbsp;\"abc*+\"</p><p><strong>Output:</strong> \"(a+(b*c))\"</p>",
+    "<p><strong>Input:</strong>&nbsp;\"abc/-ak/l-*\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ postExp.length ≤ 16000</li><li>postExp consists only of lowercase letters (a‒z) as operands and the four binary operators + - * /.</li><li>The given postfix expression is guaranteed valid (every operator has exactly two operands).</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

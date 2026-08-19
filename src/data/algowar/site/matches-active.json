@@ -1,0 +1,49 @@
+{
+  "active": true,
+  "match": {
+    "id": "f134014a-e217-4c1d-b3e1-471ca02f6bc8",
+    "mode": "BLITZ",
+    "status": "STARTING",
+    "duration": 900,
+    "problemId": "ebd6fb93-9194-42ab-af55-e74487630d4b",
+    "winnerId": null,
+    "startedAt": null,
+    "endedAt": null,
+    "createdAt": "2026-08-18T14:08:01.529Z",
+    "problem": {
+      "id": "ebd6fb93-9194-42ab-af55-e74487630d4b",
+      "title": "To Zero",
+      "difficulty": 800
+    },
+    "players": [
+      {
+        "id": "6321f60e-0da1-45d4-abfa-52a8fc53a26a",
+        "matchId": "f134014a-e217-4c1d-b3e1-471ca02f6bc8",
+        "userId": "aa91b089-c843-4e44-b365-76059d18764c",
+        "result": "PENDING",
+        "ratingBefore": 1000,
+        "ratingAfter": null,
+        "joinedAt": "2026-08-18T14:08:01.529Z",
+        "user": {
+          "id": "aa91b089-c843-4e44-b365-76059d18764c",
+          "username": "NandanPatkar",
+          "avatar": "bug_hunter.png"
+        }
+      },
+      {
+        "id": "69720ce9-eb6b-4c92-b2c5-b2bca3887ea4",
+        "matchId": "f134014a-e217-4c1d-b3e1-471ca02f6bc8",
+        "userId": "388dc54b-542b-4408-b148-e02c5622a1b5",
+        "result": "PENDING",
+        "ratingBefore": 1016,
+        "ratingAfter": null,
+        "joinedAt": "2026-08-18T14:08:01.529Z",
+        "user": {
+          "id": "388dc54b-542b-4408-b148-e02c5622a1b5",
+          "username": "StackOverflow",
+          "avatar": "bug_hunter.png"
+        }
+      }
+    ]
+  }
+}

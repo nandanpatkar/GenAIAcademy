@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "de16324b-0369-4033-b222-582795415289",
+    "title": "Beautiful Towers II",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "stack",
+      "monotonic-stack"
+    ],
+    "statement": "You are given a 0-indexed array maxHeights of n integers.\n\nYou are tasked with building n towers on the coordinate line. The i-th tower is built at coordinate i and has a height of heights[i].\n\nA configuration of towers is beautiful if the following conditions hold:\n1. 1 <= heights[i] <= maxHeights[i]\n2. heights is a mountain array.\n\nArray heights is a mountain if there exists an index i such that:\n- For all 0 < j <= i, heights[j - 1] <= heights[j]\n- For all i <= k < n - 1, heights[k + 1] <= heights[k]\n\nReturn the maximum possible sum of heights of a beautiful configuration of towers.\n\n**Input:**\nThe first line contains an integer n, the length of the array maxHeights.\nThe second line contains n space-separated integers maxHeights[0] maxHeights[1] ... maxHeights[n-1].\n\n**Output:**\nA single integer: the maximum possible sum of heights of a beautiful configuration of towers.\n\n**Constraints:**\n- 1 <= n <= 10^5\n- 1 <= maxHeights[i] <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n5\n5 3 4 1 1\nOutput:\n13\n\nExample 2:\nInput:\n6\n6 5 3 9 2 7\nOutput:\n22\n\nExample 3:\nInput:\n6\n3 2 5 5 2 3\nOutput:\n18",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 141,
+  "displayNumber": 87,
+  "title": "Sort Characters by Frequency",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a string <strong>s</strong>. Return the array of <strong>unique</strong> characters, sorted by <strong>highest to lowest</strong> occurring characters.</p><p><br></p><p>If two or more characters have same frequency then arrange them in alphabetic order.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"tree\"</p><p><strong>Output :</strong> ['e', 'r', 't' ]</p><p><strong>Explanation :</strong> </p><p>The occurrences of each character are as shown below :</p><p>e --> 2</p><p>r --> 1</p><p>t --> 1.</p><p>The r and t have same occurrences , so we arrange them by alphabetic order.</p>",
+    "<p><strong>Input :</strong> s = \"raaaajj\"</p><p><strong>Output :</strong> ['a' , 'j', 'r' ]</p><p><strong>Explanation :</strong> </p><p>The occurrences of each character are as shown below :</p><p>a --> 4</p><p>j --> 2</p><p>r --> 1</p>",
+    "<p><strong>Input :</strong> s = \"bbccddaaa\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>5</sup></li><li>s consist of only lowercase English characters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

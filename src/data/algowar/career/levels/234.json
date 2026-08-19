@@ -1,0 +1,26 @@
+{
+  "levelNumber": 234,
+  "displayNumber": 180,
+  "title": "Postfix to Prefix Conversion",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a valid postfix expression as a string, where:</p><ul><li>Operands are single lowercase English letters ('a' to 'z')</li><li>Operators are binary: '+', '-', '*', '/'</li><li>The expression contains no spaces and is guaranteed to be valid.</li></ul><p><br></p><p>Write a function to convert the <strong>postfix </strong>expression <strong>into </strong>a <strong>prefix </strong>expression, also as a string without spaces.</p>",
+  "examples": [
+    "<p><strong>Input:</strong>&nbsp;expression = \"ab+\"</p><p><strong>Output:</strong> \"+ab\"</p><p><strong>Explanation: </strong>Postfix → Prefix</p>",
+    "<p><strong>Input:</strong>&nbsp;<span style=\"color: rgb(245, 245, 245);\">expression = </span>\"abc*+d-\"</p><p><strong>Output:</strong> \"-+a*bcd\"</p>",
+    "<p><strong>Input:&nbsp;</strong><span style=\"color: rgb(245, 245, 245);\">expression =</span><strong style=\"color: rgb(245, 245, 245);\"> </strong>\"xyz*+ab/-\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= len(postfix) <= 1000</li><li>The postfix expression is valid (no need to validate correctness)</li><li>Operands are lowercase letters (a-z)</li><li>Operators are binary: +, -, *, /</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

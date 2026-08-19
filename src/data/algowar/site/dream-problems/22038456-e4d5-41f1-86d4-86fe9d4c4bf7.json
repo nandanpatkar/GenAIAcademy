@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "22038456-e4d5-41f1-86d4-86fe9d4c4bf7",
+    "title": "HTML Entity Parser",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "string"
+    ],
+    "statement": "HTML Entity Parser\n\nAn HTML entity parser takes HTML code as input and replaces all the entities of special characters by the characters themselves.\n\nThe special characters and their entities for HTML are:\n- Quotation Mark: the entity is &quot; and symbol character is \".\n- Single Quote Mark: the entity is &apos; and symbol character is '.\n- Ampersand: the entity is &amp; and symbol character is &.\n- Greater Than Sign: the entity is &gt; and symbol character is >.\n- Less Than Sign: the entity is &lt; and symbol character is <.\n- Slash: the entity is &frasl; and symbol character is /.\n\nGiven the input text string to the HTML parser, return the text after replacing the entities by the special characters.\n\n**Input:**\n- Line 1: an integer n, the length of the text string.\n- Line 2: the raw text string of length n (may contain spaces and any ASCII characters).\n\n**Output:**\n- A single line containing the text after replacing all valid HTML entities with their corresponding special characters.\n\n**Constraints:**\n- 1 <= text.length <= 10^5\n- The string may contain any possible characters out of all the 256 ASCII characters.\n\n**Examples:**\n\nExample 1:\nInput:\n48\n&amp; is an HTML entity but &ambassador; is not.\nOutput:\n& is an HTML entity but &ambassador; is not.\n\nExample 2:\nInput:\n28\nand I quote: &quot;...&quot;\nOutput:\nand I quote: \"...\"",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

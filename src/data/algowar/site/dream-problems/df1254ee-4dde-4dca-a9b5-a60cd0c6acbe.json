@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "df1254ee-4dde-4dca-a9b5-a60cd0c6acbe",
+    "title": "Rotate Array",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "math",
+      "two-pointers"
+    ],
+    "statement": "Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.\n\n**Input:**\n- Line 1: an integer n, the length of the array.\n- Line 2: n space-separated integers, the elements of nums.\n- Line 3: an integer k, the number of steps to rotate to the right.\n\n**Output:**\n- One line containing n space-separated integers: the array after rotating nums to the right by k steps.\n\n**Constraints:**\n- 1 <= nums.length <= 10^5\n- -2^31 <= nums[i] <= 2^31 - 1\n- 0 <= k <= 10^5\n\n**Examples:**\nExample 1:\nInput:\n7\n1 2 3 4 5 6 7\n3\nOutput:\n5 6 7 1 2 3 4\n\nExample 2:\nInput:\n4\n-1 -100 3 99\n2\nOutput:\n3 99 -1 -100",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

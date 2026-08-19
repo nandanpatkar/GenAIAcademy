@@ -1,0 +1,33 @@
+{
+  "levelNumber": 126,
+  "displayNumber": 72,
+  "title": "Minimize Max Distance to Gas Station",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a sorted array arr of size n, containing integer positions of n gas stations on the X-axis, and an integer k, place k new gas stations on the X-axis.</p><p><br></p><p>The new gas stations can be placed anywhere on the non-negative side of the X-axis, including non-integer positions.</p><p><br></p><p>Let <strong>dist</strong> be the maximum distance between adjacent gas stations after adding the k new gas stations.</p><p><br></p><p>Find the <strong>minimum value</strong> of dist.</p><p><br></p><p>Your answer will be accepted if it is within <strong>1e-6</strong> of the true value.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 10, arr = [1, 2, 3, 4, 5, 6 ,7, 8, 9, 10], k = 10</p><p><strong>Output</strong>: 0.50000</p><p><strong>Explanation</strong>:</p><p>One of the possible ways to place 10 gas stations is [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10].</p><p>Thus the maximum difference between adjacent gas stations is 0.5.</p><p>Hence, the value of dist is 0.5.</p><p>It can be shown that there is no possible way to add 10 gas stations in such a way that the value of dist is lower than this.</p>",
+    "<p><strong>Input </strong>: n = 10, arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], k = 1</p><p><strong>Output</strong>: 1.00000</p><p><strong>Explanation</strong>:</p><ul><li>One of the possible ways to place 1 gas station is [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].</li><li>New Gas Station is at 11.</li><li>Thus the maximum difference between adjacent gas stations is still 1.</li><li>Hence, the value of dist is 1.</li><li>It can be shown that there is no possible way to add 1 gas station in such a way that the value of dist is lower than this.&nbsp;</li></ul>",
+    "<p><strong>Input</strong>: n = 10, arr= [3, 6, 12, 19, 33, 44, 67, 72, 89, 95], k = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>10 <= n <= 5000&nbsp;</li><li>0 <= arr[i] <= 10<sup>9</sup></li><li>arr is sorted in a strictly increasing order<sup>&nbsp;</sup></li><li>0 <= k <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

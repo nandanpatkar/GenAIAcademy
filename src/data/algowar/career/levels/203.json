@@ -1,0 +1,32 @@
+{
+  "levelNumber": 203,
+  "displayNumber": 149,
+  "title": "Sudoku Solver",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Create a program that fills in the blank cells in a Sudoku puzzle to solve it.</p><p><br></p><p>Every sudoku solution needs to follow to these guidelines:</p><p><br></p><p>1) In every <strong>row</strong>, the numbers 1 through 9 must appear exactly <strong>once</strong>.</p><p>2) In every <strong>column</strong>, the numbers 1 through 9 must appear exactly <strong>once</strong>.</p><p>3) In each of the grid's nine <strong>3x3</strong> sub-boxes, the numbers 1 through 9 must appear exactly once.</p><p><br></p><p>Empty cells are indicated by the '.' character.</p>",
+  "examples": [
+    "$1c",
+    "$1d"
+  ],
+  "constraintsHtml": "<ul><li>board.length = 9</li><li>board[i].length = 9</li><li>board[i][j] is a digit or '.'</li><li>It is <strong>guaranteed</strong> that input board has only one solution.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

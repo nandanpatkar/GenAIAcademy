@@ -1,0 +1,26 @@
+{
+  "levelNumber": 441,
+  "displayNumber": 387,
+  "title": "Best Time to Buy and Sell Stock with Cooldown",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer array prices where prices[i] is the price of a stock on the iᵗʰ day.</p><p><br></p><p>You may complete any number of transactions (buy one share and sell one share of the stock multiple times) subject to these rules:</p><ul><li>After you sell a share, you cannot buy on the very next day (i.e. there is a one-day cooldown).</li><li>You may not hold more than one share at a time; that is, you must sell before you buy again.</li></ul><p><br></p><p>Return the maximum profit you can achieve.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> prices = [1,2,3,0,2]</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong> transactions = [buy, sell, cooldown, buy, sell]</p>",
+    "<p><strong>Input:</strong> prices = [1]</p><p><strong>Output:</strong> 0</p><p><strong>Explanation: </strong>Only one day — no transaction is possible.</p>",
+    "<p><strong>Input:</strong> prices = [3,2,6,5,0,3]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ prices.length ≤ 5000</li><li>0 ≤ prices[i] ≤ 1000</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

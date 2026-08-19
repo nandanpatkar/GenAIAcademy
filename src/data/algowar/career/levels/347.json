@@ -1,0 +1,33 @@
+{
+  "levelNumber": 347,
+  "displayNumber": 293,
+  "title": "Merge 2 BST's",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "<p><strong>Input :</strong>&nbsp;[ \"BSTIterator\" , \"next\" , \"next\" , \"hasNext\" , \"next\" , \"hasNext\" , \"next\" , \"hasNext\" , \"next\" , \"hasNext\" ] , root = [7, 3, 15, null, null, 9, 20]</p><p><strong>Output :</strong>&nbsp;[3, 7, true, 9, true, 15, true, 20, false]</p><p><strong>Explanation :</strong></p><p>BSTIterator bSTIterator = new BSTIterator([7, 3, 15, null, null, 9, 20]);</p><p>bSTIterator.next();&nbsp;&nbsp;// return 3</p><p>bSTIterator.next();&nbsp;&nbsp;// return 7</p><p>bSTIterator.hasNext(); // return True</p><p>bSTIterator.next();&nbsp;&nbsp;// return 9</p><p>bSTIterator.hasNext(); // return True</p><p>bSTIterator.next();&nbsp;&nbsp;// return 15</p><p>bSTIterator.hasNext(); // return True</p><p>bSTIterator.next();&nbsp;&nbsp;// return 20</p><p>bSTIterator.hasNext(); // return False</p>",
+    "<p><strong>Input :</strong>&nbsp;[ \"BSTIterator\" , \"next\" , \"next\" , \"next\", \"hasNext\" , \"next\" , \"hasNext\" ] , root = [7, 3, 15, null, null, 9, 20]</p><p><strong>Output :</strong>&nbsp;[3, 7, 9, true, 15, true]</p><p><strong>Explanation :</strong></p><p>BSTIterator bSTIterator = new BSTIterator([7, 3, 15, null, null, 9, 20]);</p><p>bSTIterator.next();&nbsp;&nbsp;// return 3</p><p>bSTIterator.next();&nbsp;&nbsp;// return 7</p><p>bSTIterator.next(); // return 9</p><p>bSTIterator.hasNext(); // return True</p><p>bSTIterator.next();&nbsp;&nbsp;// return 15</p><p>bSTIterator.hasNext(); // return True</p>",
+    "<p><strong>Input </strong>: &nbsp;[ \"BSTIterator\" , \"next\" , \"next\" , \"next\", \"next\" , \"next\" , \"hasNext\" ] , root = [7, 3, 15, null, null, 9, 20]</p><p><br></p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 104</li><li>At most 104 calls will be made to next and hasNext.</li><li>0 <= Node.val <= 1054</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

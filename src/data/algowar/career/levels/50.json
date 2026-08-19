@@ -1,0 +1,33 @@
+{
+  "levelNumber": 50,
+  "displayNumber": 50,
+  "title": "Check if String is Palindrome or Not",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string <strong>s, r</strong>eturn <strong>true</strong> if the string is palindrome, otherwise <strong>false</strong>.</p><p><br></p><p>A string is called <strong>palindrome</strong> if it reads the same forward and backward.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"hannah\"</p><p><strong>Output :</strong> true</p><p><strong>Explanation : </strong>The string when reversed is --> \"hannah\", which is same as original string , so we return true.</p>",
+    "<p><strong>Input :</strong> s = \"aabbaA\"</p><p><strong>Output :</strong> false</p><p><strong>Explanation : </strong>The string when reversed is --> \"Aabbaa\", which is not same as original string, So we return false.</p>",
+    "<p><strong>Input :</strong> s = \"aabbcccdbbaa\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>3</sup></li><li>s consist of only uppercase and lowercase English characters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

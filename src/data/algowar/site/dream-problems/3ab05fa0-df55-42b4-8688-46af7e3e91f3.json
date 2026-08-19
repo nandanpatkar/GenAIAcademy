@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "3ab05fa0-df55-42b4-8688-46af7e3e91f3",
+    "title": "Random Pick with Weight",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "math",
+      "binary-search",
+      "prefix-sum",
+      "randomized"
+    ],
+    "statement": "You are given a 0-indexed array of positive integers w where w[i] describes the weight of the i-th index. You need to perform q pickIndex operations. Each pickIndex operation randomly picks an index in the range [0, n-1] (inclusive) and returns it. The probability of picking index i is w[i] / sum(w).\n\nTo make the output deterministic for exact comparison, instead of using a real random number generator, each pickIndex call is driven by a provided integer r in the range [0, sum(w)-1]. The index returned is the smallest index i such that the prefix sum prefix[i] = w[0] + w[1] + ... + w[i] is strictly greater than r. In other words, find the smallest i where r < prefix[i].\n\n**Input:**\n- Line 1: integer n, the length of array w.\n- Line 2: n space-separated positive integers, the array w.\n- Line 3: integer q, the number of pickIndex calls.\n- Line 4: q space-separated integers r_1 r_2 ... r_q, each in the range [0, sum(w)-1], representing the random value used for each pickIndex call.\n\n**Output:**\n- Line 1: q space-separated integers, the result of each pickIndex call in order.\n\n**Constraints:**\n- 1 <= n <= 10^4\n- 1 <= w[i] <= 10^5\n- 1 <= q <= 10^4\n- 0 <= r_j <= sum(w) - 1\n- sum(w) fits in a 32-bit signed integer.\n\n**Examples:**\nExample 1:\nInput:\n1\n1\n1\n0\nOutput:\n0\n\nExample 2:\nInput:\n2\n1 3\n5\n1 2 3 1 0\nOutput:\n1 1 1 1 0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

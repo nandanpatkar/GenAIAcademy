@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "bca32f8d-b10d-4f7c-963a-d86e7ed1d359",
+    "title": "Count Paths That Can Form a Palindrome in a Tree",
+    "difficulty": "Hard",
+    "tags": [
+      "hash-table",
+      "bit-manipulation",
+      "tree",
+      "depth-first-search"
+    ],
+    "statement": "You are given a tree (i.e. a connected, undirected graph that has no cycles) rooted at node 0 consisting of n nodes numbered from 0 to n - 1. The tree is represented by a 0-indexed array parent of size n, where parent[i] is the parent of node i. Since node 0 is the root, parent[0] == -1.\n\nYou are also given a string s of length n, where s[i] is the character assigned to the edge between i and parent[i]. s[0] can be ignored.\n\nReturn the number of pairs of nodes (u, v) such that u < v and the characters assigned to edges on the path from u to v can be rearranged to form a palindrome.\n\nA string is a palindrome when it reads the same backwards as forwards.\n\n**Input:**\nThe first line contains an integer n, the number of nodes.\nThe second line contains n space-separated integers representing the parent array.\nThe third line contains an integer, the length of the string s.\nThe fourth line contains the string s of length n consisting of lowercase English letters.\n\n**Output:**\nPrint a single integer: the number of pairs of nodes (u, v) with u < v such that the characters on the path from u to v can be rearranged into a palindrome.\n\n**Constraints:**\n- n == parent.length == s.length\n- 1 <= n <= 10^5\n- 0 <= parent[i] <= n - 1 for all i >= 1\n- parent[0] == -1\n- parent represents a valid tree.\n- s consists of only lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\n6\n-1 0 0 1 1 2\n6\nacaabc\nOutput:\n8\n\nExample 2:\nInput:\n5\n-1 0 0 0 0\n5\naaaaa\nOutput:\n10",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

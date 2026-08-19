@@ -1,0 +1,9 @@
+{
+  "problem": {
+    "title": "Creating Words",
+    "statement": "A. Creating Words\ntime limit per test\n1 second\nmemory limit per test\n256 megabytes\ninput\nstandard input\noutput\nstandard output\n\nMatthew is given two strings a and b, both of length 3. He thinks it's particularly funny to create two new words by swapping the first character of a with the first character of b. He wants you to output a and b after the swap.\n\nNote that the new words may not necessarily be different.\n\n**Input:**\nThe first line contains t (1 \\leq t \\leq 100)  — the number of test cases.\n\nThe first and only line of each test case contains two space-separated strings, a and b, both of length 3. The strings only contain lowercase Latin letters.\n\n**Output:**\nFor each test case, after the swap, output a and b, separated by a space.\n\n**Examples:**",
+    "difficulty": 800,
+    "timeLimit": null,
+    "memoryLimit": null
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 296,
+  "displayNumber": 242,
+  "title": "Non-overlapping Intervals",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of N intervals in the form of (start[i], end[i]), where start[i] is the starting point of the interval and end[i] is the ending point of the interval, return the <strong>minimum</strong> number of intervals that need to be removed to make the remaining intervals <strong>non-overlapping</strong>.</p><p><br></p><p><strong style=\"color: rgb(209, 213, 219); background-color: rgb(24, 24, 24);\">Note: </strong></p><p><span style=\"color: rgb(209, 213, 219); background-color: rgb(24, 24, 24);\">Intervals which only touch at a point are also considered as non-overlapping. For example, [1, 3] and [3, 4] are non-overlapping.</span></p>",
+  "examples": [
+    "<p><strong>Input :</strong> Intervals = [ [1, 2] , [2, 3] , [3, 4] ,[1, 3] ]</p><p><br></p><p><strong>Output :</strong> 1</p><p><br></p><p><strong>Explanation :</strong> You can remove the interval [1, 3] to make the remaining interval non overlapping.</p>",
+    "<p><strong>Input :</strong> Intervals = [ [1, 3] , [1, 4] , [3, 5] , [3, 4] , [4, 5] ]</p><p><br></p><p><strong>Output :</strong> 2</p><p><br></p><p><strong>Explanation :</strong> You can remove the intervals [1, 4] and [3, 5] and the remaining intervals becomes non overlapping.</p>",
+    "<p><strong>Input :</strong> Intervals = [ [1, 10] , [1, 4] , [3, 8] , [3, 4] , [4, 5] ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Intervals.length <= 10<sup>5</sup></li><li>0 <= start[i] < end[i] <= 10<sup>5</sup></li><li>Intervals[i].length = 2</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 150,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

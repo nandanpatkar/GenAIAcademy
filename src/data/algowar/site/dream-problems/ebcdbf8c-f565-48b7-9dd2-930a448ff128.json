@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "ebcdbf8c-f565-48b7-9dd2-930a448ff128",
+    "title": "Nim Game",
+    "difficulty": "Easy",
+    "tags": [
+      "math",
+      "brainteaser",
+      "game-theory"
+    ],
+    "statement": "You are playing the following Nim Game with your friend:\n\n- Initially, there is a heap of stones on the table.\n- You and your friend will alternate taking turns, and you go first.\n- On each turn, the person whose turn it is will remove 1 to 3 stones from the heap.\n- The one who removes the last stone is the winner.\n\nGiven n, the number of stones in the heap, print \"true\" if you can win the game assuming both you and your friend play optimally, otherwise print \"false\".\n\n**Input:**\nA single integer n on one line.\n\n**Output:**\nPrint \"true\" if you can win, otherwise print \"false\".\n\n**Constraints:**\n1 <= n <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n4\nOutput:\nfalse\n\nExample 2:\nInput:\n1\nOutput:\ntrue\n\nExample 3:\nInput:\n2\nOutput:\ntrue",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

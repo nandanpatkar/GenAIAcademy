@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "a74f771d-1869-44a0-bd11-fceb1ae60dc7",
+    "title": "Reverse Substrings Between Each Pair of Parentheses",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "stack"
+    ],
+    "statement": "You are given a string s that consists of lower case English letters and brackets.\n\nReverse the strings in each pair of matching parentheses, starting from the innermost one.\n\nYour result should not contain any brackets.\n\n**Input:**\nThe first and only line contains the string s, consisting of lowercase English letters and parentheses.\n\n**Output:**\nPrint the resulting string after reversing all substrings within matching parentheses and removing all brackets. The string is printed raw on a single line.\n\n**Constraints:**\n- 1 <= s.length <= 2000\n- s only contains lower case English characters and parentheses.\n- It is guaranteed that all parentheses are balanced.\n\n**Examples:**\nExample 1:\nInput:\n(abcd)\nOutput:\ndcba\n\nExample 2:\nInput:\n(u(love)i)\nOutput:\niloveu\n\nExample 3:\nInput:\n(ed(et(oc))el)\nOutput:\nleetcode",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

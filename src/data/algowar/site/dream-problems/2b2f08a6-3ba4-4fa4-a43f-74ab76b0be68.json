@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "2b2f08a6-3ba4-4fa4-a43f-74ab76b0be68",
+    "title": "Making A Large Island",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "depth-first-search",
+      "breadth-first-search",
+      "union-find",
+      "matrix"
+    ],
+    "statement": "You are given an n x n binary matrix grid. You are allowed to change at most one 0 to be 1.\n\nReturn the size of the largest island in grid after applying this operation.\n\nAn island is a 4-directionally connected group of 1s.\n\n**Input:**\nThe first line contains two integers rows and cols (both equal to n).\nThe next rows lines each contain cols space-separated values (0 or 1), representing the grid.\n\n**Output:**\nPrint a single integer: the size of the largest island in the grid after changing at most one 0 to 1.\n\n**Constraints:**\n- n == grid.length\n- n == grid[i].length\n- 1 <= n <= 500\n- grid[i][j] is either 0 or 1.\n\n**Examples:**\nExample 1:\nInput:\n2 2\n1 0\n0 1\nOutput:\n3\n\nExample 2:\nInput:\n2 2\n1 1\n1 0\nOutput:\n4\n\nExample 3:\nInput:\n2 2\n1 1\n1 1\nOutput:\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

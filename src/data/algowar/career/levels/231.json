@@ -1,0 +1,26 @@
+{
+  "levelNumber": 231,
+  "displayNumber": 177,
+  "title": "Infix to Postfix Conversion",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "<p><strong>Input: </strong>expression = \"a+b*c\"</p><p><strong>Output: </strong>\"abc*+\"</p><p><strong>Explanation: </strong></p><p>Multiplication has higher precedence than addition, so b * c is evaluated first, then added to a.</p>",
+    "<p><strong>Input: </strong>expression =<span style=\"color: rgb(245, 245, 245);\"> </span>\"(a+b)*c\"</p><p><strong>Output: </strong>\"ab+c*\"</p><p><strong>Explanation: </strong></p><p>The parentheses ensure that a + b is evaluated before multiplying with c.</p>",
+    "<p><strong>Input: </strong>expression =<span style=\"color: rgb(245, 245, 245);\"> </span><strong>\"</strong>a+b*c^d-e^f*g+h\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= expression.length <= 10<sup>4</sup></li><li>The expression is syntactically valid and properly parenthesized</li><li>Operands are always single characters</li><li>No whitespace appears in the input or output</li><li>All operators are binary</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

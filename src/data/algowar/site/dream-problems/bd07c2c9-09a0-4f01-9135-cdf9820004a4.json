@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "bd07c2c9-09a0-4f01-9135-cdf9820004a4",
+    "title": "Count Integers in Intervals",
+    "difficulty": "Hard",
+    "tags": [
+      "design",
+      "segment-tree",
+      "ordered-set"
+    ],
+    "statement": "Count Integers in Intervals\n\nYou start with an empty set of intervals. You need to process a sequence of operations of two types:\n\n- Add an interval [left, right] to the set.\n- Count the number of integers that are present in at least one interval.\n\nAn interval [left, right] denotes all integers x where left <= x <= right.\n\n**Input:**\nThe first line contains an integer q, the number of operations.\nThe next q lines each describe one operation:\n  - \"add left right\" adds the interval [left, right].\n  - \"count\" asks for the current total count of integers covered by at least one interval.\n\n**Output:**\nFor each \"count\" operation, print one line containing the number of integers present in at least one interval. \"add\" operations produce no output.\n\n**Constraints:**\n- 1 <= left <= right <= 10^9\n- 1 <= q <= 10^5\n- At least one \"count\" operation appears in the input.\n- The total number of \"add\" and \"count\" operations is at most 10^5.\n\n**Examples:**\nExample 1:\nInput:\n6\nadd 2 3\nadd 7 10\ncount\nadd 5 8\ncount\nOutput:\n6\n8",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

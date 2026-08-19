@@ -1,0 +1,33 @@
+{
+  "levelNumber": 290,
+  "displayNumber": 236,
+  "title": "Job sequencing Problem",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an 2D array Jobs of size Nx3, where Jobs[i][0] represents JobID , Jobs[i][1] represents Deadline , Jobs[i][2] represents Profit associated with that job. Each Job takes 1 unit of time to complete and only one job can be scheduled at a time.</p><p><br></p><p>The profit associated with a job is earned only if it is completed by its deadline. Find the number of <strong>jobs</strong> and <strong>maximum profit</strong>.</p>",
+  "examples": [
+    "<p><strong>Input</strong> : Jobs = [ [1, 4, 20] , [2, 1, 10] , [3, 1, 40] , [4, 1, 30] ]</p><p><strong>Output</strong> : 2 60</p><p><strong>Explanation</strong> : Job with JobID 3 can be performed at time t=1 giving a profit of 40.</p><p>Job with JobID 1 can be performed at time t=2 giving a profit of 20.</p><p>No more jobs can be scheduled, So total Profit = 40 + 20 => 60.</p><p>Total number of jobs completed are two, JobID 1, JobID 3.</p><p>So answer is 2 60.</p>",
+    "<p><strong>Input</strong> : Jobs = [ [1, 2, 100] , [2, 1, 19] , [3, 2, 27] , [4, 1, 25] , [5, 1, 15] ]</p><p><strong>Output</strong> : 2 127</p><p><strong>Explanation</strong> : Job with JobID 1 can be performed at time time t=1 giving a profit of 100.</p><p>Job with JobID 3 can be performed at time t=2 giving a profit of 27.</p><p>No more jobs can be scheduled, So total Profit = 100 + 27 => 127.</p><p>Total number of jobs completed are two, JobID 1, JobID 3.</p><p>So answer is 2 127.</p>",
+    "<p><strong>Input :</strong> Jobs = [ [1, 1, 100] , [2, 2, 200] , [3, 3, 300] , [4, 4, 400] ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 10<sup>4</sup></li><li>1 <= Deadline <= N</li><li>1 <= Profit <= 500</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

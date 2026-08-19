@@ -1,0 +1,33 @@
+{
+  "levelNumber": 363,
+  "displayNumber": 309,
+  "title": "Distance of nearest cell having one",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a binary grid of N x M. Find the <strong>distance</strong> of the nearest 1 in the grid for each cell.</p><p><br></p><p>The distance is calculated as <strong>|i1&nbsp;- i2| + |j1 - j2|</strong>, where i1, j1 are the row number and column number of the current cell, and i2, j2 are the row number and column number of the nearest cell having value 1.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-RW6Xyxa0\"></p><p><strong>Input:</strong> grid = [ [0, 1, 1, 0], [1, 1, 0, 0], [0, 0, 1, 1] ]</p><p><strong>Output:</strong> [ [1, 0, 0, 1], [0, 0, 1, 1], [1, 1, 0, 0] ]</p><p><strong>Explanation:</strong> 0's at (0,0), (0,3), (1,2), (1,3), (2,0) and (2,1) are at a distance of 1 from 1's at (0,1),(0,2), (0,2), (2,3), (1,0) and (1,1) respectively.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-b0o2o0hT\"></p>",
+    "<p><strong>Input:</strong> grid = [ [1, 0, 1], [1, 1, 0], [1, 0, 0] ]</p><p><strong>Output:</strong> [ [0, 1, 0], [0, 0, 1], [0, 1, 2] ]</p><p><strong>Explanation:</strong> 0's at (0,1), (1,2), (2,1) and (2,2) are at a&nbsp;distance of 1, 1, 1 and 2 from 1's at (0,0),(0,2), (2,0) and (1,1) respectively.</p>",
+    "<p><strong>Input :</strong> grid = [ [0, 1], [1, 0] ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= N, M <= 500</li><li>&nbsp;&nbsp;grid[i][j] == 0 or 1</li><li>There is atleast one 1 in the grid</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

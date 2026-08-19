@@ -1,0 +1,33 @@
+{
+  "levelNumber": 386,
+  "displayNumber": 332,
+  "title": "Number of ways to arrive at destination",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>A city consists of n intersections numbered from 0 to n - 1 with bi-directional roads between some intersections. The inputs are generated such that one can reach any intersection from any other intersection and that there is at most one road between any two intersections.</p><p><br></p><p>Given an integer n and a 2D integer array ‘roads’ where roads[i] = [u<sub>i</sub>, v<sub>i</sub>, time<sub>i</sub>] means that there is a road between intersections u<sub>i</sub> and v<sub>i</sub> that takes time<sub>i</sub> minutes to travel. Determine the <strong>number of ways</strong> to travel from intersection 0 to intersection n - 1 in the shortest amount of time.</p><p><br></p><p>Since the answer may be large, return it modulo 10<sup>9</sup> + 7.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-n4bXXNh5\"></p><p><br></p><p><strong>Input:</strong> n=7, m=10, roads= [[0,6,7],[0,1,2],[1,2,3],[1,3,3],[6,3,3],[3,5,1],[6,5,1],[2,5,1],[0,4,5],[4,6,2]]</p><p><strong>Output:</strong> 4</p><p><strong>Explanation:&nbsp;</strong></p><p>The four ways to get there in 7 minutes (which is the shortest calculated time) are:</p><p>- 0&nbsp;6</p><p>- 0&nbsp;4&nbsp;6</p><p>- 0&nbsp;1&nbsp;2&nbsp;5&nbsp;6</p><p>- 0&nbsp;1&nbsp;3&nbsp;5&nbsp;6</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-vh3sQIWk\"></p><p><br></p><p><strong>Input:</strong> n=6, m=8, roads= [[0,5,8],[0,2,2],[0,1,1],[1,3,3],[1,2,3],[2,5,6],[3,4,2],[4,5,2]]</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:&nbsp;</strong></p><p>The three ways to get there in 8 minutes (which is the shortest calculated time) are:</p><p>- 0&nbsp;5</p><p>- 0&nbsp;2&nbsp;5</p><p>- 0&nbsp;1&nbsp;3&nbsp;4&nbsp;5</p>",
+    "<p><strong>Input:</strong> n = 4, m = 4, roads = [[0, 1, 10], [1, 2, 7], [2, 3, 4], [0, 3, 3]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 200</li><li>n - 1 <= roads.length <= n * (n - 1) / 2</li><li>roads[i].length == 3</li><li>0 <= u<sub>i</sub>, v<sub>i</sub> <= n - 1</li><li>1 <= time<sub>i</sub> <= 10<sup>9</sup></li><li>u<sub>i</sub> != v<sub>i</sub></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

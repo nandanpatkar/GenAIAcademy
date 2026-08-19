@@ -1,0 +1,26 @@
+{
+  "id": "aa91b089-c843-4e44-b365-76059d18764c",
+  "username": "NandanPatkar",
+  "email": "nandanpatkar14114@gmail.com",
+  "avatar": "bug_hunter.png",
+  "college": null,
+  "createdAt": "2026-08-06T15:31:49.618Z",
+  "stats": {
+    "id": "750125bd-3c50-41e7-b821-f0b260245c81",
+    "userId": "aa91b089-c843-4e44-b365-76059d18764c",
+    "rating": 1000,
+    "xp": 195,
+    "wins": 0,
+    "losses": 0,
+    "draws": 0,
+    "winStreak": 0,
+    "maxStreak": 0,
+    "dailyStreak": 0,
+    "maxDailyStreak": 2,
+    "lastActiveDate": "2026-08-08",
+    "streakFreezes": 1,
+    "streakFreezesMonth": "2026-08"
+  },
+  "isPro": true,
+  "proTrialEndsAt": "2026-08-20T15:46:33.383907Z"
+}

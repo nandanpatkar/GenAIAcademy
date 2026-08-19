@@ -1,0 +1,33 @@
+{
+  "levelNumber": 207,
+  "displayNumber": 153,
+  "title": "Check if a Number is Odd or Not",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a non-negative integer n, determine whether it is odd.</p><p>Return true if the number is odd, otherwise return false.</p><p><br></p><p>A number is odd if it is not divisible by 2 <strong>(i.e., n % 2 != 0)</strong>.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> n = 7</p><p><strong>Output:</strong> true</p><p><strong>Explanation:</strong> 7 is not divisible by 2. Hence, it is odd.</p>",
+    "<p><strong>Input: </strong>n = 0</p><p><strong>Output: </strong>false</p><p><strong>Explanation: </strong>0 is divisible by 2. Hence, it is not odd.</p>",
+    "<p><strong>Input:</strong> n = 10000</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= n <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "route": "/signup",
+  "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "description": "Challenge developers in real-time coding duels, climb the leaderboard, improve your DSA skills, and compete against coders worldwide on AlgoWars.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(auth)/signup/page-cfa33c281ffa2635.js"
+  ],
+  "copy": [
+    "The captcha could not load. Check your connection or disable a blocker, then reload.",
+    "form",
+    "Login",
+    "Sign Up",
+    "Try signing up with Discord instead →",
+    "Or sign up with email",
+    "Operator Handle",
+    "UNIQUE_ID",
+    "Comms Channel",
+    "operator@domain.com",
+    "Access Key",
+    "Confirm Access Key",
+    "Create Identity",
+    "Complete the captcha to continue.",
+    "We sent a verification code to your email. Check your inbox (and spam folder).",
+    "Verification Code",
+    "Verify & Create Account",
+    "← Back to registration"
+  ],
+  "rendered": {
+    "finalUrl": "/signup",
+    "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "ALGOWARS"
+      },
+      {
+        "tag": "h1",
+        "text": "NEW OPERATOR"
+      }
+    ],
+    "text": "戦 アルゴリズム戦争・開始 ALGOWARS アルゴウォーズ SYSTEM ONLINE NEW OPERATOR 登録 Register to enter the competitive arena. LOGIN SIGN UP SIGN UP WITH DISCORD SIGN UP WITH GOOGLE OR SIGN UP WITH EMAIL OPERATOR HANDLE fingerprint COMMS CHANNEL mail ACCESS KEY encrypted visibility_off CONFIRM ACCESS KEY lock visibility_off Create Identity arrow_forward Complete the captcha to continue. ENCRYPTED CONNECTION • SECURE V2.1",
+    "links": [
+      "/login"
+    ],
+    "buttons": [
+      "SIGN UP",
+      "SIGN UP WITH DISCORD",
+      "SIGN UP WITH GOOGLE",
+      "visibility_off",
+      "Create Identity arrow_forward"
+    ],
+    "redirected": false
+  }
+}

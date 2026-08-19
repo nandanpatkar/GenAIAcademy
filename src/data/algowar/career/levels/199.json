@@ -1,0 +1,33 @@
+{
+  "levelNumber": 199,
+  "displayNumber": 145,
+  "title": "N Queen",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>The challenge of arranging <strong>n</strong> <strong>queens</strong> on a n × n chessboard so that no two queens attack one another is known as the \"n-queens puzzle.\"</p><p><br></p><p>Return every unique solution to the <strong>n-queens puzzle</strong> given an integer n. The answer can be returned in any sequence.</p><p><br></p><p>Every solution has a <strong>unique</strong> board arrangement for the placement of the n-queens, where 'Q' and '.' stand for a queen and an empty space, respectively.</p><p><br></p><p>Here are the attack rules for N-Queens:</p><ol><li>Same Row - No two queens can be in the same row.</li><li>Same Column - No two queens can be in the same column.</li><li>Same Diagonal (top-left to bottom-right) - No two queens can share the same diagonal where (row - col) is equal.</li><li>Same Anti-Diagonal (top-right to bottom-left) - No two queens can share the same anti-diagonal where (row + col) is equal.</li></ol>",
+  "examples": [
+    "<p><strong>Input :</strong> n = 4</p><p><strong>Output :</strong> [[\".Q..\" , \"...Q\" , \"Q...\" , \"..Q.\"] , [\"..Q.\" , \"Q...\" , \"...Q\" , \".Q..\"]]</p><p><strong>Explanation : </strong>There are two possible combinations as shown below.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-LYFMng9U\"></p>",
+    "<p><strong>Input :</strong> n = 2</p><p><strong>Output :</strong> [ [] ]</p><p><strong>Explanation : </strong>There is no possible combination for placing two queens on a board of size 2*2.</p>",
+    "<p><strong>Input :</strong> n = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 9</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

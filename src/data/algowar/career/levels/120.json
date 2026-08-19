@@ -1,0 +1,26 @@
+{
+  "levelNumber": 120,
+  "displayNumber": 66,
+  "title": "Capacity to Ship Packages Within D Days",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an array weights where <strong>weights[i]</strong> represents the weight of the <strong>i-th package</strong> on a conveyor belt. All the packages must be shipped in the order given from one port to another within days days.</p><p><br></p><p>Each day, the ship can carry a <strong>contiguous sequence of packages</strong>, as long as the total weight does <strong>not exceed</strong> its maximum capacity.</p><p><br></p><p>Your task is to find the <strong>minimum possible capacity</strong> of the ship so that all packages can be shipped within the given number of days.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> weights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], days = 5</p><p><strong>Output: </strong>15</p><p><strong>Explanation:</strong></p><p>Minimum ship <strong>capacity = 15</strong>. One way to ship in 5 days:</p><ul><li>Day 1: 1 + 2 + 3 + 4 + 5 = 15</li><li>Day 2: 6 + 7 = 13</li><li>Day 3: 8</li><li>Day 4: 9</li><li>Day 5: 10</li></ul><p><br></p><p>No day exceeds <strong>capacity 15</strong> and all packages are shipped in order in <strong>5 days</strong>.</p>",
+    "<p><strong>Input: </strong>weights = [3, 2, 2, 4, 1, 4], days = 3</p><p><strong>Output: </strong>6</p><p><strong>Explanation:</strong></p><p>One possible division with <strong>capacity 6:</strong></p><ul><li>Day 1: 3 + 2 = 5</li><li>Day 2: 2 + 4 = 6</li><li>Day 3: 1 + 4 = 5</li></ul><p><br></p><p>All packages shipped in order within <strong>3 days</strong>.</p>",
+    "<p><strong>Input: </strong>weights = [10, 50, 50, 10], days = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= days <= weights.length <= 5 * 10⁴</li><li>1 <= weights[i] <= 500</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

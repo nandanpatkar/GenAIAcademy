@@ -1,0 +1,33 @@
+{
+  "levelNumber": 224,
+  "displayNumber": 170,
+  "title": "Implement Queue using Arrays",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Implement a First-In-First-Out (FIFO) queue using an array. The implemented queue should support the following operations: push, peek, pop, and isEmpty.</p><p><br></p><p>Implement the ArrayQueue class:</p><p><br></p><p>void push(int x): Adds element x to the end of the queue.</p><p>int pop(): Removes and returns the front element of the queue.</p><p>int peek(): Returns the front element of the queue without removing it.</p><p>boolean isEmpty(): Returns true if the queue is empty, false otherwise.</p>",
+  "examples": [
+    "<p>Input:</p><p>[\"ArrayQueue\", \"push\", \"push\", \"peek\", \"pop\", \"isEmpty\"]</p><p>[[], [5], [10], [], [], []]</p><p>Output: [null, null, null, 5, 5, false]</p><p>Explanation:</p><p>ArrayQueue queue = new ArrayQueue();</p><p>queue.push(5);</p><p>queue.push(10);</p><p>queue.peek(); // returns 5</p><p>queue.pop(); // returns 5</p><p>queue.isEmpty(); // returns false</p>",
+    "<p>Input:</p><p>[\"ArrayQueue\", \"isEmpty\"]</p><p>[[]]</p><p>Output:[null, true]</p><p>Explanation:</p><p>ArrayQueue queue = new ArrayQueue();</p><p>queue.isEmpty(); // returns true</p>",
+    "<p>Input:</p><p>[\"ArrayQueue\", \"push\", \"pop\", \"isEmpty\"]</p><p>[[], [1], [], []]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= numbers of calls made <= 100</li><li>1 <= x <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

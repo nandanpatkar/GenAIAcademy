@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "6ec4d339-c49a-4c74-bbda-9566dbf76f67",
+    "title": "Minimum Falling Path Sum",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "matrix"
+    ],
+    "statement": "Given an n x n array of integers matrix, return the minimum sum of any falling path through matrix.\n\nA falling path starts at any element in the first row and chooses the element in the next row that is either directly below or diagonally left/right. Specifically, the next element from position (row, col) will be (row + 1, col - 1), (row + 1, col), or (row + 1, col + 1).\n\n**Input:**\nThe first line contains two integers rows and cols (both equal to n).\nThe next rows lines each contain cols space-separated integers representing the matrix.\n\n**Output:**\nPrint a single integer: the minimum sum of any falling path through the matrix.\n\n**Constraints:**\n- n == matrix.length == matrix[i].length\n- 1 <= n <= 100\n- -100 <= matrix[i][j] <= 100\n\n**Examples:**\nExample 1:\nInput:\n3 3\n2 1 3\n6 5 4\n7 8 9\nOutput:\n13\n\nExample 2:\nInput:\n2 2\n-19 57\n-40 -5\nOutput:\n-59",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

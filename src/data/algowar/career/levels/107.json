@@ -1,0 +1,33 @@
+{
+  "levelNumber": 107,
+  "displayNumber": 53,
+  "title": "First and last occurrence",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers nums sorted in non-decreasing order, find the <strong>starting</strong> and <strong>ending</strong> position of a given target value. If the target is not found in the array, return [-1, -1].</p>",
+  "examples": [
+    "<p>Input: nums = [5, 7, 7, 8, 8, 10], target = 8</p><p>Output: [3, 4]</p><p>Explanation:The target is 8, and it appears in the array at indices 3 and 4, so the output is [3,4]</p>",
+    "<p>Input: nums = [5, 7, 7, 8, 8, 10], target = 6</p><p>Output: [-1, -1]</p><p>Expalantion:&nbsp;The target is 6, which is not present in the array. Therefore, the output is [-1, -1].</p>",
+    "<p>Input: nums = [5, 7, 7, 8, 8, 10], target = 5</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;0 <= nums.length <= 10<sup>5</sup></li><li>&nbsp;&nbsp;-10<sup>9</sup> <= nums[i] <= 10<sup>9</sup></li><li>&nbsp;&nbsp;nums is a non-decreasing array.</li><li>&nbsp;&nbsp;-10<sup>9</sup> <= target <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

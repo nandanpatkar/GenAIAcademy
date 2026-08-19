@@ -1,0 +1,33 @@
+{
+  "levelNumber": 411,
+  "displayNumber": 357,
+  "title": "Grid Unique Paths : DP on Grids (DP8)",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integers m and n, representing the number of rows and columns of a 2d array named matrix. Return the number of <strong>unique ways</strong> to go from the top-left cell (matrix[0][0]) to the bottom-right cell (matrix[m-1][n-1]).</p><p><br></p><p>&nbsp;Movement is allowed only in two directions from a cell: <strong>right</strong> and <strong>bottom</strong>.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: m = 3, n = 2</p><p><strong>Output</strong>: 3</p><p><strong>Explanation</strong>: </p><p>There are 3 unique ways to go from the top left to the bottom right cell.</p><p>1) right -> down -> down</p><p>2) down -> right -> down</p><p>3) down -> down -> right</p>",
+    "<p><strong>Input</strong>: m = 2, n = 4</p><p><strong>Output</strong>: 4</p><p><strong>Explanation</strong>: </p><p>There are 4 unique ways to go from the top left to the bottom right cell.</p><p>1) down -> right -> right -> right</p><p>2) right -> down -> right -> right</p><p>3) right -> right -> down -> right</p><p>4) right -> right -> right -> down</p>",
+    "<p><strong>Input</strong>: m = 3, n = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n, m <= 100</li><li>The answer will not exceed 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 416,
+  "displayNumber": 362,
+  "title": "Subset sum equal to target (DP- 14)",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of n integers and an integer target, determine if there is a <strong>subset</strong> of the given array with a sum equal to the given target.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> arr = [1, 2, 7, 3], target = 6</p><p><strong>Output:</strong> True</p><p><strong>Explanation:</strong> There is a subset (1, 2, 3) with sum 6.</p>",
+    "<p><strong>Input:</strong> arr = [2, 3, 5], target = 6</p><p><strong>Output:</strong> False</p><p><strong>Explanation:</strong> There is no subset with sum 6.</p>",
+    "<p><strong>Input:</strong> arr = [7, 54, 4, 12, 15, 5], target = 9</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n = 100</li><li>1<= arr[i] <= 100</li><li>0<= target <= 5*10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

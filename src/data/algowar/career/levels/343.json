@@ -1,0 +1,33 @@
+{
+  "levelNumber": 343,
+  "displayNumber": 289,
+  "title": "Check if a tree is a BST or not",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>root</strong> node of a binary tree. Return <strong>true</strong> if the given binary tree is a binary search tree(BST) else <strong>false</strong>.</p><p><br></p><p>A <strong>valid</strong> <strong>BST</strong> is defined as follows:</p><p><br></p><ul><li>The left&nbsp;subtree of a node contains only nodes with key <strong>strictly</strong> less than the node's key.</li></ul><p><br></p><ul><li>The right subtree of a node contains only nodes with key <strong>strictly</strong> greater than the node's key.</li></ul><p><br></p><ul><li>Both the left and right subtrees must also be binary search trees.</li></ul>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7]</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> </p><p>Below is image of the given tree.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-DDCNyKoE\"></p>",
+    "<p><strong>Input :</strong> root = [5, 3, 6, 4, 2, null, 7]</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong></p><p><strong><span class=\"ql-cursor\">﻿</span></strong>Below is image of the given tree.</p><p>The node 4 and node 2 violates the BST rule of smaller to left and larger to right.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-GETEpN6F\"></p>",
+    "<p><strong>Input :</strong> root = [2, 1, 3]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>-2<sup>31</sup> <= Node.val <= 2<sup>31</sup> - 1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

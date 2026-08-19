@@ -1,0 +1,33 @@
+{
+  "levelNumber": 424,
+  "displayNumber": 370,
+  "title": "Coin Change 2 (DP - 22)",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Give an array coins of n integers representing coin denominations. Your task is to find the number of distinct combinations that sum up to a specified amount of money. If it's impossible to achieve the exact amount with any combination of coins, return 0.</p><p>Single coin can be used any number of times.</p><p>Return your answer with modulo 10<sup>9</sup>+7.</p>",
+  "examples": [
+    "<p>Input: coins = [2, 4,10], amount = 10</p><p><br></p><p>Output: 4</p><p><br></p><p>Explanation: The four combinations are:</p><p>10 = 10</p><p>10 = 4 + 4 + 2</p><p>10 = 4 + 2 + 2 + 2</p><p>10 = 2 + 2 + 2 + 2 + 2</p>",
+    "<p>Input: coins = [5], amount = 5</p><p><br></p><p>Output: 1</p><p><br></p><p>Explanation: There is one combination: 5 = 5.</p>",
+    "<p>Input: coins = [1, 2, 3, 5], amount = 5</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n, coins[i], amount <= 10<sup>3</sup></li><li>All the values of <strong>coins </strong>are unique.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

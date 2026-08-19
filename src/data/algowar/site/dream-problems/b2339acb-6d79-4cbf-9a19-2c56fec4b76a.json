@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "b2339acb-6d79-4cbf-9a19-2c56fec4b76a",
+    "title": "Find First and Last Position of Element in Sorted Array",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "statement": "Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.\n\nIf target is not found in the array, return [-1, -1].\n\nYou must write an algorithm with O(log n) runtime complexity.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\nThe third line contains an integer target.\n\n**Output:**\nPrint two space-separated integers: the starting and ending index of target in the array. If target is not found, print \"-1 -1\".\n\n**Constraints:**\n- 0 <= nums.length <= 10^5\n- -10^9 <= nums[i] <= 10^9\n- nums is a non-decreasing array.\n- -10^9 <= target <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n6\n5 7 7 8 8 10\n8\nOutput:\n3 4\n\nExample 2:\nInput:\n6\n5 7 7 8 8 10\n6\nOutput:\n-1 -1\n\nExample 3:\nInput:\n0\n0\nOutput:\n-1 -1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

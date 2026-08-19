@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "461f31c0-0d82-46e3-88a4-9b198a774988",
+    "title": "Letter Combinations of a Phone Number",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "string",
+      "backtracking"
+    ],
+    "statement": "Letter Combinations of a Phone Number\n\nGiven a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.\n\nA mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.\n\n2 -> abc\n3 -> def\n4 -> ghi\n5 -> jkl\n6 -> mno\n7 -> pqrs\n8 -> tuv\n9 -> wxyz\n\nReturn the combinations in lexicographic order (the order obtained by iterating the letters of each digit's mapping from left to right, with earlier digits varying slowest).\n\n**Input:**\nThe first line contains an integer n, the length of the digits string.\nThe second line contains the digits string itself (raw, not quoted).\n\n**Output:**\nPrint all possible letter combinations on a single line, space-separated, in lexicographic order as defined above. If the input string is empty, print nothing (an empty line).\n\n**Constraints:**\n1 <= digits.length <= 4\ndigits[i] is a digit in the range ['2', '9'].\n\n**Examples:**\nExample 1:\nInput:\n2\n23\nOutput:\nad ae af bd be bf cd ce cf\n\nExample 2:\nInput:\n1\n2\nOutput:\na b c",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

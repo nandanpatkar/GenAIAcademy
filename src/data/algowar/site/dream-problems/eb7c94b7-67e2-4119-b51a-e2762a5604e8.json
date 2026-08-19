@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "eb7c94b7-67e2-4119-b51a-e2762a5604e8",
+    "title": "Delete and Earn",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "dynamic-programming"
+    ],
+    "statement": "You are given an integer array nums. You want to maximize the number of points you get by performing the following operation any number of times:\n\n- Pick any nums[i] and delete it to earn nums[i] points. Afterwards, you must delete every element equal to nums[i] - 1 and every element equal to nums[i] + 1.\n\nReturn the maximum number of points you can earn by applying the above operation some number of times.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint a single integer, the maximum number of points you can earn.\n\n**Constraints:**\n- 1 <= nums.length <= 2 * 10^4\n- 1 <= nums[i] <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n3\n3 4 2\nOutput:\n6\n\nExample 2:\nInput:\n6\n2 2 3 3 3 4\nOutput:\n9",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

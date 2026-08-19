@@ -1,0 +1,72 @@
+{
+  "route": "/leaderboard",
+  "title": "Leaderboard — Top Competitive Programmers | AlgoWars",
+  "description": "See the top-ranked competitive programmers on AlgoWars. Global leaderboard ranked by Elo rating. Climb the ranks through real-time coding duels.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars Leaderboard — Top Competitive Programmers",
+  "chunks": [
+    "app/(main)/leaderboard/page-d58cf0abc3b8d89a.js"
+  ],
+  "copy": [
+    "Leaderboard",
+    "Top rankings",
+    "Loading rankings...",
+    "Retry",
+    "Player",
+    "Rating",
+    "Win %",
+    "Streak",
+    "Previous",
+    "Next",
+    "No warriors yet. Be the first!",
+    "Champion",
+    "Runner Up",
+    "Third Place",
+    "(you)"
+  ],
+  "rendered": {
+    "finalUrl": "/leaderboard",
+    "title": "Leaderboard — Top Competitive Programmers | AlgoWars",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "ALGOWARS"
+      },
+      {
+        "tag": "h1",
+        "text": "Leaderboard"
+      },
+      {
+        "tag": "h3",
+        "text": "frostking"
+      },
+      {
+        "tag": "h3",
+        "text": "SyntaxWraith"
+      },
+      {
+        "tag": "h3",
+        "text": "RecursiveAce"
+      }
+    ],
+    "text": "闘 ALGOWARS アルゴウォーズ Placement Leaderboard Career Duo Daily Pricing 🔥 0 notifications bug_report Leaderboard Top rankings military_tech RUNNER UP #2 frostking 1085 67% win rate workspace_premium CHAMPION #1 SyntaxWraith 1100 61% win rate military_tech THIRD PLACE #3 RecursiveAce 1080 63% win rate # Player Rating W/L Win % Streak 4 CodeNinja 80 matches 1050 45/32 56% local_fire_department 3 5 Akki 3 matches 1040 2/0 67% — 6 BinaryGhost 73 matches 1040 40/29 55% local_fire_department 2 7 Karanowsec 4 matches 1038 3/1 75% local_fire_department 3 8 test123 4 matches 1033 3/1 75% local_fire_department 1 9 ninad 13 matches 1028 7/6 54% — 10 Kirito 78 matches 1022 27/42 35% — 11 i_always_loose 3 matches 1022 2/1 67% local_fire_department 2 12 ByteStorm 72 matches 1020 38/30 53% local_fire_department 2 13 Imaakarsh 1 matches 1020 1/0 100% local_fire_department 1 14 parzival 3 matches 1020 2/1 67% local_fire_department 2 15 disha 1 matches 1020 1/0 100% local_fire_department 1 16 megaskew 1 matches 1020 1/0 100% local_fire_department 1 17 logical_refuse 1 matches 1018 1/0 100% local_fire_department 1 18 challenge_me 2 matches 1018 1/1 50% — 19 Opponent_Too_Strong 1 matches 1018 1/0 100% local_fire_department 1 20 Jaidev 1 matches 1018 1/0 100% local_fire_department 1 21 Knight 1 matches 1018 1/0 100% local_fire_department 1 22 TESTINGGGG 1 matches 1018 1/0 100% local_fire_department 1 23 ayus_5 1 matches 1018 1/0 100% local_fire_department 1 24 theonemishra 1 matches 1018 1/0 100% local_fire_department 1 25 nobita 1 matches 1017 1/0 100% local_fire_department 1 26 bhatt 1 matches 1017 1/0 100% local_fire_department 1 27 anupsawant 1 matches 1017 1/0 100% local_fire_department 1 28 Leonaxel 1 matches 1016 1/0 100% local_fire_department 1 29 StackOverflow 70 matches 1016 35/33 50% local_fire_department 1 30 loki 1 matches 1016 1/0 100% local_fire_department 1 31 racistnigga 1 matches 1016 1/0 100% local_fire_department 1 32 sdafjsdfjna 1 matches 1016 1/0 100% local_fire_department 1 33 bhavye 1 matches 1015 1/0 100% local_fire_department 1 34 skaiser 2 matches 1007 1/1 50% local_fire_department 1 35 Vigyat3906 4 matches 1005 2/2 50% — 36 person Butcher 1 matches 1005 1/0 100% local_fire_department 1 37 sandy 2 matches 1004 1/1 50% local_fire_department 1 38 Renguko 2 matches 1003 1/1 50% local_fire_department 1 39 Fandy 2 matches 1003 1/1 50% local_fire_department 1 40 igris 2 matches 1002 1/1 50% local_fire_department 1 41 eraseableshadow 5 matches 1001 2/2 40% local_fire_department 1 42 yamesa 0 matches 1000 0/0 0% — 43 Jcfj 0 matches 1000 0/0 0% — 44 fasfsdf 0 matches 1000 0/0 0% — 45 Manas-5461X 0 matches 1000 0/0 0% — 46 Leyrioh7 0 matches 1000 0/0 0% — 47 person Uuviiii 0 matches 1000 0/0 0% — 48 bunnyy 0 matches 1000 0/0 0% — 49 tech_shivam 0 matches 1000 0/0 0% — 50 D4RK99 0 matches 1000 0/0 0% — Previous Page 1 Next",
+    "links": [
+      "/arena",
+      "/placement",
+      "/leaderboard",
+      "/career",
+      "/duo",
+      "/daily",
+      "/pricing",
+      "/profile"
+    ],
+    "buttons": [
+      "🔥 0",
+      "notifications",
+      "bug_report",
+      "Previous",
+      "Next"
+    ],
+    "redirected": false
+  }
+}

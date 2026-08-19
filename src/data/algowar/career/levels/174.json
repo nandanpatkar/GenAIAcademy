@@ -1,0 +1,26 @@
+{
+  "levelNumber": 174,
+  "displayNumber": 120,
+  "title": "Find Pairs with Given Sum in Doubly Linked List",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a <strong>sorted doubly linked list</strong> of positive distinct integers, and a target integer, return a 2D array containing all unique pairs of nodes (a, b) such that <strong>a + b == target.</strong></p><p><br></p><p>Each pair should be returned as a 2-element array [a, b] with a < b. The list is sorted in ascending order. If there are no such pairs, return an empty list.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> head = [1, 2, 4, 5, 6, 8, 9], target = 7</p><p><strong>Output:</strong> [[1, 6], [2, 5]]</p><p><strong>Explanation:</strong></p><p>1 + 6 = 7 and 2 + 5 = 7 are the valid pairs.</p>",
+    "<p><strong>Input:</strong> head = [1, 5, 6], target = 6</p><p><strong>Output:</strong> [[1, 5]]</p><p><strong>Explanation:</strong></p><p>1 + 5 = 6 is the only valid pair.</p>",
+    "<p><strong>Input:</strong> head = [2, 3, 5, 9], target = 12</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes <= 10<sup>5</sup></li><li>1 <= Node.val <= 10<sup>5</sup></li><li>1 <= target <= 10<sup>5</sup></li><li>The linked list is sorted in strictly increasing order</li><li>The linked list is contains distinct values</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

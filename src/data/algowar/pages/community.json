@@ -1,0 +1,30 @@
+{
+  "route": "/community",
+  "title": "Community — Join the AlgoWars Community | AlgoWars",
+  "description": "Join the AlgoWars community on WhatsApp, X (Twitter), and LinkedIn. Connect with competitive programmers worldwide.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(legal)/community/page-629767bec7855b59.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/community",
+    "title": "Community — Join the AlgoWars Community | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "JOIN THE COMMUNITY"
+      }
+    ],
+    "text": "← Back to home JOIN THE COMMUNITY Connect with competitive programmers, get updates, and be part of the AlgoWars movement. 💬 WhatsApp Join our active community chat ↗ 𝕏 X (Twitter) Follow for updates and announcements ↗ in LinkedIn Professional updates and networking ↗ More communities coming soon — Reddit, Discord, and more.",
+    "links": [
+      "/",
+      "https://chat.whatsapp.com/Dbs4msMDP9PH7gv5wjeZsS",
+      "https://x.com/play_algowars",
+      "https://www.linkedin.com/company/algowar/"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

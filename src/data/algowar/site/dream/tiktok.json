@@ -1,0 +1,378 @@
+{
+  "company": {
+    "slug": "tiktok",
+    "name": "TikTok"
+  },
+  "questions": [
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 100,
+      "orderIndex": 0,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 99.3,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3e140029-64ea-4268-becf-cb431a0c9af9",
+      "title": "Longest Increasing Subsequence",
+      "difficulty": "Medium",
+      "frequency": 90.2,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0783a4cf-c630-4f94-9a68-5f08dc1f78cf",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "frequency": 87.8,
+      "orderIndex": 3,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "275cde79-80b0-4f1a-ac10-9c912c95cc2a",
+      "title": "Course Schedule II",
+      "difficulty": "Medium",
+      "frequency": 86.5,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 84.4,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3bb0dcd8-d476-4c5a-869a-a9f6ca6981ba",
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "frequency": 83.7,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "047250c0-28dd-488b-9bea-cfd549d50ec5",
+      "title": "Course Schedule",
+      "difficulty": "Medium",
+      "frequency": 83.7,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c688ff98-13ec-47b0-ba83-352814517c94",
+      "title": "Subarray With Elements Greater Than Varying Threshold",
+      "difficulty": "Hard",
+      "frequency": 83.7,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "793432e3-0d68-4ca0-a003-40c590135556",
+      "title": "Text Justification",
+      "difficulty": "Hard",
+      "frequency": 79.6,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "738f42d7-7830-4e28-8b65-39e03e9db38f",
+      "title": "Decode String",
+      "difficulty": "Medium",
+      "frequency": 77.7,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "938756cb-dc27-4110-b487-d13d1b853267",
+      "title": "Word Search",
+      "difficulty": "Medium",
+      "frequency": 76.8,
+      "orderIndex": 11,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b2d4e6a5-26ee-4bcd-a010-9bdb2b140050",
+      "title": "Longest Palindromic Substring",
+      "difficulty": "Medium",
+      "frequency": 74.6,
+      "orderIndex": 12,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "cba93d6b-5203-4d3a-b445-7c1c87bb2fea",
+      "title": "Minimum Window Substring",
+      "difficulty": "Hard",
+      "frequency": 74.6,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c3bd17ea-88b3-4f26-a546-1e76c702a258",
+      "title": "Search in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "frequency": 73.5,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ccee497c-6bb1-4dc9-9101-df84e1ebc5dc",
+      "title": "3Sum",
+      "difficulty": "Medium",
+      "frequency": 72.3,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c28ff3b2-55a0-4958-8585-b3c5b5afabd2",
+      "title": "Top K Frequent Elements",
+      "difficulty": "Medium",
+      "frequency": 72.3,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3871de1f-b447-4435-b799-7b84a8a7a4f0",
+      "title": "Subarray Sum Equals K",
+      "difficulty": "Medium",
+      "frequency": 72.3,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ece81ce2-babf-4f95-9b74-c08bb874f07b",
+      "title": "Sqrt(x)",
+      "difficulty": "Easy",
+      "frequency": 71,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "25e0fab2-8839-4be3-8570-6a86fc248925",
+      "title": "Coin Change",
+      "difficulty": "Medium",
+      "frequency": 71,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f81ca876-684a-4e62-b351-116a2205e5dc",
+      "title": "Spiral Matrix",
+      "difficulty": "Medium",
+      "frequency": 69.6,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5c87d78e-1385-495e-9f9c-1d722c2f639f",
+      "title": "Merge k Sorted Lists",
+      "difficulty": "Hard",
+      "frequency": 68.2,
+      "orderIndex": 22,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 68.2,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fb45c70a-1dd6-432d-96b9-cca4d16a2cae",
+      "title": "Longest Consecutive Sequence",
+      "difficulty": "Medium",
+      "frequency": 68.2,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "2b2f08a6-3ba4-4fa4-a43f-74ab76b0be68",
+      "title": "Making A Large Island",
+      "difficulty": "Hard",
+      "frequency": 68.2,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "2a220f2c-bce7-4bba-b7c4-eb7f0aa5df75",
+      "title": "Maximum Value at a Given Index in a Bounded Array",
+      "difficulty": "Medium",
+      "frequency": 68.2,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "206d74c7-42d0-466a-b93c-af519bcd219b",
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "frequency": 66.6,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7d361fba-bf0f-4a53-a065-7aeeb08c43f2",
+      "title": "House Robber",
+      "difficulty": "Medium",
+      "frequency": 66.6,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fcee7ba1-c0d4-47f6-917e-e6e8da3d9b1a",
+      "title": "Kth Largest Element in an Array",
+      "difficulty": "Medium",
+      "frequency": 66.6,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "329ae227-674e-4efc-af40-e562b4212bd7",
+      "title": "Basic Calculator II",
+      "difficulty": "Medium",
+      "frequency": 66.6,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "6abca159-baa5-48eb-ae9b-98628a76016f",
+      "title": "Maximum Swap",
+      "difficulty": "Medium",
+      "frequency": 66.6,
+      "orderIndex": 31,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "4798319c-1f87-47e6-994b-20b7e049f2ee",
+      "title": "Snapshot Array",
+      "difficulty": "Medium",
+      "frequency": 66.6,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ef4f6834-b0ba-403d-a068-c9c91a50530e",
+      "title": "Word Ladder",
+      "difficulty": "Hard",
+      "frequency": 65,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b35ddb16-ad75-4936-88d9-0cb0061aed24",
+      "title": "Sort Colors",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "cba82385-6e65-49b5-b578-32f9ba758f06",
+      "title": "Count the Hidden Sequences",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ede94381-2e6d-4e23-b247-e99e1550831b",
+      "title": "Longest Increasing Path in a Matrix",
+      "difficulty": "Hard",
+      "frequency": 63.2,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "abf34784-264d-4549-b92d-017f2924d75a",
+      "title": "Insert Delete GetRandom O(1)",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1e87b31c-2758-4dac-bfe3-d1a842905c0e",
+      "title": "Valid Parenthesis String",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 41,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a814fc3b-b267-40a8-ab22-ff1108c34762",
+      "title": "Max Area of Island",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 42,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d54d63f5-0926-479a-9f7b-0b4bf75f64f5",
+      "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+      "difficulty": "Medium",
+      "frequency": 61.2,
+      "orderIndex": 44,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "12583558-ff8f-4f5b-adf7-649845058f15",
+      "title": "Add Strings",
+      "difficulty": "Easy",
+      "frequency": 61.2,
+      "orderIndex": 45,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

@@ -1,0 +1,53 @@
+{
+  "route": "/queue",
+  "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "description": "Challenge developers in real-time coding duels, climb the leaderboard, improve your DSA skills, and compete against coders worldwide on AlgoWars.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(main)/queue/page-436067817ef4d9ca.js"
+  ],
+  "copy": [
+    "Hang tight — you'll be matched within 20 seconds",
+    "Retry",
+    "Back to Arena",
+    "You",
+    "Wins",
+    "Streak",
+    "Ready",
+    "VS",
+    "Elapsed",
+    "Win %",
+    "Matches",
+    "Matched!",
+    "joining",
+    "Abort Mission",
+    "matched"
+  ],
+  "rendered": {
+    "finalUrl": "/match/f134014a-e217-4c1d-b3e1-471ca02f6bc8",
+    "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "To Zero"
+      },
+      {
+        "tag": "h2",
+        "text": "To Zero"
+      },
+      {
+        "tag": "h3",
+        "text": "Constraints"
+      }
+    ],
+    "text": "800 To Zero 14:49 person StackOverflow Coding » Problem RANKED MATCH To Zero You are given two integers n and k; k is an odd number not less than 3. Your task is to turn n into 0. To do this, you can perform the following operation any number of times: choose a number x from 1 to k and subtract it from n. However, if the current value of n is even (divisible by 2), then x must also be even, and if the current value of n is odd (not divisible by 2), then x must be odd. In different operations, you can choose the same values of x, but you don't have to. So, there are no limitations on using the same value of x. Calculate the minimum number of operations required to turn n into 0. **Input:** The first line contains one integer t (1 ≤ t ≤ 10000) — the number of test cases. Each test case consists of one line containing two integers n and k (3 ≤ k ≤ n ≤ 109, k is odd). **Output:** For each test case, output one integer — the minimum number of operations required to turn n into 0. **Examples:** EXAMPLE 1: INPUT 8 39 7 9 3 6 3 999967802 3 5 5 6 5 999999999 3 1000000000 3 OUTPUT 7 4 3 499983901 1 2 499999999 500000000 **Note:** In the first example from the statement, you can first subtract 5 from 39 to get 34. Then subtract 6 five times to get 4. Finally, subtract 4 to get 0. In the second example, you can subtract 3 once, and then subtract 2 three times. In the third example, you can subtract 2 three times. Constraints schedule Time: 1000ms memory Memory: 256 MB » Solution Python 3 C++ 17 C++ 20 Java 17 PyPy 3 1 Submissions: 0 mood Nudge flag Surrender play_arrow Submit terminal LIVE LOGS [8:34:33 PM] Matched against StackOverflow [8:34:33 PM] Match started!",
+    "links": [],
+    "buttons": [
+      "mood Nudge",
+      "flag Surrender",
+      "play_arrow Submit"
+    ],
+    "redirected": true
+  }
+}

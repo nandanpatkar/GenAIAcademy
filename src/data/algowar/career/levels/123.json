@@ -1,0 +1,33 @@
+{
+  "levelNumber": 123,
+  "displayNumber": 69,
+  "title": "Book Allocation Problem",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array nums of n integers, where nums[i] represents the number of pages in the i-th book, and an integer m representing the number of students, allocate all the books to the students so that each student gets at least one book, each book is allocated to only one student, and the allocation is contiguous.</p><p><br></p><p>Allocate the books to m students in such a way that the <strong>maximum number of pages</strong> assigned to a student is minimized. If the allocation of books is not possible, return -1.</p>",
+  "examples": [
+    "<p>Input: nums = [12, 34, 67, 90], m=2</p><p>Output: 113</p><p>Explanation: The allocation of books will be 12, 34, 67 | 90. One student will get the first 3 books and the other will get the last one.</p>",
+    "<p>Input:&nbsp;nums = [25, 46, 28, 49, 24], m=4</p><p>Output: 71</p><p>Explanation: The allocation of books will be 25, 46 | 28 | 49 | 24.</p>",
+    "<p>Input: nums = [15, 17, 20], m=2</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= n, m <= 10<sup>4</sup></li><li>&nbsp;&nbsp;1 <= nums[i] <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

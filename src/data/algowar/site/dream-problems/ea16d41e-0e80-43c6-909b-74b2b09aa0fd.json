@@ -1,0 +1,22 @@
+{
+  "problem": {
+    "id": "ea16d41e-0e80-43c6-909b-74b2b09aa0fd",
+    "title": "Power Grid Maintenance",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "depth-first-search",
+      "breadth-first-search",
+      "union-find",
+      "graph",
+      "heap-priority-queue",
+      "ordered-set"
+    ],
+    "statement": "Power Grid Maintenance\n\nYou are given an integer c representing c power stations, each with a unique identifier id from 1 to c (1-based indexing).\n\nThese stations are interconnected via n bidirectional cables, represented by a list of connections, where each element connections[i] = [u_i, v_i] indicates a connection between station u_i and station v_i. Stations that are directly or indirectly connected form a power grid.\n\nInitially, all stations are online (operational).\n\nYou are also given a list of queries, where each query is one of the following two types:\n\n- [1, x]: A maintenance check is requested for station x. If station x is online, it resolves the check by itself. If station x is offline, the check is resolved by the operational station with the smallest id in the same power grid as x. If no operational station exists in that grid, return -1.\n- [2, x]: Station x goes offline (i.e., it becomes non-operational).\n\nReturn an array of integers representing the results of each query of type [1, x] in the order they appear.\n\nNote: The power grid preserves its structure; an offline (non-operational) node remains part of its grid and taking it offline does not alter connectivity.\n\n**Input:**\nThe first line contains an integer c, the number of power stations.\nThe second line contains an integer n, the number of cables.\nThe next n lines each contain two space-separated integers u_i v_i, describing a bidirectional connection.\nThe next line contains an integer q, the number of queries.\nThe next q lines each contain two space-separated integers t x, where t is 1 or 2 indicating the query type and x is the station id.\n\n**Output:**\nPrint a single line containing the results of all type-1 queries in order, space-separated. If there are no type-1 queries, print an empty line.\n\n**Constraints:**\n- 1 <= c <= 10^5\n- 0 <= n <= min(10^5, c * (c - 1) / 2)\n- connections[i].length == 2\n- 1 <= u_i, v_i <= c\n- u_i != v_i\n- 1 <= queries.length <= 2 * 10^5\n- queries[i].length == 2\n- queries[i][0] is either 1 or 2.\n- 1 <= queries[i][1] <= c\n\n**Examples:**\nExample 1:\nInput:\n5\n4\n1 2\n2 3\n3 4\n4 5\n5\n1 3\n2 1\n1 1\n2 2\n1 2\nOutput:\n3 2 3\n\nExample 2:\nInput:\n3\n0\n3\n1 1\n2 1\n1 1\nOutput:\n1 -1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

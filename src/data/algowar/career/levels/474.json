@@ -1,0 +1,26 @@
+{
+  "levelNumber": 474,
+  "displayNumber": 420,
+  "title": "Count Palindromic Subsequences",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a string s consisting of lowercase English letters.</p><p>Return the total number of palindromic subsequences present in the string.</p><p>A subsequence is a sequence that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.</p><p><br></p><p>A palindromic subsequence is one that reads the same forward and backward.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> s = \"abcd\"</p><p><strong>Output:</strong> 4</p><p><strong>Explanation: </strong>Only the single characters are palindromic: \"a\", \"b\", \"c\", \"d\"</p>",
+    "<p><strong>Input:</strong> s = \"aab\"</p><p><strong>Output:</strong> 4</p><p><strong>Explanation:</strong> The palindromic subsequences are: \"a\", \"a\", \"b\", and \"aa\"</p>",
+    "<p><strong>Input: </strong>s = \"aaa\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 30</li><li>All characters in s are lowercase English letters.</li><li>The answer can be large, but you do not need to take modulo.</li><li>Subsequences need not be distinct — count all valid palindromic subsequences.</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 150,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 18,
+    "title": "String Trials",
+    "theme": "obsidian-strings",
+    "levelCount": 9,
+    "completionXp": 100
+  }
+}

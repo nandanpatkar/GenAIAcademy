@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "b741a12f-edaa-4827-b68f-9585b6812eba",
+    "title": "Shortest Bridge",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "depth-first-search",
+      "breadth-first-search",
+      "matrix"
+    ],
+    "statement": "You are given an n x n binary matrix where 1 represents land and 0 represents water.\n\nAn island is a 4-directionally connected group of 1's not connected to any other 1's. There are exactly two islands in the matrix.\n\nYou may change 0's to 1's to connect the two islands to form one island.\n\nReturn the smallest number of 0's you must flip to connect the two islands.\n\n**Input:**\nThe first line contains two integers n and n (rows and cols, both equal).\nThe next n lines each contain n space-separated values (0 or 1), representing the matrix.\n\n**Output:**\nA single integer on one line: the smallest number of 0's you must flip to connect the two islands.\n\n**Constraints:**\n- n == grid.length == grid[i].length\n- 2 <= n <= 100\n- grid[i][j] is either 0 or 1.\n- There are exactly two islands in grid.\n\n**Examples:**\nExample 1:\nInput:\n2 2\n0 1\n1 0\nOutput:\n1\n\nExample 2:\nInput:\n3 3\n0 1 0\n0 0 0\n0 0 1\nOutput:\n2\n\nExample 3:\nInput:\n5 5\n1 1 1 1 1\n1 0 0 0 1\n1 0 1 0 1\n1 0 0 0 1\n1 1 1 1 1\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

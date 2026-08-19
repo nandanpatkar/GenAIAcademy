@@ -1,0 +1,33 @@
+{
+  "levelNumber": 47,
+  "displayNumber": 47,
+  "title": "Sum of First N Numbers",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer <strong>N,</strong> return the sum of first N natural numbers. Try to solve this using recursion.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> N = 4</p><p><strong>Output :</strong> 10</p><p><strong>Explanation :</strong> first four natural numbers are 1, 2, 3, 4.</p><p>Sum is 1 + 2 + 3 + 4 => 10.</p>",
+    "<p><strong>Input :</strong> N = 2</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong> first two natural numbers are 1, 2.</p><p>Sum is 1 + 2 => 3.</p>",
+    "<p><strong>Input :</strong> N = 10</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

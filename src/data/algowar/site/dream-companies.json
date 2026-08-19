@@ -1,0 +1,109 @@
+{
+  "companies": [
+    {
+      "slug": "adobe",
+      "name": "Adobe",
+      "logoUrl": null,
+      "questionCount": 41,
+      "solvedCount": 0
+    },
+    {
+      "slug": "amazon",
+      "name": "Amazon",
+      "logoUrl": null,
+      "questionCount": 46,
+      "solvedCount": 0
+    },
+    {
+      "slug": "apple",
+      "name": "Apple",
+      "logoUrl": null,
+      "questionCount": 44,
+      "solvedCount": 0
+    },
+    {
+      "slug": "bloomberg",
+      "name": "Bloomberg",
+      "logoUrl": null,
+      "questionCount": 44,
+      "solvedCount": 0
+    },
+    {
+      "slug": "citadel",
+      "name": "Citadel",
+      "logoUrl": null,
+      "questionCount": 38,
+      "solvedCount": 0
+    },
+    {
+      "slug": "goldman-sachs",
+      "name": "Goldman Sachs",
+      "logoUrl": null,
+      "questionCount": 42,
+      "solvedCount": 0
+    },
+    {
+      "slug": "google",
+      "name": "Google",
+      "logoUrl": null,
+      "questionCount": 46,
+      "solvedCount": 0
+    },
+    {
+      "slug": "linkedin",
+      "name": "LinkedIn",
+      "logoUrl": null,
+      "questionCount": 36,
+      "solvedCount": 0
+    },
+    {
+      "slug": "meta",
+      "name": "Meta",
+      "logoUrl": null,
+      "questionCount": 45,
+      "solvedCount": 0
+    },
+    {
+      "slug": "microsoft",
+      "name": "Microsoft",
+      "logoUrl": null,
+      "questionCount": 46,
+      "solvedCount": 0
+    },
+    {
+      "slug": "nvidia",
+      "name": "Nvidia",
+      "logoUrl": null,
+      "questionCount": 45,
+      "solvedCount": 0
+    },
+    {
+      "slug": "oracle",
+      "name": "Oracle",
+      "logoUrl": null,
+      "questionCount": 41,
+      "solvedCount": 0
+    },
+    {
+      "slug": "salesforce",
+      "name": "Salesforce",
+      "logoUrl": null,
+      "questionCount": 37,
+      "solvedCount": 0
+    },
+    {
+      "slug": "tiktok",
+      "name": "TikTok",
+      "logoUrl": null,
+      "questionCount": 41,
+      "solvedCount": 0
+    },
+    {
+      "slug": "uber",
+      "name": "Uber",
+      "logoUrl": null,
+      "questionCount": 35,
+      "solvedCount": 0
+    }
+  ]
+}

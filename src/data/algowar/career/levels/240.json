@@ -1,0 +1,26 @@
+{
+  "levelNumber": 240,
+  "displayNumber": 186,
+  "title": "Number of Greater Elements to the Right",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer array <strong>arr[]</strong> of length<strong> n</strong> and an array of queries <strong>indices[]</strong> containing positions in <strong>arr</strong>.</p><p><br></p><p>For each query i, determine the number of elements in <strong>arr</strong> that are <strong>strictly greater</strong> <strong>than arr[indices[i]]</strong> and appear to its <strong>right (after position indices[i])</strong>.</p><p><br></p><p>Return an <strong>array </strong>of answers where the j<sup>th</sup> value corresponds to the result for indices[j].</p>",
+  "examples": [
+    "<p><strong>Input:</strong> arr = [3, 4, 2, 7, 5, 8, 10, 6], indices = [0, 5]</p><p><strong>Output:</strong> [6, 1]</p><p><strong>Explanation:</strong></p><ul><li><strong>For index 0 → arr[0] = 3</strong>, elements greater than 3 to its right are [4, 7, 5, 8, 10, 6] → <strong>count = 6</strong>.</li><li><strong>For index 5 → arr[5] = 8</strong>, greater elements to the right are [10] → <strong>count = 1</strong>.</li></ul>",
+    "<p><strong>Input:</strong> arr = [1, 2, 3, 4, 1], indices = [0, 3]</p><p><strong>Output: </strong>[3, 0]</p><p><strong>Explanation:</strong></p><ul><li><strong>For index 0 → arr[0] = 1</strong>, greater elements to the right are [2, 3, 4] → <strong>count = 3.</strong></li><li><strong>For index 3 → arr[3] = 4</strong>, no elements greater than 4 exist to the right → <strong>count = 0.</strong></li></ul>",
+    "<p><strong>Input:</strong> arr = [5, 5, 5, 5], indices = [0, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ n ≤ 10<sup>4</sup></li><li>1 ≤ arr[i] ≤ 10<sup>5</sup></li><li>1 ≤ queries ≤ 100</li><li>0 ≤ indices[i] ≤ n - 1</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "e772fd3c-a997-477c-9678-c83ddd906487",
+    "title": "Kth Smallest Product of Two Sorted Arrays",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "statement": "Given two sorted 0-indexed integer arrays nums1 and nums2 as well as an integer k, return the kth (1-based) smallest product of nums1[i] * nums2[j] where 0 <= i < nums1.length and 0 <= j < nums2.length.\n\n**Input:**\n- Line 1: an integer n1, the length of nums1.\n- Line 2: n1 space-separated integers representing nums1.\n- Line 3: an integer n2, the length of nums2.\n- Line 4: n2 space-separated integers representing nums2.\n- Line 5: an integer k.\n\n**Output:**\n- A single integer: the kth (1-based) smallest product of nums1[i] * nums2[j].\n\n**Constraints:**\n- 1 <= nums1.length, nums2.length <= 5 * 10^4\n- -10^5 <= nums1[i], nums2[j] <= 10^5\n- 1 <= k <= nums1.length * nums2.length\n- nums1 and nums2 are sorted in non-decreasing order.\n\n**Examples:**\nExample 1:\nInput:\n2\n2 5\n2\n3 4\n2\nOutput:\n8\n\nExample 2:\nInput:\n4\n-4 -2 0 3\n2\n2 4\n6\nOutput:\n0\n\nExample 3:\nInput:\n5\n-2 -1 0 1 2\n5\n-3 -1 2 4 5\n3\nOutput:\n-6",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

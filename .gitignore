@@ -156,3 +156,12 @@ agentcore-samples-main/
 # scripts/upload_av_archive.mjs and never committed or deployed. The small
 # index that DOES ship lives in public/data/av-index.json.
 /.av-build/
+
+# AlgoWars scraper Chrome profile (contains your login session)
+.algowars-session/
+arena.algowars.online/
+.algowars-mirror/
+
+# aimlcompanion.ai site mirror (HTTrack copy, ~50MB). Only the catalog extracted from
+# it by scripts/extract_aimlcompanion_catalog.mjs ships, in src/data/aimlcompanion/.
+aimlcompanion.ai/

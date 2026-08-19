@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "7af9f79b-1297-4778-bacb-08a3ca814783",
+    "title": "Valid Anagram",
+    "difficulty": "Easy",
+    "tags": [
+      "hash-table",
+      "string",
+      "sorting"
+    ],
+    "statement": "Valid Anagram\n\nGiven two strings s and t, determine whether t is an anagram of s. An anagram is a word or phrase formed by rearranging the letters of another word or phrase, using all the original letters exactly once. Print \"true\" if t is an anagram of s, and \"false\" otherwise.\n\n**Input:**\nThe input is read from standard input as two lines:\n- Line 1: the string s (raw, no quotes).\n- Line 2: the string t (raw, no quotes).\n\n**Output:**\nPrint a single line containing the lowercase word \"true\" or \"false\".\n\n**Constraints:**\n- 1 <= s.length, t.length <= 5 * 10^4\n- s and t consist of lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\nanagram\nnagaram\nOutput:\ntrue\n\nExample 2:\nInput:\nrat\ncar\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

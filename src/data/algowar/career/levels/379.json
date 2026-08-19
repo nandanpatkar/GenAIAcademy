@@ -1,0 +1,33 @@
+{
+  "levelNumber": 379,
+  "displayNumber": 325,
+  "title": "Shortest path in DAG",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a Directed Acyclic Graph of N vertices from 0 to N-1 and M edges and a 2D Integer array edges, where there is a directed edge from vertex edge[i][0] to vertex&nbsp;edge[i][1] with a distance of edge[i][2] for all i.</p><p><br></p><p>Find the <strong>shortest path</strong> from source vertex to all the vertices and if it is impossible to reach any vertex, then return -1 for that vertex. The source vertex is assumed to be 0.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-yfJ4sh6m\"></p><p><strong>Input:</strong> N = 4, M = 2 edge = [[0,1,2],[0,2,1]]</p><p><br></p><p><strong>Output:</strong> 0 2 1 -1</p><p><br></p><p><strong>Explanation:</strong></p><p>Shortest path from 0 to 1 is 0->1 with edge weight 2.&nbsp;</p><p>Shortest path from 0 to 2 is 0->2 with edge weight 1.</p><p>There is no way we can reach 3, so it's -1 for 3.</p>",
+    "<p><strong>Input:</strong> N = 6, M = 7 edge = [[0,1,2],[0,4,1],[4,5,4],[4,2,2],[1,2,3],[2,3,6],[5,3,1]]</p><p><br></p><p><strong>Output:</strong> 0 2 3 6 1 5</p><p><br></p><p><strong>Explanation:</strong></p><p>Shortest path from 0 to 1 is 0->1 with edge weight 2.&nbsp;</p><p>Shortest path from 0 to 2 is 0->4->2 with edge weight 1+2=3.</p><p>Shortest path from 0 to 3 is 0->4->5->3 with edge weight 1+4+1=6.</p><p>Shortest path from 0 to 4 is 0->4 with edge weight 1.</p><p>Shortest path from 0 to 5 is 0->4->5 with edge weight 1+4=5.</p>",
+    "<p>Input: N = 3, M = 3 edge = [[0, 1, 4], [0, 2, 2], [1, 2, 5]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ N,M ≤ 5*10<sup>4</sup></li><li>0 ≤ edge[i][0],edge[i][1] < N-1</li><li>1 ≤ edge[i][2] < 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

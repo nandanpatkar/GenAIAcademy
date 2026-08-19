@@ -109,7 +109,7 @@ export const AI_PROVIDERS = {
     fields: [
       { name: "endpoint", label: "Base URL", type: "text", placeholder: "https://open.bigmodel.cn/api/paas/v4", required: true },
       { name: "key", label: "API key", type: "password", placeholder: "Paste your GLM API key…", required: true },
-      { name: "model", label: "Model", type: "text", placeholder: "glm-4-plus", required: false },
+      { name: "model", label: "Model", type: "text", placeholder: "glm-4-plus", required: false, helpText: "When using the RoutesMe Base URL, use its gateway model name: GLM5.2." },
     ],
   },
 

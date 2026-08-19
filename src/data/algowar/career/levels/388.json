@@ -1,0 +1,33 @@
+{
+  "levelNumber": 388,
+  "displayNumber": 334,
+  "title": "Bellman Ford Algorithm",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a weighted and directed graph of V vertices and E edges. An edge is represented as [ai, bi, wi], meaning there is a directed edge from a<sub>i </sub>to b<sub>i</sub> having weight w<sub>i</sub>. Find the <strong>shortest distance</strong> of all the vertices from the source vertex S. If a vertex can't be reached from the S then mark the distance as 10<sup>9</sup>.</p><p><br></p><p>If the graph contains a negative cycle then return -1 in a list.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-B14DtTpA\"></p><p><br></p><p><strong>Input :</strong> V = 6, Edges = [[3, 2, 6], [5, 3, 1], [0, 1, 5], [1, 5, -3], [1, 2, -2], [3, 4, -2], [2, 4, 3]], S = 0</p><p><strong>Output: </strong>0 5 3 3 1 2</p><p><strong>Explanation:</strong></p><p>For node 1, shortest path is 0->1 (distance=5).</p><p>For node 2, shortest path is 0->1->2 (distance=3)</p><p>For node 3, shortest path is 0->1->5->3 (distance=3)</p><p>For node 4, shortest path is 0->1->5->3->4 (distance=1)</p><p>For node 5, shortest path is 0->1->5 (distance=2)</p>",
+    "<p><strong>Input :</strong> V = 2, Edges = [[0,1,9]],&nbsp;S = 0</p><p><strong>Output:</strong> 0 9</p><p><strong>Explanation:</strong> For node 1, the shortest path is 0->1 (distance=9)</p>",
+    "<p>Input: V=3, Edges = [[0,1,5],[1,0,3],[1,2,-1],[2,0,1]], S = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ V ≤ 500</li><li>1 ≤ E ≤ V*(V-1)</li><li>-1000 ≤ edges[i][3] ≤ 1000</li><li>0 ≤ S < V</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

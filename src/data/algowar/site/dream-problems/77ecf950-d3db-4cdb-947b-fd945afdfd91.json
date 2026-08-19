@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "77ecf950-d3db-4cdb-947b-fd945afdfd91",
+    "title": "Subsets",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "backtracking",
+      "bit-manipulation"
+    ],
+    "statement": "Given an integer array nums of unique elements, print all possible subsets (the power set).\n\nThe solution set must not contain duplicate subsets. The subsets must be printed in ascending bitmask order: for each mask from 0 to 2^n - 1 (where bit i corresponds to nums[i]), output the subset consisting of the elements whose bit is set, in the original array order.\n\n**Input:**\n- Line 1: integer n, the length of the array.\n- Line 2: n space-separated integers, the elements of nums.\n\n**Output:**\n- Line 1: integer k, the number of subsets (equal to 2^n).\n- Next k lines: each line contains the elements of one subset, space-separated in the original array order. The empty subset is printed as an empty line. Subsets are ordered by ascending bitmask from 0 to 2^n - 1.\n\n**Constraints:**\n- 1 <= n <= 10\n- -10 <= nums[i] <= 10\n- All numbers in nums are unique.\n\n**Examples:**\nExample 1:\nInput:\n3\n1 2 3\nOutput:\n8\n\n1\n2\n1 2\n3\n1 3\n2 3\n1 2 3\n\nExample 2:\nInput:\n1\n0\nOutput:\n2\n\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

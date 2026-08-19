@@ -1,0 +1,33 @@
+{
+  "levelNumber": 155,
+  "displayNumber": 101,
+  "title": "Insert node before head in Doubly Linked List",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a doubly linked list and an integer X, insert a node with value X before the head of the linked list and return the head of the modified list.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head = [1, 2, 3], X = 3</p><p><strong>Output</strong>: head = [3, 1, 2, 3]</p><p><strong>Explanation</strong>: 3 was added before the 1st node. Note that the head's value is changed.</p>",
+    "<p><strong>Input</strong>: head = [5], X = 7</p><p><strong>Output</strong>: head = [7, 5]</p>",
+    "<p><strong>Input</strong>: head = [2, 3], X = 10</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == Number of nodes in the Linked List</li><li>1 <= n <= 100</li><li>0 <= ListNode.val <= 100</li><li>0 <= X <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 158,
+  "displayNumber": 104,
+  "title": "Middle of a LinkedList [TortoiseHare Method]",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>head </strong>of a singly Linked List, return the <strong>middle </strong>node of the Linked List.</p><p><br></p><p>If the Linked List has an <strong>even </strong>number of nodes, return the <strong>second </strong>middle one.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head -> 3 -> 8 -> 7 -> 1 -> 3</p><p><strong>Output</strong>(value at returned node): 7</p><p><strong>Explanation</strong>: There are 5 nodes, so the middle node is the 3<sup>rd</sup> Node, with value 7.</p>",
+    "<p><strong>Input</strong>: head -> 2 -> 9 -> 1 -> 4 -> 0 -> 4</p><p><strong>Output</strong>(value at returned node): 4</p><p><strong>Explanation</strong>: There are 6 nodes, thus both the 3<sup>rd</sup> and 4<sup>th</sup> nodes are middle. So the 2<sup>nd</sup> middle node (4<sup>th</sup> Node) is returned with value 4.</p>",
+    "<p><strong>Input</strong>: head -> 3 -> 8 -> 1 -> 7 -> 0</p>"
+  ],
+  "constraintsHtml": "<p>1 <= number of Nodes in the Linked List <= 10<sup>5</sup></p><p>-10<sup>4</sup> <= ListNode.val <= 10<sup>4</sup></p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

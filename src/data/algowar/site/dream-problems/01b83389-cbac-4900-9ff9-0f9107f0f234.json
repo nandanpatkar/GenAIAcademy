@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "01b83389-cbac-4900-9ff9-0f9107f0f234",
+    "title": "Minimum Number of Increments on Subarrays to Form a Target Array",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "stack",
+      "greedy",
+      "monotonic-stack"
+    ],
+    "statement": "You are given an integer array target. You have an integer array initial of the same size as target with all elements initially zeros.\n\nIn one operation you can choose any subarray from initial and increment each value by one.\n\nReturn the minimum number of operations to form a target array from initial.\n\nThe test cases are generated so that the answer fits in a 32-bit integer.\n\n**Input:**\nThe first line contains an integer n, the length of the target array.\nThe second line contains n space-separated integers representing the target array.\n\n**Output:**\nPrint a single integer: the minimum number of operations to form the target array from the initial array.\n\n**Constraints:**\n- 1 <= target.length <= 10^5\n- 1 <= target[i] <= 10^5\n- The input is generated such that the answer fits inside a 32-bit integer.\n\n**Examples:**\nExample 1:\nInput:\n5\n1 2 3 2 1\nOutput:\n3\n\nExample 2:\nInput:\n4\n3 1 1 2\nOutput:\n4\n\nExample 3:\nInput:\n5\n3 1 5 4 2\nOutput:\n7",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

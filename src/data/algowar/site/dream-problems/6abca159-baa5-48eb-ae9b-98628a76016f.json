@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "6abca159-baa5-48eb-ae9b-98628a76016f",
+    "title": "Maximum Swap",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "greedy"
+    ],
+    "statement": "You are given an integer num. You can swap two digits at most once to get the maximum valued number. Return the maximum valued number you can get.\n\n**Input:**\nA single line containing the integer num.\n\n**Output:**\nA single line containing the maximum valued integer you can get.\n\n**Constraints:**\n0 <= num <= 10^8\n\n**Examples:**\nExample 1:\nInput:\n2736\nOutput:\n7236\n\nExample 2:\nInput:\n9973\nOutput:\n9973",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

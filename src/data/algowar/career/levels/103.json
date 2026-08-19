@@ -1,0 +1,33 @@
+{
+  "levelNumber": 103,
+  "displayNumber": 49,
+  "title": "Lower Bound",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a sorted array of nums and an integer x, write a program to find the <strong>lower bound</strong> of <strong>x</strong>.</p><p><br></p><p>The lower bound algorithm finds the first and smallest index in a sorted array where the value at that index is greater than or equal to a given key i.e. x.</p><p><br></p><p>If no such index is found, return the size of the array.</p>",
+  "examples": [
+    "<p><strong>Input </strong>: nums= [1,2,2,3], x = 2</p><p><strong>Output</strong>:1</p><p><strong>Explanation</strong>:</p><p>Index 1 is the smallest index such that arr[1] >= x.</p>",
+    "<p><strong>Input </strong>: nums= [3,5,8,15,19], x = 9</p><p><strong>Output</strong>: 3</p><p><strong>Explanation</strong>:</p><p>Index 3 is the smallest index such that arr[3] >= x.</p>",
+    "<p><strong>Input </strong>: nums= [3,5,8,15,19], x = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= nums.length <= 10<sup>5</sup></li><li>&nbsp;&nbsp;-10<sup>5</sup> < nums[i], x < 10<sup>5</sup></li><li>&nbsp;&nbsp;nums is sorted in ascending order.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

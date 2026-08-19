@@ -1,0 +1,33 @@
+{
+  "levelNumber": 62,
+  "displayNumber": 8,
+  "title": "Largest Element",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers <strong>nums</strong>, return the value of the largest element in the array</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [3, 3, 6, 1]</p><p><strong>Output</strong>: 6</p><p><strong>Explanation</strong>: The largest element in array is 6</p>",
+    "<p><strong>Input</strong>: nums = [3, 3, 0, 99, -40]</p><p><strong>Output</strong>: 99</p><p><strong>Explanation</strong>: The largest element in array is 99</p>",
+    "<p><strong>Input</strong>: nums = [-4, -3, 0, 1, -8]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>nums may contain duplicate elements.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

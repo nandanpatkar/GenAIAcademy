@@ -1,0 +1,210 @@
+{
+  "worldNumber": 2,
+  "slug": "sorting-forge",
+  "title": "Sorting Forge",
+  "description": "Learn to control order with classic comparison and recursive sorting techniques.",
+  "theme": "ember-forge",
+  "levelCount": 7,
+  "xpAvailable": 175,
+  "difficultySummary": {
+    "Easy": 6,
+    "Medium": 1
+  },
+  "contentSummary": {
+    "plus": 7
+  },
+  "completionReward": {
+    "badgeTitle": "Sorting Smith",
+    "xp": 100,
+    "coins": 300
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-2-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Sorting Forge",
+      "subtitle": "Learn Important Sorting Techniques",
+      "description": "Learn to control order with classic comparison and recursive sorting techniques.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-55",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Selection Sort",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 55,
+        "displayNumber": 1,
+        "title": "Selection Sort",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-56",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Bubble Sort",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 56,
+        "displayNumber": 2,
+        "title": "Bubble Sort",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-57",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Insertion Sorting",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 57,
+        "displayNumber": 3,
+        "title": "Insertion Sorting",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-58",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Merge Sorting",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 58,
+        "displayNumber": 4,
+        "title": "Merge Sorting",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-59",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Recursive Bubble Sort",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 59,
+        "displayNumber": 5,
+        "title": "Recursive Bubble Sort",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-60",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Recursive Insertion Sort",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 60,
+        "displayNumber": 6,
+        "title": "Recursive Insertion Sort",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-61",
+      "nodeType": "boss",
+      "order": 8,
+      "mapLane": "center",
+      "title": "Quick Sorting",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 130
+      },
+      "level": {
+        "levelNumber": 61,
+        "displayNumber": 7,
+        "title": "Quick Sorting",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 130,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

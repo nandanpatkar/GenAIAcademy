@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "8d4e7e85-33e3-4e67-a14b-b3506408487a",
+    "title": "Add Digits",
+    "difficulty": "Easy",
+    "tags": [
+      "math",
+      "simulation",
+      "number-theory"
+    ],
+    "statement": "Given an integer num, repeatedly add all its digits until the result has only one digit, and return it.\n\n**Input:**\nA single line containing the integer num.\n\n**Output:**\nA single line containing the resulting single-digit integer.\n\n**Constraints:**\n- 0 <= num <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n38\nOutput:\n2\n\nExample 2:\nInput:\n0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

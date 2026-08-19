@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "5e5673bf-bb48-4ee9-95b5-bd75cfaa9276",
+    "title": "Longest Palindromic Subsequence",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
+    "statement": "Longest Palindromic Subsequence\n\nGiven a string s, find the longest palindromic subsequence's length in s.\n\nA subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.\n\n**Input:**\nThe input consists of a single line containing the string s (raw, not quoted).\n\n**Output:**\nPrint a single integer: the length of the longest palindromic subsequence in s.\n\n**Constraints:**\n- 1 <= s.length <= 1000\n- s consists only of lowercase English letters.\n\n**Examples:**\n\nExample 1:\nInput:\nbbbab\nOutput:\n4\n\nExample 2:\nInput:\ncbbd\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

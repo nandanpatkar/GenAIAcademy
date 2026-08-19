@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "f8b3a96a-66ab-4464-b81b-98bc5d7f6062",
+    "title": "Split Array Largest Sum",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "binary-search",
+      "dynamic-programming",
+      "greedy",
+      "prefix-sum"
+    ],
+    "statement": "Given an integer array nums and an integer k, split nums into k non-empty subarrays such that the largest sum of any subarray is minimized.\n\nA subarray is a contiguous part of the array.\n\nReturn the minimized largest sum of the split.\n\n**Input:**\n- First line: integer n, the length of the array nums.\n- Second line: n space-separated integers, the elements of nums.\n- Third line: integer k, the number of subarrays to split into.\n\n**Output:**\n- A single integer: the minimized largest sum among the k subarrays.\n\n**Constraints:**\n- 1 <= nums.length <= 1000\n- 0 <= nums[i] <= 10^6\n- 1 <= k <= min(50, nums.length)\n\n**Examples:**\nExample 1:\nInput:\n5\n7 2 5 10 8\n2\nOutput:\n18\n\nExample 2:\nInput:\n5\n1 2 3 4 5\n2\nOutput:\n9",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

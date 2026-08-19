@@ -1,0 +1,212 @@
+{
+  "worldNumber": 17,
+  "slug": "trie-nexus",
+  "title": "Trie Nexus",
+  "description": "Build prefix systems for word search, dictionaries, and XOR missions.",
+  "theme": "prefix-nexus",
+  "levelCount": 7,
+  "xpAvailable": 220,
+  "difficultySummary": {
+    "Easy": 1,
+    "Hard": 4,
+    "Medium": 2
+  },
+  "contentSummary": {
+    "plus": 6,
+    "missing": 1
+  },
+  "completionReward": {
+    "badgeTitle": "Trie Operator",
+    "xp": 100,
+    "coins": 675
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-17-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Trie Nexus",
+      "subtitle": "Tries",
+      "description": "Build prefix systems for word search, dictionaries, and XOR missions.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-459",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Trie Implementation and Operations",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 459,
+        "displayNumber": 405,
+        "title": "Trie Implementation and Operations",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-460",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Trie Implementation and Advanced Operations",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 460,
+        "displayNumber": 406,
+        "title": "Trie Implementation and Advanced Operations",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-461",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Longest Word with All Prefixes",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 461,
+        "displayNumber": 407,
+        "title": "Longest Word with All Prefixes",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-462",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Number of distinct substrings in a string",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 462,
+        "displayNumber": 408,
+        "title": "Number of distinct substrings in a string",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-463",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Bit PreRequisites for TRIE Problems",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 463,
+        "displayNumber": 409,
+        "title": "Bit PreRequisites for TRIE Problems",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-464",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Maximum XOR of two numbers in an array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 464,
+        "displayNumber": 410,
+        "title": "Maximum XOR of two numbers in an array",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-465",
+      "nodeType": "boss",
+      "order": 8,
+      "mapLane": "center",
+      "title": "Maximum Xor with an element from an array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 465,
+        "displayNumber": 411,
+        "title": "Maximum Xor with an element from an array",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

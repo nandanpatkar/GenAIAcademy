@@ -1,0 +1,33 @@
+{
+  "levelNumber": 96,
+  "displayNumber": 42,
+  "title": "Merge Overlapping Subintervals",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of intervals where <strong>intervals[i] = [start</strong><sub><strong>i</strong></sub><strong>, end</strong><sub><strong>i</strong></sub><strong>]</strong>, merge all overlapping intervals and return an array of the<strong> non-overlapping intervals</strong> that cover all the intervals in the input.</p><p><br></p><p>You can return the intervals in any order.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>intervals = [[1,5],[3,6],[8,10],[15,18]]</p><p><strong>Output:</strong> [[1,6],[8,10],[15,18]]</p><p><strong>Explanation:</strong> Intervals [1,5] and [3,6] overlap, so they are merged into [1,6].</p>",
+    "<p><strong>Input: </strong>intervals = [[5,7],[1,3],[4,6],[8,10]]</p><p><strong>Output:</strong> [[1,3],[4,7],[8,10]]</p><p><strong>Explanation:</strong> Intervals [4,6] and [5,7] overlap and are merged into [4,7].</p>",
+    "<p><strong>Input: </strong>intervals = [[1,4],[4,5]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= intervals.length <= 10⁵</li><li>0 <= start<sub>i</sub> <= end<sub>i</sub> <= 10⁵</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 273,
+  "displayNumber": 219,
+  "title": "Replace Elements by Their Rank",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of N integers, replace each element by its rank in the array. The rank is defined as the position of the element in the sorted unique array <strong>(1-based)</strong>.</p><ul><li>Smaller numbers have smaller ranks.</li><li>Duplicate elements have the same rank.</li><li>The output array should contain the ranks corresponding to each element in the original order.</li></ul>",
+  "examples": [
+    "<p><strong>Input: </strong>arr = [20, 15, 26, 2, 98, 6]</p><p><strong>Output: </strong>[4, 3, 5, 1, 6, 2]</p><p><strong>Explanation:</strong></p><ul><li>Sorted unique array is [2, 6, 15, 20, 26, 98]</li><li>Ranks: 2 → 1, 6 → 2, 15 → 3, 20 → 4, 26 → 5, 98 → 6</li></ul>",
+    "<p><strong>Input: </strong>arr = [1, 5, 8, 15, 8, 25, 9]</p><p><strong>Output: </strong><span style=\"color: rgb(245, 245, 245);\">[1, 2, 3, 5, 3, 6, 4]</span></p><p><strong>Explanation:</strong></p><ul><li>Sorted unique array: [1, 5, 8, 9, 15, 25]</li><li>Ranks: 1 → 1, 5 → 2, 8 → 3, 9 → 4, 15 → 5, 25 → 6</li></ul>",
+    "<p><strong>Input:</strong> arr = [40, 10, 20, 40, 30]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 10<sup>5</sup></li><li>-10<sup>9</sup> <= arr[i] <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

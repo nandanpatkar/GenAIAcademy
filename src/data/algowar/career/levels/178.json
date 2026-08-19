@@ -1,0 +1,32 @@
+{
+  "levelNumber": 178,
+  "displayNumber": 124,
+  "title": "Flattening of LL",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a special linked list containing <strong>n head</strong> nodes where every node in the linked list contains <strong>two </strong>pointers:</p><ul><li>‘<strong>Next</strong>’ points to the next node in the list</li><li>‘<strong>Child</strong>’ pointer to a linked list where the current node is the head</li></ul><p>Each of these <strong>child </strong>linked lists is in <strong>sorted </strong>order and connected by a '<strong>child</strong>' pointer.</p><p><br></p><p><strong>Flatten </strong>this linked list such that all nodes appear in a single sorted layer connected by the '<strong>child</strong>' pointer and return the head of the modified list.</p>",
+  "examples": [
+    "<p><strong>Input</strong>:</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-hVtR9OSV\"></p><p><strong>Output</strong>: head -> 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10 -> 11 -> 12</p><p><strong>Explanation</strong>: All the linked lists are joined together and sorted in a single level through the child pointer.</p>",
+    "<p><strong>Input</strong>:</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-gsamAJrJ\"></p><p><strong>Output</strong>: head -> 2 -> 4 -> 5 -> 10 -> 12 -> 13 -> 16 -> 17 -> 20</p><p><strong>Explanation</strong>: All the linked lists are joined together and sorted in a single level through the child pointer.</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == Number of head nodes</li><li>1 <= n <= 100</li><li>1 <= Number of nodes in each child linked list <= 100</li><li>0 <= ListNode.val <= 1000</li><li>All child linked lists are sorted in non-decreasing order</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

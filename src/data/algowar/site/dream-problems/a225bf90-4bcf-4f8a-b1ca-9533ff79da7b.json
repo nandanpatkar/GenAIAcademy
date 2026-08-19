@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "a225bf90-4bcf-4f8a-b1ca-9533ff79da7b",
+    "title": "Product of Array Except Self",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "prefix-sum"
+    ],
+    "statement": "Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].\n\nThe product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in O(n) time and without using the division operation.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers, the elements of nums.\n\n**Output:**\nPrint n space-separated integers, where the i-th value is the product of all elements of nums except nums[i].\n\n**Constraints:**\n- 2 <= nums.length <= 10^5\n- -30 <= nums[i] <= 30\n- The input is generated such that answer[i] is guaranteed to fit in a 32-bit integer.\n\n**Examples:**\nExample 1:\nInput:\n4\n1 2 3 4\nOutput:\n24 12 8 6\n\nExample 2:\nInput:\n5\n-1 1 0 -3 3\nOutput:\n0 0 9 0 0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

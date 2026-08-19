@@ -1,0 +1,26 @@
+{
+  "levelNumber": 415,
+  "displayNumber": 361,
+  "title": "Ninja and his Friends",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Ninja has a grid of size R x C, where each cell contains some chocolates. He has two friends: Alice and Bob, and wants to collect as many chocolates as possible using their help.</p><p><br></p><ul><li>Alice starts at the top-left cell (0, 0)</li><li>Bob starts at the top-right cell (0, C - 1)</li><li>Both can only move to the next row, and from position (i, j), they can move to:</li><li class=\"ql-indent-1\">(i + 1, j)</li><li class=\"ql-indent-1\">(i + 1, j - 1)</li><li class=\"ql-indent-1\">(i + 1, j + 1)</li></ul><p><br></p><ul><li>Both must remain within the grid bounds.</li><li>Each collects all chocolates in their current cell.</li><li>If both land on the same cell, the chocolates are only counted once.</li></ul><p><br></p><p>Return the maximum number of chocolates Ninja can collect using his two friends.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>grid = [[2, 3, 1, 2],[3, 4, 2, 2],[5, 6, 3, 5]]</p><p><strong>Output: </strong>21</p><p><strong>Explanation:&nbsp;</strong></p><ul><li>Alice: (0,0) → (1,1) → (2,1) → chocolates = 2 + 4 + 6 = 12</li><li>Bob:&nbsp;&nbsp;(0,3) → (1,3) → (2,3) → chocolates = 2 + 2 + 5 = 9</li><li>Total = 12 + 9 = 21</li></ul><p><br></p>",
+    "<p><strong>Input:</strong> grid = [[1, 2],[3, 4]]</p><p><strong>Output:</strong> 10</p><p><strong>Explanation:</strong></p><ul><li>Alice: (0,0) → (1,0) → 1 + 3 = 4</li><li>Bob:&nbsp;&nbsp;(0,1) → (1,1) → 2 + 4 = 6</li><li>But both can’t pick at same time (if they land same cell), so:</li><li>Best is (0,0)+(1,0)+(0,1)+(1,1) - overlap = 1+3+2+4 = 10</li></ul>",
+    "<p><strong>Input:</strong> grid = [&nbsp;[10, 1, 10],&nbsp;[1, 1, 1],&nbsp;[1, 1, 1]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>2 <= R, C <= 50 — rows and columns of grid</li><li>0 <= grid[i][j] <= 100 — chocolates per cell</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

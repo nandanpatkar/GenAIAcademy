@@ -1,0 +1,263 @@
+{
+  "worldNumber": 18,
+  "slug": "string-trials",
+  "title": "String Trials",
+  "description": "Finish with advanced string matching, hashing, and palindrome missions.",
+  "theme": "obsidian-strings",
+  "levelCount": 9,
+  "xpAvailable": 265,
+  "difficultySummary": {
+    "Easy": 1,
+    "Hard": 7,
+    "Medium": 1
+  },
+  "contentSummary": {
+    "plus": 6,
+    "article": 1,
+    "missing": 2
+  },
+  "completionReward": {
+    "badgeTitle": "String Champion",
+    "xp": 100,
+    "coins": 700
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-18-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "String Trials",
+      "subtitle": "Strings",
+      "description": "Finish with advanced string matching, hashing, and palindrome missions.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-466",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Minimum number of bracket reversals to make an expression balanced",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 466,
+        "displayNumber": 412,
+        "title": "Minimum number of bracket reversals to make an expression balanced",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-467",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Count and say",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 467,
+        "displayNumber": 413,
+        "title": "Count and say",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-468",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Hashing In Strings | Theory",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 468,
+        "displayNumber": 414,
+        "title": "Hashing In Strings | Theory",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-469",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Rabin Karp Algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 469,
+        "displayNumber": 415,
+        "title": "Rabin Karp Algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-470",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Z function",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 470,
+        "displayNumber": 416,
+        "title": "Z function",
+        "difficulty": "Hard",
+        "contentStatus": "missing",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-471",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "KMP Algorithm or LPS array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 471,
+        "displayNumber": 417,
+        "title": "KMP Algorithm or LPS array",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-472",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Shortest Palindrome",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 472,
+        "displayNumber": 418,
+        "title": "Shortest Palindrome",
+        "difficulty": "Hard",
+        "contentStatus": "missing",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-473",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Longest happy prefix",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 473,
+        "displayNumber": 419,
+        "title": "Longest happy prefix",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-474",
+      "nodeType": "boss",
+      "order": 10,
+      "mapLane": "center",
+      "title": "Count Palindromic Subsequences",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 150
+      },
+      "level": {
+        "levelNumber": 474,
+        "displayNumber": 420,
+        "title": "Count Palindromic Subsequences",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 150,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

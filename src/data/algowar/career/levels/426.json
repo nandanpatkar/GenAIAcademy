@@ -1,0 +1,33 @@
+{
+  "levelNumber": 426,
+  "displayNumber": 372,
+  "title": "Rod Cutting Problem | (DP - 24)",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a rod of length N inches and an array price[] where price[i] denotes the value of a piece of rod of length i inches (1-based indexing). Determine the <strong>maximum value</strong> obtainable by cutting up the rod and selling the pieces. Make any number of cuts, or none at all, and sell the resulting pieces.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> price = [1, 6, 8, 9, 10, 19, 7, 20], N = 8</p><p><strong>Output:</strong> 25</p><p><strong>Explanation:</strong> Cut the rod into lengths of 2 and 6 for a total price of 6 + 19= 25.</p>",
+    "<p><strong>Input:</strong> price = [1, 5, 8, 9], N = 4</p><p><strong>Output:</strong> 10</p><p><strong>Explanation:</strong> Cut the rod into lengths of 2 and 2 for a total price of 5 + 5 = 10.</p>",
+    "<p><strong>Input:</strong> price = [5, 5, 8, 9, 10, 17, 17, 20], N = 8</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ N ≤ 1000</li><li>1 ≤ price[i] ≤ 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

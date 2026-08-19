@@ -1,0 +1,33 @@
+{
+  "levelNumber": 407,
+  "displayNumber": 353,
+  "title": "Frog jump with K distances",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>A frog wants to climb a staircase with n steps. Given an integer array heights, where heights[i] contains the height of the i<sup>th</sup> step, and an integer k.</p><p><br></p><p>To jump from the i<sup>th</sup> step to the j<sup>th</sup> step, the frog requires <strong>abs(heights[i] - heights[j])</strong> energy, where abs() denotes the absolute difference. The frog can jump from the i<sup>th</sup> step to any step in the range [i + 1, i + k], provided it exists. </p><p><br></p><p>Return the <strong>minimum</strong> amount of energy required by the frog to go from the 0<sup>th</sup> step to the (n-1)<sup>th </sup>step.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: heights = [10, 5, 20, 0, 15], k = 2</p><p><strong>Output</strong>: 15</p><p><strong>Explanation</strong>:</p><p>0th step -> 2nd step, cost = abs(10 - 20) = 10</p><p>2nd step -> 4th step, cost = abs(20 - 15) = 5</p><p>Total cost = 10 + 5 = 15.</p>",
+    "<p><strong>Input</strong>: heights = [15, 4, 1, 14, 15], k = 3</p><p><strong>Output</strong>: 2</p><p><strong>Explanation</strong>:</p><p>0th step -> 3rd step, cost = abs(15 - 14) = 1</p><p>3rd step -> 4th step, cost = abs(14 - 15) = 1</p><p>Total cost = 1 + 1 = 2.</p>",
+    "<p><strong>Input</strong>: heights = [15, 4, 1, 14, 15], k = 4</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>4</sup></li><li>1 <= k <= 10</li><li>0 <= heights[i] <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

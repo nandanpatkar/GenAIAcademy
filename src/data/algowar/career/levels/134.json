@@ -1,0 +1,26 @@
+{
+  "levelNumber": 134,
+  "displayNumber": 80,
+  "title": "Remove Outermost Parentheses",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "<p><strong>Input: </strong>s = \"((()))\"</p><p><strong>Output:</strong> \"(())\"</p><p><strong>Explanation:</strong></p><p>The input string is a single primitive: \"((()))\".</p><p>Removing the outermost layer yields: \"(())\".</p>",
+    "<p><strong>Input: </strong>s = \"()(()())(())\"</p><p><strong>Output: </strong>\"<span style=\"color: rgb(229, 231, 235);\">()()()</span>\"</p><p><strong>Explanation:</strong></p><p>Primitive decomposition: \"()\" + \"(()())\" + \"(())\"</p><p>After removing outermost parentheses: \"\" + \"()()\" + \"()\"</p><p>Final result: \"()()()\".</p>",
+    "<p><strong>Input: </strong>s = \"()(())((()))\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10⁵</li><li>s[i] is either '(' or ')'</li><li>s is a valid parentheses string</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "59c78775-f9ae-42cf-ac61-3edc35025306",
+    "title": "Add Two Integers",
+    "difficulty": "Easy",
+    "tags": [
+      "math"
+    ],
+    "statement": "Given two integers num1 and num2, return the sum of the two integers.\n\n**Input:**\nThe first line contains the integer num1.\nThe second line contains the integer num2.\n\n**Output:**\nPrint a single line containing the sum of the two integers.\n\n**Constraints:**\n- -100 <= num1, num2 <= 100\n\n**Examples:**\nExample 1:\nInput:\n12\n5\nOutput:\n17\n\nExample 2:\nInput:\n-10\n4\nOutput:\n-6",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "7856964e-6598-4ba5-bb59-880a2b505099",
+    "title": "Number of Subarrays with Bounded Maximum",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "two-pointers"
+    ],
+    "statement": "Given an integer array nums and two integers left and right, return the number of contiguous non-empty subarrays such that the value of the maximum array element in that subarray is in the range [left, right].\n\nThe test cases are generated so that the answer will fit in a 32-bit integer.\n\n**Input:**\nThe first line contains an integer n, the length of the array nums.\nThe second line contains n space-separated integers, the elements of nums.\nThe third line contains an integer left.\nThe fourth line contains an integer right.\n\n**Output:**\nPrint a single integer: the number of contiguous non-empty subarrays whose maximum element lies in the range [left, right].\n\n**Constraints:**\n- 1 <= nums.length <= 10^5\n- 0 <= nums[i] <= 10^9\n- 0 <= left <= right <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n4\n2 1 4 3\n2\n3\nOutput:\n3\n\nExample 2:\nInput:\n5\n2 9 2 5 6\n2\n8\nOutput:\n7",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

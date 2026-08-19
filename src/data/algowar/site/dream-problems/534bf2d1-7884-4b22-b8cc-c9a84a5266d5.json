@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "534bf2d1-7884-4b22-b8cc-c9a84a5266d5",
+    "title": "Lucky Numbers in a Matrix",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "matrix"
+    ],
+    "statement": "Given an m x n matrix of distinct numbers, find all lucky numbers in the matrix.\n\nA lucky number is an element of the matrix such that it is the minimum element in its row and the maximum in its column.\n\nReturn all lucky numbers sorted in ascending order, printed on a single line.\n\n**Input:**\nThe first line contains two integers m and n (rows and columns).\nThe next m lines each contain n space-separated integers, representing the matrix rows.\n\n**Output:**\nPrint all lucky numbers sorted in ascending order on a single line, space-separated. If there are no lucky numbers, print an empty line.\n\n**Constraints:**\n- 1 <= m, n <= 50\n- 1 <= matrix[i][j] <= 10^5\n- All elements in the matrix are distinct.\n\n**Examples:**\nExample 1:\nInput:\n3 3\n3 7 8\n9 11 13\n15 16 17\nOutput:\n15\n\nExample 2:\nInput:\n3 4\n1 10 4 2\n9 3 8 7\n15 16 17 12\nOutput:\n12\n\nExample 3:\nInput:\n2 2\n7 8\n1 2\nOutput:\n7",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

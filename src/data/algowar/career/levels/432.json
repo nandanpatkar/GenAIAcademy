@@ -1,0 +1,33 @@
+{
+  "levelNumber": 432,
+  "displayNumber": 378,
+  "title": "Minimum insertions or deletions to convert string A to B",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings str1 and str2, find the minimum number of <strong>insertions</strong> and <strong>deletions</strong> in string str1 required to <strong>transform</strong> str1 into str2.</p><p><br></p><p>Insertion and deletion of characters can take place at any position in the string.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> str1 = \"kitten\", str2 = \"sitting\"</p><p><strong>Output:</strong> 5</p><p><strong>Explanation:</strong>  To transform \"kitten\" to \"sitting\", delete \"k\" to get \"itten\", insert \"s\" at the beginning to get \"sitten\", delete \"e\" to get \"sittn\", then insert \"i\" to get \"sittin\", and insert \"g\" at the end to get \"sitting\".To transform \"kitten\" to \"sitting\", delete \"k\" and insert \"s\" to get \"sitten\", then insert \"i\" to get \"sittin\", and insert \"g\" at the end to get \"sitting\".</p>",
+    "<p><strong>Input:</strong> str1 = \"flaw\", str2 = \"lawn\"</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:</strong> To transform \"flaw\" to \"lawn\", delete \"f\" and insert \"n\" at the end. Hence minimum number of operations required is 2\".</p>",
+    "<p><strong>Input:</strong> str1 = \"abcdef\", str2 = \"ghijkl\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ str1.length, str2.length ≤ 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

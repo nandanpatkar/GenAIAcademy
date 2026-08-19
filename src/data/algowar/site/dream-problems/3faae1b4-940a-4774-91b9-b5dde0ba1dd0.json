@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "3faae1b4-940a-4774-91b9-b5dde0ba1dd0",
+    "title": "Minimize Maximum Component Cost",
+    "difficulty": "Medium",
+    "tags": [
+      "binary-search",
+      "union-find",
+      "graph",
+      "sorting"
+    ],
+    "statement": "You are given an undirected connected graph with n nodes labeled from 0 to n - 1 and a list of edges where each edge connects two nodes with a given weight, along with an integer k.\n\nYou are allowed to remove any number of edges from the graph such that the resulting graph has at most k connected components.\n\nThe cost of a component is defined as the maximum edge weight in that component. If a component has no edges, its cost is 0.\n\nReturn the minimum possible value of the maximum cost among all components after such removals.\n\n**Input:**\nThe first line contains an integer n, the number of nodes.\nThe second line contains an integer m, the number of edges.\nThe next m lines each contain three space-separated integers u v w, describing an undirected edge between node u and node v with weight w.\nThe last line contains an integer k.\n\n**Output:**\nPrint a single integer: the minimum possible value of the maximum component cost after removing edges so that the graph has at most k connected components.\n\n**Constraints:**\n1 <= n <= 5 * 10^4\n0 <= m <= 10^5\n0 <= u, v < n\n1 <= w <= 10^6\n1 <= k <= n\nThe input graph is connected.\n\n**Examples:**\nExample 1:\nInput:\n5\n4\n0 1 4\n1 2 3\n1 3 2\n3 4 6\n2\nOutput:\n4\n\nExample 2:\nInput:\n4\n3\n0 1 5\n1 2 5\n2 3 5\n1\nOutput:\n5",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,192 @@
+{
+  "_source": "https://arena.algowars.online",
+  "fetchedAt": "2026-08-18T14:58:35.425Z",
+  "pages": [
+    {
+      "route": "/",
+      "name": "home",
+      "title": "Arena — Choose Your Battle | AlgoWars",
+      "copyLines": 43
+    },
+    {
+      "route": "/arena",
+      "name": "arena",
+      "title": "Arena — Choose Your Battle | AlgoWars",
+      "copyLines": 43
+    },
+    {
+      "route": "/leaderboard",
+      "name": "leaderboard",
+      "title": "Leaderboard — Top Competitive Programmers | AlgoWars",
+      "copyLines": 15
+    },
+    {
+      "route": "/daily",
+      "name": "daily",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 24
+    },
+    {
+      "route": "/dream",
+      "name": "dream",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 3
+    },
+    {
+      "route": "/duo",
+      "name": "duo",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 69
+    },
+    {
+      "route": "/friends",
+      "name": "friends",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 14
+    },
+    {
+      "route": "/friend",
+      "name": "friend",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 7
+    },
+    {
+      "route": "/solo",
+      "name": "solo",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 3
+    },
+    {
+      "route": "/queue",
+      "name": "queue",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 15
+    },
+    {
+      "route": "/practice",
+      "name": "practice",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 0
+    },
+    {
+      "route": "/profile",
+      "name": "profile",
+      "title": "Profile — Your Stats &amp; Match History | AlgoWars",
+      "copyLines": 49
+    },
+    {
+      "route": "/placement",
+      "name": "placement",
+      "title": "Placement | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/pricing",
+      "name": "pricing",
+      "title": "Pricing — AlgoWars Free &amp; Pro Plans | AlgoWars",
+      "copyLines": 13
+    },
+    {
+      "route": "/upgrade",
+      "name": "upgrade",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 13
+    },
+    {
+      "route": "/refer",
+      "name": "refer",
+      "title": "Referral Network — Refer vetted engineers, earn your referral bonus | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/community",
+      "name": "community",
+      "title": "Community — Join the AlgoWars Community | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/blog",
+      "name": "blog",
+      "title": "AlgoWars Blog — Coding Guides for College Students | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/coding-duels",
+      "name": "coding-duels",
+      "title": "Real-Time Coding Duels — 1v1 Programming Battles | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/competitive-programming",
+      "name": "competitive-programming",
+      "title": "Competitive Programming Platform — Practice &amp; Compete | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/dsa-practice",
+      "name": "dsa-practice",
+      "title": "DSA Practice — Algorithm &amp; Data Structure Challenges | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/try",
+      "name": "try",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 14
+    },
+    {
+      "route": "/partners",
+      "name": "partners",
+      "title": "Creator &amp; Partner Program — Turn your audience into revenue | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/contact",
+      "name": "contact",
+      "title": "Contact Us | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/privacy",
+      "name": "privacy",
+      "title": "Privacy Policy | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/terms",
+      "name": "terms",
+      "title": "Terms &amp; Conditions | AlgoWars",
+      "copyLines": 0
+    },
+    {
+      "route": "/login",
+      "name": "login",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 10
+    },
+    {
+      "route": "/signup",
+      "name": "signup",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 18
+    },
+    {
+      "route": "/choose-username",
+      "name": "choose-username",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 6
+    },
+    {
+      "route": "/career",
+      "name": "career",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 25
+    },
+    {
+      "route": "/career/unlock",
+      "name": "career-unlock",
+      "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+      "copyLines": 0
+    }
+  ]
+}

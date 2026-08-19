@@ -1,0 +1,33 @@
+{
+  "levelNumber": 111,
+  "displayNumber": 57,
+  "title": "Find minimum in Rotated Sorted Array",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array nums of size N, sorted in ascending order with distinct values, and then <strong>rotated</strong> an unknown number of times (between 1 and N), find the <strong>minimum</strong> element in the array.</p>",
+  "examples": [
+    "<p>Input : nums = [4, 5, 6, 7, 0, 1, 2, 3]</p><p>Output: 0</p><p>Explanation: Here, the element 0 is the minimum element in the array.</p>",
+    "<p>Input : nums = [3, 4, 5, 1, 2]</p><p>Output: 1</p><p>Explanation:Here, the element 1 is the minimum element in the array.</p>",
+    "<p>Input : nums = [4, 5, 6, 7, -7, 1, 2, 3]</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == nums.length</li><li>&nbsp;1 <= n <= 10<sup>4</sup></li><li>&nbsp;-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>&nbsp;All the integers of nums are unique.</li><li>&nbsp;nums is sorted and rotated between 1 and n times.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

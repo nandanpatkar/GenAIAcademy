@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "91155042-1982-4439-b1af-a7fd9e7723ce",
+    "title": "Maximum Frequency Stack",
+    "difficulty": "Hard",
+    "tags": [
+      "hash-table",
+      "stack",
+      "design",
+      "ordered-set"
+    ],
+    "statement": "Design a stack-like data structure to push elements to the stack and pop the most frequent element from the stack.\n\nYou are given a sequence of operations to perform:\n- push(val): pushes an integer val onto the top of the stack.\n- pop(): removes and returns the most frequent element in the stack. If there is a tie for the most frequent element, the element closest to the stack's top is removed and returned.\n\nProcess all operations in order and output the result of each pop operation.\n\n**Input:**\nThe first line contains an integer n, the number of operations.\nThe next n lines each describe one operation:\n- A line starting with \"push\" followed by a space and an integer val represents a push operation.\n- A line containing \"pop\" represents a pop operation.\n\n**Output:**\nFor each pop operation, print the returned integer on its own line, in the order the pop operations occur.\n\n**Constraints:**\n- 0 <= val <= 10^9\n- At most 2 * 10^4 operations will be given.\n- It is guaranteed that there will be at least one element in the stack before any pop operation.\n\n**Examples:**\nExample 1:\nInput:\n11\npush 5\npush 7\npush 5\npush 7\npush 4\npush 5\npop\npop\npop\npop\nOutput:\n5\n7\n5\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

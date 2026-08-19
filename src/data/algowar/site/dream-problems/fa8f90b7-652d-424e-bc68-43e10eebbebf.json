@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "fa8f90b7-652d-424e-bc68-43e10eebbebf",
+    "title": "Binary Tree Right Side View",
+    "difficulty": "Medium",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "breadth-first-search",
+      "binary-tree"
+    ],
+    "statement": "Binary Tree Right Side View\n\nGiven the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.\n\nThe tree is given in level-order serialization where absent children are represented by the word \"null\" (LeetCode convention, trailing nulls trimmed).\n\n**Input:**\nThe first line contains an integer k, the number of entries in the level-order serialization of the tree.\nThe second line contains k space-separated values, which are either integers or the word \"null\", representing the level-order traversal of the binary tree (absent children are \"null\", trailing nulls trimmed).\n\n**Output:**\nPrint a single line containing the values of the nodes visible from the right side, ordered from top to bottom, space-separated. If the tree is empty, print an empty line.\n\n**Constraints:**\n- The number of nodes in the tree is in the range [0, 100].\n- -100 <= Node.val <= 100\n\n**Examples:**\nExample 1:\nInput:\n7\n1 2 3 null 5 null 4\nOutput:\n1 3 4\n\nExample 2:\nInput:\n8\n1 2 3 4 null null null 5\nOutput:\n1 3 4 5\n\nExample 3:\nInput:\n3\n1 null 3\nOutput:\n1 3\n\nExample 4:\nInput:\n0\n\nOutput:\n\n",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

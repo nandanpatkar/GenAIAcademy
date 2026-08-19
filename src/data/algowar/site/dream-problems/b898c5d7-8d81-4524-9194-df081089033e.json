@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "b898c5d7-8d81-4524-9194-df081089033e",
+    "title": "Evaluate Reverse Polish Notation",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "math",
+      "stack"
+    ],
+    "statement": "Evaluate Reverse Polish Notation\n\nYou are given an array of strings tokens that represents an arithmetic expression in Reverse Polish Notation.\n\nEvaluate the expression. Return an integer that represents the value of the expression.\n\nNote that:\n- The valid operators are '+', '-', '*', and '/'.\n- Each operand may be an integer or another expression.\n- The division between two integers always truncates toward zero.\n- There will not be any division by zero.\n- The input represents a valid arithmetic expression in reverse polish notation.\n- The answer and all the intermediate calculations can be represented in a 32-bit integer.\n\n**Input:**\nThe first line contains an integer n, the number of tokens.\nThe next n lines each contain one token. Each token is either an operator (\"+\", \"-\", \"*\", or \"/\") or an integer.\n\n**Output:**\nPrint a single integer, the value of the evaluated expression.\n\n**Constraints:**\n- 1 <= n <= 10^4\n- Each token is either an operator (\"+\", \"-\", \"*\", \"/\") or an integer in the range [-200, 200].\n- The input represents a valid arithmetic expression in reverse polish notation.\n- There will be no division by zero.\n- The answer and all intermediate calculations fit in a 32-bit signed integer.\n\n**Examples:**\n\nExample 1:\nInput:\n5\n2\n1\n+\n3\n*\nOutput:\n9\n\nExample 2:\nInput:\n5\n4\n13\n5\n/\n+\nOutput:\n6\n\nExample 3:\nInput:\n13\n10\n6\n9\n3\n+\n-11\n*\n/\n*\n17\n+\n5\n+\nOutput:\n22",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

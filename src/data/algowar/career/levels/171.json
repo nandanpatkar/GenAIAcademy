@@ -1,0 +1,33 @@
+{
+  "levelNumber": 171,
+  "displayNumber": 117,
+  "title": "Add one to a number represented by LL",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>head </strong>of a singly linked list representing a positive <strong>integer </strong>number. <strong>Each </strong>node of the linked list represents a <strong>digit </strong>of the number, with the 1st node containing the leftmost digit of the number and so on. The task is to <strong>add one</strong> to the value represented by the linked list and <strong>return </strong>the head of a linked list containing the final value.</p><p><br></p><p>The number will contain <strong>no </strong>leading zeroes except when the value represented is <strong>zero </strong>itself.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head -> 1 -> 2 -> 3</p><p><strong>Output</strong>: head -> 1 -> 2 -> 4</p><p><strong>Explanation</strong>: The number represented by the linked list = 123.</p><p>123 + 1 = 124.</p>",
+    "<p><strong>Input</strong>: head -> 9 -> 9</p><p><strong>Output</strong>: head -> 1 -> 0 -> 0</p><p><strong>Explanation</strong>: The number represented by the linked list = 99.</p><p>99 + 1 = 100.</p>",
+    "<p><strong>Input</strong>: head -> 9</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes in the Linked List <= 10<sup>5</sup></li><li>0 <= ListNode.val <= 9</li><li>No leading zeroes in the value represented.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

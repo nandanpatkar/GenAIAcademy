@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "6f194fd3-9142-4e94-a0a3-28197afb9558",
+    "title": "Task Scheduler",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "greedy",
+      "sorting",
+      "heap-priority-queue",
+      "counting"
+    ],
+    "statement": "You are given an array of CPU tasks, each labeled with a letter from A to Z, and a number n. Each CPU interval can be idle or allow the completion of one task. Tasks can be completed in any order, but there's a constraint: there has to be a gap of at least n intervals between two tasks with the same label.\n\nReturn the minimum number of CPU intervals required to complete all tasks.\n\n**Input:**\nThe first line contains an integer k, the number of tasks.\nThe next k lines each contain a single uppercase English letter representing a task label.\nThe next line contains an integer n, the minimum gap required between two tasks with the same label.\n\n**Output:**\nPrint a single integer: the minimum number of CPU intervals required to complete all tasks.\n\n**Constraints:**\n- 1 <= k <= 10^4\n- Each task label is an uppercase English letter.\n- 0 <= n <= 100\n\n**Examples:**\nExample 1:\nInput:\n6\nA\nA\nA\nB\nB\nB\n2\nOutput:\n8\n\nExample 2:\nInput:\n6\nA\nC\nA\nB\nD\nB\n1\nOutput:\n6\n\nExample 3:\nInput:\n6\nA\nA\nA\nB\nB\nB\n3\nOutput:\n10",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

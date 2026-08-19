@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "93630b46-2a5d-45c4-9756-adfb3d1e125a",
+    "title": "Combination Sum",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "backtracking"
+    ],
+    "statement": "Given an array of distinct integers `candidates` and a target integer `target`, find all unique combinations of `candidates` where the chosen numbers sum to `target`. The same number may be chosen from `candidates` an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.\n\nThe number of unique combinations that sum up to `target` is guaranteed to be less than 150 for the given input.\n\n**Input:**\n- Line 1: an integer n, the length of the candidates array.\n- Line 2: n space-separated distinct integers, the candidates array.\n- Line 3: an integer target.\n\n**Output:**\n- Line 1: an integer k, the number of unique combinations.\n- Lines 2..k+1: each line contains one combination as space-separated integers in non-decreasing order.\n- The k combinations must be listed in ascending lexicographic order.\n- If there are no combinations, print 0 and nothing else.\n\n**Constraints:**\n- 1 <= candidates.length <= 30\n- 2 <= candidates[i] <= 40\n- All elements of candidates are distinct.\n- 1 <= target <= 40\n- The number of unique combinations that sum up to target is less than 150.\n\n**Examples:**\nExample 1:\nInput:\n4\n2 3 6 7\n7\nOutput:\n2\n2 2 3\n7\n\nExample 2:\nInput:\n3\n2 3 5\n8\nOutput:\n3\n2 2 2 2\n2 3 3\n3 5\n\nExample 3:\nInput:\n1\n2\n1\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 132,
+  "displayNumber": 78,
+  "title": "Find Peak Element - II",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a 0-indexed n x m matrix mat where no two adjacent cells are equal, find any <strong>peak element</strong> mat[i][j] and return the <strong>array [i, j]</strong>.A peak element in a 2D grid is an element that is strictly greater than all of its adjacent neighbours to the left, right, top, and bottom.</p><p><br></p><p>Assume that the entire matrix is surrounded by an outer perimeter with the value -1 in each cell.</p><p><br></p><p>Note: As there can be many peak values, 1 is given as output if the returned index is a peak number, otherwise 0.</p>",
+  "examples": [
+    "<p>Input: mat=[[10, 20, 15], [21, 30, 14], [7, 16, 32]]</p><p>Output: [1, 1]</p><p>Explanation: The value at index [1, 1] is 30, which is a peak element because all its neighbours are smaller or equal to it. Similarly, {2, 2} can also be picked as a peak.</p>",
+    "<p>Input: mat=[[10, 7], [11, 17]]</p><p>Output : [1, 1]</p><p>Explanation:<span style=\"color: rgb(245, 245, 245);\">The value at index [1, 1] is 17, which is the only peak element because all its neighbours are smaller or equal to it.</span></p>",
+    "<p>Input: mat=[[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;n == mat.length</li><li>&nbsp;&nbsp;m == mat[i].length</li><li>&nbsp;&nbsp;1 <= m, n <= 500</li><li>&nbsp;&nbsp;1 <= mat[i][j] <= 10<sup>5</sup></li><li>&nbsp;&nbsp;No two adjacent cells are equal</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

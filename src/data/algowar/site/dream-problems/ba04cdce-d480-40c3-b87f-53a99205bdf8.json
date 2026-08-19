@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "ba04cdce-d480-40c3-b87f-53a99205bdf8",
+    "title": "Divide Intervals Into Minimum Number of Groups",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "two-pointers",
+      "greedy",
+      "sorting",
+      "heap-priority-queue",
+      "prefix-sum"
+    ],
+    "statement": "You are given a 2D integer array of intervals where each interval [left_i, right_i] represents the inclusive interval [left_i, right_i]. You have to divide the intervals into one or more groups such that each interval is in exactly one group, and no two intervals that are in the same group intersect each other. Return the minimum number of groups you need to make.\n\nTwo intervals intersect if there is at least one common number between them. For example, the intervals [1, 5] and [5, 8] intersect.\n\n**Input:**\nThe first line contains two integers n and c, where n is the number of intervals and c is always 2.\nThe next n lines each contain two space-separated integers left_i and right_i, representing an inclusive interval.\n\n**Output:**\nPrint a single integer: the minimum number of groups needed.\n\n**Constraints:**\n- 1 <= n <= 10^5\n- 1 <= left_i <= right_i <= 10^6\n\n**Examples:**\nExample 1:\nInput:\n5 2\n5 10\n6 8\n1 5\n2 3\n1 10\nOutput:\n3\n\nExample 2:\nInput:\n4 2\n1 3\n5 6\n8 10\n11 13\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

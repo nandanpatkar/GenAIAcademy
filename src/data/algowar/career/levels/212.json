@@ -1,0 +1,33 @@
+{
+  "levelNumber": 212,
+  "displayNumber": 158,
+  "title": "Divide two numbers without multiplication and division",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the two integers,<strong> dividend</strong> and<strong> divisor</strong>. Divide without using the mod, division, or multiplication operators and return the <strong>quotient</strong>.</p><p><br></p><p>The fractional portion of the integer division should be lost as it truncates toward zero.</p><p>As an illustration, 8.345 and -2.7335 would be reduced to 8 and -2 respectively.</p><p><br></p><p><strong>Note</strong>: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−2<sup>31</sup>, 2<sup>31</sup> − 1]. For this problem, if the quotient is strictly greater than 2<sup>31</sup> - 1, then return 2<sup>31</sup> - 1, and if the quotient is strictly less than -2<sup>31</sup>, then return -2<sup>31</sup>.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> Dividend = 10 , Divisor = 3</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong> 10/3 = 3.33 , truncated to 3.</p>",
+    "<p><strong>Input :</strong> Dividend = 7 , Divisor = -3</p><p><strong>Output :</strong> -2</p><p><strong>Explanation :</strong> 7/-3 = -2.33 , truncated to -2.</p>",
+    "<p><strong>Input :</strong> Dividend = 7 , Divisor = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>-2<sup>31</sup> <= dividend , divisor <= 2<sup>31</sup> - 1</li><li>divisor != 0</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

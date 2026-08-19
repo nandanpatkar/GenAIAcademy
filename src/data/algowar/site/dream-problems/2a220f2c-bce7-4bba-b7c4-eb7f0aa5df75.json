@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "2a220f2c-bce7-4bba-b7c4-eb7f0aa5df75",
+    "title": "Maximum Value at a Given Index in a Bounded Array",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "binary-search",
+      "greedy"
+    ],
+    "statement": "Maximum Value at a Given Index in a Bounded Array\n\nYou are given three positive integers: n, index, and maxSum. You want to construct an array nums (0-indexed) that satisfies the following conditions:\n\n- nums.length == n\n- nums[i] is a positive integer where 0 <= i < n.\n- abs(nums[i] - nums[i+1]) <= 1 where 0 <= i < n-1.\n- The sum of all the elements of nums does not exceed maxSum.\n- nums[index] is maximized.\n\nReturn nums[index] of the constructed array.\n\nNote that abs(x) equals x if x >= 0, and -x otherwise.\n\n**Input:**\nThe input consists of three lines:\n- Line 1: an integer n.\n- Line 2: an integer index.\n- Line 3: an integer maxSum.\n\n**Output:**\nPrint a single integer: the maximum possible value of nums[index] under the given constraints.\n\n**Constraints:**\n- 1 <= n <= maxSum <= 10^9\n- 0 <= index < n\n\n**Examples:**\nExample 1:\nInput:\n4\n2\n6\nOutput:\n2\n\nExample 2:\nInput:\n6\n1\n10\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 173,
+  "displayNumber": 119,
+  "title": "Delete all occurrences of a key in DLL",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a doubly linked list and an integer target. <strong>Delete</strong> all nodes in the linked list with the value <strong>target </strong>and return the head of the modified linked list.</p>",
+  "examples": [
+    "<p>Input: head -> 1 <-> 2 <-> 3 <-> 1 <-> 4, target = 1</p><p>Output: head -> 2 <-> 3 <-> 4</p><p>Explanation: All nodes with the value 1 were removed.</p>",
+    "<p>Input: head -> 2 <-> 3 <-> -1 <-> 4 <-> 2, target = 2</p><p>Output: head -> 3 <-> -1 <-> 4</p><p>Explanation: All nodes with the value 2 were removed.</p><p>Note that the value of head is changed.</p>",
+    "<p>Input: head -> 7 <-> 7 <-> 7 <-> 7, target = 7</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes in the linked list <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= ListNode.val <= 10<sup>4</sup></li><li>-10<sup>4</sup> <= target <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

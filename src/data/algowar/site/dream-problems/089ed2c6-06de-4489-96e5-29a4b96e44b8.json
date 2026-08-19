@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "089ed2c6-06de-4489-96e5-29a4b96e44b8",
+    "title": "Last Stone Weight",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "heap-priority-queue"
+    ],
+    "statement": "You are given an array of integers stones where stones[i] is the weight of the ith stone.\n\nWe are playing a game with the stones. On each turn, we choose the heaviest two stones and smash them together. Suppose the heaviest two stones have weights x and y with x <= y. The result of this smash is:\n\n- If x == y, both stones are destroyed, and\n- If x != y, the stone of weight x is destroyed, and the stone of weight y has new weight y - x.\n\nAt the end of the game, there is at most one stone left.\n\nReturn the weight of the last remaining stone. If there are no stones left, return 0.\n\n**Input:**\nThe first line contains an integer n, the number of stones.\nThe second line contains n space-separated integers representing the weights of the stones.\n\n**Output:**\nPrint a single integer: the weight of the last remaining stone, or 0 if no stones are left.\n\n**Constraints:**\n- 1 <= n <= 30\n- 1 <= stones[i] <= 1000\n\n**Examples:**\nExample 1:\nInput:\n6\n2 7 4 1 8 1\nOutput:\n1\n\nExample 2:\nInput:\n1\n1\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

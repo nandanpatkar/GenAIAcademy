@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "28bb4faa-1645-422f-8ec0-b886b33f85cc",
+    "title": "Rectangle Area",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "geometry"
+    ],
+    "statement": "Given the coordinates of two rectilinear rectangles in a 2D plane, compute the total area covered by the two rectangles.\n\nThe first rectangle is defined by its bottom-left corner (ax1, ay1) and its top-right corner (ax2, ay2).\n\nThe second rectangle is defined by its bottom-left corner (bx1, by1) and its top-right corner (bx2, by2).\n\n**Input:**\nThe input consists of 8 lines, each containing one integer, in the following order:\n- Line 1: ax1\n- Line 2: ay1\n- Line 3: ax2\n- Line 4: ay2\n- Line 5: bx1\n- Line 6: by1\n- Line 7: bx2\n- Line 8: by2\n\n**Output:**\nPrint a single integer: the total area covered by the two rectangles.\n\n**Constraints:**\n- -10^4 <= ax1 <= ax2 <= 10^4\n- -10^4 <= ay1 <= ay2 <= 10^4\n- -10^4 <= bx1 <= bx2 <= 10^4\n- -10^4 <= by1 <= by2 <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n-3\n0\n3\n4\n0\n-1\n9\n2\nOutput:\n45\n\nExample 2:\nInput:\n-2\n-2\n2\n2\n-2\n-2\n2\n2\nOutput:\n16",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

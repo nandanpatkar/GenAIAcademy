@@ -1,0 +1,33 @@
+{
+  "levelNumber": 135,
+  "displayNumber": 81,
+  "title": "Reverse words in a given string / Palindrome Check",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an input string, containing upper-case and lower-case letters, digits, and spaces( ' ' ). A word is defined as a sequence of non-space characters. The words in s are separated by at least one space.</p><p><br></p><p>Return a string with the words in <strong>reverse order</strong>, concatenated by a single space.</p>",
+  "examples": [
+    "<p>Input: s = \"welcome to the jungle\"</p><p><br></p><p>Output: \"jungle the to welcome\"</p><p><br></p><p>Explanation: The words in the input string are \"welcome\", \"to\", \"the\", and \"jungle\". Reversing the order of these words gives \"jungle\", \"the\", \"to\", and \"welcome\". The output string should have exactly one space between each word.</p>",
+    "<p>Input: s = \" amazing coding skills \"</p><p><br></p><p>Output: \"skills coding amazing\"</p><p><br></p><p>Explanation: The input string has leading and trailing spaces, as well as multiple spaces between the words \"amazing\", \"coding\", and \"skills\". After trimming the leading and trailing spaces and reducing the multiple spaces between words to a single space, the words are \"amazing\", \"coding\", and \"skills\". Reversing the order of these words gives \"skills\", \"coding\", and \"amazing\". The output string should not have any leading or trailing spaces and should have exactly one space between each word.</p>",
+    "<p>Input: s = \"openAI is&nbsp;innovative\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>4</sup></li><li>s contains English letters (upper-case and lower-case), digits, and spaces ' '.</li><li>There is at least one word in s.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

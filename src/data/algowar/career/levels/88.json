@@ -1,0 +1,26 @@
+{
+  "levelNumber": 88,
+  "displayNumber": 34,
+  "title": "Print the matrix in spiral manner",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an M * N matrix, print the elements in a <strong>clockwise </strong>spiral<strong> </strong>manner. </p><p><br></p><p>Return an array with the elements in the order of their appearance<strong> </strong>when printed in a spiral manner.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: matrix = [[1, 2, 3], [4 ,5 ,6], [7, 8, 9]]</p><p><strong>Output</strong>: [1, 2, 3, 6, 9, 8, 7, 4, 5]</p><p><strong>Explanation</strong>: </p><p>The elements in the spiral order are 1, 2, 3 -> 6, 9 -> 8, 7 -> 4, 5</p>",
+    "<p><strong>Input</strong>: matrix = [[1, 2, 3, 4], [5, 6, 7, 8]]</p><p><strong>Output</strong>: [1, 2, 3, 4, 8, 7, 6, 5]</p><p><strong>Explanation</strong>: </p><p>The elements in the spiral order are 1, 2, 3, 4 -> 8, 7, 6, 5</p>",
+    "<p><strong>Input</strong>: matrix = [[1, 2], [3, 4], [5, 6], [7, 8]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>m == matrix.length</li><li>n == matrix[i].length</li><li>1 <= m, n <= 100</li><li>-100 <= matrix[i][j] <= 100</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

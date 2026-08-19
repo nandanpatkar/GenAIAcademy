@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "0a9d6817-bab4-451a-91c7-fce741615265",
+    "title": "Check Whether Two Strings are Almost Equivalent",
+    "difficulty": "Easy",
+    "tags": [
+      "hash-table",
+      "string",
+      "counting"
+    ],
+    "statement": "Two strings word1 and word2 are considered almost equivalent if the differences between the frequencies of each letter from 'a' to 'z' between word1 and word2 is at most 3.\n\nGiven two strings word1 and word2, each of length n, print true if word1 and word2 are almost equivalent, or false otherwise.\n\nThe frequency of a letter x is the number of times it occurs in the string.\n\n**Input:**\nLine 1: word1 (a string of lowercase English letters).\nLine 2: word2 (a string of lowercase English letters).\n\n**Output:**\nA single line containing either \"true\" or \"false\".\n\n**Constraints:**\n- n == word1.length == word2.length\n- 1 <= n <= 100\n- word1 and word2 consist only of lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\naaaa\nbccb\nOutput:\nfalse\n\nExample 2:\nInput:\nabcdeef\nabaaacc\nOutput:\ntrue\n\nExample 3:\nInput:\ncccddabba\nbabababab\nOutput:\ntrue",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

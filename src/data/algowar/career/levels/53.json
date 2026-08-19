@@ -1,0 +1,31 @@
+{
+  "levelNumber": 53,
+  "displayNumber": 53,
+  "title": "Counting Frequencies of Array Elements",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array <strong>nums </strong>of size <strong>n</strong> which may contain duplicate elements.</p><p><br></p><p>Rreturn a list of pairs where each pair contains a unique element from the array and its frequency in the array.</p><p><br></p><p>You may return the result in any order, but each element must appear exactly once in the output.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>nums = [1, 2, 2, 1, 3]</p><p><strong>Output: </strong>[[1, 2], [2, 2], [3, 1]]</p><p><strong>Explanation:</strong></p><p>- 1 appears 2 times</p><p>- 2 appears 2 times</p><p>- 3 appears 1 time</p><p>Order of output can vary.</p>",
+    "<p><strong>Input:</strong> nums = [5, 5, 5, 5]</p><p><strong>Output:</strong> [[5, 4]]</p><p><strong>Explanation:</strong></p><p>- 5 appears 4 times.</p>",
+    "<p><strong>Input:</strong> nums = [7]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>9</sup> <= nums[i] <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

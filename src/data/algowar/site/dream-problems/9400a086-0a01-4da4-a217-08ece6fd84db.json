@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "9400a086-0a01-4da4-a217-08ece6fd84db",
+    "title": "Longest String Chain",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "two-pointers",
+      "string",
+      "dynamic-programming",
+      "sorting"
+    ],
+    "statement": "You are given an array of words where each word consists of lowercase English letters.\n\nwordA is a predecessor of wordB if and only if we can insert exactly one letter anywhere in wordA without changing the order of the other characters to make it equal to wordB.\n\nFor example, \"abc\" is a predecessor of \"abac\", while \"cba\" is not a predecessor of \"bcad\".\n\nA word chain is a sequence of words [word1, word2, ..., wordk] with k >= 1, where word1 is a predecessor of word2, word2 is a predecessor of word3, and so on. A single word is trivially a word chain with k == 1.\n\nReturn the length of the longest possible word chain with words chosen from the given list of words.\n\n**Input:**\nThe first line contains an integer n, the number of words.\nThe next n lines each contain one word consisting of lowercase English letters.\n\n**Output:**\nA single integer: the length of the longest possible word chain.\n\n**Constraints:**\n1 <= n <= 1000\n1 <= words[i].length <= 16\nwords[i] only consists of lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\n6\na\nb\nba\nbca\nbda\nbdca\nOutput:\n4\n\nExample 2:\nInput:\n5\nxbc\npcxbcf\nxb\ncxbc\npcxbc\nOutput:\n5\n\nExample 3:\nInput:\n2\nabcd\ndbqca\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

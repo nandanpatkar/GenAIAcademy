@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "cee6bc87-b448-4c58-9db8-adc4776c4592",
+    "title": "Max Sum of a Pair With Equal Sum of Digits",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "sorting",
+      "heap-priority-queue"
+    ],
+    "statement": "You are given a 0-indexed array nums consisting of positive integers. You can choose two indices i and j, such that i != j, and the sum of digits of the number nums[i] is equal to that of nums[j].\n\nReturn the maximum value of nums[i] + nums[j] that you can obtain over all possible indices i and j that satisfy the conditions. If no such pair of indices exists, return -1.\n\n**Input:**\nThe first line contains an integer n, the length of the array nums.\nThe second line contains n space-separated positive integers, the elements of nums.\n\n**Output:**\nPrint a single integer: the maximum value of nums[i] + nums[j] over all valid pairs (i, j) with equal digit sums, or -1 if no such pair exists.\n\n**Constraints:**\n- 1 <= n <= 10^5\n- 1 <= nums[i] <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n5\n18 43 36 13 7\nOutput:\n54\n\nExample 2:\nInput:\n4\n10 12 19 14\nOutput:\n-1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

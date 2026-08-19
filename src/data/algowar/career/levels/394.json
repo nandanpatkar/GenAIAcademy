@@ -1,0 +1,33 @@
+{
+  "levelNumber": 394,
+  "displayNumber": 340,
+  "title": "Find the MST weight",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a <strong>weighted</strong>, <strong>undirected</strong>, and <strong>connected </strong>graph with <strong>V</strong> vertices numbered from <strong>0 to V-1</strong>.</p><p><br></p><p>The graph is provided in the form of an <strong>adjacency list,</strong> where each entry <strong>adj[u]</strong> contains a list of pairs <strong>[v, w],</strong> representing an edge between vertex <strong>u</strong> and vertex <strong>v</strong> with weight <strong>w</strong>.</p><p><br></p><p>Find the <strong>sum</strong> of the weights of the edges in the <strong>Minimum Spanning Tree (MST)</strong> of the graph.&nbsp;</p><p><br></p><p>A minimum spanning tree (MST) or minimum weight spanning tree is a subset of the edges of a connected, edge-weighted undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight.</p><p><br></p><p><strong>Note </strong>: The input to the function in code editor is giving in form of adjacency list.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-VMx0t_X_\"></p><p><br></p><p><strong>Input:</strong> V = 4, adj = [[[1, 1], [3, 4]],&nbsp;[[0, 1], [2, 2]],&nbsp;[[1, 2], [3, 3]],&nbsp;[[0, 4], [2, 3]]]</p><p><strong>Output:</strong> 6</p><p><strong>Explanation:&nbsp;</strong></p><p>Edges included in the MST:</p><ul><li>From node 0 → [1, 1] (weight 1)</li><li>From node 1 → [2, 2] (weight 2)</li><li>From node 2 → [3, 3] (weight 3)</li></ul><p>The total MST weight is 1 + 2 + 3 = 6.</p><p>These edges connect all vertices (0, 1, 2, 3) with minimum cost.</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-TRzOGiy0\"></p><p><br></p><p><strong>Input:</strong> V = 3, adj = [[[1, 5], [2, 15]],&nbsp;[[0, 5], [2, 10]],&nbsp;[[0, 15], [1, 10]]]</p><p><strong>Output:</strong> 15</p><p><strong>Explanation:&nbsp;</strong></p><p>Edges included in the MST:</p><ul><li>From node 0 → [1, 5] (weight 5)</li><li>From node 1 → [2, 10] (weight 10)</li></ul><p><span style=\"color: rgb(245, 245, 245);\">The total weight of the MST is 5+10 = 15</span></p>",
+    "<p><strong>Input:</strong> V = 4, adj = [[[1, 1], [3, 4]],&nbsp;[[0, 1], [2, 2]],&nbsp;[[1, 2], [3, 3]],&nbsp;[[0, 4], [2, 3]]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>2 ≤ V ≤ 10<sup>3</sup></li><li>V-1 ≤ E ≤ 10<sup>4</sup></li><li>1 ≤ w ≤ 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

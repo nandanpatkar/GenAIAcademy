@@ -1,0 +1,33 @@
+{
+  "levelNumber": 137,
+  "displayNumber": 83,
+  "title": "Longest Common Prefix",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Write a function to find the <strong>longest</strong> <strong>common</strong> <strong>prefix</strong> string amongst an array of strings.</p><p><br></p><p>If there is no common prefix, return an empty string \"\".</p>",
+  "examples": [
+    "<p><strong>Input :</strong> str = [\"flowers\" , \"flow\" , \"fly\", \"flight\" ]</p><p><strong>Output :</strong> \"fl\"</p><p><strong>Explanation :</strong> </p><p>All strings given in array contains common prefix \"fl\".</p>",
+    "<p><strong>Input :</strong> str = [\"dog\" , \"cat\" , \"animal\", \"monkey\" ]</p><p><strong>Output :</strong> \"\"</p><p><strong>Explanation :</strong> </p><p>There is no common prefix among the given strings in array.</p>",
+    "<p><strong>Input :</strong> str = [\"lady\" , \"lazy\"]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= str.length <= 200</li><li>1 <= str[i].length <= 200</li><li>str[i] contains only lowercase English letters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

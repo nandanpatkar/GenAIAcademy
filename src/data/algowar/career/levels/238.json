@@ -1,0 +1,33 @@
+{
+  "levelNumber": 238,
+  "displayNumber": 184,
+  "title": "Next Greater Element - 2",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a <strong>circular</strong> integer array arr, return the <strong>next greater element</strong> for every element in arr.</p><p><br></p><p>The next greater element for an element x is the first element greater than x that we come across while traversing the array in a <strong>clockwise</strong> manner.</p><p><br></p><p>If it doesn't exist, return -1 for that element.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: arr = [3, 10, 4, 2, 1, 2, 6, 1, 7, 2, 9]</p><p><strong>Output</strong>: [10, -1, 6, 6, 2, 6, 7, 7, 9, 9, 10]</p><p><strong>Explanation</strong>: </p><p>For the first element in arr i.e, 3, the greater element which comes next to it while traversing and is closest to it is 10. Hence,10 is present on index 0 in the resultant array. Now for the second element i.e, 10, there is no greater number and hence -1 is it’s next greater element (NGE). Similarly, we got the NGEs for all other elements present in arr.&nbsp;&nbsp;</p>",
+    "<p><strong>Input</strong>:&nbsp;arr = [5, 7, 1, 7, 6, 0]</p><p><strong>Output</strong>: [7, -1, 7, -1, 7, 5]</p><p><strong>Explanation</strong>: </p><p>For the first element in arr i.e, 5, the greater element which comes next to it while traversing and is closest to it is 7. Now for the second element i.e, 7, there is no greater number and hence -1 is it’s next greater element (NGE). Similarly, we got the NGEs for all other elements present in arr.</p>",
+    "<p><strong>Input</strong>: arr = [1, 2, 3, 4, 5]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 ≤ n≤ 10<sup>5</sup></li><li>&nbsp;&nbsp;0 ≤ arr[i] ≤ 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

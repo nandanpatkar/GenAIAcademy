@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "ae96c1b1-aa26-468b-b355-f82e3aebaeb6",
+    "title": "Corporate Flight Bookings",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "prefix-sum"
+    ],
+    "statement": "There are n flights that are labeled from 1 to n.\n\nYou are given a list of flight bookings, where each booking is a triple [first, last, seats] representing a booking for flights first through last (inclusive) with seats seats reserved for each flight in the range.\n\nReturn an array answer of length n, where answer[i] is the total number of seats reserved for flight i (1-indexed).\n\n**Input:**\nThe first line contains two integers m and 3, where m is the number of bookings.\nThe next m lines each contain three space-separated integers: first, last, seats.\nThe next line contains a single integer n, the number of flights.\n\n**Output:**\nPrint n space-separated integers on a single line, where the i-th value is the total seats reserved for flight i (in order from flight 1 to flight n).\n\n**Constraints:**\n1 <= n <= 2 * 10^4\n1 <= bookings.length <= 2 * 10^4\n1 <= first <= last <= n\n1 <= seats <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n3 3\n1 2 10\n2 3 20\n2 5 25\n5\nOutput:\n10 55 45 25 25\n\nExample 2:\nInput:\n2 3\n1 2 10\n2 2 15\n2\nOutput:\n10 25",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

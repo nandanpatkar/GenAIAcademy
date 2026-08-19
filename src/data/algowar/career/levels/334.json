@@ -1,0 +1,26 @@
+{
+  "levelNumber": 334,
+  "displayNumber": 280,
+  "title": "Flatten Binary Tree to Linked List",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given the root of a binary tree.</p><p><br></p><p>Re-arrange the tree in place so that it becomes a singly linked list in-order of a preorder traversal:</p><p><br></p><ul><li>Each node’s right pointer must point to the next node in preorder.</li></ul><p><br></p><ul><li>Each node’s left pointer must be set to null.</li></ul><p><br></p><ul><li>The relative order of nodes must be exactly the preorder sequence of the original tree.</li></ul><p><br></p><p>The transformation must be done on the original tree structure; do not create any new nodes.</p>",
+  "examples": [
+    "<p><strong>Input:&nbsp;</strong>root = [1,2,5,3,4,null,6]</p><p><strong>Output: </strong>[1,null,2,null,3,null,4,null,5,null,6]</p><p><strong>Explanation:</strong></p><p>Preorder of original tree: 1-2-3-4-5-6 → the same order appears in the list.</p>",
+    "<p><strong>Input:</strong>&nbsp;root = []</p><p><strong>Output: </strong>[]</p><p><strong>Explanation:</strong> An empty tree stays empty.</p>",
+    "<p><strong>Input:&nbsp;</strong>root = [1,2,3,4,null,null,5]</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 ≤ number of nodes ≤ 2000</li><li>-100 ≤ Node.val ≤ 100</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 150,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

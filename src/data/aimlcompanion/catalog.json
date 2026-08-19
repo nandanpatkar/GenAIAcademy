@@ -1,0 +1,2748 @@
+{
+  "source": "aimlcompanion.ai site mirror",
+  "base": "https://aimlcompanion.ai",
+  "generatedAt": "2026-08-18",
+  "totals": {
+    "tracks": 24,
+    "modules": 373,
+    "posts": 15
+  },
+  "pages": [
+    {
+      "id": "home",
+      "label": "Home",
+      "url": "https://aimlcompanion.ai/"
+    },
+    {
+      "id": "curriculum",
+      "label": "Study Paths",
+      "url": "https://aimlcompanion.ai/curriculum"
+    },
+    {
+      "id": "roadmap",
+      "label": "Roadmap",
+      "url": "https://aimlcompanion.ai/roadmap"
+    },
+    {
+      "id": "blog",
+      "label": "Blog",
+      "url": "https://aimlcompanion.ai/blog"
+    },
+    {
+      "id": "about",
+      "label": "About",
+      "url": "https://aimlcompanion.ai/about"
+    },
+    {
+      "id": "community",
+      "label": "Community",
+      "url": "https://aimlcompanion.ai/community"
+    },
+    {
+      "id": "help",
+      "label": "Help",
+      "url": "https://aimlcompanion.ai/help"
+    },
+    {
+      "id": "upgrade",
+      "label": "Upgrade",
+      "url": "https://aimlcompanion.ai/upgrade"
+    },
+    {
+      "id": "founding-members",
+      "label": "Founding Members",
+      "url": "https://aimlcompanion.ai/founding-members"
+    }
+  ],
+  "tracks": [
+    {
+      "id": "foundations",
+      "label": "Foundations",
+      "color": "#a78bfa",
+      "url": "https://aimlcompanion.ai/curriculum/foundations",
+      "summary": "Start here if the math notation is unfamiliar.",
+      "image": "track-foundations.webp",
+      "modules": [
+        {
+          "id": "basicArith",
+          "label": "Arithmetic That Breaks Models",
+          "tagline": "The silent bugs: order, signs, division, remainders.",
+          "url": "https://aimlcompanion.ai/module/foundations/basicArith"
+        },
+        {
+          "id": "notation",
+          "label": "Reading the Symbols",
+          "tagline": "Decode Σ, ∇, θ and argmax.",
+          "url": "https://aimlcompanion.ai/module/foundations/notation"
+        },
+        {
+          "id": "fractions",
+          "label": "Decimals, Ratios & Float Precision",
+          "tagline": "Probabilities, percentages, and numbers computers cannot…",
+          "url": "https://aimlcompanion.ai/module/foundations/fractions"
+        },
+        {
+          "id": "exponents",
+          "label": "Exponents, Logs & Scale",
+          "tagline": "Reading 1e-4, 7B and 128K, and why logs are everywhere.",
+          "url": "https://aimlcompanion.ai/module/foundations/exponents"
+        },
+        {
+          "id": "algebra",
+          "label": "Solving for the Unknown",
+          "tagline": "Why training is school algebra run backwards.",
+          "url": "https://aimlcompanion.ai/module/foundations/algebra"
+        },
+        {
+          "id": "functions",
+          "label": "Functions",
+          "tagline": "The contract every model, layer, and API call obeys.",
+          "url": "https://aimlcompanion.ai/module/foundations/functions"
+        }
+      ]
+    },
+    {
+      "id": "jupyterNotebook",
+      "label": "Jupyter & Colab",
+      "color": "#f97316",
+      "url": "https://aimlcompanion.ai/curriculum/jupyterNotebook",
+      "summary": "Set up Jupyter, Colab, and VS Code notebooks for ML work.",
+      "image": "track-jupyterNotebook.webp",
+      "modules": [
+        {
+          "id": "jupyterIntro",
+          "label": "What is Jupyter?",
+          "tagline": "Understanding notebooks and interactive computing.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/jupyterIntro"
+        },
+        {
+          "id": "jupyterLocalSetup",
+          "label": "Local Jupyter Setup",
+          "tagline": "Install and run Jupyter on your machine.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/jupyterLocalSetup"
+        },
+        {
+          "id": "jupyterInterface",
+          "label": "Jupyter Interface",
+          "tagline": "Navigating cells, menus, and shortcuts.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/jupyterInterface"
+        },
+        {
+          "id": "googleColab",
+          "label": "Google Colab",
+          "tagline": "Free cloud notebooks with GPU access.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/googleColab"
+        },
+        {
+          "id": "vsCodeJupyter",
+          "label": "Jupyter in VS Code",
+          "tagline": "Using notebooks in your favorite editor.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/vsCodeJupyter"
+        },
+        {
+          "id": "jupyterBestPractices",
+          "label": "Notebook Best Practices",
+          "tagline": "Organization, reproducibility, and tips.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/jupyterBestPractices"
+        },
+        {
+          "id": "jupyterMagics",
+          "label": "Magic Commands",
+          "tagline": "Special commands for productivity.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/jupyterMagics"
+        },
+        {
+          "id": "jupyterVisualization",
+          "label": "Visualization in Notebooks",
+          "tagline": "Inline plots and interactive widgets.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/jupyterVisualization"
+        },
+        {
+          "id": "kaggleNotebooks",
+          "label": "Kaggle Notebooks & Datasets",
+          "tagline": "Kaggle's platform for datasets, competitions, and learning.",
+          "url": "https://aimlcompanion.ai/module/jupyterNotebook/kaggleNotebooks"
+        }
+      ]
+    },
+    {
+      "id": "pythonML",
+      "label": "Python for ML",
+      "color": "#3b82f6",
+      "url": "https://aimlcompanion.ai/curriculum/pythonML",
+      "summary": "Essential Python and libraries for machine learning.",
+      "image": "track-pythonML.webp",
+      "modules": [
+        {
+          "id": "pythonSetup",
+          "label": "Getting Started with Python",
+          "tagline": "Install Python, run code, and write your first program.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonSetup"
+        },
+        {
+          "id": "pythonBasics",
+          "label": "Python Basics",
+          "tagline": "Variables, data types, and control flow.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonBasics"
+        },
+        {
+          "id": "pythonStrings",
+          "label": "Strings & Files",
+          "tagline": "Text manipulation and reading data from files.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonStrings"
+        },
+        {
+          "id": "pythonFunctions",
+          "label": "Functions & Classes",
+          "tagline": "Reusable code and OOP basics.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonFunctions"
+        },
+        {
+          "id": "pythonIterables",
+          "label": "Iterables & Generators",
+          "tagline": "iter, next and yield: walk a million rows while holding one in…",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonIterables"
+        },
+        {
+          "id": "pythonErrors",
+          "label": "Errors & Debugging",
+          "tagline": "Reading tracebacks and handling exceptions with try/except.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonErrors"
+        },
+        {
+          "id": "pythonModern",
+          "label": "Modern Python",
+          "tagline": "Type hints, dataclasses, and pathlib: the Python modern libraries expect.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonModern"
+        },
+        {
+          "id": "pythonIdioms",
+          "label": "Idiomatic Python",
+          "tagline": "sorted with key, Counter, defaultdict, any/all and the right container: the…",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonIdioms"
+        },
+        {
+          "id": "pythonAsync",
+          "label": "Async Python",
+          "tagline": "async, await and gather: overlap the waiting that dominates API and I/O work.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonAsync"
+        },
+        {
+          "id": "pythonConfig",
+          "label": "Configuration & Secrets",
+          "tagline": "Environment variables, .env files and a validated settings object…",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonConfig"
+        },
+        {
+          "id": "pythonLogging",
+          "label": "Logging",
+          "tagline": "Levels, loggers, handlers and formatters: knowing what happened, after it happened.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonLogging"
+        },
+        {
+          "id": "pythonPackaging",
+          "label": "Packaging & Project Structure",
+          "tagline": "sys.path, packages, pyproject.toml and pip install -e .: from…",
+          "url": "https://aimlcompanion.ai/module/pythonML/pythonPackaging"
+        },
+        {
+          "id": "numpyIntro",
+          "label": "NumPy Fundamentals",
+          "tagline": "Arrays and vectorized operations.",
+          "url": "https://aimlcompanion.ai/module/pythonML/numpyIntro"
+        },
+        {
+          "id": "numpyAdvanced",
+          "label": "NumPy Advanced",
+          "tagline": "Broadcasting, indexing, and linear algebra.",
+          "url": "https://aimlcompanion.ai/module/pythonML/numpyAdvanced"
+        },
+        {
+          "id": "pandasIntro",
+          "label": "Pandas Basics",
+          "tagline": "DataFrames and data manipulation.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pandasIntro"
+        },
+        {
+          "id": "pandasAdvanced",
+          "label": "Pandas Advanced",
+          "tagline": "Grouping, merging, and time series.",
+          "url": "https://aimlcompanion.ai/module/pythonML/pandasAdvanced"
+        },
+        {
+          "id": "matplotlib",
+          "label": "Data Visualization",
+          "tagline": "Matplotlib and Seaborn basics.",
+          "url": "https://aimlcompanion.ai/module/pythonML/matplotlib"
+        },
+        {
+          "id": "sklearnIntro",
+          "label": "Scikit-learn Basics",
+          "tagline": "The ML workflow: fit, predict, evaluate.",
+          "url": "https://aimlcompanion.ai/module/pythonML/sklearnIntro"
+        },
+        {
+          "id": "sklearnPipelines",
+          "label": "ML Pipelines",
+          "tagline": "Preprocessing, pipelines, and cross-validation.",
+          "url": "https://aimlcompanion.ai/module/pythonML/sklearnPipelines"
+        }
+      ]
+    },
+    {
+      "id": "sql",
+      "label": "SQL for Data",
+      "color": "#06b6d4",
+      "url": "https://aimlcompanion.ai/curriculum/sql",
+      "summary": "SELECT to window functions, for analysis and ML pipelines.",
+      "image": "track-sql.webp",
+      "modules": [
+        {
+          "id": "sqlIntro",
+          "label": "What is SQL & Relational Databases",
+          "tagline": "Tables, rows, columns, and why SQL matters for data.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlIntro"
+        },
+        {
+          "id": "sqlSelect",
+          "label": "SELECT, WHERE & Filtering",
+          "tagline": "Pick columns, filter rows, and match patterns.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlSelect"
+        },
+        {
+          "id": "sqlSorting",
+          "label": "ORDER BY, LIMIT & DISTINCT",
+          "tagline": "Sort results, limit output, and remove duplicates.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlSorting"
+        },
+        {
+          "id": "sqlJoins",
+          "label": "JOINs - Combining Tables",
+          "tagline": "INNER, LEFT, RIGHT, and FULL OUTER joins.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlJoins"
+        },
+        {
+          "id": "sqlAggregation",
+          "label": "GROUP BY & Aggregate Functions",
+          "tagline": "COUNT, SUM, AVG, MIN, MAX with grouping.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlAggregation"
+        },
+        {
+          "id": "sqlSubqueries",
+          "label": "Subqueries & Nested Queries",
+          "tagline": "Scalar, table, correlated subqueries and EXISTS.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlSubqueries"
+        },
+        {
+          "id": "sqlWindowFunctions",
+          "label": "Window Functions",
+          "tagline": "ROW_NUMBER, RANK, LAG, LEAD, and running totals.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlWindowFunctions"
+        },
+        {
+          "id": "sqlCtes",
+          "label": "CTEs & Recursive Queries",
+          "tagline": "Common Table Expressions for readable complex queries.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlCtes"
+        },
+        {
+          "id": "sqlDdl",
+          "label": "Tables, Keys & Constraints",
+          "tagline": "CREATE, ALTER, DROP, primary and foreign keys.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlDdl"
+        },
+        {
+          "id": "sqlIndexing",
+          "label": "Indexes & Query Performance",
+          "tagline": "B-tree indexes, EXPLAIN plans, and optimization.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlIndexing"
+        },
+        {
+          "id": "sqlForMl",
+          "label": "SQL for ML Pipelines",
+          "tagline": "Feature engineering, data cleaning, and train/test splits in SQL.",
+          "url": "https://aimlcompanion.ai/module/sql/sqlForMl"
+        }
+      ]
+    },
+    {
+      "id": "dataEngineering",
+      "label": "Data Engineering",
+      "color": "#38bdf8",
+      "url": "https://aimlcompanion.ai/curriculum/dataEngineering",
+      "summary": "Moving data reliably - modelling, pipelines, and scale.",
+      "image": "track-dataEngineering.webp",
+      "modules": [
+        {
+          "id": "deIntro",
+          "label": "What a Data Engineer Actually Does",
+          "tagline": "The job, the stack, and who you serve.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/deIntro"
+        },
+        {
+          "id": "oltpVsOlap",
+          "label": "OLTP vs OLAP",
+          "tagline": "Why one database cannot do both jobs.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/oltpVsOlap"
+        },
+        {
+          "id": "batchVsStreaming",
+          "label": "Batch vs Streaming",
+          "tagline": "Latency you need against complexity you pay.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/batchVsStreaming"
+        },
+        {
+          "id": "fileFormats",
+          "label": "File Formats",
+          "tagline": "Why Parquet won, and how teams still make it slow.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/fileFormats"
+        },
+        {
+          "id": "lakehouseFormats",
+          "label": "Lakes, Lakehouses and Table Formats",
+          "tagline": "What a table format adds to a pile of files.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/lakehouseFormats"
+        },
+        {
+          "id": "dimensionalModelling",
+          "label": "Dimensional Modelling",
+          "tagline": "Facts, dimensions, and why the star schema persists.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/dimensionalModelling"
+        },
+        {
+          "id": "slowlyChangingDimensions",
+          "label": "Slowly Changing Dimensions",
+          "tagline": "Keeping history when an attribute changes.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/slowlyChangingDimensions"
+        },
+        {
+          "id": "normalisationTradeoffs",
+          "label": "Normalisation Trade-offs",
+          "tagline": "When redundancy is the correct answer.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/normalisationTradeoffs"
+        },
+        {
+          "id": "etlVsElt",
+          "label": "ETL vs ELT",
+          "tagline": "Why transformation moved to after the load.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/etlVsElt"
+        },
+        {
+          "id": "cloudWarehouseEconomics",
+          "label": "Cloud Warehouses and the Bill",
+          "tagline": "Separated compute, per-second billing, and why a query costs…",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/cloudWarehouseEconomics"
+        },
+        {
+          "id": "orchestration",
+          "label": "Orchestration",
+          "tagline": "DAGs, schedules, backfills, and what runs when.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/orchestration"
+        },
+        {
+          "id": "idempotency",
+          "label": "Idempotency and Retries",
+          "tagline": "Making a job safe to run twice.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/idempotency"
+        },
+        {
+          "id": "changeDataCapture",
+          "label": "Change Data Capture",
+          "tagline": "Reading the database log instead of the table.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/changeDataCapture"
+        },
+        {
+          "id": "dbtAnalyticsEng",
+          "label": "dbt and Analytics Engineering",
+          "tagline": "Version-controlled SQL that tests itself.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/dbtAnalyticsEng"
+        },
+        {
+          "id": "deStarSchemaProject",
+          "label": "Project: Model a Star Schema",
+          "tagline": "Raw CSVs to a tested star schema with dbt and DuckDB - grain…",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/deStarSchemaProject"
+        },
+        {
+          "id": "sparkBasics",
+          "label": "Spark Basics",
+          "tagline": "Distributed processing, minus the folklore.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/sparkBasics"
+        },
+        {
+          "id": "kafkaBasics",
+          "label": "Kafka Basics",
+          "tagline": "Topics, partitions, and the log as source of truth.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/kafkaBasics"
+        },
+        {
+          "id": "deReplayProject",
+          "label": "Project: Replay the Log",
+          "tagline": "Consume an event log into an idempotent sink, then prove a rewind…",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/deReplayProject"
+        },
+        {
+          "id": "dataQuality",
+          "label": "Data Quality and Contracts",
+          "tagline": "Catching bad data before your users do.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/dataQuality"
+        },
+        {
+          "id": "accessPrivacyLineage",
+          "label": "Access, Privacy and Lineage",
+          "tagline": "Who can see it, how it gets deleted, and where it came from.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/accessPrivacyLineage"
+        },
+        {
+          "id": "dataPipelinesForAI",
+          "label": "Data Pipelines for AI",
+          "tagline": "Chunking, embedding and vector sinks are still ETL.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/dataPipelinesForAI"
+        },
+        {
+          "id": "dataEngCapstone",
+          "label": "Capstone: Build a Warehouse",
+          "tagline": "Ingest, model, orchestrate and test a real pipeline.",
+          "url": "https://aimlcompanion.ai/module/dataEngineering/dataEngCapstone"
+        }
+      ]
+    },
+    {
+      "id": "linearAlgebra",
+      "label": "Linear Algebra",
+      "color": "#10b981",
+      "url": "https://aimlcompanion.ai/curriculum/linearAlgebra",
+      "summary": "Vectors, matrices, and transformations.",
+      "image": "track-linearAlgebra.webp",
+      "modules": [
+        {
+          "id": "vectors",
+          "label": "Vectors",
+          "tagline": "Building blocks of data representation.",
+          "url": "https://aimlcompanion.ai/module/linearAlgebra/vectors"
+        },
+        {
+          "id": "matrices",
+          "label": "Matrices",
+          "tagline": "Grids that transform data.",
+          "url": "https://aimlcompanion.ai/module/linearAlgebra/matrices"
+        },
+        {
+          "id": "dotProduct",
+          "label": "Dot Product",
+          "tagline": "Measuring similarity between vectors.",
+          "url": "https://aimlcompanion.ai/module/linearAlgebra/dotProduct"
+        },
+        {
+          "id": "matrixMult",
+          "label": "Matrix Multiplication",
+          "tagline": "Composing transformations.",
+          "url": "https://aimlcompanion.ai/module/linearAlgebra/matrixMult"
+        },
+        {
+          "id": "transpose",
+          "label": "Transpose & Inverse",
+          "tagline": "Matrix operations.",
+          "url": "https://aimlcompanion.ai/module/linearAlgebra/transpose"
+        },
+        {
+          "id": "eigenvalues",
+          "label": "Eigenvalues",
+          "tagline": "Directions a transformation only stretches.",
+          "url": "https://aimlcompanion.ai/module/linearAlgebra/eigenvalues"
+        },
+        {
+          "id": "svd",
+          "label": "SVD",
+          "tagline": "Decomposing any matrix into rotation, scale, rotation.",
+          "url": "https://aimlcompanion.ai/module/linearAlgebra/svd"
+        }
+      ]
+    },
+    {
+      "id": "probability",
+      "label": "Probability Theory",
+      "color": "#f59e0b",
+      "url": "https://aimlcompanion.ai/curriculum/probability",
+      "summary": "Making sense of uncertainty and randomness.",
+      "image": "track-probability.webp",
+      "modules": [
+        {
+          "id": "basicProb",
+          "label": "Basic Probability",
+          "tagline": "Events, outcomes, and likelihood.",
+          "url": "https://aimlcompanion.ai/module/probability/basicProb"
+        },
+        {
+          "id": "conditionalProb",
+          "label": "Conditional Probability",
+          "tagline": "Probability given information.",
+          "url": "https://aimlcompanion.ai/module/probability/conditionalProb"
+        },
+        {
+          "id": "bayes",
+          "label": "Bayes' Theorem",
+          "tagline": "Updating beliefs with evidence.",
+          "url": "https://aimlcompanion.ai/module/probability/bayes"
+        },
+        {
+          "id": "distributions",
+          "label": "Distributions",
+          "tagline": "The shape of randomness.",
+          "url": "https://aimlcompanion.ai/module/probability/distributions"
+        },
+        {
+          "id": "expectation",
+          "label": "Expectation",
+          "tagline": "The average outcome.",
+          "url": "https://aimlcompanion.ai/module/probability/expectation"
+        },
+        {
+          "id": "variance",
+          "label": "Variance",
+          "tagline": "Measuring spread.",
+          "url": "https://aimlcompanion.ai/module/probability/variance"
+        },
+        {
+          "id": "lln",
+          "label": "Law of Large Numbers",
+          "tagline": "Why more data helps.",
+          "url": "https://aimlcompanion.ai/module/probability/lln"
+        },
+        {
+          "id": "clt",
+          "label": "Central Limit Theorem",
+          "tagline": "Why everything is Gaussian.",
+          "url": "https://aimlcompanion.ai/module/probability/clt"
+        }
+      ]
+    },
+    {
+      "id": "calculus",
+      "label": "Calculus",
+      "color": "#ec4899",
+      "url": "https://aimlcompanion.ai/curriculum/calculus",
+      "summary": "The mathematics of change and optimization.",
+      "image": "track-calculus.webp",
+      "modules": [
+        {
+          "id": "limits",
+          "label": "Limits",
+          "tagline": "Approaching values.",
+          "url": "https://aimlcompanion.ai/module/calculus/limits"
+        },
+        {
+          "id": "derivatives",
+          "label": "Derivatives",
+          "tagline": "Measuring instantaneous change.",
+          "url": "https://aimlcompanion.ai/module/calculus/derivatives"
+        },
+        {
+          "id": "partials",
+          "label": "Partial Derivatives",
+          "tagline": "Change in multiple dimensions.",
+          "url": "https://aimlcompanion.ai/module/calculus/partials"
+        },
+        {
+          "id": "gradients",
+          "label": "Gradients",
+          "tagline": "Direction of steepest increase.",
+          "url": "https://aimlcompanion.ai/module/calculus/gradients"
+        },
+        {
+          "id": "chainRule",
+          "label": "Chain Rule",
+          "tagline": "Derivatives of nested functions.",
+          "url": "https://aimlcompanion.ai/module/calculus/chainRule"
+        },
+        {
+          "id": "integrals",
+          "label": "Integrals",
+          "tagline": "Accumulation and area.",
+          "url": "https://aimlcompanion.ai/module/calculus/integrals"
+        }
+      ]
+    },
+    {
+      "id": "optimization",
+      "label": "Optimization",
+      "color": "#8b5cf6",
+      "url": "https://aimlcompanion.ai/curriculum/optimization",
+      "summary": "Finding the best solutions - how models learn.",
+      "image": "track-optimization.webp",
+      "modules": [
+        {
+          "id": "gradientDescent",
+          "label": "Gradient Descent",
+          "tagline": "The core learning algorithm.",
+          "url": "https://aimlcompanion.ai/module/optimization/gradientDescent"
+        },
+        {
+          "id": "learningRate",
+          "label": "Learning Rate",
+          "tagline": "How fast to learn.",
+          "url": "https://aimlcompanion.ai/module/optimization/learningRate"
+        },
+        {
+          "id": "momentum",
+          "label": "Momentum",
+          "tagline": "Accelerating gradient descent.",
+          "url": "https://aimlcompanion.ai/module/optimization/momentum"
+        },
+        {
+          "id": "sgd",
+          "label": "Stochastic GD",
+          "tagline": "Noisy but fast optimization.",
+          "url": "https://aimlcompanion.ai/module/optimization/sgd"
+        },
+        {
+          "id": "adam",
+          "label": "Adam Optimizer",
+          "tagline": "Adaptive learning rates.",
+          "url": "https://aimlcompanion.ai/module/optimization/adam"
+        },
+        {
+          "id": "lossFunctions",
+          "label": "Loss Functions",
+          "tagline": "Measuring how wrong we are.",
+          "url": "https://aimlcompanion.ai/module/optimization/lossFunctions"
+        },
+        {
+          "id": "convexity",
+          "label": "Convexity",
+          "tagline": "When optimization is easy.",
+          "url": "https://aimlcompanion.ai/module/optimization/convexity"
+        }
+      ]
+    },
+    {
+      "id": "statistics",
+      "label": "Statistics",
+      "color": "#14b8a6",
+      "url": "https://aimlcompanion.ai/curriculum/statistics",
+      "summary": "Learning from data - patterns and inference.",
+      "image": "track-statistics.webp",
+      "modules": [
+        {
+          "id": "descriptive",
+          "label": "Descriptive Stats",
+          "tagline": "Mean, median, mode.",
+          "url": "https://aimlcompanion.ai/module/statistics/descriptive"
+        },
+        {
+          "id": "stdDev",
+          "label": "Standard Deviation",
+          "tagline": "Measuring spread.",
+          "url": "https://aimlcompanion.ai/module/statistics/stdDev"
+        },
+        {
+          "id": "correlation",
+          "label": "Correlation",
+          "tagline": "Do variables move together?",
+          "url": "https://aimlcompanion.ai/module/statistics/correlation"
+        },
+        {
+          "id": "regression",
+          "label": "Linear Regression",
+          "tagline": "Fitting lines to data.",
+          "url": "https://aimlcompanion.ai/module/statistics/regression"
+        },
+        {
+          "id": "hypothesis",
+          "label": "Hypothesis Testing",
+          "tagline": "Making decisions from data.",
+          "url": "https://aimlcompanion.ai/module/statistics/hypothesis"
+        },
+        {
+          "id": "confidence",
+          "label": "Confidence Intervals",
+          "tagline": "Uncertainty in estimates.",
+          "url": "https://aimlcompanion.ai/module/statistics/confidence"
+        },
+        {
+          "id": "mle",
+          "label": "Maximum Likelihood",
+          "tagline": "Where loss functions come from.",
+          "url": "https://aimlcompanion.ai/module/statistics/mle"
+        },
+        {
+          "id": "biasVariance",
+          "label": "Bias-Variance Tradeoff",
+          "tagline": "Why a more flexible model is not always better.",
+          "url": "https://aimlcompanion.ai/module/statistics/biasVariance"
+        },
+        {
+          "id": "experimentDesign",
+          "label": "Designing an Experiment",
+          "tagline": "The decisions you make before launch.",
+          "url": "https://aimlcompanion.ai/module/statistics/experimentDesign"
+        },
+        {
+          "id": "sampleSize",
+          "label": "How Long Should This Run?",
+          "tagline": "Sample size, power, and the effect you can actually detect.",
+          "url": "https://aimlcompanion.ai/module/statistics/sampleSize"
+        },
+        {
+          "id": "experimentPitfalls",
+          "label": "How Experiments Lie to You",
+          "tagline": "The failures that survive a correct design.",
+          "url": "https://aimlcompanion.ai/module/statistics/experimentPitfalls"
+        },
+        {
+          "id": "experimentDecisions",
+          "label": "Now Decide",
+          "tagline": "Turning a result into a ship or no-ship call.",
+          "url": "https://aimlcompanion.ai/module/statistics/experimentDecisions"
+        }
+      ]
+    },
+    {
+      "id": "infoTheory",
+      "label": "Information Theory",
+      "color": "#64748b",
+      "url": "https://aimlcompanion.ai/curriculum/infoTheory",
+      "summary": "Measuring information and uncertainty.",
+      "image": "track-infoTheory.webp",
+      "modules": [
+        {
+          "id": "entropy",
+          "label": "Entropy",
+          "tagline": "Measuring uncertainty in bits.",
+          "url": "https://aimlcompanion.ai/module/infoTheory/entropy"
+        },
+        {
+          "id": "crossEntropy",
+          "label": "Cross-Entropy",
+          "tagline": "THE classification loss.",
+          "url": "https://aimlcompanion.ai/module/infoTheory/crossEntropy"
+        },
+        {
+          "id": "kl",
+          "label": "KL Divergence",
+          "tagline": "Distance between distributions.",
+          "url": "https://aimlcompanion.ai/module/infoTheory/kl"
+        },
+        {
+          "id": "mutualInfo",
+          "label": "Mutual Information",
+          "tagline": "Shared information.",
+          "url": "https://aimlcompanion.ai/module/infoTheory/mutualInfo"
+        }
+      ]
+    },
+    {
+      "id": "mlAlgorithms",
+      "label": "ML Algorithms",
+      "color": "#ef4444",
+      "url": "https://aimlcompanion.ai/curriculum/mlAlgorithms",
+      "summary": "Classic ML algorithms - from theory to implementation.",
+      "image": "track-mlAlgorithms.webp",
+      "modules": [
+        {
+          "id": "mlIntro",
+          "label": "What is Machine Learning?",
+          "tagline": "ML fundamentals and types of learning.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/mlIntro"
+        },
+        {
+          "id": "linReg",
+          "label": "Linear Regression",
+          "tagline": "From scratch implementation.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/linReg"
+        },
+        {
+          "id": "logReg",
+          "label": "Logistic Regression",
+          "tagline": "Binary classification.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/logReg"
+        },
+        {
+          "id": "regularization",
+          "label": "Regularization (L1/L2/ElasticNet)",
+          "tagline": "Preventing overfitting by penalizing complexity.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/regularization"
+        },
+        {
+          "id": "featureScaling",
+          "label": "Feature Scaling",
+          "tagline": "Normalization and standardization for ML.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/featureScaling"
+        },
+        {
+          "id": "modelEval",
+          "label": "Model Evaluation Metrics",
+          "tagline": "Precision, recall, F1, ROC-AUC.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/modelEval"
+        },
+        {
+          "id": "crossVal",
+          "label": "Cross-Validation",
+          "tagline": "K-Fold, stratified splits, reliable evaluation.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/crossVal"
+        },
+        {
+          "id": "naiveBayes",
+          "label": "Naive Bayes",
+          "tagline": "Probabilistic classifier.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/naiveBayes"
+        },
+        {
+          "id": "knn",
+          "label": "K-Nearest Neighbors",
+          "tagline": "Instance-based learning.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/knn"
+        },
+        {
+          "id": "decisionTrees",
+          "label": "Decision Trees",
+          "tagline": "Tree-based models.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/decisionTrees"
+        },
+        {
+          "id": "svm",
+          "label": "Support Vector Machines",
+          "tagline": "Maximum margin classifiers.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/svm"
+        },
+        {
+          "id": "multiclassClassification",
+          "label": "Multiclass Classification",
+          "tagline": "One-vs-All, One-vs-One, softmax strategies.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/multiclassClassification"
+        },
+        {
+          "id": "neuralNets",
+          "label": "Neural Networks",
+          "tagline": "Backpropagation from scratch.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/neuralNets"
+        },
+        {
+          "id": "kmeans",
+          "label": "K-Means Clustering",
+          "tagline": "Unsupervised learning.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/kmeans"
+        },
+        {
+          "id": "hierarchicalClustering",
+          "label": "Hierarchical Clustering",
+          "tagline": "Dendrograms and linkage methods.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/hierarchicalClustering"
+        },
+        {
+          "id": "dbscan",
+          "label": "DBSCAN & Density Clustering",
+          "tagline": "Density-based clustering.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/dbscan"
+        },
+        {
+          "id": "pca",
+          "label": "PCA",
+          "tagline": "Dimensionality reduction.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/pca"
+        },
+        {
+          "id": "ensembles",
+          "label": "Ensemble Methods",
+          "tagline": "Random forests, bagging.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/ensembles"
+        },
+        {
+          "id": "gradientBoosting",
+          "label": "Gradient Boosting",
+          "tagline": "XGBoost, LightGBM, CatBoost.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/gradientBoosting"
+        },
+        {
+          "id": "featureImportance",
+          "label": "Feature Importance & SHAP",
+          "tagline": "Model interpretability and SHAP values.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/featureImportance"
+        },
+        {
+          "id": "imbalancedData",
+          "label": "Handling Imbalanced Data",
+          "tagline": "SMOTE, class weights, resampling strategies.",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/imbalancedData"
+        },
+        {
+          "id": "mlAlgorithmsCapstone",
+          "label": "Project: Algorithm Showdown",
+          "tagline": "Pick the right algorithm for real-world medical diagnosis…",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/mlAlgorithmsCapstone"
+        },
+        {
+          "id": "iplProject",
+          "label": "Project: IPL Match Predictor",
+          "tagline": "End-to-end ML pipeline on 18 seasons of IPL data - 4-model…",
+          "url": "https://aimlcompanion.ai/module/mlAlgorithms/iplProject"
+        }
+      ]
+    },
+    {
+      "id": "mlPipeline",
+      "label": "ML Pipeline",
+      "color": "#f97316",
+      "url": "https://aimlcompanion.ai/curriculum/mlPipeline",
+      "summary": "Complete ML workflow from raw data to production deployment.",
+      "image": "track-mlPipeline.webp",
+      "modules": [
+        {
+          "id": "dataCollection",
+          "label": "Data Collection",
+          "tagline": "Gathering quality data from various sources.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/dataCollection"
+        },
+        {
+          "id": "edaBasics",
+          "label": "EDA Fundamentals",
+          "tagline": "Exploratory Data Analysis techniques.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/edaBasics"
+        },
+        {
+          "id": "edaVisualization",
+          "label": "EDA Visualization",
+          "tagline": "Visual patterns and insights.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/edaVisualization"
+        },
+        {
+          "id": "dataPreprocessing",
+          "label": "Data Preprocessing",
+          "tagline": "Cleaning and preparing data.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/dataPreprocessing"
+        },
+        {
+          "id": "featureEngineering",
+          "label": "Feature Engineering",
+          "tagline": "Turning raw columns into features a model can use.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/featureEngineering"
+        },
+        {
+          "id": "featureSelection",
+          "label": "Feature Selection",
+          "tagline": "Choosing the right features.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/featureSelection"
+        },
+        {
+          "id": "dataSplitting",
+          "label": "Data Splitting",
+          "tagline": "Train, validation, test sets.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/dataSplitting"
+        },
+        {
+          "id": "modelSelection",
+          "label": "Model Selection",
+          "tagline": "Choosing the right algorithm.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/modelSelection"
+        },
+        {
+          "id": "modelTraining",
+          "label": "Model Training",
+          "tagline": "Training and fitting models.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/modelTraining"
+        },
+        {
+          "id": "hyperparameterTuning",
+          "label": "Hyperparameter Tuning",
+          "tagline": "Optimizing model parameters.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/hyperparameterTuning"
+        },
+        {
+          "id": "modelEvaluation",
+          "label": "Model Evaluation",
+          "tagline": "Metrics and validation.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/modelEvaluation"
+        },
+        {
+          "id": "modelInterpretation",
+          "label": "Model Interpretation",
+          "tagline": "Understanding model decisions.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/modelInterpretation"
+        },
+        {
+          "id": "modelDeployment",
+          "label": "Deployment",
+          "tagline": "Putting models into production.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/modelDeployment"
+        },
+        {
+          "id": "mlMonitoring",
+          "label": "Monitoring & MLOps",
+          "tagline": "Maintaining models in production.",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/mlMonitoring"
+        },
+        {
+          "id": "mlPipelineCapstone",
+          "label": "Project: Credit Risk Pipeline",
+          "tagline": "Build a production ML pipeline from messy bank data to…",
+          "url": "https://aimlcompanion.ai/module/mlPipeline/mlPipelineCapstone"
+        }
+      ]
+    },
+    {
+      "id": "deepLearning",
+      "label": "Deep Learning",
+      "color": "#6366f1",
+      "url": "https://aimlcompanion.ai/curriculum/deepLearning",
+      "summary": "Neural networks, CNNs, RNNs, Transformers - from foundations to modern architectures.",
+      "image": "track-deepLearning.webp",
+      "modules": [
+        {
+          "id": "dlIntro",
+          "label": "What is Deep Learning?",
+          "tagline": "DL vs ML, when to use deep learning.",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlIntro"
+        },
+        {
+          "id": "dlNeurons",
+          "label": "Neurons & Layers",
+          "tagline": "Perceptrons, multi-layer networks.",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlNeurons"
+        },
+        {
+          "id": "dlPytorch",
+          "label": "PyTorch Fundamentals",
+          "tagline": "Tensors, autograd, nn.Module, device management & torch.compile.",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlPytorch"
+        },
+        {
+          "id": "dlActivations",
+          "label": "Activation Functions",
+          "tagline": "ReLU, Sigmoid, Tanh, Softmax, SwiGLU.",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlActivations"
+        },
+        {
+          "id": "dlForward",
+          "label": "Forward Propagation",
+          "tagline": "Data flow through the network, matrix ops, GPU acceleration, Flash…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlForward"
+        },
+        {
+          "id": "dlLoss",
+          "label": "Loss Functions for DL",
+          "tagline": "Cross-entropy, MSE, BCE, focal loss, contrastive losses, and modern…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlLoss"
+        },
+        {
+          "id": "dlBackprop",
+          "label": "Backpropagation",
+          "tagline": "The learning algorithm, chain rule, autograd, gradient debugging, and modern…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlBackprop"
+        },
+        {
+          "id": "dlOptimizers",
+          "label": "Optimizers Deep Dive",
+          "tagline": "SGD, Adam, AdamW, learning rate schedules, and modern optimizers.",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlOptimizers"
+        },
+        {
+          "id": "dlRegularization",
+          "label": "Regularization",
+          "tagline": "Dropout, L1/L2, early stopping, data augmentation & modern techniques.",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlRegularization"
+        },
+        {
+          "id": "dlBatchNorm",
+          "label": "Batch Normalization",
+          "tagline": "BatchNorm mechanics, train vs eval mode, placement strategies, and…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlBatchNorm"
+        },
+        {
+          "id": "dlTraining",
+          "label": "Training Deep Networks",
+          "tagline": "Training loops, AdamW, LR scheduling, mixed precision, gradient…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlTraining"
+        },
+        {
+          "id": "dlCnnIntro",
+          "label": "CNN Fundamentals",
+          "tagline": "Convolutions, kernels, feature hierarchy, pooling, and modern CNN design…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlCnnIntro"
+        },
+        {
+          "id": "dlCnnPooling",
+          "label": "Pooling & CNN Architectures",
+          "tagline": "Pooling strategies, strided convolutions, skip connections &…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlCnnPooling"
+        },
+        {
+          "id": "dlEmbeddings",
+          "label": "Embeddings & Representations",
+          "tagline": "One-hot vs dense, nn.Embedding lookup, Word2Vec arithmetic…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlEmbeddings"
+        },
+        {
+          "id": "dlRnnIntro",
+          "label": "RNN & Sequences",
+          "tagline": "Hidden states, weight sharing, BPTT, vanishing gradients, and the modern RNN…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlRnnIntro"
+        },
+        {
+          "id": "dlLstmGru",
+          "label": "LSTM & GRU",
+          "tagline": "Gates, gradient highways, forget gate bias, LSTM vs GRU decision framework, and…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlLstmGru"
+        },
+        {
+          "id": "dlAttention",
+          "label": "Attention Mechanism",
+          "tagline": "Query-Key-Value, scaled dot-product, self/cross/causal attention, Flash…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlAttention"
+        },
+        {
+          "id": "dlTransformers",
+          "label": "Transformer Architecture",
+          "tagline": "Modern attention, positional encoding, core blocks, encoder/decoder…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlTransformers"
+        },
+        {
+          "id": "dlTransferLearning",
+          "label": "Transfer Learning & Fine-tuning",
+          "tagline": "Feature reuse, freeze/unfreeze strategies, discriminative…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlTransferLearning"
+        },
+        {
+          "id": "dlModernArchs",
+          "label": "Modern Architectures",
+          "tagline": "GANs, VAEs, Diffusion & Flow Matching, generative architectures behind…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlModernArchs"
+        },
+        {
+          "id": "dlGpuFundamentals",
+          "label": "GPU Fundamentals for Deep Learning",
+          "tagline": "GPU architecture, CUDA cores, memory hierarchy, Tensor…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlGpuFundamentals"
+        },
+        {
+          "id": "dlDistributed",
+          "label": "Multi-GPU & Distributed Training",
+          "tagline": "Data parallelism, model parallelism, FSDP, DeepSpeed ZeRO…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlDistributed"
+        },
+        {
+          "id": "dlCapstone",
+          "label": "Project: From Pixels to Production",
+          "tagline": "Build a real image classifier from 60% to 93%+ accuracy…",
+          "url": "https://aimlcompanion.ai/module/deepLearning/dlCapstone"
+        }
+      ]
+    },
+    {
+      "id": "llm",
+      "label": "LLM",
+      "color": "#00ff88",
+      "url": "https://aimlcompanion.ai/curriculum/llm",
+      "summary": "Large Language Models - from architecture to applications. Understand how LLMs work, then build RAG systems, agents, and multi-modal apps.",
+      "image": "track-llm.webp",
+      "modules": [
+        {
+          "id": "llmIntro",
+          "label": "What are LLMs?",
+          "tagline": "Understanding large language models and their capabilities.",
+          "url": "https://aimlcompanion.ai/module/llm/llmIntro"
+        },
+        {
+          "id": "llmGenAI",
+          "label": "Generative AI: The Big Picture",
+          "tagline": "VAEs, GANs, Diffusion, Transformers - the full GenAI family…",
+          "url": "https://aimlcompanion.ai/module/llm/llmGenAI"
+        },
+        {
+          "id": "llmTokenization",
+          "label": "Tokenization Deep Dive",
+          "tagline": "BPE, WordPiece, SentencePiece tokenization.",
+          "url": "https://aimlcompanion.ai/module/llm/llmTokenization"
+        },
+        {
+          "id": "llmEmbeddings",
+          "label": "Embeddings & Token Representations",
+          "tagline": "From token IDs to meaning vectors.",
+          "url": "https://aimlcompanion.ai/module/llm/llmEmbeddings"
+        },
+        {
+          "id": "llmArchitecture",
+          "label": "LLM Architecture Internals",
+          "tagline": "Decoder-only transformers, RMSNorm, SwiGLU, KV cache.",
+          "url": "https://aimlcompanion.ai/module/llm/llmArchitecture"
+        },
+        {
+          "id": "llmPositionalEncoding",
+          "label": "Positional Encodings",
+          "tagline": "RoPE, ALiBi, sinusoidal, and context extension methods.",
+          "url": "https://aimlcompanion.ai/module/llm/llmPositionalEncoding"
+        },
+        {
+          "id": "llmMoE",
+          "label": "Mixture of Experts (MoE)",
+          "tagline": "Sparse activation, expert routing, and load balancing.",
+          "url": "https://aimlcompanion.ai/module/llm/llmMoE"
+        },
+        {
+          "id": "llmAttentionVariants",
+          "label": "Context Window & Attention Patterns",
+          "tagline": "GQA, MLA, Flash Attention, and long-context methods.",
+          "url": "https://aimlcompanion.ai/module/llm/llmAttentionVariants"
+        },
+        {
+          "id": "llmPretraining",
+          "label": "Pre-training Objectives",
+          "tagline": "Next-token prediction, masked LM, causal vs bidirectional.",
+          "url": "https://aimlcompanion.ai/module/llm/llmPretraining"
+        },
+        {
+          "id": "llmLogits",
+          "label": "Logits, Softmax & Temperature",
+          "tagline": "Softmax mechanics, temperature, and log probabilities.",
+          "url": "https://aimlcompanion.ai/module/llm/llmLogits"
+        },
+        {
+          "id": "llmSampling",
+          "label": "Sampling Strategies",
+          "tagline": "Greedy, top-k, top-p, min-p, and beam search.",
+          "url": "https://aimlcompanion.ai/module/llm/llmSampling"
+        },
+        {
+          "id": "llmMultiTurn",
+          "label": "Multi-turn Conversations & Memory",
+          "tagline": "Chat formats, context management, and memory.",
+          "url": "https://aimlcompanion.ai/module/llm/llmMultiTurn"
+        },
+        {
+          "id": "llmContextEngineering",
+          "label": "Context Engineering",
+          "tagline": "Budgeting the window: tools, retrieval, compaction, and cache order.",
+          "url": "https://aimlcompanion.ai/module/llm/llmContextEngineering"
+        },
+        {
+          "id": "llmPromptEng",
+          "label": "Prompt Engineering",
+          "tagline": "Zero-shot, few-shot, and chain-of-thought techniques.",
+          "url": "https://aimlcompanion.ai/module/llm/llmPromptEng"
+        },
+        {
+          "id": "llmAdvancedPrompting",
+          "label": "Advanced Prompting",
+          "tagline": "Tree-of-Thought, Self-Consistency, HyDE, and advanced reasoning…",
+          "url": "https://aimlcompanion.ai/module/llm/llmAdvancedPrompting"
+        },
+        {
+          "id": "llmPromptOptimization",
+          "label": "Prompt Optimization",
+          "tagline": "APE, prompt chaining, ReAct, and automated prompt optimization.",
+          "url": "https://aimlcompanion.ai/module/llm/llmPromptOptimization"
+        },
+        {
+          "id": "llmICL",
+          "label": "In-Context Learning",
+          "tagline": "Learning from examples without weight updates.",
+          "url": "https://aimlcompanion.ai/module/llm/llmICL"
+        },
+        {
+          "id": "llmFineTuning",
+          "label": "Fine-tuning Strategies",
+          "tagline": "LoRA, QLoRA, DoRA, and the PEFT landscape.",
+          "url": "https://aimlcompanion.ai/module/llm/llmFineTuning"
+        },
+        {
+          "id": "llmRLHF",
+          "label": "Instruction Tuning & RLHF",
+          "tagline": "SFT, reward models, PPO, DPO, and alignment.",
+          "url": "https://aimlcompanion.ai/module/llm/llmRLHF"
+        },
+        {
+          "id": "llmHallucinations",
+          "label": "Hallucinations & Limitations",
+          "tagline": "Why LLMs fabricate facts, detection, and mitigation.",
+          "url": "https://aimlcompanion.ai/module/llm/llmHallucinations"
+        },
+        {
+          "id": "llmSecurity",
+          "label": "LLM Security & Prompt Injection",
+          "tagline": "Prompt injection, defense-in-depth, and attack vectors.",
+          "url": "https://aimlcompanion.ai/module/llm/llmSecurity"
+        },
+        {
+          "id": "llmEvaluation",
+          "label": "Evaluation & Benchmarks",
+          "tagline": "Perplexity, benchmarks, LLM-as-judge, and domain evals.",
+          "url": "https://aimlcompanion.ai/module/llm/llmEvaluation"
+        },
+        {
+          "id": "llmInference",
+          "label": "Inference Optimization",
+          "tagline": "KV cache, quantization, speculative decoding, and serving.",
+          "url": "https://aimlcompanion.ai/module/llm/llmInference"
+        },
+        {
+          "id": "llmScaling",
+          "label": "Scaling Laws & Emergent Abilities",
+          "tagline": "Power-law scaling, Chinchilla, and emergent abilities.",
+          "url": "https://aimlcompanion.ai/module/llm/llmScaling"
+        },
+        {
+          "id": "llmOpenSource",
+          "label": "Open-Source LLMs & Local Deployment",
+          "tagline": "Llama, DeepSeek, Qwen, local deployment, and serving.",
+          "url": "https://aimlcompanion.ai/module/llm/llmOpenSource"
+        },
+        {
+          "id": "llmHuggingFace",
+          "label": "Hugging Face: The Open-Source AI Hub",
+          "tagline": "Hub, transformers, datasets, PEFT, TRL, Spaces, and…",
+          "url": "https://aimlcompanion.ai/module/llm/llmHuggingFace"
+        },
+        {
+          "id": "llmAPIs",
+          "label": "LLM APIs & Practical Usage",
+          "tagline": "Universal API pattern, streaming, function calling, and cost…",
+          "url": "https://aimlcompanion.ai/module/llm/llmAPIs"
+        },
+        {
+          "id": "llmRAG",
+          "label": "Retrieval-Augmented Generation (RAG)",
+          "tagline": "Chunking, embeddings, vector search, and hybrid…",
+          "url": "https://aimlcompanion.ai/module/llm/llmRAG"
+        },
+        {
+          "id": "llmCRAG",
+          "label": "Corrective & Self-RAG",
+          "tagline": "Self-correcting retrieval with CRAG and Self-RAG.",
+          "url": "https://aimlcompanion.ai/module/llm/llmCRAG"
+        },
+        {
+          "id": "llmKnowledgeGraph",
+          "label": "Knowledge Graphs",
+          "tagline": "Triples, RDF vs property graphs, Cypher, and grounding LLMs.",
+          "url": "https://aimlcompanion.ai/module/llm/llmKnowledgeGraph"
+        },
+        {
+          "id": "llmGraphRAG",
+          "label": "GraphRAG & Knowledge Graphs",
+          "tagline": "Knowledge graphs, community detection, and query routing.",
+          "url": "https://aimlcompanion.ai/module/llm/llmGraphRAG"
+        },
+        {
+          "id": "llmAdaptiveRAG",
+          "label": "Adaptive RAG & Query Routing",
+          "tagline": "Query classification, dynamic routing, and semantic caching.",
+          "url": "https://aimlcompanion.ai/module/llm/llmAdaptiveRAG"
+        },
+        {
+          "id": "llmMultimodalRAG",
+          "label": "Multimodal RAG",
+          "tagline": "RAG for documents with text, tables, and images.",
+          "url": "https://aimlcompanion.ai/module/llm/llmMultimodalRAG"
+        },
+        {
+          "id": "llmAgents",
+          "label": "Agents & Tool Use",
+          "tagline": "Function calling, ReAct, MCP, and multi-agent patterns.",
+          "url": "https://aimlcompanion.ai/module/llm/llmAgents"
+        },
+        {
+          "id": "llmMultimodal",
+          "label": "Multi-Modal LLMs",
+          "tagline": "Vision encoders, early fusion, and agentic vision.",
+          "url": "https://aimlcompanion.ai/module/llm/llmMultimodal"
+        },
+        {
+          "id": "llmDistillation",
+          "label": "Knowledge Distillation",
+          "tagline": "Soft labels, dark knowledge, and CoT distillation.",
+          "url": "https://aimlcompanion.ai/module/llm/llmDistillation"
+        },
+        {
+          "id": "ragExpertAssistant",
+          "label": "Project: RAG Expert Assistant",
+          "tagline": "Production RAG pipeline with RAGAS evaluation, FlashRank…",
+          "url": "https://aimlcompanion.ai/module/llm/ragExpertAssistant"
+        }
+      ],
+      "extras": [
+        {
+          "id": "paper-attention",
+          "label": "Paper: Attention",
+          "url": "https://aimlcompanion.ai/paper-story/llm/paper-attention"
+        },
+        {
+          "id": "paper-deepseek",
+          "label": "Paper: DeepSeek",
+          "url": "https://aimlcompanion.ai/paper-story/llm/paper-deepseek"
+        },
+        {
+          "id": "paper-gpt3",
+          "label": "Paper: GPT-3",
+          "url": "https://aimlcompanion.ai/paper-story/llm/paper-gpt3"
+        }
+      ]
+    },
+    {
+      "id": "gitVersionControl",
+      "label": "Git & Version Control",
+      "color": "#f87171",
+      "url": "https://aimlcompanion.ai/curriculum/gitVersionControl",
+      "summary": "Essential version control skills for collaborative AI development.",
+      "image": "track-gitVersionControl.webp",
+      "modules": [
+        {
+          "id": "gitIntro",
+          "label": "What is Git?",
+          "tagline": "Version control concepts and why Git matters.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitIntro"
+        },
+        {
+          "id": "gitSetup",
+          "label": "Git Setup & Configuration",
+          "tagline": "Installing Git, SSH keys, and global config.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitSetup"
+        },
+        {
+          "id": "gitBasics",
+          "label": "Git Basics",
+          "tagline": "init, add, commit, status, log - the core commands.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitBasics"
+        },
+        {
+          "id": "gitignorePatterns",
+          "label": ".gitignore Mastery",
+          "tagline": "Ignoring files: patterns, templates, and ML-specific rules.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitignorePatterns"
+        },
+        {
+          "id": "commitBestPractices",
+          "label": "Writing Good Commits",
+          "tagline": "Atomic commits, messages, and conventional commits.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/commitBestPractices"
+        },
+        {
+          "id": "gitRemotes",
+          "label": "Working with Remotes",
+          "tagline": "Push, pull, fetch, and remote repositories.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitRemotes"
+        },
+        {
+          "id": "githubIntro",
+          "label": "GitHub Essentials",
+          "tagline": "Repositories, issues, and GitHub features.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/githubIntro"
+        },
+        {
+          "id": "gitTroubleshooting",
+          "label": "When Git Goes Wrong",
+          "tagline": "Reading Git errors, auth failures, line endings, and OS-specific fixes.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitTroubleshooting"
+        },
+        {
+          "id": "gitBranching",
+          "label": "Branching & Merging",
+          "tagline": "Creating branches, merging, and branch strategies.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitBranching"
+        },
+        {
+          "id": "gitConflicts",
+          "label": "Merge Conflicts",
+          "tagline": "Understanding and resolving conflicts.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitConflicts"
+        },
+        {
+          "id": "githubPRs",
+          "label": "Pull Requests & Code Review",
+          "tagline": "PR workflow, reviews, branch protection, and automated checks.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/githubPRs"
+        },
+        {
+          "id": "gitUndoing",
+          "label": "Undoing Changes",
+          "tagline": "Reset, revert, restore - recovering from mistakes.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitUndoing"
+        },
+        {
+          "id": "gitHistory",
+          "label": "Navigating History",
+          "tagline": "Log options, blame, bisect - finding bugs and understanding changes.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitHistory"
+        },
+        {
+          "id": "gitTagsReleases",
+          "label": "Tags & Releases",
+          "tagline": "Tagging versions, semantic versioning, and shipping GitHub Releases.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitTagsReleases"
+        },
+        {
+          "id": "gitWorkflows",
+          "label": "Git Workflows",
+          "tagline": "GitFlow, trunk-based development, and team patterns.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitWorkflows"
+        },
+        {
+          "id": "gitAdvanced",
+          "label": "Advanced Git",
+          "tagline": "Rebase, cherry-pick, stash, and reflog.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitAdvanced"
+        },
+        {
+          "id": "gitLFS",
+          "label": "Git LFS for ML",
+          "tagline": "Managing large files, models, and datasets.",
+          "url": "https://aimlcompanion.ai/module/gitVersionControl/gitLFS"
+        }
+      ]
+    },
+    {
+      "id": "mlOps",
+      "label": "MLOps & Deployment",
+      "color": "#fb923c",
+      "url": "https://aimlcompanion.ai/curriculum/mlOps",
+      "summary": "Deploy, monitor, and maintain ML models in production.",
+      "image": "track-mlOps.webp",
+      "modules": [
+        {
+          "id": "mlopsIntro",
+          "label": "What is MLOps?",
+          "tagline": "The discipline of productionizing ML.",
+          "url": "https://aimlcompanion.ai/module/mlOps/mlopsIntro"
+        },
+        {
+          "id": "dockerBasics",
+          "label": "Docker Fundamentals",
+          "tagline": "Containers, images, and Dockerfiles.",
+          "url": "https://aimlcompanion.ai/module/mlOps/dockerBasics"
+        },
+        {
+          "id": "dockerML",
+          "label": "Docker for ML",
+          "tagline": "Containerizing ML applications.",
+          "url": "https://aimlcompanion.ai/module/mlOps/dockerML"
+        },
+        {
+          "id": "mlAPIs",
+          "label": "Building ML APIs",
+          "tagline": "FastAPI and Flask for model serving.",
+          "url": "https://aimlcompanion.ai/module/mlOps/mlAPIs"
+        },
+        {
+          "id": "cicdBasics",
+          "label": "CI/CD Fundamentals",
+          "tagline": "GitHub Actions, automated testing.",
+          "url": "https://aimlcompanion.ai/module/mlOps/cicdBasics"
+        },
+        {
+          "id": "cicdML",
+          "label": "CI/CD for ML",
+          "tagline": "Automated training, testing, and deployment.",
+          "url": "https://aimlcompanion.ai/module/mlOps/cicdML"
+        },
+        {
+          "id": "experimentTracking",
+          "label": "Experiment Tracking",
+          "tagline": "MLflow, Weights & Biases, tracking runs.",
+          "url": "https://aimlcompanion.ai/module/mlOps/experimentTracking"
+        },
+        {
+          "id": "modelVersioning",
+          "label": "Model Versioning",
+          "tagline": "DVC, model registries, and artifact management.",
+          "url": "https://aimlcompanion.ai/module/mlOps/modelVersioning"
+        },
+        {
+          "id": "cloudDeploy",
+          "label": "Cloud Deployment",
+          "tagline": "AWS SageMaker, GCP Vertex AI, Azure ML.",
+          "url": "https://aimlcompanion.ai/module/mlOps/cloudDeploy"
+        },
+        {
+          "id": "cloudGpuSelection",
+          "label": "Cloud GPU & Hardware Selection",
+          "tagline": "A100 vs H100, TPUs, cost optimization, and choosing the right…",
+          "url": "https://aimlcompanion.ai/module/mlOps/cloudGpuSelection"
+        },
+        {
+          "id": "serverlessML",
+          "label": "Serverless ML",
+          "tagline": "Lambda, Cloud Functions for inference.",
+          "url": "https://aimlcompanion.ai/module/mlOps/serverlessML"
+        },
+        {
+          "id": "mlMonitoringOps",
+          "label": "Model Monitoring",
+          "tagline": "Drift detection, performance tracking, alerts.",
+          "url": "https://aimlcompanion.ai/module/mlOps/mlMonitoringOps"
+        },
+        {
+          "id": "kubernetesML",
+          "label": "Kubernetes for ML",
+          "tagline": "K8s basics for scaling ML workloads.",
+          "url": "https://aimlcompanion.ai/module/mlOps/kubernetesML"
+        },
+        {
+          "id": "mlopsCapstone",
+          "label": "Project: Model Serving Platform",
+          "tagline": "Learn Project: Model Serving Platform with interactive visualizations, quizzes, and hands-on Python coding.",
+          "url": "https://aimlcompanion.ai/module/mlOps/mlopsCapstone"
+        }
+      ]
+    },
+    {
+      "id": "cloudGenAI",
+      "label": "AI on Cloud",
+      "color": "#818cf8",
+      "url": "https://aimlcompanion.ai/curriculum/cloudGenAI",
+      "summary": "Build and deploy GenAI/Agentic systems on AWS, GCP, and Azure.",
+      "image": "track-cloudGenAI.webp",
+      "modules": [
+        {
+          "id": "cloudGenAIIntro",
+          "label": "Why Cloud for GenAI",
+          "tagline": "When cloud helps, when it hurts, and what you actually save.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/cloudGenAIIntro"
+        },
+        {
+          "id": "cloudIamCostSecurity",
+          "label": "IAM, Cost & Security Basics",
+          "tagline": "Identity, regions, data residency, and cost guardrails.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/cloudIamCostSecurity"
+        },
+        {
+          "id": "providerComparison",
+          "label": "AWS vs GCP vs Azure",
+          "tagline": "Side-by-side: auth, pricing, model catalog, dev experience.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/providerComparison"
+        },
+        {
+          "id": "awsBedrockModels",
+          "label": "AWS Bedrock Models",
+          "tagline": "Model catalog, invoke patterns, streaming, Guardrails.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/awsBedrockModels"
+        },
+        {
+          "id": "awsBedrockAgentCore",
+          "label": "Bedrock AgentCore",
+          "tagline": "Agent primitives, tool use, multi-agent orchestration.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/awsBedrockAgentCore"
+        },
+        {
+          "id": "multiAgentsOnAws",
+          "label": "Project: Multi-Agents App on AWS",
+          "tagline": "4-agent research team on Bedrock AgentCore - orchestrator +…",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/multiAgentsOnAws"
+        },
+        {
+          "id": "awsSageMakerFineTuning",
+          "label": "SageMaker Fine-Tuning",
+          "tagline": "Training jobs, custom models, Bedrock custom model import.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/awsSageMakerFineTuning"
+        },
+        {
+          "id": "awsLambdaAgents",
+          "label": "Lambda + Step Functions Agents",
+          "tagline": "Serverless agent orchestration patterns.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/awsLambdaAgents"
+        },
+        {
+          "id": "awsKnowledgeBasesRAG",
+          "label": "Bedrock Knowledge Bases RAG",
+          "tagline": "Managed RAG with Bedrock KB and OpenSearch.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/awsKnowledgeBasesRAG"
+        },
+        {
+          "id": "gcpVertexModels",
+          "label": "Vertex AI Models",
+          "tagline": "Model garden, Gemini APIs, serving patterns.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/gcpVertexModels"
+        },
+        {
+          "id": "gcpVertexAgentBuilder",
+          "label": "Vertex Agent Builder",
+          "tagline": "Agent Builder and Agent Engine (ex-Reasoning Engine).",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/gcpVertexAgentBuilder"
+        },
+        {
+          "id": "gcpCloudRunAgents",
+          "label": "Cloud Run for Agents",
+          "tagline": "Cloud Run + Cloud Tasks for agent workflows.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/gcpCloudRunAgents"
+        },
+        {
+          "id": "gcpVectorSearch",
+          "label": "Vertex Vector Search",
+          "tagline": "Managed vector search and RAG on GCP.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/gcpVectorSearch"
+        },
+        {
+          "id": "azureOpenAI",
+          "label": "Azure OpenAI Service",
+          "tagline": "AOAI deployments, content filters, quota.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/azureOpenAI"
+        },
+        {
+          "id": "azureAIFoundryAgents",
+          "label": "AI Foundry Agent Service",
+          "tagline": "Building agents with Microsoft Foundry.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/azureAIFoundryAgents"
+        },
+        {
+          "id": "azureFunctionsDurable",
+          "label": "Functions + Durable",
+          "tagline": "Durable Functions for stateful agent orchestration.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/azureFunctionsDurable"
+        },
+        {
+          "id": "azureAISearchRAG",
+          "label": "Azure AI Search RAG",
+          "tagline": "Vector and hybrid search RAG.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/azureAISearchRAG"
+        },
+        {
+          "id": "multiCloudPatterns",
+          "label": "Multi-Cloud Patterns",
+          "tagline": "Provider-agnostic abstractions, model routing, portability.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/multiCloudPatterns"
+        },
+        {
+          "id": "lockInEscape",
+          "label": "Vendor Lock-in & Escape Paths",
+          "tagline": "What locks you in, migration strategies.",
+          "url": "https://aimlcompanion.ai/module/cloudGenAI/lockInEscape"
+        }
+      ]
+    },
+    {
+      "id": "softwareEngAI",
+      "label": "Software Engineering for AI",
+      "color": "#22d3ee",
+      "url": "https://aimlcompanion.ai/curriculum/softwareEngAI",
+      "summary": "Write production-quality code that scales and is maintainable.",
+      "image": "track-softwareEngAI.webp",
+      "modules": [
+        {
+          "id": "cleanCode",
+          "label": "Clean Code Principles",
+          "tagline": "Writing readable, maintainable code.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/cleanCode"
+        },
+        {
+          "id": "pythonBestPractices",
+          "label": "Python Best Practices",
+          "tagline": "PEP8, type hints, and modern Python.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/pythonBestPractices"
+        },
+        {
+          "id": "projectStructure",
+          "label": "Project Structure",
+          "tagline": "Organizing ML projects professionally.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/projectStructure"
+        },
+        {
+          "id": "codeDocumentation",
+          "label": "Documentation",
+          "tagline": "Docstrings, README, and API docs.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/codeDocumentation"
+        },
+        {
+          "id": "pytestBasics",
+          "label": "Testing with pytest",
+          "tagline": "Unit tests, fixtures, and assertions.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/pytestBasics"
+        },
+        {
+          "id": "testingML",
+          "label": "Testing ML Code",
+          "tagline": "Testing data pipelines and models.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/testingML"
+        },
+        {
+          "id": "testingLLMApps",
+          "label": "Testing LLM & Agent Applications",
+          "tagline": "Snapshot tests, cassettes, and a calibrated judge in CI.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/testingLLMApps"
+        },
+        {
+          "id": "cicdForAI",
+          "label": "CI/CD for AI Systems",
+          "tagline": "Pipelines, gates, and rollout for prompts, models, and code.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/cicdForAI"
+        },
+        {
+          "id": "mockingTesting",
+          "label": "Mocking & Integration Tests",
+          "tagline": "Mocking APIs, integration testing.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/mockingTesting"
+        },
+        {
+          "id": "apiDesign",
+          "label": "API Design Principles",
+          "tagline": "REST, versioning, and best practices.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/apiDesign"
+        },
+        {
+          "id": "designPatterns",
+          "label": "Design Patterns for ML",
+          "tagline": "Factory, strategy, and ML-specific patterns.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/designPatterns"
+        },
+        {
+          "id": "codeReview",
+          "label": "Code Review Best Practices",
+          "tagline": "Giving and receiving effective feedback.",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/codeReview"
+        },
+        {
+          "id": "engineeringWithAgents",
+          "label": "Engineering with AI Coding Agents",
+          "tagline": "Specs, guardrails, and review discipline for generated…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/engineeringWithAgents"
+        },
+        {
+          "id": "mlSystemDesign",
+          "label": "ML System Design Fundamentals",
+          "tagline": "Latency budgets, two-stage retrieval, feature stores, safe…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/mlSystemDesign"
+        },
+        {
+          "id": "aiEngineeringSystemDesign",
+          "label": "AI Engineering System Design",
+          "tagline": "RAG topology, LLM serving, agent runtimes, cost cascades, evals…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/aiEngineeringSystemDesign"
+        },
+        {
+          "id": "aiEvalEngineering",
+          "label": "AI Evaluation Engineering",
+          "tagline": "Golden sets, component-level scores, calibrated judges, and…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/aiEvalEngineering"
+        },
+        {
+          "id": "aiSystemsFailDifferently",
+          "label": "AI Systems Fail Differently",
+          "tagline": "Retries, timeouts, circuit breakers, idempotency and fallbacks…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/aiSystemsFailDifferently"
+        },
+        {
+          "id": "inferenceEngineInternals",
+          "label": "Inference Engine Internals",
+          "tagline": "PagedAttention, continuous batching, FlashAttention v3, prefix…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/inferenceEngineInternals"
+        },
+        {
+          "id": "quantizationCompression",
+          "label": "Quantization & Compression",
+          "tagline": "FP16 to FP8 to INT8 to INT4, AWQ vs GPTQ vs SmoothQuant, FP8…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/quantizationCompression"
+        },
+        {
+          "id": "collectiveCommsNetworking",
+          "label": "Collective Comms & Networking",
+          "tagline": "NCCL allreduce, NVLink, NVSwitch, InfiniBand, RDMA - what…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/collectiveCommsNetworking"
+        },
+        {
+          "id": "hardwareFluency",
+          "label": "Hardware Fluency",
+          "tagline": "H100/H200/B200 vs MI300X vs Trainium2 - HBM bandwidth, FP8 support, MIG…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/hardwareFluency"
+        },
+        {
+          "id": "gpuSchedulingKubernetes",
+          "label": "GPU Scheduling on Kubernetes",
+          "tagline": "KubeRay, gang scheduling, MIG management, Karpenter on GPU…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/gpuSchedulingKubernetes"
+        },
+        {
+          "id": "multiTenantRoutingSlos",
+          "label": "Multi-Tenant Routing & SLOs",
+          "tagline": "Prefix-cache-aware routing, priority queues, SLO admission…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/multiTenantRoutingSlos"
+        },
+        {
+          "id": "llmObservabilityCost",
+          "label": "LLM Observability + Cost",
+          "tagline": "TTFT, ITL/TPOT, KV-cache hit rate, $/1M tokens - the metrics every…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/llmObservabilityCost"
+        },
+        {
+          "id": "loraServingAtScale",
+          "label": "LoRA Serving at Scale",
+          "tagline": "S-LoRA, Punica - serving thousands of fine-tuned adapters on one base…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/loraServingAtScale"
+        },
+        {
+          "id": "advancedDecoding",
+          "label": "Advanced Decoding",
+          "tagline": "Speculative decoding, Medusa, EAGLE, constrained output - the latency wins…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/advancedDecoding"
+        },
+        {
+          "id": "coldStartModelLoading",
+          "label": "Cold-Start & Model Loading",
+          "tagline": "Safetensors, streaming load, Alluxio/Fluid, pre-warm pools - get…",
+          "url": "https://aimlcompanion.ai/module/softwareEngAI/coldStartModelLoading"
+        }
+      ]
+    },
+    {
+      "id": "forwardDeployment",
+      "label": "Forward Deployment Engineering",
+      "color": "#f472b6",
+      "url": "https://aimlcompanion.ai/curriculum/forwardDeployment",
+      "summary": "Ship production AI inside a customer's environment.",
+      "image": "track-forwardDeployment.webp",
+      "modules": [
+        {
+          "id": "fdeRoleMap",
+          "label": "The FDE Role Map",
+          "tagline": "Palantir history, OpenAI/Anthropic/Google split, salary bands US + India…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeRoleMap"
+        },
+        {
+          "id": "fdeCustomerDiscovery",
+          "label": "Customer Discovery & Decomposition",
+          "tagline": "The 5-step decomposition framework Palantir invented…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeCustomerDiscovery"
+        },
+        {
+          "id": "fdeEvalFirstEng",
+          "label": "Eval-First Engineering",
+          "tagline": "Build the LLM-as-Judge harness BEFORE the agent - regression suites…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeEvalFirstEng"
+        },
+        {
+          "id": "fdeMCPServers",
+          "label": "MCP Servers, Sub-Agents & Agent Skills",
+          "tagline": "Build a real MCP server for a fake enterprise CRM…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeMCPServers"
+        },
+        {
+          "id": "fdeVPCDeployment",
+          "label": "On-Prem & VPC Deployment Patterns",
+          "tagline": "Air-gapped vLLM, private vector DB, SSO, audit logging…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeVPCDeployment"
+        },
+        {
+          "id": "fdeAIOpsRigor",
+          "label": "Production AI Ops Rigor",
+          "tagline": "Rate limiting, backoff with jitter, prompt caching + versioning, A/B…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeAIOpsRigor"
+        },
+        {
+          "id": "fdeLegacyIntegration",
+          "label": "Integrating with Legacy Enterprise Systems",
+          "tagline": "SAP, Salesforce, ServiceNow, Snowflake - MCP +…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeLegacyIntegration"
+        },
+        {
+          "id": "fdeDataEngineering",
+          "label": "Data Engineering for FDEs",
+          "tagline": "Immutable landing zone, idempotent incremental loads with a…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeDataEngineering"
+        },
+        {
+          "id": "fdeEngagementEconomics",
+          "label": "Engagement Economics & Scoping",
+          "tagline": "What an engagement really costs, scoping backwards from a…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeEngagementEconomics"
+        },
+        {
+          "id": "fdeEnablement",
+          "label": "Enablement, Handoff & Adoption",
+          "tagline": "Adoption over uptime, operators vs their engineers vs the…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeEnablement"
+        },
+        {
+          "id": "fdeDemoCraft",
+          "label": "Demo Craft & Live Build",
+          "tagline": "Live coding under observation, narration as a graded skill…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeDemoCraft"
+        },
+        {
+          "id": "fdeFullStack",
+          "label": "Full-Stack for FDEs",
+          "tagline": "Streamlit vs FastAPI vs embed vs bot, SSE past enterprise proxy…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeFullStack"
+        },
+        {
+          "id": "fdeClientSimulation",
+          "label": "Client Simulation & Executive Comms",
+          "tagline": "Push back without breaking the relationship - ADR…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeClientSimulation"
+        },
+        {
+          "id": "fdeVerticalFinServ",
+          "label": "Vertical Deep-Dive: Financial Services",
+          "tagline": "FinServ as default for India market - KYC, AML…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeVerticalFinServ"
+        },
+        {
+          "id": "fdeCodingRound",
+          "label": "FDE Coding Round Prep",
+          "tagline": "Not an algorithms round - what it scores, shipping a vertical slice…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeCodingRound"
+        },
+        {
+          "id": "fdeInterviewMastery",
+          "label": "FDE Interview Mastery",
+          "tagline": "Palantir/OpenAI/Anthropic/Google loops, 8 STAR stories, take-home…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeInterviewMastery"
+        },
+        {
+          "id": "fdeCareerNarrative",
+          "label": "FDE Career Narrative + India & Global Job Hunt",
+          "tagline": "'Why FDE not SWE', harvesting stories, India…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeCareerNarrative"
+        },
+        {
+          "id": "fdeVerticalHealthcare",
+          "label": "Bonus Vertical: Healthcare & Life Sciences",
+          "tagline": "HIPAA, PHI handling, clinical decision support…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeVerticalHealthcare"
+        },
+        {
+          "id": "fdeVerticalGov",
+          "label": "Bonus Vertical: Government & Defense",
+          "tagline": "FedRAMP, IL5, air-gapped environments, defense…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeVerticalGov"
+        },
+        {
+          "id": "fdeVerticalLegal",
+          "label": "Bonus Vertical: Legal & Contracts",
+          "tagline": "Contract analysis, citation grounding, attorney-client…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeVerticalLegal"
+        },
+        {
+          "id": "fdePortfolioMVA",
+          "label": "Playbook: FDE Portfolio Minimum Viable Artifact",
+          "tagline": "Playbook for the interview-submission…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdePortfolioMVA"
+        },
+        {
+          "id": "fdeEmbeddedSim",
+          "label": "Playbook: 7-Day Embedded Engagement Simulation",
+          "tagline": "Week-long structured exercise mirroring a…",
+          "url": "https://aimlcompanion.ai/module/forwardDeployment/fdeEmbeddedSim"
+        }
+      ]
+    },
+    {
+      "id": "aiAgents",
+      "label": "Agentic AI & Multi-Agent Systems",
+      "color": "#00ff88",
+      "url": "https://aimlcompanion.ai/curriculum/aiAgents",
+      "summary": "Build autonomous AI systems with tool use and agentic workflows.",
+      "image": "track-aiAgents.webp",
+      "modules": [
+        {
+          "id": "agentsIntro",
+          "label": "Introduction to AI Agents",
+          "tagline": "What are agents and why they matter.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentsIntro"
+        },
+        {
+          "id": "agentLifecycle",
+          "label": "Agent Lifecycle: The Complete Architecture",
+          "tagline": "The 6-phase lifecycle powering every AI agent.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentLifecycle"
+        },
+        {
+          "id": "functionCalling",
+          "label": "Function Calling",
+          "tagline": "OpenAI and Anthropic tool use APIs.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/functionCalling"
+        },
+        {
+          "id": "structuredOutputs",
+          "label": "Structured Outputs",
+          "tagline": "JSON mode, schemas, and reliable parsing.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/structuredOutputs"
+        },
+        {
+          "id": "toolDesign",
+          "label": "Designing Tools",
+          "tagline": "Creating effective tools for agents.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/toolDesign"
+        },
+        {
+          "id": "agentToolEcosystem",
+          "label": "Agent Tool Ecosystem",
+          "tagline": "Browser, code, API, and database tools for agents.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentToolEcosystem"
+        },
+        {
+          "id": "computerUseAgents",
+          "label": "Computer-Use Agents",
+          "tagline": "Driving a real screen: pixels, grounding, verification, and containment.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/computerUseAgents"
+        },
+        {
+          "id": "reactPattern",
+          "label": "ReAct Pattern",
+          "tagline": "Reasoning and acting in loops.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/reactPattern"
+        },
+        {
+          "id": "agentPlanning",
+          "label": "Agent Planning",
+          "tagline": "Task decomposition and planning strategies.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentPlanning"
+        },
+        {
+          "id": "reasoningPatterns",
+          "label": "Reasoning Patterns",
+          "tagline": "Chain-of-Thought, Self-Consistency, and structured reasoning.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/reasoningPatterns"
+        },
+        {
+          "id": "treeOfThought",
+          "label": "Tree of Thought",
+          "tagline": "Branching exploration, parallel reasoning, and backtracking.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/treeOfThought"
+        },
+        {
+          "id": "langchainBasics",
+          "label": "LangChain Fundamentals",
+          "tagline": "Building agents with LangChain.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/langchainBasics"
+        },
+        {
+          "id": "agentFrameworks",
+          "label": "Agent Frameworks",
+          "tagline": "CrewAI, AutoGen, and framework comparison.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentFrameworks"
+        },
+        {
+          "id": "vectorDatabases",
+          "label": "Vector Databases",
+          "tagline": "Pinecone, Weaviate, ChromaDB for RAG.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/vectorDatabases"
+        },
+        {
+          "id": "ragAdvanced",
+          "label": "Advanced RAG",
+          "tagline": "Chunking strategies, hybrid search, reranking.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/ragAdvanced"
+        },
+        {
+          "id": "agentEvaluation",
+          "label": "Agent Evaluation",
+          "tagline": "Testing and evaluating agent performance.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentEvaluation"
+        },
+        {
+          "id": "mcpProtocol",
+          "label": "Model Context Protocol",
+          "tagline": "MCP for standardized tool interfaces.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/mcpProtocol"
+        },
+        {
+          "id": "agentMemory",
+          "label": "Agent Memory Systems",
+          "tagline": "Short-term, long-term, and episodic memory for agents.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentMemory"
+        },
+        {
+          "id": "langgraphAgents",
+          "label": "LangGraph Agents",
+          "tagline": "Stateful multi-step agents with LangGraph.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/langgraphAgents"
+        },
+        {
+          "id": "multiAgentPatterns",
+          "label": "Multi-Agent Patterns",
+          "tagline": "Orchestration, delegation, and collaboration patterns.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/multiAgentPatterns"
+        },
+        {
+          "id": "crewaiAgents",
+          "label": "CrewAI Multi-Agent Systems",
+          "tagline": "Role-based crews and collaborative AI teams.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/crewaiAgents"
+        },
+        {
+          "id": "openaiAgentsSDK",
+          "label": "OpenAI Agents SDK",
+          "tagline": "Building agents with OpenAI's official SDK.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/openaiAgentsSDK"
+        },
+        {
+          "id": "a2aProtocol",
+          "label": "Agent-to-Agent Protocol",
+          "tagline": "Google's A2A protocol for agent interoperability.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/a2aProtocol"
+        },
+        {
+          "id": "agentGuardrails",
+          "label": "Agent Guardrails & Safety",
+          "tagline": "Input validation, output filtering, and safety boundaries.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentGuardrails"
+        },
+        {
+          "id": "agentObservability",
+          "label": "Agent Observability",
+          "tagline": "Tracing, logging, and debugging agent systems.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentObservability"
+        },
+        {
+          "id": "agenticWorkflows",
+          "label": "Agentic Workflow Patterns",
+          "tagline": "Query routing, parallel execution, chaining, event-driven, tool…",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agenticWorkflows"
+        },
+        {
+          "id": "agentDeployment",
+          "label": "Agent Deployment",
+          "tagline": "Production deployment patterns and scaling strategies.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentDeployment"
+        },
+        {
+          "id": "durableAgents",
+          "label": "Durable Agents",
+          "tagline": "Surviving crashes, deploys, and a human who answers on Thursday.",
+          "url": "https://aimlcompanion.ai/module/aiAgents/durableAgents"
+        },
+        {
+          "id": "agentFullStack",
+          "label": "Full-Stack GenAI Application",
+          "tagline": "Architecture walkthrough of production GenAI app (React +…",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentFullStack"
+        },
+        {
+          "id": "autonomousResearch",
+          "label": "Autonomous AI Research",
+          "tagline": "By Andrej Karpathy - AI agents that autonomously run ML experiments…",
+          "url": "https://aimlcompanion.ai/module/aiAgents/autonomousResearch"
+        },
+        {
+          "id": "agentsCapstone",
+          "label": "Project: Multi-Agent Research System",
+          "tagline": "Production multi-agent research pipeline with…",
+          "url": "https://aimlcompanion.ai/module/aiAgents/agentsCapstone"
+        },
+        {
+          "id": "contentModerationProject",
+          "label": "Project: Content Moderation System",
+          "tagline": "Enterprise multi-agent content moderation with LangGraph…",
+          "url": "https://aimlcompanion.ai/module/aiAgents/contentModerationProject"
+        },
+        {
+          "id": "dueDiligenceProject",
+          "label": "Project: Due Diligence Analyst",
+          "tagline": "6-agent research system with parallel execution…",
+          "url": "https://aimlcompanion.ai/module/aiAgents/dueDiligenceProject"
+        },
+        {
+          "id": "smartClaimsProcessor",
+          "label": "Project: Smart Claims Processor",
+          "tagline": "7-agent insurance claims pipeline with LangGraph, CrewAI…",
+          "url": "https://aimlcompanion.ai/module/aiAgents/smartClaimsProcessor"
+        }
+      ]
+    },
+    {
+      "id": "aiProduct",
+      "label": "AI for Product & Business",
+      "color": "#4ade80",
+      "url": "https://aimlcompanion.ai/curriculum/aiProduct",
+      "summary": "AI judgment for PMs and leaders, no code required.",
+      "image": "track-aiProduct.webp",
+      "modules": [
+        {
+          "id": "aiOpportunityId",
+          "label": "Finding Real AI Opportunities",
+          "tagline": "Separating genuine AI use cases from AI hype.",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiOpportunityId"
+        },
+        {
+          "id": "aiFeasibility",
+          "label": "AI Feasibility Assessment",
+          "tagline": "Data you can reach, examples you can gather, effort you can…",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiFeasibility"
+        },
+        {
+          "id": "aiBuildVsBuy",
+          "label": "Build, Buy, or Build On",
+          "tagline": "Three sourcing options, three different things you become…",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiBuildVsBuy"
+        },
+        {
+          "id": "aiPRD",
+          "label": "Writing an AI PRD",
+          "tagline": "Requirements for a system that answers differently every time.",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiPRD"
+        },
+        {
+          "id": "aiUX",
+          "label": "Designing for Uncertainty",
+          "tagline": "AI UX and human-in-the-loop that actually works.",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiUX"
+        },
+        {
+          "id": "aiProductMetrics",
+          "label": "Success Metrics for AI Features",
+          "tagline": "Model metrics answer a different question than the one you…",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiProductMetrics"
+        },
+        {
+          "id": "aiModelChoice",
+          "label": "Choosing a Model as a Product Decision",
+          "tagline": "Tier, baseline, interpretability, and the cost of…",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiModelChoice"
+        },
+        {
+          "id": "aiQualityTradeoffs",
+          "label": "The Cost of Being Wrong",
+          "tagline": "Precision, recall, and choosing which mistake you would rather make.",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiQualityTradeoffs"
+        },
+        {
+          "id": "aiGovernanceRisk",
+          "label": "AI Governance & Risk",
+          "tagline": "Bias, ownership, privacy, and the questions you will be asked in the…",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiGovernanceRisk"
+        },
+        {
+          "id": "aiLiteracyCapstone",
+          "label": "Capstone: Your Own AI Opportunity Brief",
+          "tagline": "Take one real workflow from your job through the…",
+          "url": "https://aimlcompanion.ai/module/aiProduct/aiLiteracyCapstone"
+        }
+      ]
+    },
+    {
+      "id": "interviewScenarios",
+      "label": "Interview Q&A",
+      "color": "#fbbf24",
+      "url": "https://aimlcompanion.ai/curriculum/interviewScenarios",
+      "summary": "Tricky scenario-based questions that AI companies ask.",
+      "image": "track-interviewScenarios.webp",
+      "modules": [
+        {
+          "id": "ivAIEngineering",
+          "label": "AI Engineering Scenario based Q&A",
+          "tagline": "12 applied scenarios from modern AI Engineer loops: debug…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivAIEngineering"
+        },
+        {
+          "id": "ivFDEEngineering",
+          "label": "Forward Deployed Engineering Q&A",
+          "tagline": "169 scenario, behavioral, technical, and live-build…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivFDEEngineering"
+        },
+        {
+          "id": "ivGenAICore",
+          "label": "GenAI & Transformers Q&A",
+          "tagline": "24 scenario-based questions on GANs, VAEs, Transformer…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivGenAICore"
+        },
+        {
+          "id": "ivRAGPromptEng",
+          "label": "RAG, Prompting & Modern GenAI Q&A",
+          "tagline": "24 scenario-based questions on RAG pipelines, GraphRAG…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivRAGPromptEng"
+        },
+        {
+          "id": "llmInterviewPrep",
+          "label": "LLM Interview Prep",
+          "tagline": "81 scenario-based questions across 9 tiers - fundamentals, architecture…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/llmInterviewPrep"
+        },
+        {
+          "id": "ivLLMCore",
+          "label": "LLM Scenario based Q&A",
+          "tagline": "12 production scenarios testing deep LLM understanding.",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivLLMCore"
+        },
+        {
+          "id": "agentInterviewPrep",
+          "label": "Agentic AI Interview Prep",
+          "tagline": "75 scenario-based interview questions across 13 progressive tiers.",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/agentInterviewPrep"
+        },
+        {
+          "id": "ivAgenticAI",
+          "label": "Agentic AI Scenario based Q&A",
+          "tagline": "12 production scenarios testing real-world agentic AI…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivAgenticAI"
+        },
+        {
+          "id": "ivDataEngineering",
+          "label": "Data Engineering Scenario Q&A",
+          "tagline": "24 scenarios from real data engineering loops - SQL under…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivDataEngineering"
+        },
+        {
+          "id": "ivAIProduct",
+          "label": "AI Product & Business Scenario Q&A",
+          "tagline": "24 scenario questions asked of product managers…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivAIProduct"
+        },
+        {
+          "id": "ivClassicalML",
+          "label": "Classical ML Q&A",
+          "tagline": "55 core machine learning questions that interviewers test first.",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivClassicalML"
+        },
+        {
+          "id": "ivDLFundamentals",
+          "label": "Deep Learning Fundamentals Q&A",
+          "tagline": "25 core deep learning questions every ML engineer must know…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivDLFundamentals"
+        },
+        {
+          "id": "ivMLSystemDesign",
+          "label": "ML System Design Q&A",
+          "tagline": "12 end-to-end system design questions that test architectural thinking.",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivMLSystemDesign"
+        },
+        {
+          "id": "ivMLOps",
+          "label": "MLOps & Production ML Q&A",
+          "tagline": "12 production deployment, monitoring, and infrastructure-at-scale…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivMLOps"
+        },
+        {
+          "id": "ivMathStats",
+          "label": "ML Math & Statistics Q&A",
+          "tagline": "12 mathematical-foundation questions interviewers use as quick…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivMathStats"
+        },
+        {
+          "id": "ivMLCoding",
+          "label": "ML Coding Challenges",
+          "tagline": "25 challenges to implement ML algorithms from scratch and prove you…",
+          "url": "https://aimlcompanion.ai/module/interviewScenarios/ivMLCoding"
+        }
+      ]
+    },
+    {
+      "id": "aiTools",
+      "label": "AI Tools",
+      "color": "#c084fc",
+      "url": "https://aimlcompanion.ai/curriculum/aiTools",
+      "summary": "Set up Claude Code and OpenClaw to automate real work.",
+      "image": "track-aiTools.webp",
+      "modules": [
+        {
+          "id": "openclawSetup",
+          "label": "OpenClaw: Your AI-Powered Personal Agent",
+          "tagline": "Install and configure OpenClaw to automate tasks…",
+          "url": "https://aimlcompanion.ai/module/aiTools/openclawSetup"
+        },
+        {
+          "id": "claudeCodeSetup",
+          "label": "Claude Code: AI-Powered Dev Workflow",
+          "tagline": "Set up an agentic coding assistant for production-grade…",
+          "url": "https://aimlcompanion.ai/module/aiTools/claudeCodeSetup"
+        }
+      ]
+    }
+  ],
+  "posts": [
+    {
+      "slug": "how-llm-text-watermarking-works-2026",
+      "image": "blog-how-llm-text-watermarking-works-2026.webp",
+      "label": "How LLM Watermarking works",
+      "date": "2026-08-17",
+      "summary": "On 11 August 2026 Anthropic said Claude models launched from 2 August onward will carry a machine-readable text watermark, built on Google DeepMind's SynthID-Text approach. None of the current models carries it yet. This post explains how a watermark hides inside the sampling loop, how a detector turns word choices into a statistical score, why paraphrasing breaks it, and why a detected watermark is evidence of processing rather than proof of authorship.",
+      "tags": [
+        "LLM",
+        "AI Safety",
+        "Provenance",
+        "Sampling"
+      ],
+      "url": "https://aimlcompanion.ai/blog/how-llm-text-watermarking-works-2026"
+    },
+    {
+      "slug": "meta-muse-glimmer-explained-2026",
+      "image": "blog-meta-muse-glimmer-explained-2026.webp",
+      "label": "Meta's Muse Glimmer: An Agentic AI Model",
+      "date": "2026-08-12",
+      "summary": "On 10 August 2026 Meta released Muse Glimmer, a 30B open-weight agentic model under Apache 2.0 that runs on one 24 GB consumer GPU. Four architectural decisions got it there, starting with an attention layout that turns a 104 GB KV cache into 1.7 GB. This post builds them up from first principles, traces one request through the whole system, and ends with a runnable lab you can point at your own Glimmer server.",
+      "tags": [
+        "Muse Glimmer",
+        "Meta",
+        "Agentic AI",
+        "Local LLM"
+      ],
+      "url": "https://aimlcompanion.ai/blog/meta-muse-glimmer-explained-2026"
+    },
+    {
+      "slug": "how-to-learn-ai-ml-without-getting-lost-2026",
+      "image": "blog-how-to-learn-ai-ml-without-getting-lost-2026.webp",
+      "label": "How to Learn AI/ML effectively without getting lost",
+      "date": "2026-08-10",
+      "summary": "Most people learning AI/ML follow one silent rule, fully understand this topic before moving to the next one. It feels like discipline, but it is the main reason learners get stuck. The field is a web, not a ladder, so the same concept only becomes clear on the second or third pass. Here is the loop that works instead, and why 30 per cent understanding is often enough to keep going.",
+      "tags": [
+        "Learning",
+        "Beginners",
+        "Mental Models",
+        "Study Method"
+      ],
+      "url": "https://aimlcompanion.ai/blog/how-to-learn-ai-ml-without-getting-lost-2026"
+    },
+    {
+      "slug": "production-multi-agent-genai-architecture-2026",
+      "image": "blog-production-multi-agent-genai-architecture-2026.webp",
+      "label": "Inside a Production Multi-Agent GenAI System",
+      "date": "2026-08-03",
+      "summary": "One user request can turn into twenty or more model calls across five agents, and any of them can return in 200 milliseconds with an answer that is well formed, on schema, and wrong. This post follows a single request through a production multi-agent system, component by component. The edge, the orchestrator, the agents, the tools, the shared state, and the merge. For each one we'll go through the failure modes that only show up under real traffic and the fix that closes them. We'll finish with the questions that catch people out in interviews.",
+      "tags": [
+        "Multi-Agent Systems",
+        "GenAI Architecture",
+        "Production AI",
+        "Distributed Systems"
+      ],
+      "url": "https://aimlcompanion.ai/blog/production-multi-agent-genai-architecture-2026"
+    },
+    {
+      "slug": "ml-system-design-patterns-2026",
+      "image": "blog-ml-system-design-patterns-2026.webp",
+      "label": "ML System Design Patterns",
+      "date": "2026-07-26",
+      "summary": "Code dependencies are explicit and versioned. Data dependencies are implicit, silently changing, and shared by teams you have never met. Nearly every pattern in production machine learning exists to deal with that one difference. This post maps them layer by layer. Feature stores and point-in-time correctness, training pipelines, the four serving shapes, the release ladder, and the three kinds of drift. We'll finish with the mistakes that quietly break real world systems, and how all of this changes in the age of language models.",
+      "tags": [
+        "ML System Design",
+        "MLOps",
+        "Architecture",
+        "Feature Store"
+      ],
+      "url": "https://aimlcompanion.ai/blog/ml-system-design-patterns-2026"
+    },
+    {
+      "slug": "evaluating-ai-systems-beginners-real-code-2026",
+      "image": "blog-evaluating-ai-systems-beginners-real-code-2026.webp",
+      "label": "How to Evaluate AI Systems with Real Code",
+      "date": "2026-07-21",
+      "summary": "Whatever you build on top of a language model, the same discipline keeps it honest. You never trust an output by default, you score it against examples whose answer you already know. This post walks it step by step with real code, build a golden set, evaluate a RAG app and then an AI agent, wire an automatic release gate, and keep evaluating after launch, plus the interview questions this method answers.",
+      "tags": [
+        "AI Engineering",
+        "GenAI",
+        "Evaluation",
+        "RAG"
+      ],
+      "url": "https://aimlcompanion.ai/blog/evaluating-ai-systems-beginners-real-code-2026"
+    },
+    {
+      "slug": "run-claude-code-cheaply-big-codebase-2026",
+      "image": "blog-run-claude-code-cheaply-big-codebase-2026.webp",
+      "label": "How to run Claude Code cheaply on a big codebase",
+      "date": "2026-07-19",
+      "summary": "Open a usage report on a busy AI coding setup and the spend is spread across dozens of sessions. Almost all of it is the expensive model running search and checks a cheaper model does just as well. The fix is structure, cheap models for the bulk and the top model only where it is needed. This post has the exact files to copy.",
+      "tags": [
+        "AI Coding",
+        "Cost",
+        "Workflow",
+        "Agents"
+      ],
+      "url": "https://aimlcompanion.ai/blog/run-claude-code-cheaply-big-codebase-2026"
+    },
+    {
+      "slug": "agentic-ai-old-software-engineering-new-names-2026",
+      "image": "blog-agentic-ai-old-software-engineering-new-names-2026.webp",
+      "label": "Is Agentic AI just Old Software Engineering with New Names?",
+      "date": "2026-07-15",
+      "summary": "Most agentic AI terminology maps cleanly onto things distributed-systems engineers already know. Orchestration is workflow management, multi-agent systems are message passing, tool use is an API call behind a dispatcher. But the component at the centre is a probabilistic machine programmed in English. That one difference changes testing, monitoring, security, and cost more than the familiar parts suggest.",
+      "tags": [
+        "Agentic AI",
+        "AI Engineering",
+        "Software Engineering",
+        "Opinion"
+      ],
+      "url": "https://aimlcompanion.ai/blog/agentic-ai-old-software-engineering-new-names-2026"
+    },
+    {
+      "slug": "ai-observability-debugging-sometimes-wrong-agent-2026",
+      "image": "blog-ai-observability-debugging-sometimes-wrong-agent-2026.webp",
+      "label": "Interview question, debug an AI agent that is only sometimes wrong",
+      "date": "2026-07-14",
+      "summary": "A user says \"sometimes it hallucinates.\" There is no stack trace, no error, no way to reproduce it. This is the full map of AI observability. Why it differs from normal monitoring, and how traces become the unit of debugging. How OpenTelemetry captures a Large Language Model (LLM) request, how quality is measured on live traffic, and how a real incident gets investigated end to end.",
+      "tags": [
+        "AI Engineering",
+        "Observability",
+        "LLMOps",
+        "Debugging"
+      ],
+      "url": "https://aimlcompanion.ai/blog/ai-observability-debugging-sometimes-wrong-agent-2026"
+    },
+    {
+      "slug": "non-functional-requirements-ai-apps-at-scale-2026",
+      "image": "blog-non-functional-requirements-ai-apps-at-scale-2026.webp",
+      "label": "What Breaks when a Million People use your AI App",
+      "date": "2026-07-10",
+      "summary": "A demo proves one good answer. Production has to serve good answers to millions of people, over and over, while traffic spikes, models drift, and costs pile up. This is the map of Non-functional requirements (NFRs) for AI apps at scale, the twelve things that decide whether your app survives, explained through what goes wrong when each one is missing.",
+      "tags": [
+        "AI Engineering",
+        "Production AI",
+        "LLM APIs",
+        "Scalability"
+      ],
+      "url": "https://aimlcompanion.ai/blog/non-functional-requirements-ai-apps-at-scale-2026"
+    },
+    {
+      "slug": "real-obstacle-to-learning-ai-2026",
+      "image": "blog-real-obstacle-to-learning-ai-2026.webp",
+      "label": "The Real Obstacle to Learning AI",
+      "date": "2026-07-06",
+      "summary": "Every week thousands of people decide to learn AI, and most quit within months, almost all of them blaming themselves. They are wrong. The obstacle was never the difficulty of the ideas. It is the wall wrapped around them, unstable jargon, expired tutorials, hype-poisoned search results, unnecessary math gatekeeping, and false confidence. This post takes that wall apart brick by brick.",
+      "tags": [
+        "Learning",
+        "Beginners",
+        "Mental Models",
+        "LLM"
+      ],
+      "url": "https://aimlcompanion.ai/blog/real-obstacle-to-learning-ai-2026"
+    },
+    {
+      "slug": "aiml-symbols-glossary-2026",
+      "image": "blog-aiml-symbols-glossary-2026.webp",
+      "label": "The Mathematical Symbols of AI & ML",
+      "date": "2026-07-01",
+      "summary": "A symbol-by-symbol reference for the math notation of AI, ML, deep learning, and LLMs. Each symbol gets a plain-English meaning, the formula you actually see it in, the confusion it causes, and a micro-diagram of what it does. It starts with the everyday operators (Σ, ∏, ∫, ∂) and Greek letters (α, λ, σ, π), moves through classic ML notation (x, X, y and ŷ), and ends with the deep-learning and LLM symbols like scaled dot-product attention and the top-p knob.",
+      "tags": [
+        "Glossary",
+        "Reference",
+        "Deep Learning",
+        "LLM"
+      ],
+      "url": "https://aimlcompanion.ai/blog/aiml-symbols-glossary-2026"
+    },
+    {
+      "slug": "sakana-fugu-orchestrator-model-2026",
+      "image": "blog-sakana-fugu-orchestrator-model-2026.webp",
+      "label": "Sakana Fugu, a team of LLMs working as one",
+      "date": "2026-06-25",
+      "summary": "Most frontier releases this year were about scale, a bigger model, a longer context, a higher score. Sakana Fugu, released June 22, 2026, takes a different swing. It is a model whose whole job is to command other models, a learned conductor that hides a team of frontier LLMs behind a single API and decides, per request, who should play. This is what Fugu actually is, how the orchestration is trained rather than hardcoded, and how seriously to take the benchmark claims.",
+      "tags": [
+        "AI Engineering",
+        "LLM",
+        "Multi-Agent",
+        "Orchestration"
+      ],
+      "url": "https://aimlcompanion.ai/blog/sakana-fugu-orchestrator-model-2026"
+    },
+    {
+      "slug": "agentic-ai-glossary-2026",
+      "image": "blog-agentic-ai-glossary-2026.webp",
+      "label": "The Agentic AI Glossary, every term you need to know",
+      "date": "2026-06-23",
+      "summary": "The agentic AI vocabulary exploded in a short span, scattered across papers, docs, and vendor blogs that each assume you already know the rest. This glossary pulls the most common terms into one place and defines each in plain language, grouped by theme rather than alphabetically. Foundations, reasoning patterns, tools and protocols, multi-agent architecture, the harness, context and memory, retrieval, skills, safety, operations, and the engineering disciplines. Built to be skimmed and looked up.",
+      "tags": [
+        "Agentic AI",
+        "AI Agents",
+        "Glossary",
+        "Reference"
+      ],
+      "url": "https://aimlcompanion.ai/blog/agentic-ai-glossary-2026"
+    },
+    {
+      "slug": "prompt-engineering-to-loop-engineering-2026",
+      "image": "blog-prompt-engineering-to-loop-engineering-2026.webp",
+      "label": "Prompt Engineering was never the end goal. Welcome to Loop Engineering.",
+      "date": "2026-06-14",
+      "summary": "It started with prompts. For a couple of years that was the obsession, then demos turned into products and reality walked in. APIs fail, context gets messy, models make things up, long workflows drift. Getting one good answer is easy. Getting good answers over and over, at scale, while the world misbehaves, is where the real work starts, and it pulled everyone back toward the feedback loops software engineers have always relied on.",
+      "tags": [
+        "AI Engineering",
+        "LLM",
+        "Production",
+        "Agents"
+      ],
+      "url": "https://aimlcompanion.ai/blog/prompt-engineering-to-loop-engineering-2026"
+    }
+  ]
+}

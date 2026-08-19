@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "d3231c78-4749-4a88-abe3-3713e2b94eb3",
+    "title": "Valid Perfect Square",
+    "difficulty": "Easy",
+    "tags": [
+      "math",
+      "binary-search"
+    ],
+    "statement": "Given a positive integer num, print \"true\" if num is a perfect square, or \"false\" otherwise.\n\nA perfect square is an integer that is the square of an integer. In other words, it is the product of some integer with itself.\n\nYou must not use any built-in library function, such as sqrt.\n\n**Input:**\nA single line containing the positive integer num.\n\n**Output:**\nA single line containing \"true\" if num is a perfect square, otherwise \"false\".\n\n**Constraints:**\n1 <= num <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n16\nOutput:\ntrue\n\nExample 2:\nInput:\n14\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

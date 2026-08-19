@@ -1,0 +1,33 @@
+{
+  "levelNumber": 89,
+  "displayNumber": 35,
+  "title": "Count subarrays with given sum",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers nums and an integer k, return the total <strong>number of</strong> <strong>subarrays</strong> whose sum equals to k.</p>",
+  "examples": [
+    "<p>Input: nums = [1, 1, 1], k = 2</p><p>Output: 2</p><p>Explanation: In the given array [1, 1, 1], there are two subarrays that sum up to 2: [1, 1] and [1, 1]. Hence, the output is 2.</p>",
+    "<p>Input: nums = [1, 2, 3], k = 3</p><p>Output: 2</p><p>Explanation: In the given array [1, 2, 3], there are two subarrays that sum up to 3: [1, 2] and [3]. Hence, the output is 2.</p>",
+    "<p>Input: nums = [3, 1, 2, 4], k = 6</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;&nbsp;1 <= nums.length <=&nbsp;10<sup>5</sup></li><li>&nbsp;&nbsp;&nbsp;-1000 <= nums[i] <= 1000</li><li>&nbsp;&nbsp;&nbsp;-10<sup>7</sup> <= k <= 10<sup>7</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

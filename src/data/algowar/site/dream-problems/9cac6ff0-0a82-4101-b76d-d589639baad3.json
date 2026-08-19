@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "9cac6ff0-0a82-4101-b76d-d589639baad3",
+    "title": "Regular Expression Matching",
+    "difficulty": "Hard",
+    "tags": [
+      "string",
+      "dynamic-programming",
+      "recursion"
+    ],
+    "statement": "Regular Expression Matching\n\nGiven an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:\n\n- '.' Matches any single character.\n- '*' Matches zero or more of the preceding element.\n\nReturn a boolean indicating whether the matching covers the entire input string (not partial).\n\n**Input:**\nThe input is read from standard input as two lines:\n- Line 1: the string s.\n- Line 2: the pattern p.\n\n**Output:**\nPrint a single line containing \"true\" if the pattern matches the entire string, or \"false\" otherwise.\n\n**Constraints:**\n- 1 <= s.length <= 20\n- 1 <= p.length <= 20\n- s contains only lowercase English letters.\n- p contains only lowercase English letters, '.', and '*'.\n- It is guaranteed that for each appearance of the character '*', there will be a previous valid character to match.\n\n**Examples:**\nExample 1:\nInput:\naa\na\nOutput:\nfalse\n\nExample 2:\nInput:\naa\na*\nOutput:\ntrue\n\nExample 3:\nInput:\nab\n.*\nOutput:\ntrue",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

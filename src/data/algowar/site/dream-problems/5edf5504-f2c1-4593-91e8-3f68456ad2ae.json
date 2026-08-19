@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "5edf5504-f2c1-4593-91e8-3f68456ad2ae",
+    "title": "Insert Interval",
+    "difficulty": "Medium",
+    "tags": [
+      "array"
+    ],
+    "statement": "You are given an array of non-overlapping intervals where each interval is represented by its start and end, sorted in ascending order by start. You are also given a new interval represented by its start and end.\n\nInsert the new interval into the array such that the array is still sorted in ascending order by start and still does not have any overlapping intervals (merge overlapping intervals if necessary). Return the resulting list of intervals after the insertion.\n\n**Input:**\n- Line 1: an integer n, the number of existing intervals.\n- Next n lines: each line contains two space-separated integers start_i and end_i, describing one interval.\n- Next line: an integer 2 (the length of the new interval).\n- Next line: two space-separated integers start and end, describing the new interval.\n\n**Output:**\n- Line 1: an integer k, the number of intervals in the result.\n- Next k lines: each line contains two space-separated integers start_i and end_i, describing one interval of the result, in ascending order by start_i.\n\n**Constraints:**\n- 0 <= n <= 10^4\n- Each interval has exactly two elements.\n- 0 <= start_i <= end_i <= 10^5\n- The given intervals are sorted by start_i in ascending order.\n- The new interval has exactly two elements.\n- 0 <= start <= end <= 10^5\n\n**Examples:**\nExample 1:\nInput:\n2\n1 3\n6 9\n2\n2 5\nOutput:\n2\n1 5\n6 9\n\nExample 2:\nInput:\n5\n1 2\n3 5\n6 7\n8 10\n12 16\n2\n4 8\nOutput:\n3\n1 2\n3 10\n12 16",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

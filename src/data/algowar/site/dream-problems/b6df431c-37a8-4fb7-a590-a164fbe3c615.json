@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "b6df431c-37a8-4fb7-a590-a164fbe3c615",
+    "title": "Minimum Equal Sum of Two Arrays After Replacing Zeros",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "greedy"
+    ],
+    "statement": "Minimum Equal Sum of Two Arrays After Replacing Zeros\n\nYou are given two arrays nums1 and nums2 consisting of positive integers.\n\nYou have to replace all the 0's in both arrays with strictly positive integers such that the sum of elements of both arrays becomes equal.\n\nReturn the minimum equal sum you can obtain, or -1 if it is impossible.\n\n**Input:**\nThe input is read from stdin as follows:\n- Line 1: an integer n, the length of nums1.\n- Line 2: n space-separated integers, the elements of nums1.\n- Line 3: an integer m, the length of nums2.\n- Line 4: m space-separated integers, the elements of nums2.\n\n**Output:**\nPrint a single integer: the minimum equal sum obtainable, or -1 if it is impossible.\n\n**Constraints:**\n- 1 <= nums1.length, nums2.length <= 10^5\n- 0 <= nums1[i], nums2[i] <= 10^6\n\n**Examples:**\nExample 1:\nInput:\n5\n3 2 0 1 0\n3\n6 5 0\nOutput:\n12\n\nExample 2:\nInput:\n4\n2 0 2 0\n2\n1 4\nOutput:\n-1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

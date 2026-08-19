@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "3a56514e-0f0e-43db-a9ef-6eca75de999c",
+    "title": "Reverse Bits",
+    "difficulty": "Easy",
+    "tags": [
+      "divide-and-conquer",
+      "bit-manipulation"
+    ],
+    "statement": "Reverse bits of a given 32-bit signed integer.\n\nRead an integer n from standard input and output the integer obtained by reversing its 32-bit binary representation.\n\n**Input:**\nA single line containing the integer n.\n\n**Output:**\nA single line containing the integer whose 32-bit binary representation is the reverse of n's 32-bit binary representation.\n\n**Constraints:**\n- 0 <= n <= 2^31 - 2\n- n is even.\n\n**Examples:**\nExample 1:\nInput:\n43261596\nOutput:\n964176192\n\nExample 2:\nInput:\n2147483644\nOutput:\n1073741822",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "06b44ab9-03b7-4364-9858-c8c2f4a9657a",
+    "title": "Fibonacci Number",
+    "difficulty": "Easy",
+    "tags": [
+      "math",
+      "dynamic-programming",
+      "recursion",
+      "memoization"
+    ],
+    "statement": "The Fibonacci numbers, commonly denoted F(n), form a sequence called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,\n\nF(0) = 0, F(1) = 1\nF(n) = F(n - 1) + F(n - 2), for n > 1.\n\nGiven n, calculate F(n).\n\n**Input:**\nA single line containing the integer n.\n\n**Output:**\nA single line containing the integer F(n).\n\n**Constraints:**\n0 <= n <= 30\n\n**Examples:**\nExample 1:\nInput:\n2\nOutput:\n1\n\nExample 2:\nInput:\n3\nOutput:\n2\n\nExample 3:\nInput:\n4\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,866 @@
+{
+  "worldNumber": 4,
+  "slug": "search-mountain",
+  "title": "Search Mountain",
+  "description": "Climb through binary search, matrices, and answer-space challenges.",
+  "theme": "frost-peak",
+  "levelCount": 32,
+  "xpAvailable": 570,
+  "difficultySummary": {
+    "Easy": 10,
+    "Hard": 8,
+    "Medium": 14
+  },
+  "contentSummary": {
+    "plus": 32
+  },
+  "completionReward": {
+    "badgeTitle": "Search Hunter",
+    "xp": 100,
+    "coins": 350
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-4-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Search Mountain",
+      "subtitle": "Binary Search [1D, 2D Arrays, Search Space]",
+      "description": "Climb through binary search, matrices, and answer-space challenges.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-102",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Search X in sorted array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 102,
+        "displayNumber": 48,
+        "title": "Search X in sorted array",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-103",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Lower Bound",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 103,
+        "displayNumber": 49,
+        "title": "Lower Bound",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-104",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Upper Bound",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 104,
+        "displayNumber": 50,
+        "title": "Upper Bound",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-105",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Search insert position",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 105,
+        "displayNumber": 51,
+        "title": "Search insert position",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-106",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Floor and Ceil in Sorted Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 106,
+        "displayNumber": 52,
+        "title": "Floor and Ceil in Sorted Array",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-107",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "First and last occurrence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 107,
+        "displayNumber": 53,
+        "title": "First and last occurrence",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-108",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Count Occurrences in a Sorted Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 108,
+        "displayNumber": 54,
+        "title": "Count Occurrences in a Sorted Array",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-109",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Search in rotated sorted array-I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 109,
+        "displayNumber": 55,
+        "title": "Search in rotated sorted array-I",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-110",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Search in rotated sorted array-II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 110,
+        "displayNumber": 56,
+        "title": "Search in rotated sorted array-II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-111",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Find minimum in Rotated Sorted Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 111,
+        "displayNumber": 57,
+        "title": "Find minimum in Rotated Sorted Array",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-112",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Find out how many times the array is rotated",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 112,
+        "displayNumber": 58,
+        "title": "Find out how many times the array is rotated",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-113",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Single element in a Sorted Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 113,
+        "displayNumber": 59,
+        "title": "Single element in a Sorted Array",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-4-checkpoint-113",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 113,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-114",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Find peak element",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 114,
+        "displayNumber": 60,
+        "title": "Find peak element",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-115",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Find square root of a number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 115,
+        "displayNumber": 61,
+        "title": "Find square root of a number",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-116",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Find Nth root of a number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 116,
+        "displayNumber": 62,
+        "title": "Find Nth root of a number",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-117",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Koko eating bananas",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 117,
+        "displayNumber": 63,
+        "title": "Koko eating bananas",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-118",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Minimum days to make M bouquets",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 118,
+        "displayNumber": 64,
+        "title": "Minimum days to make M bouquets",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-119",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Find the smallest divisor",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 119,
+        "displayNumber": 65,
+        "title": "Find the smallest divisor",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-120",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Capacity to Ship Packages Within D Days",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 120,
+        "displayNumber": 66,
+        "title": "Capacity to Ship Packages Within D Days",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-121",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Kth Missing Positive Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 121,
+        "displayNumber": 67,
+        "title": "Kth Missing Positive Number",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-122",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Aggressive Cows",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 122,
+        "displayNumber": 68,
+        "title": "Aggressive Cows",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-123",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Book Allocation Problem",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 123,
+        "displayNumber": 69,
+        "title": "Book Allocation Problem",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-124",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Split array - largest sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 124,
+        "displayNumber": 70,
+        "title": "Split array - largest sum",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-125",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Painter's Partition",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 125,
+        "displayNumber": 71,
+        "title": "Painter's Partition",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-4-checkpoint-125",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 125,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-126",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Minimize Max Distance to Gas Station",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 126,
+        "displayNumber": 72,
+        "title": "Minimize Max Distance to Gas Station",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-127",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "Median of 2 sorted arrays",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 127,
+        "displayNumber": 73,
+        "title": "Median of 2 sorted arrays",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-128",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Kth element of 2 sorted arrays",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 128,
+        "displayNumber": 74,
+        "title": "Kth element of 2 sorted arrays",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-129",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Find row with maximum 1's",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 129,
+        "displayNumber": 75,
+        "title": "Find row with maximum 1's",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-130",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "Search in a 2D matrix",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 130,
+        "displayNumber": 76,
+        "title": "Search in a 2D matrix",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-131",
+      "nodeType": "level",
+      "order": 33,
+      "mapLane": "left",
+      "title": "Search in 2D matrix - II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 131,
+        "displayNumber": 77,
+        "title": "Search in 2D matrix - II",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-132",
+      "nodeType": "level",
+      "order": 34,
+      "mapLane": "right",
+      "title": "Find Peak Element - II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 132,
+        "displayNumber": 78,
+        "title": "Find Peak Element - II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-133",
+      "nodeType": "boss",
+      "order": 35,
+      "mapLane": "center",
+      "title": "Matrix Median",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 133,
+        "displayNumber": 79,
+        "title": "Matrix Median",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

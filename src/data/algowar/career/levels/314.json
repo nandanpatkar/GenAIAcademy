@@ -1,0 +1,33 @@
+{
+  "levelNumber": 314,
+  "displayNumber": 260,
+  "title": "Zig Zag or Spiral Traversal",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the root of a binary tree, return the <strong>zigzag level order</strong> traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [1, 2, 3, null, 4, 8, 5]</p><p><strong>Output :</strong> [ [1] , [3, 2], [4, 8, 5] ]</p><p><strong>Explanation :</strong> So at root we move from left to right.</p><p>At next level we move in opposite direction i.e. from right to left.</p><p>At next level again reverse the traversal i.e. from left to right.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-8yVI8cfQ\"></p>",
+    "<p><strong>Input :</strong> root = [3, 9, 20, null, null, 15, 7]</p><p><strong>Output :</strong> [ [3] , [20, 9], [15, 7] ]</p><p><strong>Explanation :</strong> So at root we move from left to right.</p><p>At next level we move in opposite direction i.e. from right to left , from 20 to 9.</p><p>At next level again reverse the traversal i.e. from left to right, from 15 to 7.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-9gRWP-_y\"></p>",
+    "<p><strong>Input :</strong> root = [5, 1, 2, 8, null, 4, 5, null, 6]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>-10<sup>3</sup> <= Node.val <= 10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

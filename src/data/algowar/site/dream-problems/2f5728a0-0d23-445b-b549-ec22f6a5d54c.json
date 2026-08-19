@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "2f5728a0-0d23-445b-b549-ec22f6a5d54c",
+    "title": "Unique Paths",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "dynamic-programming",
+      "combinatorics"
+    ],
+    "statement": "There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.\n\nGiven the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.\n\nThe test cases are generated so that the answer will be less than or equal to 2 * 10^9.\n\n**Input:**\nThe first line contains an integer m (the number of rows).\nThe second line contains an integer n (the number of columns).\n\n**Output:**\nPrint a single integer: the number of possible unique paths the robot can take to reach the bottom-right corner.\n\n**Constraints:**\n- 1 <= m, n <= 100\n- The answer is guaranteed to be less than or equal to 2 * 10^9.\n\n**Examples:**\nExample 1:\nInput:\n3\n7\nOutput:\n28\n\nExample 2:\nInput:\n3\n2\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

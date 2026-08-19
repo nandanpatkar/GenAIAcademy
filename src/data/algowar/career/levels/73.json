@@ -1,0 +1,33 @@
+{
+  "levelNumber": 73,
+  "displayNumber": 19,
+  "title": "Find the number that appears once, and other numbers twice.",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of nums of n integers. Every integer in the array appears twice except one integer. Find the number that appeared <strong>once</strong> in the array.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [1, 2, 2, 4, 3, 1, 4]</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong> The integer 3 has appeared only once.</p>",
+    "<p><strong>Input :</strong> nums = [5]</p><p><strong>Output :</strong> 5</p><p><strong>Explanation :</strong> The integer 5 has appeared only once.</p>",
+    "<p><strong>Input :</strong> nums = [1, 3, 10, 3, 5, 1, 5]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>5</sup></li><li>-3*10<sup>5</sup> <= nums[i] <= 3*10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

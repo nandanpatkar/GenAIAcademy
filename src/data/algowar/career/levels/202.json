@@ -1,0 +1,33 @@
+{
+  "levelNumber": 202,
+  "displayNumber": 148,
+  "title": "M Coloring Problem",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer M and an <strong>undirected graph</strong> with N vertices (zero indexed) and E edges. The goal is to determine whether the graph can be coloured with a maximum of<strong> M colors</strong> so that no two of its adjacent vertices have the same colour applied to them.</p><p><br></p><p>In this context, colouring a graph refers to giving each vertex a different colour. If the colouring of vertices is possible then return true, otherwise return false.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> N = 4 , M = 3 , E = 5 , Edges = [ (0, 1) , (1, 2) , (2, 3) , (3, 0) , (0, 2) ]</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> Consider the three colors to be red, green, blue.</p><p>We can color the vertex 0 with red, vertex 1 with blue, vertex 2 with green, vertex 3 with blue.</p><p>In this way we can color graph using 3 colors at most.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-_ztgCPdg\"></p>",
+    "<p><strong>Input :</strong> N = 3 , M = 2 , E = 3 , Edges = [ (0, 1) , (1, 2) , (0, 2) ]</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> Consider the two colors to be red, green.</p><p>We can color the vertex 0 with red, vertex 1 with green.</p><p>As the vertex 2 is adjacent to both vertex 1 and 0 , so we cannot color with red and green.</p><p>Hence as we could not color all vertex of graph we return false.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-VJ4WwBU_\"></p>",
+    "<p><strong>Input :</strong> N = 5 , M = 3 , E = 6 , Edges = [ (0, 1) , (1, 2) , (0, 2) , (2,3) , (2,4) , (3,4) ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 20</li><li>1 <= E <= (N*(N-1)/2)</li><li>1 <= M <= N</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

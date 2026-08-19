@@ -1,0 +1,33 @@
+{
+  "levelNumber": 310,
+  "displayNumber": 256,
+  "title": "Check for balanced binary tree",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a binary tree root, find if it is <strong>height-balanced</strong> or not.</p><p><br></p><p>A tree is height-balanced if the difference between the heights of left and right subtrees is not more than one for all nodes of the tree.&nbsp;</p>",
+  "examples": [
+    "<p><strong>Input :</strong> [3, 9, 20, null, null, 15, 7]</p><p><strong>Output :</strong> Yes</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-MQ-fF3Hv\"></p>",
+    "<p><strong>Input :</strong> [1, 2, null, null, 3]</p><p><strong>Output :</strong> No</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-BEw-GjtR\"></p>",
+    "<p><strong>Input :</strong>&nbsp;root = [5, 1, 2, 8, 3, null, 5, null, 4]</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= Number of Nodes <= 10<sup>5</sup></li><li>1 <= Node.val <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

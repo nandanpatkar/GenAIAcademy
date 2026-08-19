@@ -1,0 +1,33 @@
+{
+  "levelNumber": 168,
+  "displayNumber": 114,
+  "title": "Sort LL",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a singly linked list. <strong>Sort</strong> the values of the linked list in <strong>non-decreasing order</strong> and return the head of the modified linked list.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head -> 5 -> 6 -> 1 -> 2 -> 1</p><p><strong>Output</strong>: head -> 1 -> 1 -> 2 -> 5 -> 6</p><p><strong>Explanation</strong>: 1 <= 1 <= 2 <= 5 <= 6</p>",
+    "<p><strong>Input</strong>: head -> 6 -> 5 -> -1 -> -2 -> -3</p><p><strong>Output</strong>: head -> -3 -> -2 -> -1 -> 5 -> 6</p><p><strong>Explanation</strong>: -3 <= -2 <= -1 <= 5 <= 6</p>",
+    "<p><strong>Input</strong>: head -> -1 -> -2 -> -3 -> -1</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes in the linked list <= 1000</li><li>-10<sup>4</sup> <= ListNode.val <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

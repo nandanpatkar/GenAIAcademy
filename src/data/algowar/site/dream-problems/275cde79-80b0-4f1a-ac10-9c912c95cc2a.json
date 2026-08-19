@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "275cde79-80b0-4f1a-ac10-9c912c95cc2a",
+    "title": "Course Schedule II",
+    "difficulty": "Medium",
+    "tags": [
+      "depth-first-search",
+      "breadth-first-search",
+      "graph",
+      "topological-sort"
+    ],
+    "statement": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given a list of prerequisites where each prerequisite is a pair [a, b] indicating that you must take course b first if you want to take course a.\n\nReturn the ordering of courses you should take to finish all courses. If there are many valid answers, return the lexicographically smallest valid topological ordering (at each step, among all courses whose prerequisites have all been satisfied and that have not yet been taken, choose the one with the smallest number). If it is impossible to finish all courses, return an empty array.\n\n**Input:**\n- Line 1: an integer numCourses.\n- Line 2: two integers rows and cols (cols is always 2), the dimensions of the prerequisites matrix.\n- Next rows lines: each line contains two space-separated integers a and b, meaning course a requires course b to be taken first.\n\n**Output:**\n- Print the course ordering as a single line of space-separated integers (the lexicographically smallest valid topological order).\n- If it is impossible to finish all courses, print an empty line.\n\n**Constraints:**\n- 1 <= numCourses <= 2000\n- 0 <= prerequisites.length <= numCourses * (numCourses - 1)\n- Each prerequisite has exactly 2 elements.\n- 0 <= a, b < numCourses\n- a != b\n- All pairs [a, b] are distinct.\n\n**Examples:**\nExample 1:\nInput:\n2\n1 2\n1 0\nOutput:\n0 1\n\nExample 2:\nInput:\n4\n4 2\n1 0\n2 0\n3 1\n3 2\nOutput:\n0 1 2 3\n\nExample 3:\nInput:\n1\n0 2\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

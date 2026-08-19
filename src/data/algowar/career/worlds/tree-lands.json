@@ -1,0 +1,1033 @@
+{
+  "worldNumber": 13,
+  "slug": "tree-lands",
+  "title": "Tree Lands",
+  "description": "Travel through traversals, views, path logic, and advanced binary tree missions.",
+  "theme": "ancient-grove",
+  "levelCount": 38,
+  "xpAvailable": 640,
+  "difficultySummary": {
+    "Easy": 14,
+    "Hard": 8,
+    "Medium": 16
+  },
+  "contentSummary": {
+    "plus": 36,
+    "article": 1,
+    "missing": 1
+  },
+  "completionReward": {
+    "badgeTitle": "Tree Explorer",
+    "xp": 100,
+    "coins": 575
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-13-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Tree Lands",
+      "subtitle": "Binary Trees [Traversals, Medium and Hard Problems]",
+      "description": "Travel through traversals, views, path logic, and advanced binary tree missions.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-297",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Introduction to Trees",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 297,
+        "displayNumber": 243,
+        "title": "Introduction to Trees",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-298",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Binary Tree Representation in Java",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 298,
+        "displayNumber": 244,
+        "title": "Binary Tree Representation in Java",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-299",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Pre, Post, Inorder in one traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 299,
+        "displayNumber": 245,
+        "title": "Pre, Post, Inorder in one traversal",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-300",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Preorder Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 300,
+        "displayNumber": 246,
+        "title": "Preorder Traversal",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-301",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Inorder Traversal of Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 301,
+        "displayNumber": 247,
+        "title": "Inorder Traversal of Binary Tree",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-302",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Postorder Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 302,
+        "displayNumber": 248,
+        "title": "Postorder Traversal",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-303",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Level Order Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 303,
+        "displayNumber": 249,
+        "title": "Level Order Traversal",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-304",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Iterative Preorder Traversal of Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 304,
+        "displayNumber": 250,
+        "title": "Iterative Preorder Traversal of Binary Tree",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-305",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Iterative Inorder Traversal of Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 305,
+        "displayNumber": 251,
+        "title": "Iterative Inorder Traversal of Binary Tree",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-306",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Post-order Traversal of Binary Tree using 2 stack",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 306,
+        "displayNumber": 252,
+        "title": "Post-order Traversal of Binary Tree using 2 stack",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-307",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Post-order Traversal of Binary Tree using 1 stack",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 307,
+        "displayNumber": 253,
+        "title": "Post-order Traversal of Binary Tree using 1 stack",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-308",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Preorder, Inorder, and Postorder Traversal in one Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 308,
+        "displayNumber": 254,
+        "title": "Preorder, Inorder, and Postorder Traversal in one Traversal",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-13-checkpoint-308",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 308,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-309",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Maximum Depth in BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 309,
+        "displayNumber": 255,
+        "title": "Maximum Depth in BT",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-310",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Check for balanced binary tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 310,
+        "displayNumber": 256,
+        "title": "Check for balanced binary tree",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-311",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Diameter of Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 311,
+        "displayNumber": 257,
+        "title": "Diameter of Binary Tree",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-312",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Maximum path sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 312,
+        "displayNumber": 258,
+        "title": "Maximum path sum",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-313",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Check if two trees are identical or not",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 313,
+        "displayNumber": 259,
+        "title": "Check if two trees are identical or not",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-314",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Zig Zag or Spiral Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 314,
+        "displayNumber": 260,
+        "title": "Zig Zag or Spiral Traversal",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-315",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Boundary Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 315,
+        "displayNumber": 261,
+        "title": "Boundary Traversal",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-316",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Vertical Order Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 316,
+        "displayNumber": 262,
+        "title": "Vertical Order Traversal",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-317",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Top View of BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 317,
+        "displayNumber": 263,
+        "title": "Top View of BT",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-318",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Bottom view of BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 318,
+        "displayNumber": 264,
+        "title": "Bottom view of BT",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-319",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Right/Left View of Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 319,
+        "displayNumber": 265,
+        "title": "Right/Left View of Binary Tree",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-320",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Symmetric Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 320,
+        "displayNumber": 266,
+        "title": "Symmetric Binary Tree",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-13-checkpoint-320",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 320,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-321",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Print root to leaf path in BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 321,
+        "displayNumber": 267,
+        "title": "Print root to leaf path in BT",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-322",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "LCA in BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 322,
+        "displayNumber": 268,
+        "title": "LCA in BT",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-323",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Maximum Width of BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 323,
+        "displayNumber": 269,
+        "title": "Maximum Width of BT",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-324",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Children Sum Property in Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 324,
+        "displayNumber": 270,
+        "title": "Children Sum Property in Binary Tree",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-325",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "Print all nodes at a distance of K in BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 325,
+        "displayNumber": 271,
+        "title": "Print all nodes at a distance of K in BT",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-326",
+      "nodeType": "level",
+      "order": 33,
+      "mapLane": "left",
+      "title": "Minimum time taken to burn the BT from a given Node",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 326,
+        "displayNumber": 272,
+        "title": "Minimum time taken to burn the BT from a given Node",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-327",
+      "nodeType": "level",
+      "order": 34,
+      "mapLane": "right",
+      "title": "Count total nodes in a complete BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 327,
+        "displayNumber": 273,
+        "title": "Count total nodes in a complete BT",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-328",
+      "nodeType": "level",
+      "order": 35,
+      "mapLane": "left",
+      "title": "Requirements needed to construct a unique BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 328,
+        "displayNumber": 274,
+        "title": "Requirements needed to construct a unique BT",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-329",
+      "nodeType": "level",
+      "order": 36,
+      "mapLane": "right",
+      "title": "Construct a BT from Preorder and Inorder",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 329,
+        "displayNumber": 275,
+        "title": "Construct a BT from Preorder and Inorder",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-330",
+      "nodeType": "level",
+      "order": 37,
+      "mapLane": "left",
+      "title": "Construct the Binary Tree from Postorder and Inorder Traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 330,
+        "displayNumber": 276,
+        "title": "Construct the Binary Tree from Postorder and Inorder Traversal",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-331",
+      "nodeType": "level",
+      "order": 38,
+      "mapLane": "right",
+      "title": "Serialize and De-serialize BT",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 331,
+        "displayNumber": 277,
+        "title": "Serialize and De-serialize BT",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-332",
+      "nodeType": "level",
+      "order": 39,
+      "mapLane": "left",
+      "title": "Morris Preorder Traversal of a Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 332,
+        "displayNumber": 278,
+        "title": "Morris Preorder Traversal of a Binary Tree",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-13-checkpoint-332",
+      "nodeType": "checkpoint",
+      "order": 40,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 332,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-333",
+      "nodeType": "level",
+      "order": 41,
+      "mapLane": "left",
+      "title": "Morris Inorder Traversal of a Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 333,
+        "displayNumber": 279,
+        "title": "Morris Inorder Traversal of a Binary Tree",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-334",
+      "nodeType": "boss",
+      "order": 42,
+      "mapLane": "center",
+      "title": "Flatten Binary Tree to Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 150
+      },
+      "level": {
+        "levelNumber": 334,
+        "displayNumber": 280,
+        "title": "Flatten Binary Tree to Linked List",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 150,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

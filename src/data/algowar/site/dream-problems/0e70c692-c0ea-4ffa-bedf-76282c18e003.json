@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "0e70c692-c0ea-4ffa-bedf-76282c18e003",
+    "title": "Count Palindromic Subsequences",
+    "difficulty": "Hard",
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
+    "statement": "Count Palindromic Subsequences\n\nGiven a string of digits s, return the number of palindromic subsequences of s having length 5. Since the answer may be very large, return it modulo 10^9 + 7.\n\nA string is palindromic if it reads the same forward and backward.\nA subsequence is a string that can be derived from another string by deleting some or no characters without changing the order of the remaining characters.\n\n**Input:**\nThe first line contains the string s, consisting of digits, on its own line.\n\n**Output:**\nPrint a single integer: the number of palindromic subsequences of s of length 5, modulo 10^9 + 7.\n\n**Constraints:**\n- 1 <= s.length <= 10^4\n- s consists of digits.\n\n**Examples:**\nExample 1:\nInput:\n103301\nOutput:\n2\n\nExample 2:\nInput:\n0000000\nOutput:\n21\n\nExample 3:\nInput:\n9999900000\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

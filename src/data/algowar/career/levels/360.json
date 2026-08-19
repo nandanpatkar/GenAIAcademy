@@ -1,0 +1,33 @@
+{
+  "levelNumber": 360,
+  "displayNumber": 306,
+  "title": "Flood fill algorithm",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>An <strong>image</strong> is represented by a 2-D array of integers, each integer representing the pixel value of the image. Given a coordinate (sr, sc) representing the starting pixel (row and column) of the flood fill, and a pixel value newColor, \"flood fill\" the image.</p><p><br></p><p>To perform a <strong>flood fill</strong>, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same colour as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same colour as the starting pixel), and so on. Replace the colour of all of the aforementioned pixels with the newColor.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-1vytgU1a\"></p><p><strong>Input:</strong> image = [ [1, 1, 1], [1, 1, 0], [1, 0, 1] ], sr = 1, sc = 1, newColor = 2</p><p><strong>Output:</strong> [ [2, 2, 2], [2, 2, 0], [2, 0, 1] ]</p><p><strong>Explanation:</strong> From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel), all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.</p><p>Note the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.</p>",
+    "<p><strong>Input:</strong> image = [ [0, 1, 0], [1, 1, 0], [0, 0, 1] ], sr = 2, sc = 2, newColor = 3</p><p><strong>Output:</strong> [ [0, 1, 0], [1, 1, 0], [0, 0, 3] ]</p><p><strong>Explanation:</strong> Starting from the pixel at position (2, 2) (i.e., the blue pixel), we flood fill all adjacent pixels that have the same color as the starting pixel. In this case, only the pixel at position (2, 2) itself is of the same color. So, only that pixel gets colored with the new color, resulting in the updated image.</p>",
+    "<p><strong>Input:</strong> image = [ [1, 1, 1], [1, 1, 0], [1, 0, 1] ], sr = 1, sc = 1, newColor = 0</p>"
+  ],
+  "constraintsHtml": "<p>·&nbsp;&nbsp;n == image.length</p><p>·&nbsp;&nbsp;m == image[i].length</p><p>·&nbsp;&nbsp;1 <= m, n <= 50</p><p>·&nbsp;&nbsp;0 <= image[i][j], color < 2<sup>16</sup></p><p>·&nbsp;&nbsp;0 <= sr < n</p><p>·&nbsp;&nbsp;0 <= sc < m</p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

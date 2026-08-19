@@ -1,0 +1,33 @@
+{
+  "levelNumber": 410,
+  "displayNumber": 356,
+  "title": "Ninja's training",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>A ninja has planned a n-day training schedule. Each day he has to perform one of <strong>three activities</strong> - running, stealth training, or fighting practice. The same activity cannot be done on two consecutive days and the ninja earns a specific number of merit points, based on the activity and the given day.</p><p><br></p><p>Given a n x 3-sized matrix, where matrix[i][0], matrix[i][1], and matrix[i][2], represent the merit points associated with running, stealth and fighting practice, on the (i+1)<sup>th</sup> day respectively. Return the <strong>maximum</strong> possible merit points that the ninja can earn.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: matrix = [[10, 40, 70], [20, 50, 80], [30, 60, 90]]</p><p><strong>Output</strong>: 210</p><p><strong>Explanation</strong>:</p><p>Day 1: fighting practice = 70</p><p>Day 2: stealth training = 50</p><p>Day 3: fighting practice = 90</p><p>Total = 70 + 50 + 90 = 210</p><p>This gives the optimal points.</p>",
+    "<p><strong>Input</strong>: matrix = [[70, 40, 10], [180, 20, 5], [200, 60, 30]]</p><p><strong>Output</strong>: 290</p><p><strong>Explanation</strong>:</p><p>Day 1: running = 70</p><p>Day 2: stealth training = 20</p><p>Day 3: running = 200</p><p>Total = 70 + 20 + 200 = 290</p><p>This gives the optimal points.</p>",
+    "<p><strong>Input</strong>: matrix = [[20, 10, 10], [20, 10, 10], [20, 30, 10]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>4</sup></li><li>n == number of rows in matrix</li><li>3 == number of columns in matrix</li><li>0 <= matrix[i][j] <= 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

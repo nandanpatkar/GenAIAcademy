@@ -1,0 +1,26 @@
+{
+  "levelNumber": 456,
+  "displayNumber": 402,
+  "title": "Partition Array for Maximum Sum",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer array arr with length n, and an integer k.</p><p><br></p><p>You may partition arr into one or more contiguous sub-arrays, where each sub-array has length in the range 1 … k (inclusive).</p><p>After you pick a partition, replace every element in each sub-array with the maximum value found in that sub-array. The array is modified in-place for the purpose of computing the total.</p><p><br></p><p>Return the largest possible sum of the entire array after performing exactly one such partition-and-replace operation.</p><p><br></p><p>The test cases are guaranteed to have an answer that fits in a 32-bit signed integer.</p><p><br></p>",
+  "examples": [
+    "<p><strong>Input:</strong>&nbsp;arr = [1,15,7,9,2,5,10], k = 3</p><p><strong>Output: </strong>84</p><p><strong>Explanation:</strong></p><p>Choose blocks </p><ul><li>[1,15,7] → max = 15,</li><li>[9]&nbsp;→ max = 9,</li><li>[2,5,10] → max = 10.</li><li>The array becomes [15,15,15,9,10,10,10]; sum = 84.</li></ul><p><br></p>",
+    "<p><strong>Input:</strong>&nbsp;arr = [2,2,2,2], k = 2</p><p><strong>Output:</strong> 8</p><p><strong>Explanation:</strong></p><ul><li>Partition as [2,2] and [2,2]; each sub-array’s max is 2.&nbsp;&nbsp;</li><li>The array stays [2,2,2,2] and the sum is 8.</li></ul>",
+    "<p><strong>Input:&nbsp;</strong>arr = [1,4,1,5,7,3,6,1,9,9,3], k = 4</p><p><strong>Output: </strong>83</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ arr.length ≤ 500</li><li>0 ≤ arr[i] ≤ 10⁹</li><li>1 ≤ k ≤ arr.length</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,692 @@
+{
+  "worldNumber": 7,
+  "slug": "recursion-forest",
+  "title": "Recursion Forest",
+  "description": "Explore recursive branching, subsequences, backtracking, and search trees.",
+  "theme": "emerald-forest",
+  "levelCount": 25,
+  "xpAvailable": 495,
+  "difficultySummary": {
+    "Easy": 4,
+    "Hard": 8,
+    "Medium": 13
+  },
+  "contentSummary": {
+    "plus": 24,
+    "article": 1
+  },
+  "completionReward": {
+    "badgeTitle": "Recursion Ranger",
+    "xp": 100,
+    "coins": 425
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-7-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Recursion Forest",
+      "subtitle": "Recursion [PatternWise]",
+      "description": "Explore recursive branching, subsequences, backtracking, and search trees.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-180",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Recursive Implementation of atoi()",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 180,
+        "displayNumber": 126,
+        "title": "Recursive Implementation of atoi()",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-181",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Pow(x, n)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 181,
+        "displayNumber": 127,
+        "title": "Pow(x, n)",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-182",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Count Good Numbers",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 182,
+        "displayNumber": 128,
+        "title": "Count Good Numbers",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-183",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Sort a stack using recursion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 183,
+        "displayNumber": 129,
+        "title": "Sort a stack using recursion",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-184",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Reverse a Stack",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 184,
+        "displayNumber": 130,
+        "title": "Reverse a Stack",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-185",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Generate Binary Strings Without Consecutive 1s",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 185,
+        "displayNumber": 131,
+        "title": "Generate Binary Strings Without Consecutive 1s",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-186",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Generate Parentheses",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 186,
+        "displayNumber": 132,
+        "title": "Generate Parentheses",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-187",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Power Set",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 187,
+        "displayNumber": 133,
+        "title": "Power Set",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-188",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Learn All Patterns of Subsequences (Theory)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 188,
+        "displayNumber": 134,
+        "title": "Learn All Patterns of Subsequences (Theory)",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-189",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Count all subsequences with sum K",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 189,
+        "displayNumber": 135,
+        "title": "Count all subsequences with sum K",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-190",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Check if there exists a subsequence with sum K",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 190,
+        "displayNumber": 136,
+        "title": "Check if there exists a subsequence with sum K",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-191",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Combination Sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 191,
+        "displayNumber": 137,
+        "title": "Combination Sum",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-7-checkpoint-191",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 191,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-192",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Combination Sum II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 192,
+        "displayNumber": 138,
+        "title": "Combination Sum II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-193",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Subsets I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 193,
+        "displayNumber": 139,
+        "title": "Subsets I",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-194",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Subsets II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 194,
+        "displayNumber": 140,
+        "title": "Subsets II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-195",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Combination Sum III",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 195,
+        "displayNumber": 141,
+        "title": "Combination Sum III",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-196",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Letter Combinations of a Phone Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 196,
+        "displayNumber": 142,
+        "title": "Letter Combinations of a Phone Number",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-197",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Palindrome partitioning",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 197,
+        "displayNumber": 143,
+        "title": "Palindrome partitioning",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-198",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Word Search",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 198,
+        "displayNumber": 144,
+        "title": "Word Search",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-199",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "N Queen",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 199,
+        "displayNumber": 145,
+        "title": "N Queen",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-200",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Rat in a Maze",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 200,
+        "displayNumber": 146,
+        "title": "Rat in a Maze",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-201",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Word Break",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 201,
+        "displayNumber": 147,
+        "title": "Word Break",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-202",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "M Coloring Problem",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 202,
+        "displayNumber": 148,
+        "title": "M Coloring Problem",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-203",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Sudoku Solver",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 203,
+        "displayNumber": 149,
+        "title": "Sudoku Solver",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-7-checkpoint-203",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 203,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-204",
+      "nodeType": "boss",
+      "order": 28,
+      "mapLane": "center",
+      "title": "Expression Add Operators",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 204,
+        "displayNumber": 150,
+        "title": "Expression Add Operators",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

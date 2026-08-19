@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "7cb6325d-1cd8-445b-8c6e-a73758ea41fc",
+    "title": "Find The Original Array of Prefix Xor",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "bit-manipulation"
+    ],
+    "statement": "You are given an integer array pref of size n. Find and return the array arr of size n that satisfies:\n\n- pref[i] = arr[0] ^ arr[1] ^ ... ^ arr[i].\n\nNote that ^ denotes the bitwise-xor operation.\n\nIt can be proven that the answer is unique.\n\n**Input:**\nThe first line contains an integer n, the length of the array pref.\nThe second line contains n space-separated integers, the elements of pref.\n\n**Output:**\nPrint n space-separated integers representing the array arr, in order from index 0 to n-1.\n\n**Constraints:**\n- 1 <= pref.length <= 10^5\n- 0 <= pref[i] <= 10^6\n\n**Examples:**\nExample 1:\nInput:\n5\n5 2 0 3 1\nOutput:\n5 7 2 3 2\n\nExample 2:\nInput:\n1\n13\nOutput:\n13",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

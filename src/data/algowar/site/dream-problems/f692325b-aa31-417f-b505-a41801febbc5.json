@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "f692325b-aa31-417f-b505-a41801febbc5",
+    "title": "Maximize Value of Function in a Ball Passing Game",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "bit-manipulation"
+    ],
+    "statement": "You are given an integer array receiver of length n and an integer k. n players are playing a ball-passing game.\n\nYou choose the starting player, i. The game proceeds as follows: player i passes the ball to player receiver[i], who then passes it to player receiver[receiver[i]], and so on, for k passes in total. The game's score is the sum of the indices of the players who touched the ball, including repetitions, i.e. i + receiver[i] + receiver[receiver[i]] + ... + receiver^(k)[i].\n\nReturn the maximum possible score.\n\nNotes:\n- receiver may contain duplicates.\n- receiver[i] may be equal to i.\n\n**Input:**\n- Line 1: integer n, the length of the receiver array.\n- Line 2: n space-separated integers, the receiver array.\n- Line 3: integer k, the number of passes.\n\n**Output:**\n- Line 1: a single integer, the maximum possible score.\n\n**Constraints:**\n- 1 <= receiver.length == n <= 10^5\n- 0 <= receiver[i] <= n - 1\n- 1 <= k <= 10^10\n\n**Examples:**\nExample 1:\nInput:\n3\n2 0 1\n4\nOutput:\n6\n\nExample 2:\nInput:\n5\n1 1 1 2 3\n3\nOutput:\n10",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

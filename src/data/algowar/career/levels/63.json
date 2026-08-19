@@ -1,0 +1,33 @@
+{
+  "levelNumber": 63,
+  "displayNumber": 9,
+  "title": "Second Largest Element",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers <strong>nums</strong>, return the second-largest element in the array. If the second-largest element does not exist, return -1.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [8, 8, 7, 6, 5]</p><p><strong>Output</strong>: 7</p><p><strong>Explanation</strong>: </p><p>The largest value in nums is 8, the second largest is 7</p>",
+    "<p><strong>Input</strong>: nums = [10, 10, 10, 10, 10]</p><p><strong>Output</strong>: -1</p><p><strong>Explanation</strong>: </p><p>The only value in nums is 10, so there is no second largest value, thus -1 is returned</p>",
+    "<p><strong>Input</strong>: nums = [7, 7, 2, 2, 10, 10, 10]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>nums may contain duplicate elements.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

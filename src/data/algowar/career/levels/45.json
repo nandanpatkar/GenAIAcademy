@@ -1,0 +1,32 @@
+{
+  "levelNumber": 45,
+  "displayNumber": 45,
+  "title": "Print 1 to N using Recursion",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer n, write a function to print all numbers from <strong>1 to n (inclusive) using recursion.</strong></p><ul><li>You must not use any loops such as for, while, or do-while.</li><li>The function should print each number on a separate line, in increasing order from 1 to n.</li></ul>",
+  "examples": [
+    "<p><strong>Input:</strong> n = 5</p><p><strong>Output:</strong></p><p>1&nbsp;&nbsp;</p><p>2&nbsp;&nbsp;</p><p>3&nbsp;&nbsp;</p><p>4&nbsp;&nbsp;</p><p>5</p>",
+    "<p><strong>Input:</strong> n = 1</p><p><strong>Output:</strong></p><p>1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

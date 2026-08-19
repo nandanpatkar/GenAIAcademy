@@ -1,0 +1,33 @@
+{
+  "levelNumber": 322,
+  "displayNumber": 268,
+  "title": "LCA in BT",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a root of binary tree, find the <strong>lowest common ancestor (LCA)</strong> of two given nodes (p, q) in the tree.</p><p><br></p><p>The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4] , p = 5, q = 1</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-bFSPuLgF\"></p>",
+    "<p><strong>Input :</strong> root = [3, 5, 1, 6, 2, 0, 8, null, null, 7, 4] , p = 5, q = 4</p><p><strong>Output :</strong> 5</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-fPJukq_V\"></p>",
+    "<p><strong>Input :</strong> root = [7, 1, 2, 8, 10, 4, 5, null, 6], p = 6, q = 10</p>"
+  ],
+  "constraintsHtml": "<ul><li>2 <= Number of Nodes <= 10<sup>5</sup></li><li>-10<sup>6</sup> <= node.val <= 10<sup>6</sup></li><li>All values in tree are <strong>unique.</strong></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "8daf77f9-b223-4ef8-a4e7-76955e136fc0",
+    "title": "Recyclable and Low Fat Products",
+    "difficulty": "Easy",
+    "tags": [
+      "database"
+    ],
+    "statement": "You are given a table of products. Each product has a product_id, a low_fats flag ('Y' or 'N'), and a recyclable flag ('Y' or 'N'). Find the ids of products that are both low fat and recyclable (i.e., low_fats = 'Y' and recyclable = 'Y'). Return the product ids in ascending order.\n\n**Input:**\nThe first line contains two integers n and 3, where n is the number of rows in the Products table.\nThe next n lines each contain three space-separated values: product_id (an integer), low_fats (a character 'Y' or 'N'), and recyclable (a character 'Y' or 'N').\n\n**Output:**\nPrint the product ids that are both low fat and recyclable in ascending order, space-separated on a single line. If there are no such products, print an empty line.\n\n**Constraints:**\n- 1 <= n <= 1000\n- 0 <= product_id <= 10^9\n- low_fats and recyclable are each either 'Y' or 'N'\n- product_id is unique across all rows\n\n**Examples:**\nExample 1:\nInput:\n5 3\n0 Y N\n1 Y Y\n2 N Y\n3 Y Y\n4 N N\nOutput:\n1 3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

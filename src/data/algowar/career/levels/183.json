@@ -1,0 +1,26 @@
+{
+  "levelNumber": 183,
+  "displayNumber": 129,
+  "title": "Sort a stack using recursion",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a <strong>stack </strong>of integers. Your task is to <strong>sort </strong>the stack in descending order <strong>using recursion</strong>, such that the top of the stack contains the greatest element. You are<strong> not allowed</strong> to use any <strong>loop-based sorting methods</strong> (e.g., quicksort, mergesort). You may only use recursive operations and the standard stack operations (push, pop, peek/top, and isEmpty).</p>",
+  "examples": [
+    "<p><strong>Input: </strong>stack = [4, 1, 3, 2]</p><p><strong>Output: </strong>[4, 3, 2, 1]</p><p><strong>Explanation:</strong></p><p>After sorting, the largest element (4) is at the top, and the smallest (1) is at the bottom.</p><p><br></p>",
+    "<p><strong>Input:</strong> stack = [1]</p><p><strong>Output: </strong>[1]</p><p><strong>Explanation:</strong></p><p>A single-element stack is already sorted.</p><p><br></p>",
+    "<p><strong>Input:</strong> stack = [10, 20, -5, 7, 15]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 100 (where N is the number of elements in the stack)</li><li>Use recursion to implement the sorting logic.</li><li>You may use auxiliary space up to O(N) (call stack).</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

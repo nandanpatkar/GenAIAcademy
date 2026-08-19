@@ -1,0 +1,33 @@
+{
+  "levelNumber": 252,
+  "displayNumber": 198,
+  "title": "LFU Cache",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "$1d",
+    "$1e",
+    "<p>Input:</p><p>[\"LFUCache\", \"put\", \"get\", \"put\", \"get\", \"get\"]</p><p>[[1], [1, 10], [1], [2, 20], [1], [2]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= capacity <= 10<sup>3</sup></li><li>0 <= key <= 10<sup>4</sup></li><li>0 <= value <= 10<sup>5</sup></li><li>At most 10<sup>5</sup> calls will be made to get and put.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 175,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

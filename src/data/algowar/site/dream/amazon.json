@@ -1,0 +1,423 @@
+{
+  "company": {
+    "slug": "amazon",
+    "name": "Amazon"
+  },
+  "questions": [
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 88.7,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3bb0dcd8-d476-4c5a-869a-a9f6ca6981ba",
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "frequency": 87.4,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 86,
+      "orderIndex": 3,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0783a4cf-c630-4f94-9a68-5f08dc1f78cf",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "frequency": 83.8,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 83.3,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 80.1,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "10a90554-4510-4c7f-ad7f-dec56d7897c1",
+      "title": "Add Two Numbers",
+      "difficulty": "Medium",
+      "frequency": 79.3,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ccee497c-6bb1-4dc9-9101-df84e1ebc5dc",
+      "title": "3Sum",
+      "difficulty": "Medium",
+      "frequency": 78.7,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b2d4e6a5-26ee-4bcd-a010-9bdb2b140050",
+      "title": "Longest Palindromic Substring",
+      "difficulty": "Medium",
+      "frequency": 78.5,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 76.6,
+      "orderIndex": 11,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "520ec43e-284b-4c59-a96d-aec48b1f4d94",
+      "title": "Container With Most Water",
+      "difficulty": "Medium",
+      "frequency": 76.5,
+      "orderIndex": 12,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "42745353-7ad0-4f1d-9262-beae53b674ec",
+      "title": "Median of Two Sorted Arrays",
+      "difficulty": "Hard",
+      "frequency": 76.4,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "26fa28ec-75b4-4d35-8ac2-a0c3842e55a1",
+      "title": "Koko Eating Bananas",
+      "difficulty": "Medium",
+      "frequency": 75.1,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "206d74c7-42d0-466a-b93c-af519bcd219b",
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "frequency": 74.8,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "047250c0-28dd-488b-9bea-cfd549d50ec5",
+      "title": "Course Schedule",
+      "difficulty": "Medium",
+      "frequency": 74.7,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5c87d78e-1385-495e-9f9c-1d722c2f639f",
+      "title": "Merge k Sorted Lists",
+      "difficulty": "Hard",
+      "frequency": 74.1,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "05d322ac-f350-47e4-8e68-2e9df344f13c",
+      "title": "Longest Common Prefix",
+      "difficulty": "Easy",
+      "frequency": 73.8,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d8240dce-bb52-403b-a6b0-466c9cf794da",
+      "title": "Rotting Oranges",
+      "difficulty": "Medium",
+      "frequency": 73.7,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3871de1f-b447-4435-b799-7b84a8a7a4f0",
+      "title": "Subarray Sum Equals K",
+      "difficulty": "Medium",
+      "frequency": 73,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "56eb21bf-0745-4211-9e5f-85fcc1592cb2",
+      "title": "Merge Sorted Array",
+      "difficulty": "Easy",
+      "frequency": 72.6,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c3bd17ea-88b3-4f26-a546-1e76c702a258",
+      "title": "Search in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "frequency": 71.4,
+      "orderIndex": 22,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c28ff3b2-55a0-4958-8585-b3c5b5afabd2",
+      "title": "Top K Frequent Elements",
+      "difficulty": "Medium",
+      "frequency": 71.2,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "8d2a91de-6a6e-4d17-ac55-d971be34919a",
+      "title": "Maximum Subarray",
+      "difficulty": "Medium",
+      "frequency": 70.9,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fb45c70a-1dd6-432d-96b9-cca4d16a2cae",
+      "title": "Longest Consecutive Sequence",
+      "difficulty": "Medium",
+      "frequency": 70.6,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7136adaa-98e0-4456-a2e1-e61c5511564d",
+      "title": "Copy List with Random Pointer",
+      "difficulty": "Medium",
+      "frequency": 70.3,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ceb3415e-3fce-471b-9313-0546512c2c17",
+      "title": "Lowest Common Ancestor of a Binary Tree",
+      "difficulty": "Medium",
+      "frequency": 70.1,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "75830b80-b8f1-452f-9331-34a4812b4963",
+      "title": "Palindrome Number",
+      "difficulty": "Easy",
+      "frequency": 69.5,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ef4f6834-b0ba-403d-a068-c9c91a50530e",
+      "title": "Word Ladder",
+      "difficulty": "Hard",
+      "frequency": 69.2,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "dc680705-24bd-4637-9c41-59e1784e2a3a",
+      "title": "Majority Element",
+      "difficulty": "Easy",
+      "frequency": 69,
+      "orderIndex": 31,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a225bf90-4bcf-4f8a-b1ca-9533ff79da7b",
+      "title": "Product of Array Except Self",
+      "difficulty": "Medium",
+      "frequency": 68.2,
+      "orderIndex": 32,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "2c01b9ca-f08e-4689-87f7-22d3100f9761",
+      "title": "Merge Two Sorted Lists",
+      "difficulty": "Easy",
+      "frequency": 67.5,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d63cbfb0-1c4a-4c18-a6f0-d87eba02ea7c",
+      "title": "Jump Game",
+      "difficulty": "Medium",
+      "frequency": 67.4,
+      "orderIndex": 34,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e63ff28f-9b27-4ebf-856f-3dd82448a39d",
+      "title": "Climbing Stairs",
+      "difficulty": "Easy",
+      "frequency": 66.8,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7d361fba-bf0f-4a53-a065-7aeeb08c43f2",
+      "title": "House Robber",
+      "difficulty": "Medium",
+      "frequency": 66.7,
+      "orderIndex": 36,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "461f31c0-0d82-46e3-88a4-9b198a774988",
+      "title": "Letter Combinations of a Phone Number",
+      "difficulty": "Medium",
+      "frequency": 66.4,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "275cde79-80b0-4f1a-ac10-9c912c95cc2a",
+      "title": "Course Schedule II",
+      "difficulty": "Medium",
+      "frequency": 65.8,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "938756cb-dc27-4110-b487-d13d1b853267",
+      "title": "Word Search",
+      "difficulty": "Medium",
+      "frequency": 65.2,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f81ca876-684a-4e62-b351-116a2205e5dc",
+      "title": "Spiral Matrix",
+      "difficulty": "Medium",
+      "frequency": 64.8,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "31dc4451-4d4e-44b8-8643-32fe1f9738d3",
+      "title": "Sliding Window Maximum",
+      "difficulty": "Hard",
+      "frequency": 64.8,
+      "orderIndex": 41,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7af9f79b-1297-4778-bacb-08a3ca814783",
+      "title": "Valid Anagram",
+      "difficulty": "Easy",
+      "frequency": 64.5,
+      "orderIndex": 42,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "2a0105e6-35ed-4052-bd6b-9ee176aa7d15",
+      "title": "Next Permutation",
+      "difficulty": "Medium",
+      "frequency": 63.8,
+      "orderIndex": 43,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "67cc139f-998c-4171-a492-26de94c4f05d",
+      "title": "Rotate Image",
+      "difficulty": "Medium",
+      "frequency": 63.8,
+      "orderIndex": 44,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fcee7ba1-c0d4-47f6-917e-e6e8da3d9b1a",
+      "title": "Kth Largest Element in an Array",
+      "difficulty": "Medium",
+      "frequency": 63.3,
+      "orderIndex": 45,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "25e0fab2-8839-4be3-8570-6a86fc248925",
+      "title": "Coin Change",
+      "difficulty": "Medium",
+      "frequency": 63.3,
+      "orderIndex": 46,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "6f194fd3-9142-4e94-a0a3-28197afb9558",
+      "title": "Task Scheduler",
+      "difficulty": "Medium",
+      "frequency": 63.3,
+      "orderIndex": 47,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3cd242f2-b5d6-4b3e-b344-94573ee25051",
+      "title": "Remove Duplicates from Sorted Array",
+      "difficulty": "Easy",
+      "frequency": 63.1,
+      "orderIndex": 48,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

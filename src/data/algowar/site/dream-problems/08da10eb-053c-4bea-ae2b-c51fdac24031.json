@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "08da10eb-053c-4bea-ae2b-c51fdac24031",
+    "title": "String Compression",
+    "difficulty": "Medium",
+    "tags": [
+      "two-pointers",
+      "string"
+    ],
+    "statement": "Given an array of characters, compress it using the following algorithm:\n\nBegin with an empty string s. For each group of consecutive repeating characters in the array:\n\n- If the group's length is 1, append the character to s.\n- Otherwise, append the character followed by the group's length.\n\nNote that group lengths that are 10 or longer will be split into multiple characters in the compressed string.\n\nOutput the compressed string s.\n\n**Input:**\nThe first line contains an integer n, the number of characters.\nThe second line contains n space-separated characters.\n\n**Output:**\nPrint the compressed string on a single line (raw, no quotes).\n\n**Constraints:**\n- 1 <= n <= 2000\n- Each character is a lowercase English letter, uppercase English letter, digit, or symbol.\n\n**Examples:**\nExample 1:\nInput:\n7\na a b b c c c\nOutput:\na2b2c3\n\nExample 2:\nInput:\n1\na\nOutput:\na\n\nExample 3:\nInput:\n13\na b b b b b b b b b b b b\nOutput:\nab12",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

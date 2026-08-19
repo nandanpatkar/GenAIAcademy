@@ -1,0 +1,1081 @@
+{
+  "worldNumber": 3,
+  "slug": "array-valley",
+  "title": "Array Valley",
+  "description": "Clear the core array path from fundamentals to hard optimization patterns.",
+  "theme": "crimson-valley",
+  "levelCount": 40,
+  "xpAvailable": 660,
+  "difficultySummary": {
+    "Easy": 14,
+    "Hard": 6,
+    "Medium": 20
+  },
+  "contentSummary": {
+    "plus": 40
+  },
+  "completionReward": {
+    "badgeTitle": "Array Raider",
+    "xp": 100,
+    "coins": 325
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-3-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Array Valley",
+      "subtitle": "Solve Problems on Arrays [Easy -> Medium -> Hard]",
+      "description": "Clear the core array path from fundamentals to hard optimization patterns.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-62",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Largest Element",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 62,
+        "displayNumber": 8,
+        "title": "Largest Element",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-63",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Second Largest Element",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 63,
+        "displayNumber": 9,
+        "title": "Second Largest Element",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-64",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Check if the Array is Sorted II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 64,
+        "displayNumber": 10,
+        "title": "Check if the Array is Sorted II",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-65",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Remove duplicates from Sorted array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 65,
+        "displayNumber": 11,
+        "title": "Remove duplicates from Sorted array",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-66",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Left Rotate Array by One",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 66,
+        "displayNumber": 12,
+        "title": "Left Rotate Array by One",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-67",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Left Rotate Array by K Places",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 67,
+        "displayNumber": 13,
+        "title": "Left Rotate Array by K Places",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-68",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Move Zeros to End",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 68,
+        "displayNumber": 14,
+        "title": "Move Zeros to End",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-69",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Linear Search",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 69,
+        "displayNumber": 15,
+        "title": "Linear Search",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-70",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Union of two sorted arrays",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 70,
+        "displayNumber": 16,
+        "title": "Union of two sorted arrays",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-71",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Find missing number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 71,
+        "displayNumber": 17,
+        "title": "Find missing number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-72",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Maximum Consecutive Ones",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 72,
+        "displayNumber": 18,
+        "title": "Maximum Consecutive Ones",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-73",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Find the number that appears once, and other numbers twice.",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 73,
+        "displayNumber": 19,
+        "title": "Find the number that appears once, and other numbers twice.",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-3-checkpoint-73",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 73,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-74",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Longest subarray with given sum K(positives)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 74,
+        "displayNumber": 20,
+        "title": "Longest subarray with given sum K(positives)",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-75",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Longest subarray with sum K",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 75,
+        "displayNumber": 21,
+        "title": "Longest subarray with sum K",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-76",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Two Sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 76,
+        "displayNumber": 22,
+        "title": "Two Sum",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-77",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Sort an array of 0's 1's and 2's",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 77,
+        "displayNumber": 23,
+        "title": "Sort an array of 0's 1's and 2's",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-78",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Majority Element-I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 78,
+        "displayNumber": 24,
+        "title": "Majority Element-I",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-79",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Kadane's Algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 79,
+        "displayNumber": 25,
+        "title": "Kadane's Algorithm",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-80",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Print subarray with maximum subarray sum (extended version of above problem)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 80,
+        "displayNumber": 26,
+        "title": "Print subarray with maximum subarray sum (extended version of above problem)",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-81",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Stock Buy and Sell",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 81,
+        "displayNumber": 27,
+        "title": "Stock Buy and Sell",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-82",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Rearrange array elements by sign",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 82,
+        "displayNumber": 28,
+        "title": "Rearrange array elements by sign",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-83",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Next Permutation",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 83,
+        "displayNumber": 29,
+        "title": "Next Permutation",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-84",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Leaders in an Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 84,
+        "displayNumber": 30,
+        "title": "Leaders in an Array",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-85",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Longest Consecutive Sequence in an Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 85,
+        "displayNumber": 31,
+        "title": "Longest Consecutive Sequence in an Array",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-3-checkpoint-85",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 85,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-86",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Set Matrix Zeroes",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 86,
+        "displayNumber": 32,
+        "title": "Set Matrix Zeroes",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-87",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "Rotate matrix by 90 degrees",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 87,
+        "displayNumber": 33,
+        "title": "Rotate matrix by 90 degrees",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-88",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Print the matrix in spiral manner",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 88,
+        "displayNumber": 34,
+        "title": "Print the matrix in spiral manner",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-89",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Count subarrays with given sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 89,
+        "displayNumber": 35,
+        "title": "Count subarrays with given sum",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-90",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "Pascal's Triangle I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 90,
+        "displayNumber": 36,
+        "title": "Pascal's Triangle I",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-91",
+      "nodeType": "level",
+      "order": 33,
+      "mapLane": "left",
+      "title": "Majority Element-II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 91,
+        "displayNumber": 37,
+        "title": "Majority Element-II",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-92",
+      "nodeType": "level",
+      "order": 34,
+      "mapLane": "right",
+      "title": "3 Sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 92,
+        "displayNumber": 38,
+        "title": "3 Sum",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-93",
+      "nodeType": "level",
+      "order": 35,
+      "mapLane": "left",
+      "title": "4 Sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 93,
+        "displayNumber": 39,
+        "title": "4 Sum",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-94",
+      "nodeType": "level",
+      "order": 36,
+      "mapLane": "right",
+      "title": "Largest Subarray with Sum 0",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 94,
+        "displayNumber": 40,
+        "title": "Largest Subarray with Sum 0",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-95",
+      "nodeType": "level",
+      "order": 37,
+      "mapLane": "left",
+      "title": "Count subarrays with given xor K",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 95,
+        "displayNumber": 41,
+        "title": "Count subarrays with given xor K",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-96",
+      "nodeType": "level",
+      "order": 38,
+      "mapLane": "right",
+      "title": "Merge Overlapping Subintervals",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 96,
+        "displayNumber": 42,
+        "title": "Merge Overlapping Subintervals",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-97",
+      "nodeType": "level",
+      "order": 39,
+      "mapLane": "left",
+      "title": "Merge two sorted arrays without extra space",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 97,
+        "displayNumber": 43,
+        "title": "Merge two sorted arrays without extra space",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-3-checkpoint-97",
+      "nodeType": "checkpoint",
+      "order": 40,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 97,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-98",
+      "nodeType": "level",
+      "order": 41,
+      "mapLane": "left",
+      "title": "Find the repeating and missing number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 98,
+        "displayNumber": 44,
+        "title": "Find the repeating and missing number",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-99",
+      "nodeType": "level",
+      "order": 42,
+      "mapLane": "right",
+      "title": "Count Inversions",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 99,
+        "displayNumber": 45,
+        "title": "Count Inversions",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-100",
+      "nodeType": "level",
+      "order": 43,
+      "mapLane": "left",
+      "title": "Reverse Pairs",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 100,
+        "displayNumber": 46,
+        "title": "Reverse Pairs",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-101",
+      "nodeType": "boss",
+      "order": 44,
+      "mapLane": "center",
+      "title": "Maximum Product Subarray in an Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 101,
+        "displayNumber": 47,
+        "title": "Maximum Product Subarray in an Array",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}
