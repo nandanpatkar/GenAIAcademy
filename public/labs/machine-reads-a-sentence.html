@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How a Machine Reads a Sentence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f8fc;
+  --bg-2:#eef1f8;
+  --panel:#ffffff;
+  --panel-2:#f4f6fb;
+  --line:#e3e7f1;
+  --line-soft:#edf0f7;
+  --text:#1b2233;
+  --text-soft:#3c4560;
+  --muted:#8a93ab;
+  --amber:#e8920c;
+  --amber-soft:#fbe9c7;
+  --amber-bg:#fff7ea;
+  --mint:#10a577;
+  --mint-soft:#c9f0e2;
+  --mint-bg:#e9f8f2;
+  --violet:#7c5cf5;
+  --violet-bg:#f1edff;
+  --rose:#e8455c;
+  --rose-bg:#fdeef0;
+  --sky:#2aa8e8;
+  --shadow:0 1px 2px rgba(27,34,51,.04),0 6px 20px rgba(27,34,51,.06);
+  --sidebar-w:270px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(900px 500px at 85% -5%, rgba(124,92,245,.06), transparent 60%),radial-gradient(800px 600px at -5% 25%, rgba(16,165,119,.05), transparent 55%)}
+.accent-bar{height:4px;background:linear-gradient(90deg,var(--violet),var(--sky),var(--amber),var(--mint));position:fixed;top:0;left:0;right:0;z-index:200}
+
+.layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100vh;padding-top:4px}
+.layout.wb-open{grid-template-columns:var(--sidebar-w) 1fr 40%}
+@media(max-width:1080px){.layout,.layout.wb-open{grid-template-columns:1fr}}
+
+.sidebar{position:sticky;top:4px;align-self:start;height:calc(100vh - 4px);background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;z-index:60}
+@media(max-width:1080px){.sidebar{position:fixed;top:4px;left:0;width:var(--sidebar-w);transform:translateX(-105%);transition:transform .25s;box-shadow:0 10px 40px rgba(0,0,0,.15)}.sidebar.show{transform:translateX(0)}}
+.brand{display:flex;align-items:center;gap:12px;padding:20px 20px 16px;border-bottom:1px solid var(--line-soft)}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--violet),var(--sky));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:21px;box-shadow:0 4px 12px rgba(124,92,245,.35)}
+.brand-txt .n1{font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:-.01em}
+.brand-txt .n2{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+.nav-scroll{flex:1;overflow-y:auto;padding:14px 12px 30px}
+.nav-scroll::-webkit-scrollbar{width:8px}.nav-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.act-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:16px 12px 8px}
+.act-label:first-child{padding-top:4px}
+.navlink{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:.15s;color:var(--text-soft);font-size:13.5px;position:relative}
+.navlink:hover{background:var(--bg)}
+.navlink.active{background:var(--violet);color:#fff;font-weight:600;box-shadow:0 3px 10px rgba(124,92,245,.3)}
+.navlink .nn{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--violet);width:20px;flex:none}
+.navlink.active .nn{color:rgba(255,255,255,.85)}
+.navlink .nt{flex:1;line-height:1.3}
+
+.main{position:relative;z-index:1;overflow-x:hidden}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(247,248,252,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topbar-inner{display:flex;align-items:center;gap:12px;padding:11px 22px}
+.hamb{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--panel);display:none;align-items:center;justify-content:center;cursor:pointer;color:var(--text-soft);flex:none}
+@media(max-width:1080px){.hamb{display:flex}}
+.pipeline{display:flex;align-items:center;gap:5px;overflow-x:auto;scrollbar-width:none;flex:1}
+.pipeline::-webkit-scrollbar{display:none}
+.pstep{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;padding:5px 10px;border-radius:7px;border:1px solid transparent;transition:.35s;flex:none}
+.pstep.on{color:#fff;background:var(--amber);border-color:var(--amber);box-shadow:0 2px 10px rgba(232,146,12,.35);font-weight:700}
+.parrow{color:var(--line);font-size:11px;flex:none}
+.wb-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--panel);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-soft);flex:none;transition:.15s;font-size:16px}
+.wb-btn:hover{border-color:var(--violet);color:var(--violet)}
+.wb-btn.on{background:var(--violet);color:#fff;border-color:var(--violet)}
+
+.wrap{max-width:920px;margin:0 auto;padding:0 24px}
+
+.hero{min-height:86vh;display:flex;flex-direction:column;justify-content:center;padding:70px 0 50px;text-align:center}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--mint);margin-bottom:24px;font-weight:700}
+.hero h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1.03;letter-spacing:-.02em;margin-bottom:8px}
+.hero h1 .q{color:var(--amber)}
+.hero-sub{color:var(--text-soft);font-size:clamp(1rem,2.2vw,1.2rem);max-width:600px;margin:24px auto 0}
+.hero-sub b{color:var(--text)}
+.sentence-chip{display:inline-flex;gap:8px;margin:38px auto 0;padding:14px 18px;background:var(--panel);border:1px solid var(--line);border-radius:14px;flex-wrap:wrap;justify-content:center;box-shadow:var(--shadow)}
+.word-tile{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:15px;padding:8px 14px;border-radius:9px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);animation:rise .6s both}
+.word-tile:nth-child(1){animation-delay:.1s}.word-tile:nth-child(2){animation-delay:.25s}.word-tile:nth-child(3){animation-delay:.4s}.word-tile:nth-child(4){animation-delay:.55s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero-flow{display:flex;flex-direction:column;align-items:center;gap:5px;margin:40px auto 0}
+.hf-node{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:260px;padding:12px 20px;border-radius:12px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);transition:.45s;animation:rise .6s both}
+.hf-node:nth-child(1){animation-delay:.05s}.hf-node:nth-child(3){animation-delay:.15s}.hf-node:nth-child(5){animation-delay:.25s}.hf-node:nth-child(7){animation-delay:.35s}.hf-node:nth-child(9){animation-delay:.45s}.hf-node:nth-child(11){animation-delay:.55s}
+.hf-lbl{font-family:'Space Grotesk';font-weight:700;font-size:15px;color:var(--text)}
+.hf-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.hf-node.lit{background:var(--amber);border-color:var(--amber);box-shadow:0 6px 20px rgba(232,146,12,.35);transform:scale(1.04)}
+.hf-node.lit .hf-lbl,.hf-node.lit .hf-sub{color:#fff}
+.hf-arw{color:var(--line);font-size:16px}
+.scroll-hint{margin-top:50px;color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace;animation:bob 2s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+.chapter{padding:66px 0;border-top:1px solid var(--line);scroll-margin-top:80px}
+.chapter:first-of-type{border-top:none}
+.ch-num{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;color:var(--violet);text-transform:uppercase;margin-bottom:14px;font-weight:700}
+.chapter h2{font-family:'Space Grotesk';font-weight:700;font-size:clamp(1.6rem,4vw,2.5rem);letter-spacing:-.015em;line-height:1.1;margin-bottom:16px}
+.chapter h2 em{font-style:normal;color:var(--amber)}
+.lead{color:var(--text-soft);font-size:1.05rem;max-width:640px;margin-bottom:32px}
+.lead b{color:var(--text);font-weight:600}
+.note{font-size:.94rem;color:var(--text-soft);margin-top:18px;max-width:620px}
+.note b{color:var(--text)}
+.key{color:var(--mint);font-weight:700}
+.warn{color:var(--rose);font-weight:700}
+.reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+.tbl{width:100%;border-collapse:separate;border-spacing:0;font-family:'JetBrains Mono',monospace;font-size:14px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.tbl th{background:var(--panel-2);color:var(--text-soft);font-weight:700;text-align:left;padding:11px 16px;font-size:12px;letter-spacing:.04em;border-bottom:1px solid var(--line)}
+.tbl td{padding:11px 16px;border-bottom:1px solid var(--line-soft);color:var(--text);transition:background .3s,color .3s,box-shadow .3s}
+.tbl tr:last-child td{border-bottom:none}
+.tbl td.num{color:var(--amber);text-align:right;font-weight:500}
+.tbl .lbl{color:var(--text);font-family:'Inter';font-weight:600}
+.cell-glow{background:var(--amber-bg)!important;color:var(--amber)!important;box-shadow:inset 0 0 0 1.5px var(--amber)}
+.cell-mint{background:var(--mint-bg)!important;color:var(--mint)!important;box-shadow:inset 0 0 0 1.5px var(--mint)}
+.table-scroll{overflow-x:auto;border-radius:12px}
+.caption{font-size:.82rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:12px;text-align:center;font-style:italic}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+
+.tok-input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:11px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:16px;padding:14px 16px;outline:none;transition:.2s}
+.tok-input:focus{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-bg)}
+.tok-out{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;min-height:52px}
+.tok{display:inline-flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:14px;animation:pop .3s both}
+.tok .id{font-size:10px;color:rgba(255,255,255,.75);font-weight:700}
+@keyframes pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.tok-stats{display:flex;gap:26px;margin-top:20px;flex-wrap:wrap}
+.stat{font-family:'JetBrains Mono',monospace}
+.stat .n{font-size:1.8rem;font-weight:700;color:var(--amber);display:block}
+.stat .l{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.mini-chip{font-family:'JetBrains Mono',monospace;font-size:12px;padding:6px 12px;border-radius:20px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer;transition:.2s}
+.mini-chip:hover{border-color:var(--amber);color:var(--amber)}
+
+.lookup{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media(max-width:720px){.lookup{grid-template-columns:1fr}.vecdemo-grid{grid-template-columns:1fr!important}}
+.vocab-list{max-height:340px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.vocab-list::-webkit-scrollbar{width:7px}.vocab-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+.vrow{display:flex;justify-content:space-between;padding:10px 15px;font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;border-bottom:1px solid var(--line-soft);transition:.2s;color:var(--text)}
+.vrow:last-child{border-bottom:none}
+.vrow:hover{background:var(--bg)}
+.vrow.sel{background:var(--amber);color:#fff}
+.vrow .vid{color:var(--muted)}
+.vrow.sel .vid{color:rgba(255,255,255,.8)}
+.vecbox{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:20px;min-height:340px}
+.vecbox h4{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.vec-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.vcell{aspect-ratio:1;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:8px;display:flex;align-items:center;justify-content:center;color:rgba(0,0,0,.5);transition:.4s}
+.vec-caption{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mint);margin-top:16px}
+
+.simwrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+@media(max-width:720px){.simwrap{grid-template-columns:1fr}}
+.map{position:relative;aspect-ratio:1;background-color:var(--bg);background-image:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:11.11% 11.11%;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.dot{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 1.1s cubic-bezier(.3,.7,.3,1)}
+.dot .pt{width:13px;height:13px;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.dot .nm{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:500}
+.toggle-btn{font-family:'Space Grotesk';font-weight:600;font-size:15px;cursor:pointer;background:var(--amber);color:#fff;border:none;padding:13px 22px;border-radius:11px;transition:.2s;box-shadow:0 4px 12px rgba(232,146,12,.3)}
+.toggle-btn:hover{transform:translateY(-2px)}
+.legend{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-soft);margin-top:20px;line-height:2}
+.legend span{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+
+.att-sentence{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 28px}
+.att-word{font-family:'JetBrains Mono',monospace;font-size:17px;padding:12px 18px;border-radius:11px;background:var(--bg);border:1.5px solid var(--line);cursor:pointer;transition:.35s;color:var(--text)}
+.att-word.active{background:var(--violet);color:#fff;border-color:var(--violet);box-shadow:0 4px 16px rgba(124,92,245,.4)}
+.att-hint{text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:8px}
+
+.ctx-toggle{display:flex;gap:10px;justify-content:center;margin-bottom:26px;flex-wrap:wrap}
+.ctx-btn{font-family:'JetBrains Mono',monospace;font-size:13px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text-soft);cursor:pointer;transition:.25s}
+.ctx-btn.on{background:var(--sky);color:#fff;border-color:var(--sky);font-weight:700}
+.ctx-vec{display:grid;grid-template-columns:repeat(12,1fr);gap:5px;max-width:520px;margin:0 auto}
+.cx{aspect-ratio:1;border-radius:4px;transition:.6s}
+
+.bars{display:flex;flex-direction:column;gap:10px;max-width:560px}
+.bar-row{display:flex;align-items:center;gap:14px}
+.bar-lbl{font-family:'JetBrains Mono',monospace;font-size:13px;width:70px;color:var(--text)}
+.bar-track{flex:1;height:26px;background:var(--bg);border-radius:7px;overflow:hidden;border:1px solid var(--line)}
+.bar-fill{height:100%;border-radius:6px;transition:width .8s cubic-bezier(.2,.7,.2,1);background:linear-gradient(90deg,var(--mint),var(--sky))}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:12px;width:48px;color:var(--amber);text-align:right;font-weight:700}
+.temp-ctrl{margin-top:26px}
+.temp-ctrl label{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-soft);display:block;margin-bottom:10px}
+.temp-ctrl label b{color:var(--amber)}
+input[type=range]{-webkit-appearance:none;width:100%;max-width:560px;height:6px;border-radius:6px;background:var(--line);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--amber);cursor:pointer;box-shadow:0 2px 8px rgba(232,146,12,.5)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border:none;border-radius:50%;background:var(--amber);cursor:pointer}
+
+.loopwrap{text-align:center}
+.loop-flow{display:flex;flex-direction:column;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:13px;margin-top:20px}
+.loop-node{padding:9px 16px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--text-soft);transition:.4s;min-width:220px}
+.loop-node.lit{background:var(--amber);color:#fff;border-color:var(--amber);font-weight:700;box-shadow:0 4px 14px rgba(232,146,12,.35)}
+.loop-arw{color:var(--line)}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--mint);padding:4px 11px;border-radius:20px;font-weight:700;margin-bottom:20px}
+
+footer{padding:60px 0 80px;text-align:center;border-top:1px solid var(--line);margin-top:40px}
+footer .brand-f{font-family:'Space Grotesk';font-weight:700;font-size:1.4rem;color:var(--amber)}
+footer p{color:var(--muted);font-size:.9rem;margin-top:10px}
+
+.whiteboard{position:sticky;top:4px;align-self:start;height:calc(100vh - 4px);background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;z-index:55}
+.layout:not(.wb-open) .whiteboard{display:none}
+@media(max-width:1080px){.whiteboard{position:fixed;inset:4px 0 0 0;z-index:120}}
+.wb-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.wb-dot{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 3px var(--mint-bg)}
+.wb-title{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-soft)}
+.wb-head-actions{margin-left:auto;display:flex;gap:6px}
+.wb-icon{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:var(--panel);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-soft);transition:.15s;font-size:15px}
+.wb-icon:hover{border-color:var(--rose);color:var(--rose)}
+.wb-canvas-wrap{flex:1;position:relative;background-color:#fdfdff;background-image:radial-gradient(circle,var(--line) 1px,transparent 1px);background-size:22px 22px}
+#wbCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;touch-action:none}
+.wb-toolbar{display:flex;align-items:center;gap:12px;padding:11px 16px;border-top:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+.tool-group{display:flex;gap:6px;align-items:center}
+.tool{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--panel);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;color:var(--text-soft);font-size:16px}
+.tool:hover{border-color:var(--violet)}
+.tool.on{background:var(--violet);color:#fff;border-color:var(--violet)}
+.swatch{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);transition:.15s}
+.swatch.on{box-shadow:0 0 0 2px var(--violet);transform:scale(1.15)}
+.size-dot{cursor:pointer;border-radius:50%;background:var(--text-soft);transition:.15s;opacity:.5}
+.size-dot.on{opacity:1;background:var(--violet)}
+.tb-divider{width:1px;height:26px;background:var(--line)}
+</style>
+</head>
+<body>
+<div class="accent-bar"></div>
+
+<div class="layout" id="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">S</div>
+      <div class="brand-txt">
+        <div class="n1">Sentence Lab</div>
+        <div class="n2">One sentence · through an LLM</div>
+      </div>
+    </div>
+    <nav class="nav-scroll" id="nav">
+      <div class="act-label">Act 1 · How computers read</div>
+      <a class="navlink" data-go="ch1"><span class="nn">01</span><span class="nt">Computers can't read words</span></a>
+      <a class="navlink" data-go="ch2"><span class="nn">02</span><span class="nt">What is a Token?</span></a>
+      <a class="navlink" data-go="ch3"><span class="nn">03</span><span class="nt">Token IDs</span></a>
+      <a class="navlink" data-go="ch4"><span class="nn">04</span><span class="nt">Describe by properties</span></a>
+      <a class="navlink" data-go="ch5"><span class="nn">05</span><span class="nt">Meaning is learned</span></a>
+      <a class="navlink" data-go="chVec"><span class="nn">5·5</span><span class="nt">What is a Vector?</span></a>
+      <div class="act-label">Act 2 · How transformers think</div>
+      <a class="navlink" data-go="ch6"><span class="nn">06</span><span class="nt">The Embedding Matrix</span></a>
+      <a class="navlink" data-go="ch7"><span class="nn">07</span><span class="nt">Why 1536 dimensions?</span></a>
+      <a class="navlink" data-go="ch8"><span class="nn">08</span><span class="nt">Self-Attention</span></a>
+      <a class="navlink" data-go="ch9"><span class="nn">09</span><span class="nt">Same word, new vector</span></a>
+      <div class="act-label">Act 3 · How it answers</div>
+      <a class="navlink" data-go="ch10"><span class="nn">10</span><span class="nt">Picking the next token</span></a>
+      <a class="navlink" data-go="loop"><span class="nn">🔁</span><span class="nt">The whole journey</span></a>
+    </nav>
+  </aside>
+
+  <main class="main" id="main">
+
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="hamb" id="hamb">☰</div>
+        <div class="pipeline" id="pipeline">
+          <span class="pstep" data-stage="sentence">Sentence</span><span class="parrow">→</span>
+          <span class="pstep" data-stage="token">Tokens</span><span class="parrow">→</span>
+          <span class="pstep" data-stage="id">Token&nbsp;IDs</span><span class="parrow">→</span>
+          <span class="pstep" data-stage="embed">Embeddings</span><span class="parrow">→</span>
+          <span class="pstep" data-stage="vector">Vectors</span><span class="parrow">→</span>
+          <span class="pstep" data-stage="attn">Attention</span><span class="parrow">→</span>
+          <span class="pstep" data-stage="logits">Next&nbsp;Token</span>
+        </div>
+        <div class="wb-btn" id="wbToggle" title="Toggle whiteboard">✎</div>
+      </div>
+    </div>
+
+    <div class="wrap">
+
+      <section class="chapter" id="ch1" data-stage="sentence" style="padding-top:44px">
+        <div class="reveal">
+          <div class="ch-num">Act 1 · Chapter 1</div>
+          <h2>A computer has never <em>seen</em> a word</h2>
+          <p class="lead">To a processor, the letters <b>C-A-T</b> are just shapes. It has no idea a cat is furry, small, or a pet. Silicon understands exactly one thing: <span class="key">numbers</span>. So before any "intelligence" can happen, every word must become a number — that's the very first step of the pipeline above.</p>
+        </div>
+        <div class="reveal card" style="text-align:center;font-family:'JetBrains Mono',monospace">
+          <div style="font-size:15px;color:var(--muted)">English</div>
+          <div style="font-size:26px;color:var(--rose);margin:8px 0">"I love AI Agents"</div>
+          <div style="color:var(--line);font-size:20px">↓ needs translation ↓</div>
+          <div style="font-size:26px;color:var(--mint);margin-top:8px">2, 891, 15, 4402 …</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:6px">numbers a machine can compute with</div>
+        </div>
+      </section>
+
+      <section class="chapter" id="ch2" data-stage="token">
+        <div class="reveal">
+          <div class="ch-num">Act 1 · Chapter 2</div>
+          <h2>Step one: chop it into <em>tokens</em></h2>
+          <p class="lead">This is the single most important idea in the whole course. <b>LLMs do not read words. Not sentences. Not even characters.</b> They read <span class="key">tokens</span> — the "language atoms" a model actually receives. Everything downstream (context windows, pricing, embeddings, RAG, hallucinations, speed) starts here.</p>
+        </div>
+
+        <div class="reveal card">
+          <input class="tok-input" id="tokInput" value="OpenAI's large language models process text using tokens." placeholder="Type a sentence…" spellcheck="false">
+          <div class="chip-row">
+            <span class="mini-chip" data-t="I love AI Agents">I love AI Agents</span>
+            <span class="mini-chip" data-t="OpenAI's large language models process text using tokens.">OpenAI's models</span>
+            <span class="mini-chip" data-t="internationalization">internationalization</span>
+            <span class="mini-chip" data-t="Hello World">Hello World</span>
+            <span class="mini-chip" data-t="aaaaaaaaaaaaaaaaaaaaaaaa">aaaaaaaaaaaaaaaaaaaaaaaa</span>
+          </div>
+          <div class="tok-out" id="tokOut"></div>
+          <div class="tok-stats">
+            <div class="stat"><span class="n" id="tokCount">0</span><span class="l">Tokens</span></div>
+            <div class="stat"><span class="n" id="charCount">0</span><span class="l">Characters</span></div>
+            <div class="stat"><span class="n" id="ratioCount">0</span><span class="l">Chars / token</span></div>
+          </div>
+          <div class="caption">each colored tile = one token · the number below is its vocabulary <b>ID</b> · try the chips to see how splitting changes</div>
+        </div>
+
+        <p class="note" style="margin-bottom:34px"><b>Watch three things above:</b> "OpenAI" splits into <b>Open</b> + <b>AI</b>, the leading space in "&nbsp;language" gets kept, and punctuation like <b>.</b> becomes its own tile. Those aren't bugs — each one is the tokenizer being efficient. The five cards below explain why.</p>
+
+        <!-- WHY NOT WORDS -->
+        <div class="reveal card" style="margin-bottom:18px;border-left:4px solid var(--rose)">
+          <div class="ch-num" style="color:var(--rose)">Question 1</div>
+          <h3 style="font-family:'Space Grotesk';font-size:1.35rem;margin-bottom:10px">Why not just store whole words?</h3>
+          <p style="color:var(--text-soft)">Because words are impossible to store. Just for the verb <i>run</i> you'd need <b>run, running, runs, runner, runners, ran</b>… now multiply by Hindi, Chinese, Japanese, Arabic, emojis, code, URLs, file paths. The vocabulary explodes into <span class="warn">billions</span>. Instead the tokenizer keeps ~100k–200k <b>reusable pieces</b> that recombine into millions of words.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:13px;align-items:center">
+            <span style="padding:7px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)">internationalization</span>
+            <span style="color:var(--muted)">→</span>
+            <span style="padding:7px 11px;border-radius:8px;background:var(--violet-bg);color:var(--violet)">inter</span>
+            <span style="padding:7px 11px;border-radius:8px;background:var(--amber-bg);color:var(--amber)">nation</span>
+            <span style="padding:7px 11px;border-radius:8px;background:var(--mint-bg);color:var(--mint)">al</span>
+            <span style="padding:7px 11px;border-radius:8px;background:var(--rose-bg);color:var(--rose)">ization</span>
+          </div>
+        </div>
+
+        <!-- WHY SPACES / SPLITS -->
+        <div class="reveal card" style="margin-bottom:18px;border-left:4px solid var(--amber)">
+          <div class="ch-num" style="color:var(--amber)">Question 2</div>
+          <h3 style="font-family:'Space Grotesk';font-size:1.35rem;margin-bottom:10px">Why do tokens include spaces, and why does "OpenAI" split?</h3>
+          <p style="color:var(--text-soft)">The tokenizer doesn't split on spaces — it splits into <b>statistically common pieces</b>. "&nbsp;language" (with a leading space) is stored as one token because it appears so often, which saves a token every time. And "OpenAI" isn't in the vocabulary, but <b>Open</b> and <b>AI</b> already are — so it reuses them. Punctuation carries meaning, so <b>.</b> and <b>,</b> get their own tokens too.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:13px;align-items:center">
+            <span style="padding:7px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line)">OpenAI's</span>
+            <span style="color:var(--muted)">→</span>
+            <span style="padding:7px 11px;border-radius:8px;background:var(--violet-bg);color:var(--violet)">Open</span>
+            <span style="padding:7px 11px;border-radius:8px;background:var(--sky);color:#fff">AI</span>
+            <span style="padding:7px 11px;border-radius:8px;background:var(--mint-bg);color:var(--mint)">'s</span>
+          </div>
+        </div>
+
+        <!-- BPE -->
+        <div class="reveal card" style="margin-bottom:18px;border-left:4px solid var(--violet)">
+          <div class="ch-num" style="color:var(--violet)">Question 3</div>
+          <h3 style="font-family:'Space Grotesk';font-size:1.35rem;margin-bottom:10px">How does it decide the splits? (BPE)</h3>
+          <p style="color:var(--text-soft)">Modern models use <b>Byte Pair Encoding</b>. During training it starts from raw characters, counts which neighbouring pair appears together most often, merges that pair into a new token, and repeats millions of times. Common sequences fuse into single tokens; rare ones stay in pieces.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:14px;align-items:center;justify-content:center">
+            <span style="padding:6px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)">t · h · e</span>
+            <span style="color:var(--muted)">→ merge top pair →</span>
+            <span style="padding:6px 10px;border-radius:8px;background:var(--amber-bg);color:var(--amber)">th · e</span>
+            <span style="color:var(--muted)">→ again →</span>
+            <span style="padding:6px 10px;border-radius:8px;background:var(--mint-bg);color:var(--mint)">the</span>
+          </div>
+        </div>
+
+        <!-- COUNTS: chars vs tokens -->
+        <div class="reveal card" style="margin-bottom:18px;border-left:4px solid var(--mint)">
+          <div class="ch-num" style="color:var(--mint)">Question 4</div>
+          <h3 style="font-family:'Space Grotesk';font-size:1.35rem;margin-bottom:10px">Characters vs tokens — and the ~4× rule</h3>
+          <p style="color:var(--text-soft)">A rough rule is <b>1 token ≈ 4 characters</b> in English — but it's only an average. Type <code style="font-family:'JetBrains Mono';background:var(--bg);padding:1px 6px;border-radius:5px">aaaaaaaa…</code> in the box above and the ratio collapses: the tokenizer has never seen that run, so it burns far more tokens. Code, emojis, and other languages all have different averages.</p>
+          <p class="note" style="margin-top:12px">The <b>Chars / token</b> stat in the playground updates live so you can feel this yourself.</p>
+        </div>
+
+        <!-- WHY IT MATTERS: cost, context, rag -->
+        <div class="reveal card" style="border-left:4px solid var(--sky)">
+          <div class="ch-num" style="color:var(--sky)">Question 5</div>
+          <h3 style="font-family:'Space Grotesk';font-size:1.35rem;margin-bottom:14px">Why AI engineers obsess over token count</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 22px">
+            <div style="display:flex;gap:12px"><div style="font-size:20px">💵</div><div><b>Pricing</b><br><span style="color:var(--text-soft);font-size:14px">You pay per token — 1000 in + 500 out = 1500 billed. Not words.</span></div></div>
+            <div style="display:flex;gap:12px"><div style="font-size:20px">📏</div><div><b>Context window</b><br><span style="color:var(--text-soft);font-size:14px">"400K context" means 400,000 <i>tokens</i> (~300K words), not words.</span></div></div>
+            <div style="display:flex;gap:12px"><div style="font-size:20px">📚</div><div><b>RAG budget</b><br><span style="color:var(--text-soft);font-size:14px">Docs 90K + history 20K + system 10K = 120K → only 8K left to answer.</span></div></div>
+            <div style="display:flex;gap:12px"><div style="font-size:20px">⚡</div><div><b>Latency</b><br><span style="color:var(--text-soft);font-size:14px">Fewer input tokens → faster inference. Concise prompts win twice.</span></div></div>
+          </div>
+          <p class="note" style="margin-top:16px">This is why enterprise RAG systems aggressively <b>chunk, compress, summarize, and rerank</b> — every token spent on context is a token stolen from the answer. <span class="key">Once you think in token budgets, embeddings, attention and inference all click into place.</span></p>
+        </div>
+      </section>
+
+      <section class="chapter" id="ch3" data-stage="id">
+        <div class="reveal">
+          <div class="ch-num">Act 1 · Chapter 3</div>
+          <h2>Every token gets an <em>address</em>, not a meaning</h2>
+          <p class="lead">The tokenizer keeps a giant dictionary. Each token maps to a fixed number — its Token ID. But here's the trap beginners fall into: <b>the ID carries no meaning</b>. It's just a row number, like an employee badge or a passport number.</p>
+        </div>
+        <div class="reveal table-scroll">
+          <table class="tbl" id="idTable">
+            <thead><tr><th>Animal (token)</th><th>Token ID</th></tr></thead>
+            <tbody>
+              <tr><td class="lbl">Cat</td><td class="num">1</td></tr>
+              <tr><td class="lbl">Dog</td><td class="num">2</td></tr>
+              <tr><td class="lbl">Tiger</td><td class="num">3</td></tr>
+              <tr><td class="lbl">Lion</td><td class="num">4</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note"><span class="warn">The problem:</span> Is Cat (1) closer to Dog (2) than to Tiger (3)? The numbers say "a little," but that's an accident of counting. <span class="key">1, 2, 3, 4 hold zero relationship.</span> We need something far richer.</p>
+      </section>
+
+      <section class="chapter" id="ch4" data-stage="embed">
+        <div class="reveal">
+          <div class="ch-num">Act 1 · Chapter 4</div>
+          <h2>The big idea: describe by <em>properties</em></h2>
+          <p class="lead">Instead of one number per animal, what if we describe each one with <b>several</b> numbers — legs, fur, wild-or-pet, size? Suddenly the numbers <span class="key">mean something</span>. Look what happens to Cat and Dog.</p>
+        </div>
+        <div class="reveal table-scroll">
+          <table class="tbl" id="propTable">
+            <thead><tr><th>Animal</th><th>Legs</th><th>Has&nbsp;Fur</th><th>Wild</th><th>Pet</th><th>Size</th></tr></thead>
+            <tbody>
+              <tr data-a="cat"><td class="lbl">Cat</td><td class="num">4</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">2</td></tr>
+              <tr data-a="dog"><td class="lbl">Dog</td><td class="num">4</td><td class="num">1</td><td class="num">0</td><td class="num">1</td><td class="num">3</td></tr>
+              <tr data-a="tiger"><td class="lbl">Tiger</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">9</td></tr>
+              <tr data-a="lion"><td class="lbl">Lion</td><td class="num">4</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">10</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Cat = <b>[4,1,0,1,2]</b> and Dog = <b>[4,1,0,1,3]</b> — almost identical. Tiger and Lion cluster together too. <span class="key">The rows are now vectors, and similar animals have similar vectors.</span> This is exactly what an embedding is — just with 1536 properties instead of 5.</p>
+      </section>
+
+      <section class="chapter" id="ch5" data-stage="embed">
+        <div class="reveal">
+          <div class="ch-num">Act 1 · Chapter 5</div>
+          <h2>But nobody <em>writes</em> those properties</h2>
+          <p class="lead">Here's the magic. No engineer sits down and labels "dimension 1 = legs, dimension 2 = fur." Instead the model <b>starts with pure random noise</b> and slowly discovers useful properties on its own, by reading billions of sentences. Press the button to watch random numbers organize themselves.</p>
+        </div>
+        <div class="reveal card">
+          <div class="simwrap">
+            <div class="map" id="simMap"></div>
+            <div>
+              <button class="toggle-btn" id="trainBtn">▶ Train the embeddings</button>
+              <div class="legend">
+                <div><span style="background:var(--amber)"></span>Cat &nbsp;·&nbsp; <span style="background:var(--mint)"></span>Dog</div>
+                <div><span style="background:var(--rose)"></span>Tiger &nbsp;·&nbsp; <span style="background:var(--violet)"></span>Lion</div>
+                <div><span style="background:var(--sky)"></span>Apple &nbsp;·&nbsp; <span style="background:#d4a017"></span>Banana</div>
+                <div style="margin-top:14px;font-size:12px;color:var(--muted)">Before training: scattered randomly.<br>After training: words used in similar<br>contexts drift together.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="note"><b>Why does Dog land next to Cat?</b> Because they appear in near-identical sentences — "the ___ drinks", "cute ___", "pet ___". Every time the model guesses wrong, backpropagation nudges those numbers a hair. Billions of nudges later, meaning emerges. <span class="key">This is called distributional semantics.</span></p>
+      </section>
+
+      <section class="chapter" id="chVec" data-stage="vector">
+        <div class="reveal">
+          <div class="ch-num">Act 1 · Chapter 5½</div>
+          <h2>So what <em>is</em> a vector, really?</h2>
+          <p class="lead">You've been building them without the name. A <b>vector is just an ordered list of numbers</b> — and every number is a <b>coordinate</b> that places the word somewhere in space. Cat = <b>[4,1,0,1,2]</b> isn't a definition of "cat"; it's an <span class="key">address</span>. Words with nearby addresses have nearby meanings.</p>
+        </div>
+
+        <div class="reveal card" style="margin-bottom:18px">
+          <div class="ch-num" style="color:var(--sky)">Build it up</div>
+          <h3 style="font-family:'Space Grotesk';font-size:1.35rem;margin-bottom:6px">From 2 numbers to 1536</h3>
+          <p style="color:var(--text-soft);margin-bottom:22px">Add dimensions and the description gets richer. Click each step — the same word, described with more and more coordinates.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px">
+            <button class="ctx-btn dimbtn on" data-dim="2">2D</button>
+            <button class="ctx-btn dimbtn" data-dim="3">3D</button>
+            <button class="ctx-btn dimbtn" data-dim="5">5D</button>
+            <button class="ctx-btn dimbtn" data-dim="1536">1536D</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center" class="vecdemo-grid">
+            <div class="map" id="vecMap" style="max-width:340px;margin:0 auto;width:100%"></div>
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-bottom:8px">Cat as a vector:</div>
+              <div id="vecReadout" style="font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--amber);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;line-height:1.9;word-break:break-word"></div>
+              <div id="vecExplain" style="font-size:14px;color:var(--text-soft);margin-top:16px"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal card">
+          <div class="ch-num" style="color:var(--mint)">The point</div>
+          <h3 style="font-family:'Space Grotesk';font-size:1.35rem;margin-bottom:10px">Closeness = similarity</h3>
+          <p style="color:var(--text-soft)">In the 2D map above, <b>Cat and Dog sit close</b> while <b>Tiger and Lion cluster elsewhere</b>. That distance <i>is</i> the meaning. We can't draw 1536 dimensions, but the math is identical — measure the gap between two vectors and you've measured how related two words are. Later chapters (cosine similarity, semantic search, RAG) are all built on exactly this idea.</p>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:13px">
+            <div style="flex:1;min-width:180px;background:var(--mint-bg);border:1px solid var(--mint);border-radius:10px;padding:12px 14px"><b style="color:var(--mint)">close vectors</b><br><span style="color:var(--text-soft)">Cat ↔ Dog · similar meaning</span></div>
+            <div style="flex:1;min-width:180px;background:var(--rose-bg);border:1px solid var(--rose);border-radius:10px;padding:12px 14px"><b style="color:var(--rose)">far vectors</b><br><span style="color:var(--text-soft)">Cat ↔ Banana · unrelated</span></div>
+          </div>
+        </div>
+        <p class="note">A <b>token</b> is a piece of text. A <b>token ID</b> is its address in the dictionary. A <b>vector</b> is the actual list of numbers stored at that address — and that's what enters the transformer. <span class="key">Everything downstream is just math on these vectors.</span></p>
+      </section>
+
+      <section class="chapter" id="ch6" data-stage="vector">
+        <div class="reveal">
+          <div class="ch-num">Act 2 · Chapter 6</div>
+          <h2>The <em>embedding matrix</em>: one giant lookup table</h2>
+          <p class="lead">Now scale the idea up. The model stores a huge table: one <b>row per token</b> (about 150,000 of them) and one <b>column per learned property</b> (often 1536). A Token ID is just the row number you look up. Click any token to pull its vector.</p>
+        </div>
+        <div class="reveal lookup">
+          <div class="vocab-list" id="vocabList"></div>
+          <div class="vecbox">
+            <h4 id="vecTitle">Click a token →</h4>
+            <div class="vec-grid" id="vecGrid"></div>
+            <div class="vec-caption" id="vecCap">Each square is one dimension. Warm = high, cool = low.</div>
+          </div>
+        </div>
+        <p class="note">This table is <b>150,000 × 1536</b> ≈ 230 million numbers — and that's just the input layer. <span class="key">The Token ID is the address. The vector is what actually lives there.</span></p>
+      </section>
+
+      <section class="chapter" id="ch7" data-stage="vector">
+        <div class="reveal">
+          <div class="ch-num">Act 2 · Chapter 7</div>
+          <h2>Why <em>1536</em> dimensions?</h2>
+          <p class="lead">Describe a person with 2 numbers — you can't say much. With 100, more. With <b>1536</b>, you can encode astonishingly rich relationships without concepts bleeding into each other. So why not a million? Because every transformer layer must multiply these vectors — more dimensions means more memory, more compute, slower answers. 1536 is a <span class="key">balance of richness and cost</span>.</p>
+        </div>
+        <div class="reveal card" style="text-align:center;font-family:'JetBrains Mono',monospace">
+          <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;align-items:flex-end">
+            <div><div style="font-size:12px;color:var(--muted)">2D</div><div style="width:44px;height:44px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;margin-top:6px"></div><div style="font-size:11px;color:var(--muted);margin-top:6px">too few</div></div>
+            <div style="color:var(--line)">→</div>
+            <div><div style="font-size:12px;color:var(--mint)">100D</div><div style="width:64px;height:64px;background:var(--mint-bg);border:1px solid var(--mint);border-radius:8px;margin-top:6px"></div><div style="font-size:11px;color:var(--muted);margin-top:6px">better</div></div>
+            <div style="color:var(--line)">→</div>
+            <div><div style="font-size:12px;color:var(--amber)">1536D</div><div style="width:88px;height:88px;background:var(--amber-bg);border:2px solid var(--amber);border-radius:8px;margin-top:6px"></div><div style="font-size:11px;color:var(--amber);margin-top:6px">just right</div></div>
+            <div style="color:var(--line)">→</div>
+            <div><div style="font-size:12px;color:var(--rose)">1,000,000D</div><div style="width:104px;height:104px;background:var(--rose-bg);border:1px dashed var(--rose);border-radius:8px;margin-top:6px"></div><div style="font-size:11px;color:var(--rose);margin-top:6px">too slow</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" id="ch8" data-stage="attn">
+        <div class="reveal">
+          <div class="ch-num">Act 2 · Chapter 8</div>
+          <h2>Self-attention: words <em>look at</em> each other</h2>
+          <p class="lead">A word alone is ambiguous. To understand "Agents", the model lets every word <b>look at every other word</b> and decide which ones matter. Click a word below to see where its attention flows — brighter links mean stronger attention.</p>
+        </div>
+        <div class="reveal card">
+          <div class="att-hint">click a word to see what it pays attention to</div>
+          <div class="att-sentence" id="attSentence"></div>
+        </div>
+        <p class="note">When you click <b>"Agents"</b>, notice how it leans on <b>"AI"</b> — together they mean something specific. That's attention deciding which context is relevant. <span class="key">This is the single most important operation in a transformer.</span></p>
+      </section>
+
+      <section class="chapter" id="ch9" data-stage="attn">
+        <div class="reveal">
+          <div class="ch-num">Act 2 · Chapter 9</div>
+          <h2>The same word, a <em>different</em> vector</h2>
+          <p class="lead">Before attention, "Apple" has one fixed embedding. After attention reads the sentence around it, that vector <b>changes</b> — pulling toward "fruit" or toward "company." Same token, different meaning, because context rewrote its numbers. Flip the sentence and watch the vector shift.</p>
+        </div>
+        <div class="reveal card">
+          <div class="ctx-toggle">
+            <button class="ctx-btn on" data-ctx="fruit">"I ate an Apple 🍎"</button>
+            <button class="ctx-btn" data-ctx="company">"Apple released a phone 📱"</button>
+          </div>
+          <div class="ctx-vec" id="ctxVec"></div>
+          <div class="caption" id="ctxCap">Contextual vector for "Apple" — meaning: fruit</div>
+        </div>
+        <p class="note">This is why transformers feel intelligent: <span class="key">the meaning of a word is computed fresh, in context, every single time.</span></p>
+      </section>
+
+      <section class="chapter" id="ch10" data-stage="logits">
+        <div class="reveal">
+          <div class="ch-num">Act 3 · Chapter 10</div>
+          <h2>Picking the <em>next token</em></h2>
+          <p class="lead">After all the layers, the final vector is scored against every word in the vocabulary. Those raw scores become <b>probabilities</b> through softmax. <b>Temperature</b> controls the mood: low means safe and predictable, high means creative and wild. Drag the slider.</p>
+        </div>
+        <div class="reveal card">
+          <div class="bars" id="bars"></div>
+          <div class="temp-ctrl">
+            <label>Temperature: <b id="tempVal">0.7</b> <span id="tempMood" style="color:var(--muted)"></span></label>
+            <input type="range" id="tempSlider" min="0.1" max="2" step="0.1" value="0.7">
+          </div>
+        </div>
+        <p class="note">Prompt: <b style="color:var(--rose)">"The cat drinks ___"</b>. At low temperature the model almost always says <b>milk</b>. Crank it up and rarer words get a real chance. <span class="key">Same numbers, different creativity.</span></p>
+      </section>
+
+      <section class="chapter loopwrap" id="loop" data-stage="logits">
+        <div class="reveal">
+          <span class="pill">The whole journey</span>
+          <h2>One sentence, start to finish</h2>
+          <p class="lead" style="margin:0 auto 10px">Everything you just explored, replayed as one pipeline. The model runs this loop over and over — each new token appended, then the whole thing predicted again.</p>
+        </div>
+        <div class="reveal loop-flow" id="loopFlow">
+          <div class="loop-node" data-i="0">"I love AI Agents"</div><div class="loop-arw">↓</div>
+          <div class="loop-node" data-i="1">Tokenizer → chunks</div><div class="loop-arw">↓</div>
+          <div class="loop-node" data-i="2">Token IDs → addresses</div><div class="loop-arw">↓</div>
+          <div class="loop-node" data-i="3">Embedding matrix → vectors</div><div class="loop-arw">↓</div>
+          <div class="loop-node" data-i="4">Attention → context added</div><div class="loop-arw">↓</div>
+          <div class="loop-node" data-i="5">Logits + Softmax → probabilities</div><div class="loop-arw">↓</div>
+          <div class="loop-node" data-i="6">Next token → append & repeat 🔁</div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer>
+      <div class="brand-f">Sentence Lab</div>
+      <p>Zero to Enterprise AI Engineer · An interactive walkthrough of the LLM pipeline</p>
+    </footer>
+  </main>
+
+  <section class="whiteboard" id="whiteboard">
+    <div class="wb-head">
+      <div class="wb-dot"></div>
+      <div class="wb-title">Whiteboard — draw while you teach</div>
+      <div class="wb-head-actions">
+        <div class="wb-icon" id="wbUndo" title="Undo">↶</div>
+        <div class="wb-icon" id="wbClear" title="Clear all">🗑</div>
+      </div>
+    </div>
+    <div class="wb-canvas-wrap"><canvas id="wbCanvas"></canvas></div>
+    <div class="wb-toolbar">
+      <div class="tool-group">
+        <div class="tool on" data-tool="pen" title="Pen">✎</div>
+        <div class="tool" data-tool="highlighter" title="Highlighter">▬</div>
+        <div class="tool" data-tool="eraser" title="Eraser">⌫</div>
+      </div>
+      <div class="tb-divider"></div>
+      <div class="tool-group" id="swatches"></div>
+      <div class="tb-divider"></div>
+      <div class="tool-group" id="sizes"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* pipeline highlight + active nav */
+const psteps=[...document.querySelectorAll('.pstep')];
+const navlinks=[...document.querySelectorAll('.navlink')];
+function setStage(s){psteps.forEach(p=>p.classList.toggle('on',p.dataset.stage===s));}
+const stageObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)setStage(e.target.dataset.stage);});},{rootMargin:'-45% 0px -45% 0px'});
+document.querySelectorAll('[data-stage]').forEach(s=>stageObs.observe(s));
+const sections=[...document.querySelectorAll('.chapter')];
+const navObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){navlinks.forEach(l=>l.classList.toggle('active',l.dataset.go===e.target.id));}});},{rootMargin:'-40% 0px -55% 0px'});
+sections.forEach(s=>navObs.observe(s));
+navlinks.forEach(l=>l.addEventListener('click',()=>{document.getElementById(l.dataset.go)?.scrollIntoView({behavior:'smooth',block:'start'});if(window.innerWidth<=1080)document.getElementById('sidebar').classList.remove('show');}));
+document.getElementById('hamb').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('show');});
+
+/* reveal */
+const revObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revObs.unobserve(e.target);}});},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(r=>revObs.observe(r));
+
+
+/* tokenizer — illustrative BPE-style splitter that keeps leading spaces,
+   splits unknown words into subwords, treats punctuation as its own token */
+const TCOL=['#e8920c','#10a577','#7c5cf5','#2aa8e8','#e8455c','#d4a017','#0e9488'];
+/* words the vocab "already knows" as a single piece */
+const KNOWN=new Set(['i','love','ai','the','a','an','is','are','you','of','to','and','it','on','in','for',
+  'large','language','models','model','process','text','using','tokens','token','open','hello','world',
+  'agents','agent','build','cat','dog','drinks','milk','builds','phone','released']);
+function splitWord(raw){
+  /* raw may include a leading space; separate it, then split trailing punctuation */
+  const lead = raw.startsWith(' ') ? ' ' : '';
+  let core = raw.slice(lead.length);
+  const out=[];
+  /* pull off trailing punctuation as separate tokens */
+  const m = core.match(/^([A-Za-z0-9']*)([^A-Za-z0-9']*)$/);
+  let wordPart = m?m[1]:core, punct = m?m[2]:'';
+  const lw = wordPart.toLowerCase().replace(/'s$/,'');
+  if(wordPart){
+    if(KNOWN.has(lw)){
+      out.push(lead+wordPart);
+    } else if(/^[A-Za-z]/.test(wordPart)){
+      /* try to peel known sub-pieces greedily (Open+AI), else chunk by 4 */
+      let rem=wordPart, first=true, matchedAny=false;
+      const pieces=[];
+      while(rem.length){
+        let hit=null;
+        for(const k of KNOWN){ if(rem.toLowerCase().startsWith(k) && k.length>1){ if(!hit||k.length>hit.length)hit=rem.slice(0,k.length);} }
+        if(hit){pieces.push(hit);rem=rem.slice(hit.length);matchedAny=true;}
+        else{pieces.push(rem.slice(0,4));rem=rem.slice(4);}
+      }
+      pieces.forEach((p,idx)=>out.push((idx===0?lead:'')+p));
+    } else {
+      out.push(lead+wordPart);
+    }
+  }
+  /* each punctuation char is its own token */
+  for(const ch of punct) out.push(ch);
+  return out;
+}
+function fakeTokenize(text){
+  if(!text)return[];
+  /* split keeping the space attached to the following word (leading-space tokens) */
+  const chunks = text.match(/\s*\S+|\s+$/g) || [];
+  let toks=[];
+  chunks.forEach(c=>{ if(/^\s+$/.test(c))return; splitWord(c).forEach(t=>{if(t.length)toks.push(t);}); });
+  return toks;
+}
+function hashId(s){let h=0;const k=s.trim().toLowerCase();for(let i=0;i<k.length;i++){h=(h*131+k.charCodeAt(i))%50000;}return h;}
+function renderTokens(){
+  const text=document.getElementById('tokInput').value,toks=fakeTokenize(text),out=document.getElementById('tokOut');out.innerHTML='';
+  toks.forEach((t,i)=>{const el=document.createElement('span');el.className='tok';el.style.background=TCOL[i%TCOL.length];el.style.color='#fff';el.style.animationDelay=(i*0.04)+'s';
+    el.innerHTML=`${t.replace(/ /g,'␣')}<span class="id">#${hashId(t)}</span>`;out.appendChild(el);});
+  const chars=text.length, n=toks.length;
+  document.getElementById('tokCount').textContent=n;
+  document.getElementById('charCount').textContent=chars;
+  document.getElementById('ratioCount').textContent=n?(chars/n).toFixed(1):'0';
+}
+document.getElementById('tokInput').addEventListener('input',renderTokens);
+document.querySelectorAll('.mini-chip').forEach(c=>c.addEventListener('click',()=>{document.getElementById('tokInput').value=c.dataset.t;renderTokens();}));
+renderTokens();
+
+/* id sweep */
+(function(){const rows=[...document.querySelectorAll('#idTable tbody tr')];let i=0;
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){start();io.disconnect();}});},{threshold:.4});io.observe(document.getElementById('idTable'));
+  function start(){setInterval(()=>{rows.forEach(r=>r.querySelectorAll('td').forEach(td=>td.classList.remove('cell-glow')));rows[i%rows.length].querySelectorAll('td').forEach(td=>td.classList.add('cell-glow'));i++;},1100);}})();
+
+/* prop table */
+(function(){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){run();io.disconnect();}});},{threshold:.4});io.observe(document.getElementById('propTable'));
+  function mark(sel,cls){document.querySelectorAll('#propTable tbody tr').forEach(r=>{if(sel.includes(r.dataset.a))r.querySelectorAll('td').forEach(td=>td.classList.add(cls));});}
+  function clear(){document.querySelectorAll('#propTable td').forEach(td=>td.classList.remove('cell-glow','cell-mint'));}
+  function run(){let p=0;setInterval(()=>{clear();if(p%2===0)mark(['cat','dog'],'cell-glow');else mark(['tiger','lion'],'cell-mint');p++;},1600);}})();
+
+/* training sim */
+const simData=[
+  {n:'Cat',c:'#e8920c',rand:[18,72],trained:[26,30]},
+  {n:'Dog',c:'#10a577',rand:[85,20],trained:[36,26]},
+  {n:'Tiger',c:'#e8455c',rand:[30,15],trained:[72,68]},
+  {n:'Lion',c:'#7c5cf5',rand:[62,88],trained:[80,74]},
+  {n:'Apple',c:'#2aa8e8',rand:[10,45],trained:[24,80]},
+  {n:'Banana',c:'#d4a017',rand:[90,60],trained:[34,86]},
+];
+const simMap=document.getElementById('simMap');
+simData.forEach((d,i)=>{const dot=document.createElement('div');dot.className='dot';dot.dataset.i=i;dot.style.color=d.c;dot.style.left=d.rand[0]+'%';dot.style.top=d.rand[1]+'%';
+  dot.innerHTML=`<div class="pt" style="background:${d.c}"></div><div class="nm">${d.n}</div>`;simMap.appendChild(dot);});
+let trained=false;
+document.getElementById('trainBtn').addEventListener('click',function(){trained=!trained;
+  simMap.querySelectorAll('.dot').forEach(dot=>{const d=simData[dot.dataset.i];const p=trained?d.trained:d.rand;dot.style.left=p[0]+'%';dot.style.top=p[1]+'%';});
+  this.textContent=trained?'↺ Reset to random':'▶ Train the embeddings';});
+
+/* what is a vector — dimension builder */
+(function(){
+  const map=document.getElementById('vecMap');if(!map)return;
+  const pts=[
+    {n:'Cat',c:'#e8920c',x:28,y:66},{n:'Dog',c:'#10a577',x:36,y:60},
+    {n:'Tiger',c:'#e8455c',x:72,y:30},{n:'Lion',c:'#7c5cf5',x:80,y:24},
+    {n:'Banana',c:'#d4a017',x:24,y:22}
+  ];
+  function drawMap(){map.innerHTML='';pts.forEach(p=>{const d=document.createElement('div');d.className='dot';d.style.left=p.x+'%';d.style.top=p.y+'%';
+    d.innerHTML=`<div class="pt" style="background:${p.c};box-shadow:0 2px 6px rgba(0,0,0,.15)"></div><div class="nm">${p.n}</div>`;map.appendChild(d);});}
+  drawMap();
+  const CAT={2:'[4, 2]',3:'[4, 2, 1]',5:'[4, 1, 0, 1, 2]',1536:'[4, 1, 0, 1, 2, 0.31, -0.77, 0.12, … ]'};
+  const EXP={
+    2:'Just two numbers — like plotting a point on a graph (x, y). Enough to place Cat near Dog, but crude.',
+    3:'Three coordinates now — a point in 3D space. A little more room to separate concepts.',
+    5:'Five properties: legs, fur, wild, pet, size. This is the table from Chapter 4 — already meaningful.',
+    1536:'Real models use ~1536 coordinates. Impossible to draw, but the model reads all of them at once to capture rich meaning.'
+  };
+  function setDim(dim){
+    document.getElementById('vecReadout').textContent=CAT[dim];
+    document.getElementById('vecExplain').textContent=EXP[dim];
+    // dim map to how many decimals of separation feel "richer": subtly nudge dots for >2
+    map.style.opacity = dim>5 ? '.55' : '1';
+    map.style.filter = dim>5 ? 'blur(1px)' : 'none';
+  }
+  document.querySelectorAll('.dimbtn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.dimbtn').forEach(x=>x.classList.remove('on'));b.classList.add('on');setDim(+b.dataset.dim);
+  }));
+  setDim(2);
+})();
+
+/* embedding lookup */
+const vocab=[{t:'cat',id:12984},{t:'dog',id:12985},{t:'tiger',id:40213},{t:'lion',id:40219},{t:'apple',id:8901},{t:'banana',id:8902},{t:'love',id:2891},{t:'agents',id:44021},{t:'car',id:3310},{t:'king',id:5567},{t:'queen',id:5568},{t:'happy',id:9982}];
+function seededVec(id){let out=[],s=id;for(let i=0;i<32;i++){s=(s*1103515245+12345)&0x7fffffff;out.push(((s%2000)/1000)-1);}return out;}
+function colorFor(v){if(v>=0){const t=v;return `rgba(232,146,12,${.15+t*.6})`;}const t=-v;return `rgba(16,165,119,${.15+t*.6})`;}
+const vList=document.getElementById('vocabList');
+vocab.forEach((v,idx)=>{const row=document.createElement('div');row.className='vrow'+(idx===0?' sel':'');row.innerHTML=`<span>${v.t}</span><span class="vid">ID ${v.id}</span>`;
+  row.addEventListener('click',()=>{document.querySelectorAll('.vrow').forEach(r=>r.classList.remove('sel'));row.classList.add('sel');showVec(v);});vList.appendChild(row);});
+function showVec(v){document.getElementById('vecTitle').textContent=`"${v.t}"  ·  row ${v.id}`;const grid=document.getElementById('vecGrid');grid.innerHTML='';
+  seededVec(v.id).forEach((val,i)=>{const c=document.createElement('div');c.className='vcell';c.style.background=colorFor(val);c.style.animationDelay=(i*0.012)+'s';c.style.animation='pop .3s both';c.textContent=val.toFixed(1);grid.appendChild(c);});
+  document.getElementById('vecCap').textContent=`showing 32 of 1536 dimensions for "${v.t}"`;}
+showVec(vocab[0]);
+
+/* attention */
+const attWords=['I','love','AI','Agents'];
+const attMap={'I':[1,.5,.2,.3],'love':[.6,1,.4,.5],'AI':[.2,.3,1,.85],'Agents':[.25,.4,.9,1]};
+const attC=document.getElementById('attSentence');
+attWords.forEach((w,i)=>{const el=document.createElement('div');el.className='att-word';el.dataset.i=i;el.textContent=w;el.addEventListener('click',()=>focusAtt(w,i));attC.appendChild(el);});
+function focusAtt(word,idx){const weights=attMap[word];
+  document.querySelectorAll('.att-word').forEach((el,i)=>{el.classList.remove('active');el.style.background='';el.style.borderColor='';el.style.color='';
+    if(i===idx){el.classList.add('active');}else{const wt=weights[i];el.style.background=`rgba(124,92,245,${wt*.5})`;el.style.borderColor=`rgba(124,92,245,${.3+wt*.55})`;el.style.color=wt>.6?'#fff':'var(--text)';}});}
+(function(){const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){focusAtt('Agents',3);io.disconnect();}});},{threshold:.5});io.observe(attC);})();
+
+/* context shift */
+const ctxGrid=document.getElementById('ctxVec');const fruitVec=[],compVec=[];
+for(let i=0;i<48;i++){let s=(i*2654435761)&0x7fffffff;fruitVec.push(((s%1000)/1000)*(i%3?1:-1));let s2=((i+7)*40503)&0x7fffffff;compVec.push(((s2%1000)/1000)*(i%2?-1:1));}
+for(let i=0;i<48;i++){const c=document.createElement('div');c.className='cx';ctxGrid.appendChild(c);}
+function paintCtx(which){const vec=which==='fruit'?fruitVec:compVec;[...ctxGrid.children].forEach((c,i)=>{c.style.background=colorFor(vec[i]);c.style.transitionDelay=(i*0.008)+'s';});
+  document.getElementById('ctxCap').textContent=`Contextual vector for "Apple" — meaning: ${which==='fruit'?'fruit 🍎':'company 📱'}`;}
+document.querySelectorAll('.ctx-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.ctx-btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');paintCtx(b.dataset.ctx);}));
+paintCtx('fruit');
+
+/* softmax */
+const logits=[['milk',5.2],['water',3.1],['the',1.4],['coffee',2.2],['juice',1.8]];const barsEl=document.getElementById('bars');
+logits.forEach((l,i)=>{const row=document.createElement('div');row.className='bar-row';row.innerHTML=`<div class="bar-lbl">${l[0]}</div><div class="bar-track"><div class="bar-fill" data-i="${i}"></div></div><div class="bar-val" data-v="${i}"></div>`;barsEl.appendChild(row);});
+function softmax(temp){const exps=logits.map(l=>Math.exp(l[1]/temp));const sum=exps.reduce((a,b)=>a+b,0);return exps.map(e=>e/sum);}
+function renderBars(temp){softmax(temp).forEach((p,i)=>{document.querySelector(`.bar-fill[data-i="${i}"]`).style.width=(p*100)+'%';document.querySelector(`.bar-val[data-v="${i}"]`).textContent=(p*100).toFixed(0)+'%';});
+  const t=parseFloat(temp);document.getElementById('tempMood').textContent=t<0.5?'— safe & predictable':t<1.1?'— balanced':t<1.6?'— getting creative':'— wild & random';document.getElementById('tempVal').textContent=t.toFixed(1);}
+document.getElementById('tempSlider').addEventListener('input',e=>renderBars(e.target.value));renderBars(0.7);
+
+/* loop */
+(function(){const nodes=[...document.querySelectorAll('.loop-node')];let i=0,timer=null;
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&!timer){timer=setInterval(()=>{nodes.forEach(n=>n.classList.remove('lit'));nodes[i%nodes.length].classList.add('lit');i++;},700);}});},{threshold:.3});
+  io.observe(document.getElementById('loopFlow'));})();
+
+/* ---------- WHITEBOARD ---------- */
+const layout=document.getElementById('layout');
+document.getElementById('wbToggle').addEventListener('click',function(){layout.classList.toggle('wb-open');this.classList.toggle('on');if(layout.classList.contains('wb-open'))setTimeout(resizeCanvas,60);});
+const canvas=document.getElementById('wbCanvas');const cxx=canvas.getContext('2d');
+let drawing=false,tool='pen',penColor='#e8455c',penSize=3,cur=null,strokes=[];
+function resizeCanvas(){const r=canvas.getBoundingClientRect();const dpr=window.devicePixelRatio||1;canvas.width=r.width*dpr;canvas.height=r.height*dpr;cxx.setTransform(dpr,0,0,dpr,0,0);redraw();}
+window.addEventListener('resize',()=>{if(layout.classList.contains('wb-open'))resizeCanvas();});
+function redraw(){const r=canvas.getBoundingClientRect();cxx.clearRect(0,0,r.width,r.height);strokes.forEach(drawStroke);}
+function drawStroke(s){if(s.pts.length<1)return;cxx.lineJoin=cxx.lineCap='round';
+  if(s.tool==='highlighter'){cxx.globalAlpha=.32;cxx.globalCompositeOperation='multiply';}
+  else if(s.tool==='eraser'){cxx.globalAlpha=1;cxx.globalCompositeOperation='destination-out';}
+  else{cxx.globalAlpha=1;cxx.globalCompositeOperation='source-over';}
+  cxx.strokeStyle=s.color;cxx.lineWidth=s.size;cxx.beginPath();cxx.moveTo(s.pts[0].x,s.pts[0].y);
+  for(let i=1;i<s.pts.length;i++)cxx.lineTo(s.pts[i].x,s.pts[i].y);cxx.stroke();cxx.globalAlpha=1;cxx.globalCompositeOperation='source-over';}
+function pos(e){const r=canvas.getBoundingClientRect();const p=e.touches?e.touches[0]:e;return{x:p.clientX-r.left,y:p.clientY-r.top};}
+function start(e){e.preventDefault();drawing=true;const sw=tool==='highlighter'?penSize*5:tool==='eraser'?penSize*6:penSize;cur={tool,color:penColor,size:sw,pts:[pos(e)]};strokes.push(cur);}
+function move(e){if(!drawing)return;e.preventDefault();cur.pts.push(pos(e));redraw();}
+function end(){drawing=false;cur=null;}
+canvas.addEventListener('mousedown',start);canvas.addEventListener('mousemove',move);window.addEventListener('mouseup',end);
+canvas.addEventListener('touchstart',start,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});canvas.addEventListener('touchend',end);
+document.querySelectorAll('.tool[data-tool]').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tool[data-tool]').forEach(x=>x.classList.remove('on'));t.classList.add('on');tool=t.dataset.tool;canvas.style.cursor=tool==='eraser'?'cell':'crosshair';}));
+document.getElementById('wbUndo').addEventListener('click',()=>{strokes.pop();redraw();});
+document.getElementById('wbClear').addEventListener('click',()=>{strokes=[];redraw();});
+const COLORS=['#e8455c','#1b2233','#2aa8e8','#10a577','#e8920c','#7c5cf5'];const sw=document.getElementById('swatches');
+COLORS.forEach((c,i)=>{const d=document.createElement('div');d.className='swatch'+(i===0?' on':'');d.style.background=c;
+  d.addEventListener('click',()=>{document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('on'));d.classList.add('on');penColor=c;
+    document.querySelectorAll('.tool[data-tool]').forEach(x=>x.classList.remove('on'));document.querySelector('.tool[data-tool="pen"]').classList.add('on');tool='pen';canvas.style.cursor='crosshair';});sw.appendChild(d);});
+const SIZES=[2,3,5,8];const sz=document.getElementById('sizes');
+SIZES.forEach((s,i)=>{const d=document.createElement('div');d.className='size-dot'+(i===1?' on':'');const px=6+s*1.6;d.style.width=px+'px';d.style.height=px+'px';
+  d.addEventListener('click',()=>{document.querySelectorAll('.size-dot').forEach(x=>x.classList.remove('on'));d.classList.add('on');penSize=s;});sz.appendChild(d);});
+</script>
+</body>
+</html>
