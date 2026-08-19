@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "9cca166d-e6ee-4e19-86d9-991e3932d87a",
+    "title": "Valid Palindrome",
+    "difficulty": "Easy",
+    "tags": [
+      "two-pointers",
+      "string"
+    ],
+    "statement": "Valid Palindrome\n\nA phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.\n\nGiven a string s, print true if it is a palindrome, or false otherwise.\n\n**Input:**\nThe first line contains an integer n, the length of the string.\nThe second line contains the string s of length n (raw, not quoted).\n\n**Output:**\nPrint true if s is a palindrome after removing non-alphanumeric characters and converting to lowercase, otherwise print false.\n\n**Constraints:**\n- 1 <= s.length <= 2 * 10^5\n- s consists only of printable ASCII characters.\n\n**Examples:**\n\nExample 1:\nInput:\n30\nA man, a plan, a canal: Panama\nOutput:\ntrue\n\nExample 2:\nInput:\n10\nrace a car\nOutput:\nfalse\n\nExample 3:\nInput:\n1\n \nOutput:\ntrue",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

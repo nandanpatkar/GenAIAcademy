@@ -1,0 +1,33 @@
+{
+  "levelNumber": 433,
+  "displayNumber": 379,
+  "title": "Shortest common supersequence",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings str1 and str2, find the <strong>shortest common supersequence</strong>.</p><p><br></p><p>The shortest common supersequence is the shortest string that contains both str1 and str2 as subsequences.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>str1 = \"mno\", str2 = \"nop\"</p><p><strong>Output:</strong> \"mnop\"</p><p><strong>Explanation:</strong> The shortest common supersequence is \"mnop\". It contains \"mno\" as the first three characters and \"nop\" as the last three characters, thus including both strings as subsequences.</p>",
+    "<p><strong>Input:</strong> str1 = \"dynamic\", str2 = \"program\"</p><p><strong>Output:</strong> \"dynprogramic\"</p><p><strong>Explanation:</strong> The shortest common supersequence is \"<span style=\"color: rgb(245, 245, 245);\">dynprogramic</span>\". It includes all characters from both \"dynamic\" and \"program\", with minimal overlap. For example, \"dynamic\" appears as \"dyn...amic\" and \"program\" appears as \"...program...\" within \"<span style=\"color: rgb(245, 245, 245);\">dynprogramic</span>\".</p>",
+    "<p><strong>Input:</strong> str1 = \"apple\", str2 = \"orange\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= str1.length, str2.length <= 1000</li><li>str1 and str2 consist of lowercase English letters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

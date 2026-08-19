@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "9e2743e8-289f-4f9a-99ac-4c743b147db3",
+    "title": "Design Underground System",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "string",
+      "design"
+    ],
+    "statement": "An underground railway system is keeping track of customer travel times between different stations. They are using this data to calculate the average time it takes to travel from one station to another.\n\nYou will process a sequence of operations of three types:\n\n- checkIn(id, stationName, t): A customer with card ID equal to id checks in at station stationName at time t. A customer can only be checked into one place at a time.\n- checkOut(id, stationName, t): A customer with card ID equal to id checks out from station stationName at time t.\n- getAverageTime(startStation, endStation): Returns the average time it takes to travel from startStation to endStation. The average time is computed from all previous traveling times from startStation to endStation that happened directly, meaning a check in at startStation followed by a check out from endStation. The time from startStation to endStation may be different from the time from endStation to startStation. There will be at least one customer that has traveled from startStation to endStation before getAverageTime is called.\n\nYou may assume all calls to checkIn and checkOut are consistent. If a customer checks in at time t1 then checks out at time t2, then t1 < t2. All events happen in chronological order.\n\n**Input:**\nThe first line contains an integer n, the number of operations.\nThe next n lines each describe one operation:\n- \"checkIn id stationName t\"\n- \"checkOut id stationName t\"\n- \"getAverageTime startStation endStation\"\n\n**Output:**\nFor each getAverageTime operation, print one line containing the average travel time with exactly 5 decimal places. No output is produced for checkIn or checkOut operations.\n\n**Constraints:**\n- 1 <= id, t <= 10^6\n- 1 <= stationName.length, startStation.length, endStation.length <= 10\n- All station names consist of uppercase and lowercase English letters and digits.\n- There will be at most 2 * 10^4 operations in total.\n- Answers within 10^-5 of the actual value will be accepted.\n\n**Examples:**\nExample 1:\nInput:\n12\ncheckIn 45 Leyton 3\ncheckIn 32 Paradise 8\ncheckIn 27 Leyton 10\ncheckOut 45 Waterloo 15\ncheckOut 27 Waterloo 20\ncheckOut 32 Cambridge 22\ngetAverageTime Paradise Cambridge\ngetAverageTime Leyton Waterloo\ncheckIn 10 Leyton 24\ngetAverageTime Leyton Waterloo\ncheckOut 10 Waterloo 38\ngetAverageTime Leyton Waterloo\nOutput:\n14.00000\n11.00000\n11.00000\n12.00000\n\nExample 2:\nInput:\n9\ncheckIn 10 Leyton 3\ncheckOut 10 Paradise 8\ngetAverageTime Leyton Paradise\ncheckIn 5 Leyton 10\ncheckOut 5 Paradise 16\ngetAverageTime Leyton Paradise\ncheckIn 2 Leyton 21\ncheckOut 2 Paradise 30\ngetAverageTime Leyton Paradise\nOutput:\n5.00000\n5.50000\n6.66667",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "05d322ac-f350-47e4-8e68-2e9df344f13c",
+    "title": "Longest Common Prefix",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "string",
+      "trie"
+    ],
+    "statement": "Write a program to find the longest common prefix string amongst an array of strings.\n\nIf there is no common prefix, return an empty string.\n\n**Input:**\n- Line 1: an integer n, the number of strings.\n- Lines 2 to n+1: each line contains one string.\n\n**Output:**\n- A single line containing the longest common prefix string. If it is empty, print an empty line.\n\n**Constraints:**\n- 1 <= n <= 200\n- 0 <= length of each string <= 200\n- Each string consists of only lowercase English letters if it is non-empty.\n\n**Examples:**\nExample 1:\nInput:\n3\nflower\nflow\nflight\nOutput:\nfl\n\nExample 2:\nInput:\n3\ndog\nracecar\ncar\nOutput:\n\n",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

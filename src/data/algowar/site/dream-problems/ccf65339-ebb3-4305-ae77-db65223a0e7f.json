@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "ccf65339-ebb3-4305-ae77-db65223a0e7f",
+    "title": "Find the Closest Palindrome",
+    "difficulty": "Hard",
+    "tags": [
+      "math",
+      "string"
+    ],
+    "statement": "Given a string n representing an integer, find the closest integer (not including itself) which is a palindrome. If there is a tie, return the smaller one. The closest is defined as the absolute difference minimized between two integers.\n\n**Input:**\n- Line 1: an integer L, the length of the string n.\n- Line 2: the string n, representing an integer.\n\n**Output:**\n- Line 1: the closest palindrome integer as a raw string (no quotes). If there is a tie, output the smaller one.\n\n**Constraints:**\n- 1 <= n.length <= 18\n- n consists of only digits.\n- n does not have leading zeros.\n- n represents an integer in the range [1, 10^18 - 1].\n\n**Examples:**\n\nExample 1:\nInput:\n3\n123\nOutput:\n121\n\nExample 2:\nInput:\n1\n1\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

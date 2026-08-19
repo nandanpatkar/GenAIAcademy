@@ -1,0 +1,56 @@
+{
+  "route": "/privacy",
+  "title": "Privacy Policy | AlgoWars",
+  "description": "AlgoWars privacy policy — how we collect, use, and protect your data.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(legal)/privacy/page-bac8852c66747e6e.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/privacy",
+    "title": "Privacy Policy | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "PRIVACY POLICY"
+      },
+      {
+        "tag": "h2",
+        "text": "1. Information We Collect"
+      },
+      {
+        "tag": "h2",
+        "text": "2. How We Use Your Information"
+      },
+      {
+        "tag": "h2",
+        "text": "3. Data Storage"
+      },
+      {
+        "tag": "h2",
+        "text": "4. Code Submissions"
+      },
+      {
+        "tag": "h2",
+        "text": "5. Cookies & Analytics"
+      },
+      {
+        "tag": "h2",
+        "text": "6. Your Rights"
+      },
+      {
+        "tag": "h2",
+        "text": "7. Contact"
+      }
+    ],
+    "text": "← Back to home PRIVACY POLICY Last updated: June 1, 2026 1. Information We Collect When you create an account on AlgoWars, we collect your email address, username, and authentication data provided through Google OAuth or email/password signup. We also collect gameplay data including match history, ratings, submissions, and performance statistics. 2. How We Use Your Information We use your information to provide the AlgoWars service, including matchmaking, rating calculations, leaderboard rankings, and personalized gameplay experiences. We do not sell your personal data to third parties. 3. Data Storage Your data is stored securely using Supabase (hosted on AWS infrastructure). Passwords are never stored in plain text — authentication is handled by Supabase Auth with industry-standard encryption. 4. Code Submissions Code you submit during matches is stored for the duration needed to judge the submission and display match results. Submissions are visible to match participants after the match ends. 5. Cookies & Analytics We use Vercel Analytics and Speed Insights to understand how users interact with the platform. These tools collect anonymized usage data. We use essential cookies for authentication session management only. 6. Your Rights You may request deletion of your account and associated data at any time by contacting us at founders@algowars.online. Upon deletion, your personal data will be removed, though anonymized match records may be retained for leaderboard integrity. 7. Contact For any privacy concerns or data requests, reach out to us at founders@algowars.online",
+    "links": [
+      "/",
+      "mailto:founders@algowars.online"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "7d361fba-bf0f-4a53-a065-7aeeb08c43f2",
+    "title": "House Robber",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "dynamic-programming"
+    ],
+    "statement": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.\n\nGiven an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.\n\n**Input:**\nThe first line contains an integer n, the number of houses.\nThe second line contains n space-separated integers representing the amount of money in each house.\n\n**Output:**\nPrint a single integer, the maximum amount of money you can rob without alerting the police.\n\n**Constraints:**\n- 1 <= n <= 100\n- 0 <= nums[i] <= 400\n\n**Examples:**\nExample 1:\nInput:\n4\n1 2 3 1\nOutput:\n4\n\nExample 2:\nInput:\n5\n2 7 9 3 1\nOutput:\n12",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

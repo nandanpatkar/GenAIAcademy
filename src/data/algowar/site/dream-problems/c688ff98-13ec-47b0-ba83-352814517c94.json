@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "c688ff98-13ec-47b0-ba83-352814517c94",
+    "title": "Subarray With Elements Greater Than Varying Threshold",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "stack",
+      "union-find",
+      "monotonic-stack"
+    ],
+    "statement": "You are given an integer array nums and an integer threshold.\n\nFind any subarray of nums of length k such that every element in the subarray is greater than threshold / k.\n\nReturn the size of such a subarray. If there is no such subarray, return -1.\n\nA subarray is a contiguous non-empty sequence of elements within an array.\n\nIf multiple valid sizes exist, return the smallest valid size.\n\n**Input:**\nThe first line contains an integer n, the length of the array nums.\nThe second line contains n space-separated integers representing nums.\nThe third line contains an integer threshold.\n\n**Output:**\nPrint a single integer: the smallest valid subarray size k, or -1 if no such subarray exists.\n\n**Constraints:**\n- 1 <= nums.length <= 10^5\n- 1 <= nums[i], threshold <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n5\n1 3 4 3 1\n6\nOutput:\n3\n\nExample 2:\nInput:\n5\n6 5 6 5 8\n7\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

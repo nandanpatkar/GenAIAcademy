@@ -1,0 +1,387 @@
+{
+  "company": {
+    "slug": "goldman-sachs",
+    "name": "Goldman Sachs"
+  },
+  "questions": [
+    {
+      "problemId": "3bb0dcd8-d476-4c5a-869a-a9f6ca6981ba",
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "frequency": 100,
+      "orderIndex": 0,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "42745353-7ad0-4f1d-9262-beae53b674ec",
+      "title": "Median of Two Sorted Arrays",
+      "difficulty": "Hard",
+      "frequency": 80.4,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ee55b9aa-c242-4e95-923f-c67d963e9b6f",
+      "title": "First Unique Character in a String",
+      "difficulty": "Easy",
+      "frequency": 78,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ab6f700d-59cb-4751-9341-7ff3c251a4f7",
+      "title": "Minimum Path Sum",
+      "difficulty": "Medium",
+      "frequency": 67.1,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "520ec43e-284b-4c59-a96d-aec48b1f4d94",
+      "title": "Container With Most Water",
+      "difficulty": "Medium",
+      "frequency": 64.8,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 64.8,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0783a4cf-c630-4f94-9a68-5f08dc1f78cf",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "frequency": 63.6,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "08da10eb-053c-4bea-ae2b-c51fdac24031",
+      "title": "String Compression",
+      "difficulty": "Medium",
+      "frequency": 62.2,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 59.9,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "735d42f5-e3cb-4bb4-8725-ce216cdce74e",
+      "title": "Robot Bounded In Circle",
+      "difficulty": "Medium",
+      "frequency": 59.9,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0d59690e-83f2-44ca-85ab-8717bf5b8e29",
+      "title": "Find the Winner of the Circular Game",
+      "difficulty": "Medium",
+      "frequency": 59.9,
+      "orderIndex": 11,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 58.2,
+      "orderIndex": 12,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "6cbd325c-a15e-41d6-9ac5-530a7d494789",
+      "title": "Decode Ways",
+      "difficulty": "Medium",
+      "frequency": 58.2,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c3bd17ea-88b3-4f26-a546-1e76c702a258",
+      "title": "Search in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "frequency": 57.2,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 57.2,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 55.2,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "df0ea5f4-7133-4aca-9891-4391405be94d",
+      "title": "Find Minimum in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "frequency": 55.2,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "8691bdb1-3f54-448b-bc0c-cb6a0189cfee",
+      "title": "Knight Probability in Chessboard",
+      "difficulty": "Medium",
+      "frequency": 55.2,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1adc705c-8206-4461-ab58-0b21833673ea",
+      "title": "Best Time to Buy and Sell Stock II",
+      "difficulty": "Medium",
+      "frequency": 52.9,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d950d055-27ec-4132-a3e5-0a50f3b69066",
+      "title": "Pairs of Songs With Total Durations Divisible by 60",
+      "difficulty": "Medium",
+      "frequency": 52.9,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a8814f9d-bb2d-42c5-ad48-2051b3a54d7a",
+      "title": "Robot Return to Origin",
+      "difficulty": "Easy",
+      "frequency": 51.6,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ae96c1b1-aa26-468b-b355-f82e3aebaeb6",
+      "title": "Corporate Flight Bookings",
+      "difficulty": "Medium",
+      "frequency": 50.3,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f18366a3-dbdb-47bb-915f-c584f2772381",
+      "title": "Minimum Moves to Capture The Queen",
+      "difficulty": "Medium",
+      "frequency": 50.3,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "78da7ea3-df09-4877-a4d0-b1753bde424b",
+      "title": "Minimum Length of String After Deleting Similar Ends",
+      "difficulty": "Medium",
+      "frequency": 50.3,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "8d2a91de-6a6e-4d17-ac55-d971be34919a",
+      "title": "Maximum Subarray",
+      "difficulty": "Medium",
+      "frequency": 48.8,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "22d0fb76-9160-4973-9bd8-ae5590a198ae",
+      "title": "Minimum Cost Homecoming of a Robot in a Grid",
+      "difficulty": "Medium",
+      "frequency": 48.8,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b732a10c-24bf-4ada-8c12-a4572e5b805d",
+      "title": "Range Product Queries of Powers",
+      "difficulty": "Medium",
+      "frequency": 48.8,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e7add279-471e-49e2-b0ec-ab93d6eca705",
+      "title": "Shortest Subarray with Sum at Least K",
+      "difficulty": "Hard",
+      "frequency": 48.8,
+      "orderIndex": 31,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "83abb218-95a1-4693-aca4-6427ed736b58",
+      "title": "Pascal's Triangle",
+      "difficulty": "Easy",
+      "frequency": 47.1,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fcee7ba1-c0d4-47f6-917e-e6e8da3d9b1a",
+      "title": "Kth Largest Element in an Array",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 34,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0ac7ce2e-ad43-48e4-8f0a-c83c10a037b3",
+      "title": "Keep Multiplying Found Values by Two",
+      "difficulty": "Easy",
+      "frequency": 47.1,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d3520ef3-2e47-45de-bcf8-69644a972a57",
+      "title": "Count Number of Texts",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 36,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "36c673b3-b052-40f7-9b45-ceee62463e90",
+      "title": "Successful Pairs of Spells and Potions",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c28ff3b2-55a0-4958-8585-b3c5b5afabd2",
+      "title": "Top K Frequent Elements",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "9ad4a859-54e8-4dbc-9a72-c4a970e8c468",
+      "title": "Find All Good Indices",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "458d1362-045e-4acf-b5b8-457089204dc6",
+      "title": "Determine if Two Events Have Conflict",
+      "difficulty": "Easy",
+      "frequency": 47.1,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0e70c692-c0ea-4ffa-bedf-76282c18e003",
+      "title": "Count Palindromic Subsequences",
+      "difficulty": "Hard",
+      "frequency": 47.1,
+      "orderIndex": 41,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "776eea62-56fe-4080-908b-6c0e83293dea",
+      "title": "Count Collisions of Monkeys on a Polygon",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 42,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "6ec4d339-c49a-4c74-bbda-9566dbf76f67",
+      "title": "Minimum Falling Path Sum",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 43,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "601023b1-6121-4eb1-ad7e-36bb04ff6aaa",
+      "title": "Print Zero Even Odd",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 44,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ede91ee0-515e-4f36-8c99-76980d4da063",
+      "title": "Sort the Jumbled Numbers",
+      "difficulty": "Medium",
+      "frequency": 47.1,
+      "orderIndex": 45,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3be10ea9-b85a-4937-adb9-dc9bcd74f46a",
+      "title": "Minimum Number of Chairs in a Waiting Room",
+      "difficulty": "Easy",
+      "frequency": 47.1,
+      "orderIndex": 46,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

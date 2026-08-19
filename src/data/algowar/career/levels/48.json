@@ -1,0 +1,33 @@
+{
+  "levelNumber": 48,
+  "displayNumber": 48,
+  "title": "Factorial of a given number",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer <strong>n</strong>. Return the value of <strong>n!</strong> or <strong>n factorial</strong>.</p><p><br></p><p><strong>Factorial </strong>of a number is the <strong>product </strong>of <strong>all </strong>positive integers less than or equal to that number.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 2</p><p><strong>Output</strong>: 2</p><p><strong>Explanation</strong>: 2! = 1 * 2 = 2.</p>",
+    "<p><strong>Input</strong>: n = 0</p><p><strong>Output</strong>: 1</p><p><strong>Explanation</strong>: 0! is defined as 1.</p>",
+    "<p>Input: 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= n <= 10</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "550f3643-4681-492e-af86-88bd9dfa182a",
+    "title": "Squares of a Sorted Array",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "two-pointers",
+      "sorting"
+    ],
+    "statement": "Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint one line containing n space-separated integers: the squares of each number in nums, sorted in non-decreasing order.\n\n**Constraints:**\n- 1 <= nums.length <= 10^4\n- -10^4 <= nums[i] <= 10^4\n- nums is sorted in non-decreasing order.\n\n**Examples:**\nExample 1:\nInput:\n5\n-4 -1 0 3 10\nOutput:\n0 1 9 16 100\n\nExample 2:\nInput:\n5\n-7 -3 2 3 11\nOutput:\n4 9 9 49 121",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

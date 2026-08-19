@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "df0ea5f4-7133-4aca-9891-4391405be94d",
+    "title": "Find Minimum in Rotated Sorted Array",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "statement": "Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:\n\n- [4,5,6,7,0,1,2] if it was rotated 4 times.\n- [0,1,2,4,5,6,7] if it was rotated 7 times.\n\nNotice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].\n\nGiven the sorted rotated array nums of unique elements, return the minimum element of this array.\n\nYou must write an algorithm that runs in O(log n) time.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint a single integer: the minimum element of the array.\n\n**Constraints:**\n- n == nums.length\n- 1 <= n <= 5000\n- -5000 <= nums[i] <= 5000\n- All the integers of nums are unique.\n- nums is sorted and rotated between 1 and n times.\n\n**Examples:**\nExample 1:\nInput:\n5\n3 4 5 1 2\nOutput:\n1\n\nExample 2:\nInput:\n7\n4 5 6 7 0 1 2\nOutput:\n0\n\nExample 3:\nInput:\n4\n11 13 15 17\nOutput:\n11",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 287,
+  "displayNumber": 233,
+  "title": "Jump Game - I",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers nums, each element in the array represents the maximum jump length at that position. Initially starting at the first index of the array, determine if it is possible to <strong>reach</strong> the last index. Return <strong>true</strong> if the last index can be reached, otherwise return <strong>false</strong>.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> [2, 3, 1, 1, 4]</p><p><br></p><p><strong>Output :</strong> true</p><p><br></p><p><strong>Explanation :</strong> We can simply take Jump of 1 step at each index to reach the last index.</p>",
+    "<p><strong>Input :</strong> [3, 2, 1, 0, 4]</p><p><br></p><p><strong>Output :</strong> false</p><p><br></p><p><strong>Explanation :</strong> No matter how you make jumps you will always reach the third index (0 base) of the array.</p><p>The maximum jump of index three is 0, So you can never reach the last index of array.</p>",
+    "<p><strong>Input :</strong> [5, 3, 2, 1, 0]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>4</sup></li><li>0 <= nums[i] <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

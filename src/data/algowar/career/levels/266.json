@@ -1,0 +1,32 @@
+{
+  "levelNumber": 266,
+  "displayNumber": 212,
+  "title": "Implement Min Heap",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You need to implement the Min Heap with the following given methods.</p><ul><li>insert (x) -> insert value x to the min heap</li><li>getMin -> Output the minimum value from min heap</li><li>exctractMin -> Remove the minimum element from the heap</li><li>heapSize -> return the current size of the heap</li><li>isEmpty -> returns if heap is empty or not</li><li>changeKey (ind, val) -> update the value at given index to val (index will be given 0-based indexing)</li><li>initializeHeap -> Initialize the heap</li></ul>",
+  "examples": [
+    "$1c",
+    "$1d"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>5</sup></li><li>-10<sup>5</sup> <= nums[i] <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

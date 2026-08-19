@@ -1,0 +1,33 @@
+{
+  "levelNumber": 249,
+  "displayNumber": 195,
+  "title": "Stock span problem",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of size n, where each element arr[i] represents the stock price on day i. Calculate the <strong>span</strong> of stock prices for each day.</p><p><br></p><p>The span S<sub>i</sub> for a specific day i is defined as the<strong> </strong>maximum number of consecutive previous days (including the current day) for which the stock price was less than or equal to the price on day i.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 7, arr = [120, 100, 60, 80, 90, 110, 115]</p><p><strong>Output</strong>: [1, 1, 1, 2, 3, 5, 6]</p><p><strong>Explanation</strong>:</p><p>Traversing the given input span:</p><p>120 is greater than or equal to 120 and there are no more elements behind it so the span is 1,</p><p>100 is greater than or equal to 100 and smaller than 120 so the span is 1,</p><p>60 is greater than or equal to 60 and smaller than 100 so the span is 1,</p><p>80 is greater than or equal to 60, 80 and smaller than 100 so the span is 2,</p><p>90 is greater than or equal to 60, 80, 90 and smaller than 100 so the span is 3,</p><p>110 is greater than or equal to 60, 80, 90, 100, 110 and smaller than 120 so the span is 5,</p><p>115 is greater than or equal to all previous elements and smaller than 120 so the span is 6.</p><p>Hence the output will be 1 1 1 2 3 5 6.</p>",
+    "<p><strong>Input</strong>: n = 6, arr = [15, 13, 12, 14, 16, 20]</p><p><strong>Output</strong>: [1, 1, 1, 3, 5, 6]</p><p><strong>Explanation</strong>:</p><p>Traversing the given input span:</p><p>15 is greater than or equal to 15 and there are no more elements behind it, so the span is 1.</p><p>13 is smaller than 15, so the span is 1.</p><p>12 is smaller than 13, so the span is 1.</p><p>14 is greater than or equal to 12 and 13, but smaller than 15, so the span is 3 (days with values 12, 13, and 14).</p><p>16 is greater than or equal to 14, 12, 13, and 15, so the span is 5.</p><p>20 is greater than or equal to all previous elements, so the span is 6.</p><p>Hence the output will be <span style=\"color: rgb(245, 245, 245);\">1 1 1 3 5 6.</span></p>",
+    "<p><strong>Input</strong>: n = 8, arr = [30, 20, 25, 28, 27, 29, 35, 40]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ n ≤ 10<sup>5</sup></li><li>1 ≤ arr[i] ≤ 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

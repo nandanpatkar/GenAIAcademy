@@ -1,0 +1,72 @@
+{
+  "route": "/partners",
+  "title": "Creator &amp; Partner Program — Turn your audience into revenue | AlgoWars",
+  "description": "Mint discount codes for AlgoWars Pro, share them with your audience, and earn a share of every subscription you drive. Free to join, Google or Discord sign-in.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars Creator &amp; Partner Program",
+  "chunks": [
+    "app/partners/page-3a556df16b6c08ef.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/partners",
+    "title": "Creator & Partner Program — Turn your audience into revenue | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "Turn your audience into revenue"
+      },
+      {
+        "tag": "h2",
+        "text": "WHAT YOU GET"
+      },
+      {
+        "tag": "h3",
+        "text": "Your own coupon codes"
+      },
+      {
+        "tag": "h3",
+        "text": "Earn revenue share"
+      },
+      {
+        "tag": "h3",
+        "text": "Live dashboard"
+      },
+      {
+        "tag": "h3",
+        "text": "Grow your tier"
+      },
+      {
+        "tag": "h2",
+        "text": "HOW IT WORKS"
+      },
+      {
+        "tag": "h3",
+        "text": "Join"
+      },
+      {
+        "tag": "h3",
+        "text": "Get approved"
+      },
+      {
+        "tag": "h3",
+        "text": "Create & share codes"
+      },
+      {
+        "tag": "h3",
+        "text": "Track & earn"
+      },
+      {
+        "tag": "h2",
+        "text": "Ready to partner up?"
+      }
+    ],
+    "text": "AlgoWars CREATORS Join CREATOR & PARTNER PROGRAM Turn your audience into revenue AlgoWars is the arena where developers battle 1v1 on real algorithm problems. Partners create discount codes for AlgoWars Pro, share them with their audience, and earn a share of every subscription they drive. Become a Partner Free to join · Google or Discord sign-in · No follower minimum WHAT YOU GET Your own coupon codes Mint custom discount codes for AlgoWars Pro in seconds — your name, your discount, your audience. Earn revenue share Every subscription driven by your code earns you a share of the revenue. Transparent, per-redemption tracking. Live dashboard Watch redemptions and revenue update in real time, split by region (₹ / $), with 30-day performance charts. Grow your tier Start with up to 50% discounts. Prove your reach and unlock bigger discounts and unlimited redemptions. HOW IT WORKS 01 Join Sign in with Google or Discord — same account as AlgoWars. 02 Get approved Tell us where your audience lives. Most creators are approved within a day. 03 Create & share codes Generate a discount code and drop it in your videos, streams or posts. 04 Track & earn Every redemption is attributed to you. Watch revenue grow on your dashboard. Ready to partner up? Join in under a minute. Your dashboard, codes and earnings are waiting. Join the program ← Back to algowars.online·AlgoWars Creator & Partner Program",
+    "links": [
+      "https://partners.algowars.online/login",
+      "https://algowars.online"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

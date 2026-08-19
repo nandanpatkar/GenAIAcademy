@@ -1,0 +1,26 @@
+{
+  "levelNumber": 236,
+  "displayNumber": 182,
+  "title": "Infix to Prefix Conversion",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a valid arithmetic expression in infix notation, return its equivalent prefix (Polish) notation.</p><p><br></p><p>The expression can contain:</p><p><br></p><ul><li>lowercase letters a–z as operands</li></ul><p><br></p><ul><li>the four binary operators + - * /</li></ul><p><br></p><ul><li>and round parentheses ( ) that enforce evaluation order</li></ul><p><br></p><ul><li>No whitespace appears in the input.</li></ul><p><br></p><p>The input is guaranteed to be syntactically correct (parentheses are balanced, every operator has two operands, etc.).</p>",
+  "examples": [
+    "<p><strong>Input: </strong>\"(a+b)*c\"</p><p><strong>Output: </strong>\"*+abc\"</p><p><strong>Explanation:</strong></p><p>Infix&nbsp;&nbsp;: (a + b) * c</p><p>Prefix&nbsp;: * + a b c</p>",
+    "<p><strong>Input:</strong> \"a+b*c\"</p><p><strong>Output:</strong> \"+a*bc\"</p><p><strong>Explanation:</strong></p><p>Infix&nbsp;:&nbsp;a + (b * c)</p><p>Prefix&nbsp;: + a * b c</p>",
+    "<p><strong>Input :</strong> \"((a-(b/c))*((a/k)-l))\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ infix.length ≤ 1000</li><li>infix contains only characters {a–z, +, -, *, /, (, )}.</li><li>The expression is valid.</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

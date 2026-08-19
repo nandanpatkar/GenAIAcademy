@@ -1,0 +1,33 @@
+{
+  "levelNumber": 112,
+  "displayNumber": 58,
+  "title": "Find out how many times the array is rotated",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array nums of size n, sorted in ascending order with distinct values. The array has been <strong>right</strong> <strong>rotated</strong> an unknown number of times, between 0 and n-1 (including). Determine the <strong>number</strong> of rotations performed on the array.</p>",
+  "examples": [
+    "<p>Input : nums = [4, 5, 6, 7, 0, 1, 2, 3]</p><p>Output: 4</p><p>Explanation: The original array should be [0, 1, 2, 3, 4, 5, 6, 7]. So, we can notice that the array has been rotated 4 times.</p>",
+    "<p>Input: nums = [3, 4, 5, 1, 2]</p><p>Output: 3</p><p>Explanation: The original array should be [1, 2, 3, 4, 5]. So, we can notice that the array has been rotated 3 times.</p>",
+    "<p>Input: nums = [4, 5, 1, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;n == nums.length</li><li>&nbsp;1 <= n <= 10<sup>4</sup></li><li>&nbsp;-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>&nbsp;All the integers of nums are unique.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

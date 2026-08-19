@@ -1,0 +1,26 @@
+{
+  "hasEntitlement": true,
+  "entitlementStatus": "active",
+  "currentPeriodEnd": "2026-08-20T15:46:33.383Z",
+  "productKey": "pro_plan",
+  "pricing": {
+    "baseAmountPaise": 19900,
+    "currency": "INR"
+  },
+  "planPricing": {
+    "monthly": {
+      "amountPaise": 19900,
+      "available": true
+    },
+    "annual": {
+      "amountPaise": null,
+      "available": false
+    },
+    "currency": "INR"
+  },
+  "region": "IN",
+  "trialDays": 14,
+  "trialEligible": false,
+  "trialEndsAt": "2026-08-20T15:46:33.383907Z",
+  "isTrial": true
+}

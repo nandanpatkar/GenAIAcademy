@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "938756cb-dc27-4110-b487-d13d1b853267",
+    "title": "Word Search",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "string",
+      "backtracking",
+      "depth-first-search",
+      "matrix"
+    ],
+    "statement": "Given an m x n grid of characters and a string word, determine whether the word exists in the grid.\n\nThe word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.\n\n**Input:**\nThe first line contains two integers m and n, the number of rows and columns of the grid.\nThe next m lines each contain n space-separated characters representing the grid.\nThe next line contains the string word.\n\n**Output:**\nPrint \"true\" if the word exists in the grid, otherwise print \"false\".\n\n**Constraints:**\n- m == board.length\n- n == board[i].length\n- 1 <= m, n <= 6\n- 1 <= word.length <= 15\n- board and word consist of only lowercase and uppercase English letters.\n\n**Examples:**\nExample 1:\nInput:\n3 4\nA B C E\nS F C S\nA D E E\nABCCED\nOutput:\ntrue\n\nExample 2:\nInput:\n3 4\nA B C E\nS F C S\nA D E E\nSEE\nOutput:\ntrue\n\nExample 3:\nInput:\n3 4\nA B C E\nS F C S\nA D E E\nABCB\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

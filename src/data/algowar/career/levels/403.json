@@ -1,0 +1,33 @@
+{
+  "levelNumber": 403,
+  "displayNumber": 349,
+  "title": "Kosaraju's algorithm",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a <strong>directed </strong>graph with <strong>V </strong>vertices, numbered from 0 to <strong>V − 1</strong>, and its adjacency list Adj, where <strong>Adj[i] </strong>contains all vertices j such that there is a <strong>directed </strong>edge from vertex<strong> i to vertex j.</strong></p><p>Your task is to find the number of strongly connected components <strong>(SCCs) </strong>in the graph.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> V=5, <span style=\"color: rgb(229, 231, 235);\">Adj=[[2,3],[0],[1],[4],[]]</span></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-PnLIld6k\"></p><p><br></p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong> Three strongly connected components are marked below:</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-o_TbPDq_\"></p>",
+    "<p><strong>Input:</strong> V=8, <span style=\"color: rgb(229, 231, 235);\">Adj=[[1],[2],[0,3],[4],[5,7],[6],[4,7],[]]</span></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-D_9a6TOG\"></p><p><strong>Output:</strong> 4</p><p><strong>Explanation:</strong> Four strongly connected components are marked below:</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-izephqU5\"></p>",
+    "<p><strong>Input:</strong> V=3, Adj=[[1], [2],[]]</p>"
+  ],
+  "constraintsHtml": "<p>1 ≤ V ≤ 5000</p><p>0 ≤ E ≤ (V*(V-1))</p><p>0 ≤ a<sub>i</sub>, b<sub>i</sub> ≤ V-1</p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 175,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

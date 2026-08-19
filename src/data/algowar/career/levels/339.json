@@ -1,0 +1,33 @@
+{
+  "levelNumber": 339,
+  "displayNumber": 285,
+  "title": "Floor in a Binary Search Tree",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a <strong>root</strong> of binary search tree and a <strong>key</strong>(node) value, find the floor and ceil value for that particular key value.</p><p><br></p><ul><li><strong>Floor</strong> Value Node: Node with the greatest data lesser than or equal to the key value.&nbsp;</li></ul><p><br></p><ul><li><strong>Ceil</strong> Value Node: Node with the smallest data larger than or equal to the key value.</li></ul><p><br></p><p>If a particular floor or ceil value is not present then output -1.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [8, 4, 12, 2, 6, 10, 14] , key = 11</p><p><strong>Output :</strong> [10, 12]</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-eDbjy9Um\"></p>",
+    "<p><strong>Input :</strong> root = [8, 4, 12, 2, 6, 10, 14] , key = 15</p><p><strong>Output :</strong> [14, -1]</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-D00IL4KV\"></p>",
+    "<p><strong>Input :</strong> root = [8, 4, 12, 2, 6, 10, 14] , key = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 5000</li><li>1 <= Node.val <= 10<sup>7</sup></li><li>1 <= key <= 10<sup>7</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

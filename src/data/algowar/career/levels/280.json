@@ -1,0 +1,33 @@
+{
+  "levelNumber": 280,
+  "displayNumber": 226,
+  "title": "Find Median from Data Stream",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Implement a class that finds the <strong>median </strong>from a data stream. The median is the <strong>middle </strong>value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.</p><p>Implement the <strong>MedianFInder </strong>class as follows:</p><ul><li><strong>MedianFinder</strong>() initializes the MedianFinder object.</li><li>void <strong>addNum</strong>(int num) adds the integer num to the data structure.</li><li>double <strong>findMedian</strong>() returns the median of all elements so far. Answers within 10<sup>-5</sup> of the actual answer will be accepted.</li></ul>",
+  "examples": [
+    "<p><strong>Input</strong>: [MedianFinder(), addNum(1), addNum(2), addNum(3), findMedian()]</p><p><strong>Output</strong>: [null, null, null, null, 2]</p><p><strong>Explanation</strong>:</p><p>MedianFinder(): initializes the object.</p><p>addNum(1): adds 1 to the data structure</p><p>addNum(2): adds 2 to the data structure</p><p>addNum(3): adds 3 to the data structure</p><p>findMedian(): returns 2 as the median of [1, 2, 3]</p>",
+    "<p>Input: [MedianFinder(), addNum(1), addNum(6), findMedian(), addNum(3), findMedian()]</p><p>Output: [null, null, null, 3.5, null, 3]</p><p>Explanation:</p><p>MedianFinder(): initializes the object.</p><p>addNum(1): adds 1 to the data structure</p><p>addNum(6): adds 6 to the data structure</p><p>findMedian(): returns 3.5 as the median of [1, 6] -> (1 + 6) / 2 = 3.5</p><p>addNum(3): adds 3 to the data structure</p><p>findMedian(): returns 3 as the median of [1, 3, 6].</p>",
+    "<p>Input: [MedianFinder(), addNum(1), findMedian(), addNum(80), addNum(6), findMedian()]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of instructions <= 10<sup>4</sup></li><li>-10<sup>4</sup> <= num <= 10<sup>4</sup></li><li>There will be at least 1 element in the data structure before any median call</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

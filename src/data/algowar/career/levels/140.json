@@ -1,0 +1,33 @@
+{
+  "levelNumber": 140,
+  "displayNumber": 86,
+  "title": "Check if two strings are anagram of each other",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings <strong>s</strong> and <strong>t</strong>, return <strong>true</strong> if t is an anagram of s, and <strong>false</strong> otherwise.</p><p><br></p><p>An <strong>Anagram</strong> is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"anagram\" , t = \"nagaram\"</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> </p><p>We can rearrange the characters of string s to get string t as frequency of all characters from both strings is same.</p>",
+    "<p><strong>Input :</strong> s = \"dog\" , t = \"cat\"</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> </p><p>We cannot rearrange the characters of string s to get string t as frequency of all characters from both strings is not same.</p>",
+    "<p><strong>Input :</strong> s = \"eat\" , t = \"tea\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length , t.length <= 5*10<sup>4</sup></li><li>s and t consist of only lowercase English letters</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

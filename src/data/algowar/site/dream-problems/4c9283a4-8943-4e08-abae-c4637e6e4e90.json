@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "4c9283a4-8943-4e08-abae-c4637e6e4e90",
+    "title": "Multiply Strings",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "string",
+      "simulation"
+    ],
+    "statement": "Given two non-negative integers num1 and num2 represented as strings, compute and return the product of num1 and num2, also represented as a string.\n\nNote: You must not use any built-in BigInteger library or convert the inputs to integer directly.\n\n**Input:**\n- Line 1: the string num1 (raw, not quoted).\n- Line 2: the string num2 (raw, not quoted).\n\n**Output:**\n- Print the product of num1 and num2 as a raw string on a single line (no leading zeros except for the value \"0\" itself).\n\n**Constraints:**\n- 1 <= num1.length, num2.length <= 200\n- num1 and num2 consist of digits only.\n- Both num1 and num2 do not contain any leading zero, except the number 0 itself.\n\n**Examples:**\nExample 1:\nInput:\n2\n3\nOutput:\n6\n\nExample 2:\nInput:\n123\n456\nOutput:\n56088",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

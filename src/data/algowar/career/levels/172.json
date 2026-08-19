@@ -1,0 +1,33 @@
+{
+  "levelNumber": 172,
+  "displayNumber": 118,
+  "title": "Add two numbers in Linked List",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two&nbsp;non-empty&nbsp;linked lists <strong>linkedList1 </strong>and <strong>linkedList2 </strong>which represent two non-negative integers.</p><p><br></p><p>The digits are stored in&nbsp;<strong>reverse </strong>order with each node storing one digit.</p><p>Add two numbers and return the sum&nbsp;as a linked list.</p><p><br></p><ul><li>The sum Linked List will be in reverse order as well.</li></ul><p><br></p><ul><li>The Two given Linked Lists represent numbers without any leading zeros, except when the number is zero itself.</li></ul>",
+  "examples": [
+    "<p><strong>Input</strong>: linkedList1 = [5, 4], linkedList2 = [4]</p><p><strong>Output</strong>: [9, 4]</p><p><strong>Explanation</strong>: linkedList1 = 45, linkedList2 = 4.</p><p>linkedList1 + linkedList2 = 45 + 4 = 49.</p><p>The sum is 49 and when prepare the linked list we reverse the number [9, 4]</p>",
+    "<p><strong>Input</strong>: linkedList1 = [4, 5, 6], linkedList2 = [1, 2, 3]</p><p><strong>Output</strong>: [5, 7, 9]</p><p><strong>Explanation</strong>: linkedList1 = 654, linkedList2 = 321.</p><p>linkedList1 + linkedList2 = 654 + 321 = 975.</p><p>The sum is 975 and when prepare the linked list we reverse the number [5, 7, 9]The sum </p>",
+    "<p><strong>Input</strong>: linkedList1 = [1], linkedList2 = [8, 7]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of nodes in each Linked List <= 100</li><li>0 <= value of each node in both Linked List <= 9</li><li>It is guaranteed that the list represents a number that does not have leading zeros.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

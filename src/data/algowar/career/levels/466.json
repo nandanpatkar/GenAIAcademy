@@ -1,0 +1,33 @@
+{
+  "levelNumber": 466,
+  "displayNumber": 412,
+  "title": "Minimum number of bracket reversals to make an expression balanced",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string s consisting of only opening and closing&nbsp;brackets '(' and ')', find out the <strong>minimum</strong> number of <strong>reversals</strong> required to convert the string into a balanced expression.</p><p><br></p><p>If it is not possible to make the brackets balanced, return -1. A reversal means changing '(' to ')' or vice-versa.</p><p><br></p><p>A balanced expression is a string where:</p><ul><li>It is empty, or</li><li>Every opening bracket '(' has exactly one corresponding closing bracket ')'</li><li>Every closing bracket ')' has exactly one corresponding opening bracket '('</li><li>Brackets are properly nested, meaning every opened bracket is closed before any outer bracket is closed</li></ul>",
+  "examples": [
+    "<p>Input: s = \")(())(((\"</p><p><br></p><p>Output: 3</p><p><br></p><p>Explanation: One way to balance is:</p><p>\"((())())\". There is no balanced sequence</p><p>that can be formed in lesser reversals.</p>",
+    "<p>Input: s = \"(()((()(())((\"</p><p><br></p><p>Output: -1</p><p><br></p><p>Explanation: There's no way we can balance</p><p>this sequence of braces.</p>",
+    "<p>Input: s=\"((())())\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 18,
+    "title": "String Trials",
+    "theme": "obsidian-strings",
+    "levelCount": 9,
+    "completionXp": 100
+  }
+}

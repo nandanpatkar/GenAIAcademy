@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "3cedced0-ce05-4882-8e06-c20374fe53a6",
+    "title": "Search a 2D Matrix II",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search",
+      "divide-and-conquer",
+      "matrix"
+    ],
+    "statement": "Write an efficient algorithm that searches for a value target in an m x n integer matrix. This matrix has the following properties:\n\n- Integers in each row are sorted in ascending order from left to right.\n- Integers in each column are sorted in ascending order from top to bottom.\n\nDetermine whether the target value exists in the matrix.\n\n**Input:**\nThe first line contains two integers m and n, the number of rows and columns of the matrix.\nThe next m lines each contain n space-separated integers, representing the rows of the matrix.\nThe next line contains a single integer target.\n\n**Output:**\nPrint \"true\" if the target value exists in the matrix, otherwise print \"false\".\n\n**Constraints:**\n- m == matrix.length\n- n == matrix[i].length\n- 1 <= n, m <= 300\n- -10^9 <= matrix[i][j] <= 10^9\n- All the integers in each row are sorted in ascending order.\n- All the integers in each column are sorted in ascending order.\n- -10^9 <= target <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n5\nOutput:\ntrue\n\nExample 2:\nInput:\n5 5\n1 4 7 11 15\n2 5 8 12 19\n3 6 9 16 22\n10 13 14 17 24\n18 21 23 26 30\n20\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

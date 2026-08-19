@@ -1,0 +1,33 @@
+{
+  "levelNumber": 201,
+  "displayNumber": 147,
+  "title": "Word Break",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string s and a dictionary of strings wordDict, return true if s can be <strong>segmented</strong> into a space-separated sequence of one or more dictionary words otherwise return false.</p><p><br></p><p>Note : The <strong>same</strong> <strong>word</strong> in dictionary can be used <strong>multiple</strong> <strong>times</strong> in segmentation.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"takeuforward\" , wordDict = [\"take\" , \"forward\" , \"you\", \"u\"]</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> Return true because \"takeuforward\" can be segmented as \"take\" , \"u\" , \"forward\".</p>",
+    "<p><strong>Input :</strong> s = \"applepineapple\" , wordDict = [\"apple\"]</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> Return false because \"applepineapple\" can be segmented as \"apple\" , \"pine\" , \"apple\" but here we do not have \"pine\" word in dictionary.</p>",
+    "<p><strong>Input :</strong> s = \"catsanddogs\" , wordDict = [\"and\" , \"dogs\" ,\"cats\", \"animals\"]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 300</li><li>1 <= wordDict.length <= 1000</li><li>1 <= wordDict[i].length <= 20</li><li>s and wordDict[i] consist only of English lowercase letters.</li><li>All strings in wordDict are <strong>unique</strong>.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

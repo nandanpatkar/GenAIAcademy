@@ -1,0 +1,33 @@
+{
+  "levelNumber": 87,
+  "displayNumber": 33,
+  "title": "Rotate matrix by 90 degrees",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an N * N 2D integer matrix, rotate the matrix by 90 degrees clockwise.</p><p><br></p><p>The rotation must be done in place, meaning the input 2D matrix must be modified directly.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-L-z8Ge1S\"></p><p><strong>Output</strong>: matrix = [[7, 4, 1], [8, 5, 2], [9, 6, 3]]</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-JDKl5YOv\"></p>",
+    "<p><strong>Input</strong>: matrix = [[0, 1, 1, 2], [2, 0, 3, 1], [4, 5, 0, 5], [5, 6, 7, 0]]</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-nTubtRDX\"></p><p><strong>Output</strong>: matrix = [[5, 4, 2, 0],&nbsp;[6, 5, 0, 1], [7, 0, 3, 1], [0, 5, 1, 2]]</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-rOUcAXk7\"></p>",
+    "<p><strong>Input</strong>: matrix = [[1, 1, 2], [5, 3, 1], [5, 3, 5]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == matrix.length.</li><li>n == matrix[i].length.</li><li>1 <= n <= 100.</li><li>-10<sup>4</sup> <= matrix[i][j] <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

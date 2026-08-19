@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "d5e9f302-c494-4bd6-90f8-7b18e0a35e7a",
+    "title": "Longest Common Subsequence",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
+    "statement": "Longest Common Subsequence\n\nGiven two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.\n\nA subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters.\n\nFor example, \"ace\" is a subsequence of \"abcde\".\n\nA common subsequence of two strings is a subsequence that is common to both strings.\n\n**Input:**\nThe input consists of two lines:\n- Line 1: the string text1 (raw, not quoted).\n- Line 2: the string text2 (raw, not quoted).\n\n**Output:**\nPrint a single integer on one line: the length of the longest common subsequence of text1 and text2.\n\n**Constraints:**\n- 1 <= text1.length, text2.length <= 1000\n- text1 and text2 consist of only lowercase English characters.\n\n**Examples:**\nExample 1:\nInput:\nabcde\nace\nOutput:\n3\n\nExample 2:\nInput:\nabc\nabc\nOutput:\n3\n\nExample 3:\nInput:\nabc\ndef\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

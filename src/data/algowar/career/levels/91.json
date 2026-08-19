@@ -1,0 +1,26 @@
+{
+  "levelNumber": 91,
+  "displayNumber": 37,
+  "title": "Majority Element-II",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an <strong>integer </strong>array <strong>nums </strong>of size <strong><em>n</em></strong>. Return <strong>all </strong>elements which <strong>appear more than</strong> <strong>n/3</strong> times in the array. The output can be returned in <strong>any </strong>order.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [1, 2, 1, 1, 3, 2]</p><p><strong>Output</strong>: [1]</p><p><strong>Explanation</strong>: </p><p>Here, n / 3 = 6 / 3 = 2.</p><p>Therefore the elements appearing 3 or more times is : [1]</p>",
+    "<p><strong>Input</strong>: nums = [1, 2, 1, 1, 3, 2, 2]</p><p><strong>Output</strong>: [1, 2]</p><p><strong>Explanation</strong>: </p><p>Here, n / 3 = 7 / 3 = 2.</p><p>Therefore the elements appearing 3 or more times is : [1, 2]</p>",
+    "<p><strong>Input</strong>: nums = [1, 2, 1, 1, 3, 2, 2, 3](Give the solution sorted in ascending order)</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == nums.length.</li><li>2 <= n <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "abf34784-264d-4549-b92d-017f2924d75a",
+    "title": "Insert Delete GetRandom O(1)",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "math",
+      "design",
+      "randomized"
+    ],
+    "statement": "Implement a data structure that supports three operations on a set of integers: insert, remove, and getRandom.\n\n- insert(val): Inserts val into the set if not present. Returns true if the item was not present (i.e., inserted), false otherwise.\n- remove(val): Removes val from the set if present. Returns true if the item was present (i.e., removed), false otherwise.\n- getRandom(): Returns an element from the current set. It is guaranteed that at least one element exists when this method is called.\n\nFor deterministic output comparison, getRandom is defined to return the minimum element currently in the set (rather than a uniformly random element). All operations must run in average O(1) time complexity.\n\nYou are given a sequence of operations to perform in order. Process each operation and output its result.\n\n**Input:**\n- Line 1: an integer n, the number of operations.\n- Next n lines: each line is one of:\n  - \"insert v\" where v is an integer,\n  - \"remove v\" where v is an integer,\n  - \"getRandom\".\n\n**Output:**\n- For each of the n operations, print one line with the result:\n  - For insert and remove: print \"true\" or \"false\".\n  - For getRandom: print the minimum element currently in the set.\n\n**Constraints:**\n- -2^31 <= val <= 2^31 - 1\n- 1 <= n <= 2 * 10^5\n- There will be at least one element in the set whenever getRandom is called.\n\n**Examples:**\nExample 1:\nInput:\n7\ninsert 1\nremove 2\ninsert 2\ngetRandom\nremove 1\ninsert 2\ngetRandom\nOutput:\ntrue\nfalse\ntrue\n1\ntrue\nfalse\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

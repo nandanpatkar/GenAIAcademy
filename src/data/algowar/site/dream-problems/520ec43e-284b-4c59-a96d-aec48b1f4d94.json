@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "520ec43e-284b-4c59-a96d-aec48b1f4d94",
+    "title": "Container With Most Water",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "two-pointers",
+      "greedy"
+    ],
+    "statement": "You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the i-th line are (i, 0) and (i, height[i]).\n\nFind two lines that together with the x-axis form a container, such that the container contains the most water.\n\nReturn the maximum amount of water a container can store.\n\nNotice that you may not slant the container.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers, the array height.\n\n**Output:**\nPrint a single integer: the maximum amount of water a container can store.\n\n**Constraints:**\n- n == height.length\n- 2 <= n <= 10^5\n- 0 <= height[i] <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n9\n1 8 6 2 5 4 8 3 7\nOutput:\n49\n\nExample 2:\nInput:\n2\n1 1\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

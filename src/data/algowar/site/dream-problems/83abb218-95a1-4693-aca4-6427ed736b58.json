@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "83abb218-95a1-4693-aca4-6427ed736b58",
+    "title": "Pascal's Triangle",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "dynamic-programming"
+    ],
+    "statement": "Given an integer numRows, return the first numRows of Pascal's triangle.\n\nIn Pascal's triangle, each number is the sum of the two numbers directly above it. The first row is [1], the second row is [1,1], and each subsequent row begins and ends with 1, with each interior element being the sum of the two elements directly above it.\n\n**Input:**\nThe input consists of a single line:\n- Line 1: an integer numRows.\n\n**Output:**\nPrint the first numRows rows of Pascal's triangle as follows:\n- Line 1: the integer numRows.\n- Lines 2 through numRows+1: each line contains the values of one row of Pascal's triangle, space-separated, in order from row 1 to row numRows.\n\n**Constraints:**\n- 1 <= numRows <= 30\n\n**Examples:**\nExample 1:\nInput:\n5\nOutput:\n5\n1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1\n\nExample 2:\nInput:\n1\nOutput:\n1\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

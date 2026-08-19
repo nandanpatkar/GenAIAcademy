@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "987ded87-a6c2-45bb-bd36-6da19064d8d8",
+    "title": "Beautiful Towers I",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "stack",
+      "monotonic-stack"
+    ],
+    "statement": "You are given an array heights of n integers representing the number of bricks in n consecutive towers. Your task is to remove some bricks to form a mountain-shaped tower arrangement. In this arrangement, the tower heights are non-decreasing, reaching a maximum peak value with one or multiple consecutive towers and then non-increasing.\n\nReturn the maximum possible sum of heights of a mountain-shaped tower arrangement.\n\n**Input:**\nThe first line contains an integer n, the number of towers.\nThe second line contains n space-separated integers representing the array heights.\n\n**Output:**\nPrint a single integer, the maximum possible sum of heights of a mountain-shaped tower arrangement.\n\n**Constraints:**\n1 <= n <= 10^3\n1 <= heights[i] <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n5\n5 3 4 1 1\nOutput:\n13\n\nExample 2:\nInput:\n6\n6 5 3 9 2 7\nOutput:\n22\n\nExample 3:\nInput:\n6\n3 2 5 5 2 3\nOutput:\n18",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

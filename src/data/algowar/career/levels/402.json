@@ -1,0 +1,33 @@
+{
+  "levelNumber": 402,
+  "displayNumber": 348,
+  "title": "Articulation point in graph",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an undirected graph with V vertices and adjacency list adj. Find all the <strong>vertices</strong> removing which (and edges through it) would increase the number of connected components in the graph. The graph may be initially disconnected.. Return the vertices in <strong>ascending order</strong>. If there are no such vertices then returns a list containing -1.</p><p><br></p><p><strong>Note</strong>: Indexing is zero-based i.e nodes numbering from (0 to V-1). There might be loops present in the graph.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-kfpw3bZG\"></p><p><br></p><p><strong>Input:</strong> V = 7, adj=[[1,2,3], [0], [0,3,4,5], [2,0], [2,6], [2,6], [4,5]]&nbsp;</p><p><strong>Output:</strong> [0, 2]</p><p><strong>Explanation:</strong> If we remove node 0 or node 2, the graph will be divided into 2 or more components.</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-xysZGNeR\"></p><p><br></p><p><strong>Input:</strong> V = 5, adj=[[1], [0,4], [3,4], [2,4], [1,2,3]]&nbsp;</p><p><strong>Output:</strong> [1, 4]</p><p><strong>Explanation: </strong>If we remove either node 1 or node 4, the graph breaks into multiple components.</p>",
+    "<p>Input: V = 3, adj=[[1,2], [0,2], [0,1]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>E= Number of Edges</li><li>1 ≤ V, E ≤ 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

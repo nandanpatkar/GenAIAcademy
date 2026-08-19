@@ -1,0 +1,22 @@
+{
+  "problem": {
+    "id": "f1698489-d202-4c90-a3f8-48a5b015b542",
+    "title": "Top K Frequent Words",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "string",
+      "trie",
+      "sorting",
+      "heap-priority-queue",
+      "bucket-sort",
+      "counting"
+    ],
+    "statement": "Top K Frequent Words\n\nGiven an array of strings words and an integer k, return the k most frequent strings.\n\nReturn the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.\n\n**Input:**\nThe first line contains an integer n, the number of words.\nThe next n lines each contain one word.\nThe following line contains an integer k.\n\n**Output:**\nPrint a single line containing the k most frequent words separated by spaces, sorted by frequency from highest to lowest, and by lexicographical order among words with the same frequency.\n\n**Constraints:**\n- 1 <= n <= 500\n- 1 <= words[i].length <= 10\n- words[i] consists of lowercase English letters.\n- k is in the range [1, the number of unique words].\n\n**Examples:**\nExample 1:\nInput:\n6\ni\nlove\nleetcode\ni\nlove\ncoding\n2\nOutput:\ni love\n\nExample 2:\nInput:\n10\nthe\nday\nis\nsunny\nthe\nthe\nthe\nsunny\nis\nis\n4\nOutput:\nthe is sunny day",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 77,
+  "displayNumber": 23,
+  "title": "Sort an array of 0's 1's and 2's",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array <strong>nums</strong> consisting of only 0, 1, or 2. Sort the array in non-decreasing order. </p><p><br></p><p>The sorting must be done in-place, without making a copy of the original array.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [1, 0, 2, 1, 0]</p><p><strong>Output</strong>: [0, 0, 1, 1, 2]</p><p><strong>Explanation</strong>: </p><p>The nums array in sorted order has 2 zeroes, 2 ones and 1 two</p>",
+    "<p><strong>Input</strong>: nums = [0, 0, 1, 1, 1]</p><p><strong>Output</strong>: [0, 0, 1, 1, 1]</p><p><strong>Explanation</strong>: </p><p>The nums array in sorted order has 2 zeroes, 3 ones and zero twos</p>",
+    "<p>Input: nums = [1, 1, 2, 2, 1]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>nums consists of 0, 1 and 2 only.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

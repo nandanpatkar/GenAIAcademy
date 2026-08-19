@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "c3bd17ea-88b3-4f26-a546-1e76c702a258",
+    "title": "Search in Rotated Sorted Array",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "statement": "There is an integer array nums sorted in ascending order (with distinct values).\n\nPrior to being passed to your function, nums is possibly left rotated at an unknown index k (1 <= k < nums.length) such that the resulting array is [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]] (0-indexed). For example, [0,1,2,4,5,6,7] might be left rotated by 3 indices and become [4,5,6,7,0,1,2].\n\nGiven the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or -1 if it is not in nums.\n\nYou must write an algorithm with O(log n) runtime complexity.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers, the array nums after the possible rotation.\nThe third line contains an integer target.\n\n**Output:**\nPrint a single integer: the index of target in nums if it exists, otherwise -1.\n\n**Constraints:**\n- 1 <= nums.length <= 5000\n- -10^4 <= nums[i] <= 10^4\n- All values of nums are unique.\n- nums is an ascending array that is possibly rotated.\n- -10^4 <= target <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n7\n4 5 6 7 0 1 2\n0\nOutput:\n4\n\nExample 2:\nInput:\n7\n4 5 6 7 0 1 2\n3\nOutput:\n-1\n\nExample 3:\nInput:\n1\n1\n0\nOutput:\n-1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

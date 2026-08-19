@@ -1,0 +1,33 @@
+{
+  "levelNumber": 164,
+  "displayNumber": 110,
+  "title": "Check if LL is palindrome or not",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a singly linked list representing a positive integer number. Each node of the linked list represents a digit of the number, with the 1st node containing the leftmost digit of the number and so on. Check whether the linked list values form a palindrome or not. Return true if it forms a palindrome, otherwise, return false.</p><p><br></p><p>A palindrome is a sequence that reads the same forward and backwards.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head -> 3 -> 7 -> 5 -> 7 -> 3</p><p><strong>Output</strong>: true</p><p><strong>Explanation</strong>: 37573 is a palindrome.</p>",
+    "<p><strong>Input</strong>: head -> 1 -> 1 -> 2 -> 1</p><p><strong>Output</strong>: false</p><p><strong>Explanation</strong>: 1121 is not a palindrome.</p>",
+    "<p><strong>Input</strong>: head -> 9 -> 9 -> 9 -> 9</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= number of nodes in the Linked List <= 10<sup>5</sup></li><li>0 <= ListNode.val <= 9</li><li>The number represented does not contain any leading zeroes.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

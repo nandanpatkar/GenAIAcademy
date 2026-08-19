@@ -1,0 +1,33 @@
+{
+  "levelNumber": 367,
+  "displayNumber": 313,
+  "title": "Word ladder II",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two distinct words startWord and targetWord, and a list denoting wordList of unique words of equal lengths. Find all <strong>shortest transformation sequence(s)</strong> from startWord to targetWord. You can return them in any order possible.</p><p><br></p><p>In this problem statement, we need to keep the following conditions in mind:</p><p><br></p><p>A word can only consist of lowercase characters.</p><p>Only one letter can be changed in each transformation.</p><p>Each transformed word must exist in the wordList including the targetWord.</p><p>startWord may or may not be part of the wordList.</p><p>Return an empty list if there is no such transformation sequence.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> startWord = \"der\", targetWord = \"dfs\", wordList = [\"des\", \"der\", \"dfr\", \"dgt\", \"dfs\"]</p><p><br></p><p><strong>Output:</strong> [ [ “der”, “dfr”, “dfs” ], [ “der”, “des”, “dfs”] ]</p><p><br></p><p><strong>Explanation:</strong>&nbsp;The length of the smallest transformation sequence here is 3.</p><p>Following are the only two shortest ways to get to the targetWord from the startWord :</p><p>\"der\" -> ( replace ‘r’ by ‘s’ ) -> \"des\" -> ( replace ‘e’ by ‘f’ ) -> \"dfs\".</p><p>\"der\" -> ( replace ‘e’ by ‘f’ ) -> \"dfr\" -> ( replace ‘r’ by ‘s’ ) -> \"dfs\".</p>",
+    "<p><strong>Input:</strong> startWord = \"gedk\", targetWord= \"geek\", wordList = [\"geek\", \"gefk\"]</p><p><br></p><p><strong>Output:</strong> [ [ “gedk”, “geek” ] ]</p><p><br></p><p><strong>Explanation:&nbsp;</strong>The length of the smallest transformation sequence here is 2.</p><p>Following is the only shortest way to get to the targetWord from the startWord :</p><p>\"gedk\" -> ( replace ‘d’ by ‘e’ ) -> \"geek\".</p>",
+    "<p><strong>Input:</strong> startWord = \"abc\", targetWord = \"xyz\", wordList = [\"abc\", \"ayc\", \"ayz\", \"xyz\"]</p>"
+  ],
+  "constraintsHtml": "<ul><li>N= Number of Words</li><li>M= Length of Word</li><li>1 ≤ N ≤ 100</li><li>1 ≤ M ≤ 10</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

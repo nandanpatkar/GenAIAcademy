@@ -1,0 +1,33 @@
+{
+  "levelNumber": 398,
+  "displayNumber": 344,
+  "title": "Number of islands II",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given n, m denoting the row and column of the 2D matrix, and an array A of size k denoting the number of operations. Matrix elements are 0 if there is water or 1 if there is land. Originally, the 2D matrix is all 0 which means there is no land in the matrix. </p><p><br></p><p>The array has <strong>k</strong> operator(s) and each operator has two integers A[i][0], A[i][1] means that you can change the cell matrix[A[i][0]][A[i][1]] from sea to island. Return how many <strong>islands</strong> are there in the matrix after each operation.</p><p><br></p><p>The directions to check for the island are up, down, right, left. The answer array will be of size k.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 4, m = 5, k = 4, A = [[1,1],[0,1],[3,3],[3,4]]&nbsp;</p><p><strong>Output</strong>: [1, 1, 2, 2]</p><p><strong>Explanation</strong>: The following illustration is the representation of the operation:</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-LfUoJCTR\"></p>",
+    "<p><strong>Input</strong>: n = 4, m = 5, k = 12, A = [[0,0],[0,0],[1,1],[1,0],[0,1],[0,3],[1,3],[0,4], [3,2], [2,2],[1,2], [0,2]]&nbsp;</p><p><strong>Output</strong>: [1, 1, 2, 1, 1, 2, 2, 2, 3, 3, 1, 1]&nbsp;</p><p><strong>Explanation</strong>: If we follow the process like in example 1, we will get the above result.</p>",
+    "<p><strong>Input:</strong> n = 2, m = 2, k = 4, A = [[0,0],[0,1],[1,0],[1,1]]&nbsp;</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= n, m <= 1000</li><li>&nbsp;&nbsp;1 <= k <= 10<sup>4</sup></li><li>&nbsp;&nbsp;0 <= A[i][0] < n</li><li>&nbsp;&nbsp;0 <= A[i][1] < m</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 279,
+  "displayNumber": 225,
+  "title": "Maximum Sum Combination",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integer arrays <strong>nums1 </strong>and <strong>nums2 </strong>and an integer <strong>k</strong>, return the <strong>maximum k</strong> valid sum combinations from all possible sum combinations using the elements of <strong>nums1 </strong>and <strong>nums2</strong>.</p><p><br></p><p>A <strong>valid sum combination </strong>is made by adding one element from <strong>nums1 </strong>and one element from <strong>nums2</strong>. Return the answer in <strong>non-increasing</strong> order.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums1 = [7, 3], nums2 = [1, 6], k = 2</p><p><strong>Output</strong>: [13, 9]</p><p><strong>Explanation</strong>:</p><p>The 2 maximum combinations are made by:</p><p>nums1[0] + nums2[1] = 13</p><p>nums1[1] + nums2[1] = 9</p>",
+    "<p><strong>Input</strong>: nums1 = [3, 4, 5], nums2 = [2, 6, 3], k = 2</p><p><strong>Output</strong>: [11, 10]</p><p><strong>Explanation</strong>:</p><p>The 2 maximum combinations are made by:</p><p>nums1[2] + nums2[1] = 11</p><p>nums1[1] + nums2[1] = 10</p>",
+    "<p><strong>Input</strong>: nums1 = [2, 2], nums2 = [5, 5], k = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == size of nums1 & nums2</li><li>1 <= n <= 10<sup>5</sup></li><li>1 <= Each element of nums1 & nums2 <= 10<sup>4</sup></li><li>1 <= k <= n * n</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

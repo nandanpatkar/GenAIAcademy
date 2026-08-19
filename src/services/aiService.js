@@ -216,6 +216,22 @@ const ensureJsonInstruction = (chatMessages) => {
   return chatMessages;
 };
 
+// RoutesMe is OpenAI-compatible, but it exposes models by gateway display
+// name. Keep an existing GLM setup working when its base URL is switched from
+// Zhipu's API to RoutesMe without making users reconfigure the model field.
+const getOpenAICompatibleModel = (providerId, endpoint, config, meta) => {
+  const configuredModel = (config.model || "").trim();
+  try {
+    const isRoutesMe = new URL(endpoint).hostname.toLowerCase() === "routesme.online";
+    if (providerId === "glm" && isRoutesMe && (!configuredModel || configuredModel === "glm-4-plus")) {
+      return "GLM5.2";
+    }
+  } catch {
+    // Endpoint validation below produces the user-facing error for malformed URLs.
+  }
+  return configuredModel || meta.defaultModel;
+};
+
 const callAzureOpenAI = async (messages, maxTokens = 800, temperature = 0.7, jsonMode = false) => {
   const cfg = getProviderConfig("azure-openai");
   const apiKey = cfg.key || "";
@@ -265,7 +281,7 @@ const callOpenAICompatible = async (providerId, messages, maxTokens = 800, tempe
   const cfg = getProviderConfig(providerId);
   const apiKey = cfg.key || "";
   const endpoint = (cfg.endpoint || meta.defaultEndpoint || "").replace(/\/+$/, "");
-  const model = cfg.model || meta.defaultModel;
+  const model = getOpenAICompatibleModel(providerId, endpoint, cfg, meta);
   if (!apiKey || !endpoint) {
     throw new Error(`Missing ${meta.label} API key or Base URL. Add them in Settings before using AI.`);
   }
@@ -276,13 +292,17 @@ const callOpenAICompatible = async (providerId, messages, maxTokens = 800, tempe
   if (jsonMode) chatMessages = ensureJsonInstruction(chatMessages);
 
   try {
-    const response = await fetch(`${endpoint}/chat/completions`, {
+    // Browser calls to several OpenAI-compatible providers (including GLM
+    // relays) are blocked by their CORS policy. Keep the request same-origin
+    // and let the Vercel function make the provider-to-provider call instead.
+    const response = await fetch("/api/ai-chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
+        endpoint,
+        apiKey,
         model,
         messages: chatMessages,
         max_tokens: maxTokens,
@@ -292,6 +312,10 @@ const callOpenAICompatible = async (providerId, messages, maxTokens = 800, tempe
 
     if (!response.ok) {
       const errData = await response.json().catch(() => ({}));
+      if (response.status === 503 && providerId === "glm" && endpoint.includes("routesme.online")) {
+        const providerMessage = errData.error?.message || "RoutesMe could not serve this request.";
+        throw new Error(`${providerMessage} Confirm that \"${model}\" is available to your RoutesMe key in its Models list.`);
+      }
       throw new Error(errData.error?.message || `${meta.label} Error: ${response.status}`);
     }
 

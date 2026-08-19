@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "b732a10c-24bf-4ada-8c12-a4572e5b805d",
+    "title": "Range Product Queries of Powers",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "bit-manipulation",
+      "prefix-sum"
+    ],
+    "statement": "Given a positive integer n, there exists a 0-indexed array called powers, composed of the minimum number of powers of 2 that sum to n. The array is sorted in non-decreasing order, and there is only one way to form the array.\n\nYou are also given a 0-indexed 2D integer array queries, where queries[i] = [left_i, right_i]. Each queries[i] represents a query where you have to find the product of all powers[j] with left_i <= j <= right_i.\n\nReturn an array answers, equal in length to queries, where answers[i] is the answer to the i-th query. Since the answer to the i-th query may be too large, each answers[i] should be returned modulo 10^9 + 7.\n\n**Input:**\nThe first line contains a single integer n.\nThe second line contains two integers m and k (the number of queries and the number of columns, which is always 2).\nThe next m lines each contain two space-separated integers left_i and right_i.\n\n**Output:**\nPrint m space-separated integers on a single line, where the i-th integer is the product of powers[left_i..right_i] modulo 10^9 + 7, in the order the queries are given.\n\n**Constraints:**\n- 1 <= n <= 10^9\n- 1 <= m <= 10^5\n- 0 <= left_i <= right_i < powers.length\n\n**Examples:**\nExample 1:\nInput:\n15\n3 2\n0 1\n2 2\n0 3\nOutput:\n2 4 64\n\nExample 2:\nInput:\n2\n1 2\n0 0\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

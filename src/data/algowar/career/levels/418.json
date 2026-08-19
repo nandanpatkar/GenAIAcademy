@@ -1,0 +1,33 @@
+{
+  "levelNumber": 418,
+  "displayNumber": 364,
+  "title": "Partition a set into two subsets with minimum absolute sum difference",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of n integers, partition the array into two <strong>subsets</strong> such that the <strong>absolute difference</strong> between their sums is minimized.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> arr = [1, 7, 14, 5]</p><p><strong>Output: </strong>1</p><p><strong>Explanation:</strong> The array can be partitioned as [1, 7, 5] and [14], with an absolute difference of 1.</p>",
+    "<p><strong>Input:</strong> arr = [3, 1, 6, 2, 2]</p><p><strong>Output:</strong> 0</p><p><strong>Explanation:</strong> The array can be partitioned as [3, 2, 2] and [6, 1], with an absolute difference of 0.</p>",
+    "<p><strong>Input:</strong> arr = [2, 2, 2, 9]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ n * sum of array elements ≤ 10<sup>6</sup></li><li>0 < arr[i] <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

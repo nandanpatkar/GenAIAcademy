@@ -1,0 +1,33 @@
+{
+  "levelNumber": 381,
+  "displayNumber": 327,
+  "title": "Why priority Queue is used in Djisktra's Algorithm",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a weighted, undirected graph of V vertices, numbered from 0 to V-1, and an 2D vector/array which represents the edges:</p><p><br></p><p>Each entry in<strong> edges[i] i</strong>s of the form<strong> [u, v, weight]</strong>, where:</p><ul><li><strong>u, v </strong>→ represents the vertex having undirected edge between them</li><li><strong>weight →</strong> the weight of the edge between u and v</li></ul><p><br></p><p>Given a source node S. Find the shortest distance of all the vertex from the source vertex S. Return a list of integers denoting <strong>shortest distance </strong>between each node and source vertex S. If a vertex is not reachable from source then its distance will be 10<sup>9</sup>.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-_DG48OHc\"></p><p><br></p><p><strong>Input:</strong> V = 2, edges = [[0,1,9]] , S=0</p><p><strong>Output:</strong> [0, 9]</p><p><strong>Explanation: </strong></p><p>The shortest distance from node 0(source) to node 0 is 0 and the shortest distance from node 0 to node 1 is 9.</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-GlKv5O6L\"></p><p><br></p><p><strong>Input:</strong> V = 3, edges = [[0, 1, 1], [0, 2, 6], [1, 2, 3]] , S=2</p><p><strong>Output:</strong> [4, 3, 0]</p><p><strong>Explanation:&nbsp;</strong></p><p>For node 0, the shortest path is 2->1->0 (distance=4)</p><p>For node 1, the shortest path is 2->1 (distance=3)</p>",
+    "<p><strong>Input:</strong> V=4, edges = [[0,1,1],[0,3,2],[1,2,4],[2,3,3]] , S=0</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ V ≤ 10000</li><li>0 ≤ edges[i][j] ≤ 10000</li><li>1 ≤ edges.size() ≤ [ (V*(V - 1)) / 2 ]</li><li>0 ≤ S < V</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

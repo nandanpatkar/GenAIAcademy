@@ -1,0 +1,33 @@
+{
+  "levelNumber": 116,
+  "displayNumber": 62,
+  "title": "Find Nth root of a number",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two numbers N and M, find the <strong>Nth</strong> root of M. The Nth root of a number M is defined as a number X such that when X is raised to the power of N, it equals M. If the Nth root is not an integer, return -1.</p>",
+  "examples": [
+    "<p>Input: N = 3, M = 27</p><p>Output: 3</p><p>Explanation: The cube root of 27 is equal to 3.</p>",
+    "<p>Input: N = 4, M = 69</p><p>Output:-1</p><p>Explanation: The 4th root of 69 does not exist. So, the answer is -1.</p>",
+    "<p>Input: N = 4, M = 81</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= N <= 30</li><li>&nbsp;&nbsp;1 <= M <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

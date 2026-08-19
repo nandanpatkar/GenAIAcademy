@@ -1,0 +1,335 @@
+{
+  "worldNumber": 10,
+  "slug": "window-desert",
+  "title": "Window Desert",
+  "description": "Race through sliding windows, two pointers, and substring control.",
+  "theme": "solar-desert",
+  "levelCount": 12,
+  "xpAvailable": 315,
+  "difficultySummary": {
+    "Hard": 7,
+    "Medium": 5
+  },
+  "contentSummary": {
+    "plus": 12
+  },
+  "completionReward": {
+    "badgeTitle": "Window Strider",
+    "xp": 100,
+    "coins": 500
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-10-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Window Desert",
+      "subtitle": "Sliding Window & Two Pointer Combined Problems",
+      "description": "Race through sliding windows, two pointers, and substring control.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-253",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Longest Substring Without Repeating Characters",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 253,
+        "displayNumber": 199,
+        "title": "Longest Substring Without Repeating Characters",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-254",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Max Consecutive Ones III",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 254,
+        "displayNumber": 200,
+        "title": "Max Consecutive Ones III",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-255",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Fruit Into Baskets",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 255,
+        "displayNumber": 201,
+        "title": "Fruit Into Baskets",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-256",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Longest Repeating Character Replacement",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 256,
+        "displayNumber": 202,
+        "title": "Longest Repeating Character Replacement",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-257",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Binary Subarrays With Sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 257,
+        "displayNumber": 203,
+        "title": "Binary Subarrays With Sum",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-258",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Count number of Nice subarrays",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 258,
+        "displayNumber": 204,
+        "title": "Count number of Nice subarrays",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-259",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Number of Substrings Containing All Three Characters",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 259,
+        "displayNumber": 205,
+        "title": "Number of Substrings Containing All Three Characters",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-260",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Maximum Points You Can Obtain from Cards",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 260,
+        "displayNumber": 206,
+        "title": "Maximum Points You Can Obtain from Cards",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-261",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Longest Substring With At Most K Distinct Characters",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 261,
+        "displayNumber": 207,
+        "title": "Longest Substring With At Most K Distinct Characters",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-262",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Subarrays with K Different Integers",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 262,
+        "displayNumber": 208,
+        "title": "Subarrays with K Different Integers",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-263",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Minimum Window Substring",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 263,
+        "displayNumber": 209,
+        "title": "Minimum Window Substring",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-264",
+      "nodeType": "boss",
+      "order": 13,
+      "mapLane": "center",
+      "title": "Minimum Window Subsequence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 264,
+        "displayNumber": 210,
+        "title": "Minimum Window Subsequence",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

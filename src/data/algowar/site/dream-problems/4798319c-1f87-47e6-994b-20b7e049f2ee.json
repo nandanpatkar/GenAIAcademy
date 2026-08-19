@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "4798319c-1f87-47e6-994b-20b7e049f2ee",
+    "title": "Snapshot Array",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "binary-search",
+      "design"
+    ],
+    "statement": "Implement a SnapshotArray that supports the following operations:\n\n- Initialize an array-like data structure with a given length. Initially, each element equals 0.\n- set(index, val): sets the element at the given index to val.\n- snap(): takes a snapshot of the array and returns the snap_id, which is the total number of times snap() has been called minus 1.\n- get(index, snap_id): returns the value at the given index at the time the snapshot with the given snap_id was taken.\n\nYou are given the initial length and a sequence of operations. Process them in order and output the result of each operation that returns a value.\n\n**Input:**\nLine 1: integer length — the length of the SnapshotArray.\nLine 2: integer Q — the number of operations.\nNext Q lines: each line describes one operation in one of the following forms:\n  - \"set index val\"\n  - \"snap\"\n  - \"get index snap_id\"\n\n**Output:**\nFor each \"snap\" operation, print the returned snap_id on its own line.\nFor each \"get\" operation, print the returned value on its own line.\n\"set\" operations produce no output.\n\n**Constraints:**\n1 <= length <= 5 * 10^4\n0 <= index < length\n0 <= val <= 10^9\n0 <= snap_id < (total number of snap() calls so far)\nAt most 5 * 10^4 operations will be performed.\n\n**Examples:**\nExample 1:\nInput:\n3\n5\nset 0 5\nsnap\nset 0 6\nget 0 0\nOutput:\n0\n5",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

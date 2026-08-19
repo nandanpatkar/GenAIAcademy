@@ -1,0 +1,426 @@
+{
+  "worldNumber": 5,
+  "slug": "string-realm",
+  "title": "String Realm",
+  "description": "Handle strings, rotations, palindromes, ordering, and frequency logic.",
+  "theme": "violet-realm",
+  "levelCount": 15,
+  "xpAvailable": 290,
+  "difficultySummary": {
+    "Easy": 7,
+    "Medium": 8
+  },
+  "contentSummary": {
+    "plus": 14,
+    "missing": 1
+  },
+  "completionReward": {
+    "badgeTitle": "String Adept",
+    "xp": 100,
+    "coins": 375
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-5-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "String Realm",
+      "subtitle": "Strings [Basic and Medium]",
+      "description": "Handle strings, rotations, palindromes, ordering, and frequency logic.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-134",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Remove Outermost Parentheses",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 134,
+        "displayNumber": 80,
+        "title": "Remove Outermost Parentheses",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-135",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Reverse words in a given string / Palindrome Check",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 135,
+        "displayNumber": 81,
+        "title": "Reverse words in a given string / Palindrome Check",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-136",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Largest Odd Number in a String",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 136,
+        "displayNumber": 82,
+        "title": "Largest Odd Number in a String",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-137",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Longest Common Prefix",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 137,
+        "displayNumber": 83,
+        "title": "Longest Common Prefix",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-138",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Isomorphic String",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 138,
+        "displayNumber": 84,
+        "title": "Isomorphic String",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-139",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Rotate String",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 139,
+        "displayNumber": 85,
+        "title": "Rotate String",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-140",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Check if two strings are anagram of each other",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 140,
+        "displayNumber": 86,
+        "title": "Check if two strings are anagram of each other",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-141",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Sort Characters by Frequency",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 141,
+        "displayNumber": 87,
+        "title": "Sort Characters by Frequency",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-142",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Maximum Nesting Depth of the Parentheses",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 142,
+        "displayNumber": 88,
+        "title": "Maximum Nesting Depth of the Parentheses",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-143",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Roman to Integer",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 143,
+        "displayNumber": 89,
+        "title": "Roman to Integer",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-144",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "String to Integer (atoi)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 144,
+        "displayNumber": 90,
+        "title": "String to Integer (atoi)",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-145",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Count Number of Substrings",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 145,
+        "displayNumber": 91,
+        "title": "Count Number of Substrings",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "world-5-checkpoint-145",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 145,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-146",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Longest Palindromic Substring",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 146,
+        "displayNumber": 92,
+        "title": "Longest Palindromic Substring",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-147",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Sum of Beauty of All Substrings",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 147,
+        "displayNumber": 93,
+        "title": "Sum of Beauty of All Substrings",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-148",
+      "nodeType": "boss",
+      "order": 17,
+      "mapLane": "center",
+      "title": "Reverse every word in a string",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 150
+      },
+      "level": {
+        "levelNumber": 148,
+        "displayNumber": 94,
+        "title": "Reverse every word in a string",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 150,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

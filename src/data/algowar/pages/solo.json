@@ -1,0 +1,24 @@
+{
+  "route": "/solo",
+  "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "description": "Challenge developers in real-time coding duels, climb the leaderboard, improve your DSA skills, and compete against coders worldwide on AlgoWars.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(main)/solo/page-b4b63da34e37e1d4.js"
+  ],
+  "copy": [
+    "Back to Arena",
+    "Preparing Arena...",
+    "Setting up your solo challenge"
+  ],
+  "rendered": {
+    "finalUrl": "/match/f134014a-e217-4c1d-b3e1-471ca02f6bc8",
+    "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+    "headings": [],
+    "text": "Loading Loading match...",
+    "links": [],
+    "buttons": [],
+    "redirected": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "776eea62-56fe-4080-908b-6c0e83293dea",
+    "title": "Count Collisions of Monkeys on a Polygon",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "recursion"
+    ],
+    "statement": "There is a regular convex polygon with n vertices. The vertices are labeled from 0 to n - 1 in a clockwise direction, and each vertex has exactly one monkey.\n\nSimultaneously, each monkey moves to a neighboring vertex. A collision happens if at least two monkeys reside on the same vertex after the movement or intersect on an edge.\n\nReturn the number of ways the monkeys can move so that at least one collision happens. Since the answer may be very large, return it modulo 10^9 + 7.\n\n**Input:**\nA single line containing the integer n.\n\n**Output:**\nA single line containing the number of ways the monkeys can move so that at least one collision happens, modulo 10^9 + 7.\n\n**Constraints:**\n- 3 <= n <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n3\nOutput:\n6\n\nExample 2:\nInput:\n4\nOutput:\n14",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

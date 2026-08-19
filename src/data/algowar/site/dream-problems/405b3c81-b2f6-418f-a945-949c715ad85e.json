@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "405b3c81-b2f6-418f-a945-949c715ad85e",
+    "title": "Invalid Transactions",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "string",
+      "sorting"
+    ],
+    "statement": "A transaction is possibly invalid if:\n\n- the amount exceeds $1000, or;\n- if it occurs within (and including) 60 minutes of another transaction with the same name in a different city.\n\nYou are given a list of transactions where each transaction is a string of comma-separated values representing the name, time (in minutes), amount, and city of the transaction.\n\nReturn a list of transactions that are possibly invalid. The output must be sorted in ascending lexicographic order of the transaction strings.\n\n**Input:**\nThe first line contains an integer n, the number of transactions.\nThe next n lines each contain one transaction string in the form \"{name},{time},{amount},{city}\".\n\n**Output:**\nPrint all invalid transactions on a single line, space-separated, sorted in ascending lexicographic order. If there are no invalid transactions, print an empty line.\n\n**Constraints:**\n- n <= 1000\n- Each transaction takes the form \"{name},{time},{amount},{city}\".\n- Each {name} and {city} consist of lowercase English letters, and have lengths between 1 and 10.\n- Each {time} consists of digits and represents an integer between 0 and 1000.\n- Each {amount} consists of digits and represents an integer between 0 and 2000.\n\n**Examples:**\nExample 1:\nInput:\n2\nalice,20,800,mtv\nalice,50,100,beijing\nOutput:\nalice,20,800,mtv alice,50,100,beijing\n\nExample 2:\nInput:\n2\nalice,20,800,mtv\nalice,50,1200,mtv\nOutput:\nalice,50,1200,mtv\n\nExample 3:\nInput:\n2\nalice,20,800,mtv\nbob,50,1200,mtv\nOutput:\nbob,50,1200,mtv",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 117,
+  "displayNumber": 63,
+  "title": "Koko eating bananas",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>A monkey is given n piles of bananas, where the 'ith' pile has nums[i] bananas. An integer h represents the total time in hours to eat all the bananas.</p><p><br></p><p>Each hour, the monkey chooses a non-empty pile of bananas and eats k bananas. If the pile contains fewer than k bananas, the monkey eats all the bananas in that pile and does not consume any more bananas in that hour.</p><p><br></p><p>Determine the <strong>minimum</strong> number of bananas the monkey must eat per hour to finish all the bananas within h hours.</p>",
+  "examples": [
+    "<p>Input: n = 4, nums = [7, 15, 6, 3], h = 8</p><p>Output: 5</p><p>Explanation: If Koko eats 5 bananas/hr, he will take 2, 3, 2, and 1 hour to eat the piles accordingly. So, he will take 8 hours to complete all the piles.&nbsp;&nbsp;</p>",
+    "<p>Input: n = 5, nums = [25, 12, 8, 14, 19], h = 5</p><p>Output: 25</p><p>Explanation: If Koko eats 25 bananas/hr, he will take 1, 1, 1, 1, and 1 hour to eat the piles accordingly. So, he will take 5 hours to complete all the piles.</p>",
+    "<p>Input: n = 4, nums = [3, 7, 6, 11], h = 8</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= n <= 10<sup>4</sup></li><li>&nbsp;&nbsp;n <= h <= 10<sup>9</sup></li><li>&nbsp;&nbsp;1 <= nums[i] <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

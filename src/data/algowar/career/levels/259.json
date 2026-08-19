@@ -1,0 +1,33 @@
+{
+  "levelNumber": 259,
+  "displayNumber": 205,
+  "title": "Number of Substrings Containing All Three Characters",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string s , consisting only of characters 'a' , 'b' , 'c'.Find the <strong>number</strong> of substrings that contain at least <strong>one</strong> occurrence of all these characters 'a' , 'b' , 'c'.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"abcba\"</p><p><strong>Output :</strong> 5</p><p><strong>Explanation :</strong> The substrings containing at least one occurrence of the characters 'a' , 'b' , 'c' are \"abc\" , \"abcb\" , \"abcba\" , \"bcba\" , \"cba\".</p>",
+    "<p><strong>Input :</strong> s = \"ccabcc\"</p><p><strong>Output :</strong> 8</p><p><strong>Explanation :</strong> The substrings containing at least one occurrence of the characters 'a' , 'b' , 'c' are \"ccab\" , \"ccabc\" , \"ccabcc\" , \"cab\" , \"cabc\" , \"cabcc\" , \"abc\" , \"abcc\".</p>",
+    "<p><strong>Input :</strong> s = \"abccba\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 5*10<sup>4</sup></li><li>s consist only of characters 'a' , 'b' , 'c'.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 10,
+    "title": "Window Desert",
+    "theme": "solar-desert",
+    "levelCount": 12,
+    "completionXp": 100
+  }
+}

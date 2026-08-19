@@ -1,0 +1,26 @@
+{
+  "levelNumber": 153,
+  "displayNumber": 99,
+  "title": "Search in Linked List",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given the <strong>head </strong>of a singly linked list and an integer <strong>key</strong>. </p><p>Return <strong>true </strong>if the key exists in the linked list, otherwise return <strong>false</strong>.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> head = [1, 2, 3, 4], key = 3</p><p><strong>Output:</strong> true</p><p><strong>Explanation: </strong>The linked list is 1 → 2 → 3 → 4. The key 3 is present in the list.</p>",
+    "<p><strong>Input: </strong>head = [7, 8, 9, 10, 11], key = 5</p><p><strong>Output: </strong>false</p><p><strong>Explanation:</strong> The key 5 is not present in the list.</p>",
+    "<p><strong>Input: </strong>head = [42], key = 42</p>"
+  ],
+  "constraintsHtml": "<ul><li>The number of nodes in the linked list is in the range 1 <= n <= 10⁵.</li><li>The value of each node is in the range 1 <= Node.val <= 10⁵.</li><li>1 <= key <= 10⁵</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 99,
+  "displayNumber": 45,
+  "title": "Count Inversions",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array <strong>nums</strong>. Return the <strong>number </strong>of <strong>inversions </strong>in the array.</p><p><br></p><p>Two elements <strong>a[i]</strong> and <strong>a[j] </strong>form an <strong>inversion </strong>if <strong>a[i] > a[j]</strong> and <strong>i < j</strong>.</p><p><br></p><ul><li>It indicates how <strong>close </strong>an array is to being <strong>sorted</strong>.</li></ul><p><br></p><ul><li>A <strong>sorted </strong>array has an inversion count of <strong>0</strong>.</li></ul><p><br></p><ul><li>An array <strong>sorted </strong>in <strong>descending </strong>order has <strong>maximum </strong>inversion.</li></ul>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [2, 3, 7, 1, 3, 5]</p><p><strong>Output</strong>: 5</p><p><strong>Explanation</strong>: </p><p>The responsible indexes are:</p><p>nums[0], nums[3], values: 2 > 1 & indexes: 0 < 3</p><p>nums[1], nums[3], values: 3 > 1 & indexes: 1 < 3</p><p>nums[2], nums[3], values: 7 > 1 & indexes: 2 < 3</p><p>nums[2], nums[4], values: 7 > 3 & indexes: 2 < 4</p><p>nums[2], nums[5], values: 7 > 5 & indexes: 2 < 5</p>",
+    "<p><strong>Input</strong>: nums = [-10, -5, 6, 11, 15, 17]</p><p><strong>Output</strong>: 0</p><p><strong>Explanation</strong>: </p><p>nums is sorted, hence no inversions present.</p>",
+    "<p><strong>Input</strong>: nums = [9, 5, 4, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

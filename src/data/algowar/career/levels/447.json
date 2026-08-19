@@ -1,0 +1,33 @@
+{
+  "levelNumber": 447,
+  "displayNumber": 393,
+  "title": "Longest String Chain",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an <strong>array </strong>of words where each word consists of lowercase English letters.</p><p><br></p><p>word<sub>A</sub> is a <strong>predecessor </strong>of word<sub>B</sub> if and only if we can insert <strong>exactly one letter</strong> anywhere in word<sub>A</sub> <strong>without changing the order of the other characters</strong> to make it equal to word<sub>B</sub>.</p><p><br></p><p>For example, \"abc\" is a predecessor of \"ab<strong>a</strong>c\", while \"cba\" is not a predecessor of \"bca<strong>d</strong>\".</p><p><br></p><p>A word chain is a sequence of words [word<sub>1</sub>, word<sub>2</sub>, ..., word<sub>k</sub>] with k >= 1, where word<sub>1</sub> is a predecessor of word<sub>2</sub>, word<sub>2</sub> is a predecessor of word<sub>3</sub>, and so on. A single word is trivially a word chain with k == 1.</p><p><br></p><p>Return the length of the<strong><em> longest possible word </em></strong>chain with words chosen from the given list of words.</p>",
+  "examples": [
+    "<p>Input: words = [\"a\", \"ab\", \"abc\", \"abcd\", \"abcde\"]</p><p>Output: 5</p><p>Explanation: The longest chain is [\"a\", \"ab\", \"abc\", \"abcd\", \"abcde\"].</p><p>Each word in the chain is formed by adding exactly one character to the previous word.</p>",
+    "<p>Input: words = [\"dog\", \"dogs\", \"dots\", \"dot\", \"d\", \"do\"]</p><p>Output: 4</p><p>Explanation: The longest chain is [\"d\", \"do\", \"dot\", \"dots\"].</p><p>Each word is formed by inserting one character into the previous word.</p>",
+    "<p>Input: words = [\"a\", \"aa\", \"aaa\", \"aaaa\", \"b\", \"bb\", \"bbb\"]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= words.length <= 1000</li><li>1 <= words[i].length <= 20</li><li>words[i] only consists of lowercase English letters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

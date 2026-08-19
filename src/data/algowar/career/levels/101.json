@@ -1,0 +1,33 @@
+{
+  "levelNumber": 101,
+  "displayNumber": 47,
+  "title": "Maximum Product Subarray in an Array",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array <strong>nums</strong>. Find the <strong>subarray </strong>with the <strong>largest product</strong>, and return the <strong>product </strong>of the elements present in that <strong>subarray</strong>.</p><p><br></p><p>A <strong>subarray </strong>is a <strong>contiguous </strong>non-empty <strong>sequence </strong>of elements within an array.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [4, 5, 3, 7, 1, 2]</p><p><strong>Output</strong>: 840</p><p><strong>Explanation</strong>: </p><p>The largest product is given by the whole array itself</p>",
+    "<p><strong>Input</strong>: nums = [-5, 0, -2]</p><p><strong>Output</strong>: 0</p><p><strong>Explanation</strong>: </p><p>The largest product is achieved with the following subarrays [0], [-5, 0], [0, -2], [-5, 0, -2].</p>",
+    "<p><strong>Input</strong>: nums = [1, -2, 3, 4, -4, -3]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>4</sup></li><li>-10 <= nums[i] <= 10</li><li>-10<sup>9</sup> <= product of any prefix or suffix of nums <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 175,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

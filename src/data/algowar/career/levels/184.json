@@ -1,0 +1,26 @@
+{
+  "levelNumber": 184,
+  "displayNumber": 130,
+  "title": "Reverse a Stack",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a <strong>stack </strong>of integers. Your task is to reverse the stack using recursion. You may only use standard stack operations<strong> (push, pop, top/peek, isEmpty).</strong> You are<strong> not allowed</strong> to use any <strong>loop </strong>constructs or additional data structures like <strong>arrays </strong>or <strong>queues</strong>.</p><p><br></p><p><strong>Your solution must modify the input stack in-place to reverse the order of its elements.</strong></p>",
+  "examples": [
+    "<p><strong>Input: </strong>stack = [4, 1, 3, 2]</p><p><strong>Output: </strong>[2, 3, 1, 4]</p>",
+    "<p><strong>Input:</strong> stack = [10, 20, -5, 7, 15]</p><p><strong>Output: </strong>[15, 7, -5, 20, 10]</p><p><br></p>",
+    "<p><strong>Input:</strong> stack = [100, 90, 80, 70, 60]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 100 (where N is the number of elements in the stack)</li><li>Must use only recursion (no loops or built-in reverse methods)</li><li>Auxiliary space allowed: O(N) (due to recursion stack)</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

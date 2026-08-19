@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "6a005db5-6768-4236-89ae-ffa11d318057",
+    "title": "Validate Binary Search Tree",
+    "difficulty": "Medium",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "binary-search-tree",
+      "binary-tree"
+    ],
+    "statement": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).\n\nA valid BST is defined as follows:\n- The left subtree of a node contains only nodes with keys strictly less than the node's key.\n- The right subtree of a node contains only nodes with keys strictly greater than the node's key.\n- Both the left and right subtrees must also be binary search trees.\n\nThe tree is given in level-order serialization (LeetCode convention), where absent children are represented by the word \"null\" and trailing nulls are trimmed.\n\n**Input:**\nThe first line contains an integer k, the number of entries in the level-order serialization of the tree.\nThe second line contains k space-separated values, which are either integers or the word \"null\" (for absent children), in level order.\n\n**Output:**\nPrint \"true\" if the tree is a valid BST, otherwise print \"false\".\n\n**Constraints:**\n- The number of nodes in the tree is in the range [1, 10^4].\n- -2^31 <= Node.val <= 2^31 - 1.\n\n**Examples:**\nExample 1:\nInput:\n3\n2 1 3\nOutput:\ntrue\n\nExample 2:\nInput:\n7\n5 1 4 null null 3 6\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

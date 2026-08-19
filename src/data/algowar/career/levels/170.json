@@ -1,0 +1,33 @@
+{
+  "levelNumber": 170,
+  "displayNumber": 116,
+  "title": "Find the intersection point of Y LL",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "<p><strong>Input</strong>: listA: intersectVal = 4, skipA = 3, skipB = 2, head -> 1 -> 2 -> 3 -> 4 -> 5, listB: head -> 7 -> 8 -> 4 -> 5</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-9Sg1d-Lo\"></p><p><strong>Output</strong>(value at returned node is displayed): 4</p><p><strong>Explanation</strong>: The two lists have nodes with values 4 and 5 as their tails.</p>",
+    "<p><strong>Input</strong>: listA: intersectVal = -1, skipA = -1, skipB = -1, head -> 1 -> 2 -> 3, listB: head -> 8 -> 9</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-p32uBGcT\"></p><p><strong>Output</strong>(value at returned node is displayed): null</p><p><strong>Explanation</strong>: The two lists do not intersect.</p>",
+    "<p><strong>Input</strong>: listA: intersectVal = 4, skipA = 0, skipB = 0, head -> 4 -> 5 -> 6, listB: head -> 4 -> 5 -> 6</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-kI64Tdm8\"></p>"
+  ],
+  "constraintsHtml": "<ul><li>m == number of nodes in listA.</li><li>n == number of nodes in listB.</li><li>1 <= m, n <= 5 * 10<sup>4</sup></li><li>0 <= ListNode.val <= 10<sup>4</sup></li><li>0 <= skipA < m</li><li>0 <= skipB < n</li><li>intersectVal, skipA, skipB is -1 if listA and listB do not intersect.</li><li>intersectVal == listA[skipA] == listB[skipB] if listA and listB intersect.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

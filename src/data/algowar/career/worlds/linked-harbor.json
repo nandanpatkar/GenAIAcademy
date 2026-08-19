@@ -1,0 +1,842 @@
+{
+  "worldNumber": 6,
+  "slug": "linked-harbor",
+  "title": "Linked Harbor",
+  "description": "Navigate singly, doubly, medium, and hard linked-list battles.",
+  "theme": "steel-harbor",
+  "levelCount": 31,
+  "xpAvailable": 560,
+  "difficultySummary": {
+    "Easy": 8,
+    "Hard": 7,
+    "Medium": 16
+  },
+  "contentSummary": {
+    "plus": 29,
+    "article": 2
+  },
+  "completionReward": {
+    "badgeTitle": "Linked List Captain",
+    "xp": 100,
+    "coins": 400
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-6-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Linked Harbor",
+      "subtitle": "Learn LinkedList [Single LL, Double LL, Medium, Hard Problems]",
+      "description": "Navigate singly, doubly, medium, and hard linked-list battles.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-149",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Introduction to Singly LinkedList",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 149,
+        "displayNumber": 95,
+        "title": "Introduction to Singly LinkedList",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-150",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Insertion at the head of Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 150,
+        "displayNumber": 96,
+        "title": "Insertion at the head of Linked List",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-151",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Deletion of the head of LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 151,
+        "displayNumber": 97,
+        "title": "Deletion of the head of LL",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-152",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Find the length of the Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 152,
+        "displayNumber": 98,
+        "title": "Find the length of the Linked List",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-153",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Search in Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 153,
+        "displayNumber": 99,
+        "title": "Search in Linked List",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-154",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Introduction to Doubly LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 154,
+        "displayNumber": 100,
+        "title": "Introduction to Doubly LL",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-155",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Insert node before head in Doubly Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 155,
+        "displayNumber": 101,
+        "title": "Insert node before head in Doubly Linked List",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-156",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Delete head of Doubly Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 156,
+        "displayNumber": 102,
+        "title": "Delete head of Doubly Linked List",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-157",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Reverse a Doubly Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 157,
+        "displayNumber": 103,
+        "title": "Reverse a Doubly Linked List",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-158",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Middle of a LinkedList [TortoiseHare Method]",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 158,
+        "displayNumber": 104,
+        "title": "Middle of a LinkedList [TortoiseHare Method]",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-159",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Reverse a LinkedList [Iterative]",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 159,
+        "displayNumber": 105,
+        "title": "Reverse a LinkedList [Iterative]",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-160",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Reverse a LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 160,
+        "displayNumber": 106,
+        "title": "Reverse a LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-6-checkpoint-160",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 160,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-161",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Detect a loop in LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 161,
+        "displayNumber": 107,
+        "title": "Detect a loop in LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-162",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Find the starting point in LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 162,
+        "displayNumber": 108,
+        "title": "Find the starting point in LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-163",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Length of loop in LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 163,
+        "displayNumber": 109,
+        "title": "Length of loop in LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-164",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Check if LL is palindrome or not",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 164,
+        "displayNumber": 110,
+        "title": "Check if LL is palindrome or not",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-165",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Segregate odd and even nodes in Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 165,
+        "displayNumber": 111,
+        "title": "Segregate odd and even nodes in Linked List",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-166",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Remove Nth node from the back of the LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 166,
+        "displayNumber": 112,
+        "title": "Remove Nth node from the back of the LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-167",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Delete the middle node in LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 167,
+        "displayNumber": 113,
+        "title": "Delete the middle node in LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-168",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Sort LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 168,
+        "displayNumber": 114,
+        "title": "Sort LL",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-169",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Sort a Linked List of 0's 1's and 2's",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 169,
+        "displayNumber": 115,
+        "title": "Sort a Linked List of 0's 1's and 2's",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-170",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Find the intersection point of Y LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 170,
+        "displayNumber": 116,
+        "title": "Find the intersection point of Y LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-171",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Add one to a number represented by LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 171,
+        "displayNumber": 117,
+        "title": "Add one to a number represented by LL",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-172",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Add two numbers in Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 172,
+        "displayNumber": 118,
+        "title": "Add two numbers in Linked List",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-6-checkpoint-172",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 172,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-173",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Delete all occurrences of a key in DLL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 173,
+        "displayNumber": 119,
+        "title": "Delete all occurrences of a key in DLL",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-174",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "Find Pairs with Given Sum in Doubly Linked List",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 174,
+        "displayNumber": 120,
+        "title": "Find Pairs with Given Sum in Doubly Linked List",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-175",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Remove duplicates from sorted DLL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 175,
+        "displayNumber": 121,
+        "title": "Remove duplicates from sorted DLL",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-176",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Reverse LL in group of given size K",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 176,
+        "displayNumber": 122,
+        "title": "Reverse LL in group of given size K",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-177",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "Rotate a LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 177,
+        "displayNumber": 123,
+        "title": "Rotate a LL",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-178",
+      "nodeType": "level",
+      "order": 33,
+      "mapLane": "left",
+      "title": "Flattening of LL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 178,
+        "displayNumber": 124,
+        "title": "Flattening of LL",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-179",
+      "nodeType": "boss",
+      "order": 34,
+      "mapLane": "center",
+      "title": "Clone a LL with random and next pointer",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 179,
+        "displayNumber": 125,
+        "title": "Clone a LL with random and next pointer",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

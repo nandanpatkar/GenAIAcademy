@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "3d0bade0-d76c-4a0c-bdee-a1e00d04629b",
+    "title": "Count the Number of Inversions",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "dynamic-programming"
+    ],
+    "statement": "You are given an integer n and a list of requirements, where each requirement is a pair (end_i, cnt_i) representing the end index and the inversion count of that requirement.\n\nA pair of indices (i, j) from an integer array nums is called an inversion if i < j and nums[i] > nums[j].\n\nReturn the number of permutations perm of [0, 1, 2, ..., n - 1] such that for all requirements, the prefix perm[0..end_i] has exactly cnt_i inversions.\n\nSince the answer may be very large, return it modulo 10^9 + 7.\n\n**Input:**\nThe first line contains the integer n.\nThe second line contains the integer m, the number of requirements.\nThe next m lines each contain two space-separated integers end_i and cnt_i.\n\n**Output:**\nPrint a single integer: the number of valid permutations modulo 10^9 + 7.\n\n**Constraints:**\n- 2 <= n <= 300\n- 1 <= m <= n\n- 0 <= end_i <= n - 1\n- 0 <= cnt_i <= 400\n- The input is generated such that there is at least one i with end_i == n - 1.\n- All end_i are unique.\n\n**Examples:**\nExample 1:\nInput:\n3\n2\n2 2\n0 0\nOutput:\n2\n\nExample 2:\nInput:\n3\n3\n2 2\n1 1\n0 0\nOutput:\n1\n\nExample 3:\nInput:\n2\n2\n0 0\n1 0\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

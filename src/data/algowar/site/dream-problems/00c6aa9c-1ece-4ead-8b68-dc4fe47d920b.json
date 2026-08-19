@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "00c6aa9c-1ece-4ead-8b68-dc4fe47d920b",
+    "title": "Concatenation of Array",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "simulation"
+    ],
+    "statement": "Given an integer array nums of length n, you want to create an array ans of length 2n where ans[i] == nums[i] and ans[i + n] == nums[i] for 0 <= i < n (0-indexed). Specifically, ans is the concatenation of two nums arrays. Print the array ans.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint the resulting array ans of length 2n as a single line of space-separated integers.\n\n**Constraints:**\n- n == nums.length\n- 1 <= n <= 1000\n- 1 <= nums[i] <= 1000\n\n**Examples:**\nExample 1:\nInput:\n3\n1 2 1\nOutput:\n1 2 1 1 2 1\n\nExample 2:\nInput:\n4\n1 3 2 1\nOutput:\n1 3 2 1 1 3 2 1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

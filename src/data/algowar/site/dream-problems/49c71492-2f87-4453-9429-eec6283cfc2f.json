@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "49c71492-2f87-4453-9429-eec6283cfc2f",
+    "title": "Smallest Range I",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "math"
+    ],
+    "statement": "Smallest Range I\n\nYou are given an integer array nums and an integer k.\n\nIn one operation, you can choose any index i where 0 <= i < nums.length and change nums[i] to nums[i] + x where x is an integer from the range [-k, k]. You can apply this operation at most once for each index i.\n\nThe score of nums is the difference between the maximum and minimum elements in nums.\n\nReturn the minimum score of nums after applying the mentioned operation at most once for each index in it.\n\n**Input:**\nThe first line contains an integer n, the length of the array nums.\nThe second line contains n space-separated integers, the elements of nums.\nThe third line contains an integer k.\n\n**Output:**\nPrint a single integer: the minimum possible score of nums after applying the operation at most once for each index.\n\n**Constraints:**\n- 1 <= nums.length <= 10^4\n- 0 <= nums[i] <= 10^4\n- 0 <= k <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n1\n1\n0\nOutput:\n0\n\nExample 2:\nInput:\n2\n0 10\n2\nOutput:\n6\n\nExample 3:\nInput:\n3\n1 3 6\n3\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

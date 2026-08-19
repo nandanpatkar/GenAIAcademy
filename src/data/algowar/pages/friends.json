@@ -1,0 +1,65 @@
+{
+  "route": "/friends",
+  "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "description": "Challenge developers in real-time coding duels, climb the leaderboard, improve your DSA skills, and compete against coders worldwide on AlgoWars.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(main)/friends/page-20f3bdd237893b31.js"
+  ],
+  "copy": [
+    "Searching…",
+    "Friends",
+    "Add friends by username and challenge them to private duels.",
+    "Loading...",
+    "No friends yet — add someone by username.",
+    "Add a friend",
+    "Search by username — try the first few letters",
+    "Accept",
+    "Decline",
+    "Pending",
+    "Cancel",
+    "Challenge",
+    "Make duo",
+    "Unfriend"
+  ],
+  "rendered": {
+    "finalUrl": "/friends",
+    "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+    "headings": [
+      {
+        "tag": "h2",
+        "text": "ALGOWARS"
+      },
+      {
+        "tag": "h1",
+        "text": "Friends"
+      },
+      {
+        "tag": "h2",
+        "text": "Add a friend"
+      },
+      {
+        "tag": "h2",
+        "text": "Friends (0)"
+      }
+    ],
+    "text": "闘 ALGOWARS アルゴウォーズ Placement Leaderboard Career Duo Daily Pricing 🔥 0 notifications bug_report 仲間 Friends Add friends by username and challenge them to private duels. Add a friend search Friends (0) group No friends yet — add someone by username.",
+    "links": [
+      "/arena",
+      "/placement",
+      "/leaderboard",
+      "/career",
+      "/duo",
+      "/daily",
+      "/pricing",
+      "/profile"
+    ],
+    "buttons": [
+      "🔥 0",
+      "notifications",
+      "bug_report"
+    ],
+    "redirected": false
+  }
+}

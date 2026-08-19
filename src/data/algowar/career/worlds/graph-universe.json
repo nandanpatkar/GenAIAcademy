@@ -1,0 +1,1422 @@
+{
+  "worldNumber": 15,
+  "slug": "graph-universe",
+  "title": "Graph Universe",
+  "description": "Fight across traversal, shortest paths, MST, DSU, and directed graph systems.",
+  "theme": "cosmic-graph",
+  "levelCount": 53,
+  "xpAvailable": 1045,
+  "difficultySummary": {
+    "Easy": 4,
+    "Hard": 34,
+    "Medium": 15
+  },
+  "contentSummary": {
+    "plus": 49,
+    "article": 4
+  },
+  "completionReward": {
+    "badgeTitle": "Graph Voyager",
+    "xp": 100,
+    "coins": 625
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-15-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Graph Universe",
+      "subtitle": "Graphs [Concepts & Problems]",
+      "description": "Fight across traversal, shortest paths, MST, DSU, and directed graph systems.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-351",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Introduction to Graph",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 351,
+        "displayNumber": 297,
+        "title": "Introduction to Graph",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-352",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Graph Representation | C++",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 352,
+        "displayNumber": 298,
+        "title": "Graph Representation | C++",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-353",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Graph Representation | Java",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 353,
+        "displayNumber": 299,
+        "title": "Graph Representation | Java",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-354",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Connected Components",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 354,
+        "displayNumber": 300,
+        "title": "Connected Components",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-355",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Traversal Techniques",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 355,
+        "displayNumber": 301,
+        "title": "Traversal Techniques",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-356",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "DFS",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 356,
+        "displayNumber": 302,
+        "title": "DFS",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-357",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Number of provinces",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 357,
+        "displayNumber": 303,
+        "title": "Number of provinces",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-358",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Connected Components Problem in Matrix",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 358,
+        "displayNumber": 304,
+        "title": "Connected Components Problem in Matrix",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-359",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Rotten Oranges",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 359,
+        "displayNumber": 305,
+        "title": "Rotten Oranges",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-360",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Flood fill algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 360,
+        "displayNumber": 306,
+        "title": "Flood fill algorithm",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-361",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Cycle Detection in Undirected Graph (bfs)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 361,
+        "displayNumber": 307,
+        "title": "Cycle Detection in Undirected Graph (bfs)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-362",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Detect a cycle in an undirected graph",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 362,
+        "displayNumber": 308,
+        "title": "Detect a cycle in an undirected graph",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-15-checkpoint-362",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 362,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-363",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Distance of nearest cell having one",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 363,
+        "displayNumber": 309,
+        "title": "Distance of nearest cell having one",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-364",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Surrounded Regions",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 364,
+        "displayNumber": 310,
+        "title": "Surrounded Regions",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-365",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Number of enclaves",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 365,
+        "displayNumber": 311,
+        "title": "Number of enclaves",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-366",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Word ladder I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 366,
+        "displayNumber": 312,
+        "title": "Word ladder I",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-367",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Word ladder II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 367,
+        "displayNumber": 313,
+        "title": "Word ladder II",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-368",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Number of islands",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 368,
+        "displayNumber": 314,
+        "title": "Number of islands",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-369",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Bipartite Graph (DFS)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 369,
+        "displayNumber": 315,
+        "title": "Bipartite Graph (DFS)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-370",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Cycle Detection in Directed Graph (DFS)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 370,
+        "displayNumber": 316,
+        "title": "Cycle Detection in Directed Graph (DFS)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-371",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Topo Sort",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 371,
+        "displayNumber": 317,
+        "title": "Topo Sort",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-372",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Topological sort or Kahn's algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 372,
+        "displayNumber": 318,
+        "title": "Topological sort or Kahn's algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-373",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Detect a cycle in a directed graph",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 373,
+        "displayNumber": 319,
+        "title": "Detect a cycle in a directed graph",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-374",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Course Schedule I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 374,
+        "displayNumber": 320,
+        "title": "Course Schedule I",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-15-checkpoint-374",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 374,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-375",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Course Schedule II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 375,
+        "displayNumber": 321,
+        "title": "Course Schedule II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-376",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "Find eventual safe states",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 376,
+        "displayNumber": 322,
+        "title": "Find eventual safe states",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-377",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Alien Dictionary",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 377,
+        "displayNumber": 323,
+        "title": "Alien Dictionary",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-378",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Shortest path in undirected graph with unit weights",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 378,
+        "displayNumber": 324,
+        "title": "Shortest path in undirected graph with unit weights",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-379",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "Shortest path in DAG",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 379,
+        "displayNumber": 325,
+        "title": "Shortest path in DAG",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-380",
+      "nodeType": "level",
+      "order": 33,
+      "mapLane": "left",
+      "title": "Djisktra's Algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 380,
+        "displayNumber": 326,
+        "title": "Djisktra's Algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-381",
+      "nodeType": "level",
+      "order": 34,
+      "mapLane": "right",
+      "title": "Why priority Queue is used in Djisktra's Algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 381,
+        "displayNumber": 327,
+        "title": "Why priority Queue is used in Djisktra's Algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-382",
+      "nodeType": "level",
+      "order": 35,
+      "mapLane": "left",
+      "title": "Shortest Distance in a Binary Maze",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 382,
+        "displayNumber": 328,
+        "title": "Shortest Distance in a Binary Maze",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-383",
+      "nodeType": "level",
+      "order": 36,
+      "mapLane": "right",
+      "title": "Path with minimum effort",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 383,
+        "displayNumber": 329,
+        "title": "Path with minimum effort",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-384",
+      "nodeType": "level",
+      "order": 37,
+      "mapLane": "left",
+      "title": "Cheapest flight within K stops",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 384,
+        "displayNumber": 330,
+        "title": "Cheapest flight within K stops",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-385",
+      "nodeType": "level",
+      "order": 38,
+      "mapLane": "right",
+      "title": "Network Delay Time",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 385,
+        "displayNumber": 331,
+        "title": "Network Delay Time",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-386",
+      "nodeType": "level",
+      "order": 39,
+      "mapLane": "left",
+      "title": "Number of ways to arrive at destination",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 386,
+        "displayNumber": 332,
+        "title": "Number of ways to arrive at destination",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-15-checkpoint-386",
+      "nodeType": "checkpoint",
+      "order": 40,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 386,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-387",
+      "nodeType": "level",
+      "order": 41,
+      "mapLane": "left",
+      "title": "Minimum multiplications to reach end",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 387,
+        "displayNumber": 333,
+        "title": "Minimum multiplications to reach end",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-388",
+      "nodeType": "level",
+      "order": 42,
+      "mapLane": "right",
+      "title": "Bellman Ford Algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 388,
+        "displayNumber": 334,
+        "title": "Bellman Ford Algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-389",
+      "nodeType": "level",
+      "order": 43,
+      "mapLane": "left",
+      "title": "Floyd warshall algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 389,
+        "displayNumber": 335,
+        "title": "Floyd warshall algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-390",
+      "nodeType": "level",
+      "order": 44,
+      "mapLane": "right",
+      "title": "Find the city with the smallest number of neighbors",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 390,
+        "displayNumber": 336,
+        "title": "Find the city with the smallest number of neighbors",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-391",
+      "nodeType": "level",
+      "order": 45,
+      "mapLane": "left",
+      "title": "MST theory",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 391,
+        "displayNumber": 337,
+        "title": "MST theory",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-392",
+      "nodeType": "level",
+      "order": 46,
+      "mapLane": "right",
+      "title": "Prim's Algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 392,
+        "displayNumber": 338,
+        "title": "Prim's Algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-393",
+      "nodeType": "level",
+      "order": 47,
+      "mapLane": "left",
+      "title": "Disjoint Set",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 393,
+        "displayNumber": 339,
+        "title": "Disjoint Set",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-394",
+      "nodeType": "level",
+      "order": 48,
+      "mapLane": "right",
+      "title": "Find the MST weight",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 394,
+        "displayNumber": 340,
+        "title": "Find the MST weight",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-395",
+      "nodeType": "level",
+      "order": 49,
+      "mapLane": "left",
+      "title": "Number of operations to make network connected",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 395,
+        "displayNumber": 341,
+        "title": "Number of operations to make network connected",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-396",
+      "nodeType": "level",
+      "order": 50,
+      "mapLane": "right",
+      "title": "Most stones removed with same row or column",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 396,
+        "displayNumber": 342,
+        "title": "Most stones removed with same row or column",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-397",
+      "nodeType": "level",
+      "order": 51,
+      "mapLane": "left",
+      "title": "Accounts merge",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 397,
+        "displayNumber": 343,
+        "title": "Accounts merge",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-398",
+      "nodeType": "level",
+      "order": 52,
+      "mapLane": "right",
+      "title": "Number of islands II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 398,
+        "displayNumber": 344,
+        "title": "Number of islands II",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-15-checkpoint-398",
+      "nodeType": "checkpoint",
+      "order": 53,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 398,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-399",
+      "nodeType": "level",
+      "order": 54,
+      "mapLane": "right",
+      "title": "Making a large island",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 399,
+        "displayNumber": 345,
+        "title": "Making a large island",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-400",
+      "nodeType": "level",
+      "order": 55,
+      "mapLane": "left",
+      "title": "Swim in Rising Water",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 400,
+        "displayNumber": 346,
+        "title": "Swim in Rising Water",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-401",
+      "nodeType": "level",
+      "order": 56,
+      "mapLane": "right",
+      "title": "Bridges in graph",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 401,
+        "displayNumber": 347,
+        "title": "Bridges in graph",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-402",
+      "nodeType": "level",
+      "order": 57,
+      "mapLane": "left",
+      "title": "Articulation point in graph",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 402,
+        "displayNumber": 348,
+        "title": "Articulation point in graph",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-403",
+      "nodeType": "boss",
+      "order": 58,
+      "mapLane": "center",
+      "title": "Kosaraju's algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 403,
+        "displayNumber": 349,
+        "title": "Kosaraju's algorithm",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

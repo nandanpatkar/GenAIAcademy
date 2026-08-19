@@ -1,0 +1,33 @@
+{
+  "levelNumber": 81,
+  "displayNumber": 27,
+  "title": "Stock Buy and Sell",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of n integers, where arr[i] represents price of the stock on the ith day.&nbsp;Determine the<strong> maximum profit</strong> achievable by buying and selling the stock at most once.&nbsp;</p><p><br></p><p>The stock should be purchased before selling it, and both actions cannot occur on the same day.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> arr = [10, 7, 5, 8, 11, 9]</p><p><strong>Output:</strong> 6</p><p><strong>Explanation:</strong> Buy on day 3 (price = 5) and sell on day 5 (price = 11), profit = 11 - 5 = 6.</p>",
+    "<p><strong>Input:</strong>&nbsp;arr = [5, 4, 3, 2, 1]</p><p><strong>Output:</strong> 0</p><p><strong>Explanation:</strong> In this case, no transactions are made. Therefore, the maximum profit remains 0.</p>",
+    "<p><strong>Input:&nbsp;</strong>arr = [3, 8, 1, 4, 6, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n<= 10<sup>5</sup></li><li>0 <= arr[i] <= 10<sup>6</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

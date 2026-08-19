@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "56eb21bf-0745-4211-9e5f-85fcc1592cb2",
+    "title": "Merge Sorted Array",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "two-pointers",
+      "sorting"
+    ],
+    "statement": "You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.\n\nMerge nums1 and nums2 into a single array sorted in non-decreasing order.\n\nThe array nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n. After merging, the final sorted array of length m + n should be printed.\n\n**Input:**\n- Line 1: integer len1, the length of nums1 (equal to m + n).\n- Line 2: len1 space-separated integers, the elements of nums1.\n- Line 3: integer m.\n- Line 4: integer len2, the length of nums2 (equal to n).\n- Line 5: len2 space-separated integers, the elements of nums2. (If len2 is 0, this line is omitted.)\n- Line 6: integer n.\n\n**Output:**\n- A single line containing m + n space-separated integers: the merged array sorted in non-decreasing order.\n\n**Constraints:**\n- nums1.length == m + n\n- nums2.length == n\n- 0 <= m, n <= 200\n- 1 <= m + n <= 200\n- -10^9 <= nums1[i], nums2[j] <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n6\n1 2 3 0 0 0\n3\n3\n2 5 6\n3\nOutput:\n1 2 2 3 5 6\n\nExample 2:\nInput:\n1\n1\n1\n0\n0\nOutput:\n1\n\nExample 3:\nInput:\n1\n0\n0\n1\n1\n1\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

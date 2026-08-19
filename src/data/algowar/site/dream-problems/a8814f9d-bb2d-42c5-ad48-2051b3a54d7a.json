@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "a8814f9d-bb2d-42c5-ad48-2051b3a54d7a",
+    "title": "Robot Return to Origin",
+    "difficulty": "Easy",
+    "tags": [
+      "string",
+      "simulation"
+    ],
+    "statement": "There is a robot starting at the position (0, 0), the origin, on a 2D plane. Given a sequence of its moves, judge if this robot ends up at (0, 0) after it completes its moves.\n\nYou are given a string moves that represents the move sequence of the robot where moves[i] represents its ith move. Valid moves are 'R' (right), 'L' (left), 'U' (up), and 'D' (down).\n\nReturn true if the robot returns to the origin after it finishes all of its moves, or false otherwise.\n\nNote: The way that the robot is \"facing\" is irrelevant. 'R' will always make the robot move to the right once, 'L' will always make it move left, etc. Also, assume that the magnitude of the robot's movement is the same for each move.\n\n**Input:**\nA single line containing the string moves, consisting only of the characters 'U', 'D', 'L', and 'R'.\n\n**Output:**\nPrint \"true\" if the robot returns to the origin after completing all moves, or \"false\" otherwise.\n\n**Constraints:**\n- 1 <= moves.length <= 2 * 10^4\n- moves only contains the characters 'U', 'D', 'L' and 'R'.\n\n**Examples:**\nExample 1:\nInput:\nUD\nOutput:\ntrue\n\nExample 2:\nInput:\nLL\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

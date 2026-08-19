@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "83b8ed78-3c88-4ee4-89f0-781abc0b77fe",
+    "title": "Max Points on a Line",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "hash-table",
+      "math",
+      "geometry"
+    ],
+    "statement": "Max Points on a Line\n\nGiven a set of points on the X-Y plane, find the maximum number of points that lie on the same straight line.\n\n**Input:**\nThe first line contains an integer n, the number of points.\nThe next n lines each contain two space-separated integers x_i and y_i, the coordinates of the i-th point.\n\n**Output:**\nPrint a single integer: the maximum number of points that lie on the same straight line.\n\n**Constraints:**\n- 1 <= n <= 300\n- -10^4 <= x_i, y_i <= 10^4\n- All points are unique.\n\n**Examples:**\nExample 1:\nInput:\n3\n1 1\n2 2\n3 3\nOutput:\n3\n\nExample 2:\nInput:\n6\n1 1\n3 2\n5 3\n4 1\n2 3\n1 4\nOutput:\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

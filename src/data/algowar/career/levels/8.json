@@ -1,0 +1,32 @@
+{
+  "levelNumber": 8,
+  "displayNumber": 8,
+  "title": "Functions (Pass by Reference and Value)",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of n elements. The task is to reverse the given array. The reversal of array should be inplace.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> n=5, arr = [1,2,3,4,5]</p><p><strong>Output:</strong> [5,4,3,2,1]</p><p><strong>Explanation: </strong>The reverse of the array [1,2,3,4,5] is [5,4,3,2,1]</p>",
+    "<p><strong>Input:</strong>&nbsp;n=6, arr = [1,2,1,1,5,1]</p><p><strong>Output: </strong>[1,5,1,1,2,1]</p><p><strong>Explanation: </strong>The reverse of the array [1,2,1,1,5,1] is [1,5,1,1,2,1].</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>4</sup></li><li>1 <= arr[i] <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

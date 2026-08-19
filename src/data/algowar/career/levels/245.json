@@ -1,0 +1,33 @@
+{
+  "levelNumber": 245,
+  "displayNumber": 191,
+  "title": "Remove K Digits",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string nums representing a non-negative integer, and an integer k, find the <strong>smallest</strong> possible integer after removing <strong>k</strong> digits from num.</p><p><br></p><p><strong>Note: </strong>If removing k digits deletes all digits, <strong>return \"0\"</strong>. <strong>The result must be a valid non-negative integer without leading zeros.</strong></p>",
+  "examples": [
+    "<p>Input: nums = \"541892\", k = 2</p><p>Output: \"1892\"</p><p>Explanation: Removing the two digits 5 and 4 yields the smallest number, 1892.</p>",
+    "<p>Input: nums = \"1002991\", k = 3</p><p>Output: \"21\"</p><p>Explanation: Remove the three digits 1(leading one), 9, and 9 to form the new number 21(Note that the output must not contain leading zeroes) which is the smallest.</p>",
+    "<p>Input: nums = \"10\", k = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= k <= nums.length <= 10<sup>4</sup></li><li>&nbsp;&nbsp;nums consists of only digits.</li><li>&nbsp;&nbsp;nums does not have any leading zeros except for the zero itself.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "levelNumber": 185,
+  "displayNumber": 131,
+  "title": "Generate Binary Strings Without Consecutive 1s",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer <strong>n</strong>, return all binary strings of length n that do not contain consecutive 1s. Return the result in <strong>lexicographically increasing order</strong>.</p><p><br></p><p>A binary string is a string consisting only of characters<strong> '0'</strong> and<strong> '1</strong>'.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> n = 3</p><p><strong>Output:</strong> [\"000\", \"001\", \"010\", \"100\", \"101\"]</p><p><strong>Explanation: </strong>All strings are of length 3 and do not contain consecutive 1s.</p>",
+    "<p><strong>Input:</strong> n = 2</p><p><strong>Output: </strong>[\"00\", \"01\", \"10\"]</p>",
+    "<p><strong>Input:</strong> n = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 20</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

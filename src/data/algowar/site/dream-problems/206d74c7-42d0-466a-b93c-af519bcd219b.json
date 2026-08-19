@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "206d74c7-42d0-466a-b93c-af519bcd219b",
+    "title": "Valid Parentheses",
+    "difficulty": "Easy",
+    "tags": [
+      "string",
+      "stack"
+    ],
+    "statement": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if:\n\n1. Open brackets must be closed by the same type of brackets.\n2. Open brackets must be closed in the correct order.\n3. Every close bracket has a corresponding open bracket of the same type.\n\n**Input:**\nThe first line contains the string s, consisting only of the characters '(', ')', '{', '}', '[' and ']'.\n\n**Output:**\nPrint \"true\" if the string is valid, otherwise print \"false\".\n\n**Constraints:**\n- 1 <= s.length <= 10^4\n- s consists of parentheses only '()[]{}'.\n\n**Examples:**\n\nExample 1:\nInput:\n()\nOutput:\ntrue\n\nExample 2:\nInput:\n()[]{}\nOutput:\ntrue\n\nExample 3:\nInput:\n(]\nOutput:\nfalse\n\nExample 4:\nInput:\n([])\nOutput:\ntrue\n\nExample 5:\nInput:\n([)]\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

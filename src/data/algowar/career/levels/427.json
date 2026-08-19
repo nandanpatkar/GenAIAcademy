@@ -1,0 +1,33 @@
+{
+  "levelNumber": 427,
+  "displayNumber": 373,
+  "title": "Longest common subsequence",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings str1 and str2, find the<strong> length</strong> of their longest common subsequence.</p><p><br></p><p>A subsequence is a sequence that appears in the same relative order but not necessarily contiguous and a common subsequence of two strings is a subsequence that is common to both strings.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> str1 = \"bdefg\", str2 = \"bfg\"</p><p><strong>Output: </strong>3</p><p><strong>Explanation:</strong> The longest common subsequence is \"bfg\", which has a length of 3.</p>",
+    "<p><strong>Input:</strong> str1 = \"mnop\", str2 = \"mnq\"</p><p><strong>Output: </strong>2</p><p><strong>Explanation:</strong> The longest common subsequence is \"mn\", which has a length of 2.</p>",
+    "<p><strong>Input:</strong> str1 = \"abc\", str2 = \"dafb\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>n=str1.length</li><li>m=str2.length</li><li>1<= n, m <=10<sup>3</sup></li><li>str1 and str2 are in lowercase alphabet</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

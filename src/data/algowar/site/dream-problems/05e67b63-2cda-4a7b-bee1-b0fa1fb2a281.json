@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "05e67b63-2cda-4a7b-bee1-b0fa1fb2a281",
+    "title": "Minimize XOR",
+    "difficulty": "Medium",
+    "tags": [
+      "greedy",
+      "bit-manipulation"
+    ],
+    "statement": "Given two positive integers num1 and num2, find the positive integer x such that:\n\n- x has the same number of set bits as num2, and\n- The value x XOR num1 is minimal.\n\nNote that XOR is the bitwise XOR operation.\n\nThe number of set bits of an integer is the number of 1's in its binary representation.\n\nThe test cases are generated such that x is uniquely determined.\n\n**Input:**\nThe first line contains the integer num1.\nThe second line contains the integer num2.\n\n**Output:**\nPrint a single line containing the integer x.\n\n**Constraints:**\n- 1 <= num1, num2 <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n3\n5\nOutput:\n3\n\nExample 2:\nInput:\n1\n12\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

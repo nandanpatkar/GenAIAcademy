@@ -40,12 +40,12 @@
     "deploy:av-cdn": "cd av-cdn-worker && npx wrangler deploy"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^149.0.0",
     "@aws-sdk/client-s3": "^3.1019.0",
     "@electric-sql/pglite": "^0.5.4",
     "@emotion/is-prop-valid": "^1.4.0",
     "@iconify/react": "^6.0.2",
     "@monaco-editor/react": "^4.7.0",
+    "@sparticuz/chromium": "^149.0.0",
     "@supabase/supabase-js": "^2.100.1",
     "@tiptap/extension-code-block-lowlight": "^3.22.2",
     "@tiptap/extension-image": "^3.22.2",
@@ -61,6 +61,7 @@
     "lucide-react": "^1.7.0",
     "mermaid": "^11.16.0",
     "ogl": "^1.0.11",
+    "playwright": "^1.62.1",
     "puppeteer-core": "^25.8.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

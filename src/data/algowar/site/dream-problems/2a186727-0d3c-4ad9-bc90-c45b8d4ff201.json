@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "2a186727-0d3c-4ad9-bc90-c45b8d4ff201",
+    "title": "Merge Strings Alternately",
+    "difficulty": "Easy",
+    "tags": [
+      "two-pointers",
+      "string"
+    ],
+    "statement": "You are given two strings word1 and word2. Merge the strings by adding letters in alternating order, starting with word1. If a string is longer than the other, append the additional letters onto the end of the merged string.\n\nReturn the merged string.\n\n**Input:**\nLine 1: word1 (a string of lowercase English letters)\nLine 2: word2 (a string of lowercase English letters)\n\n**Output:**\nA single line containing the merged string.\n\n**Constraints:**\n- 1 <= word1.length, word2.length <= 100\n- word1 and word2 consist of lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\nabc\npqr\nOutput:\napbqcr\n\nExample 2:\nInput:\nab\npqrs\nOutput:\napbqrs\n\nExample 3:\nInput:\nabcd\npq\nOutput:\napbqcd",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 300,
+  "displayNumber": 246,
+  "title": "Preorder Traversal",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given root of binary tree, return the <strong>preorder</strong> traversal of the binary tree.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [1, 4, null, 4 2]</p><p><strong>Output :</strong> [1, 4, 4, 2]</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter--a35ZZF-\"></p>",
+    "<p><strong>Input :</strong> root = [1]</p><p><strong>Output :</strong> [1]</p><p><strong>Explanation : </strong>Only root node is present.</p>",
+    "<p><strong>Input :</strong> root = [5, 1, 2, 8, null, 4, 5, null, 6]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 100</li><li>-100 <= Node.val <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

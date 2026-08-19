@@ -1,0 +1,342 @@
+{
+  "company": {
+    "slug": "salesforce",
+    "name": "Salesforce"
+  },
+  "questions": [
+    {
+      "problemId": "7b46f5b0-b751-4bb5-93d4-9692d3e55254",
+      "title": "Minimum Operations to Reduce an Integer to 0",
+      "difficulty": "Medium",
+      "frequency": 100,
+      "orderIndex": 0,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "08da10eb-053c-4bea-ae2b-c51fdac24031",
+      "title": "String Compression",
+      "difficulty": "Medium",
+      "frequency": 87.8,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "eb869d46-48d5-4319-b3bc-622e618c9869",
+      "title": "LFU Cache",
+      "difficulty": "Hard",
+      "frequency": 80,
+      "orderIndex": 3,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "973ef692-774b-45e6-9771-c19c38b3685c",
+      "title": "Closest Equal Element Queries",
+      "difficulty": "Medium",
+      "frequency": 76.6,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1efbd062-3e25-44f6-8936-d5268606065e",
+      "title": "Smallest Substring With Identical Characters I",
+      "difficulty": "Hard",
+      "frequency": 72.5,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e34cc3de-7766-4411-a9a1-9e9339f6b0d4",
+      "title": "Remove Adjacent Almost-Equal Characters",
+      "difficulty": "Medium",
+      "frequency": 71.3,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "4755350d-6735-49e3-b468-be85e551a209",
+      "title": "Subarray Product Less Than K",
+      "difficulty": "Medium",
+      "frequency": 70.1,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 67.4,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0eb072ec-5423-4abf-a86f-c5062e6d09a4",
+      "title": "Maximum Number of Occurrences of a Substring",
+      "difficulty": "Medium",
+      "frequency": 67.4,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e7593bfe-5a3f-4252-971b-7d9d0cae064a",
+      "title": "Maximum Product of Three Numbers",
+      "difficulty": "Easy",
+      "frequency": 65.8,
+      "orderIndex": 12,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "71148802-ccab-4516-8e9c-558b6e63ce39",
+      "title": "Minimize Malware Spread",
+      "difficulty": "Hard",
+      "frequency": 65.8,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "04c7b45e-b239-4a0a-9a15-36e25f2cdd14",
+      "title": "Distinct Subsequences",
+      "difficulty": "Hard",
+      "frequency": 64.2,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ea16d41e-0e80-43c6-909b-74b2b09aa0fd",
+      "title": "Power Grid Maintenance",
+      "difficulty": "Medium",
+      "frequency": 64.2,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0783a4cf-c630-4f94-9a68-5f08dc1f78cf",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "frequency": 62.4,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1524dd4e-930a-415f-8000-d5794b7bda50",
+      "title": "Count the Number of Fair Pairs",
+      "difficulty": "Medium",
+      "frequency": 62.4,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "91155042-1982-4439-b1af-a7fd9e7723ce",
+      "title": "Maximum Frequency Stack",
+      "difficulty": "Hard",
+      "frequency": 62.4,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3faae1b4-940a-4774-91b9-b5dde0ba1dd0",
+      "title": "Minimize Maximum Component Cost",
+      "difficulty": "Medium",
+      "frequency": 62.4,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0a9d6817-bab4-451a-91c7-fce741615265",
+      "title": "Check Whether Two Strings are Almost Equivalent",
+      "difficulty": "Easy",
+      "frequency": 60.5,
+      "orderIndex": 22,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "275cde79-80b0-4f1a-ac10-9c912c95cc2a",
+      "title": "Course Schedule II",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "de16324b-0369-4033-b222-582795415289",
+      "title": "Beautiful Towers II",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "987ded87-a6c2-45bb-bd36-6da19064d8d8",
+      "title": "Beautiful Towers I",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ad5f20bb-54a1-4d12-bd9b-5e14bf5e9978",
+      "title": "Height Checker",
+      "difficulty": "Easy",
+      "frequency": 60.5,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7b5496eb-a9aa-4e53-b984-63f36d072168",
+      "title": "Matrix Similarity After Cyclic Shifts",
+      "difficulty": "Easy",
+      "frequency": 60.5,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "41a77bc2-a85d-44d0-bd15-fde2c6cbec9e",
+      "title": "Find Subarray With Bitwise OR Closest to K",
+      "difficulty": "Hard",
+      "frequency": 60.5,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3d0bade0-d76c-4a0c-bdee-a1e00d04629b",
+      "title": "Count the Number of Inversions",
+      "difficulty": "Hard",
+      "frequency": 60.5,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "18d3d7af-645f-4103-b252-65b9fc11bdad",
+      "title": "Find the Minimum Area to Cover All Ones I",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 32,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "988a7064-7dd3-44ba-83b9-54f3b1b9525f",
+      "title": "Maximum Height of a Triangle",
+      "difficulty": "Easy",
+      "frequency": 60.5,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3e6f50df-6f36-41d0-98de-1f3e2bd33b15",
+      "title": "Average Waiting Time",
+      "difficulty": "Medium",
+      "frequency": 60.5,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "bfaa550c-9f4c-4510-a7f0-ab9b786394c8",
+      "title": "Palindromic Substrings",
+      "difficulty": "Medium",
+      "frequency": 58.3,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "eb7c94b7-67e2-4119-b51a-e2762a5604e8",
+      "title": "Delete and Earn",
+      "difficulty": "Medium",
+      "frequency": 58.3,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f402d8cb-fd2c-4968-a1f8-52acfff3d0ce",
+      "title": "Binary Tree Maximum Path Sum",
+      "difficulty": "Hard",
+      "frequency": 55.9,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d5e9f302-c494-4bd6-90f8-7b18e0a35e7a",
+      "title": "Longest Common Subsequence",
+      "difficulty": "Medium",
+      "frequency": 55.9,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 53.2,
+      "orderIndex": 41,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "982f6eee-39be-4754-9d88-f489ddcb7dea",
+      "title": "Minimum Number of Taps to Open to Water a Garden",
+      "difficulty": "Hard",
+      "frequency": 53.2,
+      "orderIndex": 42,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

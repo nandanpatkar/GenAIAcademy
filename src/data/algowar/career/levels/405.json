@@ -1,0 +1,33 @@
+{
+  "levelNumber": 405,
+  "displayNumber": 351,
+  "title": "Climbing stairs",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer n, there is a staircase with n steps, starting from the 0<sup>th</sup> step. </p><p><br></p><p>Determine the number of <strong>unique ways</strong> to reach the n<sup>th</sup> step, given that each move can be either 1 or 2 steps at a time.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 2</p><p><strong>Output</strong>: 2</p><p><strong>Explanation</strong>: </p><p>There are 2 unique ways to climb to the 2nd step:</p><p>1) 1 step + 1 step</p><p>2) 2 steps</p>",
+    "<p><strong>Input</strong>: n = 3</p><p><strong>Output</strong>: 3</p><p><strong>Explanation</strong>: </p><p>There are 3 unique ways to climb to the 3rd step:</p><p>1) 1 step + 1 step + 1 step</p><p>2) 2 steps + 1 step</p><p>3) 1 step + 2 steps</p>",
+    "<p><strong>Input</strong>: n = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 45</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 312,
+  "displayNumber": 258,
+  "title": "Maximum path sum",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>In a binary tree, a path is a list of nodes where there is an edge between every pair of neighbouring nodes. A node may only make a single appearance in the sequence. </p><p><br></p><p>The total of each node's values along a path is its <strong>path sum</strong>. Return the <strong>largest</strong> path sum of all non-empty paths given the root of a binary tree.</p><p><br></p><p><strong>Note:</strong> The path does not have to go via the root.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [20, 9, -10, null, null, 15, 7]</p><p><strong>Output :</strong> 34</p><p><strong>Explanation :</strong>\tThe path from node 15 to node 9 has maximum path sum.</p><p>The path is 15 -> -10 -> 20 -> 9.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-gLEBhSXO\"></p>",
+    "<p><strong>Input : </strong>root = [-10, 9, 20, null, null, 15, 7]</p><p><strong>Output :</strong> 42</p><p><strong>Explanation :</strong>\tThe path from node 15 to node 7 has maximum path sum.</p><p>The path is 15 -> 20 -> 7.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-BBBySXwH\"></p>",
+    "<p><strong>Input :</strong> root = [1, 2, 3, null, 4]</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-Fl9HJXqT\"></p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 3*10<sup>4</sup></li><li>-10<sup>3</sup> <= Node.val <= 10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

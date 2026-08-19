@@ -1,0 +1,351 @@
+{
+  "company": {
+    "slug": "citadel",
+    "name": "Citadel"
+  },
+  "questions": [
+    {
+      "problemId": "eec83681-05e8-4072-86ce-98413a0478b7",
+      "title": "Longest Non-decreasing Subarray From Two Arrays",
+      "difficulty": "Medium",
+      "frequency": 100,
+      "orderIndex": 0,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f402d8cb-fd2c-4968-a1f8-52acfff3d0ce",
+      "title": "Binary Tree Maximum Path Sum",
+      "difficulty": "Hard",
+      "frequency": 98.7,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "eb7c94b7-67e2-4119-b51a-e2762a5604e8",
+      "title": "Delete and Earn",
+      "difficulty": "Medium",
+      "frequency": 93.4,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "bfaa550c-9f4c-4510-a7f0-ab9b786394c8",
+      "title": "Palindromic Substrings",
+      "difficulty": "Medium",
+      "frequency": 86.5,
+      "orderIndex": 3,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "31dc4451-4d4e-44b8-8643-32fe1f9738d3",
+      "title": "Sliding Window Maximum",
+      "difficulty": "Hard",
+      "frequency": 85.3,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0e70c692-c0ea-4ffa-bedf-76282c18e003",
+      "title": "Count Palindromic Subsequences",
+      "difficulty": "Hard",
+      "frequency": 81.3,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b6df431c-37a8-4fb7-a590-a164fbe3c615",
+      "title": "Minimum Equal Sum of Two Arrays After Replacing Zeros",
+      "difficulty": "Medium",
+      "frequency": 79.8,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "eb869d46-48d5-4319-b3bc-622e618c9869",
+      "title": "LFU Cache",
+      "difficulty": "Hard",
+      "frequency": 79.8,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0d8ef18f-abcc-4772-9cd2-442ee8e58cf4",
+      "title": "Maximum Total Damage With Spell Casting",
+      "difficulty": "Medium",
+      "frequency": 76.4,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7fb1b314-6198-4b09-bf41-019dbff88b96",
+      "title": "Maximum Length of Repeated Subarray",
+      "difficulty": "Medium",
+      "frequency": 74.4,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 74.4,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e0bd2c92-1fe8-43ae-90df-9fe410c390f5",
+      "title": "Best Position for a Service Centre",
+      "difficulty": "Hard",
+      "frequency": 74.4,
+      "orderIndex": 11,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d337a381-8f5a-4756-b361-f5b6a94edc27",
+      "title": "First Completely Painted Row or Column",
+      "difficulty": "Medium",
+      "frequency": 72.3,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "9400a086-0a01-4da4-a217-08ece6fd84db",
+      "title": "Longest String Chain",
+      "difficulty": "Medium",
+      "frequency": 70,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 70,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 67.4,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a5c1bddd-842b-4999-9417-7de028775cc1",
+      "title": "Serialize and Deserialize Binary Tree",
+      "difficulty": "Hard",
+      "frequency": 67.4,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a03e29f4-c8e4-48d6-9f02-f9dfe03f4392",
+      "title": "Find the Duplicate Number",
+      "difficulty": "Medium",
+      "frequency": 67.4,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b898c5d7-8d81-4524-9194-df081089033e",
+      "title": "Evaluate Reverse Polish Notation",
+      "difficulty": "Medium",
+      "frequency": 64.5,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "abf34784-264d-4549-b92d-017f2924d75a",
+      "title": "Insert Delete GetRandom O(1)",
+      "difficulty": "Medium",
+      "frequency": 64.5,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "72591df4-28c2-4959-8264-48936c82952d",
+      "title": "Length of Longest Subarray With at Most K Frequency",
+      "difficulty": "Medium",
+      "frequency": 61.1,
+      "orderIndex": 22,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "771f7e04-44b6-468f-8481-a4d4099e23d2",
+      "title": "Parallel Courses III",
+      "difficulty": "Hard",
+      "frequency": 61.1,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 61.1,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c5da97f6-3565-4571-a0fd-1b82c2cd3780",
+      "title": "Find Median from Data Stream",
+      "difficulty": "Hard",
+      "frequency": 57.1,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 57.1,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "6a005db5-6768-4236-89ae-ffa11d318057",
+      "title": "Validate Binary Search Tree",
+      "difficulty": "Medium",
+      "frequency": 57.1,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5c87d78e-1385-495e-9f9c-1d722c2f639f",
+      "title": "Merge k Sorted Lists",
+      "difficulty": "Hard",
+      "frequency": 57.1,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "24da703b-b65f-47fc-aab3-ebd9798cd598",
+      "title": "Permutations",
+      "difficulty": "Medium",
+      "frequency": 57.1,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3fc05253-c211-43c2-b4ba-d2e192f4dd8a",
+      "title": "Binary Tree Zigzag Level Order Traversal",
+      "difficulty": "Medium",
+      "frequency": 52.2,
+      "orderIndex": 31,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3c41610d-b084-4c17-b9d3-133568963990",
+      "title": "Fizz Buzz",
+      "difficulty": "Easy",
+      "frequency": 52.2,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1adc705c-8206-4461-ab58-0b21833673ea",
+      "title": "Best Time to Buy and Sell Stock II",
+      "difficulty": "Medium",
+      "frequency": 52.2,
+      "orderIndex": 34,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "9cac6ff0-0a82-4101-b76d-d589639baad3",
+      "title": "Regular Expression Matching",
+      "difficulty": "Hard",
+      "frequency": 52.2,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3e59f9c8-7a7e-4040-a680-4199f31a567e",
+      "title": "Best Time to Buy and Sell Stock III",
+      "difficulty": "Hard",
+      "frequency": 52.2,
+      "orderIndex": 36,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3f035467-f629-457a-a276-73465307f222",
+      "title": "Search Suggestions System",
+      "difficulty": "Medium",
+      "frequency": 52.2,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "93630b46-2a5d-45c4-9756-adfb3d1e125a",
+      "title": "Combination Sum",
+      "difficulty": "Medium",
+      "frequency": 52.2,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b3483af4-7932-40ab-9b63-fa3966fad367",
+      "title": "Design Circular Queue",
+      "difficulty": "Medium",
+      "frequency": 52.2,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3bb0dcd8-d476-4c5a-869a-a9f6ca6981ba",
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "frequency": 52.2,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "938756cb-dc27-4110-b487-d13d1b853267",
+      "title": "Word Search",
+      "difficulty": "Medium",
+      "frequency": 45.9,
+      "orderIndex": 41,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

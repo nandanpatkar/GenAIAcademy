@@ -1,0 +1,33 @@
+{
+  "levelNumber": 72,
+  "displayNumber": 18,
+  "title": "Maximum Consecutive Ones",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a binary array <strong>nums</strong>, return the maximum number of consecutive 1s in the array.</p><p><br></p><p>A binary array is an array that contains only 0s and 1s.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [1, 1, 0, 0, 1, 1, 1, 0]</p><p><strong>Output</strong>: 3</p><p><strong>Explanation</strong>: </p><p>The maximum consecutive 1s are present from index 4 to index 6, amounting to 3 1s</p>",
+    "<p><strong>Input</strong>: nums = [0, 0, 0, 0, 0, 0, 0, 0]</p><p><strong>Output</strong>: 0</p><p><strong>Explanation</strong>: </p><p>No 1s are present in nums, thus we return 0</p>",
+    "<p><strong>Input</strong>: nums = [1, 0, 1, 1, 1, 0, 1, 1, 1]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>nums[i] is either 0 or 1.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

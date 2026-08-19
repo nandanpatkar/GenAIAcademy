@@ -1,0 +1,33 @@
+{
+  "levelNumber": 294,
+  "displayNumber": 240,
+  "title": "Insert Interval",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a 2D array Intervals, where Intervals[i] = [start[i], end[i]] represents the start and end of the ith interval, the array represents non-overlapping intervals sorted in ascending order by start[i].&nbsp;</p><p><br></p><p>Given another array newInterval, where newInterval = [start, end] represents the start and end of another interval, merge newInterval into Intervals such that Intervals remain non-overlapping and sorted in ascending order by start[i].</p><p><br></p><p>Return <strong>Intervals</strong> after the insertion of <strong>newInterval</strong>.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> Intervals = [ [1, 3] , [6, 9] ] , newInterval = [2, 5]</p><p><br></p><p><strong>Output :</strong> [ [1, 5] , [6, 9] ]</p><p><br></p><p><strong>Explanation :</strong> After inserting the newInterval the Intervals array becomes [ [1, 3] , [2, 5] , [6, 9] ].</p><p>So to make them non overlapping we can merge the intervals [1, 3] and [2, 5].</p><p>So the Intervals array is [ [1, 5] , [6, 9] ].</p>",
+    "<p><strong>Input :</strong> Intervals = [ [1, 2] , [3, 5] , [6, 7] , [8,10] ] , newInterval = [4, 8]</p><p><br></p><p><strong>Output :</strong> [ [1, 2] , [3, 10] ]</p><p><br></p><p><strong>Explanation :</strong> The Intervals array after inserting newInterval is [ [1, 2] , [3, 5] , [4, 8] , [6, 7] , [8, 10] ].</p><p>We merge the required intervals to make it non overlapping.</p><p>So final array is [ [1, 2] , [3, 10] ].</p>",
+    "<p><strong>Input :</strong> Intervals = [ [1, 2] , [3, 5] , [6, 7] , [8,10] ] , newInterval = [1, 8]</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= Intervals.length <= 10<sup>5</sup></li><li>0 <= start[i] < end[i] <= 10<sup>7</sup></li><li>0 <= start < end <= 10<sup>7</sup></li><li>Intervals[i].length = 2</li><li>newInterval.length = 2</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

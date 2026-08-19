@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "37b5bbce-aad0-41b9-93db-54bc3232da9a",
+    "title": "Simplify Path",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "stack"
+    ],
+    "statement": "You are given an absolute path for a Unix-style file system, which always begins with a slash '/'. Your task is to transform this absolute path into its simplified canonical path.\n\nThe rules of a Unix-style file system are as follows:\n- A single period '.' represents the current directory.\n- A double period '..' represents the previous/parent directory.\n- Multiple consecutive slashes such as '//' and '///' are treated as a single slash '/'.\n- Any sequence of periods that does not match the rules above should be treated as a valid directory or file name. For example, '...' and '....' are valid directory or file names.\n\nThe simplified canonical path should follow these rules:\n- The path must start with a single slash '/'.\n- Directories within the path must be separated by exactly one slash '/'.\n- The path must not end with a slash '/', unless it is the root directory.\n- The path must not have any single or double periods ('.' and '..') used to denote current or parent directories.\n\nReturn the simplified canonical path.\n\n**Input:**\nThe input consists of a single line containing the absolute path string (raw, not quoted).\n\n**Output:**\nPrint the simplified canonical path string on a single line (raw, not quoted).\n\n**Constraints:**\n- 1 <= path.length <= 3000\n- path consists of English letters, digits, period '.', slash '/', or '_'.\n- path is a valid absolute Unix path.\n\n**Examples:**\nExample 1:\nInput:\n/home/\nOutput:\n/home\n\nExample 2:\nInput:\n/home//foo/\nOutput:\n/home/foo\n\nExample 3:\nInput:\n/home/user/Documents/../Pictures\nOutput:\n/home/user/Pictures\n\nExample 4:\nInput:\n/../\nOutput:\n/\n\nExample 5:\nInput:\n/.../a/../b/c/../d/./\nOutput:\n/.../b/d",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 69,
+  "displayNumber": 15,
+  "title": "Linear Search",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers <strong>nums</strong> and an integer <strong>target</strong>, find the smallest index (0 based indexing) where the target appears in the array. If the target is not found in the array, return -1</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [2, 3, 4, 5, 3], target = 3</p><p><strong>Output</strong>: 1</p><p><strong>Explanation</strong>:</p><p>The first occurence of 3 in nums is at index 1</p>",
+    "<p><strong>Input</strong>: nums = [2, -4, 4, 0, 10], target = 6</p><p><strong>Output</strong>: -1</p><p><strong>Explanation</strong>:</p><p>The value 6 does not occur in the array, hence output is -1</p>",
+    "<p><strong>Input</strong>: nums = [1, 3, 5, -4, 1], target = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>-10<sup>4</sup> <= target <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

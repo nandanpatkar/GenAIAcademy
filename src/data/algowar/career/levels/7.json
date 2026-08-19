@@ -1,0 +1,33 @@
+{
+  "levelNumber": 7,
+  "displayNumber": 7,
+  "title": "While loops",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a digit d (0 to 9), find the sum of the first 50 positive integers (integers > 0) that end with digit d.</p><p><br></p><p>A number ends with digit d if its last digit is d.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>d = 1</p><p><strong>Output:</strong> 12300</p><p><strong>Explanation:</strong></p><p>The first 50 positive integers ending with 1 are: 1, 11, 21, 31, ..., 491</p><p>Their sum is 12300.</p>",
+    "<p><strong>Input: </strong>d = 5</p><p><strong>Output:</strong> 12500</p>",
+    "<p><strong>Input: </strong>d = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= d <= 9</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

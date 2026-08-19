@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "973ef692-774b-45e6-9771-c19c38b3685c",
+    "title": "Closest Equal Element Queries",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "binary-search"
+    ],
+    "statement": "You are given a circular array nums and an array queries.\n\nFor each query i, you have to find the following:\n\n- The minimum distance between the element at index queries[i] and any other index j in the circular array, where nums[j] == nums[queries[i]]. If no such index exists, the answer for that query should be -1.\n\nReturn an array answer of the same size as queries, where answer[i] represents the result for query i.\n\n**Input:**\nFirst line: integer n, the length of nums.\nSecond line: n space-separated integers, the elements of nums.\nThird line: integer q, the length of queries.\nFourth line: q space-separated integers, the elements of queries.\n\n**Output:**\nOne line containing q space-separated integers, the answer for each query in order.\n\n**Constraints:**\n- 1 <= queries.length <= nums.length <= 10^5\n- 1 <= nums[i] <= 10^6\n- 0 <= queries[i] < nums.length\n\n**Examples:**\nExample 1:\nInput:\n7\n1 3 1 4 1 3 2\n3\n0 3 5\nOutput:\n2 -1 3\n\nExample 2:\nInput:\n4\n1 2 3 4\n4\n0 1 2 3\nOutput:\n-1 -1 -1 -1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

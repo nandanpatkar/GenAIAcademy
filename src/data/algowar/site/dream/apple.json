@@ -1,0 +1,405 @@
+{
+  "company": {
+    "slug": "apple",
+    "name": "Apple"
+  },
+  "questions": [
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 100,
+      "orderIndex": 0,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 85.5,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 84.7,
+      "orderIndex": 3,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 79,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "05d322ac-f350-47e4-8e68-2e9df344f13c",
+      "title": "Longest Common Prefix",
+      "difficulty": "Easy",
+      "frequency": 78.5,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "df1254ee-4dde-4dca-a9b5-a60cd0c6acbe",
+      "title": "Rotate Array",
+      "difficulty": "Medium",
+      "frequency": 77.9,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5d4e0257-e0a9-40d0-987d-339d097b68bd",
+      "title": "Valid Sudoku",
+      "difficulty": "Medium",
+      "frequency": 76.7,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d4ae6460-c66c-4be7-8e76-99d4441ece3b",
+      "title": "Reverse Linked List",
+      "difficulty": "Easy",
+      "frequency": 76.7,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 76.1,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c28ff3b2-55a0-4958-8585-b3c5b5afabd2",
+      "title": "Top K Frequent Elements",
+      "difficulty": "Medium",
+      "frequency": 76.1,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "047250c0-28dd-488b-9bea-cfd549d50ec5",
+      "title": "Course Schedule",
+      "difficulty": "Medium",
+      "frequency": 73.5,
+      "orderIndex": 11,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "275cde79-80b0-4f1a-ac10-9c912c95cc2a",
+      "title": "Course Schedule II",
+      "difficulty": "Medium",
+      "frequency": 73.5,
+      "orderIndex": 12,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "206d74c7-42d0-466a-b93c-af519bcd219b",
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "frequency": 72.7,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0783a4cf-c630-4f94-9a68-5f08dc1f78cf",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "frequency": 72,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a225bf90-4bcf-4f8a-b1ca-9533ff79da7b",
+      "title": "Product of Array Except Self",
+      "difficulty": "Medium",
+      "frequency": 72,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "67cc139f-998c-4171-a492-26de94c4f05d",
+      "title": "Rotate Image",
+      "difficulty": "Medium",
+      "frequency": 70.4,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "9cca166d-e6ee-4e19-86d9-991e3932d87a",
+      "title": "Valid Palindrome",
+      "difficulty": "Easy",
+      "frequency": 70.4,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f617d8db-db3e-4dbc-8fd4-44f1d3fa99ac",
+      "title": "Reverse Words in a String",
+      "difficulty": "Medium",
+      "frequency": 70.4,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fcee7ba1-c0d4-47f6-917e-e6e8da3d9b1a",
+      "title": "Kth Largest Element in an Array",
+      "difficulty": "Medium",
+      "frequency": 69.5,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "8d2a91de-6a6e-4d17-ac55-d971be34919a",
+      "title": "Maximum Subarray",
+      "difficulty": "Medium",
+      "frequency": 68.6,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f81ca876-684a-4e62-b351-116a2205e5dc",
+      "title": "Spiral Matrix",
+      "difficulty": "Medium",
+      "frequency": 68.6,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1adc705c-8206-4461-ab58-0b21833673ea",
+      "title": "Best Time to Buy and Sell Stock II",
+      "difficulty": "Medium",
+      "frequency": 68.6,
+      "orderIndex": 22,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "92477042-8a9b-44f2-b5ee-4d3ac615fb22",
+      "title": "Reverse Integer",
+      "difficulty": "Medium",
+      "frequency": 67.7,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5c87d78e-1385-495e-9f9c-1d722c2f639f",
+      "title": "Merge k Sorted Lists",
+      "difficulty": "Hard",
+      "frequency": 66.7,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3bb0dcd8-d476-4c5a-869a-a9f6ca6981ba",
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "frequency": 65.7,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ceb3415e-3fce-471b-9313-0546512c2c17",
+      "title": "Lowest Common Ancestor of a Binary Tree",
+      "difficulty": "Medium",
+      "frequency": 64.6,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "42745353-7ad0-4f1d-9262-beae53b674ec",
+      "title": "Median of Two Sorted Arrays",
+      "difficulty": "Hard",
+      "frequency": 63.4,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3a56514e-0f0e-43db-a9ef-6eca75de999c",
+      "title": "Reverse Bits",
+      "difficulty": "Easy",
+      "frequency": 63.4,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3871de1f-b447-4435-b799-7b84a8a7a4f0",
+      "title": "Subarray Sum Equals K",
+      "difficulty": "Medium",
+      "frequency": 63.4,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "4755350d-6735-49e3-b468-be85e551a209",
+      "title": "Subarray Product Less Than K",
+      "difficulty": "Medium",
+      "frequency": 63.4,
+      "orderIndex": 31,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "2c01b9ca-f08e-4689-87f7-22d3100f9761",
+      "title": "Merge Two Sorted Lists",
+      "difficulty": "Easy",
+      "frequency": 62.2,
+      "orderIndex": 32,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b2339acb-6d79-4cbf-9a19-2c56fec4b76a",
+      "title": "Find First and Last Position of Element in Sorted Array",
+      "difficulty": "Medium",
+      "frequency": 62.2,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d423fa9b-ec67-40d6-9632-417a501c252f",
+      "title": "Number of 1 Bits",
+      "difficulty": "Easy",
+      "frequency": 62.2,
+      "orderIndex": 34,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b3483af4-7932-40ab-9b63-fa3966fad367",
+      "title": "Design Circular Queue",
+      "difficulty": "Medium",
+      "frequency": 62.2,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "4798319c-1f87-47e6-994b-20b7e049f2ee",
+      "title": "Snapshot Array",
+      "difficulty": "Medium",
+      "frequency": 62.2,
+      "orderIndex": 36,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1f38d686-847b-4309-99ca-3569f0c44b4d",
+      "title": "Move Zeroes",
+      "difficulty": "Easy",
+      "frequency": 60.9,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c5da97f6-3565-4571-a0fd-1b82c2cd3780",
+      "title": "Find Median from Data Stream",
+      "difficulty": "Hard",
+      "frequency": 60.9,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e63ff28f-9b27-4ebf-856f-3dd82448a39d",
+      "title": "Climbing Stairs",
+      "difficulty": "Easy",
+      "frequency": 59.5,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ef4f6834-b0ba-403d-a068-c9c91a50530e",
+      "title": "Word Ladder",
+      "difficulty": "Hard",
+      "frequency": 59.5,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7761eb7a-fe66-4399-9909-1cd9a05c45ac",
+      "title": "Compare Version Numbers",
+      "difficulty": "Medium",
+      "frequency": 59.5,
+      "orderIndex": 42,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "329ae227-674e-4efc-af40-e562b4212bd7",
+      "title": "Basic Calculator II",
+      "difficulty": "Medium",
+      "frequency": 59.5,
+      "orderIndex": 43,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3cedced0-ce05-4882-8e06-c20374fe53a6",
+      "title": "Search a 2D Matrix II",
+      "difficulty": "Medium",
+      "frequency": 59.5,
+      "orderIndex": 44,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "abf34784-264d-4549-b92d-017f2924d75a",
+      "title": "Insert Delete GetRandom O(1)",
+      "difficulty": "Medium",
+      "frequency": 59.5,
+      "orderIndex": 45,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "56eb21bf-0745-4211-9e5f-85fcc1592cb2",
+      "title": "Merge Sorted Array",
+      "difficulty": "Easy",
+      "frequency": 58.1,
+      "orderIndex": 47,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

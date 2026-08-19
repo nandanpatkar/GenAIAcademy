@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "b2d4e6a5-26ee-4bcd-a010-9bdb2b140050",
+    "title": "Longest Palindromic Substring",
+    "difficulty": "Medium",
+    "tags": [
+      "two-pointers",
+      "string",
+      "dynamic-programming"
+    ],
+    "statement": "Given a string s, return the longest palindromic substring in s. If there are multiple longest palindromic substrings of the same maximum length, return the one that occurs first (smallest starting index) in s.\n\n**Input:**\nThe first line contains an integer n, the length of the string.\nThe second line contains the string s (raw, not quoted).\n\n**Output:**\nPrint the longest palindromic substring of s as a raw string on a single line. If multiple substrings share the maximum length, print the one with the smallest starting index.\n\n**Constraints:**\n1 <= s.length <= 1000\ns consists of only digits and English letters.\n\n**Examples:**\nExample 1:\nInput:\n5\nbabad\nOutput:\nbab\n\nExample 2:\nInput:\n4\ncbbd\nOutput:\nbb",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

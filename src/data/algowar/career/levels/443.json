@@ -1,0 +1,33 @@
+{
+  "levelNumber": 443,
+  "displayNumber": 389,
+  "title": "Longest Increasing Subsequence",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array nums, return the length of the longest strictly increasing subsequence.</p><p><br></p><p>A subsequence is a sequence derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, [3, 6, 2, 7] is a subsequence of [0, 3, 1, 6, 2, 2, 7].</p><p><br></p><p>The task is to find the length of the longest subsequence in which every element is greater than the previous one.</p>",
+  "examples": [
+    "<p>Input: nums = [10, 9, 2, 5, 3, 7, 101, 18]</p><p>Output: 4</p><p>Explanation: The longest increasing subsequence is [2, 3, 7, 101], and its length is 4.</p>",
+    "<p>Input: nums = [0, 1, 0, 3, 2, 3]</p><p>Output: 4</p><p>Explanation: The longest increasing subsequence is [0, 1, 2, 3], and its length is 4</p>",
+    "<p>Input: nums = [7, 7, 7, 7, 7, 7, 7]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>6</sup> <= nums[i] <= 10<sup>6</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

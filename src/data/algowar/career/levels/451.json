@@ -1,0 +1,33 @@
+{
+  "levelNumber": 451,
+  "displayNumber": 397,
+  "title": "Matrix Chain Multiplication | Bottom-Up|(DP-49)",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a chain of matrices A<sub>1</sub>, A<sub>2</sub>, A<sub>3</sub>,.....A<sub>n</sub>, you have to figure out the most efficient way to multiply these matrices. In other words, determine where to place parentheses to<strong> minimize</strong> the number of<strong> multiplications.</strong></p><p><br></p><p>Given an array nums of size n. Dimension of matrix A<sub>i </sub>( 0 < i < n ) is nums[i - 1] x nums[i].Find a minimum number of multiplications needed to multiply the chain.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [10, 15, 20, 25]</p><p><strong>Output :</strong> 8000</p><p><strong>Explanation :</strong> There are two ways to multiply the chain - A1*(A2*A3) or (A1*A2)*A3.</p><p>If we multiply in order- A1*(A2*A3), then number of multiplications required are 11250.</p><p>If we multiply in order- (A1*A2)*A3, then number of multiplications required are 8000.</p><p>Thus minimum number of multiplications required is 8000.</p>",
+    "<p><strong>Input :</strong> nums = [4, 2, 3]</p><p><strong>Output :</strong> 24</p><p><strong>Explanation : </strong>There is only one way to multiply the chain - A1*A2.</p><p>Thus minimum number of multiplications required is 24.</p>",
+    "<p><strong>Input :</strong> nums = [1, 2, 3, 4, 5]</p>"
+  ],
+  "constraintsHtml": "<ul><li>2 <= n <= 100</li><li>1 <= nums[i] <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "152df95d-7ebe-4150-9c99-e5b54c118531",
+    "title": "First Missing Positive",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "hash-table"
+    ],
+    "statement": "Given an unsorted integer array nums, return the smallest positive integer that is not present in nums.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint a single integer: the smallest positive integer that is not present in nums.\n\n**Constraints:**\n1 <= nums.length <= 10^5\n-2^31 <= nums[i] <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n3\n1 2 0\nOutput:\n3\n\nExample 2:\nInput:\n4\n3 4 -1 1\nOutput:\n2\n\nExample 3:\nInput:\n5\n7 8 9 11 12\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 400,
+  "displayNumber": 346,
+  "title": "Swim in Rising Water",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an n × n matrix grid where grid[i][j] is the unique elevation of cell (i, j).</p><p><br></p><p>Rain starts falling at time t = 0.</p><p>At any later time t ≥ 0, every cell is covered by water to depth t.</p><p>You may move 4-directionally (up ⇧, down ⇩, left ⇦, right ⇨) between adjacent cells instantaneously iff the elevations of both cells are ≤ t.</p><p>(Think of t as “how high you’re willing to climb”: by time t every elevation ≤ t is underwater and swimmable.)</p><p><br></p><p>Starting from the top-left cell (0, 0), return the minimum time t at which you can reach the bottom-right cell (n − 1, n − 1).</p>",
+  "examples": [
+    "<p><strong>Input:&nbsp;</strong>grid = [[0,2],[1,3]]</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong></p><ul><li>t = 0 → only (0,0) is reachable.&nbsp;&nbsp;</li><li>t = 1 → cells {0,0},{1,0} reachable, but (1,1) still blocked (elevation 3).&nbsp;&nbsp;</li><li>t = 2 → cells {0,0},{0,1},{1,0} reachable.&nbsp;&nbsp;</li><li>t = 3 → all cells ≤ 3 are flooded, so we can swim to (1,1).&nbsp;Minimum t = 3.</li></ul><p><br></p>",
+    "<p><strong>Input:</strong>&nbsp;grid = [[ 0, 1, 2, 3, 4],[24,23,22,21, 5],[12,13,14,15,16],[11,17,18,19,20],[10, 9, 8, 7, 6]]</p><p><strong>Output:</strong> 16</p><p><strong>Explanation:</strong></p><ul><li>The earliest moment the start and end cells belong to the same flooded component is t = 16.</li></ul><p><br></p>",
+    "<p><strong>Input:</strong>&nbsp;grid = [[0,&nbsp;99,&nbsp;1],[80,&nbsp;2,&nbsp;3],[81, 82,&nbsp;4]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == grid.length</li><li>n == grid[i].length</li><li>1 ≤ n ≤ 50</li><li>0 ≤ grid[i][j] < n²</li><li>All elevations are distinct (i.e. grid[i][j] values are unique).</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

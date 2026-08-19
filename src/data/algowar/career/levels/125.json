@@ -1,0 +1,26 @@
+{
+  "levelNumber": 125,
+  "displayNumber": 71,
+  "title": "Painter's Partition",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given <strong>A</strong> painters and an array <strong>C </strong>of <strong>N </strong>integers where<strong> C[i] </strong>denotes the length of the<strong> i</strong><sup><strong>th</strong></sup> board. Each painter takes <strong>B</strong> units of time to paint 1 unit of board. You must assign boards to painters such that:</p><ul><li>Each painter paints only <strong>contiguous</strong> segments of boards.</li><li>No board can be <strong>split between painters</strong>.</li><li>The goal is to <strong>minimize</strong> the <strong>time </strong>to paint all boards.</li></ul><p><br></p><p>Return the minimum time required to paint all boards <strong>modulo 10000003</strong>.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> A = 2, B = 5, C = [1, 10]</p><p><strong>Output: </strong>50</p><p><strong>Explanation:</strong></p><ul><li>Painter 1 paints board 0 (length = 1), time = 5</li><li>Painter 2 paints board 1 (length = 10), time = 50</li><li>Max time = 50</li><li>Return 50 % 10000003 = 50</li></ul>",
+    "<p><strong>Input:</strong> A = 10, B = 1, C = [1, 8, 11, 3]</p><p><strong>Output: </strong>11</p><p><strong>Explanation:</strong></p><ul><li>Assign each board to a different painter</li><li>Max time = max(1, 8, 11, 3) = 11</li><li>Return 11 % 10000003 = 11</li></ul>",
+    "<p><strong>Input: </strong>A = 3, B = 2, C = [5, 10, 30, 20]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= A <= 1000</li><li>1 <= B <= 10<sup>6</sup></li><li>1 <= N <= 10<sup>5</sup></li><li>1 <= C[i] <= 10<sup>6</sup></li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

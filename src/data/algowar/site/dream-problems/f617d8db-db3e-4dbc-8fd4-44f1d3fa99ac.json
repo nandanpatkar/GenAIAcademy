@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "f617d8db-db3e-4dbc-8fd4-44f1d3fa99ac",
+    "title": "Reverse Words in a String",
+    "difficulty": "Medium",
+    "tags": [
+      "two-pointers",
+      "string"
+    ],
+    "statement": "Reverse Words in a String\n\nGiven an input string s, reverse the order of the words.\n\nA word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.\n\nReturn a string of the words in reverse order concatenated by a single space.\n\nNote that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.\n\n**Input:**\n- Line 1: an integer n, the length of the string s.\n- Line 2: the string s (raw, may contain leading/trailing/multiple spaces).\n\n**Output:**\n- Line 1: the string with words in reverse order, separated by single spaces, with no leading or trailing spaces.\n\n**Constraints:**\n- 1 <= s.length <= 10^4\n- s contains English letters (upper-case and lower-case), digits, and spaces ' '.\n- There is at least one word in s.\n\n**Examples:**\n\nExample 1:\nInput:\n15\nthe sky is blue\nOutput:\nblue is sky the\n\nExample 2:\nInput:\n15\n  hello world  \nOutput:\nworld hello\n\nExample 3:\nInput:\n15\na good   example\nOutput:\nexample good a",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

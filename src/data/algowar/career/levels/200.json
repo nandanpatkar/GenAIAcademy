@@ -1,0 +1,33 @@
+{
+  "levelNumber": 200,
+  "displayNumber": 146,
+  "title": "Rat in a Maze",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a grid of dimensions n x n. A rat is placed at coordinates (0, 0) and wants to reach at coordinates (n-1, n-1).</p><p><br></p><p>Find all possible paths that rat can take to travel from (0, 0) to (n-1, n-1). The directions in which rat can move are <strong>'U' (up) , 'D' (down) , 'L' (left) , 'R' (right)</strong>.</p><p><br></p><p>The value 0 in grid denotes that the cell is blocked and rat cannot use that cell for travelling, whereas value 1 represents that rat can travel through the cell. If the cell (0, 0) has 0 value, then mouse cannot move to any other cell.</p><p><br></p><p><strong>Note :</strong></p><ul><li>In a path no cell can be visited more than once.</li><li>If there is no possible path then return empty vector.</li></ul>",
+  "examples": [
+    "<p><strong>Input :</strong> n = 4 , grid = [ [1, 0, 0, 0] , [1, 1, 0, 1], [1, 1, 0, 0], [0, 1, 1, 1] ]</p><p><strong>Output :</strong> [ \"DDRDRR\" , \"DRDDRR\" ]</p><p><strong>Explanation :</strong> The rat has two different path to reach (3, 3).</p><p>The first path is (0, 0) => (1, 0) => (2, 0) => (2, 1) => (3, 1) => (3, 2) => (3, 3).</p><p>The second path is (0,0) => (1,0) => (1,1) => (2,1) => (3,1) => (3,2) => (3,3).</p>",
+    "<p><strong>Input :</strong> n = 2 , grid = [ [1, 0] , [1, 0] ]</p><p><strong>Output :</strong> -1</p><p><strong>Explanation :</strong> There is no path that rat can choose to travel from (0,0) to (1,1).</p>",
+    "<p><strong>Input :</strong> n = 3 , grid = [ [1, 0, 0] , [1, 1, 0], [0, 1, 1] ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>2 <= n <= 5</li><li>0 <= grid[i][j] <= 1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

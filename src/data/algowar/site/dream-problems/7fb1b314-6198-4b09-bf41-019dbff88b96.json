@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "7fb1b314-6198-4b09-bf41-019dbff88b96",
+    "title": "Maximum Length of Repeated Subarray",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search",
+      "dynamic-programming",
+      "sliding-window",
+      "rolling-hash",
+      "hash-function"
+    ],
+    "statement": "Maximum Length of Repeated Subarray\n\nGiven two integer arrays nums1 and nums2, return the maximum length of a subarray that appears in both arrays. A subarray is a contiguous sequence of elements within an array.\n\n**Input:**\nThe input is read from stdin as follows:\n- Line 1: an integer n1, the length of nums1.\n- Line 2: n1 space-separated integers, the elements of nums1.\n- Line 3: an integer n2, the length of nums2.\n- Line 4: n2 space-separated integers, the elements of nums2.\n\n**Output:**\nPrint a single integer: the maximum length of a subarray that appears in both arrays.\n\n**Constraints:**\n- 1 <= nums1.length, nums2.length <= 1000\n- 0 <= nums1[i], nums2[i] <= 100\n\n**Examples:**\nExample 1:\nInput:\n5\n1 2 3 2 1\n5\n3 2 1 4 7\nOutput:\n3\n\nExample 2:\nInput:\n5\n0 0 0 0 0\n5\n0 0 0 0 0\nOutput:\n5",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

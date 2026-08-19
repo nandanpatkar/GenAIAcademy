@@ -1,0 +1,33 @@
+{
+  "levelNumber": 384,
+  "displayNumber": 330,
+  "title": "Cheapest flight within K stops",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>There are n cities and m edges connected by some number of flights. Given an array of flights where flights[i] = [ from<sub>i</sub>, to<sub>i</sub>, price<sub>i</sub>] indicates that there is a flight from city from<sub>i</sub> to city to<sub>i</sub> with cost price<sub>i</sub>. Given three integers src, dst, and k, and return the <strong>cheapest price</strong> from src to dst with at most<strong> k</strong> stops. If there is no such route, return -1.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-lTPXKKMA\"></p><p><br></p><p><strong>Input:</strong> n = 4, flights = [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], src = 0, dst = 3, k = 1</p><p><strong>Output:</strong> 700</p><p><strong>Explanation:</strong> The optimal path with at most 1 stops from city 0 to 3 is marked in red and has cost 100 + 600 = 700.</p><p>Note that the path through cities [0,1,2,3] is cheaper but is invalid because it uses 2 stops.</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-CIPwuM01\"></p><p><br></p><p><strong>Input:</strong> n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1</p><p><strong>Output:</strong> 200</p><p><strong>Explanation:</strong>The optimal path with at most 1 stops from city 0 to 2 is marked in red and has cost 100 + 100 = 200.</p>",
+    "<p>Input: n = 3, flights = [[0, 1, 100], [1, 2, 100], [0, 2, 500]], src = 0, dst = 2, k = 0&nbsp;</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= n <= 100</li><li>&nbsp;&nbsp;0 <= flights.length <= (n * (n - 1) / 2)</li><li>&nbsp;&nbsp;&nbsp;flights[i].length == 3</li><li>&nbsp;&nbsp;0 <= from<sub>i</sub>, to<sub>i </sub>< n</li><li>&nbsp;&nbsp;from<sub>i</sub> != to<sub>i</sub></li><li>&nbsp;&nbsp;1 <= price<sub>i </sub><= 10<sup>4</sup></li><li>&nbsp;&nbsp;There will not be any multiple flights between the two cities.</li><li>&nbsp;&nbsp;0 <= src, dst, k < n</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

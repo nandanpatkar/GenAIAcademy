@@ -1,0 +1,33 @@
+{
+  "levelNumber": 277,
+  "displayNumber": 223,
+  "title": "Minimum Cost to Connect Sticks",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You have some sticks with positive integer lengths. You can connect any two sticks together to form a longer stick by paying a cost equal to the sum of their lengths. You must connect all the sticks into one single stick.</p><p><br></p><p>Return <em>the </em><strong>minimum </strong><em>cost</em> of connecting all the sticks.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>sticks = [2, 4, 3]</p><p><strong>Output: </strong>14</p><p><strong>Explanation:</strong></p><p>Connect sticks 2 and 3 → cost = 2 + 3 = 5 (sticks = [5, 4]), </p><p>Connect sticks 4 and 5 → cost = 4 + 5 = 9 (sticks = [9]), </p><p>Total cost = 5 + 9 = 14</p>",
+    "<p><strong>Input: </strong>sticks = [1, 8, 3, 5]</p><p><strong>Output: </strong>30</p><p><strong>Explanation: </strong></p><p>Connect 1 and 3 → cost = 1 + 3 = 4 (sticks = [4, 8, 5]), </p><p>Connect 4 and 5 → cost = 4 + 5 = 9 (sticks = [9, 8]), </p><p>Connect 8 and 9 → cost = 8 + 9 = 17 (sticks = [17]), </p><p>Total cost = 4 + 9 + 17 = 30</p>",
+    "<p><strong>Input: </strong>sticks = [5, 2, 1, 6]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= sticks.length <= 10<sup>4</sup></li><li><span class=\"ql-cursor\">﻿</span>1 <= stcks[i] <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

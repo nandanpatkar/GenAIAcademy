@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "84ac9d99-4627-4857-86bd-f0a4dff9d6b2",
+    "title": "Delete Node in a Linked List",
+    "difficulty": "Medium",
+    "tags": [
+      "linked-list"
+    ],
+    "statement": "Delete Node in a Linked List\n\nYou are given a singly-linked list and a node value to delete. All values in the linked list are unique, and the node to be deleted is guaranteed not to be the last node in the list.\n\nDelete the given node. By deleting the node, we mean:\n- The value of the given node should not exist in the linked list.\n- The number of nodes in the linked list should decrease by one.\n- All the values before the node should remain in the same order.\n- All the values after the node should remain in the same order.\n\nSince all node values are unique, the node to delete is identified by its value.\n\n**Input:**\nThe first line contains an integer n, the number of nodes in the linked list.\nThe second line contains n space-separated integers, the values of the linked list from head to tail.\nThe third line contains an integer, the value of the node to be deleted.\n\n**Output:**\nPrint the resulting linked list as n-1 space-separated integers on a single line, from head to tail.\n\n**Constraints:**\n- 2 <= n <= 1000\n- -1000 <= Node.val <= 1000\n- The value of each node in the list is unique.\n- The node to be deleted is in the list and is not the tail node.\n\n**Examples:**\nExample 1:\nInput:\n4\n4 5 1 9\n5\nOutput:\n4 1 9\n\nExample 2:\nInput:\n4\n4 5 1 9\n1\nOutput:\n4 5 9",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

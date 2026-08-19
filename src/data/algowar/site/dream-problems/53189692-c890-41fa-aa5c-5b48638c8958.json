@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "53189692-c890-41fa-aa5c-5b48638c8958",
+    "title": "Set Matrix Zeroes",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "matrix"
+    ],
+    "statement": "Given an m x n integer matrix, if an element is 0, set its entire row and column to 0's. Modify the matrix in place and print the resulting matrix.\n\n**Input:**\nThe first line contains two integers m and n, the number of rows and columns of the matrix.\nThe next m lines each contain n space-separated integers representing the matrix.\n\n**Output:**\nPrint the modified matrix as m lines, each containing n space-separated integers.\n\n**Constraints:**\n- 1 <= m, n <= 200\n- -2^31 <= matrix[i][j] <= 2^31 - 1\n\n**Examples:**\nExample 1:\nInput:\n3 3\n1 1 1\n1 0 1\n1 1 1\nOutput:\n1 0 1\n0 0 0\n1 0 1\n\nExample 2:\nInput:\n3 4\n0 1 2 0\n3 4 5 2\n1 3 1 5\nOutput:\n0 0 0 0\n0 4 5 0\n0 3 1 0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

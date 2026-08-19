@@ -1,0 +1,33 @@
+{
+  "levelNumber": 311,
+  "displayNumber": 257,
+  "title": "Diameter of Binary Tree",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the root of a binary tree, return the length of the <strong>diameter </strong>of the tree.</p><p><br></p><p>The diameter of a binary tree is the length of the longest path between any two nodes in the tree. It may or may not pass through the root.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [1, 2, 3, 4, 5]</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong> The path length between node 4 and 3 is of length 3.</p><p>There are other ways to reach the solution.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-PtG_ttvW\"></p>",
+    "<p><strong>Input :</strong> root = [1, 2, 3, null, 4, null, 5]</p><p><strong>Output :</strong> 4</p><p><strong>Explanation :</strong> The path length between node 4 and 5 is of length 4.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-klKGu6hl\"></p>",
+    "<p><strong>Input :</strong> root = [5, 1, 2, 8, 3, null, 5, null, 4]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>-100 <= Node.val <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

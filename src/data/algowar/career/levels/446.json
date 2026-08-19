@@ -1,0 +1,33 @@
+{
+  "levelNumber": 446,
+  "displayNumber": 392,
+  "title": "Largest Divisible Subset",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array <strong>nums </strong>of positive integers, the task is to find the largest subset such that every pair<strong> (a, b)</strong> of elements in the subset satisfies <strong>a % b == 0</strong> or <strong>b % a == 0</strong>. </p><p><br></p><p>Return the subset in any order. If there are multiple solutions, return any one of them.</p><p><br></p><p><strong>Note</strong>: As there can be multiple correct answers, the compiler returns 1 if the answer is valid, else 0.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [3, 5, 10, 20]</p><p><strong>Output</strong>: [5, 10, 20]</p><p><strong>Explanation</strong>: </p><p>The subset [5, 10, 20] satisfies the divisibility condition: 10 % 5 == 0 and 20 % 10 == 0.</p>",
+    "<p><strong>Input</strong>: nums = [16, 8, 2, 4, 32]</p><p><strong>Output</strong>: [2, 4, 8, 16, 32]</p><p><strong>Explanation</strong>: </p><p>The entire array forms a divisible subset since 32 % 16 == 0, 16 % 8 == 0, and so on.</p>",
+    "<p><strong>Input</strong>: nums&nbsp;= [7, 14, 28, 3]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>3</sup></li><li>1 <= nums[i] <= 10<sup>6</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

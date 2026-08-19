@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "1b051715-24ab-40a2-9ed3-840ddfa68c2f",
+    "title": "Maximum Depth of Binary Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "breadth-first-search",
+      "binary-tree"
+    ],
+    "statement": "Given the root of a binary tree, return its maximum depth.\n\nA binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.\n\nThe tree is provided in level-order serialization (LeetCode convention), where absent children are represented by the word \"null\" and trailing nulls are trimmed.\n\n**Input:**\nThe first line contains an integer k, the number of entries in the level-order serialization of the tree.\nThe second line contains k space-separated values: the level-order traversal of the binary tree, using \"null\" for absent children.\n\n**Output:**\nPrint a single integer: the maximum depth of the binary tree.\n\n**Constraints:**\n- The number of nodes in the tree is in the range [0, 10^4].\n- -100 <= Node.val <= 100\n\n**Examples:**\nExample 1:\nInput:\n7\n3 9 20 null null 15 7\nOutput:\n3\n\nExample 2:\nInput:\n3\n1 null 2\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

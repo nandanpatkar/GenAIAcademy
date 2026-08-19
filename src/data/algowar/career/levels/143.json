@@ -1,0 +1,26 @@
+{
+  "levelNumber": 143,
+  "displayNumber": 89,
+  "title": "Roman to Integer",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Roman numerals are represented by seven different symbols:</p><ul><li>I = 1</li><li>V = 5</li><li>X = 10</li><li>L = 50</li><li>C = 100</li><li>D = 500</li><li>M = 1000</li></ul><p><br></p><p>Roman numerals are typically written from largest to smallest, left to right. However, in specific cases, a smaller numeral placed before a larger one indicates subtraction.</p><p><br></p><p>The following subtractive combinations are valid:</p><ul><li>I before V (5) and X (10) → 4 and 9</li><li>X before L (50) and C (100) → 40 and 90</li><li>C before D (500) and M (1000) → 400 and 900</li></ul><p><br></p><p>Given a Roman numeral, convert it to an integer.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>s = \"III\"</p><p><strong>Output: </strong>3</p><p><strong>Explanation: </strong>III = 1 + 1 + 1 = 3</p>",
+    "<p><strong>Input: </strong>s = \"XLII\"</p><p><strong>Output: </strong>42</p><p><strong>Explanation: </strong>XL = 40, II = 2 → 40 + 2 = 42</p>",
+    "<p><strong>Input: </strong>s = \"DCCCXC\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 15</li><li>s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M')</li><li>It is guaranteed that s is a valid Roman numeral in the range [1, 3999]</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

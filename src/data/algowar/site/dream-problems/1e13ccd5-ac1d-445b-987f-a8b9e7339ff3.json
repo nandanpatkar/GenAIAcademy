@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "1e13ccd5-ac1d-445b-987f-a8b9e7339ff3",
+    "title": "Count Ways to Group Overlapping Ranges",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "sorting"
+    ],
+    "statement": "You are given a list of ranges where each range is defined by a start and an end (both inclusive), meaning all integers between start and end are contained in that range.\n\nYou are to split the ranges into two (possibly empty) groups such that:\n- Each range belongs to exactly one group.\n- Any two overlapping ranges must belong to the same group.\n\nTwo ranges are said to be overlapping if there exists at least one integer that is present in both ranges. For example, [1, 3] and [2, 5] are overlapping because 2 and 3 occur in both ranges.\n\nReturn the total number of ways to split the ranges into two groups. Since the answer may be very large, return it modulo 10^9 + 7.\n\n**Input:**\nThe first line contains two integers rows and cols, where rows is the number of ranges and cols is always 2.\nThe next rows lines each contain two space-separated integers start_i and end_i.\n\n**Output:**\nPrint a single integer: the total number of ways to split the ranges into two groups, modulo 10^9 + 7.\n\n**Constraints:**\n- 1 <= ranges.length <= 10^5\n- ranges[i].length == 2\n- 0 <= start_i <= end_i <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n2 2\n6 10\n5 15\nOutput:\n2\n\nExample 2:\nInput:\n4 2\n1 3\n10 20\n2 5\n4 8\nOutput:\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

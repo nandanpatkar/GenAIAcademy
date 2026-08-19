@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "1dfb3722-6b0f-4aee-a26d-0b79937f3b92",
+    "title": "Second Minimum Node In a Binary Tree",
+    "difficulty": "Easy",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "binary-tree"
+    ],
+    "statement": "Given a non-empty special binary tree consisting of nodes with non-negative values, where each node in this tree has exactly two or zero sub-nodes. If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes. More formally, the property root.val = min(root.left.val, root.right.val) always holds.\n\nGiven such a binary tree, you need to output the second minimum value in the set made of all the nodes' values in the whole tree. If no such second minimum value exists, output -1 instead.\n\n**Input:**\nThe tree is serialized in level order. The first line is an integer k, the number of entries in the level-order representation. The second line contains k space-separated values, where absent children are represented by the word \"null\" (trailing nulls are trimmed).\n\n**Output:**\nPrint a single integer: the second minimum value among all node values in the tree, or -1 if no such value exists.\n\n**Constraints:**\n- The number of nodes in the tree is in the range [1, 25].\n- 1 <= Node.val <= 2^31 - 1.\n- root.val == min(root.left.val, root.right.val) for each internal node of the tree.\n\n**Examples:**\nExample 1:\nInput:\n7\n2 2 5 null null 5 7\nOutput:\n5\n\nExample 2:\nInput:\n3\n2 2 2\nOutput:\n-1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

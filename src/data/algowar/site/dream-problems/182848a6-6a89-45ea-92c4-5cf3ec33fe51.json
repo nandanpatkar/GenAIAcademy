@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "182848a6-6a89-45ea-92c4-5cf3ec33fe51",
+    "title": "Plates Between Candles",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "string",
+      "binary-search",
+      "prefix-sum"
+    ],
+    "statement": "There is a long table with a line of plates and candles arranged on top of it. You are given a 0-indexed string s consisting of characters '*' and '|' only, where a '*' represents a plate and a '|' represents a candle.\n\nYou are also given a 0-indexed 2D integer array queries where queries[i] = [left_i, right_i] denotes the substring s[left_i...right_i] (inclusive). For each query, you need to find the number of plates between candles that are in the substring. A plate is considered between candles if there is at least one candle to its left and at least one candle to its right in the substring.\n\nFor example, s = \"||**||**|*\", and a query [3, 8] denotes the substring \"*||**|\". The number of plates between candles in this substring is 2, as each of the two plates has at least one candle in the substring to its left and right.\n\nReturn an integer array answer where answer[i] is the answer to the i-th query.\n\n**Input:**\nThe first line contains the string s (raw, not quoted).\nThe second line contains an integer q, the number of queries.\nThe next q lines each contain two space-separated integers left_i and right_i.\n\n**Output:**\nPrint a single line of q space-separated integers, where the i-th integer is the answer to the i-th query.\n\n**Constraints:**\n- 3 <= s.length <= 10^5\n- s consists of '*' and '|' characters only.\n- 1 <= queries.length <= 10^5\n- queries[i].length == 2\n- 0 <= left_i <= right_i < s.length\n\n**Examples:**\nExample 1:\nInput:\n**|**|***|\n2\n2 5\n5 9\nOutput:\n2 3\n\nExample 2:\nInput:\n***|**|*****|**||**|*\n5\n1 17\n4 5\n14 17\n5 11\n15 16\nOutput:\n9 0 0 0 0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

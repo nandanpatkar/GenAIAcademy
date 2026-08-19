@@ -1,0 +1,33 @@
+{
+  "levelNumber": 318,
+  "displayNumber": 264,
+  "title": "Bottom view of BT",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given root of binary tree, return the<strong> bottom view</strong> of the binary tree.</p><p><br></p><p>The bottom view of a binary tree is the set of nodes visible when the tree is viewed from the bottom. Return nodes from the leftmost node to the rightmost node. Also if 2 nodes are outside the shadow of the tree and are at the same position then consider the node that appears later in level traversal.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [20, 8, 22, 5, 3, null, 25, null, null, 10 ,14]</p><p><strong>Output :</strong> [5, 10, 3, 14, 25]</p><p><strong>Explanation :</strong> From left to right the path is as follows :</p><p>First we encounter node with value 5.</p><p>Then we have nodes 8 , 10 but from bottom only 10 will be visible.</p><p>Next we have 20 , 3 but from bottom only 3 will be visible.</p><p>Next we have 14 , 22 but from bottom only 14 will be visible.</p><p>Then we encounter node with value 25.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/aptitude_1768096166392_Group 21.png\"></p>",
+    "<p><strong>Input :</strong> root = [20, 8, 22, 5, 3, 4, 25, null, null, 10 ,14]</p><p><strong>Output :</strong> [5, 10, 4, 14, 25]</p><p><strong>Explanation : </strong>From left to right the path is as follows :</p><p>First we encounter node with value 5.</p><p>Then we have nodes 8 , 10 but from bottom only 10 will be visible.</p><p>Next we have 20 , 3 and 4. The 3 and 4 will be nodes visible from bottom but as the node 4 appears later from left to right , so only node 4 will be considered visible.</p><p>Next we have 14 , 22 but from bottom only 14 will be visible.</p><p>Then we encounter node with value 25.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/aptitude_1768096346490_Group 21 (1).png\"></p>",
+    "<p><strong>Input:</strong> root = [10, 20, 30, 40, 60]</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-7-5v46eF\"></p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>-10<sup>3</sup> <= Node.val <= 10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

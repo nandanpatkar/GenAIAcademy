@@ -1,0 +1,57 @@
+{
+  "route": "/blog",
+  "title": "AlgoWars Blog — Coding Guides for College Students | AlgoWars",
+  "description": "Straight answers to the questions every first-year CS student searches: how to start coding, when to start DSA, which language to learn first, and how to actually get good at problem solving.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars Blog — Coding Guides for College Students",
+  "chunks": [
+    "app/(legal)/blog/page-35316b195f86b9f4.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/blog",
+    "title": "AlgoWars Blog — Coding Guides for College Students | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "CODING GUIDES FOR COLLEGE STUDENTS"
+      },
+      {
+        "tag": "h2",
+        "text": "How do I start coding in my first year of college?"
+      },
+      {
+        "tag": "h2",
+        "text": "When should I start DSA in college?"
+      },
+      {
+        "tag": "h2",
+        "text": "Which programming language should I learn first — C++, Python, or Java?"
+      },
+      {
+        "tag": "h2",
+        "text": "How do I improve my problem-solving skills in programming?"
+      },
+      {
+        "tag": "h2",
+        "text": "LeetCode vs Codeforces vs CodeChef — which should a beginner use?"
+      },
+      {
+        "tag": "h2",
+        "text": "How do I stay consistent with coding practice?"
+      }
+    ],
+    "text": "← Back to home BLOG CODING GUIDES FOR COLLEGE STUDENTS Straight answers to the questions every first-year actually searches — no fluff, no course-selling, just what works. JUL 18, 2026 · 7 MIN READ · FIRST YEAR How do I start coding in my first year of college? A realistic, step-by-step guide for first-year students starting to code: which language to pick, how much time to give daily, what to build, and the mistakes that waste your first semester. READ THE ANSWER → JUL 15, 2026 · 6 MIN READ · DSA When should I start DSA in college? Should you start data structures and algorithms in first year or wait? An honest timeline for DSA in college, what to learn before it, and how long it takes to get placement-ready. READ THE ANSWER → JUL 12, 2026 · 7 MIN READ · LANGUAGES Which programming language should I learn first — C++, Python, or Java? C++ vs Python vs Java for a first-year student: an honest comparison for learning speed, DSA, competitive programming and placements — and why the choice matters less than you think. READ THE ANSWER → JUL 8, 2026 · 8 MIN READ · PROBLEM SOLVING How do I improve my problem-solving skills in programming? Concrete methods to get better at problem solving for coding: the struggle rule, pattern learning, upsolving, time pressure, and why watching solutions is making you worse. READ THE ANSWER → JUL 3, 2026 · 7 MIN READ · PLATFORMS LeetCode vs Codeforces vs CodeChef — which should a beginner use? An honest comparison of LeetCode, Codeforces and CodeChef for college students: what each is actually for, which fits beginners, and how to combine them without burning out. READ THE ANSWER → JUN 28, 2026 · 6 MIN READ · HABITS How do I stay consistent with coding practice? Why coding consistency collapses after two weeks and what actually fixes it: tiny daily minimums, streaks done right, accountability, and making practice feel like a game. READ THE ANSWER →",
+    "links": [
+      "/",
+      "/blog/how-to-start-coding-in-first-year",
+      "/blog/when-should-i-start-dsa",
+      "/blog/cpp-vs-python-vs-java-first-language",
+      "/blog/how-to-improve-problem-solving-skills",
+      "/blog/leetcode-vs-codeforces-vs-codechef",
+      "/blog/how-to-stay-consistent-with-coding"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

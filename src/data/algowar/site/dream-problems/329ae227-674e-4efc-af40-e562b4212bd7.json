@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "329ae227-674e-4efc-af40-e562b4212bd7",
+    "title": "Basic Calculator II",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "string",
+      "stack"
+    ],
+    "statement": "Given a string s which represents an arithmetic expression, evaluate this expression and return its value.\n\nThe integer division should truncate toward zero.\n\nYou may assume that the given expression is always valid. All intermediate results will be in the range [-2^31, 2^31 - 1].\n\nNote: You are not allowed to use any built-in function which evaluates strings as mathematical expressions, such as eval().\n\n**Input:**\nThe first line contains an integer n, the length of the expression string.\nThe second line contains the expression string s (raw, may contain spaces).\n\n**Output:**\nPrint a single integer: the value of the evaluated expression.\n\n**Constraints:**\n- 1 <= s.length <= 3 * 10^5\n- s consists of integers and operators ('+', '-', '*', '/') separated by some number of spaces.\n- s represents a valid expression.\n- All the integers in the expression are non-negative integers in the range [0, 2^31 - 1].\n- The answer is guaranteed to fit in a 32-bit integer.\n\n**Examples:**\nExample 1:\nInput:\n6\n3+2*2\nOutput:\n7\n\nExample 2:\nInput:\n6\n 3/2 \nOutput:\n1\n\nExample 3:\nInput:\n10\n 3+5 / 2 \nOutput:\n5",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 253,
+  "displayNumber": 199,
+  "title": "Longest Substring Without Repeating Characters",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string, S. Find the <strong>length</strong> of the longest substring without repeating characters.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> S = \"abcddabac\"</p><p><strong>Output :</strong> 4</p><p><strong>Explanation :</strong> The answer is \"abcd\" , with a length of 4.</p>",
+    "<p><strong>Input :</strong> S = \"aaabbbccc\"</p><p><strong>Output :</strong> 2</p><p><strong>Explanation :</strong> The answers are \"ab\" , \"bc\". Both have maximum length 2.</p>",
+    "<p><strong>Input :</strong> S = \"aaaa\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= S.length <= 5*10<sup>4</sup></li><li>S contains only English lowercase letters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 10,
+    "title": "Window Desert",
+    "theme": "solar-desert",
+    "levelCount": 12,
+    "completionXp": 100
+  }
+}

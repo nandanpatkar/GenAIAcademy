@@ -1,0 +1,33 @@
+{
+  "levelNumber": 131,
+  "displayNumber": 77,
+  "title": "Search in 2D matrix - II",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a 2D array matrix where each row is sorted in ascending order from left to right and each column is sorted in ascending order from top to bottom, write an efficient algorithm to search for a specific integer <strong>target</strong> in the matrix.</p>",
+  "examples": [
+    "<p>Input: matrix = [ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30] ], target = 5</p><p>Output: True</p><p>Explanation: The target 5 exists in the matrix in the index (1,1)</p>",
+    "<p>Input: matrix= [ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30] ], target = 20</p><p>Output: False</p><p>Explanation: The target 20 does not exist in the matrix.</p>",
+    "<p>Input: matrix= [ [1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30] ], target = 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;n == matrix.length</li><li>&nbsp;&nbsp;m == matrix[i].length</li><li>&nbsp;&nbsp;1 <= n, m <= 300</li><li>&nbsp;&nbsp;-10<sup>9 </sup><= matrix[i][j] <= 10<sup>9</sup></li><li>&nbsp;&nbsp;All the integers in each row are sorted in ascending order.</li><li>&nbsp;&nbsp;All the integers in each column are sorted in ascending order.</li><li>&nbsp;&nbsp;-10<sup>9 </sup><= target <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

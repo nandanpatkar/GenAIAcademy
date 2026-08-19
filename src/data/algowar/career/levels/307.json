@@ -1,0 +1,33 @@
+{
+  "levelNumber": 307,
+  "displayNumber": 253,
+  "title": "Post-order Traversal of Binary Tree using 1 stack",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given root of binary tree, return the <strong>Postorder</strong> traversal of the binary tree.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [1, 4, null, 4, 2]</p><p><strong>Output :</strong> [4, 2, 4, 1]</p><p><strong>Explanation :</strong></p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-ORvQLHw4\"></p>",
+    "<p><strong>Input :</strong> root = [1, null, 2, 3]</p><p><strong>Output :</strong> [3, 2, 1]</p><p><strong>Explanation :</strong></p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-11arw0oH\"></p>",
+    "<p><strong>Input :</strong> root = [5, 1, 2, 8, null, 4, 5, null, 6]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 100</li><li>-100 <= Node.val <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "70a5a320-4fb7-422f-bce7-1ff832205498",
+    "title": "Binary Tree Level Order Traversal",
+    "difficulty": "Medium",
+    "tags": [
+      "tree",
+      "breadth-first-search",
+      "binary-tree"
+    ],
+    "statement": "Given the root of a binary tree, return the level order traversal of its nodes' values (i.e., from left to right, level by level).\n\nThe tree is provided in LeetCode level-order serialization: the first input line gives the number of entries k, and the second line lists k space-separated values where absent children are represented by the word \"null\" (trailing nulls trimmed).\n\nThe output is the list of levels, each level being the list of node values at that depth from left to right. Print the number of levels L on the first line, followed by L lines, one per level, each containing that level's values space-separated. If the tree is empty, print a single line \"0\".\n\n**Input:**\n- Line 1: integer k, the number of level-order entries.\n- Line 2: k space-separated values (integers or \"null\"), the level-order serialization of the binary tree. (If k is 0, this line is omitted.)\n\n**Output:**\n- Line 1: integer L, the number of levels.\n- Next L lines: each line contains the node values of that level from left to right, space-separated. (If L is 0, no further lines are printed.)\n\n**Constraints:**\n- The number of nodes in the tree is in the range [0, 2000].\n- -1000 <= Node.val <= 1000.\n\n**Examples:**\nExample 1:\nInput:\n7\n3 9 20 null null 15 7\nOutput:\n3\n3\n9 20\n15 7\n\nExample 2:\nInput:\n1\n1\nOutput:\n1\n1\n\nExample 3:\nInput:\n0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

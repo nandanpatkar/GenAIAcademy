@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "c789a641-b195-4007-8486-d3544fbf9169",
+    "title": "Design Authentication Manager",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "linked-list",
+      "design",
+      "doubly-linked-list"
+    ],
+    "statement": "There is an authentication system that works with authentication tokens. For each session, the user will receive a new authentication token that will expire timeToLive seconds after the currentTime. If the token is renewed, the expiry time will be extended to expire timeToLive seconds after the (potentially different) currentTime.\n\nYou will process a sequence of operations on an AuthenticationManager:\n- AuthenticationManager(timeToLive): constructs the AuthenticationManager and sets the timeToLive. This is always the first operation.\n- generate(tokenId, currentTime): generates a new token with the given tokenId at the given currentTime in seconds.\n- renew(tokenId, currentTime): renews the unexpired token with the given tokenId at the given currentTime in seconds. If there are no unexpired tokens with the given tokenId, the request is ignored, and nothing happens.\n- countUnexpiredTokens(currentTime): returns the number of unexpired tokens at the given currentTime.\n\nNote that if a token expires at time t, and another action happens on time t (renew or countUnexpiredTokens), the expiration takes place before the other actions.\n\n**Input:**\nThe first line contains an integer n, the number of operations.\nThe next n lines each describe one operation:\n- \"AuthenticationManager <timeToLive>\" for the constructor (always the first operation).\n- \"generate <tokenId> <currentTime>\" for generate.\n- \"renew <tokenId> <currentTime>\" for renew.\n- \"countUnexpiredTokens <currentTime>\" for countUnexpiredTokens.\n\n**Output:**\nPrint n lines, one per operation. For AuthenticationManager, generate, and renew, print \"null\". For countUnexpiredTokens, print the integer count of unexpired tokens.\n\n**Constraints:**\n- 1 <= timeToLive <= 10^8\n- 1 <= currentTime <= 10^8\n- 1 <= tokenId.length <= 5\n- tokenId consists only of lowercase letters.\n- All calls to generate will contain unique values of tokenId.\n- The values of currentTime across all the function calls will be strictly increasing.\n- At most 2000 calls will be made to all functions combined.\n\n**Examples:**\nExample 1:\nInput:\n8\nAuthenticationManager 5\nrenew aaa 1\ngenerate aaa 2\ncountUnexpiredTokens 6\ngenerate bbb 7\nrenew aaa 8\nrenew bbb 10\ncountUnexpiredTokens 15\nOutput:\nnull\nnull\nnull\n1\nnull\nnull\nnull\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

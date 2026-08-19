@@ -1,0 +1,33 @@
+{
+  "levelNumber": 198,
+  "displayNumber": 144,
+  "title": "Word Search",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a grid of n x m dimension grid of characters board and a string word.The word can be created by assembling the letters of successively surrounding cells, whether they are next to each other <strong>vertically</strong> or <strong>horizontally</strong>. It is forbidden to use the same letter cell more than once.</p><p>Return true if the word exists in the grid otherwise false.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> board = [ [\"A\", \"B\", \"C\", \"E\"] , [\"S\" ,\"F\" ,\"C\" ,\"S\"] , [\"A\", \"D\", \"E\", \"E\"] ] , word = \"ABCCED\"</p><p><strong>Output :</strong> true</p><p><strong>Explanation : </strong>The word is coloured in yellow.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-P9Dc3q6C\"></p>",
+    "<p><strong>Input :</strong> board = [[\"A\", \"B\", \"C\", \"E\"] , [\"S\", \"F\", \"C\", \"S\"] , [\"A\", \"D\", \"E\", \"E\"]] , word = \"SEE\"</p><p><strong>Output :</strong> true</p><p><strong>Explanation : </strong>The word is coloured in yellow.</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-Q0bcgifi\"></p>",
+    "<p><strong>Input :</strong> board = [[\"A\", \"B\", \"C\", \"E\"] , [\"S\", \"F\", \"C\", \"S\"] , [\"A\", \"D\", \"E\", \"E\"]] , word = \"ABCB\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>n = board.length</li><li>m = board[i].length</li><li>1 <= n, m <=6</li><li>1 <= word.length <= 15</li><li>board and word consist of only lowercase and uppercase English letters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

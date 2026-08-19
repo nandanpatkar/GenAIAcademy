@@ -1,0 +1,33 @@
+{
+  "levelNumber": 344,
+  "displayNumber": 290,
+  "title": "LCA in BST",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>root</strong> node of a binary search tree (BST) and two node values p,q.</p><p><br></p><p>Return the lowest common ancestors<strong>(LCA)</strong> of the two nodes in BST.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , p = 2, q = 4</p><p><strong>Output :</strong> [3]</p><p><strong>Explanation :</strong> </p><p>Below is image of the BST</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-R7f_VyjM\"></p>",
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , p = 2, q = 7</p><p><strong>Output :</strong> [5]</p><p><strong>Explanation :</strong> </p><p>Below is image of the BST</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-WMGru_wO\"></p>",
+    "<p><strong>Input :</strong> root = [2, 1, 4, null, null, 3, 6] , p = 1, q = 6</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>1 <= Node.val <= 10<sup>5</sup></li><li>All values in BST are unique.</li><li>The values p and q are always present in the given BST.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

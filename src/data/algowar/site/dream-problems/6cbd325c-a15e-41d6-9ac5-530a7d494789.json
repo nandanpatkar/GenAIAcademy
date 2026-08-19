@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "6cbd325c-a15e-41d6-9ac5-530a7d494789",
+    "title": "Decode Ways",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
+    "statement": "You have intercepted a secret message encoded as a string of numbers. The message is decoded via the following mapping:\n\n\"1\" -> 'A'\n\"2\" -> 'B'\n...\n\"25\" -> 'Y'\n\"26\" -> 'Z'\n\nHowever, while decoding the message, you realize that there are many different ways you can decode the message because some codes are contained in other codes (\"2\" and \"5\" vs \"25\").\n\nFor example, \"11106\" can be decoded into:\n- \"AAJF\" with the grouping (1, 1, 10, 6)\n- \"KJF\" with the grouping (11, 10, 6)\n- The grouping (1, 11, 06) is invalid because \"06\" is not a valid code (only \"6\" is valid).\n\nNote: there may be strings that are impossible to decode.\n\nGiven a string s containing only digits, return the number of ways to decode it. If the entire string cannot be decoded in any valid way, return 0.\n\nThe test cases are generated so that the answer fits in a 32-bit integer.\n\n**Input:**\nThe first line contains the length n of the string.\nThe second line contains the string s of length n, consisting only of digits.\n\n**Output:**\nPrint a single integer: the number of ways to decode the string.\n\n**Constraints:**\n- 1 <= s.length <= 100\n- s contains only digits and may contain leading zero(s).\n\n**Examples:**\nExample 1:\nInput:\n2\n12\nOutput:\n2\n\nExample 2:\nInput:\n3\n226\nOutput:\n3\n\nExample 3:\nInput:\n2\n06\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

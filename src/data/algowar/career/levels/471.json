@@ -1,0 +1,33 @@
+{
+  "levelNumber": 471,
+  "displayNumber": 417,
+  "title": "KMP Algorithm or LPS array",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings, one is a text string, <strong>text</strong>, and the other is a pattern string, <strong>pattern</strong>. Find and print the indices of all the occurrences of the pattern string within the text string. Use 0-based indexing for the indices, and ensure that the indices are in ascending order. If the pattern does not occur in the text, return an empty list.</p><p><br></p><p>Implement this solution using the <strong>Knuth-Morris-Pratt (KMP) algorithm</strong> for efficient pattern matching.</p>",
+  "examples": [
+    "<p>Input: text = \"abracadabra\", pattern = \"abra\"</p><p><br></p><p>Output: 0 7</p><p><br></p><p>Expalanation : The pattern \"abra\" appears at the 0st and 7th positions in the text \"abracadabra\".</p>",
+    "<p>Input: text = \"abcabcabc\", pattern = \"abc\"</p><p><br></p><p>Output: 0 3 6</p><p><br></p><p>Expalanation : The pattern \"abc\" appears at the 0st, 3th, and 6th positions in the text \"abcabcabc\".</p>",
+    "<p>Input: text = \"daad\", pattern = \"aa\"</p>"
+  ],
+  "constraintsHtml": "<ul><li><span style=\"color: rgb(245, 245, 245);\">1<= text.length, pattern.length <=5*10</span><sup style=\"color: rgb(245, 245, 245);\">4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 18,
+    "title": "String Trials",
+    "theme": "obsidian-strings",
+    "levelCount": 9,
+    "completionXp": 100
+  }
+}

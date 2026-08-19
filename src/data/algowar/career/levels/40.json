@@ -1,0 +1,33 @@
+{
+  "levelNumber": 40,
+  "displayNumber": 40,
+  "title": "Check if the Number is Armstrong",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer <strong>n</strong>. You need to check whether it is an <strong>armstrong </strong>number or not. Return <strong>true </strong>if it is an <strong>armstrong </strong>number, otherwise return <strong>false</strong>.</p><p><br></p><p>An <strong>armstrong </strong>number is a number which is <strong>equal </strong>to the <strong>sum </strong>of the <strong>digits </strong>of the number, raised to the <strong>power</strong> of the <strong>number </strong>of digits.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 153</p><p><strong>Output</strong>: true</p><p><strong>Explanation</strong>: Number of digits : 3.</p><p>1<sup>3</sup> + 5<sup>3</sup> + 3<sup>3</sup> = 1 + 125 + 27 = 153.</p><p>Therefore, it is an Armstrong number.</p>",
+    "<p><strong>Input</strong>: n = 12</p><p><strong>Output</strong>: false</p><p><strong>Explanation</strong>: Number of digits : 2.</p><p>1<sup>2</sup> + 2<sup>2</sup> = 1 + 4 = 5.</p><p>Therefore, it is not an Armstrong number.</p>",
+    "<p><strong>Input</strong>: n = 370</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= n <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

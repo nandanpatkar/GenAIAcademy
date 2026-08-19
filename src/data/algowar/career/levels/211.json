@@ -1,0 +1,26 @@
+{
+  "levelNumber": 211,
+  "displayNumber": 157,
+  "title": "Swap Two Numbers",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integers a and b, swap them in-place using only 2 variables (without using a temporary variable).</p><p><br></p><p>Can you solve it using:</p><ul><li>Arithmetic operations?</li><li>Bitwise XOR?</li></ul>",
+  "examples": [
+    "<p><strong>Input:</strong> a = 5, b = 10</p><p><strong>Output:</strong> a = 10, b = 5</p>",
+    "<p><strong>Input</strong>: a = -100, b = -200</p><p><strong>Output:</strong> a = -200, b = -100</p>",
+    "<p><strong>Input: </strong>a = 0, b = 99</p>"
+  ],
+  "constraintsHtml": "<p>10<sup>9</sup> <= a, b <= 10<sup>9</sup></p>",
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

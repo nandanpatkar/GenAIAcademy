@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "840b75a0-0c87-4e2d-a0c0-c08129762f84",
+    "title": "Single Number",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "bit-manipulation"
+    ],
+    "statement": "Given a non-empty array of integers, every element appears twice except for one. Find that single one.\n\nYou must implement a solution with linear runtime complexity and use only constant extra space.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers.\n\n**Output:**\nPrint a single integer: the element that appears only once.\n\n**Constraints:**\n1 <= n <= 3 * 10^4\n-3 * 10^4 <= nums[i] <= 3 * 10^4\nEach element in the array appears twice except for one element which appears only once.\n\n**Examples:**\nExample 1:\nInput:\n3\n2 2 1\nOutput:\n1\n\nExample 2:\nInput:\n5\n4 1 2 1 2\nOutput:\n4\n\nExample 3:\nInput:\n1\n1\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

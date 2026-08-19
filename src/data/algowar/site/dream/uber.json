@@ -1,0 +1,324 @@
+{
+  "company": {
+    "slug": "uber",
+    "name": "Uber"
+  },
+  "questions": [
+    {
+      "problemId": "d25f1707-c2ff-475a-b679-f1430dab9ead",
+      "title": "Bus Routes",
+      "difficulty": "Hard",
+      "frequency": 100,
+      "orderIndex": 0,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "78f5b214-6289-4698-80d8-f098795fe6a7",
+      "title": "Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit",
+      "difficulty": "Medium",
+      "frequency": 93.5,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 89.6,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "550f3643-4681-492e-af86-88bd9dfa182a",
+      "title": "Squares of a Sorted Array",
+      "difficulty": "Easy",
+      "frequency": 85.6,
+      "orderIndex": 3,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "01327a9a-89a8-4898-a26f-cfe43a17a01f",
+      "title": "Construct Quad Tree",
+      "difficulty": "Medium",
+      "frequency": 85.2,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "67c86460-0366-4544-960b-4ee1ba37e9c1",
+      "title": "Kth Smallest Element in a BST",
+      "difficulty": "Medium",
+      "frequency": 82.4,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ccf65339-ebb3-4305-ae77-db65223a0e7f",
+      "title": "Find the Closest Palindrome",
+      "difficulty": "Hard",
+      "frequency": 80.5,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "938756cb-dc27-4110-b487-d13d1b853267",
+      "title": "Word Search",
+      "difficulty": "Medium",
+      "frequency": 76.9,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 76.9,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "abf34784-264d-4549-b92d-017f2924d75a",
+      "title": "Insert Delete GetRandom O(1)",
+      "difficulty": "Medium",
+      "frequency": 76.9,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "13045252-a4f1-4e3d-8702-b5c9065042da",
+      "title": "Word Search II",
+      "difficulty": "Hard",
+      "frequency": 73.8,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 71.7,
+      "orderIndex": 12,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "4e1f7e50-3463-4bfc-8998-5f1c3881f6f0",
+      "title": "My Calendar I",
+      "difficulty": "Medium",
+      "frequency": 71,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a225bf90-4bcf-4f8a-b1ca-9533ff79da7b",
+      "title": "Product of Array Except Self",
+      "difficulty": "Medium",
+      "frequency": 70.2,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3ab05fa0-df55-42b4-8688-46af7e3e91f3",
+      "title": "Random Pick with Weight",
+      "difficulty": "Medium",
+      "frequency": 70.2,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "bca32f8d-b10d-4f7c-963a-d86e7ed1d359",
+      "title": "Count Paths That Can Form a Palindrome in a Tree",
+      "difficulty": "Hard",
+      "frequency": 70.2,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "793432e3-0d68-4ca0-a003-40c590135556",
+      "title": "Text Justification",
+      "difficulty": "Hard",
+      "frequency": 69.4,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e9a41ef5-b77b-4f6f-998b-414b4f1633b0",
+      "title": "Block Placement Queries",
+      "difficulty": "Hard",
+      "frequency": 67.7,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "275cde79-80b0-4f1a-ac10-9c912c95cc2a",
+      "title": "Course Schedule II",
+      "difficulty": "Medium",
+      "frequency": 65.8,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5d4e0257-e0a9-40d0-987d-339d097b68bd",
+      "title": "Valid Sudoku",
+      "difficulty": "Medium",
+      "frequency": 64.8,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f81ca876-684a-4e62-b351-116a2205e5dc",
+      "title": "Spiral Matrix",
+      "difficulty": "Medium",
+      "frequency": 64.8,
+      "orderIndex": 22,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "2b2f08a6-3ba4-4fa4-a43f-74ab76b0be68",
+      "title": "Making A Large Island",
+      "difficulty": "Hard",
+      "frequency": 64.8,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "047250c0-28dd-488b-9bea-cfd549d50ec5",
+      "title": "Course Schedule",
+      "difficulty": "Medium",
+      "frequency": 63.8,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "4d31a5f1-4309-4b43-81ee-4b62350dc930",
+      "title": "Find Minimum Time to Reach Last Room I",
+      "difficulty": "Medium",
+      "frequency": 63.8,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "461f31c0-0d82-46e3-88a4-9b198a774988",
+      "title": "Letter Combinations of a Phone Number",
+      "difficulty": "Medium",
+      "frequency": 62.7,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 62.7,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ffac8249-37b5-492c-ade8-53e871a28aec",
+      "title": "Basic Calculator",
+      "difficulty": "Hard",
+      "frequency": 62.7,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f1698489-d202-4c90-a3f8-48a5b015b542",
+      "title": "Top K Frequent Words",
+      "difficulty": "Medium",
+      "frequency": 62.7,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b741a12f-edaa-4827-b68f-9585b6812eba",
+      "title": "Shortest Bridge",
+      "difficulty": "Medium",
+      "frequency": 62.7,
+      "orderIndex": 30,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "647cd03b-5fe1-43c0-b887-513ca9755703",
+      "title": "Word Break",
+      "difficulty": "Medium",
+      "frequency": 61.5,
+      "orderIndex": 31,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a82dcda0-ca20-4b85-a313-a76cb5f6b5ad",
+      "title": "Final Prices With a Special Discount in a Shop",
+      "difficulty": "Easy",
+      "frequency": 61.5,
+      "orderIndex": 32,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "a5c1bddd-842b-4999-9417-7de028775cc1",
+      "title": "Serialize and Deserialize Binary Tree",
+      "difficulty": "Hard",
+      "frequency": 58.9,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5c87d78e-1385-495e-9f9c-1d722c2f639f",
+      "title": "Merge k Sorted Lists",
+      "difficulty": "Hard",
+      "frequency": 57.5,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c3bd17ea-88b3-4f26-a546-1e76c702a258",
+      "title": "Search in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "frequency": 57.5,
+      "orderIndex": 40,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "cba93d6b-5203-4d3a-b445-7c1c87bb2fea",
+      "title": "Minimum Window Substring",
+      "difficulty": "Hard",
+      "frequency": 57.5,
+      "orderIndex": 41,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

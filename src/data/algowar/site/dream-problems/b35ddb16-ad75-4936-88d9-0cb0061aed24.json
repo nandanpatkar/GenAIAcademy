@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "b35ddb16-ad75-4936-88d9-0cb0061aed24",
+    "title": "Sort Colors",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "two-pointers",
+      "sorting"
+    ],
+    "statement": "Given an array of n integers where each integer is 0, 1, or 2, representing the colors red, white, and blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white, and blue (0, then 1, then 2). You must solve this problem without using the library's sort function.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers, each being 0, 1, or 2.\n\n**Output:**\nPrint the sorted array as a single line of n space-separated integers in non-decreasing order.\n\n**Constraints:**\n1 <= n <= 300\nEach element in the array is either 0, 1, or 2.\n\n**Examples:**\nExample 1:\nInput:\n6\n2 0 2 1 1 0\nOutput:\n0 0 1 1 2 2\n\nExample 2:\nInput:\n3\n2 0 1\nOutput:\n0 1 2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

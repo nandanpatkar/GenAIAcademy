@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "d3520ef3-2e47-45de-bcf8-69644a972a57",
+    "title": "Count Number of Texts",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "math",
+      "string",
+      "dynamic-programming"
+    ],
+    "statement": "Alice is texting Bob using her phone. The mapping of digits to letters follows the standard telephone keypad:\n- 2 -> \"abc\", 3 -> \"def\", 4 -> \"ghi\", 5 -> \"jkl\", 6 -> \"mno\", 7 -> \"pqrs\", 8 -> \"tuv\", 9 -> \"wxyz\".\n\nTo add a letter, Alice presses the key of the corresponding digit i times, where i is the position of the letter on that key. For example, to add the letter 's', Alice presses '7' four times. The digits '0' and '1' do not map to any letters and are not used.\n\nDue to an error in transmission, Bob received a string of pressed keys instead of the text message. Given a string pressedKeys representing the string received by Bob, return the total number of possible text messages Alice could have sent.\n\nSince the answer may be very large, return it modulo 10^9 + 7.\n\n**Input:**\nThe first line contains an integer n, the length of pressedKeys.\nThe second line contains the string pressedKeys (raw, not quoted).\n\n**Output:**\nPrint a single integer: the total number of possible text messages modulo 10^9 + 7.\n\n**Constraints:**\n1 <= pressedKeys.length <= 10^5\npressedKeys only consists of digits from '2' to '9'.\n\n**Examples:**\nExample 1:\nInput:\n5\n22233\nOutput:\n8\n\nExample 2:\nInput:\n36\n222222222222222222222222222222222222\nOutput:\n82876089",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

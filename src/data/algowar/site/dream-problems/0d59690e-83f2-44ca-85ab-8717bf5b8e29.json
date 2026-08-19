@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "0d59690e-83f2-44ca-85ab-8717bf5b8e29",
+    "title": "Find the Winner of the Circular Game",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "math",
+      "recursion",
+      "queue",
+      "simulation"
+    ],
+    "statement": "There are n friends that are playing a game. The friends are sitting in a circle and are numbered from 1 to n in clockwise order. More formally, moving clockwise from the i-th friend brings you to the (i+1)-th friend for 1 <= i < n, and moving clockwise from the n-th friend brings you to the 1st friend.\n\nThe rules of the game are as follows:\n1. Start at the 1st friend.\n2. Count the next k friends in the clockwise direction including the friend you started at. The counting wraps around the circle and may count some friends more than once.\n3. The last friend you counted leaves the circle and loses the game.\n4. If there is still more than one friend in the circle, go back to step 2 starting from the friend immediately clockwise of the friend who just lost and repeat.\n5. Else, the last friend in the circle wins the game.\n\nGiven the number of friends, n, and an integer k, output the winner of the game.\n\n**Input:**\nThe first line contains an integer n.\nThe second line contains an integer k.\n\n**Output:**\nPrint a single integer: the number of the winning friend.\n\n**Constraints:**\n1 <= k <= n <= 500\n\n**Examples:**\nExample 1:\nInput:\n5\n2\nOutput:\n3\n\nExample 2:\nInput:\n6\n5\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

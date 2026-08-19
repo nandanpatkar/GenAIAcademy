@@ -1,0 +1,33 @@
+{
+  "levelNumber": 332,
+  "displayNumber": 278,
+  "title": "Morris Preorder Traversal of a Binary Tree",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given <strong>root</strong> of binary tree, return the <strong>preorder</strong> traversal of the binary tree.</p><p><br></p><p><strong>Morris</strong> <strong>preorder</strong> Traversal is a tree traversal algorithm aiming to achieve a <strong>space</strong> <strong>complexity</strong> of <strong>O(1)</strong> without recursion or an external data structure.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [1, 4, null, 4 2]</p><p><strong>Output :</strong> [1, 4, 4, 2]</p><p><strong>Explanation :</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-ciEf_je5\"></p>",
+    "<p><strong>Input :</strong> root = [1]</p><p><strong>Output :</strong> [1]</p><p><strong>Explanation : </strong>Only root node is present.</p>",
+    "<p><strong>Input :</strong> root = [1, 4, 2, 9, null, null, 6]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 100</li><li>-100 Node.val <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

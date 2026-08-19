@@ -1,0 +1,33 @@
+{
+  "levelNumber": 57,
+  "displayNumber": 3,
+  "title": "Insertion Sorting",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers called nums, sort the array in non-decreasing order using the <strong>insertion sort</strong> algorithm and return the sorted array.</p><p><br></p><p>A sorted array in non-decreasing order is an array where each element is greater than or equal to all preceding elements in the array.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>nums = [7, 4, 1, 5, 3]</p><p><strong>Output:</strong> [1, 3, 4, 5, 7]</p><p><strong>Explanation:</strong> 1 <= 3 <= 4 <= 5 <= 7.</p><p>Thus the array is sorted in non-decreasing order.</p>",
+    "<p><strong>Input: </strong>nums = [5, 4, 4, 1, 1]</p><p><strong>Output:</strong> [1, 1, 4, 4, 5]</p><p><strong>Explanation:</strong> 1 <= 1 <= 4 <= 4 <= 5.</p><p>Thus the array is sorted in non-decreasing order.</p>",
+    "<p><strong>Input:</strong> nums = [3, 2, 3, 4, 5]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 1000</li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>nums[i] may contain duplicate values.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 2,
+    "title": "Sorting Forge",
+    "theme": "ember-forge",
+    "levelCount": 7,
+    "completionXp": 100
+  }
+}

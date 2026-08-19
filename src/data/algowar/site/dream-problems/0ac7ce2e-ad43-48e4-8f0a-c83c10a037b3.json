@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "0ac7ce2e-ad43-48e4-8f0a-c83c10a037b3",
+    "title": "Keep Multiplying Found Values by Two",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "hash-table",
+      "sorting",
+      "simulation"
+    ],
+    "statement": "You are given an array of integers nums and an integer original which is the first number that needs to be searched for in nums.\n\nYou then do the following steps:\n\n1. If original is found in nums, multiply it by two (i.e., set original = 2 * original).\n2. Otherwise, stop the process.\n3. Repeat this process with the new number as long as you keep finding the number.\n\nReturn the final value of original.\n\n**Input:**\nThe first line contains an integer n, the length of the array nums.\nThe second line contains n space-separated integers, the elements of nums.\nThe third line contains the integer original.\n\n**Output:**\nPrint a single integer: the final value of original after the process stops.\n\n**Constraints:**\n1 <= nums.length <= 1000\n1 <= nums[i], original <= 1000\n\n**Examples:**\nExample 1:\nInput:\n5\n5 3 6 1 12\n3\nOutput:\n24\n\nExample 2:\nInput:\n3\n2 7 9\n4\nOutput:\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

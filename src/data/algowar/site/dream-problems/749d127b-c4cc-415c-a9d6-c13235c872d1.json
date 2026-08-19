@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+    "title": "Group Anagrams",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "string",
+      "sorting"
+    ],
+    "statement": "Given an array of strings, group the anagrams together. Two strings are anagrams if they can be rearranged to form each other.\n\n**Input:**\n- Line 1: an integer n, the number of strings.\n- Lines 2 through n+1: one string per line.\n\n**Output:**\n- Line 1: an integer g, the number of anagram groups.\n- For each group (in ascending order of the lexicographically smallest string in the group):\n  - A line containing an integer k, the size of the group.\n  - k lines, each containing one string of the group, sorted in ascending lexicographic order.\n\n**Constraints:**\n- 1 <= n <= 10^4\n- 0 <= strs[i].length <= 100\n- Each strs[i] consists of lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\n6\neat\ntea\ntan\nate\nnat\nbat\nOutput:\n3\n3\nate\neat\ntea\n1\nbat\n2\nnat\ntan\n\nExample 2:\nInput:\n1\n\nOutput:\n1\n1\n\n\nExample 3:\nInput:\n1\na\nOutput:\n1\n1\na",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

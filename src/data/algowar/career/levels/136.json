@@ -1,0 +1,33 @@
+{
+  "levelNumber": 136,
+  "displayNumber": 82,
+  "title": "Largest Odd Number in a String",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string <strong>s</strong>, representing a large integer, the task is to return the largest-valued <strong>odd</strong> <strong>integer</strong> (as a string) that is a <strong>substring</strong> of the given string s.</p><p><br></p><p>The number returned should <strong>not</strong> have leading <strong>zero's</strong>. But the given input string may have leading zero. (If no odd number is found, then return empty string.)</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"5347\"</p><p><strong>Output :</strong> \"5347\"</p><p><strong>Explanation :</strong> </p><p>The odd numbers formed by given strings are --> 5, 3, 53, 347, 5347.</p><p>So the largest among all the possible odd numbers for given string is 5347.</p>",
+    "<p><strong>Input :</strong> s = \"0214638\"</p><p><strong>Output :</strong> \"21463\"</p><p><strong>Explanation :</strong> </p><p>The different odd numbers that can be formed by the given string are --> 1, 3, 21, 63, 463, 1463, 21463.</p><p>We cannot include 021463 as the number contains leading zero.</p><p>So largest odd number in given string is 21463.</p>",
+    "<p><strong>Input :</strong> s = \"0032579\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>3</sup></li><li>'0' <= s[i] <= '9'</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

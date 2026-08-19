@@ -1,0 +1,33 @@
+{
+  "levelNumber": 156,
+  "displayNumber": 102,
+  "title": "Delete head of Doubly Linked List",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a doubly linked list, remove the node at the head of the linked list and return the head of the modified list.</p><p><br></p><p>The head is the first node of the linked list.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: doublyLinkedList = [1, 2, 3]</p><p><strong>Output</strong>: <span style=\"color: rgb(229, 231, 235);\">[2, 3]</span></p><p><strong>Explanation</strong>:</p><ul><li>The node with value 1 was removed.</li></ul>",
+    "<p><strong>Input</strong>: <span style=\"color: rgb(229, 231, 235);\">doublyLinkedList = [7]</span></p><p><strong>Output</strong>: [ ]</p><p><strong>Explanation</strong>:</p><ul><li>Note that the head has null value after the removal.</li></ul>",
+    "<p><strong>Input</strong>: <span style=\"color: rgb(229, 231, 235);\">doublyLinkedList = [2, 4]</span></p>"
+  ],
+  "constraintsHtml": "<ul><li>n == Number of nodes in the linked list</li><li>1 <= n <= 100</li><li>0 <= ListNode.data <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

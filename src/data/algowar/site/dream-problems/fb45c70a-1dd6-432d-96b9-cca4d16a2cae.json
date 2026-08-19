@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "fb45c70a-1dd6-432d-96b9-cca4d16a2cae",
+    "title": "Longest Consecutive Sequence",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "union-find"
+    ],
+    "statement": "Given an unsorted array of integers, find the length of the longest consecutive elements sequence. Your algorithm must run in O(n) time.\n\n**Input:**\nLine 1: an integer n, the length of the array.\nLine 2: n space-separated integers representing the array.\n\n**Output:**\nA single integer: the length of the longest consecutive elements sequence.\n\n**Constraints:**\n- 0 <= n <= 10^5\n- -10^9 <= nums[i] <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n6\n100 4 200 1 3 2\nOutput:\n4\n\nExample 2:\nInput:\n10\n0 3 7 2 5 8 4 6 0 1\nOutput:\n9\n\nExample 3:\nInput:\n4\n1 0 1 2\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

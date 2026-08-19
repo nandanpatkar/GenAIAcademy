@@ -1,0 +1,26 @@
+{
+  "levelNumber": 274,
+  "displayNumber": 220,
+  "title": "Task Scheduler",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a list of tasks represented by uppercase English letters ('A' to 'Z'), and an integer n representing a cooldown interval between two same tasks.</p><p><br></p><p>Each task takes exactly 1 CPU interval to complete.</p><p>Tasks can be executed in any order, but identical tasks must be separated by at least n intervals, during which the CPU may remain idle or execute other tasks.</p><p><br></p><p>Return the minimum number of <strong>CPU </strong>intervals required to complete all the tasks.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> tasks = [\"A\",\"A\",\"A\",\"B\",\"B\",\"B\"], n = 2</p><p><strong>Output: </strong>8</p><p><strong>Explanation:</strong></p><ul><li>One valid execution order is:</li><li>A -> B -> idle -> A -> B -> idle -> A -> B</li><li>Total intervals = 8</li></ul>",
+    "<p><strong>Input:</strong> tasks = [\"A\",\"C\",\"A\",\"B\",\"D\",\"B\"], n = 1</p><p><strong>Output:</strong> 6</p><p><strong>Explanation:</strong></p><ul><li>A possible execution:</li><li>A -> B -> C -> D -> A -> B</li><li>No idle interval is needed as cooldown = 1.</li></ul>",
+    "<p><strong>Input:</strong> tasks = [\"A\",\"A\",\"A\",\"B\",\"B\",\"B\"], n = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= tasks.length <= 10<sup>4</sup></li><li>tasks[i] is an uppercase English letter from 'A' to 'Z'</li><li>0 <= n <= 100</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

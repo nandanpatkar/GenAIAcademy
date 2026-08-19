@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "b3483af4-7932-40ab-9b63-fa3966fad367",
+    "title": "Design Circular Queue",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "linked-list",
+      "design",
+      "queue"
+    ],
+    "statement": "Design a circular queue of fixed size k. A circular queue is a linear data structure in which operations are performed based on FIFO (First In First Out) principle, and the last position is connected back to the first position to make a circle (also called a \"Ring Buffer\").\n\nYou must support the following operations:\n- enQueue(value): Insert an element into the circular queue. Return true if the operation is successful (i.e., the queue is not full).\n- deQueue(): Delete an element from the front of the circular queue. Return true if the operation is successful (i.e., the queue is not empty).\n- Front(): Get the front item from the queue. If the queue is empty, return -1.\n- Rear(): Get the last item from the queue. If the queue is empty, return -1.\n- isEmpty(): Return true if the queue is empty.\n- isFull(): Return true if the queue is full.\n\nYou must solve the problem without using the built-in queue data structure in your programming language.\n\n**Input:**\nThe first line contains an integer k, the capacity of the circular queue.\nThe second line contains an integer n, the number of operations.\nThe next n lines each contain an operation. Each operation is one of:\n  - \"enQueue v\" where v is an integer value to insert.\n  - \"deQueue\"\n  - \"Front\"\n  - \"Rear\"\n  - \"isEmpty\"\n  - \"isFull\"\n\n**Output:**\nPrint n lines, one per operation in order. For enQueue, deQueue, isEmpty, and isFull, print \"true\" or \"false\" on its own line. For Front and Rear, print the integer result on its own line.\n\n**Constraints:**\n1 <= k <= 1000\n0 <= value <= 1000\nAt most 3000 operations will be performed.\n\n**Examples:**\nExample 1:\nInput:\n3\n9\nenQueue 1\nenQueue 2\nenQueue 3\nenQueue 4\nRear\nisFull\ndeQueue\nenQueue 4\nRear\nOutput:\ntrue\ntrue\ntrue\nfalse\n3\ntrue\ntrue\ntrue\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

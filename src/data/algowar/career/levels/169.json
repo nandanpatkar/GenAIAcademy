@@ -1,0 +1,33 @@
+{
+  "levelNumber": 169,
+  "displayNumber": 115,
+  "title": "Sort a Linked List of 0's 1's and 2's",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head<strong> </strong>of a singly<strong> </strong>linked list consisting of only <strong>0, 1 or 2</strong>. </p><p><br></p><p>Sort<strong> </strong>the given linked list and return the head<strong> </strong>of the modified<strong> </strong>list. </p><p><br></p><p>Do it <strong>in-place</strong> by changing<strong> </strong>the links between the nodes without<strong> </strong>creating new nodes.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: linkedList = [1, 0, 2, 0 , 1]</p><p><strong>Output</strong>: [0, 0, 1, 1, 2]</p><p><strong>Explanation</strong>: The values after sorting are [0, 0, 1, 1, 2].</p>",
+    "<p><strong>Input</strong>: linkedList = [1, 1, 1, 0]</p><p><strong>Output</strong>: [0, 1, 1, 1]</p><p><strong>Explanation</strong>: The values after sorting are [0, 1, 1, 1].</p>",
+    "<p><strong>Input</strong>: linkedList = [2, 2, 1, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes in the Linked List <= 10<sup>5</sup></li><li>0 <= ListNode.val <= 2</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

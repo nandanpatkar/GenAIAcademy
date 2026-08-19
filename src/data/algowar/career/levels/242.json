@@ -1,0 +1,33 @@
+{
+  "levelNumber": 242,
+  "displayNumber": 188,
+  "title": "Sum of Subarray Minimums",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers arr of size n, calculate the sum of the minimum value in each (contiguous) <strong>subarray</strong> of arr. Since the result may be large, return the answer modulo 10<sup>9</sup> +7.</p>",
+  "examples": [
+    "<p>Input: arr = [3, 1, 2, 5]</p><p>Output: 18</p><p>Explanation: The minimum of subarrays: [3], [1], [2], [5], [3, 1], [1, 2], [2, 5], [3, 1, 2], [1, 2, 5], [3, 1, 2, 5] are 3, 1, 2, 5, 1, 1, 2, 1, 1, 1 respectively and their sum is 18.</p>",
+    "<p>Input: arr = [2, 3, 1]</p><p>Output: 10</p><p>Explanation: The minimum of subarrays: [2], [3], [1], [2,3], [3,1], [2,3,1] are&nbsp;2, 3, 1, 2, 1, 1 respectively and their sum is 10.</p>",
+    "<p>Input: arr = [11, 81, 94, 43, 3]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= arr.length <= 10<sup>5</sup></li><li>&nbsp;&nbsp;1 <= arr[i] <= 10<sup>6</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

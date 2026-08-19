@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "d54d63f5-0926-479a-9f7b-0b4bf75f64f5",
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "divide-and-conquer",
+      "tree",
+      "binary-tree"
+    ],
+    "statement": "Given two integer arrays preorder and inorder, where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.\n\nThe binary tree is output in level-order, with the word \"null\" marking absent children (trailing nulls trimmed).\n\n**Input:**\n- Line 1: an integer n — the length of the preorder array.\n- Line 2: n space-separated integers — the preorder traversal.\n- Line 3: an integer n — the length of the inorder array (equal to the preorder length).\n- Line 4: n space-separated integers — the inorder traversal.\n\n**Output:**\n- A single line of space-separated values representing the reconstructed binary tree in level-order (LeetCode convention), using \"null\" for absent children and trimming trailing nulls.\n\n**Constraints:**\n- 1 <= preorder.length <= 3000\n- inorder.length == preorder.length\n- -3000 <= preorder[i], inorder[i] <= 3000\n- preorder and inorder consist of unique values.\n- Each value of inorder also appears in preorder.\n- preorder is guaranteed to be the preorder traversal of the tree.\n- inorder is guaranteed to be the inorder traversal of the tree.\n\n**Examples:**\n\nExample 1:\nInput:\n5\n3 9 20 15 7\n5\n9 3 15 20 7\nOutput:\n3 9 20 null null 15 7\n\nExample 2:\nInput:\n1\n-1\n1\n-1\nOutput:\n-1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

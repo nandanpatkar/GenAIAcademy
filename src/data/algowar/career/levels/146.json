@@ -1,0 +1,26 @@
+{
+  "levelNumber": 146,
+  "displayNumber": 92,
+  "title": "Longest Palindromic Substring",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string <strong>s</strong>, return the <strong>longest palindromic </strong>substring in s.</p><p><br></p><p>A palindromic substring is a contiguous sequence of characters within the string that <strong>reads </strong>the<strong> same forward and backward</strong>.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>s = \"babad\"</p><p><strong>Output:</strong> \"bab\"</p><p><strong>Explanation:</strong> </p><p>Both \"bab\" and \"aba\" are valid palindromic substrings of length 3. Return either.</p>",
+    "<p><strong>Input:</strong> s = \"cbbd\"</p><p><strong>Output: </strong>\"bb\"</p><p><strong>Explanation:</strong> </p><p>The longest palindrome is \"bb\" of length 2.</p>",
+    "<p><strong>Input: </strong>s = \"a12321b\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 1000</li><li>s consists of only English letters (both lowercase and uppercase) and digits.</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

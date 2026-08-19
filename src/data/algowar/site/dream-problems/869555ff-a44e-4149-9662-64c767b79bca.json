@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "869555ff-a44e-4149-9662-64c767b79bca",
+    "title": "Task Scheduler II",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "simulation"
+    ],
+    "statement": "You are given a 0-indexed array of positive integers tasks, representing tasks that need to be completed in order, where tasks[i] represents the type of the i-th task.\n\nYou are also given a positive integer space, which represents the minimum number of days that must pass after the completion of a task before another task of the same type can be performed.\n\nEach day, until all tasks have been completed, you must either:\n- Complete the next task from tasks, or\n- Take a break.\n\nReturn the minimum number of days needed to complete all tasks.\n\n**Input:**\nThe first line contains an integer n, the number of tasks.\nThe second line contains n space-separated positive integers representing the task types.\nThe third line contains a single positive integer space.\n\n**Output:**\nPrint a single integer: the minimum number of days needed to complete all tasks.\n\n**Constraints:**\n- 1 <= n <= 10^5\n- 1 <= tasks[i] <= 10^9\n- 1 <= space <= n\n\n**Examples:**\nExample 1:\nInput:\n6\n1 2 1 2 3 1\n3\nOutput:\n9\n\nExample 2:\nInput:\n4\n5 8 8 5\n2\nOutput:\n6",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

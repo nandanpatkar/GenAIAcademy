@@ -1,0 +1,33 @@
+{
+  "levelNumber": 286,
+  "displayNumber": 232,
+  "title": "N meetings in one room",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given one meeting room and N meetings represented by two arrays, start and end, where start[i] represents the start time of the ith meeting and end[i] represents the end time of the ith meeting, determine the <strong>maximum </strong>number of meetings that can be accommodated in the meeting room if only one meeting can be held at a time.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> Start = [1, 3, 0, 5, 8, 5]&nbsp;,&nbsp;End = [2, 4, 6, 7, 9, 9]</p><p><strong>Output :</strong> 4</p><p><strong>Explanation :</strong> The meetings that can be accommodated in meeting room are (1,2) , (3,4) , (5,7) , (8,9).</p>",
+    "<p><strong>Input :</strong> Start = [10, 12, 20]&nbsp;,&nbsp;End = [20, 25, 30]</p><p><strong>Output :</strong> 1</p><p><strong>Explanation :</strong> Given the start and end time, only one meeting can be held in meeting room.</p>",
+    "<p><strong>Input :</strong> Start = [1, 4, 6, 9] , End = [2, 5, 7, 12]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= N <= 10<sup>5</sup></li><li>0 <= start[i] < end[i] <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 469,
+  "displayNumber": 415,
+  "title": "Rabin Karp Algorithm",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string text and a string pattern, implement the <strong>Rabin-Karp</strong> algorithm to find the starting index of all occurrences of pattern in text. If pattern is not found, return an empty list.</p>",
+  "examples": [
+    "<p>Input: text = \"ababcabcababc\", pattern = \"abc\"</p><p><br></p><p>Output: [2, 5, 10]</p><p><br></p><p>Expalanation : The pattern \"abc\" is found at indices 2, 5, and 10 in the text.</p>",
+    "<p>Input: text = \"hello\", pattern = \"ll\"</p><p><br></p><p>Output: [2]</p><p><br></p><p>Explanation: The pattern \"ll\" is found at index 2 in the text.</p>",
+    "<p>Input: text = \"abcdef\", pattern = \"gh\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1<= text.length, pattern.length <=5*10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 18,
+    "title": "String Trials",
+    "theme": "obsidian-strings",
+    "levelCount": 9,
+    "completionXp": 100
+  }
+}

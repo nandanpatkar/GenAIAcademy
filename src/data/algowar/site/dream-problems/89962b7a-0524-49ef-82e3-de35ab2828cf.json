@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "89962b7a-0524-49ef-82e3-de35ab2828cf",
+    "title": "Integer to Roman",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "math",
+      "string"
+    ],
+    "statement": "Seven different symbols represent Roman numerals with the following values:\n\nSymbol | Value\n--- | ---\nI | 1\nV | 5\nX | 10\nL | 50\nC | 100\nD | 500\nM | 1000\n\nRoman numerals are formed by appending the conversions of decimal place values from highest to lowest. Converting a decimal place value into a Roman numeral has the following rules:\n\n- If the value does not start with 4 or 9, select the symbol of the maximal value that can be subtracted from the input, append that symbol to the result, subtract its value, and convert the remainder to a Roman numeral.\n- If the value starts with 4 or 9 use the subtractive form representing one symbol subtracted from the following symbol, for example, 4 is 1 (I) less than 5 (V): IV and 9 is 1 (I) less than 10 (X): IX. Only the following subtractive forms are used: 4 (IV), 9 (IX), 40 (XL), 90 (XC), 400 (CD) and 900 (CM).\n- Only powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form.\n\nGiven an integer, convert it to a Roman numeral.\n\n**Input:**\nThe first and only line contains an integer `num`.\n\n**Output:**\nPrint the Roman numeral representation of `num` as a raw string on a single line.\n\n**Constraints:**\n1 <= num <= 3999\n\n**Examples:**\nExample 1:\nInput:\n3749\nOutput:\nMMMDCCXLIX\n\nExample 2:\nInput:\n58\nOutput:\nLVIII\n\nExample 3:\nInput:\n1994\nOutput:\nMCMXCIV",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

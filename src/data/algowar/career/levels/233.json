@@ -1,0 +1,26 @@
+{
+  "levelNumber": 233,
+  "displayNumber": 179,
+  "title": "Prefix to Postfix Conversion",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a valid prefix expression consisting of binary operators and single-character operands. Your task is to convert it into a <strong>valid postfix expression.</strong></p><p><br></p><p>Prefix (<strong>Polish</strong>) notation places the <strong>operator before operands</strong>.</p><p>Postfix (<strong>Reverse Polish</strong>) notation places the <strong>operator after </strong>operands.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> <span style=\"color: rgb(245, 245, 245);\">expression = </span>\"+ab\"</p><p><strong>Output:</strong> \"ab+\"</p>",
+    "<p><strong>Input:</strong> <span style=\"color: rgb(245, 245, 245);\">expression = </span>\"*+ab-cd\"</p><p><strong>Output:</strong> \"ab+cd-*\"</p><p><br></p>",
+    "<p><strong>Input:</strong> expression = \"^a*bc\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= expression.length <= 10<sup>4</sup></li><li>Expression contains only valid prefix characters (a-z, 0-9, +, -, *, /, ^)</li><li>Expression is guaranteed to be a valid prefix expression</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

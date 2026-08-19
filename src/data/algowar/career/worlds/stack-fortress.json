@@ -1,0 +1,816 @@
+{
+  "worldNumber": 9,
+  "slug": "stack-fortress",
+  "title": "Stack Fortress",
+  "description": "Conquer stacks, queues, monotonic structures, and expression systems.",
+  "theme": "iron-fortress",
+  "levelCount": 30,
+  "xpAvailable": 545,
+  "difficultySummary": {
+    "Easy": 9,
+    "Hard": 8,
+    "Medium": 13
+  },
+  "contentSummary": {
+    "plus": 30
+  },
+  "completionReward": {
+    "badgeTitle": "Stack Guardian",
+    "xp": 100,
+    "coins": 475
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-9-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Stack Fortress",
+      "subtitle": "Stack and Queues [Learning, Pre-In-Post-fix, Monotonic Stack, Implementation]",
+      "description": "Conquer stacks, queues, monotonic structures, and expression systems.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-223",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Implement Stack using Arrays",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 223,
+        "displayNumber": 169,
+        "title": "Implement Stack using Arrays",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-224",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Implement Queue using Arrays",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 224,
+        "displayNumber": 170,
+        "title": "Implement Queue using Arrays",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-225",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Implement Stack using Queue",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 225,
+        "displayNumber": 171,
+        "title": "Implement Stack using Queue",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-226",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Implement Queue using Stack",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 226,
+        "displayNumber": 172,
+        "title": "Implement Queue using Stack",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-227",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Implement stack using Linkedlist",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 227,
+        "displayNumber": 173,
+        "title": "Implement stack using Linkedlist",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-228",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Implement queue using Linkedlist",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 228,
+        "displayNumber": 174,
+        "title": "Implement queue using Linkedlist",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-229",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Balanced Paranthesis",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 229,
+        "displayNumber": 175,
+        "title": "Balanced Paranthesis",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-230",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Implement Min Stack",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 230,
+        "displayNumber": 176,
+        "title": "Implement Min Stack",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-231",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Infix to Postfix Conversion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 231,
+        "displayNumber": 177,
+        "title": "Infix to Postfix Conversion",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-232",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Prefix to Infix Conversion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 232,
+        "displayNumber": 178,
+        "title": "Prefix to Infix Conversion",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-233",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Prefix to Postfix Conversion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 233,
+        "displayNumber": 179,
+        "title": "Prefix to Postfix Conversion",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-234",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Postfix to Prefix Conversion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 234,
+        "displayNumber": 180,
+        "title": "Postfix to Prefix Conversion",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-9-checkpoint-234",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 234,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-235",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Postfix to Infix Conversion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 235,
+        "displayNumber": 181,
+        "title": "Postfix to Infix Conversion",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-236",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Infix to Prefix Conversion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 236,
+        "displayNumber": 182,
+        "title": "Infix to Prefix Conversion",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-237",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Next Greater Element",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 237,
+        "displayNumber": 183,
+        "title": "Next Greater Element",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-238",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Next Greater Element - 2",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 238,
+        "displayNumber": 184,
+        "title": "Next Greater Element - 2",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-239",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Next Smaller Element",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 239,
+        "displayNumber": 185,
+        "title": "Next Smaller Element",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-240",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Number of Greater Elements to the Right",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 240,
+        "displayNumber": 186,
+        "title": "Number of Greater Elements to the Right",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-241",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Trapping Rainwater",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 241,
+        "displayNumber": 187,
+        "title": "Trapping Rainwater",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-242",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Sum of Subarray Minimums",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 242,
+        "displayNumber": 188,
+        "title": "Sum of Subarray Minimums",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-243",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Asteroid Collision",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 243,
+        "displayNumber": 189,
+        "title": "Asteroid Collision",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-244",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Sum of Subarray Ranges",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 244,
+        "displayNumber": 190,
+        "title": "Sum of Subarray Ranges",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-245",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Remove K Digits",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 245,
+        "displayNumber": 191,
+        "title": "Remove K Digits",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-246",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Largest rectangle in a histogram",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 246,
+        "displayNumber": 192,
+        "title": "Largest rectangle in a histogram",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-9-checkpoint-246",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 246,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-247",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Maximum Rectangles",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 247,
+        "displayNumber": 193,
+        "title": "Maximum Rectangles",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-248",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "Sliding Window Maximum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 248,
+        "displayNumber": 194,
+        "title": "Sliding Window Maximum",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-249",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Stock span problem",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 249,
+        "displayNumber": 195,
+        "title": "Stock span problem",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-250",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Celebrity Problem",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 250,
+        "displayNumber": 196,
+        "title": "Celebrity Problem",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-251",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "LRU Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 251,
+        "displayNumber": 197,
+        "title": "LRU Cache",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-252",
+      "nodeType": "boss",
+      "order": 33,
+      "mapLane": "center",
+      "title": "LFU Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 252,
+        "displayNumber": 198,
+        "title": "LFU Cache",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

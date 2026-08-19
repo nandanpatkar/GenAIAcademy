@@ -1,0 +1,33 @@
+{
+  "levelNumber": 431,
+  "displayNumber": 377,
+  "title": "Minimum insertions to make string palindrome | DP-29",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string s, find the minimum number of insertions needed to make it a palindrome. A palindrome is a sequence that reads the same backward as forward. You can insert characters at any position in the string.</p>",
+  "examples": [
+    "<p>Input: s = \"abcaa\"</p><p><br></p><p>Output: 2</p><p><br></p><p>Explanation: Insert 2 characters \"c\", and \"b\" to make \"abca<strong>cb</strong>a\", which is a palindrome.</p>",
+    "<p>Input: s = \"ba\"</p><p><br></p><p>Output: 1</p><p><br></p><p>Explanation: Insert \"a\" at the beginning to make \"aba\", which is a palindrome.</p>",
+    "<p>Input: s = \"madam\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 1000,</li><li>s consists of only lowercase English letters</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

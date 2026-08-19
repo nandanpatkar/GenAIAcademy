@@ -1,0 +1,33 @@
+{
+  "levelNumber": 194,
+  "displayNumber": 140,
+  "title": "Subsets II",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array nums, which can have duplicate entries, provide the <strong>power set</strong>. </p><p><br></p><p>Duplicate subsets cannot exist in the solution set. Return the answer in any sequence.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [1, 2, 2]</p><p><strong>Output :</strong> [ [ ] , [1] , [1, 2] , [1, 2, 2] , [2] , [2, 2] ]</p>",
+    "<p><strong>Input :</strong> nums = [1, 2]</p><p><strong>Output :</strong> [ [ ], [1] , [2] , [1, 2] ]</p>",
+    "<p><strong>Input :</strong> nums = [1, 3, 3]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10</li><li>-10 <= nums[i] <= 10</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

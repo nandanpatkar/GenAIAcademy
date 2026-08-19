@@ -1,0 +1,33 @@
+{
+  "levelNumber": 37,
+  "displayNumber": 37,
+  "title": "Reverse a number",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer <strong>n</strong>. Return the integer formed by placing the <strong>digits </strong>of n in <strong>reverse</strong> order.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 25</p><p><strong>Output</strong>: 52</p><p><strong>Explanation</strong>: Reverse of 25 is 52.</p>",
+    "<p><strong>Input</strong>: n = 123</p><p><strong>Output</strong>: 321</p><p><strong>Explanation</strong>: Reverse of 123 is 321.</p>",
+    "<p>Input: n = 54</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= n <= 5000</li><li>n will contain no leading zeroes except when it is 0 itself.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 1,
+    "title": "Foundation Gate",
+    "theme": "neon-dojo",
+    "levelCount": 54,
+    "completionXp": 100
+  }
+}

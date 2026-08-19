@@ -1,0 +1,31 @@
+{
+  "levelNumber": 206,
+  "displayNumber": 152,
+  "title": "Check if the i-th bit is Set or Not",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integers n and i, return true if the i<sup>th</sup> bit in the binary representation of n (counting from the least significant bit, 0-indexed) is set (i.e., equal to 1). Otherwise, return false.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> n = 5, i = 0</p><p><strong>Output:</strong> true</p><p><strong>Explanation: </strong>Binary representation of 5 is 101. The 0-th bit from LSB is set (1).</p><p><br></p>",
+    "<p><strong>Input:</strong> n = 10, i = 1</p><p><strong>Output:</strong> true</p><p><strong>Explanation: </strong>Binary representation of 10 is 1010. The 1-st bit from LSB is set (1).</p>",
+    "<p><strong>Input:</strong> n = 16, i = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 10<sup>9</sup></li><li>0 <= i <= 31</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

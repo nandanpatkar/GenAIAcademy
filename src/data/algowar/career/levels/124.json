@@ -1,0 +1,33 @@
+{
+  "levelNumber": 124,
+  "displayNumber": 70,
+  "title": "Split array - largest sum",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array a of size n and an integer k. Split the array a into k non-empty subarrays such that the largest sum of any subarray is minimized. Return the <strong>minimized largest sum</strong> of the split.</p>",
+  "examples": [
+    "<p>Input: a = [1, 2, 3, 4, 5], k = 3</p><p>Output:6</p><p>Explanation: There are many ways to split the array a[] into k consecutive subarrays. The best way to do this is to split the array a[] into [1, 2, 3], [4], and [5], where the largest sum among the three subarrays is only 6.</p>",
+    "<p>Input: a = [3,5,1], k = 3</p><p>Output: 5</p><p>Explanation: There is only one way to split the array a[] into 3 subarrays, i.e., [3], [5], and [1]. The largest sum among these subarrays is 5.</p>",
+    "<p>Input: a = [1, 2, 3, 4, 5], k = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;1 ≤ n ≤ 10<sup>4</sup></li><li>&nbsp;1 ≤ k ≤ n</li><li>&nbsp;1 ≤ a[i] ≤ 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

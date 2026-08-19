@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "b37b4a1f-8871-44f0-a126-889ffdd783b0",
+    "title": "Break a Palindrome",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "greedy"
+    ],
+    "statement": "Break a Palindrome\n\nGiven a palindromic string of lowercase English letters, replace exactly one character with any lowercase English letter so that the resulting string is not a palindrome and that it is the lexicographically smallest one possible.\n\nReturn the resulting string. If there is no way to replace a character to make it not a palindrome, return an empty string.\n\nA string a is lexicographically smaller than a string b (of the same length) if in the first position where a and b differ, a has a character strictly smaller than the corresponding character in b. For example, \"abcc\" is lexicographically smaller than \"abcd\" because the first position they differ is at the fourth character, and 'c' is smaller than 'd'.\n\n**Input:**\nThe first line contains an integer n, the length of the palindromic string.\nThe second line contains the string palindrome, consisting of n lowercase English letters.\n\n**Output:**\nIf a valid result exists, print its length on the first line, followed by the resulting string on the second line.\nIf the result is an empty string, print 0 on the first line (no second line).\n\n**Constraints:**\n- 1 <= palindrome.length <= 1000\n- palindrome consists of only lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\n6\nabccba\nOutput:\n6\naaccba\n\nExample 2:\nInput:\n1\na\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

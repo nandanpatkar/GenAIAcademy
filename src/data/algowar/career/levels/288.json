@@ -1,0 +1,26 @@
+{
+  "levelNumber": 288,
+  "displayNumber": 234,
+  "title": "Jump Game II",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a 0-indexed array nums of length n representing your maximum jump capability from each index.</p><p><br></p><p>You start at index 0. Each element nums[i] represents the maximum number of steps you can jump forward from index i.</p><p><br></p><p>Your goal is to reach the last index of the array <strong>(nums[n - 1]) </strong>using the minimum number of jumps.</p><p><br></p><p>Return the minimum number of jumps required to reach the last index.</p><p><br></p><p>You can assume that it is always possible to reach the last index.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> nums = [2,3,1,1,4]</p><p><strong>Output:</strong> 2</p><p><strong>Explanation: </strong></p><p>Jump from index 0 → 1 → 4 (2 jumps).</p>",
+    "<p><strong>Input:</strong> nums = [2,3,0,1,4]</p><p><strong>Output: </strong>2</p><p><strong>Explanation:</strong> </p><p>Jump from index 0 → 1 → 4.</p>",
+    "<p><strong>Input:</strong> nums = [5,9,3,2,1,0,2,3,3,1,0,0]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10⁴</li><li>0 <= nums[i] <= 1000</li><li>It is guaranteed that you can reach the last index.</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 12,
+    "title": "Greedy Kingdom",
+    "theme": "royal-greedy",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

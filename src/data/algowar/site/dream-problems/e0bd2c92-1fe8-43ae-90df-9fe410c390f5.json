@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "e0bd2c92-1fe8-43ae-90df-9fe410c390f5",
+    "title": "Best Position for a Service Centre",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "math",
+      "geometry",
+      "randomized"
+    ],
+    "statement": "A delivery company wants to build a new service center in a new city. The company knows the positions of all the customers in this city on a 2D map and wants to build the new center in a position such that the sum of the Euclidean distances to all customers is minimum.\n\nYou are given the positions of all customers. Find the position of the service center [x_centre, y_centre] that minimizes the sum of the Euclidean distances to all customers, and return that minimum sum.\n\nAnswers within 10^-5 of the actual value will be accepted.\n\n**Input:**\nThe first line contains two integers rows and cols, where rows is the number of customers and cols is always 2.\nThe next rows lines each contain two space-separated integers x_i and y_i, the position of the i-th customer.\n\n**Output:**\nPrint a single floating point number: the minimum sum of the Euclidean distances to all customers, with exactly 5 decimal places.\n\n**Constraints:**\n1 <= rows <= 50\ncols == 2\n0 <= x_i, y_i <= 100\n\n**Examples:**\nExample 1:\nInput:\n4 2\n0 1\n1 0\n1 2\n2 1\nOutput:\n4.00000\n\nExample 2:\nInput:\n2 2\n1 1\n3 3\nOutput:\n2.82843",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

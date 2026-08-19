@@ -1,0 +1,33 @@
+{
+  "levelNumber": 348,
+  "displayNumber": 294,
+  "title": "Two Sum In BST | Check if there exists a pair with Sum K",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the root of a binary search tree and an integer k.Return true if there exist two elements in the BST such that their <strong>sum</strong> is equal to <strong>k</strong> otherwise false.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , k = 9</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> </p><p>The BST contains multiple pair of nodes that sum up to k.</p><p>3 + 6 => 9.</p><p>5 + 4 => 9.</p><p>2 + 7 => 9.</p>",
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , k = 14</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> </p><p>There is no pair in given BST that sum up to k.</p>",
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , k = 12</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>-10<sup>4</sup> <= Node.val <= 10<sup>4</sup></li><li>-10<sup>5</sup> <= k <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

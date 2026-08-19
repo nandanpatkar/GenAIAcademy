@@ -1,0 +1,426 @@
+{
+  "worldNumber": 12,
+  "slug": "greedy-kingdom",
+  "title": "Greedy Kingdom",
+  "description": "Make locally optimal moves across intervals, scheduling, and allocation.",
+  "theme": "royal-greedy",
+  "levelCount": 15,
+  "xpAvailable": 320,
+  "difficultySummary": {
+    "Easy": 3,
+    "Hard": 2,
+    "Medium": 10
+  },
+  "contentSummary": {
+    "plus": 15
+  },
+  "completionReward": {
+    "badgeTitle": "Greedy Strategist",
+    "xp": 100,
+    "coins": 550
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-12-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Greedy Kingdom",
+      "subtitle": "Greedy Algorithms [Easy, Medium/Hard]",
+      "description": "Make locally optimal moves across intervals, scheduling, and allocation.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-282",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Assign Cookies",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 282,
+        "displayNumber": 228,
+        "title": "Assign Cookies",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-283",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Fractional Knapsack",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 283,
+        "displayNumber": 229,
+        "title": "Fractional Knapsack",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-284",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Lemonade Change",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 284,
+        "displayNumber": 230,
+        "title": "Lemonade Change",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-285",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Valid Paranthesis Checker",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 285,
+        "displayNumber": 231,
+        "title": "Valid Paranthesis Checker",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-286",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "N meetings in one room",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 286,
+        "displayNumber": 232,
+        "title": "N meetings in one room",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-287",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Jump Game - I",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 287,
+        "displayNumber": 233,
+        "title": "Jump Game - I",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-288",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Jump Game II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 288,
+        "displayNumber": 234,
+        "title": "Jump Game II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-289",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Minimum number of platforms required for a railway",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 289,
+        "displayNumber": 235,
+        "title": "Minimum number of platforms required for a railway",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-290",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Job sequencing Problem",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 290,
+        "displayNumber": 236,
+        "title": "Job sequencing Problem",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-291",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Candy",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 291,
+        "displayNumber": 237,
+        "title": "Candy",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-292",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Shortest Job First",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 292,
+        "displayNumber": 238,
+        "title": "Shortest Job First",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-293",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Program for Least Recently Used (LRU) Page Replacement Algorithm",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 293,
+        "displayNumber": 239,
+        "title": "Program for Least Recently Used (LRU) Page Replacement Algorithm",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-12-checkpoint-293",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 293,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-294",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Insert Interval",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 294,
+        "displayNumber": 240,
+        "title": "Insert Interval",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-295",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Merge Intervals",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 295,
+        "displayNumber": 241,
+        "title": "Merge Intervals",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-296",
+      "nodeType": "boss",
+      "order": 17,
+      "mapLane": "center",
+      "title": "Non-overlapping Intervals",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 150
+      },
+      "level": {
+        "levelNumber": 296,
+        "displayNumber": 242,
+        "title": "Non-overlapping Intervals",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 150,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

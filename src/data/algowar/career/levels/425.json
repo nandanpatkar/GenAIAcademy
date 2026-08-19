@@ -1,0 +1,33 @@
+{
+  "levelNumber": 425,
+  "displayNumber": 371,
+  "title": "Unbounded knapsack",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integer arrays, val and wt, each of size N, representing the values and weights of N items respectively, and an integer W, representing the maximum capacity of a knapsack, determine the maximum value achievable by selecting a subset of the items such that the total weight of the selected items does not exceed the knapsack capacity W. The goal is to <strong>maximize</strong> the sum of the values of the selected items while keeping the total weight within the knapsack's capacity.</p><p><br></p><p>An <strong>infinite</strong> supply of each item can be assumed.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> val = [5, 11, 13], wt = [2, 4, 6], W = 10</p><p><strong>Output: </strong>27</p><p><strong>Explanation:</strong> Select 2 items with weights 4 and 1 item with weight 2 for a total value of 11+11+5 = 27.</p>",
+    "<p><strong>Input:</strong> val = [10, 40, 50, 70], wt = [1, 3, 4, 5], W = 8</p><p><strong>Output:</strong> 110</p><p><strong>Explanation:</strong> Select items with weights 3 and 5 for a total value of 40 + 70 = 110.</p>",
+    "<p><strong>Input:</strong> val = [60, 100, 120], wt = [10, 20, 30], W = 60</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ N ≤ 500</li><li>1 ≤ W ≤ 1000</li><li>1 ≤ wt[i] ≤ 500</li><li>1 ≤ val[i] ≤ 500</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

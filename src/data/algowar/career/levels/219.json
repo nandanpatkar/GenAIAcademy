@@ -1,0 +1,33 @@
+{
+  "levelNumber": 219,
+  "displayNumber": 165,
+  "title": "Divisors of a Number",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given an integer <strong>n</strong>. You need to find <strong>all </strong>the <strong>divisors </strong>of n. Return all the <strong>divisors </strong>of <strong>n </strong>as an array or list in a sorted order.</p><p><br></p><p>A number which completely <strong>divides </strong>another number is called it's <strong>divisor</strong>.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: n = 6</p><p><strong>Output </strong>= [1, 2, 3, 6]</p><p><strong>Explanation</strong>: The divisors of 6 are 1, 2, 3, 6.</p>",
+    "<p><strong>Input</strong>: n = 8</p><p><strong>Output</strong>: [1, 2, 4, 8]</p><p><strong>Explanation</strong>: The divisors of 8 are 1, 2, 4, 8.</p>",
+    "<p><strong>Input</strong>: n = 7</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

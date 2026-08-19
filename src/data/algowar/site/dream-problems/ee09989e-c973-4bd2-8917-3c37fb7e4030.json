@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "ee09989e-c973-4bd2-8917-3c37fb7e4030",
+    "title": "Remove All Adjacent Duplicates in String II",
+    "difficulty": "Medium",
+    "tags": [
+      "string",
+      "stack"
+    ],
+    "statement": "You are given a string s and an integer k. A k duplicate removal consists of choosing k adjacent and equal letters from s and removing them, causing the left and the right side of the deleted substring to concatenate together.\n\nWe repeatedly make k duplicate removals on s until we no longer can.\n\nReturn the final string after all such duplicate removals have been made. It is guaranteed that the answer is unique.\n\n**Input:**\nThe first line contains the string s (raw, not quoted).\nThe second line contains the integer k.\n\n**Output:**\nPrint the final string on a single line (raw, not quoted).\n\n**Constraints:**\n- 1 <= s.length <= 10^5\n- 2 <= k <= 10^4\n- s only contains lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\nabcd\n2\nOutput:\nabcd\n\nExample 2:\nInput:\ndeeedbbcccbdaa\n3\nOutput:\naa\n\nExample 3:\nInput:\npbbcggttciiippooaais\n2\nOutput:\nps",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

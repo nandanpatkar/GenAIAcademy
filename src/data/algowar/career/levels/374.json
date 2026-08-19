@@ -1,0 +1,33 @@
+{
+  "levelNumber": 374,
+  "displayNumber": 320,
+  "title": "Course Schedule I",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>There are a total of N tasks, labeled from 0 to N-1. Given an array arr where arr[i] = [a, b] indicates that you must take course <strong>b</strong> first if you want to take course <strong>a</strong>. Find if it is possible to <strong>finish</strong> all tasks.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: N = 4,&nbsp;arr = [[1,0],[2,1],[3,2]]</p><p><br></p><p><strong>Output:</strong> True</p><p><br></p><p><strong>Explanation:</strong> It is possible to finish all the tasks in the order : 0 1 2 3.</p><p>First, we will finish task 0. Then we will finish task 1, task 2, and task 3.</p>",
+    "<p><strong>Input:</strong> N = 4,&nbsp;arr = [[0,1],[3,2],[1,3],[3,0]]</p><p><br></p><p><strong>Output:</strong> False</p><p><br></p><p><strong>Explanation:</strong> It is impossible to finish all the tasks. Let’s analyze the pairs:</p><p>For pair {0, 1} -> we need to finish task 1 first and then task 0. (order : 1 0).</p><p>For pair{3, 2} -> we need to finish task 2 first and then task 3. (order: 2 3).</p><p>For pair {1, 3} -> we need to finish task 3 first and then task 1. (order: 3 1).</p><p>But for pair {3, 0} -> we need to finish task 0 first and then task 3 but task 0 requires task 1 and task 1 requires task 3. So, it is not possible to finish all the tasks.</p>",
+    "<p><strong>Input:</strong> N = 2, arr = [[1,0]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= N <= 2000</li><li>&nbsp;&nbsp;0 <= arr.length <= 5000</li><li>&nbsp;&nbsp;arr[i].length == 2</li><li>&nbsp;&nbsp;0 <= arr[i][0], arr[i][1] < N</li><li>&nbsp;&nbsp;All the pairs arr[i] are unique.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

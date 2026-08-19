@@ -1,0 +1,33 @@
+{
+  "levelNumber": 86,
+  "displayNumber": 32,
+  "title": "Set Matrix Zeroes",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an <strong>m x n</strong> integer matrix matrix, if an element is<strong> 0</strong>, set its entire row and column to 0. <strong>You must do it in place.</strong></p>",
+  "examples": [
+    "<p><strong>Input:</strong> matrix = [[1,1,1],[1,0,1],[1,1,1]]</p><p><strong>Output:</strong> [[1,0,1],[0,0,0],[1,0,1]]</p><p><strong>Explanation: </strong></p><p>Element at position (1,1) is 0, so set entire row 1 and column 1 to 0.</p>",
+    "<p><strong>Input:</strong> matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]</p><p><strong>Output:</strong> [[0,0,0,0],[0,4,5,0],[0,3,1,0]]</p><p><strong>Explanation: </strong></p><p>There are two zeroes: (0,0) and (0,3).</p><ul><li>Row 0 → all elements become 0</li><li>Column 0 and column 3 → all elements become 0</li></ul>",
+    "<p><strong>Input:</strong> matrix = [[1,2,3,4],[5,6,0,8],[9,10,11,12]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>m == matrix.length</li><li>n == matrix[0].length</li><li>1 <= m, n <= 200</li><li>-2<sup>31</sup> <= matrix[i][j] <= 2<sup>31</sup> - 1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

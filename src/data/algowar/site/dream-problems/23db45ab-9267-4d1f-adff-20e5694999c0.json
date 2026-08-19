@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "23db45ab-9267-4d1f-adff-20e5694999c0",
+    "title": "Add Binary",
+    "difficulty": "Easy",
+    "tags": [
+      "math",
+      "string",
+      "bit-manipulation",
+      "simulation"
+    ],
+    "statement": "Given two binary strings a and b, return their sum as a binary string.\n\n**Input:**\n- Line 1: binary string a (raw, no quotes).\n- Line 2: binary string b (raw, no quotes).\n\n**Output:**\n- A single line containing the binary string representing the sum of a and b (raw, no quotes).\n\n**Constraints:**\n- 1 <= a.length, b.length <= 10^4\n- a and b consist only of '0' or '1' characters.\n- Each string does not contain leading zeros except for the zero itself.\n\n**Examples:**\n\nExample 1:\nInput:\n11\n1\nOutput:\n100\n\nExample 2:\nInput:\n1010\n1011\nOutput:\n10101",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

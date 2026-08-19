@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "ceb3415e-3fce-471b-9313-0546512c2c17",
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "difficulty": "Medium",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "binary-tree"
+    ],
+    "statement": "Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.\n\nAccording to the definition of LCA on Wikipedia: \"The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).\"\n\nThe tree is provided in level-order serialization where absent children are represented by the word \"null\" and trailing nulls are trimmed. Since all node values are unique, the two target nodes are identified by their values.\n\n**Input:**\n- Line 1: an integer k, the number of entries in the level-order serialization of the tree.\n- Line 2: k space-separated values, each either an integer or the word \"null\", giving the level-order traversal of the binary tree (LeetCode convention, trailing nulls trimmed).\n- Line 3: an integer p, the value of the first target node.\n- Line 4: an integer q, the value of the second target node.\n\n**Output:**\n- A single integer: the value of the lowest common ancestor node of p and q.\n\n**Constraints:**\n- The number of nodes in the tree is in the range [2, 10^5].\n- -10^9 <= Node.val <= 10^9.\n- All Node.val are unique.\n- p != q.\n- p and q will exist in the tree.\n\n**Examples:**\nExample 1:\nInput:\n11\n3 5 1 6 2 0 8 null null 7 4\n5\n1\nOutput:\n3\n\nExample 2:\nInput:\n11\n3 5 1 6 2 0 8 null null 7 4\n5\n4\nOutput:\n5\n\nExample 3:\nInput:\n2\n1 2\n1\n2\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

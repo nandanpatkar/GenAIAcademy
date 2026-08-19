@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "047250c0-28dd-488b-9bea-cfd549d50ec5",
+    "title": "Course Schedule",
+    "difficulty": "Medium",
+    "tags": [
+      "depth-first-search",
+      "breadth-first-search",
+      "graph",
+      "topological-sort"
+    ],
+    "statement": "There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given a list of prerequisites where each prerequisite is a pair [a, b] indicating that you must take course b first if you want to take course a.\n\nFor example, the pair [0, 1] indicates that to take course 0 you have to first take course 1.\n\nReturn true if you can finish all courses. Otherwise, return false.\n\n**Input:**\nThe first line contains an integer numCourses.\nThe second line contains two integers rows and cols, where rows is the number of prerequisite pairs and cols is always 2.\nThe next rows lines each contain two space-separated integers a and b, representing the prerequisite pair [a, b] (you must take course b before course a).\n\n**Output:**\nPrint a single line containing the word \"true\" if all courses can be finished, otherwise \"false\".\n\n**Constraints:**\n1 <= numCourses <= 2000\n0 <= prerequisites.length <= 5000\nEach prerequisite pair has exactly 2 elements.\n0 <= a, b < numCourses\nAll prerequisite pairs are unique.\n\n**Examples:**\nExample 1:\nInput:\n2\n1 2\n1 0\nOutput:\ntrue\n\nExample 2:\nInput:\n2\n2 2\n1 0\n0 1\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

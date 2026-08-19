@@ -1,0 +1,26 @@
+{
+  "levelNumber": 147,
+  "displayNumber": 93,
+  "title": "Sum of Beauty of All Substrings",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>The beauty of a string is defined as the <strong>difference </strong>between the <strong>frequency </strong>of the <strong>most frequent </strong>character and the <strong>least frequent </strong>character <strong>(excluding characters that do not appear) </strong>in that string.</p><p><br></p><p>Given a string s, return the <strong>sum of</strong> <strong>beauty </strong>values of <strong>all possible substrings</strong> of s.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> s = \"xyx\"</p><p><strong>Output:</strong> 1</p><p><strong>Explanation:</strong> The substrings with non-zero beauty are:</p><p>- \"xyx\" → frequencies: x:2, y:1 → beauty = 2 - 1 = 1</p><p>- \"xy\" → x:1, y:1 → beauty = 0</p><p>- \"yx\" → y:1, x:1 → beauty = 0</p><p>- \"x\" or \"y\" → beauty = 0</p><p>Total sum = 1 (from \"xyx\") = 1</p>",
+    "<p><strong>Input:</strong> s = \"aabcbaa\"</p><p><strong>Output: </strong>17</p><p><strong>Explanation:</strong> Various substrings such as \"aabc\", \"bcba\", etc., have non-zero beauty values. Summing all gives 17.</p>",
+    "<p><strong>Input: </strong>s = \"zzzz\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 500</li><li>s consists of only lowercase English letters ('a' to 'z')</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

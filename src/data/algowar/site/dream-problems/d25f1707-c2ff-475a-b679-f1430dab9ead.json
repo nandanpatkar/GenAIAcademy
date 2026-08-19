@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "d25f1707-c2ff-475a-b679-f1430dab9ead",
+    "title": "Bus Routes",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "hash-table",
+      "breadth-first-search"
+    ],
+    "statement": "You are given an array of bus routes where routes[i] is a bus route that the i-th bus repeats forever. For example, if routes[0] = [1, 5, 7], this means that the 0-th bus travels in the sequence 1 -> 5 -> 7 -> 1 -> 5 -> 7 -> 1 -> ... forever.\n\nYou will start at the bus stop source (you are not on any bus initially), and you want to go to the bus stop target. You can travel between bus stops by buses only.\n\nReturn the least number of buses you must take to travel from source to target. Return -1 if it is not possible.\n\n**Input:**\nThe first line contains an integer n, the number of bus routes.\nThe next n lines each describe one route: each line begins with an integer len_i (the number of stops on that route), followed by len_i space-separated integers (the stops on that route).\nThe next line contains an integer source.\nThe next line contains an integer target.\n\n**Output:**\nPrint a single integer: the least number of buses you must take to travel from source to target, or -1 if it is not possible.\n\n**Constraints:**\n- 1 <= n <= 500\n- 1 <= routes[i].length <= 10^5\n- All the values of routes[i] are unique.\n- sum(routes[i].length) <= 10^5\n- 0 <= routes[i][j] < 10^6\n- 0 <= source, target < 10^6\n\n**Examples:**\nExample 1:\nInput:\n2\n3 1 2 7\n3 3 6 7\n1\n6\nOutput:\n2\n\nExample 2:\nInput:\n5\n2 7 12\n3 4 5 15\n1 6\n2 15 19\n3 9 12 13\n15\n12\nOutput:\n-1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

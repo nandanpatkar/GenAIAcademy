@@ -1,0 +1,33 @@
+{
+  "levelNumber": 464,
+  "displayNumber": 410,
+  "title": "Maximum XOR of two numbers in an array",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array nums, return the <strong>maximum</strong> result of nums[i] XOR nums[j], where 0 <= i <= j < n.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> nums = [3, 9, 10, 5, 1]</p><p><strong>Output :</strong> 15</p><p><strong>Explanation :</strong> </p><p>The maximum XOR value is 10 XOR 5 => 15.</p>",
+    "<p><strong>Input :</strong> nums = [26, 49, 30, 15, 69]</p><p><strong>Output :</strong> 116</p><p><strong>Explanation :</strong> </p><p>The maximum XOR value is 69 XOR 49 => 116.</p>",
+    "<p><strong>Input :</strong> nums = [1, 2, 3, 4, 5, 6]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>0 <= nums[i] <= 2<sup>31</sup> - 1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 17,
+    "title": "Trie Nexus",
+    "theme": "prefix-nexus",
+    "levelCount": 7,
+    "completionXp": 100
+  }
+}

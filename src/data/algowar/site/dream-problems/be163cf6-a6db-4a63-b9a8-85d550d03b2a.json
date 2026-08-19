@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "be163cf6-a6db-4a63-b9a8-85d550d03b2a",
+    "title": "Minimize Length of Array Using Operations",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "math",
+      "greedy",
+      "number-theory"
+    ],
+    "statement": "Minimize Length of Array Using Operations\n\nYou are given a 0-indexed integer array nums containing positive integers.\n\nYour task is to minimize the length of nums by performing the following operations any number of times (including zero):\n\n- Select two distinct indices i and j from nums, such that nums[i] > 0 and nums[j] > 0.\n- Insert the result of nums[i] % nums[j] at the end of nums.\n- Delete the elements at indices i and j from nums.\n\nReturn an integer denoting the minimum length of nums after performing the operation any number of times.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated positive integers, the elements of nums.\n\n**Output:**\nPrint a single integer denoting the minimum length of nums after performing the operation any number of times.\n\n**Constraints:**\n1 <= nums.length <= 10^5\n1 <= nums[i] <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n4\n1 4 3 1\nOutput:\n1\n\nExample 2:\nInput:\n5\n5 5 5 10 5\nOutput:\n2\n\nExample 3:\nInput:\n3\n2 3 4\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

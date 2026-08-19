@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "42745353-7ad0-4f1d-9262-beae53b674ec",
+    "title": "Median of Two Sorted Arrays",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "binary-search",
+      "divide-and-conquer"
+    ],
+    "statement": "Median of Two Sorted Arrays\n\nGiven two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.\n\nThe overall run time complexity should be O(log (m+n)).\n\n**Input:**\n- Line 1: an integer m, the length of nums1.\n- Line 2: m space-separated integers representing nums1 (sorted in non-decreasing order).\n- Line 3: an integer n, the length of nums2.\n- Line 4: n space-separated integers representing nums2 (sorted in non-decreasing order).\n\n**Output:**\n- A single line containing the median of the two sorted arrays, printed with exactly 5 decimal places.\n\n**Constraints:**\n- nums1.length == m\n- nums2.length == n\n- 0 <= m <= 1000\n- 0 <= n <= 1000\n- 1 <= m + n <= 2000\n- -10^6 <= nums1[i], nums2[i] <= 10^6\n\n**Examples:**\nExample 1:\nInput:\n2\n1 3\n1\n2\nOutput:\n2.00000\n\nExample 2:\nInput:\n2\n1 2\n2\n3 4\nOutput:\n2.50000",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

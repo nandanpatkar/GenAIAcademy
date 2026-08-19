@@ -1,0 +1,28 @@
+{
+  "route": "/contact",
+  "title": "Contact Us | AlgoWars",
+  "description": "Get in touch with the AlgoWars team. Reach out for support, feedback, or partnerships.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(legal)/contact/page-96139c74c18073ca.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/contact",
+    "title": "Contact Us | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "CONTACT US"
+      }
+    ],
+    "text": "← Back to home CONTACT US Have questions, feedback, or want to collaborate? We'd love to hear from you. Drop us an email and we'll get back to you as soon as possible. FOUNDERS@ALGOWARS.ONLINE We typically respond within 24 hours.",
+    "links": [
+      "/",
+      "mailto:founders@algowars.online"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

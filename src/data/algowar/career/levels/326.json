@@ -1,0 +1,33 @@
+{
+  "levelNumber": 326,
+  "displayNumber": 272,
+  "title": "Minimum time taken to burn the BT from a given Node",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a target node data and a root of binary tree. If the target is set on fire, determine the shortest amount of <strong>time</strong> needed to <strong>burn</strong> the entire binary tree.</p><p><br></p><p>It is known that in 1 second all nodes connected to a given node get burned. That is its left child, right child, and parent.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [1, 2, 3, 4, null, 5, 6, null, 7]. target = 1</p><p><strong>Output :</strong> 3</p><p><strong>Explanation :</strong> The node with value 1 is set on fire.</p><p>In 1st second it burns node 2 and node 3.</p><p>In 2nd second it burns nodes 4, 5, 6.</p><p>In 3rd second it burns node 7.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-cym-RjGO\"></p>",
+    "<p><strong>Input :</strong> root = [1, 2, 3, null, 5, null, 4], target = 4</p><p><strong>Output :</strong> 4</p><p><strong>Explanation :</strong> The node with value 4 is set on fire.</p><p>In 1st second it burns node 3.</p><p>In 2nd second it burns node 1.</p><p>In 3rd second it burns node 2.</p><p>In 4th second it burns node 5.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-QHqDuU5z\"></p>",
+    "<p><strong>Input :</strong> root = [1, 2, 3, 6, 5, 8, 4], target = 4</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-n7Zzz-kB\"></p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>-10<sup>5</sup> <= Node.val <= 10<sup>5</sup></li><li>All Node.val values are <strong>unique</strong>.</li><li>target will always be present in tree</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

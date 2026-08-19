@@ -1,0 +1,33 @@
+{
+  "levelNumber": 186,
+  "displayNumber": 132,
+  "title": "Generate Parentheses",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer n.Generate all possible combinations of well-formed <strong>parentheses</strong> of length <strong>2 x N</strong>.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> n = 3</p><p><strong>Output :</strong> [ \"((()))\" , \"(()())\" , \"(())()\" , \"()(())\" , \"()()()\" ]</p>",
+    "<p><strong>Input :</strong> 2</p><p><strong>Output :</strong> [ \"(())\" , \"()()\" ]</p>",
+    "<p><strong>Input :</strong> 1</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 8</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

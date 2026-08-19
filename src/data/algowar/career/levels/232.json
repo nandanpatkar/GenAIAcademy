@@ -1,0 +1,26 @@
+{
+  "levelNumber": 232,
+  "displayNumber": 178,
+  "title": "Prefix to Infix Conversion",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a valid arithmetic expression in prefix notation. Your task is to convert it into a fully parenthesized infix expression.</p><p>Prefix notation (also known as <strong>Polish notation</strong>) places the operator before its operands. In contrast, infix notation places the operator between operands.</p><p><br></p><p>Your goal is to convert the <strong>prefix expression</strong> into a valid<strong> fully parenthesized infix expression</strong>.</p>",
+  "examples": [
+    "<p><strong>Input: </strong>expression = \"+ab\"</p><p><strong>Output: </strong>\"(a+b)\"</p>",
+    "<p><strong>Input: </strong><span style=\"color: rgb(245, 245, 245);\">expression = </span>\"*+ab-cd\"</p><p><strong>Output: </strong>\"((a+b)*(c-d))\"</p>",
+    "<p><strong>Input:</strong> <span style=\"color: rgb(245, 245, 245);\">expression = </span>\"^a*bc\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= expression.length <= 10<sup>4</sup></li><li><span style=\"color: rgb(245, 245, 245);\">Expression contains </span>Valid binary operators: +, -, *, /, ^</li><li><span style=\"color: rgb(245, 245, 245);\">Expression contains </span>Valid operands: lowercase letters (a-z) or digits (0-9)</li><li><span style=\"color: rgb(245, 245, 245);\">Expression contains </span>The input is guaranteed to be a valid prefix expression.</li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

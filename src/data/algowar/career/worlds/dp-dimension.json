@@ -1,0 +1,1473 @@
+{
+  "worldNumber": 16,
+  "slug": "dp-dimension",
+  "title": "DP Dimension",
+  "description": "Master memoization, tabulation, subsequences, partitions, strings, and grids.",
+  "theme": "quantum-dp",
+  "levelCount": 55,
+  "xpAvailable": 1040,
+  "difficultySummary": {
+    "Easy": 3,
+    "Hard": 26,
+    "Medium": 26
+  },
+  "contentSummary": {
+    "plus": 53,
+    "article": 1,
+    "missing": 1
+  },
+  "completionReward": {
+    "badgeTitle": "DP Architect",
+    "xp": 100,
+    "coins": 650
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-16-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "DP Dimension",
+      "subtitle": "Dynamic Programming [Patterns and Problems]",
+      "description": "Master memoization, tabulation, subsequences, partitions, strings, and grids.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-404",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Introduction to DP",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 404,
+        "displayNumber": 350,
+        "title": "Introduction to DP",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-405",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Climbing stairs",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 405,
+        "displayNumber": 351,
+        "title": "Climbing stairs",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-406",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Frog Jump",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 406,
+        "displayNumber": 352,
+        "title": "Frog Jump",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-407",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Frog jump with K distances",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 407,
+        "displayNumber": 353,
+        "title": "Frog jump with K distances",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-408",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Maximum sum of non adjacent elements",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 408,
+        "displayNumber": 354,
+        "title": "Maximum sum of non adjacent elements",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-409",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "House robber",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 409,
+        "displayNumber": 355,
+        "title": "House robber",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-410",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Ninja's training",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 410,
+        "displayNumber": 356,
+        "title": "Ninja's training",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-411",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Grid Unique Paths : DP on Grids (DP8)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 411,
+        "displayNumber": 357,
+        "title": "Grid Unique Paths : DP on Grids (DP8)",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-412",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Unique paths II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 412,
+        "displayNumber": 358,
+        "title": "Unique paths II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-413",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Minimum Falling Path Sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 413,
+        "displayNumber": 359,
+        "title": "Minimum Falling Path Sum",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-414",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Triangle",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 414,
+        "displayNumber": 360,
+        "title": "Triangle",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-415",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Ninja and his Friends",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 415,
+        "displayNumber": 361,
+        "title": "Ninja and his Friends",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-16-checkpoint-415",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 415,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-416",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Subset sum equal to target (DP- 14)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 416,
+        "displayNumber": 362,
+        "title": "Subset sum equal to target (DP- 14)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-417",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Partition equal subset sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 417,
+        "displayNumber": 363,
+        "title": "Partition equal subset sum",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-418",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Partition a set into two subsets with minimum absolute sum difference",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 418,
+        "displayNumber": 364,
+        "title": "Partition a set into two subsets with minimum absolute sum difference",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-419",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Count subsets with sum K",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 419,
+        "displayNumber": 365,
+        "title": "Count subsets with sum K",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-420",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Count partitions with given difference",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 420,
+        "displayNumber": 366,
+        "title": "Count partitions with given difference",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-421",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Assign Cookies",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 421,
+        "displayNumber": 367,
+        "title": "Assign Cookies",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-422",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Minimum Coins (DP - 20)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 422,
+        "displayNumber": 368,
+        "title": "Minimum Coins (DP - 20)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-423",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Target sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 423,
+        "displayNumber": 369,
+        "title": "Target sum",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-424",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Coin Change 2 (DP - 22)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 424,
+        "displayNumber": 370,
+        "title": "Coin Change 2 (DP - 22)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-425",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Unbounded knapsack",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 425,
+        "displayNumber": 371,
+        "title": "Unbounded knapsack",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-426",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Rod Cutting Problem | (DP - 24)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 426,
+        "displayNumber": 372,
+        "title": "Rod Cutting Problem | (DP - 24)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-427",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Longest common subsequence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 427,
+        "displayNumber": 373,
+        "title": "Longest common subsequence",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-16-checkpoint-427",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 427,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-428",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Print Longest Common Subsequence | (DP - 26)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 428,
+        "displayNumber": 374,
+        "title": "Print Longest Common Subsequence | (DP - 26)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-429",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "Longest common substring",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 429,
+        "displayNumber": 375,
+        "title": "Longest common substring",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-430",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Longest palindromic subsequence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 430,
+        "displayNumber": 376,
+        "title": "Longest palindromic subsequence",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-431",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Minimum insertions to make string palindrome | DP-29",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 431,
+        "displayNumber": 377,
+        "title": "Minimum insertions to make string palindrome | DP-29",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-432",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "Minimum insertions or deletions to convert string A to B",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 432,
+        "displayNumber": 378,
+        "title": "Minimum insertions or deletions to convert string A to B",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-433",
+      "nodeType": "level",
+      "order": 33,
+      "mapLane": "left",
+      "title": "Shortest common supersequence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 433,
+        "displayNumber": 379,
+        "title": "Shortest common supersequence",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-434",
+      "nodeType": "level",
+      "order": 34,
+      "mapLane": "right",
+      "title": "Distinct subsequences",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 434,
+        "displayNumber": 380,
+        "title": "Distinct subsequences",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-435",
+      "nodeType": "level",
+      "order": 35,
+      "mapLane": "left",
+      "title": "Edit distance",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 435,
+        "displayNumber": 381,
+        "title": "Edit distance",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-436",
+      "nodeType": "level",
+      "order": 36,
+      "mapLane": "right",
+      "title": "Wildcard matching",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 436,
+        "displayNumber": 382,
+        "title": "Wildcard matching",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-437",
+      "nodeType": "level",
+      "order": 37,
+      "mapLane": "left",
+      "title": "Best time to buy and sell stock",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 437,
+        "displayNumber": 383,
+        "title": "Best time to buy and sell stock",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-438",
+      "nodeType": "level",
+      "order": 38,
+      "mapLane": "right",
+      "title": "Best time to buy and sell stock II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 438,
+        "displayNumber": 384,
+        "title": "Best time to buy and sell stock II",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-439",
+      "nodeType": "level",
+      "order": 39,
+      "mapLane": "left",
+      "title": "Best time to buy and sell stock III",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 439,
+        "displayNumber": 385,
+        "title": "Best time to buy and sell stock III",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-16-checkpoint-439",
+      "nodeType": "checkpoint",
+      "order": 40,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 439,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-440",
+      "nodeType": "level",
+      "order": 41,
+      "mapLane": "left",
+      "title": "Best time to buy and sell stock IV",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 440,
+        "displayNumber": 386,
+        "title": "Best time to buy and sell stock IV",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-441",
+      "nodeType": "level",
+      "order": 42,
+      "mapLane": "right",
+      "title": "Best Time to Buy and Sell Stock with Cooldown",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 441,
+        "displayNumber": 387,
+        "title": "Best Time to Buy and Sell Stock with Cooldown",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-442",
+      "nodeType": "level",
+      "order": 43,
+      "mapLane": "left",
+      "title": "Best time to buy and sell stock with transaction fees",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 442,
+        "displayNumber": 388,
+        "title": "Best time to buy and sell stock with transaction fees",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-443",
+      "nodeType": "level",
+      "order": 44,
+      "mapLane": "right",
+      "title": "Longest Increasing Subsequence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 443,
+        "displayNumber": 389,
+        "title": "Longest Increasing Subsequence",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-444",
+      "nodeType": "level",
+      "order": 45,
+      "mapLane": "left",
+      "title": "Print Longest Increasing Subsequence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 444,
+        "displayNumber": 390,
+        "title": "Print Longest Increasing Subsequence",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-445",
+      "nodeType": "level",
+      "order": 46,
+      "mapLane": "right",
+      "title": "Longest Increasing Subsequence |(DP-43)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 445,
+        "displayNumber": 391,
+        "title": "Longest Increasing Subsequence |(DP-43)",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-446",
+      "nodeType": "level",
+      "order": 47,
+      "mapLane": "left",
+      "title": "Largest Divisible Subset",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 446,
+        "displayNumber": 392,
+        "title": "Largest Divisible Subset",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-447",
+      "nodeType": "level",
+      "order": 48,
+      "mapLane": "right",
+      "title": "Longest String Chain",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 447,
+        "displayNumber": 393,
+        "title": "Longest String Chain",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-448",
+      "nodeType": "level",
+      "order": 49,
+      "mapLane": "left",
+      "title": "Longest Bitonic Subsequence",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 448,
+        "displayNumber": 394,
+        "title": "Longest Bitonic Subsequence",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-449",
+      "nodeType": "level",
+      "order": 50,
+      "mapLane": "right",
+      "title": "Number of Longest Increasing Subsequences",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 449,
+        "displayNumber": 395,
+        "title": "Number of Longest Increasing Subsequences",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-450",
+      "nodeType": "level",
+      "order": 51,
+      "mapLane": "left",
+      "title": "Matrix chain multiplication",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 450,
+        "displayNumber": 396,
+        "title": "Matrix chain multiplication",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-451",
+      "nodeType": "level",
+      "order": 52,
+      "mapLane": "right",
+      "title": "Matrix Chain Multiplication | Bottom-Up|(DP-49)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 451,
+        "displayNumber": 397,
+        "title": "Matrix Chain Multiplication | Bottom-Up|(DP-49)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-16-checkpoint-451",
+      "nodeType": "checkpoint",
+      "order": 53,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 451,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-452",
+      "nodeType": "level",
+      "order": 54,
+      "mapLane": "right",
+      "title": "Minimum cost to cut the stick",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 452,
+        "displayNumber": 398,
+        "title": "Minimum cost to cut the stick",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-453",
+      "nodeType": "level",
+      "order": 55,
+      "mapLane": "left",
+      "title": "Burst balloons",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 453,
+        "displayNumber": 399,
+        "title": "Burst balloons",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-454",
+      "nodeType": "level",
+      "order": 56,
+      "mapLane": "right",
+      "title": "Different Ways to Evaluate a Boolean Expression",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 454,
+        "displayNumber": 400,
+        "title": "Different Ways to Evaluate a Boolean Expression",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-455",
+      "nodeType": "level",
+      "order": 57,
+      "mapLane": "left",
+      "title": "Palindrome partitioning II",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 455,
+        "displayNumber": 401,
+        "title": "Palindrome partitioning II",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-456",
+      "nodeType": "level",
+      "order": 58,
+      "mapLane": "right",
+      "title": "Partition Array for Maximum Sum",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 456,
+        "displayNumber": 402,
+        "title": "Partition Array for Maximum Sum",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-457",
+      "nodeType": "level",
+      "order": 59,
+      "mapLane": "left",
+      "title": "Maximum Rectangle Area with all 1's|(DP-55)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 457,
+        "displayNumber": 403,
+        "title": "Maximum Rectangle Area with all 1's|(DP-55)",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-458",
+      "nodeType": "boss",
+      "order": 60,
+      "mapLane": "center",
+      "title": "Count Square Submatrices with All Ones|(DP-56)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 130
+      },
+      "level": {
+        "levelNumber": 458,
+        "displayNumber": 404,
+        "title": "Count Square Submatrices with All Ones|(DP-56)",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 130,
+        "isBoss": true,
+        "levelType": "theory"
+      }
+    }
+  ]
+}

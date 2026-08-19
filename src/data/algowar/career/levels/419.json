@@ -1,0 +1,33 @@
+{
+  "levelNumber": 419,
+  "displayNumber": 365,
+  "title": "Count subsets with sum K",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of n integers and an integer K, count the number of subsets of the given array that have a sum equal to K. Return the result modulo (10<sup>9</sup> + 7).</p>",
+  "examples": [
+    "<p>Input: arr = [2, 3, 5, 16, 8, 10], K = 10</p><p>Output: 3</p><p>Explanation: The subsets are [2, 8], [10], and [2, 3, 5].</p>",
+    "<p>Input: arr = [1, 2, 3, 4, 5], K = 5</p><p>Output: 3</p><p>Explanation: The subsets are [5], [2, 3], and [1, 4].</p>",
+    "<p>Input: arr = [2, 2, 2, 2], K = 4</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;1 <= n <= 100</li><li>1 <= arr[i] <= 10<sup>3</sup></li><li>1 <= K <= 10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

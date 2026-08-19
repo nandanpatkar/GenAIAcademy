@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "159ca7e5-f2e9-49dd-a784-acafc7d290d2",
+    "title": "Sort Array by Increasing Frequency",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "hash-table",
+      "sorting"
+    ],
+    "statement": "Sort Array by Increasing Frequency\n\nGiven an array of integers nums, sort the array in increasing order based on the frequency of the values. If multiple values have the same frequency, sort them in decreasing order.\n\nReturn the sorted array.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint the sorted array as a single line of n space-separated integers, sorted in increasing order of frequency, with ties broken in decreasing order of value.\n\n**Constraints:**\n- 1 <= nums.length <= 100\n- -100 <= nums[i] <= 100\n\n**Examples:**\nExample 1:\nInput:\n6\n1 1 2 2 2 3\nOutput:\n3 1 1 2 2 2\n\nExample 2:\nInput:\n5\n2 3 1 3 2\nOutput:\n1 3 3 2 2\n\nExample 3:\nInput:\n9\n-1 1 -6 4 5 -6 1 4 1\nOutput:\n5 -1 4 4 -6 -6 1 1 1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

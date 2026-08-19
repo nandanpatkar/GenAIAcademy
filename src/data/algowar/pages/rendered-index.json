@@ -1,0 +1,132 @@
+{
+  "_source": "https://algowars.online",
+  "renderedAt": "2026-08-18T15:12:10.994Z",
+  "pages": [
+    {
+      "route": "/",
+      "name": "home",
+      "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+      "headings": 16,
+      "chars": 2715
+    },
+    {
+      "route": "/coding-duels",
+      "name": "coding-duels",
+      "title": "Real-Time Coding Duels — 1v1 Programming Battles | AlgoWars",
+      "headings": 4,
+      "chars": 1022
+    },
+    {
+      "route": "/competitive-programming",
+      "name": "competitive-programming",
+      "title": "Competitive Programming Platform — Practice & Compete | AlgoWars",
+      "headings": 5,
+      "chars": 1143
+    },
+    {
+      "route": "/dsa-practice",
+      "name": "dsa-practice",
+      "title": "DSA Practice — Algorithm & Data Structure Challenges | AlgoWars",
+      "headings": 5,
+      "chars": 1223
+    },
+    {
+      "route": "/practice",
+      "name": "practice",
+      "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+      "headings": 2,
+      "chars": 329
+    },
+    {
+      "route": "/placement",
+      "name": "placement",
+      "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+      "headings": 2,
+      "chars": 329
+    },
+    {
+      "route": "/pricing",
+      "name": "pricing",
+      "title": "Pricing — AlgoWars Free & Pro Plans | AlgoWars",
+      "headings": 3,
+      "chars": 959
+    },
+    {
+      "route": "/upgrade",
+      "name": "upgrade",
+      "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+      "headings": 2,
+      "chars": 329
+    },
+    {
+      "route": "/refer",
+      "name": "refer",
+      "title": "Referral Network — Refer vetted engineers, earn your referral bonus | AlgoWars",
+      "headings": 12,
+      "chars": 1844
+    },
+    {
+      "route": "/community",
+      "name": "community",
+      "title": "Community — Join the AlgoWars Community | AlgoWars",
+      "headings": 1,
+      "chars": 329
+    },
+    {
+      "route": "/blog",
+      "name": "blog",
+      "title": "AlgoWars Blog — Coding Guides for College Students | AlgoWars",
+      "headings": 7,
+      "chars": 1908
+    },
+    {
+      "route": "/partners",
+      "name": "partners",
+      "title": "Creator & Partner Program — Turn your audience into revenue | AlgoWars",
+      "headings": 12,
+      "chars": 1406
+    },
+    {
+      "route": "/contact",
+      "name": "contact",
+      "title": "Contact Us | AlgoWars",
+      "headings": 1,
+      "chars": 230
+    },
+    {
+      "route": "/privacy",
+      "name": "privacy",
+      "title": "Privacy Policy | AlgoWars",
+      "headings": 8,
+      "chars": 1598
+    },
+    {
+      "route": "/terms",
+      "name": "terms",
+      "title": "Terms & Conditions | AlgoWars",
+      "headings": 10,
+      "chars": 1743
+    },
+    {
+      "route": "/try",
+      "name": "try",
+      "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+      "headings": 3,
+      "chars": 970
+    },
+    {
+      "route": "/login",
+      "name": "login",
+      "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+      "headings": 2,
+      "chars": 329
+    },
+    {
+      "route": "/signup",
+      "name": "signup",
+      "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+      "headings": 2,
+      "chars": 399
+    }
+  ]
+}

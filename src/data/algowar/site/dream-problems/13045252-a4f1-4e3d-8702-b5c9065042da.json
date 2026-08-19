@@ -1,0 +1,19 @@
+{
+  "problem": {
+    "id": "13045252-a4f1-4e3d-8702-b5c9065042da",
+    "title": "Word Search II",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "string",
+      "backtracking",
+      "trie",
+      "matrix"
+    ],
+    "statement": "Given an m x n board of characters and a list of words, return all words that can be found on the board.\n\nEach word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.\n\nA word is found if it can be formed by a path on the board following the rules above. Return the found words sorted in ascending lexicographic order.\n\n**Input:**\nThe first line contains two integers m and n, the dimensions of the board.\nThe next m lines each contain n space-separated lowercase letters, representing the board.\nThe next line contains an integer k, the number of words.\nThe next k lines each contain one word (a string of lowercase English letters).\n\n**Output:**\nPrint the found words on a single line, space-separated, sorted in ascending lexicographic order. If no words are found, print an empty line.\n\n**Constraints:**\n- 1 <= m, n <= 12\n- board[i][j] is a lowercase English letter.\n- 1 <= k <= 3 * 10^4\n- 1 <= words[i].length <= 10\n- Each word consists of lowercase English letters.\n- All words are unique.\n\n**Examples:**\nExample 1:\nInput:\n4 4\no a a n\ne t a e\ni h k r\ni f l v\n4\noath\npea\neat\nrain\nOutput:\neat oath\n\nExample 2:\nInput:\n2 2\na b\nc d\n1\nabcb\nOutput:\n",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

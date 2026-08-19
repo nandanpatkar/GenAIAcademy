@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "543011e7-b319-42c4-a12a-7581258351e2",
+    "title": "Valid Number",
+    "difficulty": "Hard",
+    "tags": [
+      "string"
+    ],
+    "statement": "Given a string s, determine whether s is a valid number.\n\nFormally, a valid number is defined using one of the following definitions:\n1. An integer number followed by an optional exponent.\n2. A decimal number followed by an optional exponent.\n\nAn integer number is defined with an optional sign '-' or '+' followed by digits.\n\nA decimal number is defined with an optional sign '-' or '+' followed by one of the following definitions:\n1. Digits followed by a dot '.'.\n2. Digits followed by a dot '.' followed by digits.\n3. A dot '.' followed by digits.\n\nAn exponent is defined with an exponent notation 'e' or 'E' followed by an integer number.\n\nThe digits are defined as one or more digits.\n\n**Input:**\nThe first line contains an integer n, the length of the string.\nThe second line contains the string s (raw, not quoted).\n\n**Output:**\nPrint \"true\" if s is a valid number, otherwise print \"false\".\n\n**Constraints:**\n1 <= s.length <= 20\ns consists of only English letters (both uppercase and lowercase), digits (0-9), plus '+', minus '-', or dot '.'.\n\n**Examples:**\nExample 1:\nInput:\n1\n0\nOutput:\ntrue\n\nExample 2:\nInput:\n1\ne\nOutput:\nfalse\n\nExample 3:\nInput:\n1\n.\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

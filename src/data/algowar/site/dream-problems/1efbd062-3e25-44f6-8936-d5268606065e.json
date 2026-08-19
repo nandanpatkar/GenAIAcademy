@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "1efbd062-3e25-44f6-8936-d5268606065e",
+    "title": "Smallest Substring With Identical Characters I",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "binary-search",
+      "enumeration"
+    ],
+    "statement": "You are given a binary string s of length n and an integer numOps.\n\nYou are allowed to perform the following operation on s at most numOps times:\n\n- Select any index i (where 0 <= i < n) and flip s[i]. If s[i] == '1', change s[i] to '0' and vice versa.\n\nYou need to minimize the length of the longest substring of s such that all the characters in the substring are identical.\n\nReturn the minimum length after the operations.\n\n**Input:**\n- Line 1: an integer n, the length of the string s.\n- Line 2: the binary string s (raw, not quoted).\n- Line 3: an integer numOps.\n\n**Output:**\n- Line 1: a single integer, the minimum possible length of the longest substring of identical characters after at most numOps flips.\n\n**Constraints:**\n- 1 <= n == s.length <= 1000\n- s consists only of '0' and '1'.\n- 0 <= numOps <= n\n\n**Examples:**\n\nExample 1:\nInput:\n6\n000001\n1\nOutput:\n2\n\nExample 2:\nInput:\n4\n0000\n2\nOutput:\n1\n\nExample 3:\nInput:\n4\n0101\n0\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

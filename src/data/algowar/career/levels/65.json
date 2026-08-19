@@ -1,0 +1,33 @@
+{
+  "levelNumber": 65,
+  "displayNumber": 11,
+  "title": "Remove duplicates from Sorted array",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array <strong>nums</strong> sorted in non-decreasing order, remove all duplicates in-place so that each unique element appears only once.</p><p><br></p><p>Return the number of unique elements in the array.</p><p><br></p><p>If the number of unique elements be<strong><em> </em>k,</strong> then,</p><ul><li>Change the array nums<strong> </strong>such that the first<strong><em> </em>k </strong>elements of nums contain the <strong>unique</strong> values in the order that they were present originally.</li><li>The remaining elements, as well as the size of the array does not matter in terms of correctness.</li><li><strong>The driver code will assess correctness by printing and checking only the first k elements of the modified array.</strong></li></ul><p><br></p><p>An array sorted in <strong>non-decreasing </strong>order is an array where every element to the right of an element is either equal to or greater<strong> </strong>in value than that element.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [0, 0, 3, 3, 5, 6]</p><p><strong>Output</strong>: 4</p><p><strong>Explanation</strong>:</p><p>Resulting array = [0, 3, 5, 6, _, _]</p><p>There are 4 distinct elements in nums and the elements marked as _ can have any value.</p>",
+    "<p><strong>Input</strong>: nums = [-2, 2, 4, 4, 4, 4, 5, 5]</p><p><strong>Output</strong>: 4</p><p><strong>Explanation</strong>:</p><p>Resulting array = [-2, 2, 4, 5, _, _, _, _]</p><p>There are 4 distinct elements in nums and the elements marked as _ can have any value.</p>",
+    "<p><strong>Input</strong>: nums = [-30, -30, 0, 0, 10, 20, 30, 30]</p><p>Select the possible resulting array.</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li><li>nums is sorted in non-decreasing order.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

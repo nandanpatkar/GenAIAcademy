@@ -1,0 +1,33 @@
+{
+  "levelNumber": 225,
+  "displayNumber": 171,
+  "title": "Implement Stack using Queue",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Implement a Last-In-First-Out (LIFO) stack using a single queue. The implemented stack should support the following operations: push, pop, top, and isEmpty.</p><p><br></p><p>Implement the QueueStack class:</p><p><br></p><p>void push(int x): Pushes element x onto the stack.</p><p>int pop(): Removes and returns the top element of the stack.</p><p>int top(): Returns the top element of the stack without removing it.</p><p>boolean isEmpty(): Returns true if the stack is empty, false otherwise.</p>",
+  "examples": [
+    "<p>Input:</p><p>[\"QueueStack\", \"push\", \"push\", \"pop\", \"top\", \"isEmpty\"]</p><p>[[], [4], [8], [], [], []]</p><p>Output: [null, null, null, 8, 4, false]</p><p>Explanation:</p><p>QueueStack stack = new QueueStack();</p><p>stack.push(4);</p><p>stack.push(8);</p><p>stack.pop(); // returns 8</p><p>stack.top(); // returns 4</p><p>stack.isEmpty(); // returns false</p>",
+    "<p>Input:</p><p>[\"QueueStack\", \"isEmpty\"]</p><p>[[]]</p><p>Output:[null, true]</p><p>Explanation:</p><p>&nbsp;QueueStack stack = new QueueStack();</p><p>stack.isEmpty(); // returns true</p>",
+    "<p>Input:</p><p>[\"QueueStack\", \"push\", \"pop\", \"isEmpty\"]</p><p>[[], [6], [], []]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= numbers of calls made <= 100</li><li>1 <= x <= 100</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

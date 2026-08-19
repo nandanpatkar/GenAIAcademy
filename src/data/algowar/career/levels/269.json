@@ -1,0 +1,33 @@
+{
+  "levelNumber": 269,
+  "displayNumber": 215,
+  "title": "K-th Largest element in an array",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array <strong>nums</strong>, return the <strong>k</strong><sup><strong>th</strong></sup> <strong>largest </strong>element in the array.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [1, 2, 3, 4, 5], k = 2</p><p><strong>Output</strong>: 4</p>",
+    "<p><strong>Input</strong>: nums = [-5, 4, 1, 2, -3], k = 5</p><p><strong>Output</strong>: -5</p>",
+    "<p><strong>Input</strong>: nums = [11, 9, 8, 7, 3, 1], k = 4</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-1000 <= nums[i] <= 1000</li><li>1 <= k <= nums.length</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 11,
+    "title": "Heap Citadel",
+    "theme": "gold-citadel",
+    "levelCount": 17,
+    "completionXp": 100
+  }
+}

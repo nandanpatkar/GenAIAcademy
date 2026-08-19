@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "cba93d6b-5203-4d3a-b445-7c1c87bb2fea",
+    "title": "Minimum Window Substring",
+    "difficulty": "Hard",
+    "tags": [
+      "hash-table",
+      "string",
+      "sliding-window"
+    ],
+    "statement": "Minimum Window Substring\n\nGiven two strings s and t, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string.\n\nThe testcases will be generated such that the answer is unique.\n\n**Input:**\nThe input consists of two lines:\n- Line 1: the string s.\n- Line 2: the string t.\n\nBoth strings consist of uppercase and lowercase English letters and contain no spaces.\n\n**Output:**\nPrint the minimum window substring of s on a single line. If no such substring exists, print an empty line (the empty string).\n\n**Constraints:**\n- m == s.length\n- n == t.length\n- 1 <= m, n <= 10^5\n- s and t consist of uppercase and lowercase English letters.\n- The answer is unique.\n\n**Examples:**\nExample 1:\nInput:\nADOBECODEBANC\nABC\nOutput:\nBANC\n\nExample 2:\nInput:\na\na\nOutput:\na\n\nExample 3:\nInput:\na\naa\nOutput:\n\n",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

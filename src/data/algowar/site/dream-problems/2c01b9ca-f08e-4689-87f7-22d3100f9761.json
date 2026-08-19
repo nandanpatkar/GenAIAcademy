@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "2c01b9ca-f08e-4689-87f7-22d3100f9761",
+    "title": "Merge Two Sorted Lists",
+    "difficulty": "Easy",
+    "tags": [
+      "linked-list",
+      "recursion"
+    ],
+    "statement": "You are given the heads of two sorted linked lists list1 and list2.\n\nMerge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.\n\nReturn the head of the merged linked list.\n\nThe linked lists are represented in the input as arrays (in order from head to tail), and the merged result should be printed in the same array form.\n\n**Input:**\n- Line 1: an integer n1, the length of list1.\n- Line 2: n1 space-separated integers, the values of list1 from head to tail. (If n1 is 0, this line is omitted.)\n- Line 3: an integer n2, the length of list2.\n- Line 4: n2 space-separated integers, the values of list2 from head to tail. (If n2 is 0, this line is omitted.)\n\n**Output:**\n- One line containing the values of the merged linked list from head to tail, space-separated, with no leading length. If the merged list is empty, print an empty line.\n\n**Constraints:**\n- The number of nodes in both lists is in the range [0, 50].\n- -100 <= Node.val <= 100.\n- Both list1 and list2 are sorted in non-decreasing order.\n\n**Examples:**\nExample 1:\nInput:\n3\n1 2 4\n3\n1 3 4\nOutput:\n1 1 2 3 4 4\n\nExample 2:\nInput:\n0\n0\nOutput:\n\n\nExample 3:\nInput:\n0\n1\n0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 434,
+  "displayNumber": 380,
+  "title": "Distinct subsequences",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings s and t, return the number of distinct subsequences of s that equal t.</p><p><br></p><p>A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters. For example, \"ace\" is a subsequence of \"abcde\" while \"aec\" is not.</p><p><br></p><p>The task is to count how many different ways we can form t from s by deleting some (or no) characters from s. Return the result modulo 10<sup>9</sup>+7.</p>",
+  "examples": [
+    "<p>Input: s = \"axbxax\", t = \"axa\"</p><p><br></p><p>Output: 2</p><p><br></p><p>Explanation: In the string \"axbxax\", there are two distinct subsequences \"axa\":</p><p><br></p><p>(a)(x)bx(a)x</p><p>(a)xb(x)(a)x</p>",
+    "<p>Input: s = \"babgbag\", t = \"bag\"</p><p><br></p><p>Output: 5</p><p><br></p><p>Explanation: In the string \"babgbag\", there are five distinct subsequences \"bag\":</p><p><br></p><p>(ba)(b)(ga)(g)</p><p>(ba)(bg)(ag)</p><p>(bab)(ga)(g)</p><p>(bab)(g)(ag)</p><p>(babg)(a)(g)</p>",
+    "<p>Input: s = \"abcde\", t = \"ace\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length, t.length <= 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

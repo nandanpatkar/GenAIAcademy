@@ -1,0 +1,33 @@
+{
+  "levelNumber": 455,
+  "displayNumber": 401,
+  "title": "Palindrome partitioning II",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string s, partition s such that every&nbsp;substring of the partition is a&nbsp;palindrome.Return the<strong> minimum cuts</strong> needed for a palindrome partitioning of s.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"aab\"</p><p><strong>Output :</strong> 1</p><p><strong>Explanation :</strong> The palindrome partitioning [\"aa\", \"b\"] could be produced using 1 cut.</p>",
+    "<p><strong>Input :</strong> s = \"abaaba\"</p><p><strong>Output :</strong> 0</p><p><strong>Explanation :</strong> The complete string can be considered as a partition as the string itself is palindrome.</p><p>There are other ways to partition the string but it requires more number of cuts.</p>",
+    "<p><strong>Input :</strong> s = \"abcd\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 2000</li><li>s consist of only lowercase English letters</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

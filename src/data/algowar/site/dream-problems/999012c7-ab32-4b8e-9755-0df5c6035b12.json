@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "999012c7-ab32-4b8e-9755-0df5c6035b12",
+    "title": "Threshold Majority Queries",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "hash-table",
+      "binary-search",
+      "divide-and-conquer",
+      "counting",
+      "prefix-sum"
+    ],
+    "statement": "Threshold Majority Queries (Hard)\n\nYou are given an integer array nums of length n and an array of queries, where each query is a triple [l, r, threshold]. For each query, consider the subarray nums[l..r]. Find the element in this subarray that appears at least threshold times, selecting the element with the highest frequency (choosing the smallest element in case of a tie). If no such element exists, the answer for that query is -1.\n\nReturn the answers for all queries in order.\n\n**Input:**\n- Line 1: an integer n, the length of nums.\n- Line 2: n space-separated integers, the array nums.\n- Line 3: an integer m, the number of queries.\n- The next m lines: each line contains three space-separated integers l, r, threshold describing one query.\n\n**Output:**\n- A single line containing m space-separated integers, the answers to the queries in the order given.\n\n**Constraints:**\n- 1 <= nums.length == n <= 10^4\n- 1 <= nums[i] <= 10^9\n- 1 <= queries.length <= 5 * 10^4\n- queries[i] = [l_i, r_i, threshold_i]\n- 0 <= l_i <= r_i < n\n- 1 <= threshold_i <= r_i - l_i + 1\n\n**Examples:**\nExample 1:\nInput:\n6\n1 1 2 2 1 1\n3\n0 5 4\n0 3 3\n2 3 2\nOutput:\n1 -1 2\n\nExample 2:\nInput:\n7\n3 2 3 2 3 2 3\n4\n0 6 4\n1 5 2\n2 4 1\n3 3 1\nOutput:\n3 2 3 2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

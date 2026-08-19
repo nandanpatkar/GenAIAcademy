@@ -1,0 +1,33 @@
+{
+  "levelNumber": 330,
+  "displayNumber": 276,
+  "title": "Construct the Binary Tree from Postorder and Inorder Traversal",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integer arrays Postorder and Inorder. Where Postorder is the postorder traversal of a binary tree and Inorder is the inorder traversal of the same tree.</p><p><br></p><p>Construct and return the binary tree using the <strong>postorder</strong> and <strong>inorder</strong> arrays.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> postorder = [9, 15, 7, 20, 3] , inorder = [9, 3, 15, 20, 7]</p><p><strong>Output :</strong> [3, 9, 20, null, null, 15, 7]</p><p><strong>Explanation : </strong>The output tree is shown below.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-rdloQxO4\"></p>",
+    "<p><strong>Input :</strong> postorder = [5, 6, 4, 9, 2, 3]&nbsp;, inorder =&nbsp;[5, 4, 6, 3, 2, 9]</p><p><strong>Output :</strong> [3, 4, 2, 5, 6, null, 9]</p><p><strong>Explanation : </strong>The output tree is shown below.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-wcRUWMz1\"></p>",
+    "<p><strong>Input :</strong> postorder = [6, 8, 1, 4, 7, 2, 5], inorder = [8, 6, 1, 5, 4, 2, 7]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 3000</li><li>-10<sup>4</sup> <= Node.val <= 10<sup>4</sup></li><li>All values in the given tree are unique.</li><li>Each value of inorder also appears in postorder.</li><li>Postorder is guaranteed to be the postorder traversal of the tree.</li><li>Inorder is guaranteed to be the inorder traversal of the tree.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

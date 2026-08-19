@@ -1,0 +1,26 @@
+{
+  "levelNumber": 152,
+  "displayNumber": 98,
+  "title": "Find the length of the Linked List",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given the head of a singly linked list. Your task is to return the number of nodes in the linked list.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head = [1, 2, 3, 4, 5]</p><p><strong>Output</strong>: 5</p>",
+    "<p><strong>Input</strong>: head = [8, 6]</p><p><strong>Output</strong>: 2</p>",
+    "<p>Input: head = [1]</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes in the Linked List <= 10<sup>5</sup></li><li>0 <= ListNode.val <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 448,
+  "displayNumber": 394,
+  "title": "Longest Bitonic Subsequence",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array arr of n integers, the task is to find the length of the longest bitonic sequence. A sequence is considered bitonic if it first increases, then decreases. The sequence does not have to be contiguous.</p>",
+  "examples": [
+    "<p>Input: arr = [5, 1, 4, 2, 3, 6, 8, 7]</p><p>Output: 6</p><p>Explanation: The longest bitonic sequence is [1, 2, 3, 6, 8, 7] with length 6.</p>",
+    "<p>Input: arr = [10, 20, 30, 40, 50, 40, 30, 20]</p><p>Output: 8</p><p>Explanation: The entire array is bitonic, increasing up to 50 and then decreasing.</p>",
+    "<p>Input: arr = [12, 11, 10, 15, 18, 17, 16, 14]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= arr.length <= 10<sup>3</sup></li><li><span style=\"color: rgb(245, 245, 245);\"> -10</span><sup style=\"color: rgb(245, 245, 245);\">6</sup><= arr[i] <= 10<sup>6</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

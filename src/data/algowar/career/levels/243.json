@@ -1,0 +1,33 @@
+{
+  "levelNumber": 243,
+  "displayNumber": 189,
+  "title": "Asteroid Collision",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "$1c",
+  "examples": [
+    "<p><strong>Input: </strong>asteroids = [1, 2, 3, -4, -2]</p><p><strong>Output:</strong> [-4, -2]</p><p><strong>Explanation:</strong></p><ul><li>Asteroid 3 and -4 collide → 3 explodes, -4 survives.</li><li>Asteroid -4 continues and collides with 2 → 2 explodes, -4 continues.</li><li>Asteroid -4 collides with 1 → 1 explodes, -4 continues.</li><li>Next asteroid -2 is moving left → no collision.</li></ul><p><strong>Final state: [-4, -2].</strong></p>",
+    "<p><strong>Input:</strong> asteroids = [5, 10, -5, -10, 8, -8, -3, 12]</p><p><strong>Output:</strong> [5, 12]</p><p><strong>Explanation:</strong></p><ul><li>Asteroid 10 and -5 collide → -5 explodes, 10 survives.</li><li>Asteroid 10 and -10 collide → both explode.</li><li>Asteroid 8 and -8 collide → both explode.</li><li>Asteroid -3 moves left → collides with 5 (right-moving) → 5 > 3 → -3 explodes, 5 survives.</li><li>Asteroid 12 moves right → no collision with 5 because it is behind → 12 survives.</li></ul><p><strong>Final state: [5, 12]</strong></p>",
+    "<p>Input: asteroids = [10, 2, -5]</p>"
+  ],
+  "constraintsHtml": "<p>·&nbsp;&nbsp;2 <= asteroids.length <= 10<sup>5</sup></p><p>·&nbsp;&nbsp;-10<sup>6</sup> <= asteroids[i] <= 10<sup>6</sup></p><p>·&nbsp;&nbsp;asteroids[i] != 0</p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

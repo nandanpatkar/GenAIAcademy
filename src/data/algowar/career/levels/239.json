@@ -1,0 +1,26 @@
+{
+  "levelNumber": 239,
+  "displayNumber": 185,
+  "title": "Next Smaller Element",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers <strong>arr</strong>, your task is to find the Next Smaller Element <strong>(NSE)</strong> for every element in the array.</p><p><br></p><p>The Next Smaller Element for an element x is defined as the first element to the right of x that is smaller than x.</p><p><br></p><p>If there is no smaller element to the right, then the NSE is <strong>-1</strong>.</p>",
+  "examples": [
+    "<p><strong>Input:</strong>&nbsp;arr = [4, 8, 5, 2, 25]</p><p><strong>Output:</strong> [2, 5, 2, -1, -1]</p><p>Explanation:</p><p>- For 4, the next smaller element is 2.</p><p>- For 8, the next smaller element is 5.</p><p>- For 5, the next smaller element is 2.</p><p>- For 2, there is no smaller element to its right → -1.</p><p>- For 25, no smaller element exists → -1.</p>",
+    "<p><strong>Input:</strong>&nbsp;arr = [10, 9, 8, 7]</p><p><strong>Output:</strong> [9, 8, 7, -1]</p><p><strong>Explanation:</strong></p><ul><li>Each element’s next right neighbor is smaller.</li></ul>",
+    "<p><strong>Input:</strong>&nbsp;arr = [1, 2, 3, 4, 5]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= arr.length <= 10<sup>5</sup></li><li>-10<sup>9 </sup><= arr[i] <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

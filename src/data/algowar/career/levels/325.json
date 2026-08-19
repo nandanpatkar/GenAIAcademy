@@ -1,0 +1,33 @@
+{
+  "levelNumber": 325,
+  "displayNumber": 271,
+  "title": "Print all nodes at a distance of K in BT",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>root</strong> of a binary tree, the value of a target node <strong>target</strong>, and an integer <strong>k</strong>. Return an array of the values of all nodes that have a distance <strong>k</strong> from the <strong>target node</strong>.</p><p><br></p><p>The answer can be returned in any order (N represents null).</p><p><br></p><p><strong><em>Note: </em></strong><em>Although input shows target as a value, internally it refers to the TreeNode with that value.</em></p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [3, 5, 1, 6, 2, 0, 8, N, N, 7, 4] , target = 5, k = 2</p><p><strong>Output :</strong> [1, 4, 7]</p><p><strong>Explanation :</strong> The nodes that are a distance 2 from the target node (with value 5) have values 7, 4, and 1.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-X7lrwOO7\"></p>",
+    "<p><strong>Input :</strong> root = [3, 5, 1, 6, 2, 0, 8, N, N, 7, 4] , target = 5, k = 3</p><p><strong>Output :</strong> [0, 8]</p><p><strong>Explanation :</strong> The nodes that are a distance 3 from the target node (with value 5) have values 0, 8.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-8qwA6bD3\"></p>",
+    "<p><strong>Input :</strong> root =[1, 2, 3, 4, null, 5, 6], target = 6, k = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>3</sup></li><li>-10<sup>4</sup> <= Node.val <= 10<sup>4</sup></li><li>All the values <strong>Node.val</strong> are <strong>unique</strong>.</li><li>target is the value of one of the nodes in the tree</li><li>0 <= k <= 10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

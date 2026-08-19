@@ -1,0 +1,33 @@
+{
+  "levelNumber": 422,
+  "displayNumber": 368,
+  "title": "Minimum Coins (DP - 20)",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array of coins representing coins of different denominations and an integer amount representing a total amount of money. Return the <strong>fewest</strong> number of coins that are needed to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1. There are <strong>infinite</strong> numbers of coins of each type</p>",
+  "examples": [
+    "<p><strong>Input: </strong>coins = [1, 2, 5], amount = 11</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:&nbsp;</strong>11 = 5 + 5 + 1. We need 3 coins to make up the amount 11.</p>",
+    "<p><strong>Input:</strong> coins = [2, 5], amount = 3</p><p><strong>Output: </strong>-1</p><p><strong>Explanation:</strong> It's not possible to make amount 3 with coins 2 and 5. Since we can't combine the coin 2 and 5 to make the amount 3, the output is -1.</p>",
+    "<p><strong>Input:</strong> coins = [10], amount = 5</p>"
+  ],
+  "constraintsHtml": "<ul><li>n=<span style=\"color: rgb(245, 245, 245);\">number of distinct denominations</span></li><li>1 <= n <= 100</li><li>1 <= coins[i], amount <= 10<sup>3</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

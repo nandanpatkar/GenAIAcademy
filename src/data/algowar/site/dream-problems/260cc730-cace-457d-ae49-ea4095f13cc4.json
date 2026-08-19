@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "260cc730-cace-457d-ae49-ea4095f13cc4",
+    "title": "Merge Intervals",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "sorting"
+    ],
+    "statement": "Given an array of intervals where each interval is [start, end], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input. Two intervals are considered overlapping if one starts at or before the other ends when they are sorted (i.e., intervals [a, b] and [b, c] overlap).\n\n**Input:**\nThe first line contains two integers n and c (where c is always 2), the number of intervals and the number of values per interval.\nThe next n lines each contain two space-separated integers start_i and end_i.\n\n**Output:**\nFirst line: two integers k and 2, the number of merged intervals.\nThe next k lines each contain two space-separated integers: the start and end of a merged interval.\nThe merged intervals must be printed in ascending order of start value.\n\n**Constraints:**\n1 <= n <= 10^4\nEach interval has exactly 2 values.\n0 <= start_i <= end_i <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n4 2\n1 3\n2 6\n8 10\n15 18\nOutput:\n3 2\n1 6\n8 10\n15 18\n\nExample 2:\nInput:\n2 2\n1 4\n4 5\nOutput:\n1 2\n1 5\n\nExample 3:\nInput:\n2 2\n4 7\n1 4\nOutput:\n1 2\n1 7",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

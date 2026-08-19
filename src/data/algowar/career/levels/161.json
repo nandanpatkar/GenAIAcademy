@@ -1,0 +1,33 @@
+{
+  "levelNumber": 161,
+  "displayNumber": 107,
+  "title": "Detect a loop in LL",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a singly linked list. Return true if a <strong>loop</strong> exists in the linked list or return false.</p><p><br></p><p>A loop exists in a linked list if some node in the list can be reached again by continuously following the next pointer.</p><p><br></p><p>Internally, pos is used to denote the index(0-based) of the node from where the loop starts. Note&nbsp;that pos is not passed as a parameter.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter--y2YLT69\"></p><p><br></p><p><strong>Input</strong>: head -> 1 -> 2 -> 3 -> 4 -> 5, pos = 1</p><p><strong>Output</strong>: true</p><p><strong>Explanation</strong>: The tail of the linked list connects to the node at 1st index.</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-vodxuwjV\"></p><p><br></p><p><strong>Input</strong>: head -> 1 -> 3 -> 7 -> 4, pos = -1</p><p><strong>Output</strong>: false</p><p><strong>Explanation</strong>: No loop is present in the linked list.</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-sv9gEaDf\"></p><p><br></p><p><strong>Input</strong>: head -> 6 -> 3 -> 7, pos = 0</p>"
+  ],
+  "constraintsHtml": "<ul><li>0 <= number of nodes in the cycle <= 10<sup>5</sup></li><li>0 <= ListNode.val <= 10<sup>4</sup></li><li>pos is -1 or a valid index in the linked list</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

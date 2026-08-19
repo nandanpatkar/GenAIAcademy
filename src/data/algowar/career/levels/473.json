@@ -1,0 +1,33 @@
+{
+  "levelNumber": 473,
+  "displayNumber": 419,
+  "title": "Longest happy prefix",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a string s, return the longest <strong>happy prefix</strong> of s. A happy prefix is a string that is both a <strong>proper prefix</strong> and a <strong>proper suffix</strong>.</p><p><br></p><p>If no such prefix exists, return an empty string \"\".</p>",
+  "examples": [
+    "<p>Input: s = \"ababab\"</p><p><br></p><p>Output: \"abab\"</p><p><br></p><p>Explanation: \"abab\" is the longest prefix which is also suffix. They can overlap in the original string.</p>",
+    "<p>Input: s = \"aaaa\"</p><p><br></p><p>Output: \"aaa\"</p><p><br></p><p>Explanation: \"aaa\" is the longest prefix which is also a suffix in the string \"aaaa\".</p>",
+    "<p>Input: s = \"abc\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 18,
+    "title": "String Trials",
+    "theme": "obsidian-strings",
+    "levelCount": 9,
+    "completionXp": 100
+  }
+}

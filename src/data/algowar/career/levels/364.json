@@ -1,0 +1,33 @@
+{
+  "levelNumber": 364,
+  "displayNumber": 310,
+  "title": "Surrounded Regions",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given a matrix mat of size <strong>N x M</strong> where each cell contains either<strong> 'O'</strong> or <strong>'X'</strong>.</p><p>Your task is to replace all <strong>'O'</strong> cells that are completely surrounded by <strong>'X'</strong> with<strong> 'X'</strong>.</p><p><br></p><p><strong>Rules:</strong></p><ul><li>An<strong> 'O'</strong> (or a group of connected<strong> 'O'</strong>s) is considered surrounded if it is not connected to any border of the matrix.</li><li>Two<strong> 'O' </strong>cells are considered connected if they are adjacent horizontally or vertically <strong>(not diagonally)</strong>.</li><li>A region of connected<strong> 'O'</strong>s that touches the border (i.e., first row, last row, first column, or last column) is not surrounded and should not be changed.</li></ul>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-sA3BL8cs\"></p><p><strong>Input:</strong> mat = [ [\"X\", \"X\", \"X\", \"X\"], [\"X\", \"O\", \"O\", \"X\"], [\"X\", \"X\", \"O\", \"X\"], [\"X\", \"O\", \"X\", \"X\"] ]</p><p><strong>Output:</strong> [ [\"X\", \"X\", \"X\", \"X\"], [\"X\", \"X\", \"X\", \"X\"], [\"X\", \"X\", \"X\", \"X\"], [\"X\", \"O\", \"X\", \"X\"] ]</p><p><strong>Explanation:</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-jd2Z8EHv\"></p><p>The 'O' cells at positions (1,1), (1,2), (2,2), and (3,1) are surrounded by 'X' cells in all directions (horizontally and vertically).</p><p>However, the 'O' region at (3,1) is adjacent to an edge of the board, so it cannot be completely surrounded by 'X' cells. Therefore, it remains unchanged.</p>",
+    "<p><strong>Input:</strong> mat = [ [\"X\", \"X\", \"X\"], [\"X\", \"O\", \"X\"], [\"X\", \"X\", \"X\"] ]</p><p><strong>Output:</strong> [ [\"X\", \"X\", \"X\"], [\"X\", \"X\", \"X\"], [\"X\", \"X\", \"X\"] ]</p><p><strong>Explanation:</strong> The only 'O' cell at position (1,1) is completely surrounded by 'X' cells in all directions (horizontally and vertically). Hence, it is replaced with 'X' in the output.</p>",
+    "<p><strong>Input:</strong> mat = [ [\"X\", \"X\", \"X\", \"O\"], [\"X\", \"X\", \"X\", \"X\"], [\"O\", \"X\", \"X\", \"X\"], [\"X\", \"X\", \"X\", \"X\"] ]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;N == mat.length</li><li>&nbsp;&nbsp;M == mat[i].length</li><li>&nbsp;&nbsp;1 <= N, M <= 300</li><li>&nbsp;&nbsp;mat[i][j] is 'X' or 'O'.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 408,
+  "displayNumber": 354,
+  "title": "Maximum sum of non adjacent elements",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array nums of size n. Return the <strong>maximum sum</strong> possible using the elements of nums such that no two elements taken are adjacent in nums.</p><p><br></p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [1, 2, 4]</p><p><strong>Output</strong>: 5</p><p><strong>Explanation</strong>: </p><p>[<u>1</u>, 2, <u>4</u>], the underlined elements are taken to get the maximum sum.</p>",
+    "<p><strong>Input</strong>: nums = [2, 1, 4, 9]</p><p><strong>Output</strong>: 11</p><p><strong>Explanation</strong>: </p><p>[<u>2</u>, 1, 4, <u>9</u>], the underlined elements are taken to get the maximum sum.</p>",
+    "<p><strong>Input</strong>: nums = [1, 7, 16, 8]</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == nums.length</li><li>1 <= n <= 10<sup>5</sup></li><li>0 <= nums[i] <= 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

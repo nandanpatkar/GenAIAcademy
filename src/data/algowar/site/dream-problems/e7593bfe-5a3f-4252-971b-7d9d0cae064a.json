@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "e7593bfe-5a3f-4252-971b-7d9d0cae064a",
+    "title": "Maximum Product of Three Numbers",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "math",
+      "sorting"
+    ],
+    "statement": "Given an integer array, find three numbers whose product is maximum and return the maximum product.\n\n**Input:**\n- Line 1: an integer n, the length of the array.\n- Line 2: n space-separated integers, the elements of the array.\n\n**Output:**\n- A single integer, the maximum product of three numbers from the array.\n\n**Constraints:**\n- 3 <= n <= 10^4\n- -1000 <= nums[i] <= 1000\n\n**Examples:**\nExample 1:\nInput:\n3\n1 2 3\nOutput:\n6\n\nExample 2:\nInput:\n4\n1 2 3 4\nOutput:\n24\n\nExample 3:\nInput:\n3\n-1 -2 -3\nOutput:\n-6",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

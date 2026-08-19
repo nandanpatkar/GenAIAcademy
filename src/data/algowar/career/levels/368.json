@@ -1,0 +1,33 @@
+{
+  "levelNumber": 368,
+  "displayNumber": 314,
+  "title": "Number of islands",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a grid of size N x M (N is the number of rows and M is the number of columns in the grid) consisting of '0's (Water) and ‘1's(Land). Find the number of <strong>islands</strong>.</p><p>An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically or diagonally i.e., in all 8 directions.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-cQJHsEaI\"></p><p><br></p><p><strong>Input:</strong> grid = [ [\"1\", \"1\", \"1\", \"0\", \"1\"], [\"1\", \"0\", \"0\", \"0\", \"0\"], [\"1\", \"1\", \"1\", \"0\", \"1\"], [\"0\", \"0\", \"0\", \"1\", \"1\"] ]</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:</strong> This grid contains 2 islands. Each '1' represents a piece of land, and the islands are formed by connecting adjacent lands horizontally or vertically. Despite some islands having a common edge, they are considered separate islands because there is no land connectivity in any of the eight directions between them. Therefore, the grid contains 2 islands.</p>",
+    "<p><strong>Input:</strong> grid = [ [\"1\", \"0\", \"0\", \"0\", \"1\"], [\"0\", \"1\", \"0\", \"1\", \"0\"], [\"0\", \"0\", \"1\", \"0\", \"0\"], [\"0\", \"1\", \"0\", \"1\",\" 0\"] ]</p><p><strong>Output:</strong> 1</p><p><strong>Explanation:</strong> In the given grid, there's only one island as all the '1's are connected either horizontally, vertically, or diagonally, forming a single contiguous landmass surrounded by water on all sides.</p>",
+    "<p>Input: grid = [&nbsp;[\"1\", \"1\", \"1\", \"1\", \"0\"], [\"1\", \"1\", \"0\", \"1\", \"0\"],&nbsp;[\"1\", \"1\", \"0\", \"0\", \"0\"],&nbsp;[\"0\", \"0\", \"0\", \"0\", \"0\"] ]</p>"
+  ],
+  "constraintsHtml": "<p>·&nbsp;&nbsp;N == grid.length</p><p>·&nbsp;&nbsp;M == grid[i].length</p><p>·&nbsp;&nbsp;1 <= N, M <= 300</p><p>·&nbsp;&nbsp;grid[i][j] is '0' or '1'.</p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

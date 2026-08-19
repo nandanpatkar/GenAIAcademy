@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "35eee0b3-f000-481f-adfa-0c4d33afeb2f",
+    "title": "Asteroid Collision",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "stack",
+      "simulation"
+    ],
+    "statement": "We are given an array asteroids of integers representing asteroids in a row. The indices of the asteroid in the array represent their relative position in space.\n\nFor each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). Each asteroid moves at the same speed.\n\nFind out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.\n\n**Input:**\nThe first line contains an integer n, the number of asteroids.\nThe second line contains n space-separated integers representing the asteroids array.\n\n**Output:**\nPrint the state of the asteroids after all collisions as a single line of space-separated integers, in their relative order from left to right. If no asteroids remain, print an empty line.\n\n**Constraints:**\n2 <= asteroids.length <= 10^4\n-1000 <= asteroids[i] <= 1000\nasteroids[i] != 0\n\n**Examples:**\nExample 1:\nInput:\n3\n5 10 -5\nOutput:\n5 10\n\nExample 2:\nInput:\n2\n8 -8\nOutput:\n\nExample 3:\nInput:\n3\n10 2 -5\nOutput:\n10\n\nExample 4:\nInput:\n6\n3 5 -6 2 -1 4\nOutput:\n-6 2 4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

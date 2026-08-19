@@ -1,0 +1,33 @@
+{
+  "levelNumber": 342,
+  "displayNumber": 288,
+  "title": "Kth Smallest and Largest element in BST",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>root</strong> node of a binary search tree (BST) and an integer k.</p><p><br></p><p>Return the <strong>k</strong><sup><strong>th</strong></sup> <strong>smallest</strong> and <strong>largest</strong> value (1-indexed) of all values of the nodes in the tree.</p><p><br></p><p>Return the 1<sup>st</sup> integer as k<sup>th</sup> smallest and 2<sup>nd</sup> integer as k<sup>th</sup> largest in the returned array.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [3,1,4,null,2] , k = 1</p><p><strong>Output :</strong> [1, 4]</p><p><strong>Explanation :</strong> </p><p>The 1<sup>st</sup> smallest value in given BST is 1.</p><p>The 1<sup>st</sup> largest value in given BST is 4.</p>",
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, null, null, null, 1] , k = 3</p><p><strong>Output :</strong> [3, 3]</p><p><strong>Explanation :</strong> </p><p>The 3<sup>rd</sup> smallest value in given BST is 3.</p><p>The 3<sup>rd</sup> largest value in given BST is 3.</p>",
+    "<p><strong>Input :</strong> root = [3,1,4,null,2] , k = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>The number of nodes in the tree is n.</li><li>1 <= k <= n <= 10<sup>4</sup></li><li>0 <= Node.val <= 10<sup>5</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

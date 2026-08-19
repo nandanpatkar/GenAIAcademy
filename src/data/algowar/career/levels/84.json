@@ -1,0 +1,33 @@
+{
+  "levelNumber": 84,
+  "displayNumber": 30,
+  "title": "Leaders in an Array",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array <strong>nums</strong>, return a list of all the leaders in the array.</p><p><br></p><p>A leader in an array is an element whose value is <strong>strictly</strong> greater than all elements to its right in the given array. The rightmost element is always a leader. The elements in the leader array must appear in the <strong>order they appear</strong> in the nums array.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [1, 2, 5, 3, 1, 2]</p><p><strong>Output</strong>: [5, 3, 2]</p><p><strong>Explanation</strong>: </p><p>2 is the rightmost element, 3 is the largest element in the index range [3, 5], 5 is the largest element in the index range [2, 5]</p>",
+    "<p><strong>Input</strong>: nums = [-3, 4, 5, 1, -4, -5]</p><p><strong>Output</strong>: [5, 1, -4, -5]</p><p><strong>Explanation</strong>: </p><p>-5 is the rightmost element, -4 is the largest element in the index range [4, 5], 1 is the largest element in the index range [3, 5] and 5 is the largest element in the range [2, 5]</p>",
+    "<p><strong>Input</strong>: nums = [-3, 4, 5, 1, -30, -10]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= nums[i] <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

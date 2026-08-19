@@ -1,0 +1,378 @@
+{
+  "company": {
+    "slug": "oracle",
+    "name": "Oracle"
+  },
+  "questions": [
+    {
+      "problemId": "0f162178-c4c1-4512-b02d-fa43b1f6d611",
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "frequency": 100,
+      "orderIndex": 0,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "0783a4cf-c630-4f94-9a68-5f08dc1f78cf",
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "frequency": 86.8,
+      "orderIndex": 1,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e8f32d3e-7689-4b40-8fb8-8e94b64a3bcb",
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "frequency": 83.4,
+      "orderIndex": 2,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "749d127b-c4cc-415c-a9d6-c13235c872d1",
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "frequency": 80.8,
+      "orderIndex": 4,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c28ff3b2-55a0-4958-8585-b3c5b5afabd2",
+      "title": "Top K Frequent Elements",
+      "difficulty": "Medium",
+      "frequency": 76.9,
+      "orderIndex": 5,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "31dc4451-4d4e-44b8-8643-32fe1f9738d3",
+      "title": "Sliding Window Maximum",
+      "difficulty": "Hard",
+      "frequency": 76.1,
+      "orderIndex": 6,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5c87d78e-1385-495e-9f9c-1d722c2f639f",
+      "title": "Merge k Sorted Lists",
+      "difficulty": "Hard",
+      "frequency": 73.3,
+      "orderIndex": 7,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "206d74c7-42d0-466a-b93c-af519bcd219b",
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "frequency": 73.3,
+      "orderIndex": 8,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "260cc730-cace-457d-ae49-ea4095f13cc4",
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "frequency": 70,
+      "orderIndex": 9,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "b2d4e6a5-26ee-4bcd-a010-9bdb2b140050",
+      "title": "Longest Palindromic Substring",
+      "difficulty": "Medium",
+      "frequency": 68.8,
+      "orderIndex": 10,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f81ca876-684a-4e62-b351-116a2205e5dc",
+      "title": "Spiral Matrix",
+      "difficulty": "Medium",
+      "frequency": 68.8,
+      "orderIndex": 11,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c3bd17ea-88b3-4f26-a546-1e76c702a258",
+      "title": "Search in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "frequency": 66.2,
+      "orderIndex": 13,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "eb869d46-48d5-4319-b3bc-622e618c9869",
+      "title": "LFU Cache",
+      "difficulty": "Hard",
+      "frequency": 66.2,
+      "orderIndex": 14,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "35eee0b3-f000-481f-adfa-0c4d33afeb2f",
+      "title": "Asteroid Collision",
+      "difficulty": "Medium",
+      "frequency": 64.8,
+      "orderIndex": 15,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "520ec43e-284b-4c59-a96d-aec48b1f4d94",
+      "title": "Container With Most Water",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 16,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ccee497c-6bb1-4dc9-9101-df84e1ebc5dc",
+      "title": "3Sum",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 17,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d4ae6460-c66c-4be7-8e76-99d4441ece3b",
+      "title": "Reverse Linked List",
+      "difficulty": "Easy",
+      "frequency": 63.2,
+      "orderIndex": 18,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ee09989e-c973-4bd2-8917-3c37fb7e4030",
+      "title": "Remove All Adjacent Duplicates in String II",
+      "difficulty": "Medium",
+      "frequency": 63.2,
+      "orderIndex": 19,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "3bb0dcd8-d476-4c5a-869a-a9f6ca6981ba",
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "frequency": 61.5,
+      "orderIndex": 20,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fb45c70a-1dd6-432d-96b9-cca4d16a2cae",
+      "title": "Longest Consecutive Sequence",
+      "difficulty": "Medium",
+      "frequency": 61.5,
+      "orderIndex": 21,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "e08d4989-bb69-464d-aebc-1d6c6183c9dd",
+      "title": "Minimum Absolute Difference",
+      "difficulty": "Easy",
+      "frequency": 61.5,
+      "orderIndex": 23,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "349fe0b4-55b1-4377-8f98-0a8896df3369",
+      "title": "Roman to Integer",
+      "difficulty": "Easy",
+      "frequency": 59.7,
+      "orderIndex": 24,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "8d2a91de-6a6e-4d17-ac55-d971be34919a",
+      "title": "Maximum Subarray",
+      "difficulty": "Medium",
+      "frequency": 59.7,
+      "orderIndex": 25,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "7af9f79b-1297-4778-bacb-08a3ca814783",
+      "title": "Valid Anagram",
+      "difficulty": "Easy",
+      "frequency": 59.7,
+      "orderIndex": 26,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "20ba1d44-bc2c-4edf-9490-6f11b2745b12",
+      "title": "Count Pairs Of Similar Strings",
+      "difficulty": "Easy",
+      "frequency": 59.7,
+      "orderIndex": 27,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "f692325b-aa31-417f-b505-a41801febbc5",
+      "title": "Maximize Value of Function in a Ball Passing Game",
+      "difficulty": "Hard",
+      "frequency": 59.7,
+      "orderIndex": 28,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "d8240dce-bb52-403b-a6b0-466c9cf794da",
+      "title": "Rotting Oranges",
+      "difficulty": "Medium",
+      "frequency": 59.7,
+      "orderIndex": 29,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "498fbd54-4e51-4c9c-acf8-f2d96828afbd",
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "frequency": 57.7,
+      "orderIndex": 32,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "fa8f90b7-652d-424e-bc68-43e10eebbebf",
+      "title": "Binary Tree Right Side View",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 33,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "ceb3415e-3fce-471b-9313-0546512c2c17",
+      "title": "Lowest Common Ancestor of a Binary Tree",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 34,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "738f42d7-7830-4e28-8b65-39e03e9db38f",
+      "title": "Decode String",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 35,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "cf997f80-0014-4d74-b55c-94ec456b92ad",
+      "title": "Count Ways To Build Good Strings",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 36,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "1e13ccd5-ac1d-445b-987f-a8b9e7339ff3",
+      "title": "Count Ways to Group Overlapping Ranges",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 37,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "5697cdb9-ef03-4b38-93ca-940807a7389f",
+      "title": "Count Distinct Numbers on Board",
+      "difficulty": "Easy",
+      "frequency": 57.7,
+      "orderIndex": 38,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "be163cf6-a6db-4a63-b9a8-85d550d03b2a",
+      "title": "Minimize Length of Array Using Operations",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 39,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "534bf2d1-7884-4b22-b8cc-c9a84a5266d5",
+      "title": "Lucky Numbers in a Matrix",
+      "difficulty": "Easy",
+      "frequency": 57.7,
+      "orderIndex": 43,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "22038456-e4d5-41f1-86d4-86fe9d4c4bf7",
+      "title": "HTML Entity Parser",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 44,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "c789a641-b195-4007-8486-d3544fbf9169",
+      "title": "Design Authentication Manager",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 45,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "26fa28ec-75b4-4d35-8ac2-a0c3842e55a1",
+      "title": "Koko Eating Bananas",
+      "difficulty": "Medium",
+      "frequency": 57.7,
+      "orderIndex": 46,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "42745353-7ad0-4f1d-9262-beae53b674ec",
+      "title": "Median of Two Sorted Arrays",
+      "difficulty": "Hard",
+      "frequency": 55.5,
+      "orderIndex": 47,
+      "solved": false,
+      "locked": false
+    },
+    {
+      "problemId": "05d322ac-f350-47e4-8e68-2e9df344f13c",
+      "title": "Longest Common Prefix",
+      "difficulty": "Easy",
+      "frequency": 55.5,
+      "orderIndex": 48,
+      "solved": false,
+      "locked": false
+    }
+  ],
+  "isPro": true
+}

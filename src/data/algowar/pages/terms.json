@@ -1,0 +1,64 @@
+{
+  "route": "/terms",
+  "title": "Terms &amp; Conditions | AlgoWars",
+  "description": "AlgoWars terms of service — rules for using the competitive programming platform.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(legal)/terms/page-5c30be3189f72f35.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/terms",
+    "title": "Terms & Conditions | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "TERMS & CONDITIONS"
+      },
+      {
+        "tag": "h2",
+        "text": "1. Acceptance of Terms"
+      },
+      {
+        "tag": "h2",
+        "text": "2. Account Responsibilities"
+      },
+      {
+        "tag": "h2",
+        "text": "3. Fair Play"
+      },
+      {
+        "tag": "h2",
+        "text": "4. Code Ownership"
+      },
+      {
+        "tag": "h2",
+        "text": "5. Rating System"
+      },
+      {
+        "tag": "h2",
+        "text": "6. Conduct"
+      },
+      {
+        "tag": "h2",
+        "text": "7. Service Availability"
+      },
+      {
+        "tag": "h2",
+        "text": "8. Termination"
+      },
+      {
+        "tag": "h2",
+        "text": "9. Contact"
+      }
+    ],
+    "text": "← Back to home TERMS & CONDITIONS Last updated: June 1, 2026 1. Acceptance of Terms By accessing or using AlgoWars, you agree to be bound by these Terms and Conditions. If you do not agree, you may not use the platform. 2. Account Responsibilities You are responsible for maintaining the security of your account credentials. You must not share your account or create multiple accounts. One account per person is enforced. 3. Fair Play All code submissions must be your own work during the match. Using external AI tools, copying from other sources, or any form of cheating during a live match is strictly prohibited and may result in account suspension or ban. 4. Code Ownership You retain ownership of code you write and submit on AlgoWars. By submitting code, you grant AlgoWars a non-exclusive license to store, display (post-match), and use it for platform operations (judging, match records). 5. Rating System AlgoWars uses an Elo-based rating system. Ratings are adjusted based on match outcomes. Intentional rating manipulation (sandbagging, win-trading) is prohibited. 6. Conduct Users must not engage in harassment, offensive behavior, or any conduct that disrupts other users' experience. Usernames must not contain offensive, discriminatory, or inappropriate content. 7. Service Availability AlgoWars is provided “as is” without warranty. We do not guarantee uninterrupted service. We reserve the right to modify, suspend, or discontinue any part of the service at any time. 8. Termination We reserve the right to suspend or terminate accounts that violate these terms. Users may delete their account at any time by contacting founders@algowars.online. 9. Contact Questions about these terms? Contact us at founders@algowars.online",
+    "links": [
+      "/",
+      "mailto:founders@algowars.online"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

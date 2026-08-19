@@ -1,0 +1,33 @@
+{
+  "levelNumber": 248,
+  "displayNumber": 194,
+  "title": "Sliding Window Maximum",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an array of integers arr, there is a sliding window of size<strong> k</strong> which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the <strong>max</strong> sliding window.</p>",
+  "examples": [
+    "<p>Input: arr = [4, 0, -1, 3, 5, 3, 6, 8], k = 3</p><p>Output: [4, 3, 5, 5, 6, 8]</p><p>Explanation:&nbsp;</p><p><img src=\"https://static.takeuforward.org/content/aptitude_1766388539738_Sliding Window Maximum.png\"></p><p>For each window of size k=3, we find the maximum element in the window and add it to our output array.</p>",
+    "<p>Input: arr = [20, 25], k = 2</p><p>Output: [25]</p><p>Explanation: There’s just one window of size 2 that is possible and the maximum of the two elements is our answer.</p>",
+    "<p>Input: arr = [1, 3, -1, -3, 5, 3, 6, 7],&nbsp;k = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= arr.length <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= arr[i] <= 10<sup>4</sup></li><li>1 <= k <= arr.length</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

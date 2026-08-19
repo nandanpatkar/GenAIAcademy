@@ -1,0 +1,26 @@
+{
+  "levelNumber": 157,
+  "displayNumber": 103,
+  "title": "Reverse a Doubly Linked List",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>You are given the head of a<strong> doubly linked list. </strong></p><p><br></p><p>Reverse the list <strong>in-place</strong> and return the new head of the reversed list.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> head = [10, 20, 30]</p><p><strong>Output:<span class=\"ql-cursor\">﻿</span></strong> [30, 20, 10]</p>",
+    "<p><strong>Input:</strong> head = [1, 3, 5, 7, 9]</p><p><strong>Output:</strong> [9, 7, 5, 3, 1]</p>",
+    "<p><strong>Input:</strong> head = [42]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= number of nodes <= 10<sup>6</sup></li><li>0 <= node.val <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

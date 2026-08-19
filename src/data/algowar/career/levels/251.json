@@ -1,0 +1,33 @@
+{
+  "levelNumber": 251,
+  "displayNumber": 197,
+  "title": "LRU Cache",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Design a data structure that follows the constraints of <strong>Least Recently Used (LRU) </strong>cache.</p><p><br></p><p>Implement the LRUCache class:</p><p><br></p><p><strong>LRUCache(int capacity):</strong> We need to initialize the LRU cache with positive size capacity.</p><p><strong>int get(int key):</strong> Returns the value of the key if the key exists, otherwise return -1.</p><p><strong>void put(int key,int value):</strong> Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.</p><p><br></p><p>The functions get and put must each run in <strong>O(1)</strong> average time complexity.</p><p><br></p><p>Note : In Input is provided in 2D array format where the first number in each array denotes the operation (1-put, 2-get) to perform. The next integers are the values used for the operation.</p>",
+  "examples": [
+    "<p>Input: Capacity = 2, nums = [ [1, 1, 1], [1, 2, 2], [2, 1], [1, 3, 3], [2, 2], [1, 4, 4], [2, 1], [2, 3], [2, 4] ]</p><p>Output:</p><p>&nbsp;[null, null, 1, null, -1, null, -1, 3, 4]</p><p>Explanation:</p><p>LRUCache lRUCache = new LRUCache(2);</p><p>1<sup>st</sup> entry of nums is (<strong>1</strong>, 1, 1). 1 - represents put call. lRUCache.put(1, 1); // cache is {1=1}</p><p>2<sup>nd</sup> entry of nums is (<strong>1</strong>, 2, 2). 1 - represents put call. lRUCache.put(2, 2); // cache is {1=1, 2=2}</p><p>3<sup>rd</sup> entry of nums is (<strong>2</strong>, 1). 2 - represents get call. lRUCache.get(1);&nbsp;&nbsp;// return 1</p><p>lRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}</p><p>lRUCache.get(2);&nbsp;&nbsp;// returns -1 (not found)</p><p>lRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}</p><p>lRUCache.get(1);&nbsp;&nbsp;// return -1 (not found)</p><p>lRUCache.get(3);&nbsp;&nbsp;// return 3</p><p>lRUCache.get(4);&nbsp;&nbsp;// return 4</p>",
+    "<p>Input: Capacity = 1, nums = [[1, 1, 1], [1, 2, 2], [2, 1], [1, 3, 3], [2, 2], [1, 4, 4], [2, 3]]</p><p>Output:</p><p>[null, null, -1, null, -1, null, -1]</p><p>Explanation:</p><p>LRUCache lRUCache = new LRUCache(1);</p><p>lRUCache.put(1, 1); // cache is {1=1}</p><p>lRUCache.put(2, 2); // evicts key 1, cache is {2=2}</p><p>lRUCache.get(1);&nbsp;&nbsp;// returns -1 (not found)</p><p>lRUCache.put(3, 3); // evicts key 2, cache is {3=3}</p><p>lRUCache.get(2);&nbsp;&nbsp;// returns -1 (not found)</p><p>lRUCache.put(4, 4); // evicts key 3, cache is {4=4}</p><p>lRUCache.get(3);&nbsp;&nbsp;// returns -1 (not found)</p>",
+    "<p>Input: Capacity - 2, nums = [[1, 1, 1], [1, 2, 2], [2, 1], [1, 3, 3], [1, 4, 4], [2, 2], [2, 4]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= capacity <= 1000</li><li>0 <= key <= 10<sup>4</sup></li><li>0 <= value <= 10<sup>5</sup></li><li>At most 10<sup>5</sup> calls will be made to get and put.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

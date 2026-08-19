@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "5697cdb9-ef03-4b38-93ca-940807a7389f",
+    "title": "Count Distinct Numbers on Board",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "hash-table",
+      "math",
+      "simulation"
+    ],
+    "statement": "You are given a positive integer n, that is initially placed on a board. Every day, for 10^9 days, you perform the following procedure:\n\n- For each number x present on the board, find all numbers 1 <= i <= n such that x % i == 1.\n- Then, place those numbers on the board.\n\nReturn the number of distinct integers present on the board after 10^9 days have elapsed.\n\nNote:\n- Once a number is placed on the board, it will remain on it until the end.\n- % stands for the modulo operation. For example, 14 % 3 is 2.\n\n**Input:**\nA single line containing the positive integer n.\n\n**Output:**\nA single line containing the number of distinct integers present on the board after 10^9 days.\n\n**Constraints:**\n- 1 <= n <= 100\n\n**Examples:**\nExample 1:\nInput:\n5\nOutput:\n4\n\nExample 2:\nInput:\n3\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

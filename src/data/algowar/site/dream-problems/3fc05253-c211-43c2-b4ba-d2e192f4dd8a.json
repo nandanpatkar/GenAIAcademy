@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "3fc05253-c211-43c2-b4ba-d2e192f4dd8a",
+    "title": "Binary Tree Zigzag Level Order Traversal",
+    "difficulty": "Medium",
+    "tags": [
+      "tree",
+      "breadth-first-search",
+      "binary-tree"
+    ],
+    "statement": "Given the root of a binary tree, return the zigzag level order traversal of its nodes' values (i.e., from left to right, then right to left for the next level, alternating between).\n\nThe binary tree is given in LeetCode level-order serialization: values are listed level by level from left to right, with the word \"null\" marking absent children (trailing nulls trimmed).\n\n**Input:**\nThe first line contains an integer k, the number of entries in the level-order serialization of the tree.\nThe second line contains k space-separated values, which are either integers or the word \"null\", representing the level-order traversal of the tree. If k is 0, the second line is omitted.\n\n**Output:**\nPrint the zigzag level order traversal as follows: the first line contains an integer r, the number of levels in the tree (0 if the tree is empty). Then print r lines, one per level in order from the root downward. On even-indexed levels (0, 2, 4, ...) print the node values from left to right; on odd-indexed levels (1, 3, 5, ...) print the node values from right to left. Each level's values are space-separated on a single line. If r is 0, print only the line \"0\".\n\n**Constraints:**\n- The number of nodes in the tree is in the range [0, 2000].\n- -100 <= Node.val <= 100\n\n**Examples:**\nExample 1:\nInput:\n7\n3 9 20 null null 15 7\nOutput:\n3\n3\n20 9\n15 7\n\nExample 2:\nInput:\n1\n1\nOutput:\n1\n1\n\nExample 3:\nInput:\n0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

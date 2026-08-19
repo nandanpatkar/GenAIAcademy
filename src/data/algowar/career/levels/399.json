@@ -1,0 +1,33 @@
+{
+  "levelNumber": 399,
+  "displayNumber": 345,
+  "title": "Making a large island",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an n x n binary matrix grid, it is allowed to change at most one 0 to 1. A group of connected 1s forms an island, where two 1s are <strong>connected</strong> if they share one of their sides.</p><p><br></p><p>Return the <strong>size</strong> of the largest island in the grid after applying this operation.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> grid = [[1,0],[0,1]]</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong> We change any one 0 to 1 and connect two 1s, then we get an island with maximum area = 3.</p>",
+    "<p><strong>Input:</strong>&nbsp;grid = [[1,1],[1,1]]</p><p><strong>Output: </strong>4</p><p><strong>Explanation:</strong> The largest island already exists with size 4.</p>",
+    "<p><strong>Input:</strong> grid = [[1,1],[1,0]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= n <= 500</li><li>0 <= grid[i][j] <= 1&nbsp;</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

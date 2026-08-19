@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "0eb072ec-5423-4abf-a86f-c5062e6d09a4",
+    "title": "Maximum Number of Occurrences of a Substring",
+    "difficulty": "Medium",
+    "tags": [
+      "hash-table",
+      "string",
+      "sliding-window"
+    ],
+    "statement": "Given a string s, return the maximum number of occurrences of any substring under the following rules:\n\n- The number of unique characters in the substring must be less than or equal to maxLetters.\n- The substring size must be between minSize and maxSize inclusive.\n\n**Input:**\nThe input is read from stdin as follows:\n- Line 1: the string s (raw, consisting of lowercase English letters).\n- Line 2: the integer maxLetters.\n- Line 3: the integer minSize.\n- Line 4: the integer maxSize.\n\n**Output:**\nPrint a single integer: the maximum number of occurrences of any valid substring.\n\n**Constraints:**\n- 1 <= s.length <= 10^5\n- 1 <= maxLetters <= 26\n- 1 <= minSize <= maxSize <= min(26, s.length)\n- s consists of only lowercase English letters.\n\n**Examples:**\nExample 1:\nInput:\naababcaab\n2\n3\n4\nOutput:\n2\n\nExample 2:\nInput:\naaaa\n1\n3\n3\nOutput:\n2",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

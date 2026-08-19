@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "647cd03b-5fe1-43c0-b887-513ca9755703",
+    "title": "Word Break",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "hash-table",
+      "string",
+      "dynamic-programming",
+      "trie",
+      "memoization"
+    ],
+    "statement": "Given a string s and a dictionary of strings wordDict, determine whether s can be segmented into a space-separated sequence of one or more dictionary words. The same word in the dictionary may be reused multiple times in the segmentation. Print \"true\" if s can be segmented, otherwise print \"false\".\n\n**Input:**\nThe first line contains an integer L, the length of the string s.\nThe second line contains the string s.\nThe third line contains an integer n, the number of words in the dictionary.\nThe next n lines each contain one dictionary word.\n\n**Output:**\nPrint \"true\" if s can be segmented into a space-separated sequence of one or more dictionary words, otherwise print \"false\".\n\n**Constraints:**\n- 1 <= s.length <= 300\n- 1 <= wordDict.length <= 1000\n- 1 <= wordDict[i].length <= 20\n- s and wordDict[i] consist of only lowercase English letters.\n- All the strings of wordDict are unique.\n\n**Examples:**\nExample 1:\nInput:\n8\nleetcode\n2\nleet\ncode\nOutput:\ntrue\n\nExample 2:\nInput:\n13\napplepenapple\n2\napple\npen\nOutput:\ntrue\n\nExample 3:\nInput:\n9\ncatsandog\n5\ncats\ndog\nsand\nand\ncat\nOutput:\nfalse",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

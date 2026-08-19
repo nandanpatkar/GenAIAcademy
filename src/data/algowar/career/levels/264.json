@@ -1,0 +1,33 @@
+{
+  "levelNumber": 264,
+  "displayNumber": 210,
+  "title": "Minimum Window Subsequence",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p><u><span class=\"ql-cursor\">﻿</span></u>Given strings&nbsp;s1&nbsp;and&nbsp;s2, return&nbsp;<em>the minimum contiguous&nbsp;substring part of&nbsp;</em>s1<em>, so that&nbsp;</em>s2<em>&nbsp;is a subsequence of the part</em>.</p><p>If there is no such window in&nbsp;s1&nbsp;that covers all characters in&nbsp;s2, return the empty string&nbsp;\"\". If there are multiple such minimum-length windows, return the one with the&nbsp;<strong>left-most starting index</strong>.</p>",
+  "examples": [
+    "<p><strong>Input: s1 = \"abcdebdde\", s2 = \"bde\"</strong></p><p><strong>Output: \"bcde\"</strong></p><p><strong>Explanation: </strong></p><p><strong>\"bcde\" is the answer because it occurs before \"bdde\" which has the same length.</strong></p><p><strong>\"deb\" is not a smaller window because the elements of s2 in the window must occur in order.</strong></p>",
+    "<p><strong>Input: s1 = \"jmeqsiwvaovvnbstl\", s2 = \"u\"</strong></p><p><strong>Output: \"\"</strong></p>",
+    "<p><strong>Input</strong>: <strong>s1=\"fhhjkeejkdjjs\", s2=”jkj”</strong></p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s1.length <= 2 * 10<sup>4</sup></li><li>1 <= s2.length <= 100</li><li>s1&nbsp;and&nbsp;s2&nbsp;consist of lowercase English letters.</li></ul><p><br></p>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 175,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 10,
+    "title": "Window Desert",
+    "theme": "solar-desert",
+    "levelCount": 12,
+    "completionXp": 100
+  }
+}

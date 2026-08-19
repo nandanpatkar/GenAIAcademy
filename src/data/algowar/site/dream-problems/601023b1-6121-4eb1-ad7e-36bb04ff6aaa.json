@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "601023b1-6121-4eb1-ad7e-36bb04ff6aaa",
+    "title": "Print Zero Even Odd",
+    "difficulty": "Medium",
+    "tags": [
+      "concurrency"
+    ],
+    "statement": "Print Zero Even Odd\n\nYou are given an integer n. Produce the series \"010203040506...\" of length 2n, formed by interleaving a 0 before each number from 1 to n in order. That is, for each i from 1 to n, first output 0, then output i.\n\n**Input:**\nA single line containing the integer n.\n\n**Output:**\nA single line containing the resulting string of length 2n, with no spaces or quotes.\n\n**Constraints:**\n- 1 <= n <= 1000\n\n**Examples:**\nExample 1:\nInput:\n2\nOutput:\n0102\n\nExample 2:\nInput:\n5\nOutput:\n0102030405",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

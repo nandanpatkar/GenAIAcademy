@@ -1,0 +1,453 @@
+{
+  "worldNumber": 14,
+  "slug": "bst-temple",
+  "title": "BST Temple",
+  "description": "Unlock ordered-tree search, validation, construction, and iterator mechanics.",
+  "theme": "jade-temple",
+  "levelCount": 16,
+  "xpAvailable": 335,
+  "difficultySummary": {
+    "Easy": 5,
+    "Hard": 4,
+    "Medium": 7
+  },
+  "contentSummary": {
+    "plus": 14,
+    "article": 1,
+    "missing": 1
+  },
+  "completionReward": {
+    "badgeTitle": "BST Monk",
+    "xp": 100,
+    "coins": 600
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-14-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "BST Temple",
+      "subtitle": "Binary Search Trees [Concept and Problems]",
+      "description": "Unlock ordered-tree search, validation, construction, and iterator mechanics.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-335",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Introduction to BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 335,
+        "displayNumber": 281,
+        "title": "Introduction to BST",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-336",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Search in a Binary Search Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 336,
+        "displayNumber": 282,
+        "title": "Search in a Binary Search Tree",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-337",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "Find Min/Max in BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 337,
+        "displayNumber": 283,
+        "title": "Find Min/Max in BST",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-338",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Floor and Ceil in a BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 338,
+        "displayNumber": 284,
+        "title": "Floor and Ceil in a BST",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-339",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "Floor in a Binary Search Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 339,
+        "displayNumber": 285,
+        "title": "Floor in a Binary Search Tree",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-340",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "Insert a given node in BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 340,
+        "displayNumber": 286,
+        "title": "Insert a given node in BST",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-341",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "Delete a node in BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 341,
+        "displayNumber": 287,
+        "title": "Delete a node in BST",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-342",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Kth Smallest and Largest element in BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 342,
+        "displayNumber": 288,
+        "title": "Kth Smallest and Largest element in BST",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-343",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Check if a tree is a BST or not",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 343,
+        "displayNumber": 289,
+        "title": "Check if a tree is a BST or not",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-344",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "LCA in BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 344,
+        "displayNumber": 290,
+        "title": "LCA in BST",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-345",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Construct a BST from a preorder traversal",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 345,
+        "displayNumber": 291,
+        "title": "Construct a BST from a preorder traversal",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-346",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Inorder Successor/Predecessor in BST",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 346,
+        "displayNumber": 292,
+        "title": "Inorder Successor/Predecessor in BST",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-14-checkpoint-346",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 346,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-347",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Merge 2 BST's",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 347,
+        "displayNumber": 293,
+        "title": "Merge 2 BST's",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-348",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Two Sum In BST | Check if there exists a pair with Sum K",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 348,
+        "displayNumber": 294,
+        "title": "Two Sum In BST | Check if there exists a pair with Sum K",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-349",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Correct BST with two nodes swapped",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 75
+      },
+      "level": {
+        "levelNumber": 349,
+        "displayNumber": 295,
+        "title": "Correct BST with two nodes swapped",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 75,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-350",
+      "nodeType": "boss",
+      "order": 18,
+      "mapLane": "center",
+      "title": "Largest BST in Binary Tree",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 20,
+        "coins": 175
+      },
+      "level": {
+        "levelNumber": 350,
+        "displayNumber": 296,
+        "title": "Largest BST in Binary Tree",
+        "difficulty": "Hard",
+        "contentStatus": "plus",
+        "xpReward": 20,
+        "coinReward": 175,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

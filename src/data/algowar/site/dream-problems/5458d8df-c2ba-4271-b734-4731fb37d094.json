@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "5458d8df-c2ba-4271-b734-4731fb37d094",
+    "title": "Pow(x, n)",
+    "difficulty": "Medium",
+    "tags": [
+      "math",
+      "recursion"
+    ],
+    "statement": "Implement pow(x, n), which calculates x raised to the power n (i.e., x^n).\n\n**Input:**\nThe first line contains a floating-point number x.\nThe second line contains an integer n.\n\n**Output:**\nPrint x^n as a floating-point number with exactly 5 decimal places.\n\n**Constraints:**\n- -100.0 < x < 100.0\n- -2^31 <= n <= 2^31 - 1\n- n is an integer.\n- Either x is not zero or n > 0.\n- -10^4 <= x^n <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n2.00000\n10\nOutput:\n1024.00000\n\nExample 2:\nInput:\n2.10000\n3\nOutput:\n9.26100\n\nExample 3:\nInput:\n2.00000\n-2\nOutput:\n0.25000",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

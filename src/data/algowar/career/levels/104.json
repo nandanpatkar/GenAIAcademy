@@ -1,0 +1,33 @@
+{
+  "levelNumber": 104,
+  "displayNumber": 50,
+  "title": "Upper Bound",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a sorted array of nums and an integer x, write a program to find the <strong>upper bound</strong> of <strong>x</strong>.</p><p><br></p><p>The <strong>upper bound</strong> of <strong>x</strong> is defined as the <strong>smallest index </strong>i such that <strong>nums[i] > x</strong>.</p><p><br></p><p>If no such index is found, return the size of the array.</p>",
+  "examples": [
+    "<p><strong>Input </strong>: n= 4, nums = [1,2,2,3], x = 2</p><p><strong>Output</strong>:3</p><p><strong>Explanation</strong>:</p><p>Index 3 is the smallest index such that arr[3] > x.</p>",
+    "<p><strong>Input </strong>: n = 5, nums = [3,5,8,15,19], x = 9</p><p><strong>Output</strong>: 3</p><p><strong>Explanation</strong>:</p><p>Index 3 is the smallest index such that arr[3] > x.</p>",
+    "<p><strong>Input </strong>: n = 5, nums = [3,5,8,15,19], x = 3</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= nums.length <= 10<sup>5</sup></li><li>&nbsp;&nbsp;-10<sup>5</sup> < nums[i], x < 10<sup>5</sup></li><li>&nbsp;&nbsp;nums is sorted in ascending order.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

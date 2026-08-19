@@ -1,0 +1,33 @@
+{
+  "levelNumber": 139,
+  "displayNumber": 85,
+  "title": "Rotate String",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings <strong>s</strong> and <strong>goal</strong>, return <strong>true</strong> if and only if s can become goal after some number of shifts on s.</p><p><br></p><p>A <strong>shift</strong> on s consists of moving the leftmost character of s to the rightmost position.</p><p><br></p><p>For example, if s = \"abcde\", then it will be \"bcdea\" after one shift.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> s = \"abcde\" , goal = \"cdeab\"</p><p><strong>Output :</strong> true</p><p><strong>Explanation :</strong> </p><p>After performing 2 shifts we can achieve the goal string from string s.</p><p>After first shift the string s is => bcdea</p><p>After second shift the string s is => cdeab.</p>",
+    "<p><strong>Input :</strong> s = \"abcde\" , goal = \"adeac\"</p><p><strong>Output :</strong> false</p><p><strong>Explanation :</strong> </p><p>Any number of shift operations cannot convert string s to string goal.</p>",
+    "<p><strong>Input :</strong> s = \"abcde\" , goal = \"abcde\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= s.length <= 100</li><li>1 <= goal.length <= 100</li><li>s and goal consist of only lowercase English letters.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 30,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 5,
+    "title": "String Realm",
+    "theme": "violet-realm",
+    "levelCount": 15,
+    "completionXp": 100
+  }
+}

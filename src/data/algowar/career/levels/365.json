@@ -1,0 +1,33 @@
+{
+  "levelNumber": 365,
+  "displayNumber": 311,
+  "title": "Number of enclaves",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an N x M binary matrix grid, where 0 represents a sea cell and 1 represents a land cell. A move consists of walking from one land cell to another adjacent <strong>(4-directionally) </strong>land cell or walking off the boundary of the grid. Find the number of <strong>land cells</strong> in the grid for which we cannot walk off the boundary of the grid in any number of moves.</p>",
+  "examples": [
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-BX7diqs5\"></p><p><strong>Input:</strong> grid = [[0, 0, 0, 0], [1, 0, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]</p><p><strong>Output:</strong> 3</p><p><strong>Explanation:</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-4DMweAfF\"></p><p>The highlighted cells represents the land cells.</p>",
+    "<p><img src=\"https://static.takeuforward.org/content/ProblemSetter-JKtYrVqX\"></p><p><strong>Input:</strong> grid = [[0, 0, 0, 1],[0, 0, 0, 1], [0, 1, 1, 0], [0, 0, 1, 0], [0, 0, 0, 0]]</p><p><strong>Output:</strong>3</p><p><strong>Explanation:</strong></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-zgfKADbg\"></p><p>The highlighted cells represents the land cells.</p>",
+    "<p>Input: grid = [[0, 0, 0, 1], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= N, M <= 500</li><li>&nbsp;&nbsp;grid[i][j] == 0 or 1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

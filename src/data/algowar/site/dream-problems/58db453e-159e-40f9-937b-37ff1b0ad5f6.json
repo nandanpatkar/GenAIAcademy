@@ -1,0 +1,15 @@
+{
+  "problem": {
+    "id": "58db453e-159e-40f9-937b-37ff1b0ad5f6",
+    "title": "String to Integer (atoi)",
+    "difficulty": "Medium",
+    "tags": [
+      "string"
+    ],
+    "statement": "Implement the atoi function, which converts a string to a 32-bit signed integer.\n\nThe algorithm is as follows:\n1. Whitespace: Ignore any leading whitespace (' ').\n2. Signedness: Determine the sign by checking if the next character is '-' or '+', assuming positivity if neither present.\n3. Conversion: Read the integer by skipping leading zeros until a non-digit character is encountered or the end of the string is reached. If no digits were read, then the result is 0.\n4. Rounding: If the integer is out of the 32-bit signed integer range [-2^31, 2^31 - 1], then round the integer to remain in the range. Specifically, integers less than -2^31 should be rounded to -2^31, and integers greater than 2^31 - 1 should be rounded to 2^31 - 1.\n\nReturn the integer as the final result.\n\n**Input:**\nThe first line contains an integer n, the length of the string.\nThe second line contains the string s (raw, not quoted). The string may contain spaces, so it is read as the entire next line of exactly n characters.\n\n**Output:**\nPrint a single integer: the result of converting the string to a 32-bit signed integer using the algorithm above.\n\n**Constraints:**\n- 0 <= s.length <= 200\n- s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.\n\n**Examples:**\nExample 1:\nInput:\n2\n42\nOutput:\n42\n\nExample 2:\nInput:\n7\n   -042\nOutput:\n-42\n\nExample 3:\nInput:\n9\n1337c0d3\nOutput:\n1337\n\nExample 4:\nInput:\n3\n0-1\nOutput:\n0\n\nExample 5:\nInput:\n13\nwords and 987\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 409,
+  "displayNumber": 355,
+  "title": "House robber",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>A robber is targeting to rob houses from a street. Each house has security measures that alert the police when two adjacent houses are robbed. The houses are arranged in a <strong>circular manner</strong>, thus the first and last houses are adjacent to each other.</p><p><br></p><p>Given an integer array money, where money[i] represents the amount of money that can be looted from the (i+1)<sup>th</sup> house. Return the <strong>maximum</strong> amount of money that the robber can loot without alerting the police.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: money = [2, 1, 4, 9]</p><p><strong>Output</strong>: 10</p><p><strong>Explanation</strong>: </p><p>[2, <u>1</u>, 4, <u>9</u>] The underlined houses would give the maximum loot.</p><p>Note that we cannot loot the 1st and 4th houses together.</p>",
+    "<p><strong>Input</strong>: money = [1, 5, 2, 1, 6]</p><p><strong>Output</strong>: 11</p><p><strong>Explanation</strong>: </p><p>[1, <u>5</u>, 2, 1, <u>6</u>] The underlined houses would give the maximum loot.</p>",
+    "<p><strong>Input</strong>: money = [9, 4, 1, 8]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= money.length <= 10<sup>5</sup></li><li>0 <= money[i] <= 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

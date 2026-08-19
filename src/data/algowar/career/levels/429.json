@@ -1,0 +1,33 @@
+{
+  "levelNumber": 429,
+  "displayNumber": 375,
+  "title": "Longest common substring",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings str1 and str2, find the length of their <strong>longest common</strong> substring.</p><p><br></p><p>A substring is a contiguous sequence of characters within a string.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> str1 = \"abcde\", str2 = \"abfce\"</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:</strong> The longest common substring is \"ab\", which has a length of 2.</p>",
+    "<p><strong>Input: </strong>str1 = \"abcdxyz\", str2 = \"xyzabcd\"</p><p><strong>Output:</strong> 4</p><p><strong>Explanation:</strong> The longest common substring is \"abcd\", which has a length of 4.</p>",
+    "<p><strong>Input:</strong> str1 = \"abcdef\", str2 = \"ghijkl\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>n=str1.length</li><li>m=str2.length</li><li>1<= n, m <=10<sup>3</sup></li><li>str1 and str2 are in lowercase alphabet</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

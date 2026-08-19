@@ -1,0 +1,1447 @@
+{
+  "worldNumber": 1,
+  "slug": "foundation-gate",
+  "title": "Foundation Gate",
+  "description": "Master input, conditionals, loops, patterns, recursion basics, and hashing.",
+  "theme": "neon-dojo",
+  "levelCount": 54,
+  "xpAvailable": 655,
+  "difficultySummary": {
+    "Easy": 51,
+    "Medium": 3
+  },
+  "contentSummary": {
+    "plus": 44,
+    "article": 8,
+    "missing": 2
+  },
+  "completionReward": {
+    "badgeTitle": "Foundation Initiate",
+    "xp": 100,
+    "coins": 275
+  },
+  "nodes": [
+    {
+      "nodeKey": "world-1-intro",
+      "nodeType": "intro",
+      "order": 1,
+      "mapLane": "center",
+      "title": "Foundation Gate",
+      "subtitle": "Learn the basics",
+      "description": "Master input, conditionals, loops, patterns, recursion basics, and hashing.",
+      "afterLevelNumber": null,
+      "rewards": {},
+      "level": null
+    },
+    {
+      "nodeKey": "level-1",
+      "nodeType": "level",
+      "order": 2,
+      "mapLane": "right",
+      "title": "Input Output",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 1,
+        "displayNumber": 1,
+        "title": "Input Output",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-2",
+      "nodeType": "level",
+      "order": 3,
+      "mapLane": "left",
+      "title": "Cpp Basics",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 2,
+        "displayNumber": 2,
+        "title": "Cpp Basics",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-3",
+      "nodeType": "level",
+      "order": 4,
+      "mapLane": "right",
+      "title": "If ElseIf",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 3,
+        "displayNumber": 3,
+        "title": "If ElseIf",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-4",
+      "nodeType": "level",
+      "order": 5,
+      "mapLane": "left",
+      "title": "Switch Case",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 4,
+        "displayNumber": 4,
+        "title": "Switch Case",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-5",
+      "nodeType": "level",
+      "order": 6,
+      "mapLane": "right",
+      "title": "What are arrays, strings?",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 5,
+        "displayNumber": 5,
+        "title": "What are arrays, strings?",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-6",
+      "nodeType": "level",
+      "order": 7,
+      "mapLane": "left",
+      "title": "For loops",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 6,
+        "displayNumber": 6,
+        "title": "For loops",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-7",
+      "nodeType": "level",
+      "order": 8,
+      "mapLane": "right",
+      "title": "While loops",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 7,
+        "displayNumber": 7,
+        "title": "While loops",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-8",
+      "nodeType": "level",
+      "order": 9,
+      "mapLane": "left",
+      "title": "Functions (Pass by Reference and Value)",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 8,
+        "displayNumber": 8,
+        "title": "Functions (Pass by Reference and Value)",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-9",
+      "nodeType": "level",
+      "order": 10,
+      "mapLane": "right",
+      "title": "Theory with examples",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 9,
+        "displayNumber": 9,
+        "title": "Theory with examples",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-10",
+      "nodeType": "level",
+      "order": 11,
+      "mapLane": "left",
+      "title": "Easy and Medium",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 10,
+        "displayNumber": 10,
+        "title": "Easy and Medium",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-11",
+      "nodeType": "level",
+      "order": 12,
+      "mapLane": "right",
+      "title": "Hard",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 11,
+        "displayNumber": 11,
+        "title": "Hard",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-12",
+      "nodeType": "level",
+      "order": 13,
+      "mapLane": "left",
+      "title": "Pattern 1",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 12,
+        "displayNumber": 12,
+        "title": "Pattern 1",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-1-checkpoint-12",
+      "nodeType": "checkpoint",
+      "order": 14,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 12,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-13",
+      "nodeType": "level",
+      "order": 15,
+      "mapLane": "left",
+      "title": "Pattern 2",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 13,
+        "displayNumber": 13,
+        "title": "Pattern 2",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-14",
+      "nodeType": "level",
+      "order": 16,
+      "mapLane": "right",
+      "title": "Pattern 3",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 14,
+        "displayNumber": 14,
+        "title": "Pattern 3",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-15",
+      "nodeType": "level",
+      "order": 17,
+      "mapLane": "left",
+      "title": "Pattern 4",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 15,
+        "displayNumber": 15,
+        "title": "Pattern 4",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-16",
+      "nodeType": "level",
+      "order": 18,
+      "mapLane": "right",
+      "title": "Pattern 5",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 16,
+        "displayNumber": 16,
+        "title": "Pattern 5",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-17",
+      "nodeType": "level",
+      "order": 19,
+      "mapLane": "left",
+      "title": "Pattern 6",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 17,
+        "displayNumber": 17,
+        "title": "Pattern 6",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-18",
+      "nodeType": "level",
+      "order": 20,
+      "mapLane": "right",
+      "title": "Pattern 7",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 18,
+        "displayNumber": 18,
+        "title": "Pattern 7",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-19",
+      "nodeType": "level",
+      "order": 21,
+      "mapLane": "left",
+      "title": "Pattern 8",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 19,
+        "displayNumber": 19,
+        "title": "Pattern 8",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-20",
+      "nodeType": "level",
+      "order": 22,
+      "mapLane": "right",
+      "title": "Pattern 9",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 20,
+        "displayNumber": 20,
+        "title": "Pattern 9",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-21",
+      "nodeType": "level",
+      "order": 23,
+      "mapLane": "left",
+      "title": "Pattern 10",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 21,
+        "displayNumber": 21,
+        "title": "Pattern 10",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-22",
+      "nodeType": "level",
+      "order": 24,
+      "mapLane": "right",
+      "title": "Pattern 11",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 22,
+        "displayNumber": 22,
+        "title": "Pattern 11",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-23",
+      "nodeType": "level",
+      "order": 25,
+      "mapLane": "left",
+      "title": "Pattern 12",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 23,
+        "displayNumber": 23,
+        "title": "Pattern 12",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-24",
+      "nodeType": "level",
+      "order": 26,
+      "mapLane": "right",
+      "title": "Pattern 13",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 24,
+        "displayNumber": 24,
+        "title": "Pattern 13",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-1-checkpoint-24",
+      "nodeType": "checkpoint",
+      "order": 27,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 24,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-25",
+      "nodeType": "level",
+      "order": 28,
+      "mapLane": "right",
+      "title": "Pattern 14",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 25,
+        "displayNumber": 25,
+        "title": "Pattern 14",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-26",
+      "nodeType": "level",
+      "order": 29,
+      "mapLane": "left",
+      "title": "Pattern 15",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 26,
+        "displayNumber": 26,
+        "title": "Pattern 15",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-27",
+      "nodeType": "level",
+      "order": 30,
+      "mapLane": "right",
+      "title": "Pattern 16",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 27,
+        "displayNumber": 27,
+        "title": "Pattern 16",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-28",
+      "nodeType": "level",
+      "order": 31,
+      "mapLane": "left",
+      "title": "Pattern 17",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 28,
+        "displayNumber": 28,
+        "title": "Pattern 17",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-29",
+      "nodeType": "level",
+      "order": 32,
+      "mapLane": "right",
+      "title": "Pattern 18",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 29,
+        "displayNumber": 29,
+        "title": "Pattern 18",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-30",
+      "nodeType": "level",
+      "order": 33,
+      "mapLane": "left",
+      "title": "Pattern 19",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 30,
+        "displayNumber": 30,
+        "title": "Pattern 19",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-31",
+      "nodeType": "level",
+      "order": 34,
+      "mapLane": "right",
+      "title": "Pattern 20",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 31,
+        "displayNumber": 31,
+        "title": "Pattern 20",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-32",
+      "nodeType": "level",
+      "order": 35,
+      "mapLane": "left",
+      "title": "Pattern 21",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 32,
+        "displayNumber": 32,
+        "title": "Pattern 21",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-33",
+      "nodeType": "level",
+      "order": 36,
+      "mapLane": "right",
+      "title": "Pattern 22",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 15,
+        "coins": 50
+      },
+      "level": {
+        "levelNumber": 33,
+        "displayNumber": 33,
+        "title": "Pattern 22",
+        "difficulty": "Medium",
+        "contentStatus": "plus",
+        "xpReward": 15,
+        "coinReward": 50,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-34",
+      "nodeType": "level",
+      "order": 37,
+      "mapLane": "left",
+      "title": "STL",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 34,
+        "displayNumber": 34,
+        "title": "STL",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-35",
+      "nodeType": "level",
+      "order": 38,
+      "mapLane": "right",
+      "title": "Java Collections",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 35,
+        "displayNumber": 35,
+        "title": "Java Collections",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-36",
+      "nodeType": "level",
+      "order": 39,
+      "mapLane": "left",
+      "title": "Count all Digits of a Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 36,
+        "displayNumber": 36,
+        "title": "Count all Digits of a Number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-1-checkpoint-36",
+      "nodeType": "checkpoint",
+      "order": 40,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 36,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-37",
+      "nodeType": "level",
+      "order": 41,
+      "mapLane": "left",
+      "title": "Reverse a number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 37,
+        "displayNumber": 37,
+        "title": "Reverse a number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-38",
+      "nodeType": "level",
+      "order": 42,
+      "mapLane": "right",
+      "title": "Palindrome Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 38,
+        "displayNumber": 38,
+        "title": "Palindrome Number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-39",
+      "nodeType": "level",
+      "order": 43,
+      "mapLane": "left",
+      "title": "GCD of Two Numbers",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 39,
+        "displayNumber": 39,
+        "title": "GCD of Two Numbers",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-40",
+      "nodeType": "level",
+      "order": 44,
+      "mapLane": "right",
+      "title": "Check if the Number is Armstrong",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 40,
+        "displayNumber": 40,
+        "title": "Check if the Number is Armstrong",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-41",
+      "nodeType": "level",
+      "order": 45,
+      "mapLane": "left",
+      "title": "Print all Divisors",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 41,
+        "displayNumber": 41,
+        "title": "Print all Divisors",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-42",
+      "nodeType": "level",
+      "order": 46,
+      "mapLane": "right",
+      "title": "Check for Prime Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 42,
+        "displayNumber": 42,
+        "title": "Check for Prime Number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-43",
+      "nodeType": "level",
+      "order": 47,
+      "mapLane": "left",
+      "title": "Understand recursion by print something N times",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 43,
+        "displayNumber": 43,
+        "title": "Understand recursion by print something N times",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-44",
+      "nodeType": "level",
+      "order": 48,
+      "mapLane": "right",
+      "title": "Print name N times using recursion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 44,
+        "displayNumber": 44,
+        "title": "Print name N times using recursion",
+        "difficulty": "Easy",
+        "contentStatus": "missing",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-45",
+      "nodeType": "level",
+      "order": 49,
+      "mapLane": "left",
+      "title": "Print 1 to N using Recursion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 45,
+        "displayNumber": 45,
+        "title": "Print 1 to N using Recursion",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-46",
+      "nodeType": "level",
+      "order": 50,
+      "mapLane": "right",
+      "title": "Print N to 1 using Recursion",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 46,
+        "displayNumber": 46,
+        "title": "Print N to 1 using Recursion",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-47",
+      "nodeType": "level",
+      "order": 51,
+      "mapLane": "left",
+      "title": "Sum of First N Numbers",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 47,
+        "displayNumber": 47,
+        "title": "Sum of First N Numbers",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-48",
+      "nodeType": "level",
+      "order": 52,
+      "mapLane": "right",
+      "title": "Factorial of a given number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 48,
+        "displayNumber": 48,
+        "title": "Factorial of a given number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "world-1-checkpoint-48",
+      "nodeType": "checkpoint",
+      "order": 53,
+      "mapLane": "center",
+      "title": "Checkpoint Cache",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": 48,
+      "rewards": {
+        "xp": 0,
+        "coins": 100
+      },
+      "level": null
+    },
+    {
+      "nodeKey": "level-49",
+      "nodeType": "level",
+      "order": 54,
+      "mapLane": "right",
+      "title": "Reverse an array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 49,
+        "displayNumber": 49,
+        "title": "Reverse an array",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-50",
+      "nodeType": "level",
+      "order": 55,
+      "mapLane": "left",
+      "title": "Check if String is Palindrome or Not",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 50,
+        "displayNumber": 50,
+        "title": "Check if String is Palindrome or Not",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-51",
+      "nodeType": "level",
+      "order": 56,
+      "mapLane": "right",
+      "title": "Fibonacci Number",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 51,
+        "displayNumber": 51,
+        "title": "Fibonacci Number",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-52",
+      "nodeType": "level",
+      "order": 57,
+      "mapLane": "left",
+      "title": "Basic Hashing",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 52,
+        "displayNumber": 52,
+        "title": "Basic Hashing",
+        "difficulty": "Easy",
+        "contentStatus": "article",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "theory"
+      }
+    },
+    {
+      "nodeKey": "level-53",
+      "nodeType": "level",
+      "order": 58,
+      "mapLane": "right",
+      "title": "Counting Frequencies of Array Elements",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 30
+      },
+      "level": {
+        "levelNumber": 53,
+        "displayNumber": 53,
+        "title": "Counting Frequencies of Array Elements",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 30,
+        "isBoss": false,
+        "levelType": "practical"
+      }
+    },
+    {
+      "nodeKey": "level-54",
+      "nodeType": "boss",
+      "order": 59,
+      "mapLane": "center",
+      "title": "Highest Occurring Element in an Array",
+      "subtitle": null,
+      "description": null,
+      "afterLevelNumber": null,
+      "rewards": {
+        "xp": 10,
+        "coins": 130
+      },
+      "level": {
+        "levelNumber": 54,
+        "displayNumber": 54,
+        "title": "Highest Occurring Element in an Array",
+        "difficulty": "Easy",
+        "contentStatus": "plus",
+        "xpReward": 10,
+        "coinReward": 130,
+        "isBoss": true,
+        "levelType": "practical"
+      }
+    }
+  ]
+}

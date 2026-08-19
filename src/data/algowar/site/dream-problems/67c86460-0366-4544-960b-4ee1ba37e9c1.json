@@ -1,0 +1,18 @@
+{
+  "problem": {
+    "id": "67c86460-0366-4544-960b-4ee1ba37e9c1",
+    "title": "Kth Smallest Element in a BST",
+    "difficulty": "Medium",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "binary-search-tree",
+      "binary-tree"
+    ],
+    "statement": "Given the root of a binary search tree and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.\n\n**Input:**\nThe first line contains an integer k, the number of level-order entries in the tree.\nThe second line contains k space-separated values describing the tree in level order, where absent children are represented by the word \"null\" (trailing nulls trimmed).\nThe third line contains the integer k (the 1-indexed position of the smallest value to find).\n\n**Output:**\nPrint a single integer: the kth smallest value in the BST.\n\n**Constraints:**\n- The number of nodes in the tree is n.\n- 1 <= k <= n <= 10^4\n- 0 <= Node.val <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n5\n3 1 4 null 2\n1\nOutput:\n1\n\nExample 2:\nInput:\n8\n5 3 6 2 4 null null 1\n3\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

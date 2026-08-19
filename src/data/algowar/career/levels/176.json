@@ -1,0 +1,33 @@
+{
+  "levelNumber": 176,
+  "displayNumber": 122,
+  "title": "Reverse LL in group of given size K",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the head of a singly linked list containing integers, <strong>reverse</strong> the nodes of the list in <strong>groups of k</strong> and return the head of the modified list. If the number of nodes is not a multiple of k, then the remaining nodes at the end should be kept as is and not reversed.</p><p><br></p><p>Do not change the values of the nodes, only change the links between nodes.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: head -> 1 -> 2 -> 3 -> 4 -> 5, k = 2</p><p><strong>Output</strong>: head -> 2 -> 1 -> 4 -> 3 -> 5</p><p><strong>Explanation</strong>: The groups 1 -> 2 and 3 -> 4 were reversed as 2 -> 1 and 4 -> 3.</p>",
+    "<p><strong>Input</strong>: head -> 1 -> 2 -> 3 -> 4 -> 5, k = 3</p><p><strong>Output</strong>: head -> 3 -> 2 -> 1 -> 4 -> 5</p><p><strong>Explanation</strong>: The groups 1 -> 2 -> 3 were reversed as 3 -> 2 -> 1.</p><p>Note that 4 -> 5 was not reversed.</p>",
+    "<p><strong>Input</strong>: head -> 6 -> 1 -> 2 -> 3 -> 4 -> 7, k = 4</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= k <= number of nodes in the linked list <= 10<sup>5</sup></li><li>-10<sup>4</sup> <= ListNode.val <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 6,
+    "title": "Linked Harbor",
+    "theme": "steel-harbor",
+    "levelCount": 31,
+    "completionXp": 100
+  }
+}

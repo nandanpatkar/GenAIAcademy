@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "7b46f5b0-b751-4bb5-93d4-9692d3e55254",
+    "title": "Minimum Operations to Reduce an Integer to 0",
+    "difficulty": "Medium",
+    "tags": [
+      "dynamic-programming",
+      "greedy",
+      "bit-manipulation"
+    ],
+    "statement": "You are given a positive integer n. You can perform the following operation any number of times: add or subtract a power of 2 from n. A number x is a power of 2 if x == 2^i where i >= 0. Return the minimum number of operations to make n equal to 0.\n\n**Input:**\nA single line containing the positive integer n.\n\n**Output:**\nA single line containing the minimum number of operations to reduce n to 0.\n\n**Constraints:**\n1 <= n <= 10^5\n\n**Examples:**\nExample 1:\nInput:\n39\nOutput:\n3\n\nExample 2:\nInput:\n54\nOutput:\n3",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

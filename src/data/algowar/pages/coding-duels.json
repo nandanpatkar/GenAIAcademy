@@ -1,0 +1,40 @@
+{
+  "route": "/coding-duels",
+  "title": "Real-Time Coding Duels — 1v1 Programming Battles | AlgoWars",
+  "description": "Challenge developers to real-time 1v1 coding duels on AlgoWars. Race to solve algorithmic problems head-to-head. Instant feedback, Elo ranking, and live competition.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "Real-Time Coding Duels on AlgoWars",
+  "chunks": [
+    "app/(legal)/coding-duels/page-9bfad2b302424d09.js"
+  ],
+  "copy": [],
+  "rendered": {
+    "finalUrl": "/coding-duels",
+    "title": "Real-Time Coding Duels — 1v1 Programming Battles | AlgoWars",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "REAL-TIME CODING DUELS"
+      },
+      {
+        "tag": "h2",
+        "text": "How Coding Duels Work"
+      },
+      {
+        "tag": "h2",
+        "text": "Game Modes"
+      },
+      {
+        "tag": "h2",
+        "text": "Why Coding Duels?"
+      }
+    ],
+    "text": "← Back to home REAL-TIME CODING DUELS AlgoWars brings the thrill of competitive gaming to programming. Challenge developers worldwide in real-time 1v1 coding duels where speed, accuracy, and algorithmic thinking determine the winner. How Coding Duels Work Both players receive the same algorithmic problem simultaneously. You race against your opponent to write and submit a correct solution. The first player to get an accepted submission wins the duel and gains Elo rating points. Game Modes Blitz (15 min) — Fast-paced, high-pressure duels Classical (20 min) — More time for complex problems Private Duel — Challenge a specific friend via invite link Against Time — Solo mode, beat the clock Why Coding Duels? Traditional competitive programming platforms let you solve problems at your own pace. AlgoWars adds a human opponent and a live timer — simulating the pressure of coding interviews and real contests. Every duel improves your speed, problem-solving, and ability to code under pressure. START YOUR FIRST DUEL →",
+    "links": [
+      "/",
+      "/signup"
+    ],
+    "buttons": [],
+    "redirected": false
+  }
+}

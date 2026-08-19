@@ -1,0 +1,58 @@
+{
+  "route": "/daily",
+  "title": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "description": "Challenge developers in real-time coding duels, climb the leaderboard, improve your DSA skills, and compete against coders worldwide on AlgoWars.",
+  "keywords": "competitive programming,coding duels,DSA practice,coding battles,algorithm challenges,coding game,coding competition,programming challenges,1v1 coding,real-time coding",
+  "ogTitle": "AlgoWars — Real-Time Coding Duels &amp; Competitive Programming Battles",
+  "chunks": [
+    "app/(match)/daily/page-169d4138c890d125.js"
+  ],
+  "copy": [
+    "Pro",
+    "AlgoWars daily solve",
+    "Share Daily Solve",
+    "Daily solve share card preview",
+    "Couldn't build the card.",
+    "Retry",
+    "Share",
+    "Save",
+    "Python 3",
+    "Java 17",
+    "PyPy 3",
+    "Daily",
+    "Daily Complete",
+    "Experience",
+    "Daily Streak",
+    "Go to Arena",
+    "Play Classic",
+    "Share card",
+    "Problem",
+    "Solution",
+    "Daily Streak +1",
+    "Coach Review",
+    "Unlock detailed AI feedback",
+    "Get complexity analysis, why your code failed, and the optimal approach with Pro."
+  ],
+  "rendered": {
+    "finalUrl": "/daily",
+    "title": "AlgoWars — Real-Time Coding Duels & Competitive Programming Battles",
+    "headings": [
+      {
+        "tag": "h1",
+        "text": "August 18, 2026"
+      },
+      {
+        "tag": "h2",
+        "text": "Product of Binary Decimals"
+      }
+    ],
+    "text": "arrow_back DAILY August 18, 2026 refresh Resets 5:30 AM flag 0 attempts description Problem 1100 Product of Binary Decimals Let's call a number a binary decimal if it is a positive integer and all digits in its decimal notation are either 0 or 1. For example, 1 010 111 is a binary decimal, while 10 201 and 787 788 are not. Given a number n, you are asked whether or not it is possible to represent n as a product of some (not necessarily distinct) binary decimals. **Input:** The first line contains a single integer t (1 ≤ t ≤ 5 · 104) — the number of test cases. The only line of each test case contains a single integer n (1 ≤ n ≤ 105). **Output:** For each test case, output \"YES\" (without quotes) if n can be represented as a product of binary decimals, and \"NO\" (without quotes) otherwise. You can output \"YES\" and \"NO\" in any case (for example, strings \"yES\", \"yes\", and \"Yes\" will be recognized as a positive response). **Examples:** EXAMPLE 1: INPUT 11 121 1 14641 12221 10110 100000 99 112 2024 12421 1001 OUTPUT YES YES YES YES YES YES NO NO NO NO YES **Note:** The first five test cases can be represented as a product of binary decimals as follows: 121 = 11 × 11. 1 = 1 is already a binary decimal. 14 641 = 11 × 11 × 11 × 11. 12 221 = 11 × 11 × 101. 10 110 = 10 110 is already a binary decimal. code Solution Python 3 C++ 17 C++ 20 Java 17 PyPy 3 1 0 submissions play_arrow Submit",
+    "links": [
+      "/arena"
+    ],
+    "buttons": [
+      "play_arrow Submit"
+    ],
+    "redirected": false
+  }
+}

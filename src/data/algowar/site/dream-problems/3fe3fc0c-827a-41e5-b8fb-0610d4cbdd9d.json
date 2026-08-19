@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "3fe3fc0c-827a-41e5-b8fb-0610d4cbdd9d",
+    "title": "Kth Largest Element in a Stream",
+    "difficulty": "Easy",
+    "tags": [
+      "tree",
+      "design",
+      "binary-search-tree",
+      "heap-priority-queue",
+      "binary-tree",
+      "data-stream"
+    ],
+    "statement": "You are part of a university admissions office and need to keep track of the kth highest test score from applicants in real-time. This helps to determine cut-off marks for interviews and admissions dynamically as new applicants submit their scores.\n\nYou are given an integer k and an initial list of test scores nums. Then you will process a sequence of additional scores, one at a time. After each new score is added to the pool, you must report the kth highest test score in the sorted list of all scores seen so far (sorted in descending order). The kth highest is the element at position k when all scores are sorted from largest to smallest.\n\n**Input:**\n- Line 1: an integer k.\n- Line 2: an integer n, the length of the initial list of scores.\n- Line 3: n space-separated integers representing the initial scores. If n is 0, this line is empty (or omitted).\n- Line 4: an integer q, the number of additional scores to add.\n- The next q lines: each line contains one integer val, a new score to add.\n\n**Output:**\n- Print q lines, one per add operation in order. Each line contains a single integer: the kth largest score in the pool after that score was added.\n\n**Constraints:**\n- 0 <= n <= 10^4\n- 1 <= k <= n + 1\n- -10^4 <= nums[i] <= 10^4\n- -10^4 <= val <= 10^4\n- 1 <= q <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n3\n4\n4 5 8 2\n5\n3\n5\n10\n9\n4\nOutput:\n4\n5\n5\n8\n8\n\nExample 2:\nInput:\n4\n6\n7 7 7 7 8 3\n4\n2\n10\n9\n9\nOutput:\n7\n7\n7\n8",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

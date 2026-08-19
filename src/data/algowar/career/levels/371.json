@@ -1,0 +1,33 @@
+{
+  "levelNumber": 371,
+  "displayNumber": 317,
+  "title": "Topo Sort",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a Directed Acyclic Graph (DAG) with V vertices labeled from 0 to V-1.The graph is represented using an adjacency list where adj[i] lists all nodes connected to node. Find any <strong>Topological</strong> Sorting of that Graph.</p><p><br></p><p>In topological sorting, node u will always appear before node v if there is a directed edge from node u towards node v(u -> v).</p><p><br></p><p>The function should <strong>return </strong>an <strong>array </strong>representing the topological order. The output will be validated by our driver code, which checks the correctness of your topological sort. It will print <strong>True </strong>if the order is valid, otherwise <strong>False.</strong></p>",
+  "examples": [
+    "<p><strong>Input:</strong> V = 6,adj=[ [ ], [ ], [3], [1], [0,1], [0,2] ]</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-YmZlLBfA\"></p><p><br></p><p><strong>Output:</strong> [5, 4, 2, 3, 1, 0]</p><p><strong>Explanation:</strong> A graph may have multiple topological sortings.&nbsp;</p><ul><li>Node 5 must appear before 0 and 2</li><li>Node 2 must appear before 3</li><li>Node 3 must appear before 1</li><li>Node 4 must appear before 0 and 1</li></ul><p><br></p><p><strong>One valid topological order is: [5, 4, 2, 3, 1, 0]</strong></p>",
+    "<p><strong>Input:</strong> V = 4, adj=[ [ ], [0], [0], [0] ]</p><p><br></p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-ZqsXEYq1\"></p><p><br></p><p><strong>Output:</strong> [3, 2, 1, 0]</p><p><strong>Explanation:</strong> The necessary conditions for the ordering are:</p><ul><li>Nodes 1, 2, and 3 must all appear before 0.</li><li>Their internal order doesn’t matter.</li></ul><p><br></p><p><strong>One valid topological order is: [3, 2, 1, 0]</strong></p>",
+    "<p>Input: V = 3, adj=[[1], [2], []]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ V ≤ 10⁴</li><li>0 ≤ number of edges ≤ 10⁴</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 15,
+    "title": "Graph Universe",
+    "theme": "cosmic-graph",
+    "levelCount": 53,
+    "completionXp": 100
+  }
+}

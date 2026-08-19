@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "d70f5773-5570-479a-ad3f-79971010e62f",
+    "title": "Largest Rectangle in Histogram",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "stack",
+      "monotonic-stack"
+    ],
+    "statement": "Given an array of integers representing the histogram's bar height where the width of each bar is 1, find the area of the largest rectangle in the histogram.\n\n**Input:**\nThe first line contains an integer n, the number of bars in the histogram.\nThe second line contains n space-separated integers, the heights of the bars.\n\n**Output:**\nPrint a single integer: the area of the largest rectangle in the histogram.\n\n**Constraints:**\n1 <= n <= 10^5\n0 <= heights[i] <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n6\n2 1 5 6 2 3\nOutput:\n10\n\nExample 2:\nInput:\n2\n2 4\nOutput:\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

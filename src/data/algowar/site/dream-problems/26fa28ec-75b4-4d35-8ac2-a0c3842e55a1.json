@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "26fa28ec-75b4-4d35-8ac2-a0c3842e55a1",
+    "title": "Koko Eating Bananas",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "statement": "Koko loves to eat bananas. There are n piles of bananas, the i-th pile has piles[i] bananas. The guards have gone and will come back in h hours.\n\nKoko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour.\n\nKoko likes to eat slowly but still wants to finish eating all the bananas before the guards return.\n\nFind the minimum integer k such that she can eat all the bananas within h hours.\n\n**Input:**\nThe first line contains an integer n, the number of piles.\nThe second line contains n space-separated integers, the piles of bananas.\nThe third line contains an integer h, the number of hours before the guards return.\n\n**Output:**\nPrint a single integer, the minimum integer k such that Koko can eat all the bananas within h hours.\n\n**Constraints:**\n- 1 <= piles.length <= 10^4\n- piles.length <= h <= 10^9\n- 1 <= piles[i] <= 10^9\n\n**Examples:**\nExample 1:\nInput:\n4\n3 6 7 11\n8\nOutput:\n4\n\nExample 2:\nInput:\n5\n30 11 23 4 20\n5\nOutput:\n30\n\nExample 3:\nInput:\n5\n30 11 23 4 20\n6\nOutput:\n23",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

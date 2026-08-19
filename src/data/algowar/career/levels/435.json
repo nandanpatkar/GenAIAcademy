@@ -1,0 +1,33 @@
+{
+  "levelNumber": 435,
+  "displayNumber": 381,
+  "title": "Edit distance",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two strings start and target, you need to determine the minimum number of operations required to convert the string start into the string target. The operations you can use are:</p><p><br></p><p><strong>Insert a character:</strong> Add any single character at any position in the string.</p><p><strong>Delete a character:</strong> Remove any single character from the string.</p><p><strong>Replace a character:</strong> Change any single character in the string to another character.</p><p><br></p><p>The goal is to transform start into target using the<strong> fewest number</strong> of these operations.</p>",
+  "examples": [
+    "<p><strong>Input:</strong> start = \"planet\", target = \"plan\"</p><p><strong>Output:</strong> 2</p><p><strong>Explanation:&nbsp;</strong></p><p>To transform \"planet\" into \"plan\", the following operations are required:</p><p>1. Delete the character 'e': \"planet\" -> \"plan\"</p><p>2. Delete the character 't': \"plan\" -> \"plan\"</p><p>Thus, a total of 2 operations are needed.</p>",
+    "<p><strong>Input:</strong> start = \"abcdefg\", target = \"azced\"</p><p><strong>Output:</strong> 4</p><p><strong>Explanation:</strong>&nbsp;</p><p>To transform \"abcdefg\" into \"azced\", the following operations are required:</p><p>1. Replace 'b' with 'z': \"abcdefg\" -> \"azcdefg\"</p><p>2. Delete 'd': \"azcdefg\" -> \"azcefg\"</p><p>3. Delete 'f': \"azcefg\" -> \"azceg\"</p><p>4. Replace 'g' with 'd': \"azceg\" -> \"azced\"</p><p>Thus, a total of 4 operations are needed.</p>",
+    "<p><strong>Input: </strong>start = \"saturday\", target = \"sunday\"</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 ≤ start.length, target.length ≤ 1000</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 16,
+    "title": "DP Dimension",
+    "theme": "quantum-dp",
+    "levelCount": 55,
+    "completionXp": 100
+  }
+}

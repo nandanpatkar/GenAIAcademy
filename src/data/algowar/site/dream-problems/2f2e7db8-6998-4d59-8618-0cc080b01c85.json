@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "2f2e7db8-6998-4d59-8618-0cc080b01c85",
+    "title": "Find Peak Element",
+    "difficulty": "Medium",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "statement": "A peak element is an element that is strictly greater than its neighbors.\n\nGiven a 0-indexed integer array nums, find a peak element and return its index. If the array contains multiple peaks, return the smallest index among all valid peak indices.\n\nYou may imagine that nums[-1] = nums[n] = -infinity. In other words, an element is always considered to be strictly greater than a neighbor that is outside the array.\n\nYou must write an algorithm that runs in O(log n) time.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers representing the array nums.\n\n**Output:**\nPrint a single integer: the smallest index of any peak element in the array.\n\n**Constraints:**\n1 <= nums.length <= 1000\n-2^31 <= nums[i] <= 2^31 - 1\nnums[i] != nums[i + 1] for all valid i.\n\n**Examples:**\nExample 1:\nInput:\n4\n1 2 3 1\nOutput:\n2\n\nExample 2:\nInput:\n7\n1 2 1 3 5 6 4\nOutput:\n1",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

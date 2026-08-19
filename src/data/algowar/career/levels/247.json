@@ -1,0 +1,33 @@
+{
+  "levelNumber": 247,
+  "displayNumber": 193,
+  "title": "Maximum Rectangles",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given a m x n binary matrix filled with 0's and 1's, find the <strong>largest</strong> rectangle containing only 1's and return its <strong>area</strong>.</p>",
+  "examples": [
+    "<p>Input: matrix = [[1, 0, 1, 0, 0], [1, 0, 1, 1, 1], [1, 1, 1, 1, 1], [1, 0, 0, 1, 0]]</p><p>Output: 6</p><p>Explanation: The highlighted part depicts the rectangle with the largest area i.e. 6.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-FFzhyYF9\"></p>",
+    "<p>Input : matrix = [[1]]&nbsp;</p><p>Output: 1&nbsp;</p><p>Explanation: In this case, there is only one rectangle with area 1.</p>",
+    "<p><span style=\"color: rgb(245, 245, 245);\">Input: matrix = [[1, 0, 1, 0, 0], [1, 0, 1, 1, 1]]</span></p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1<=n,m<=1000</li><li>&nbsp;&nbsp;0<=matrix[i][j]<=1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 9,
+    "title": "Stack Fortress",
+    "theme": "iron-fortress",
+    "levelCount": 30,
+    "completionXp": 100
+  }
+}

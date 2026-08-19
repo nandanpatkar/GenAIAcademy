@@ -1,0 +1,33 @@
+{
+  "levelNumber": 222,
+  "displayNumber": 168,
+  "title": "Pow(x,n)",
+  "difficulty": "Easy",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Implement the power function pow(x, n) , which calculates the x raised to n i.e. <strong>x</strong><sup><strong>n</strong></sup>.</p><p><br></p><p><strong>Note </strong>: In output print <strong>4 digits places</strong> after decimal point.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> x = 2.0000 , n = 10</p><p><strong>Output :</strong> 1024.0000</p><p><strong>Explanation :</strong> Answer = 2^10 => 1024.</p>",
+    "<p><strong>Input :</strong> x = 2.0000 , n = -2</p><p><strong>Output :</strong> 0.2500</p><p><strong>Explanation :</strong> Answer = 2^(-2) = 1/4 => 0.25.</p>",
+    "<p><strong>Input :</strong> x = 2.5000 , n = 2</p>"
+  ],
+  "constraintsHtml": "<ul><li>-100.0 <= x <= 100.0</li><li>-2<sup>31</sup> <= n <= 2<sup>31</sup> - 1</li><li>-10<sup>4</sup> <= x<sup>n </sup><= 10<sup>4</sup></li><li>Either x is not zero or n>0.</li><li>n is an integer.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 10,
+  "coinReward": 130,
+  "isBoss": true,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

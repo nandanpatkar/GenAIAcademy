@@ -1,0 +1,33 @@
+{
+  "levelNumber": 341,
+  "displayNumber": 287,
+  "title": "Delete a node in BST",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given the <strong>root</strong> node of a binary search tree (BST) and a value key. Return the root node of the BST after the <strong>deletion</strong> of the node with the given key value.</p><p><br></p><p>Note: As there can be many correct answers, the compiler returns true if the answer is correct, otherwise false.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , key = 3</p><p><strong>Output :</strong> [5, 4, 6, 2, null, null, 7]</p><p><strong>Explanation :</strong> </p><p>Below is image of the original BST</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-PcCLLBxP\"></p><p><br></p><p>Below is image where the node 3 is deleted</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-kSeVvzcS\"></p>",
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , key = 0</p><p><strong>Output :</strong> [5, 3, 6, 2, 4, null, 7]</p><p><strong>Explanation :</strong> </p><p>The tree does not have node with value 0.</p>",
+    "<p><strong>Input :</strong> root = [5, 3, 6, 2, 4, null, 7] , key = 5</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of nodes <= 10<sup>4</sup></li><li>-10<sup>8</sup> <= Node.val <= 10<sup>8</sup></li><li>All values in tree are <strong>unique</strong>.</li><li>-10<sup>8</sup> <= key <= 10<sup>8</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 14,
+    "title": "BST Temple",
+    "theme": "jade-temple",
+    "levelCount": 16,
+    "completionXp": 100
+  }
+}

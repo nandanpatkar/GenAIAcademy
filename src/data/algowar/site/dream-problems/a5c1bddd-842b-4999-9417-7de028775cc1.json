@@ -1,0 +1,20 @@
+{
+  "problem": {
+    "id": "a5c1bddd-842b-4999-9417-7de028775cc1",
+    "title": "Serialize and Deserialize Binary Tree",
+    "difficulty": "Hard",
+    "tags": [
+      "string",
+      "tree",
+      "depth-first-search",
+      "breadth-first-search",
+      "design",
+      "binary-tree"
+    ],
+    "statement": "Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored or transmitted and later reconstructed. Your task is to read a binary tree given in LeetCode's level-order serialization format, reconstruct the tree, and then serialize it back out in the same level-order format.\n\nThe level-order format lists node values level by level from left to right, using the word \"null\" for absent children. Trailing nulls are trimmed (i.e., nulls at the end of the level-order list that would only pad to a complete tree are omitted).\n\n**Input:**\nThe first line contains an integer k, the number of entries in the level-order list.\nThe second line contains k space-separated tokens, each either an integer (a node value) or the word \"null\" (an absent child). If k is 0, the second line is omitted.\n\n**Output:**\nPrint the level-order serialization of the reconstructed tree on a single line: space-separated values with \"null\" for absent children, trailing nulls trimmed. If the tree is empty, print nothing (an empty line is not printed).\n\n**Constraints:**\n- 0 <= number of nodes <= 10^4\n- -1000 <= Node.val <= 1000\n\n**Examples:**\nExample 1:\nInput:\n7\n1 2 3 null null 4 5\nOutput:\n1 2 3 null null 4 5\n\nExample 2:\nInput:\n0\nOutput:\n",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

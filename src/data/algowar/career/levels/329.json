@@ -1,0 +1,33 @@
+{
+  "levelNumber": 329,
+  "displayNumber": 275,
+  "title": "Construct a BT from Preorder and Inorder",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integer arrays preorder and inorder. Where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree.</p><p><br></p><p>Construct and return the binary tree using <strong>in-order</strong> and <strong>preorder arrays</strong>.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> preorder = [3, 9, 20, 15, 7] , inorder = [9, 3, 15, 20, 7]</p><p><strong>Output :</strong> [3, 9, 20, null, null, 15, 7]</p><p><strong>Explanation : </strong>The output tree is shown below.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-J7OHMB3h\"></p>",
+    "<p><strong>Input :</strong> preorder = [3, 4, 5, 6, 2, 9] , inorder =&nbsp;[5, 4, 6, 3, 2, 9]</p><p><strong>Output :</strong> [3, 4, 2, 5, 6, null, 9]</p><p><strong>Explanation : </strong>The output tree is shown below.</p><p><img src=\"https://static.takeuforward.org/content/ProblemSetter-2FRZ0uID\"></p>",
+    "<p><strong>Input :</strong> preorder = [5, 1, 8, 6, 2, 4, 7] , inorder = [8, 6, 1, 5, 4, 2, 7]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= Number of Nodes <= 10<sup>4</sup></li><li>-10<sup>4</sup> <= Node.val <= 10<sup>4</sup></li><li>All values in the given tree are unique.</li><li>Each value of inorder also appears in preorder.</li><li>Preorder is guaranteed to be the preorder traversal of the tree.</li><li>Inorder is guaranteed to be the inorder traversal of the tree.</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 13,
+    "title": "Tree Lands",
+    "theme": "ancient-grove",
+    "levelCount": 38,
+    "completionXp": 100
+  }
+}

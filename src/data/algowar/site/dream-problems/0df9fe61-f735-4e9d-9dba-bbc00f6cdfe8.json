@@ -1,0 +1,16 @@
+{
+  "problem": {
+    "id": "0df9fe61-f735-4e9d-9dba-bbc00f6cdfe8",
+    "title": "Search Insert Position",
+    "difficulty": "Easy",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "statement": "Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.\n\nYou must write an algorithm with O(log n) runtime complexity.\n\n**Input:**\nThe first line contains an integer n, the length of the array.\nThe second line contains n space-separated integers, the sorted array nums.\nThe third line contains an integer target.\n\n**Output:**\nPrint a single integer: the index of target in nums if found, otherwise the index where target would be inserted to maintain sorted order.\n\n**Constraints:**\n1 <= nums.length <= 10^4\n-10^4 <= nums[i] <= 10^4\nnums contains distinct values sorted in ascending order.\n-10^4 <= target <= 10^4\n\n**Examples:**\nExample 1:\nInput:\n4\n1 3 5 6\n5\nOutput:\n2\n\nExample 2:\nInput:\n4\n1 3 5 6\n2\nOutput:\n1\n\nExample 3:\nInput:\n4\n1 3 5 6\n7\nOutput:\n4",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

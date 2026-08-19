@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "12583558-ff8f-4f5b-adf7-649845058f15",
+    "title": "Add Strings",
+    "difficulty": "Easy",
+    "tags": [
+      "math",
+      "string",
+      "simulation"
+    ],
+    "statement": "Given two non-negative integers, num1 and num2, represented as strings, return the sum of num1 and num2 as a string.\n\nYou must solve the problem without using any built-in library for handling large integers (such as BigInteger). You must also not convert the inputs to integers directly.\n\n**Input:**\nThe first line contains the string num1.\nThe second line contains the string num2.\n\n**Output:**\nPrint the sum of num1 and num2 as a string, on a single line.\n\n**Constraints:**\n- 1 <= num1.length, num2.length <= 10^4\n- num1 and num2 consist of only digits.\n- num1 and num2 don't have any leading zeros except for the zero itself.\n\n**Examples:**\nExample 1:\nInput:\n11\n123\nOutput:\n134\n\nExample 2:\nInput:\n456\n77\nOutput:\n533\n\nExample 3:\nInput:\n0\n0\nOutput:\n0",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}

@@ -1,0 +1,33 @@
+{
+  "levelNumber": 100,
+  "displayNumber": 46,
+  "title": "Reverse Pairs",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array <strong>nums</strong>. Return the <strong>number </strong>of<strong> reverse pairs</strong> in the array.</p><p><br></p><p>An index pair<strong> (i, j) </strong>is called a <strong>reverse </strong>pair if:</p><p><br></p><ul><li>0 <= i < j < nums.length</li></ul><p><br></p><ul><li>nums[i] > 2 * nums[j]</li></ul>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [6, 4, 1, 2, 7]</p><p><strong>Output</strong>: 3</p><p><strong>Explanation</strong>: </p><p>The reverse pairs are:</p><p>(0, 2) : nums[0] = 6, nums[2] = 1, 6 > 2 * 1</p><p>(0, 3) : nums[0] = 6, nums[3] = 2, 6 > 2 * 2</p><p>(1, 2) : nums[1] = 4, nums[2] = 1, 4 > 2 * 1</p>",
+    "<p><strong>Input</strong>: nums = [5, 4, 4, 3, 3]</p><p><strong>Output</strong>: 0</p><p><strong>Explanation</strong>: </p><p>No pairs satisfy both the conditons.</p>",
+    "<p><strong>Input</strong>: nums = [6, 4, 4, 2, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= nums.length <= 5 * 10<sup>4</sup></li><li>-2<sup>31</sup> <= nums[i] <= 2<sup>31</sup> - 1</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

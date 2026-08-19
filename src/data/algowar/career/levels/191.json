@@ -1,0 +1,33 @@
+{
+  "levelNumber": 191,
+  "displayNumber": 137,
+  "title": "Combination Sum",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Provided with a goal integer <strong>target</strong> and an array of unique integer <strong>candidates</strong>, provide a list of all possible combinations of candidates in which the selected numbers add up to the target. The combinations can be returned in any order.</p><p><br></p><p>A candidate may be selected from the pool an <strong>infinite</strong> number of times. There are two distinct combinations if the frequency of at least one of the selected figures differs.</p><p><br></p><p>The test cases are created so that, for the given input, there are fewer than 150 possible combinations that add up to the target.</p><p>If there is no possible subsequences then return <strong>empty</strong> <strong>vector</strong>.</p>",
+  "examples": [
+    "<p><strong>Input :</strong> candidates = [2, 3, 5, 4] , target = 7</p><p><strong>Output :</strong> [ [2, 2, 3] , [3, 4] , [5, 2] ]</p><p><strong>Explanation :</strong></p><p>2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.</p><p>5 and 2 are candidates, and 5 + 2 = 7.</p><p>3 and 4 are candidates, and 3 + 4 = 7.</p><p>There are total three combinations.</p>",
+    "<p><strong>Input :</strong> candidates = [2], target = 1</p><p><strong>Output :</strong> []</p><p><strong>Explanation :</strong> There is no way we can choose the candidates to sum up to target.</p>",
+    "<p><strong>Input :</strong> candidates = [3, 4, 5, 6], target = 10</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= candidates.length <= 30</li><li>2 <= candidates[i] <= 40</li><li>All elements of candidates are distinct.</li><li>1 <= target <= 40</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 7,
+    "title": "Recursion Forest",
+    "theme": "emerald-forest",
+    "levelCount": 25,
+    "completionXp": 100
+  }
+}

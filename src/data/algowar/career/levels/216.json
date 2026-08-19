@@ -1,0 +1,33 @@
+{
+  "levelNumber": 216,
+  "displayNumber": 162,
+  "title": "XOR of numbers in a given range",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given two integers L and R. Find the <strong>XOR</strong> of the elements in the range [L , R].</p>",
+  "examples": [
+    "<p><strong>Input :</strong> L = 3 , R = 5</p><p><strong>Output :</strong> 2</p><p><strong>Explanation :</strong> answer = (3 ^ 4 ^ 5) = 2.</p>",
+    "<p><strong>Input :</strong> L = 1, R = 3</p><p><strong>Output :</strong> 0</p><p><strong>Explanation :</strong> answer = (1 ^ 2 ^ 3) = 0.</p>",
+    "<p><strong>Input :</strong> L = 4, R = 10</p>"
+  ],
+  "constraintsHtml": "<ul><li>1 <= L <= R <= 10<sup>9</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 8,
+    "title": "Bit Lab",
+    "theme": "cyber-lab",
+    "levelCount": 18,
+    "completionXp": 100
+  }
+}

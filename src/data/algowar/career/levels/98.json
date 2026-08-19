@@ -1,0 +1,33 @@
+{
+  "levelNumber": 98,
+  "displayNumber": 44,
+  "title": "Find the repeating and missing number",
+  "difficulty": "Hard",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array <strong>nums </strong>of size <strong>n</strong> containing values from <strong>[1, n]</strong> and <strong>each </strong>value appears <strong>exactly </strong>once in the array, except for <strong>A</strong>, which appears <strong>twice </strong>and <strong>B</strong> which is <strong>missing</strong>.</p><p><br></p><p>Return the values <strong>A </strong>and <strong>B</strong>, as an array of size 2, where<strong> A</strong> appears in the <strong>0-th</strong> index and <strong>B </strong>in the <strong>1st</strong> index.</p><p><br></p><p><strong>Note: </strong>You are not allowed to modify the original array.</p>",
+  "examples": [
+    "<p><strong>Input</strong>: nums = [3, 5, 4, 1, 1]</p><p><strong>Output</strong>: [1, 2]</p><p><strong>Explanation</strong>: </p><p>1 appears two times in the array and 2 is missing from nums</p>",
+    "<p><strong>Input</strong>: nums = [1, 2, 3, 6, 7, 5, 7]</p><p><strong>Output</strong>: [7, 4]</p><p><strong>Explanation</strong>: </p><p>7 appears two times in the array and 4 is missing from nums.</p>",
+    "<p><strong>Input</strong>: nums = [6, 5, 7, 1, 8, 6, 4, 3, 2]</p>"
+  ],
+  "constraintsHtml": "<ul><li>n == nums.length</li><li>1 <= n <= 10<sup>5</sup></li><li>n - 2 elements in nums appear exactly once and are valued between [1, n].</li><li>1 element in nums appears twice, and is valued between [1, n].</li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 20,
+  "coinReward": 75,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 3,
+    "title": "Array Valley",
+    "theme": "crimson-valley",
+    "levelCount": 40,
+    "completionXp": 100
+  }
+}

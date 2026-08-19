@@ -1,0 +1,33 @@
+{
+  "levelNumber": 110,
+  "displayNumber": 56,
+  "title": "Search in rotated sorted array-II",
+  "difficulty": "Medium",
+  "contentStatus": "plus",
+  "levelType": "practical",
+  "statementHtml": "<p>Given an integer array nums, sorted in ascending order (may contain duplicate values) and a target value <strong>k</strong>. Now the array is <strong>rotated</strong> at some pivot point unknown to you. Return True if k is present and otherwise, return False.</p>",
+  "examples": [
+    "<p>Input :&nbsp;nums = [7, 8, 1, 2, 3, 3, 3, 4, 5, 6], k = 3</p><p>Output: True</p><p>Explanation: The element 3 is present in the array. So, the answer is True.</p>",
+    "<p>Input : nums = [7, 8, 1, 2, 3, 3, 3, 4, 5, 6], k = 10</p><p>Output: False</p><p>Explanation:The element 10 is not present in the array. So, the answer is False.</p>",
+    "<p>Input : nums = [7, 8, 1, 2, 3, 3, 3, 4, 5, 6], k = 7</p>"
+  ],
+  "constraintsHtml": "<ul><li>&nbsp;&nbsp;1 <= nums.length <= 10<sup>4 </sup></li><li>&nbsp;&nbsp;-10<sup>4</sup> <= nums[i] <= 10<sup>4 </sup></li><li>&nbsp;&nbsp;nums is guaranteed to be rotated at some pivot.</li><li>&nbsp;&nbsp;-10<sup>4</sup> <= k <= 10<sup>4</sup></li></ul>",
+  "languagesSupported": [
+    "cpp",
+    "java",
+    "python",
+    "javascript",
+    "csharp",
+    "go"
+  ],
+  "xpReward": 15,
+  "coinReward": 50,
+  "isBoss": false,
+  "world": {
+    "worldNumber": 4,
+    "title": "Search Mountain",
+    "theme": "frost-peak",
+    "levelCount": 32,
+    "completionXp": 100
+  }
+}

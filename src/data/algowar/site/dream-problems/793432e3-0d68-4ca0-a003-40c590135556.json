@@ -1,0 +1,17 @@
+{
+  "problem": {
+    "id": "793432e3-0d68-4ca0-a003-40c590135556",
+    "title": "Text Justification",
+    "difficulty": "Hard",
+    "tags": [
+      "array",
+      "string",
+      "simulation"
+    ],
+    "statement": "Given an array of strings `words` and a width `maxWidth`, format the text such that each line has exactly `maxWidth` characters and is fully (left and right) justified.\n\nYou should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that each line has exactly `maxWidth` characters.\n\nExtra spaces between words should be distributed as evenly as possible. If the number of spaces on a line does not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.\n\nFor the last line of text, it should be left-justified, and no extra space is inserted between words.\n\nNote:\n- A word is defined as a character sequence consisting of non-space characters only.\n- Each word's length is guaranteed to be greater than 0 and not exceed `maxWidth`.\n- The input array `words` contains at least one word.\n\n**Input:**\nThe first line contains an integer n, the number of words.\nThe next n lines each contain one word (a non-empty string without spaces).\nThe next line contains an integer maxWidth.\n\n**Output:**\nThe first line contains an integer k, the number of justified lines.\nThe next k lines each contain one justified line of exactly `maxWidth` characters, in the order produced by the greedy packing and justification rules above.\n\n**Constraints:**\n- 1 <= words.length <= 300\n- 1 <= words[i].length <= 20\n- words[i] consists of only English letters and symbols.\n- 1 <= maxWidth <= 100\n- words[i].length <= maxWidth\n\n**Examples:**\nExample 1:\nInput:\n7\nThis\nis\nan\nexample\nof\ntext\njustification.\n16\nOutput:\n3\nThis    is    an\nexample  of text\njustification.  \n\nExample 2:\nInput:\n6\nWhat\nmust\nbe\nacknowledgment\nshall\nbe\n16\nOutput:\n3\nWhat   must   be\nacknowledgment  \nshall be        \n\nExample 3:\nInput:\n18\nScience\nis\nwhat\nwe\nunderstand\nwell\nenough\nto\nexplain\nto\na\ncomputer.\nArt\nis\neverything\nelse\nwe\ndo\n20\nOutput:\n6\nScience  is  what we\nunderstand     well\nenough to explain to\na  computer.  Art is\neverything  else  we\ndo                  ",
+    "timeLimit": 2000,
+    "memoryLimit": 262144,
+    "solved": false
+  },
+  "isPro": true
+}
