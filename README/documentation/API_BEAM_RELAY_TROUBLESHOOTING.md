@@ -110,11 +110,25 @@ If those lines never appear after clicking **Connect**, the issue is between the
 
 ## Extension WebSocket/CORS check
 
-The production relay currently allows:
+The production relay allows a comma-separated list that mixes site origins,
+local development origins, and any unpacked-extension origin — it is longer than
+just the production site. Its current shape is:
 
 ```text
-ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app
+ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app,http://localhost:5173,http://127.0.0.1:5173,chrome-extension://<dev-extension-id>
 EXTENSION_ID=lppnphjckpnmekbjlciagcebgjempohh
+```
+
+Read the live value before changing it, and edit by *inserting* rather than
+replacing the line. A `sed 's|^ALLOWED_ORIGINS=.*|...|'` silently drops the
+localhost and extension entries, which breaks local development and the
+Connector without any error at the time. To add an origin, match the prefix
+only:
+
+```bash
+sudo cp /etc/genai-apibeam/relay.env /etc/genai-apibeam/relay.env.bak
+sudo sed -i 's|^ALLOWED_ORIGINS=|ALLOWED_ORIGINS=https://new-origin.example,|' \
+  /etc/genai-apibeam/relay.env
 ```
 
 Confirm it on Oracle:
@@ -151,8 +165,10 @@ An unpacked extension can receive a different ID on each computer. That new ID i
    Change `ALLOWED_ORIGINS` to this form:
 
    ```text
-   ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app,chrome-extension://<new-extension-id>
+   ALLOWED_ORIGINS=<the existing list>,chrome-extension://<new-extension-id>
    ```
+
+   Append to what is already there — do not retype the line from this document.
 
    Leave `EXTENSION_ID=lppnphjckpnmekbjlciagcebgjempohh` unchanged.
 

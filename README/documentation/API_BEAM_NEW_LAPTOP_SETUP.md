@@ -235,9 +235,13 @@ sudo grep -E '^(ALLOWED_ORIGINS|EXTENSION_ID)=' /etc/genai-apibeam/relay.env
 Expected values:
 
 ```text
-ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app
+ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app,http://localhost:5173,http://127.0.0.1:5173,chrome-extension://<dev-extension-id>
 EXTENSION_ID=lppnphjckpnmekbjlciagcebgjempohh
 ```
+
+The origin list also carries the local development and unpacked-extension
+entries, so treat it as append-only — see the CORS section of
+`API_BEAM_RELAY_TROUBLESHOOTING.md`.
 
 If you change either value, restart the relay:
 
