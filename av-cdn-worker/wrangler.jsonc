@@ -16,8 +16,11 @@
   "vars": {
     // Browsers allowed to fetch(). Images in <img> tags ignore CORS entirely,
     // so this only governs the markdown fetches the reader makes.
-    // Add your production domain here once you have one.
-    "ALLOWED_ORIGINS": "http://localhost:5173,http://localhost:4173,https://gen-ai-academy.vercel.app",
+    // learn-genaiacademy.in is the production custom domain. The .vercel.app
+    // alias this project actually deploys to is kept alongside it so the old
+    // URL keeps working (gen-ai-academy.vercel.app, listed here previously, is
+    // a different account's project — see JOB_AGENT_DEPLOY.md).
+    "ALLOWED_ORIGINS": "http://localhost:5173,http://localhost:4173,https://learn-genaiacademy.in,https://www.learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app",
 
     // Also allow Vercel preview deployments (gen-ai-academy-*.vercel.app).
     "ALLOWED_ORIGIN_SUFFIX": ".vercel.app"
