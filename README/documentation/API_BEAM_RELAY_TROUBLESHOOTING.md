@@ -113,7 +113,7 @@ If those lines never appear after clicking **Connect**, the issue is between the
 The production relay currently allows:
 
 ```text
-ALLOWED_ORIGINS=https://gen-ai-academy-umber.vercel.app
+ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app
 EXTENSION_ID=lppnphjckpnmekbjlciagcebgjempohh
 ```
 
@@ -151,7 +151,7 @@ An unpacked extension can receive a different ID on each computer. That new ID i
    Change `ALLOWED_ORIGINS` to this form:
 
    ```text
-   ALLOWED_ORIGINS=https://gen-ai-academy-umber.vercel.app,chrome-extension://<new-extension-id>
+   ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app,chrome-extension://<new-extension-id>
    ```
 
    Leave `EXTENSION_ID=lppnphjckpnmekbjlciagcebgjempohh` unchanged.

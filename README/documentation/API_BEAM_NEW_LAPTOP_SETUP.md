@@ -14,7 +14,7 @@ You do **not** need to install Node.js, clone this repository, start a local ser
 
 | Item | Address |
 | --- | --- |
-| GenAI Academy | `https://gen-ai-academy-umber.vercel.app/` |
+| GenAI Academy | `https://learn-genaiacademy.in/` |
 | ApiBeam relay health check | `https://130-210-8-149.sslip.io/healthz` |
 | ApiBeam relay base URL | `https://130-210-8-149.sslip.io/` |
 | ApiBeam Chrome extension | `https://chromewebstore.google.com/detail/apibeam/lppnphjckpnmekbjlciagcebgjempohh` |
@@ -97,7 +97,7 @@ Important:
 
 ### Step 6: Connect Atlas to this laptop's ApiBeam room
 
-1. Open [GenAI Academy](https://gen-ai-academy-umber.vercel.app/).
+1. Open [GenAI Academy](https://learn-genaiacademy.in/).
 2. Open **Atlas**.
 3. Choose **ApiBeam** from the **Model** dropdown.
 4. Click **Credentials**.
@@ -165,7 +165,7 @@ Open **Credentials** in Atlas and paste the full URL from the extension. The rel
 
 ### The extension works, but production Atlas cannot reach it
 
-Hard-refresh the Academy page (`Cmd + Shift + R` on macOS or `Ctrl + Shift + R` on Windows/Linux), then choose ApiBeam again. The production integration is available at <https://gen-ai-academy-umber.vercel.app/>.
+Hard-refresh the Academy page (`Cmd + Shift + R` on macOS or `Ctrl + Shift + R` on Windows/Linux), then choose ApiBeam again. The production integration is available at <https://learn-genaiacademy.in/>.
 
 ### You accidentally turned context on
 
@@ -235,7 +235,7 @@ sudo grep -E '^(ALLOWED_ORIGINS|EXTENSION_ID)=' /etc/genai-apibeam/relay.env
 Expected values:
 
 ```text
-ALLOWED_ORIGINS=https://gen-ai-academy-umber.vercel.app
+ALLOWED_ORIGINS=https://learn-genaiacademy.in,https://gen-ai-academy-umber.vercel.app
 EXTENSION_ID=lppnphjckpnmekbjlciagcebgjempohh
 ```
 
