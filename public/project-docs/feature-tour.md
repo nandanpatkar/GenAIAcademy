@@ -2,6 +2,21 @@
 
 Every screenshot on this page was captured from this repository running locally with `npm run dev`. Each section names the component behind the surface so you can go from what you see to where it lives.
 
+This page is the overview. The **Sidebar sections** group covers every destination in the sidebar one section at a time, with a screenshot of each:
+
+```lc-cards
+[
+  {"title": "Learn", "body": "Three homes, three roadmaps, progress and concept maps."},
+  {"title": "Practice", "body": "Editors, the judge, playgrounds and simulators."},
+  {"title": "Labs", "body": "The hub over roughly 100 interactive labs."},
+  {"title": "Agents", "body": "Six external documentation archives plus the agent catalogue."},
+  {"title": "Library", "body": "The manual, reference sheets, resources, blog, links and GitHub."},
+  {"title": "Career", "body": "Interview prep, three interviewers, the job agent and the quiz."},
+  {"title": "More tools", "body": "Vendored bundles and standalone tools."},
+  {"title": "Admin", "body": "Admin-gated destinations and how visibility is resolved."}
+]
+```
+
 ## Entry
 
 An unauthenticated visitor lands on Home 3.0, a full-screen scroll-driven landing page with a Three.js scene. A product tour overlays it on first visit and can be skipped.
