@@ -90,6 +90,8 @@ export function getActiveNavId(p) {
   if (p.showStrandsDocs) return "strands";
   // One nav item over seven in-viewer tracks, so no extra mapping.
   if (p.showExamsDocs) return "exams";
+  // Same shape: one nav item over the whole project-documentation viewer.
+  if (p.showDocumentation) return "documentation";
   // The AI from Scratch track id doubles as the nav id, minus the prefix.
   if (p.showAiFromScratch) return `aifs_${p.aifsTrack === "guides" ? "reference" : p.aifsTrack || "curriculum"}`;
   if (!p.activeNode) return "overview";
@@ -217,6 +219,9 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "exams":
       if (p.setShowExamsDocs) p.setShowExamsDocs(true);
+      break;
+    case "documentation":
+      if (p.setShowDocumentation) p.setShowDocumentation(true);
       break;
     case "aifs_curriculum":
     case "aifs_certification":

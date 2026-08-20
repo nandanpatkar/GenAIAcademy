@@ -221,6 +221,8 @@ export const SIDEBAR_ITEM_REGISTRY = {
   git_visualizer: { icon: GitCommit, label: "Git Visualizer", description: "Explore branches visually" },
   flow_design: { icon: Network, label: "Flow Design", description: "Design application flows" },
   notion: { icon: FileText, label: "Notion", description: "View your workspace" },
+  documentation: { icon: BookMarked, label: "Documentation", description: "How this project is built, end to end" },
+
   nosignups: { icon: Globe, label: "NoSignups", description: "Browse external tools" },
   free_system_design: { icon: Layers, label: "Free System Design", description: "Learn system design by building it" },
 };
@@ -243,6 +245,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
   { id: "more_tools", label: "More tools", itemIds: ["projects", "aws_simulator", "dsa_animator", "k8s_games", "git_visualizer", "flow_design", "notion", "nosignups", "free_system_design"] },
+  { id: "about", label: "About", itemIds: ["documentation"] },
 ];
 
 const LAB_ITEM_IDS = [
@@ -560,6 +563,20 @@ export const resolveEffectiveLayout = (savedLayout) => {
   }
   examsGroup.label = "Exams and Certification";
   examsGroup.itemIds.push("exams");
+
+  // About sits last, after More tools. Same migration as every section above:
+  // without it, anyone with a saved layout would find Documentation appended to
+  // "More tools" as an orphan rather than in its own section.
+  groups.forEach((group) => {
+    group.itemIds = group.itemIds.filter((id) => id !== "documentation");
+  });
+  let aboutGroup = groups.find((group) => group.id === "about");
+  if (!aboutGroup) {
+    aboutGroup = { id: "about", label: "About", itemIds: [] };
+    groups.push(aboutGroup);
+  }
+  aboutGroup.label = "About";
+  aboutGroup.itemIds.push("documentation");
 
   const covered = new Set(groups.flatMap((group) => group.itemIds));
   // Individual lab destinations live inside LabsHub. They are intentionally

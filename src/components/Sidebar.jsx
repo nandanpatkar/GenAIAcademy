@@ -82,6 +82,7 @@ function Sidebar({
   showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
   showStrandsDocs, setShowStrandsDocs,
   showExamsDocs, setShowExamsDocs,
+  showDocumentation, setShowDocumentation,
   showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
   showOnboarding, setShowOnboarding,
   activeToolHome, onOpenToolHome,
@@ -328,6 +329,7 @@ function Sidebar({
     if (showLangChainDocs) return langChainProduct || "langchain";
     if (showStrandsDocs) return "strands";
     if (showExamsDocs) return "exams";
+    if (showDocumentation) return "documentation";
     if (showAiFromScratch) return `aifs_${aifsTrack === "guides" ? "reference" : aifsTrack || "curriculum"}`;
     if (!activeNode) return "overview";
     return null;
@@ -397,6 +399,7 @@ function Sidebar({
     if (setShowLangChainDocs) setShowLangChainDocs(false);
     if (setShowStrandsDocs) setShowStrandsDocs(false);
     if (setShowExamsDocs) setShowExamsDocs(false);
+    if (setShowDocumentation) setShowDocumentation(false);
     if (setShowAiFromScratch) setShowAiFromScratch(false);
     if (setShowOnboarding) setShowOnboarding(false);
 
@@ -438,6 +441,9 @@ function Sidebar({
         break;
       case "exams":
         if (setShowExamsDocs) setShowExamsDocs(true);
+        break;
+      case "documentation":
+        if (setShowDocumentation) setShowDocumentation(true);
         break;
       case "aifs_curriculum":
       case "aifs_certification":
