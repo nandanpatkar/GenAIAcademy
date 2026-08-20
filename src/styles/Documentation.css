@@ -1,0 +1,89 @@
+/* Project documentation (About → Documentation).
+ *
+ * Layout, prose, code blocks, callouts and the TOC rail all come from
+ * LangChainDocs.css, which this view loads first. Everything here is either an
+ * accent override — the archive viewers are blue, this one follows the app's
+ * own emerald — or the two small pieces the shared sheet has no class for: the
+ * flat one-level nav rail, and the brand mark that replaces a product logo.
+ */
+
+.pd-root {
+  --lc-accent: #0a8f52;
+  --lc-accent-soft: rgba(10, 143, 82, 0.1);
+}
+
+.pd-root[data-theme="dark"] {
+  --lc-accent: #00ff88;
+  --lc-accent-soft: rgba(0, 255, 136, 0.12);
+}
+
+/* Stands in for the product logo the archive viewers show here. */
+.pd-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--lc-accent-soft);
+  color: var(--lc-accent);
+}
+
+/* The archive viewers nest tabs inside groups inside products. This section is
+   one level deep, so it needs a plain link rather than lc-nav-page's tree
+   affordances — same metrics, no chevron column. */
+.pd-nav-link {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--lc-ink-2);
+  font-family: inherit;
+  font-size: 12.5px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pd-nav-link:hover {
+  background: var(--lc-line-2);
+  color: var(--lc-ink);
+}
+
+.pd-nav-link--on {
+  color: var(--lc-accent);
+  background: var(--lc-accent-soft);
+  font-weight: 600;
+}
+
+.pd-nav-link--on::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--lc-accent);
+}
+
+.pd-crumb-root {
+  color: var(--lc-accent);
+  font-weight: 600;
+}
+
+/* Mermaid measures each label before the web font has loaded, then paints it in
+   the loaded face — which is a little wider, so the last character or two is cut
+   off by the foreignObject's bounds. Letting the label overflow its box shows
+   the whole label; the boxes are laid out with enough gap that nothing collides.
+   Scoped to this viewer so the shared archive viewers keep their current output. */
+.pd-root .lc-mermaid foreignObject {
+  overflow: visible;
+}
+
+.pd-root .lc-mermaid foreignObject > div {
+  width: max-content;
+  max-width: none;
+}
