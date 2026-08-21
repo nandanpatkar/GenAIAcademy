@@ -1013,6 +1013,220 @@ const styles = `
   .sb-modern .sb-cred-foot a { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; color: var(--neon); text-decoration: none; }
   .sb-modern .sb-spin { animation: sb-spin 3s linear infinite; }
 
+  /* ── Light mode ──────────────────────────────────────────
+     Everything above is tuned for a dark canvas: it leans on neon glows,
+     screen blending and white inset highlights. None of that survives on a
+     near-white rail — screen blend against white paints nothing, so the
+     aurora animated invisibly, and a neon glow reads as a grey smudge. So
+     light mode gets its own pass: a tinted rail that separates from the
+     white content area, raised chips instead of glows, accent ink darkened
+     enough to clear AA as text, and the effects that cannot show switched
+     off rather than left animating for free.
+
+     Surfaces are derived from the palette tokens rather than hard-coded, so
+     Solarized Light / Sepia / Catppuccin Latte stay on their own palette.
+     Nothing here uses !important, so 'panel-glass' still wins if the user
+     has picked the glass panel style. */
+  body.light-theme .sb-modern {
+    --sb-surface:   color-mix(in srgb, var(--bg3) 52%, #fff);
+    --sb-raised:    color-mix(in srgb, var(--bg) 28%, #fff);
+    --sb-line:      color-mix(in srgb, var(--text) 13%, transparent);
+    --sb-line-soft: color-mix(in srgb, var(--text) 8%, transparent);
+    --sb-wash:      color-mix(in srgb, var(--text) 6%, transparent);
+    /* The raw accent is a mid-tone — #00cc66 on white is ~2.2:1, so it fails
+       as text. Mixing toward --text keeps the hue and clears AA. */
+    --sb-accent-ink: color-mix(in srgb, var(--neon) 58%, var(--text));
+    /* Small text sitting on an accent-tinted chip loses the contrast the tint
+       costs it, so it needs a deeper mix to stay above 4.5:1. */
+    --sb-accent-ink-deep: color-mix(in srgb, var(--neon) 44%, var(--text));
+    --sb-lift: 0 1px 2px color-mix(in srgb, var(--text) 9%, transparent);
+  }
+
+  body.light-theme .sb-modern.sidebar {
+    background: var(--sb-surface);
+    /* Opaque: nothing meaningful shows through a light rail, so the
+       full-height backdrop blur was a per-frame cost for no visible effect. */
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    border-right: 1px solid var(--sb-line);
+    /* The dark 60px spread smeared grey across the content area. */
+    box-shadow: inset -1px 0 var(--sb-line-soft), 6px 0 20px color-mix(in srgb, var(--text) 4%, transparent);
+  }
+
+  /* Aurora: multiply instead of screen, or it paints nothing at all. */
+  body.light-theme .sb-modern .sb-aurora-blob { mix-blend-mode: multiply; opacity: .17; filter: blur(52px); }
+  body.light-theme .sb-modern .sb-aurora-3 { opacity: .11; }
+  body.light-theme .sb-modern .sb-aurora-grid { opacity: .34; }
+  /* A 7s sweeping band that reads as a dirty streak on a light surface. */
+  body.light-theme .sb-modern .sb-aurora-scan { display: none; }
+
+  /* ── Header ── */
+  body.light-theme .sb-modern .sb-header { border-bottom-color: var(--sb-line); }
+  body.light-theme .sb-modern .sb-logo-ring {
+    background: linear-gradient(150deg, color-mix(in srgb, var(--neon) 22%, #fff), color-mix(in srgb, #7c5cff 13%, #fff));
+    border-color: color-mix(in srgb, var(--neon) 40%, transparent);
+    box-shadow: var(--sb-lift);
+  }
+  body.light-theme .sb-modern .sb-orbit { opacity: .8; }
+  /* drop-shadow glows just fuzz the mark on a light chip */
+  body.light-theme .sb-modern .sb-orbit-node { filter: none; }
+  body.light-theme .sb-modern .sb-core { filter: none; }
+  body.light-theme .sb-modern .sb-wordmark-1 {
+    background-image: linear-gradient(90deg, var(--text) 0%, var(--sb-accent-ink) 50%, var(--text) 100%);
+  }
+  body.light-theme .sb-modern .sb-wordmark-2 { color: var(--text2); }
+  body.light-theme .sb-modern .sb-pulse-bars i { background: var(--sb-accent-ink); opacity: .9; }
+  body.light-theme .sb-modern .sb-collapse {
+    background: var(--sb-raised); border-color: var(--sb-line); color: var(--text2); box-shadow: var(--sb-lift);
+  }
+  body.light-theme .sb-modern .sb-collapse:hover {
+    background: var(--sb-raised); color: var(--sb-accent-ink);
+    border-color: color-mix(in srgb, var(--neon) 45%, transparent);
+    box-shadow: var(--sb-lift);
+  }
+  /* Restated: the rule above outranks the collapsed-state fill it inherits from. */
+  body.light-theme .sb-modern.sb-collapsed .sb-collapse {
+    background: var(--neon); color: #04120b; border-color: transparent;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--neon) 40%, transparent);
+  }
+
+  /* ── Search ── */
+  body.light-theme .sb-modern .sb-search {
+    background: var(--sb-raised); border-color: var(--sb-line); color: var(--text2); box-shadow: var(--sb-lift);
+  }
+  body.light-theme .sb-modern .sb-search::after { background: var(--sb-raised); }
+  body.light-theme .sb-modern .sb-search:hover, body.light-theme .sb-modern .sb-search:focus-visible { color: var(--text); }
+  body.light-theme .sb-modern .sb-search:hover .sb-search-ring { opacity: .9; }
+  body.light-theme .sb-modern .sb-kbd { background: var(--sb-wash); border-color: var(--sb-line); color: var(--text2); }
+
+  /* ── Nav ── */
+  body.light-theme .sb-modern .sb-nav::before {
+    background: radial-gradient(200px circle at var(--sb-mx, 50%) var(--sb-my, 0), color-mix(in srgb, var(--neon) 13%, transparent), transparent 70%);
+  }
+  body.light-theme .sb-modern .sb-nav::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text) 14%, transparent); background-clip: padding-box; }
+  body.light-theme .sb-modern .sb-nav:hover::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text) 26%, transparent); background-clip: padding-box; }
+  /* --text3 is ~3:1 on white — too low for 10px uppercase labels. */
+  body.light-theme .sb-modern .sb-group-toggle { color: var(--text2); }
+  body.light-theme .sb-modern .sb-group-toggle:hover { color: var(--text); }
+  body.light-theme .sb-modern .sb-group-rule { background: var(--sb-line-soft); }
+  body.light-theme .sb-modern .sb-group-actions button { color: var(--text2); }
+  body.light-theme .sb-modern .sb-group-actions button:hover { background: var(--sb-wash); color: var(--text); }
+
+  /* ── Items ── */
+  body.light-theme .sb-modern .sb-item-icon {
+    background: var(--sb-raised); border: 1px solid var(--sb-line-soft);
+    color: var(--text2); box-shadow: var(--sb-lift);
+  }
+  body.light-theme .sb-modern .sb-item:hover .sb-item-icon { color: var(--text); border-color: var(--sb-line); }
+  body.light-theme .sb-modern .sb-item.is-active .sb-item-icon {
+    background: color-mix(in srgb, var(--neon) 16%, var(--sb-raised));
+    border-color: color-mix(in srgb, var(--neon) 40%, transparent);
+    color: var(--sb-accent-ink);
+  }
+  body.light-theme .sb-modern .sb-item-glow {
+    background: radial-gradient(90px circle at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in srgb, var(--neon) 13%, transparent), transparent 70%);
+  }
+  body.light-theme .sb-modern .sb-active-pill {
+    /* Single hue: the dark-mode violet leg turned muddy over white. */
+    background: linear-gradient(100deg, color-mix(in srgb, var(--neon) 16%, transparent), color-mix(in srgb, var(--neon) 6%, transparent));
+    border-color: color-mix(in srgb, var(--neon) 38%, transparent);
+    box-shadow: var(--sb-lift), inset 0 1px rgba(255,255,255,.85);
+  }
+  body.light-theme .sb-modern .sb-active-pill::before { background: var(--sb-accent-ink); box-shadow: none; }
+  /* overlay blend with near-white blows the sweep out to a flat flare */
+  body.light-theme .sb-modern .sb-active-shine { display: none; }
+  body.light-theme .sb-modern .sb-icon-ring::before {
+    background: conic-gradient(from 0deg, transparent 60%, color-mix(in srgb, var(--sb-accent-ink) 80%, transparent) 78%, transparent 96%);
+  }
+  body.light-theme .sb-modern .sb-grip { color: var(--text2); }
+  body.light-theme .sb-modern .sb-info { color: var(--text2); }
+  body.light-theme .sb-modern .sb-info:hover { background: var(--sb-wash); }
+  body.light-theme .sb-modern .sb-admin-badge { color: #b45309; opacity: 1; }
+  body.light-theme .sb-modern .sb-ripple {
+    background: radial-gradient(circle, color-mix(in srgb, var(--sb-accent-ink) 45%, transparent), transparent 70%);
+  }
+  body.light-theme .sb-modern .sb-empty { color: var(--text2); border-color: var(--sb-line); }
+  body.light-theme .sb-modern .sb-add-section { color: var(--text2); border-color: var(--sb-line); }
+  body.light-theme .sb-modern .sb-add-section:hover { background: var(--sb-wash); color: var(--text); border-color: color-mix(in srgb, var(--neon) 42%, transparent); }
+
+  /* Collapsed flyouts read better inverted than as a pale grey chip. */
+  body.light-theme .sb-modern.sb-collapsed .sb-item[data-label]:hover::after,
+  body.light-theme .sb-modern .sb-path-dot[data-label]:hover::after {
+    background: var(--text); border-color: transparent; color: var(--bg);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--text) 22%, transparent);
+  }
+
+  /* ── Study paths ── */
+  body.light-theme .sb-modern .sb-paths {
+    border-top-color: var(--sb-line);
+    background: color-mix(in srgb, var(--bg) 40%, #fff);
+  }
+  body.light-theme .sb-modern .sb-paths-label { color: var(--text2); }
+  body.light-theme .sb-modern .sb-paths-label:hover { color: var(--text); }
+  body.light-theme .sb-modern .sb-paths-count {
+    background: color-mix(in srgb, var(--neon) 15%, var(--sb-raised));
+    border-color: color-mix(in srgb, var(--neon) 36%, transparent);
+    color: var(--sb-accent-ink-deep);
+  }
+  body.light-theme .sb-modern .sb-path:hover { background: var(--sb-raised); border-color: var(--sb-line-soft); }
+  body.light-theme .sb-modern .sb-path.is-active {
+    background: color-mix(in srgb, var(--path-color) 13%, var(--sb-raised));
+    border-color: color-mix(in srgb, var(--path-color) 42%, transparent);
+  }
+  body.light-theme .sb-modern .sb-path-ring-track { stroke: color-mix(in srgb, var(--text) 13%, transparent); }
+  body.light-theme .sb-modern .sb-path-ring-fill { filter: none; }
+  body.light-theme .sb-modern .sb-path-ring-pct { color: color-mix(in srgb, var(--path-color) 44%, var(--text)); }
+  body.light-theme .sb-modern .sb-path-badge { color: var(--text2); }
+  body.light-theme .sb-modern .sb-path-add { color: var(--text2); border-color: var(--sb-line); }
+  body.light-theme .sb-modern .sb-path-add:hover { background: var(--sb-wash); border-color: var(--sb-line); color: var(--text); }
+  body.light-theme .sb-modern .sb-path-dot { background: var(--sb-raised); border-color: var(--sb-line); color: var(--text2); box-shadow: var(--sb-lift); }
+  body.light-theme .sb-modern .sb-path-dot:hover { background: var(--sb-raised); border-color: var(--sb-line); color: var(--text); }
+  body.light-theme .sb-modern .sb-path-dot.is-active {
+    background: color-mix(in srgb, var(--path-color) 15%, var(--sb-raised));
+    border-color: color-mix(in srgb, var(--path-color) 45%, transparent);
+    color: color-mix(in srgb, var(--path-color) 44%, var(--text));
+    box-shadow: var(--sb-lift);
+  }
+  body.light-theme .sb-modern .sb-path-edit { background: var(--sb-raised); border-color: var(--sb-line); box-shadow: var(--sb-lift); }
+
+  /* ── Footer / settings menu ── */
+  body.light-theme .sb-modern .sb-footer { border-top-color: var(--sb-line); }
+  body.light-theme .sb-modern .sb-settings-btn {
+    background: var(--sb-raised); border-color: var(--sb-line); color: var(--text2); box-shadow: var(--sb-lift);
+  }
+  body.light-theme .sb-modern .sb-settings-btn:hover,
+  body.light-theme .sb-modern .sb-settings-btn.is-open {
+    background: var(--sb-raised); color: var(--text);
+    border-color: color-mix(in srgb, var(--neon) 38%, transparent);
+  }
+  body.light-theme .sb-modern .sb-settings-orb { background: var(--sb-wash); color: var(--text2); }
+  body.light-theme .sb-modern .sb-settings-btn:hover .sb-settings-orb,
+  body.light-theme .sb-modern .sb-settings-btn.is-open .sb-settings-orb {
+    background: color-mix(in srgb, var(--neon) 17%, var(--sb-raised)); color: var(--sb-accent-ink);
+  }
+  body.light-theme .sb-modern .sb-reactor-ring { border-color: var(--sb-accent-ink); }
+  body.light-theme .sb-modern .sb-menu {
+    background: color-mix(in srgb, var(--bg) 20%, #fff);
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    border-color: var(--sb-line);
+    box-shadow: 0 18px 44px color-mix(in srgb, var(--text) 15%, transparent),
+                0 2px 6px color-mix(in srgb, var(--text) 8%, transparent);
+  }
+  body.light-theme .sb-modern .sb-menu-head { color: var(--text2); }
+  body.light-theme .sb-modern .sb-menu-close { color: var(--text2); }
+  body.light-theme .sb-modern .sb-menu-close:hover { background: var(--sb-wash); color: var(--text); }
+  body.light-theme .sb-modern .sb-menu-row:hover:not(.sb-menu-toggle-row) { background: var(--sb-wash); }
+  body.light-theme .sb-modern .sb-menu-row.is-active { color: var(--sb-accent-ink); }
+  body.light-theme .sb-modern .sb-menu-row.is-danger { color: #c02626; }
+  body.light-theme .sb-modern .sb-menu-logout:hover { color: #c02626; }
+  body.light-theme .sb-modern .sb-menu-divider { background: var(--sb-line-soft); }
+  body.light-theme .sb-modern .sb-menu-kicker { color: var(--text2); }
+  body.light-theme .sb-modern .sb-menu-note { color: var(--text2); }
+  body.light-theme .sb-modern .sb-switch:not(.is-on) { background: color-mix(in srgb, var(--text) 20%, transparent); }
+  body.light-theme .sb-modern .sb-switch-knob { box-shadow: 0 1px 3px color-mix(in srgb, var(--text) 32%, transparent); }
+  body.light-theme .sb-modern .sb-cred-field { background: var(--sb-raised); border-color: var(--sb-line); }
+  body.light-theme .sb-modern .sb-cred-foot span { color: var(--text2); }
+  body.light-theme .sb-modern .sb-cred-foot a { color: var(--sb-accent-ink); }
+
       @media (max-width: 768px) {
         /* This stylesheet is injected after the global drawer rules. Keep the
            sidebar out of the flex row until the mobile menu explicitly opens. */
