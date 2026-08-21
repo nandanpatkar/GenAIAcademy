@@ -17,7 +17,10 @@ export const MLA_CERTIFICATION = {
 export const MLA_PRACTICE_EXAMS = [
   {
     "slug": "mla-c01-practice-1",
+    "setId": "set-a",
+    "setLabel": "Set A",
     "title": "Practice Test 1",
+    "label": "Set A · Practice Test 1",
     "fullTitle": "Practice Test #1 - Full Exam - AWS Certified Machine Learning Engineer - Associate (MLA-C01)",
     "questionCount": 65,
     "multiSelectCount": 8,
@@ -42,7 +45,10 @@ export const MLA_PRACTICE_EXAMS = [
   },
   {
     "slug": "mla-c01-practice-2",
+    "setId": "set-a",
+    "setLabel": "Set A",
     "title": "Practice Test 2",
+    "label": "Set A · Practice Test 2",
     "fullTitle": "Practice Test #2 - Full Exam - AWS Certified Machine Learning Engineer - Associate (MLA-C01)",
     "questionCount": 65,
     "multiSelectCount": 12,
@@ -67,7 +73,10 @@ export const MLA_PRACTICE_EXAMS = [
   },
   {
     "slug": "mla-c01-practice-3",
+    "setId": "set-a",
+    "setLabel": "Set A",
     "title": "Practice Test 3",
+    "label": "Set A · Practice Test 3",
     "fullTitle": "Practice Test #3 - Full Exam - AWS Certified Machine Learning Engineer - Associate (MLA-C01)",
     "questionCount": 65,
     "multiSelectCount": 10,
@@ -88,6 +97,236 @@ export const MLA_PRACTICE_EXAMS = [
         "name": "Deployment and Orchestration of ML Workflows",
         "count": 11
       }
+    ]
+  },
+  {
+    "slug": "mla-c01-set-b-1",
+    "setId": "set-b",
+    "setLabel": "Set B",
+    "title": "Practice Test 1",
+    "label": "Set B · Practice Test 1",
+    "fullTitle": "AWS Machine Learning Engineer - Associate Practice Test 1",
+    "questionCount": 65,
+    "multiSelectCount": 13,
+    "domains": [
+      {
+        "name": "ML Model Development",
+        "count": 21
+      },
+      {
+        "name": "Data Preparation for Machine Learning (ML)",
+        "count": 18
+      },
+      {
+        "name": "Deployment and Orchestration of ML Workflows",
+        "count": 14
+      },
+      {
+        "name": "ML Solution Monitoring, Maintenance, and Security",
+        "count": 12
+      }
+    ]
+  },
+  {
+    "slug": "mla-c01-set-b-2",
+    "setId": "set-b",
+    "setLabel": "Set B",
+    "title": "Practice Test 2",
+    "label": "Set B · Practice Test 2",
+    "fullTitle": "AWS Machine Learning Engineer - Associate Practice Test 2",
+    "questionCount": 65,
+    "multiSelectCount": 9,
+    "domains": [
+      {
+        "name": "ML Model Development",
+        "count": 22
+      },
+      {
+        "name": "Deployment and Orchestration of ML Workflows",
+        "count": 21
+      },
+      {
+        "name": "ML Solution Monitoring, Maintenance, and Security",
+        "count": 12
+      },
+      {
+        "name": "Data Preparation for Machine Learning (ML)",
+        "count": 10
+      }
+    ]
+  },
+  {
+    "slug": "mla-c01-set-b-3",
+    "setId": "set-b",
+    "setLabel": "Set B",
+    "title": "Practice Test 3",
+    "label": "Set B · Practice Test 3",
+    "fullTitle": "AWS Machine Learning Engineer - Associate Practice Test 3",
+    "questionCount": 65,
+    "multiSelectCount": 12,
+    "domains": [
+      {
+        "name": "Deployment and Orchestration of ML Workflows",
+        "count": 17
+      },
+      {
+        "name": "ML Model Development",
+        "count": 17
+      },
+      {
+        "name": "Data Preparation for Machine Learning (ML)",
+        "count": 16
+      },
+      {
+        "name": "ML Solution Monitoring, Maintenance, and Security",
+        "count": 15
+      }
+    ]
+  },
+  {
+    "slug": "mla-c01-set-b-4",
+    "setId": "set-b",
+    "setLabel": "Set B",
+    "title": "Practice Test 4",
+    "label": "Set B · Practice Test 4",
+    "fullTitle": "AWS Machine Learning Engineer - Associate Practice Test 4",
+    "questionCount": 65,
+    "multiSelectCount": 14,
+    "domains": [
+      {
+        "name": "ML Solution Monitoring, Maintenance, and Security",
+        "count": 21
+      },
+      {
+        "name": "ML Model Development",
+        "count": 16
+      },
+      {
+        "name": "Deployment and Orchestration of ML Workflows",
+        "count": 15
+      },
+      {
+        "name": "Data Preparation for Machine Learning (ML)",
+        "count": 13
+      }
+    ]
+  },
+  {
+    "slug": "mla-c01-set-c-1",
+    "setId": "set-c",
+    "setLabel": "Set C",
+    "title": "Practice Test 1",
+    "label": "Set C · Practice Test 1",
+    "fullTitle": "Practice Exam 1: AWS Certified Machine Learning Engineer Associate (MLA-C01)",
+    "questionCount": 65,
+    "multiSelectCount": 14,
+    "domains": [
+      {
+        "name": "Data Preparation for Machine Learning (ML)",
+        "count": 18
+      },
+      {
+        "name": "ML Model Development",
+        "count": 17
+      },
+      {
+        "name": "ML Solution Monitoring, Maintenance, and Security",
+        "count": 16
+      },
+      {
+        "name": "Deployment and Orchestration of ML Workflows",
+        "count": 14
+      }
+    ]
+  },
+  {
+    "slug": "mla-c01-set-c-2",
+    "setId": "set-c",
+    "setLabel": "Set C",
+    "title": "Practice Test 2",
+    "label": "Set C · Practice Test 2",
+    "fullTitle": "Practice Exam 2: AWS Certified Machine Learning Engineer Associate (MLA-C01)",
+    "questionCount": 65,
+    "multiSelectCount": 14,
+    "domains": [
+      {
+        "name": "Data Preparation for Machine Learning (ML)",
+        "count": 18
+      },
+      {
+        "name": "ML Model Development",
+        "count": 17
+      },
+      {
+        "name": "ML Solution Monitoring, Maintenance, and Security",
+        "count": 16
+      },
+      {
+        "name": "Deployment and Orchestration of ML Workflows",
+        "count": 14
+      }
+    ]
+  },
+  {
+    "slug": "mla-c01-set-c-3",
+    "setId": "set-c",
+    "setLabel": "Set C",
+    "title": "Practice Test 3",
+    "label": "Set C · Practice Test 3",
+    "fullTitle": "Practice Exam 3: AWS Certified Machine Learning Engineer Associate (MLA-C01)",
+    "questionCount": 65,
+    "multiSelectCount": 12,
+    "domains": [
+      {
+        "name": "Data Preparation for Machine Learning (ML)",
+        "count": 18
+      },
+      {
+        "name": "ML Model Development",
+        "count": 17
+      },
+      {
+        "name": "ML Solution Monitoring, Maintenance, and Security",
+        "count": 16
+      },
+      {
+        "name": "Deployment and Orchestration of ML Workflows",
+        "count": 14
+      }
+    ]
+  }
+];
+
+export const MLA_EXAM_SETS = [
+  {
+    "id": "set-a",
+    "label": "Set A",
+    "blurb": "The original three papers, heavy on scenario framing.",
+    "examSlugs": [
+      "mla-c01-practice-1",
+      "mla-c01-practice-2",
+      "mla-c01-practice-3"
+    ]
+  },
+  {
+    "id": "set-b",
+    "label": "Set B",
+    "blurb": "Four more papers covering the same four domains.",
+    "examSlugs": [
+      "mla-c01-set-b-1",
+      "mla-c01-set-b-2",
+      "mla-c01-set-b-3",
+      "mla-c01-set-b-4"
+    ]
+  },
+  {
+    "id": "set-c",
+    "label": "Set C",
+    "blurb": "Three papers written against the numbered content domains.",
+    "examSlugs": [
+      "mla-c01-set-c-1",
+      "mla-c01-set-c-2",
+      "mla-c01-set-c-3"
     ]
   }
 ];

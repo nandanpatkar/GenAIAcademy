@@ -18,7 +18,9 @@ import {
 
 const DIAL_CIRCUMFERENCE = 2 * Math.PI * 78;
 
-export default function MlaExamResults({ exam, result, mode, elapsedSeconds, autoSubmitted, onReview, onRetake, onExit }) {
+export default function MlaExamResults({
+  exam, result, mode, elapsedSeconds, autoSubmitted, onReview, onRetake, onExit, themeToggle = null,
+}) {
   const { score, passed, correctCount, incorrectCount, skippedCount, total, percent, domainBreakdown } = result;
 
   // The dial fills across the reported range, not from zero — a 100 is the
@@ -31,9 +33,12 @@ export default function MlaExamResults({ exam, result, mode, elapsedSeconds, aut
   return (
     <div className="mla-results">
       <div className="mla-results-inner">
-        <button type="button" className="mla-btn mla-btn--ghost mla-results-back" onClick={onExit}>
-          <ArrowLeft size={16} /> All practice tests
-        </button>
+        <div className="mla-results-bar">
+          <button type="button" className="mla-btn mla-btn--ghost" onClick={onExit}>
+            <ArrowLeft size={16} /> All practice tests
+          </button>
+          {themeToggle}
+        </div>
 
         <header className={`mla-verdict${passed ? " is-pass" : " is-fail"}`}>
           <div className="mla-dial">
@@ -65,7 +70,7 @@ export default function MlaExamResults({ exam, result, mode, elapsedSeconds, aut
             <span className="mla-verdict-badge">
               {passed ? <><Trophy size={16} /> Pass</> : <><XCircle size={16} /> Not yet</>}
             </span>
-            <h2>{exam.title}</h2>
+            <h2>{exam.label || exam.title}</h2>
             <p>
               {passed
                 ? `You scored ${score}, clearing the ${MLA_PASSING_SCORE} pass mark with ${correctCount} of ${total} correct.`

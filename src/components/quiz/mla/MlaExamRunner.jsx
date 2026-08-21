@@ -46,6 +46,7 @@ export default function MlaExamRunner({
   onProgress,
   onFinish,
   onExit,
+  themeToggle = null,
 }) {
   const isReview = mode === "review";
   const isExam = mode === "exam";
@@ -387,6 +388,7 @@ export default function MlaExamRunner({
           </div>
 
           <div className="mla-topbar-right">
+            {themeToggle}
             {isExam && secondsLeft !== null && (
               <div className={`mla-clock${clockCritical ? " is-critical" : clockWarning ? " is-warning" : ""}`}>
                 <Clock size={16} />
@@ -521,7 +523,7 @@ export default function MlaExamRunner({
       {confirmSubmit && (
         <div className="mla-modal-scrim" onClick={() => setConfirmSubmit(false)}>
           <div className="mla-modal" onClick={(e) => e.stopPropagation()}>
-            <h3>Finish {exam.title}?</h3>
+            <h3>Finish {exam.label || exam.title}?</h3>
             <p>
               You have answered <strong>{answeredCount}</strong> of {questions.length} questions
               {questions.length - answeredCount > 0 && (

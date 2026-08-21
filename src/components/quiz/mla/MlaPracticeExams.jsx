@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   X, Play, Clock, ListChecks, Trophy, Loader2, AlertCircle, GraduationCap,
-  BookOpen, Timer, RotateCcw, CheckCircle2, Target, CloudOff,
+  BookOpen, Timer, RotateCcw, CheckCircle2, Target, CloudOff, Sun, Moon,
 } from "lucide-react";
 import {
-  MLA_PRACTICE_EXAMS, MLA_EXAM_MINUTES, MLA_PASSING_SCORE, MLA_SCORE_MAX,
-  MLA_CERTIFICATION,
+  MLA_PRACTICE_EXAMS, MLA_EXAM_SETS, MLA_EXAM_MINUTES, MLA_PASSING_SCORE,
+  MLA_SCORE_MAX, MLA_CERTIFICATION,
 } from "../../../data/mlaPracticeExams";
 import {
   loadActiveAttempts, loadCompletedAttempts, startAttempt, saveAttempt,
@@ -34,6 +34,7 @@ import "../../../styles/MlaPracticeExams.css";
  * bank is a megabyte, and no one sits three papers at once.
  */
 
+const LS_THEME = "mla_exam_theme";
 const SAVE_DEBOUNCE_MS = 2500;
 // Exam mode reports progress once a second as the clock ticks, which would
 // re-arm the debounce forever and mean nothing was ever written until the tab
@@ -68,8 +69,42 @@ async function fetchExamQuestions(slug) {
 export default function MlaPracticeExams({ onClose }) {
   const { user } = useAuth();
   const { theme } = useTheme();
-  const dark = theme !== "light";
   const userId = user?.id || null;
+
+  // The runner follows the app's light/dark switch until someone overrides it
+  // here — sitting a 210-minute paper is exactly the case for reading light on
+  // a dark app, or the other way round, without changing the whole workspace.
+  const [themeOverride, setThemeOverride] = useState(() => {
+    try {
+      const saved = localStorage.getItem(LS_THEME);
+      return saved === "light" || saved === "dark" ? saved : null;
+    } catch {
+      return null;
+    }
+  });
+  const dark = themeOverride ? themeOverride === "dark" : theme !== "light";
+
+  const toggleTheme = useCallback(() => {
+    const next = dark ? "light" : "dark";
+    setThemeOverride(next);
+    try {
+      localStorage.setItem(LS_THEME, next);
+    } catch {
+      /* the choice just won't survive a reload */
+    }
+  }, [dark]);
+
+  const themeToggle = (
+    <button
+      type="button"
+      className="mla-icon-btn"
+      onClick={toggleTheme}
+      title={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      {dark ? <Sun size={18} /> : <Moon size={18} />}
+    </button>
+  );
 
   const [view, setView] = useState("landing");
   const [exam, setExam] = useState(null);
@@ -242,6 +277,7 @@ export default function MlaPracticeExams({ onClose }) {
           onProgress={view === "review" ? undefined : handleProgress}
           onFinish={handleFinish}
           onExit={view === "review" ? () => setView("results") : backToLanding}
+          themeToggle={themeToggle}
         />
       </div>
     );
@@ -259,12 +295,91 @@ export default function MlaPracticeExams({ onClose }) {
           onReview={() => setView("review")}
           onRetake={retake}
           onExit={backToLanding}
+          themeToggle={themeToggle}
         />
       </div>
     );
   }
 
   const totalQuestions = MLA_PRACTICE_EXAMS.reduce((sum, entry) => sum + entry.questionCount, 0);
+
+  const renderExamCard = (entry) => {
+    const best = bestByExam[entry.slug];
+    const practiceResume = resumableFor(entry.slug, "practice");
+    const examResume = resumableFor(entry.slug, "exam");
+    const answeredIn = (a) => (a ? Object.values(a.answers || {}).filter((v) => v.length).length : 0);
+
+    return (
+      <article key={entry.slug} className="mla-exam-card">
+        <div className="mla-exam-card-head">
+          <h3>{entry.title}</h3>
+          {best && (
+            <span className={`mla-best${best.passed ? " is-pass" : ""}`}>
+              {best.passed ? <Trophy size={13} /> : <Target size={13} />}
+              Best {best.score}
+            </span>
+          )}
+        </div>
+
+        <div className="mla-exam-meta">
+          <span>{entry.questionCount} questions</span>
+          <span>{entry.multiSelectCount} multi-select</span>
+        </div>
+
+        <ul className="mla-domain-list">
+          {entry.domains.map((domainEntry) => (
+            <li key={domainEntry.name}>
+              <span>{domainEntry.name}</span>
+              <strong>{domainEntry.count}</strong>
+            </li>
+          ))}
+        </ul>
+
+        {(practiceResume || examResume) && (
+          <div className="mla-resume-strip">
+            {[["practice", practiceResume], ["exam", examResume]]
+              .filter(([, a]) => a)
+              .map(([resumeMode, a]) => (
+                <button
+                  key={resumeMode}
+                  type="button"
+                  className="mla-resume"
+                  onClick={() => openExam(entry, resumeMode, { resume: true })}
+                  disabled={busy}
+                >
+                  <RotateCcw size={14} />
+                  <span>
+                    Resume {resumeMode} — {answeredIn(a)}/{entry.questionCount} answered
+                    {resumeMode === "exam" && a.secondsRemaining != null && (
+                      <> · {formatDuration(a.secondsRemaining)} left</>
+                    )}
+                  </span>
+                </button>
+              ))}
+          </div>
+        )}
+
+        <div className="mla-exam-actions">
+          <button
+            type="button"
+            className="mla-btn mla-btn--ghost"
+            onClick={() => openExam(entry, "practice")}
+            disabled={busy}
+          >
+            <BookOpen size={16} /> Practice mode
+          </button>
+          <button
+            type="button"
+            className="mla-btn mla-btn--primary"
+            onClick={() => openExam(entry, "exam")}
+            disabled={busy}
+          >
+            <Play size={16} /> Exam mode
+          </button>
+        </div>
+      </article>
+    );
+  };
 
   return (
     <div className="mla-root" data-theme={dark ? "dark" : "light"}>
@@ -274,9 +389,9 @@ export default function MlaPracticeExams({ onClose }) {
             <span className="mla-eyebrow"><GraduationCap size={15} /> {MLA_CERTIFICATION.code}</span>
             <h1>{MLA_CERTIFICATION.name}</h1>
             <p>
-              {MLA_PRACTICE_EXAMS.length} full-length practice papers, {totalQuestions} questions,
-              every one with a written explanation. Sit them untimed to learn, or on the clock to
-              find out where you actually stand.
+              {MLA_PRACTICE_EXAMS.length} full-length practice papers across {MLA_EXAM_SETS.length} sets,
+              {" "}{totalQuestions} questions, every one with a written explanation. Sit them untimed to
+              learn, or on the clock to find out where you actually stand.
             </p>
             <div className="mla-hero-facts">
               <span><ListChecks size={15} /> 65 questions per paper</span>
@@ -284,11 +399,14 @@ export default function MlaPracticeExams({ onClose }) {
               <span><Trophy size={15} /> {MLA_PASSING_SCORE} of {MLA_SCORE_MAX} to pass</span>
             </div>
           </div>
-          {onClose && (
-            <button type="button" className="mla-icon-btn" onClick={onClose} aria-label="Close practice exams">
-              <X size={20} />
-            </button>
-          )}
+          <div className="mla-hero-tools">
+            {themeToggle}
+            {onClose && (
+              <button type="button" className="mla-icon-btn" onClick={onClose} aria-label="Close practice exams">
+                <X size={20} />
+              </button>
+            )}
+          </div>
         </header>
 
         <div className="mla-mode-cards">
@@ -318,85 +436,21 @@ export default function MlaPracticeExams({ onClose }) {
           <p className="mla-error"><AlertCircle size={16} /> {error}</p>
         )}
 
-        <div className="mla-exam-grid">
-          {MLA_PRACTICE_EXAMS.map((entry) => {
-            const best = bestByExam[entry.slug];
-            const practiceResume = resumableFor(entry.slug, "practice");
-            const examResume = resumableFor(entry.slug, "exam");
-            const answeredIn = (a) => (a ? Object.values(a.answers || {}).filter((v) => v.length).length : 0);
-
-            return (
-              <article key={entry.slug} className="mla-exam-card">
-                <div className="mla-exam-card-head">
-                  <h2>{entry.title}</h2>
-                  {best && (
-                    <span className={`mla-best${best.passed ? " is-pass" : ""}`}>
-                      {best.passed ? <Trophy size={13} /> : <Target size={13} />}
-                      Best {best.score}
-                    </span>
-                  )}
-                </div>
-
-                <div className="mla-exam-meta">
-                  <span>{entry.questionCount} questions</span>
-                  <span>{entry.multiSelectCount} multi-select</span>
-                </div>
-
-                <ul className="mla-domain-list">
-                  {entry.domains.map((domainEntry) => (
-                    <li key={domainEntry.name}>
-                      <span>{domainEntry.name}</span>
-                      <strong>{domainEntry.count}</strong>
-                    </li>
-                  ))}
-                </ul>
-
-                {(practiceResume || examResume) && (
-                  <div className="mla-resume-strip">
-                    {[["practice", practiceResume], ["exam", examResume]]
-                      .filter(([, a]) => a)
-                      .map(([resumeMode, a]) => (
-                        <button
-                          key={resumeMode}
-                          type="button"
-                          className="mla-resume"
-                          onClick={() => openExam(entry, resumeMode, { resume: true })}
-                          disabled={busy}
-                        >
-                          <RotateCcw size={14} />
-                          <span>
-                            Resume {resumeMode} — {answeredIn(a)}/{entry.questionCount} answered
-                            {resumeMode === "exam" && a.secondsRemaining != null && (
-                              <> · {formatDuration(a.secondsRemaining)} left</>
-                            )}
-                          </span>
-                        </button>
-                      ))}
-                  </div>
-                )}
-
-                <div className="mla-exam-actions">
-                  <button
-                    type="button"
-                    className="mla-btn mla-btn--ghost"
-                    onClick={() => openExam(entry, "practice")}
-                    disabled={busy}
-                  >
-                    <BookOpen size={16} /> Practice mode
-                  </button>
-                  <button
-                    type="button"
-                    className="mla-btn mla-btn--primary"
-                    onClick={() => openExam(entry, "exam")}
-                    disabled={busy}
-                  >
-                    <Play size={16} /> Exam mode
-                  </button>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+        {MLA_EXAM_SETS.map((set) => (
+          <section key={set.id} className="mla-set">
+            <div className="mla-set-head">
+              <h2>{set.label}</h2>
+              <p>{set.blurb}</p>
+              <span className="mla-set-count">{set.examSlugs.length} papers</span>
+            </div>
+            <div className="mla-exam-grid">
+              {set.examSlugs
+                .map((slug) => MLA_PRACTICE_EXAMS.find((entry) => entry.slug === slug))
+                .filter(Boolean)
+                .map(renderExamCard)}
+            </div>
+          </section>
+        ))}
 
         {history.length > 0 && (
           <section className="mla-history">
@@ -412,7 +466,7 @@ export default function MlaPracticeExams({ onClose }) {
                   const meta = MLA_PRACTICE_EXAMS.find((e) => e.slug === entry.examSlug);
                   return (
                     <tr key={entry.id || `${entry.examSlug}-${entry.completedAt}`}>
-                      <td>{meta?.title || entry.examSlug}</td>
+                      <td>{meta?.label || entry.examSlug}</td>
                       <td className="mla-history-mode">{entry.mode}</td>
                       <td><strong>{entry.score}</strong></td>
                       <td>{entry.correctCount}/{meta?.questionCount || 65}</td>

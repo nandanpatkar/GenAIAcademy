@@ -1,14 +1,19 @@
 #!/usr/bin/env python3
 """Build the AWS MLA-C01 practice exam bank the quiz runner reads.
 
-Input  : scripts/data/aws_mla_practice_exams.json — the raw scrape, one entry
-         per practice test, each with 65 questions.
+Input  : scripts/data/aws_mla_practice_exams_set_*.json — the raw scrapes, one
+         entry per practice test, each with 65 questions. Each file is one
+         "set" on the landing screen (see SOURCES).
 Output : public/exams/practice/<slug>.json  — one file per test, fetched on
                                               demand by MlaPracticeExams.jsx.
          src/data/mlaPracticeExams.js       — the manifest (titles, counts,
                                               domain splits) the landing screen
                                               renders before anything is
                                               fetched.
+
+Slugs are permanent: a saved attempt in mla_exam_attempts refers to its paper
+by slug, so renaming or renumbering one orphans that learner's progress. Add a
+new set with a new prefix; never renumber an existing one.
 
 Question and explanation bodies keep their HTML, because the corpus leans on
 lists, inline code and architecture diagrams that plain text loses. The HTML is
@@ -24,9 +29,61 @@ import re
 from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SOURCE = os.path.join(ROOT, "scripts", "data", "aws_mla_practice_exams.json")
+DATA_DIR = os.path.join(ROOT, "scripts", "data")
 OUT_DIR = os.path.join(ROOT, "public", "exams", "practice")
 MANIFEST = os.path.join(ROOT, "src", "data", "mlaPracticeExams.js")
+
+# One entry per question bank. `prefix` is baked into every slug in that set and
+# must never change once shipped; `id`/`label` drive the landing screen's
+# sections.
+SOURCES = [
+    {
+        "id": "set-a",
+        "label": "Set A",
+        "blurb": "The original three papers, heavy on scenario framing.",
+        "prefix": "mla-c01-practice",
+        "file": "aws_mla_practice_exams_set_a.json",
+    },
+    {
+        "id": "set-b",
+        "label": "Set B",
+        "blurb": "Four more papers covering the same four domains.",
+        "prefix": "mla-c01-set-b",
+        "file": "aws_mla_practice_exams_set_b.json",
+    },
+    {
+        "id": "set-c",
+        "label": "Set C",
+        "blurb": "Three papers written against the numbered content domains.",
+        "prefix": "mla-c01-set-c",
+        "file": "aws_mla_practice_exams_set_c.json",
+    },
+]
+
+# Every scrape names the same four blueprint domains its own way: with and
+# without the trailing "(ML)", behind a "Content Domain 3:" prefix, and
+# sometimes truncated mid-word by whatever exported it. Left alone that turns
+# four domains into a dozen rows in the navigator filter and the score
+# breakdown, so each one is mapped back to the name AWS uses in the MLA-C01
+# exam guide.
+CANONICAL_DOMAINS = [
+    "Data Preparation for Machine Learning (ML)",
+    "ML Model Development",
+    "Deployment and Orchestration of ML Workflows",
+    "ML Solution Monitoring, Maintenance, and Security",
+]
+DOMAIN_PREFIX_RE = re.compile(r"^\s*Content Domain\s*\d+\s*:\s*", re.I)
+
+
+def canonical_domain(raw):
+    cleaned = DOMAIN_PREFIX_RE.sub("", (raw or "").strip()).strip()
+    if not cleaned:
+        return "General"
+    for canonical in CANONICAL_DOMAINS:
+        # Either side may be the truncated one, so match in both directions.
+        if canonical == cleaned or canonical.startswith(cleaned) or cleaned.startswith(canonical):
+            return canonical
+    return cleaned
 
 # The real MLA-C01: 65 scored questions, 130 minutes, scaled 100–1000, 720 to
 # pass. The runner's exam mode uses a 210-minute clock instead, which is what
@@ -108,13 +165,19 @@ def escape_text(value):
     return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\n", "<br/>")
 
 
-def slugify(index):
-    return f"mla-c01-practice-{index}"
+def slugify(prefix, index):
+    return f"{prefix}-{index}"
 
 
 def short_title(title):
-    """'Practice Test #1 - Full Exam - AWS Certified …' → 'Practice Test 1'."""
-    match = re.search(r"Practice Test\s*#?(\d+)", title)
+    """Reduce a scrape's title to 'Practice Test N'.
+
+    The three banks label their papers differently — 'Practice Test #1 - Full
+    Exam - AWS Certified …', 'AWS Machine Learning Engineer … Practice Test 1',
+    'Practice Exam 1: AWS Certified …' — and they are the same thing, so they
+    get the same name. The set label is what tells two 'Practice Test 1's apart.
+    """
+    match = re.search(r"Practice\s+(?:Test|Exam)\s*#?\s*(\d+)", title, re.I)
     return f"Practice Test {match.group(1)}" if match else title.split(" - ")[0].strip()
 
 
@@ -128,7 +191,7 @@ def build_question(raw):
     return {
         "id": raw.get("question_id"),
         "number": raw.get("question_number"),
-        "domain": raw.get("section") or "General",
+        "domain": canonical_domain(raw.get("section")),
         # multi-select questions ask for two or three answers; the runner
         # switches to checkboxes on this flag rather than on option count.
         "multi": len(correct) > 1 or raw.get("assessment_type") == "multi-select",
@@ -142,42 +205,60 @@ def build_question(raw):
 
 
 def main():
-    with open(SOURCE, encoding="utf-8") as handle:
-        source = json.load(handle)
-
     os.makedirs(OUT_DIR, exist_ok=True)
     manifest = []
+    sets = []
 
-    for index, exam in enumerate(source, start=1):
-        questions = [build_question(q) for q in exam["questions"]]
-        slug = slugify(index)
+    for source in SOURCES:
+        with open(os.path.join(DATA_DIR, source["file"]), encoding="utf-8") as handle:
+            exams = json.load(handle)
 
-        domains = {}
-        for question in questions:
-            domains[question["domain"]] = domains.get(question["domain"], 0) + 1
+        slugs = []
+        for index, exam in enumerate(exams, start=1):
+            questions = [build_question(q) for q in exam["questions"]]
+            slug = slugify(source["prefix"], index)
+            title = short_title(exam["title"])
+            slugs.append(slug)
 
-        payload = {
-            "slug": slug,
-            "title": short_title(exam["title"]),
-            "fullTitle": exam["title"],
-            "questions": questions,
-        }
-        with open(os.path.join(OUT_DIR, f"{slug}.json"), "w", encoding="utf-8") as handle:
-            json.dump(payload, handle, ensure_ascii=False, separators=(",", ":"))
+            domains = {}
+            for question in questions:
+                domains[question["domain"]] = domains.get(question["domain"], 0) + 1
 
-        manifest.append({
-            "slug": slug,
-            "title": short_title(exam["title"]),
-            "fullTitle": exam["title"],
-            "questionCount": len(questions),
-            "multiSelectCount": sum(1 for q in questions if q["multi"]),
-            "domains": [
-                {"name": name, "count": count}
-                for name, count in sorted(domains.items(), key=lambda kv: -kv[1])
-            ],
+            payload = {
+                "slug": slug,
+                "title": title,
+                "fullTitle": exam["title"],
+                "questions": questions,
+            }
+            with open(os.path.join(OUT_DIR, f"{slug}.json"), "w", encoding="utf-8") as handle:
+                json.dump(payload, handle, ensure_ascii=False, separators=(",", ":"))
+
+            manifest.append({
+                "slug": slug,
+                "setId": source["id"],
+                "setLabel": source["label"],
+                "title": title,
+                # Two sets both have a "Practice Test 1", so anywhere the papers
+                # are listed together (history, resume) needs the set as well.
+                "label": f"{source['label']} · {title}",
+                "fullTitle": exam["title"],
+                "questionCount": len(questions),
+                "multiSelectCount": sum(1 for q in questions if q["multi"]),
+                "domains": [
+                    {"name": name, "count": count}
+                    for name, count in sorted(domains.items(), key=lambda kv: -kv[1])
+                ],
+            })
+
+        sets.append({
+            "id": source["id"],
+            "label": source["label"],
+            "blurb": source["blurb"],
+            "examSlugs": slugs,
         })
 
     body = json.dumps(manifest, indent=2, ensure_ascii=False)
+    sets_body = json.dumps(sets, indent=2, ensure_ascii=False)
     with open(MANIFEST, "w", encoding="utf-8") as handle:
         handle.write(
             "// Generated by scripts/build_mla_practice_exams.py — do not edit by hand.\n"
@@ -194,6 +275,7 @@ def main():
             '  name: "AWS Certified Machine Learning Engineer – Associate",\n'
             '};\n\n'
             f"export const MLA_PRACTICE_EXAMS = {body};\n\n"
+            f"export const MLA_EXAM_SETS = {sets_body};\n\n"
             "export const MLA_EXAM_BY_SLUG = MLA_PRACTICE_EXAMS.reduce((acc, exam) => {\n"
             "  acc[exam.slug] = exam;\n"
             "  return acc;\n"
@@ -201,7 +283,8 @@ def main():
         )
 
     total = sum(entry["questionCount"] for entry in manifest)
-    print(f"Wrote {len(manifest)} practice tests ({total} questions) to {OUT_DIR}")
+    print(f"Wrote {len(manifest)} practice tests ({total} questions) across "
+          f"{len(sets)} sets to {OUT_DIR}")
     print(f"Wrote manifest to {MANIFEST}")
 
 

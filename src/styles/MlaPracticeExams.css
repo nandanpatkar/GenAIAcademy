@@ -152,6 +152,7 @@
   margin: 0 auto 28px;
 }
 .mla-hero-copy { flex: 1; min-width: 0; }
+.mla-hero-tools { display: flex; align-items: center; gap: 4px; flex: none; }
 
 .mla-eyebrow {
   display: inline-flex;
@@ -227,6 +228,29 @@
 .mla-signin-note svg, .mla-error svg { flex: none; }
 .mla-error { border-color: var(--mla-wrong); background: var(--mla-wrong-soft); color: var(--mla-wrong); }
 
+/* One block per question bank. The heading carries the set so two papers both
+   called "Practice Test 1" are still tellable apart at a glance. */
+.mla-set { max-width: 1180px; margin: 0 auto 30px; }
+.mla-set-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--mla-line-2);
+}
+.mla-set-head h2 { margin: 0; font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+.mla-set-head p { margin: 0; flex: 1; min-width: 0; font-size: 13.5px; color: var(--mla-ink-3); }
+.mla-set-count {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--mla-panel-2);
+  color: var(--mla-ink-2);
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .mla-exam-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
@@ -251,7 +275,7 @@
   justify-content: space-between;
   gap: 12px;
 }
-.mla-exam-card-head h2 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+.mla-exam-card-head h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
 
 .mla-best {
   display: inline-flex;
@@ -741,7 +765,13 @@
 
 .mla-results { flex: 1; overflow-y: auto; padding: 28px 40px 72px; }
 .mla-results-inner { max-width: 1000px; margin: 0 auto; }
-.mla-results-back { margin-bottom: 20px; }
+.mla-results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
 
 .mla-verdict {
   display: flex;
@@ -869,6 +899,7 @@
   .mla-verdict { flex-direction: column; align-items: flex-start; gap: 22px; }
   .mla-topbar, .mla-progress, .mla-body, .mla-footer { padding-left: 16px; padding-right: 16px; }
   .mla-hero { flex-direction: column; }
+  .mla-set-head { flex-wrap: wrap; }
   .mla-hero h1 { font-size: 24px; }
   .mla-history table { display: block; overflow-x: auto; }
 }
