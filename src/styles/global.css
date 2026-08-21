@@ -44,6 +44,7 @@ html { scroll-behavior: smooth; }
 .light-theme {
   --bg:       #fcfcfc;
   --bg2:      #f4f4f7;
+  --bg2-rgb:  244, 244, 247;
   --bg3:      #ebebf0;
   --bg4:      #e2e2e8;
   --bg5:      #d8d8df;
@@ -317,6 +318,7 @@ html { scroll-behavior: smooth; }
 .light-theme.palette-solarized-light {
   --bg:       #fdf6e3;
   --bg2:      #f5eeda;
+  --bg2-rgb:  245, 238, 218;
   --bg3:      #eee8d5;
   --bg4:      #e4dec4;
   --bg5:      #d3cbb0;
@@ -334,6 +336,7 @@ html { scroll-behavior: smooth; }
 .light-theme.palette-sepia {
   --bg:       #f4ecd8;
   --bg2:      #eee2c6;
+  --bg2-rgb:  238, 226, 198;
   --bg3:      #e8dcc0;
   --bg4:      #ddceac;
   --bg5:      #d0bf98;
@@ -351,6 +354,7 @@ html { scroll-behavior: smooth; }
 .light-theme.palette-catppuccin-latte {
   --bg:       #eff1f5;
   --bg2:      #e6e9ef;
+  --bg2-rgb:  230, 233, 239;
   --bg3:      #dce0e8;
   --bg4:      #ccd0da;
   --bg5:      #bcc0cc;
@@ -428,6 +432,31 @@ html { scroll-behavior: smooth; }
   backdrop-filter: blur(18px) saturate(1.4) !important;
   -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
   border-color: rgba(255,255,255,0.07) !important;
+}
+
+/* Glass on a light page.
+   The rule above was written for a dark canvas: --bg2-rgb went undefined for
+   every palette, so it fell back to obsidian's near-black and painted the
+   sidebar (plus every card, panel and modal) dark grey underneath light-mode
+   text, and its white hairline border vanished on a light surface. The light
+   palettes now define --bg2-rgb above; these override the two values that
+   still assume a dark backdrop. panelStyle 'glass' is the default, so this is
+   what a light-theme user sees out of the box. */
+.light-theme.panel-glass .sidebar,
+.light-theme.panel-glass .appearance-panel,
+.light-theme.panel-glass .modal-content,
+.light-theme.panel-glass .settings-modal,
+.light-theme.panel-glass .card,
+.light-theme.panel-glass .ap-preview,
+.light-theme.panel-glass .quiz-card,
+.light-theme.panel-glass .sidebar-nav,
+.light-theme.panel-glass [class*="-panel"],
+.light-theme.panel-glass [class*="-card"],
+.light-theme.panel-glass [class*="-modal"] {
+  /* Higher alpha than the dark treatment: a 0.55 light tint over a light page
+     leaves no edge between the panel and the page behind it. */
+  background: rgba(var(--bg2-rgb), 0.8) !important;
+  border-color: color-mix(in srgb, var(--text) 12%, transparent) !important;
 }
 
 /* ── Dracula glass tint ── */
