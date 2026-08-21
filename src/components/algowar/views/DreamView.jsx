@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { NinjaLoader } from "../../NinjaEye";
 import Icon from "../icons";
 import { companies, loadCompany, loadDreamProblem } from "../data";
 import { renderStatement } from "../statement";
@@ -68,7 +69,7 @@ export default function DreamView() {
 
       <div className="aw-dream-body">
         <section className="aw-card aw-question-list">
-          {!company && <p className="aw-muted-sm">Loading questions…</p>}
+          {!company && <NinjaLoader label="Loading questions" size="sm" />}
           {questions.map((q) => (
             <button
               key={q.problemId}
@@ -88,7 +89,7 @@ export default function DreamView() {
 
         <section className="aw-card aw-inspector">
           {!problemId && <p className="aw-muted-sm">Pick a question to read its statement.</p>}
-          {problemId && !problem && <p className="aw-muted-sm">Loading problem…</p>}
+          {problemId && !problem && <NinjaLoader label="Loading problem" size="sm" />}
           {problem && (() => {
             // The dream endpoint nests the payload under `problem` and names the body
             // `statement`, unlike the career levels which return statementHtml at the top.

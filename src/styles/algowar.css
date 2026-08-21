@@ -26,6 +26,12 @@
   font-size: 15px;
   line-height: 1.5;
 }
+/* <NinjaEye> takes its colour from the host product. AlgoWars is red on
+   near-black, not the academy's green — and on a solid-red primary button the
+   eye has to go pale to read against it. */
+.aw .ninja-eye { --ne-accent: var(--aw-primary); }
+.aw .aw-btn-primary .ninja-eye { --ne-accent: #ffe4e7; }
+
 .aw *, .aw *::before, .aw *::after { box-sizing: border-box; }
 .aw button, .aw a { font: inherit; color: inherit; }
 .aw h1, .aw h2, .aw h3 { margin: 0; letter-spacing: -0.02em; line-height: 1.15; }

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { NinjaEye } from "../../NinjaEye";
 import Icon from "../icons";
 import { judgeSubmission, judgeStatus } from "../judge";
 import { loadCode, saveCode } from "../progress";
@@ -136,7 +137,7 @@ export default function SolutionConsole({ storageKey, subtitle, problem, onAccep
 
       <div className="aw-lv-actions">
         <button type="button" className="aw-btn aw-btn-primary aw-lv-submit" onClick={submit} disabled={running}>
-          {running ? "Judging…" : "Submit Solution"}
+          {running ? <><NinjaEye size={16} labelled={false} /> Judging…</> : "Submit Solution"}
         </button>
         {footer}
       </div>

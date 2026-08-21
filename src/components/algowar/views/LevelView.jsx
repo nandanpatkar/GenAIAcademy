@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { NinjaLoader } from "../../NinjaEye";
 import Icon from "../icons";
 import { loadLevel } from "../data";
 import { completeLevel, levelStatus, resetLevel } from "../progress";
@@ -36,7 +37,7 @@ export default function LevelView({ levelNumber, onBack, onCompleted }) {
     onCompleted?.();
   };
 
-  if (!level) return <div className="aw-page"><p className="aw-muted-sm">Loading career level…</p></div>;
+  if (!level) return <div className="aw-page"><NinjaLoader label="Loading career level" /></div>;
 
   const isTheory = level.levelType === "theory";
 

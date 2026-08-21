@@ -105,7 +105,9 @@ function LevelInspector({ node, detail, state, onStart }) {
           <div className="aw-inspector-statement">
             {detail?.statementHtml
               ? <p className="aw-muted-sm aw-preview-text">{preview(detail.statementHtml)}</p>
-              : <p className="aw-muted-sm">{detail ? "Content pending — this level has no statement yet." : "Loading…"}</p>}
+              : detail
+                ? <p className="aw-muted-sm">Content pending — this level has no statement yet.</p>
+                : <NinjaLoader label="Loading" size="sm" />}
           </div>
 
           <button type="button" className="aw-btn aw-btn-primary aw-start-level" onClick={() => onStart(level.levelNumber)} disabled={locked}>
