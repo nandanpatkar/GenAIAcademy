@@ -454,8 +454,12 @@ html { scroll-behavior: smooth; }
 .light-theme.panel-glass [class*="-card"],
 .light-theme.panel-glass [class*="-modal"] {
   /* Higher alpha than the dark treatment: a 0.55 light tint over a light page
-     leaves no edge between the panel and the page behind it. */
-  background: rgba(var(--bg2-rgb), 0.8) !important;
+     leaves no edge between the panel and the page behind it.
+     The fallback matters: without one, a light palette that forgets to define
+     --bg2-rgb makes this declaration invalid, it gets dropped, and the panel
+     falls all the way back to the dark rule above — the exact bug this block
+     exists to fix. Degrade to a light surface instead. */
+  background: rgba(var(--bg2-rgb, 244, 244, 247), 0.8) !important;
   border-color: color-mix(in srgb, var(--text) 12%, transparent) !important;
 }
 
