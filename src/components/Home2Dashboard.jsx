@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
   Activity, ArrowRight, ArrowUpRight, Compass, FileText, Flame, MapPin,
@@ -694,7 +695,7 @@ export default function Home2Dashboard({
         </motion.div>
       </section>
       <section className="h2x-voyage">
-        <React.Suspense fallback={<div className="h2x-voyage-loading">initializing flight systems…</div>}>
+        <React.Suspense fallback={<div className="h2x-voyage-loading"><NinjaLoader label="initializing flight systems" /></div>}>
           <Home2Voyage />
         </React.Suspense>
         <div className="h2x-voyage-scan" aria-hidden="true" />

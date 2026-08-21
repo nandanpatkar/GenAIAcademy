@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import { generateStudyContent } from "../services/aiService";
 import {
   getSavedSets, saveStudySet, deleteSavedSet, MODE_LABELS,
@@ -273,7 +274,7 @@ export function AIStudyPanel({ module, pathColor }) {
             {loading ? (
               <>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
+                  <NinjaEye size={16} labelled={false} />
                   {statusMsg
                     ? statusMsg.toUpperCase()
                     : `ORCHESTRATING ${AI_MODES.find((m) => m.id === mode)?.label.toUpperCase()}…`}

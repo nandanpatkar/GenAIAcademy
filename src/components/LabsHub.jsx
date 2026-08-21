@@ -1,4 +1,5 @@
 import React, { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import { createPortal } from "react-dom";
 import {
   Activity,
@@ -356,7 +357,7 @@ const FEATURED_LAB_IDS = [
 function ReactLabFrame({ title, component: LabComponent, onReady }) {
   const frameRef = useRef(null);
   const [mountNode, setMountNode] = useState(null);
-  return <iframe ref={frameRef} className="labs-hub-frame" title={title} srcDoc="<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><style>html,body,#lab-root{margin:0;width:100%;min-height:100%;background:#fafaf9}body{overflow:auto}</style></head><body><div id='lab-root'></div></body></html>" onLoad={() => { const doc = frameRef.current?.contentDocument; setMountNode(doc?.getElementById("lab-root") || null); onReady?.(); }}>{mountNode ? createPortal(<React.Suspense fallback={<div style={{ padding: 24, fontFamily: "system-ui" }}>Loading interactive lab…</div>}><LabComponent /></React.Suspense>, mountNode) : null}</iframe>;
+  return <iframe ref={frameRef} className="labs-hub-frame" title={title} srcDoc="<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><style>html,body,#lab-root{margin:0;width:100%;min-height:100%;background:#fafaf9}body{overflow:auto}</style></head><body><div id='lab-root'></div></body></html>" onLoad={() => { const doc = frameRef.current?.contentDocument; setMountNode(doc?.getElementById("lab-root") || null); onReady?.(); }}>{mountNode ? createPortal(<React.Suspense fallback={<NinjaLoader label="Loading interactive lab" />}><LabComponent /></React.Suspense>, mountNode) : null}</iframe>;
 }
 
 function SharedLabEditor({ initialLab, onClose, onSave }) {
@@ -612,5 +613,5 @@ export default function LabsHub({ activeLabId, onSelectLab }) {
     </section>
   );
 
-  return <section className="labs-hub" aria-label={activeLab?.title}><button className="labs-floating-back" onClick={() => { onSelectLab?.(null); setScreen("directory"); }} aria-label="Back to lab directory"><ArrowLeft size={17} aria-hidden="true" /> All labs</button><div className="labs-hub-canvas">{isLoading && <div className="labs-hub-loading" role="status" aria-live="polite"><Loader2 size={22} aria-hidden="true" /><span>Loading {activeLab?.title}</span></div>}{activeLab?.kind === "html" ? <iframe key={activeLab.id} className="labs-hub-frame" src={activeLab.src} title={activeLab.title} sandbox="allow-scripts allow-forms allow-modals allow-downloads allow-popups" allow="clipboard-write" onLoad={() => setIsLoading(false)} /> : activeLab?.kind === "html-code" ? <iframe key={activeLab.id} className="labs-hub-frame" srcDoc={activeLab.html_code} title={activeLab.title} sandbox="allow-scripts allow-forms allow-modals allow-downloads allow-popups" allow="clipboard-write" onLoad={() => setIsLoading(false)} /> : <ReactLabFrame key={activeLab?.id} title={activeLab?.title} component={activeLab?.component} onReady={() => setIsLoading(false)} />}</div></section>;
+  return <section className="labs-hub" aria-label={activeLab?.title}><button className="labs-floating-back" onClick={() => { onSelectLab?.(null); setScreen("directory"); }} aria-label="Back to lab directory"><ArrowLeft size={17} aria-hidden="true" /> All labs</button><div className="labs-hub-canvas">{isLoading && <div className="labs-hub-loading"><NinjaLoader label={`Loading ${activeLab?.title ?? "lab"}`} /></div>}{activeLab?.kind === "html" ? <iframe key={activeLab.id} className="labs-hub-frame" src={activeLab.src} title={activeLab.title} sandbox="allow-scripts allow-forms allow-modals allow-downloads allow-popups" allow="clipboard-write" onLoad={() => setIsLoading(false)} /> : activeLab?.kind === "html-code" ? <iframe key={activeLab.id} className="labs-hub-frame" srcDoc={activeLab.html_code} title={activeLab.title} sandbox="allow-scripts allow-forms allow-modals allow-downloads allow-popups" allow="clipboard-write" onLoad={() => setIsLoading(false)} /> : <ReactLabFrame key={activeLab?.id} title={activeLab?.title} component={activeLab?.component} onReady={() => setIsLoading(false)} />}</div></section>;
 }

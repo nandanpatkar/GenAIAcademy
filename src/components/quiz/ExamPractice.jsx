@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { NinjaEye } from "../NinjaEye";
 import { Icon } from "@iconify/react";
 import {
   Search, RefreshCw, ChevronRight, ArrowUpRight, Layers3,
@@ -166,7 +167,7 @@ export default function ExamPractice({ onStartExam, theme = "dark", onWorkspaceC
       </div>
 
       {examsLoading ? (
-        <div className="quiz-bank-empty"><RefreshCw size={22} className="spin" /><span>Loading your exam library…</span></div>
+        <div className="quiz-bank-empty"><NinjaEye size={30} labelled={false} /><span>Loading your exam library…</span></div>
       ) : filteredExams.length === 0 ? (
         <div className="quiz-bank-empty"><Search size={22} /><span>No tracks match that search.</span><button className="quiz-text-button" onClick={() => { setSearch(""); setVendorFilter("All tracks"); }}>Clear filters</button></div>
       ) : (

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { NinjaEye, NinjaLoader } from "./NinjaEye";
 import Editor from "@monaco-editor/react";
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "framer-motion";
 import {
@@ -357,7 +358,7 @@ function PracticePanel({ mission, code, setCode, onPass }) {
             </select>
             <button className="cq-ghost" onClick={resetCode}><RotateCcw size={14} /> Reset</button>
             <button className="cq-run" onClick={runCode} disabled={running}>
-              {running ? <TimerReset className="cq-spin" size={15} /> : <Play size={15} fill="currentColor" />}
+              {running ? <NinjaEye size={16} labelled={false} /> : <Play size={15} fill="currentColor" />}
               {running ? "Running…" : "Run & check"}
             </button>
           </div>
@@ -370,7 +371,7 @@ function PracticePanel({ mission, code, setCode, onPass }) {
             theme="vs-dark"
             value={code}
             onChange={(value) => setCode(value || "")}
-            loading={<div className="cq-editor-loading">Loading the Python editor…</div>}
+            loading={<div className="cq-editor-loading"><NinjaLoader label="Loading the Python editor" /></div>}
             options={{
               minimap: { enabled: false },
               fontSize: 14,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -143,7 +144,7 @@ export default function SampleViewer({ sample, sectionLabel, sectionColor }) {
         {/* content */}
         <div className="ac-sample-body" ref={bodyRef}>
           {loading ? (
-            <div className="ac-state"><div className="ac-spinner" /><span>Loading…</span></div>
+            <div className="ac-state"><NinjaLoader label="Loading" size="sm" /></div>
           ) : error ? (
             <div className="ac-state ac-state-err"><AlertCircle size={24} /><span>{error}</span></div>
           ) : activeFile ? (

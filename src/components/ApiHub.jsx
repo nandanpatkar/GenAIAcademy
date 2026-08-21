@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import {
   Search, X, ChevronRight, ChevronDown, Copy, Check, Play, Loader2,
   BookOpen, FlaskConical, Lock, Unlock, ShieldCheck, Activity, Users,
@@ -389,7 +390,7 @@ function Playground({ endpoint, token, onToken }) {
           type="button"
           title={missingPath.length ? `Fill in: ${missingPath.join(", ")}` : "Send the request"}
         >
-          {sending ? <Loader2 size={13} className="ah-spin" /> : <Play size={13} />}
+          {sending ? <NinjaEye size={16} labelled={false} /> : <Play size={13} />}
           {sending ? "Sending" : "Send"}
         </button>
       </div>
@@ -832,7 +833,7 @@ function SessionPanel({ token, user, onToken, onClear }) {
                   disabled={loadingAccounts}
                   type="button"
                 >
-                  {loadingAccounts ? <Loader2 size={12} className="ah-spin" /> : <Users size={12} />}
+                  {loadingAccounts ? <NinjaEye size={14} labelled={false} /> : <Users size={12} />}
                   Load demo accounts
                 </button>
               )}
@@ -849,7 +850,7 @@ function SessionPanel({ token, user, onToken, onClear }) {
                     disabled={loadingAccounts}
                     type="button"
                   >
-                    {loadingAccounts ? <Loader2 size={12} className="ah-spin" /> : <Database size={12} />}
+                    {loadingAccounts ? <NinjaEye size={14} labelled={false} /> : <Database size={12} />}
                     Generate accounts
                   </button>
                 </>
@@ -879,7 +880,7 @@ function SessionPanel({ token, user, onToken, onClear }) {
                     ))}
                   </ul>
                   <button className="ah-mini" onClick={loadAccounts} disabled={loadingAccounts} type="button">
-                    {loadingAccounts ? <Loader2 size={12} className="ah-spin" /> : null} Refresh list
+                    {loadingAccounts ? <NinjaEye size={14} labelled={false} /> : null} Refresh list
                   </button>
                 </>
               )}
@@ -911,7 +912,7 @@ function SessionPanel({ token, user, onToken, onClear }) {
                   disabled={busy || !username || !password}
                   type="button"
                 >
-                  {busy ? <Loader2 size={12} className="ah-spin" /> : <Play size={12} />} Log in
+                  {busy ? <NinjaEye size={14} labelled={false} /> : <Play size={12} />} Log in
                 </button>
               </details>
 

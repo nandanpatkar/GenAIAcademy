@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { NinjaEye } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -340,7 +341,7 @@ export default function AgentLibrary({ onClose }) {
           <p>Paste any public repository, folder, or <code>SKILL.md</code> URL. Agent Library finds every skill below that path and saves them as individual, searchable records.</p>
           <div className="al-source-input-row">
             <div className="al-url-input"><Link size={15} /><input value={sourceUrl} onChange={(event) => setSourceUrl(event.target.value)} onKeyDown={(event) => event.key === "Enter" && syncSkills()} placeholder={DEFAULT_SKILLS_SOURCE} /></div>
-            <button className="al-primary" onClick={syncSkills} disabled={Boolean(sourceStatus)}>{sourceStatus ? <LoaderCircle size={15} className="al-spin" /> : <RefreshCw size={15} />}{sourceStatus ? "Loading…" : "Load all skills"}</button>
+            <button className="al-primary" onClick={syncSkills} disabled={Boolean(sourceStatus)}>{sourceStatus ? <NinjaEye size={16} labelled={false} /> : <RefreshCw size={15} />}{sourceStatus ? "Loading…" : "Load all skills"}</button>
           </div>
           {sourceError && <div className="al-source-error"><X size={14} /> {sourceError}</div>}
           <div className="al-source-hint"><GitBranch size={13} /> Try the default collection: <button onClick={() => setSourceUrl(DEFAULT_SKILLS_SOURCE)}>agentic-awesome-skills / skills</button><span>·</span><span>Every skill stays linked to its original file.</span></div>

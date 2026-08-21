@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { NinjaEye } from "../NinjaEye";
 import { supabase } from '../../config/supabaseClient';
 import BlockRenderer from './BlockRenderer';
 import { Loader2, AlertCircle, Maximize, Minimize, Eye, EyeOff } from 'lucide-react';
@@ -321,7 +322,7 @@ export default function NotionRenderer({ passedPageId }) {
             <span className="notion-loading-ring notion-loading-ring-two" />
             <span className="notion-loading-packet notion-loading-packet-one" />
             <span className="notion-loading-packet notion-loading-packet-two" />
-            <div className="notion-loading-core"><Loader2 size={22} /></div>
+            <div className="notion-loading-core"><NinjaEye size={30} labelled={false} /></div>
           </div>
           <div className="notion-loading-copy">
             <span className="notion-loading-kicker"><span className="notion-loading-dot" /> SYNCING / NOTION API</span>

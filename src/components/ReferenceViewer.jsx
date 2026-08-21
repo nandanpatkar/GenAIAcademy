@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft, Search, BookMarked, HelpCircle, X, HelpCircle as InfoIcon } from "lucide-react";
@@ -182,8 +183,7 @@ export default function ReferenceViewer({ activeTopic, onSelectTopic, onClose })
             /* READING VIEW */
             loading ? (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 0", gap: 16 }}>
-                <div className="loading-orb" style={{ width: 32, height: 32, border: "2px solid var(--neon)", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 1s linear infinite" }} />
-                <span style={{ fontSize: 13, color: "var(--text3)" }}>Decrypting reference guide...</span>
+                <NinjaLoader label="Decrypting reference guide" />
               </div>
             ) : error ? (
               <div style={{ padding: "40px 24px", textAlign: "center", border: "1px solid rgba(239, 68, 68, 0.2)", background: "rgba(239, 68, 68, 0.02)", borderRadius: 12 }}>

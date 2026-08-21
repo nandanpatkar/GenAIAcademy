@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -313,7 +314,7 @@ export default function TopicContentPanel({ topic, module, node, pathColor, acti
 
               {isDsaPath && codelabState === "loading" && (
                 <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text3)", fontSize: 13, padding: "12px 0" }}>
-                  <Loader size={14} className="spin" /> Loading the Code Lab problem…
+                  <NinjaEye size={16} labelled={false} /> Loading the Code Lab problem…
                 </div>
               )}
 
@@ -537,7 +538,7 @@ export default function TopicContentPanel({ topic, module, node, pathColor, acti
                     <option key={p.id} value={p.id}>{p.label}</option>
                   ))}
                 </select>
-                {isLoading && <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--text3)", fontSize: 12 }}><Loader size={14} className="spin" /> Loading Kernel...</div>}
+                {isLoading && <div style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--text3)", fontSize: 12 }}><NinjaEye size={16} labelled={false} /> Loading Kernel...</div>}
                 {isRunning ? (
                   <button onClick={interruptExecution} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 14px", background: "transparent", color: "#ef4444", border: "1px solid #ef4444", borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
                     <Square size={12} fill="currentColor" /> STOP

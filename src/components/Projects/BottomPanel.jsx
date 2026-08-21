@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { NinjaEye } from "../NinjaEye";
 import { Terminal, GitBranch, Search, AlertCircle, X, ChevronUp, ChevronDown, Play, Square, Loader2 } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import GitPanel from './GitPanel';
@@ -117,7 +118,7 @@ Respond with what this command would output (simulate it realistically), or expl
           disabled={running}
           autoFocus
         />
-        {running && <span className="ide-spinner" style={{ width: 12, height: 12 }} />}
+        {running && <NinjaEye size={14} labelled={false} />}
       </div>
     </div>
   );
@@ -241,7 +242,7 @@ function SearchTab({ onToast, onFileOpen }) {
 
       {loading ? (
         <div style={{ textAlign: 'center', padding: 16 }}>
-          <span className="ide-spinner" style={{ margin: '0 auto' }} />
+          <NinjaEye size={28} labelled={false} style={{ margin: '0 auto' }} />
         </div>
       ) : (
         <div className="ide-search-results">
@@ -338,7 +339,7 @@ function RunTab({ onToast }) {
     <div className="ide-run-tab">
       <div className="ide-run-toolbar">
         <button className="ide-run-btn" onClick={run} disabled={running || !activeFile}>
-          {running ? <Loader2 size={12} className="ide-spin" /> : <Play size={12} />}
+          {running ? <NinjaEye size={14} labelled={false} /> : <Play size={12} />}
           {running ? 'Running…' : 'Run'}
         </button>
         {running && (

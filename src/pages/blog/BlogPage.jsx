@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NinjaLoader } from "../../components/NinjaEye";
 import { X, ChevronLeft, Clock, Tag, Search, BookOpen, Edit3, Sparkles, ArrowUpRight, Database, SlidersHorizontal, Bookmark, BookmarkCheck, PanelRightClose, PanelRightOpen } from "lucide-react";
 import { supabase } from "../../config/supabaseClient";
 import { useAuth } from "../../contexts/AuthContext";
@@ -357,8 +358,7 @@ function BlogList({ blogs, loading, years, activeYear, setActiveYear, noteCount,
     return (
       <div className="blog-loading-state">
         <div>
-           <div className="blog-loading-orbit" />
-           <span>Syncing research nodes...</span>
+           <NinjaLoader label="Syncing research nodes" />
         </div>
       </div>
     );

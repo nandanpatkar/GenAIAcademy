@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { NinjaEye } from "./NinjaEye";
 import Editor from '@monaco-editor/react';
 import { configureMonaco } from "../config/monacoLoader";
 
@@ -256,7 +257,7 @@ export default function PythonIDE({ onClose, onSubmitSolution }) {
            {viewMode === 'local' ? (
              isLoading ? (
                <button className="studio-btn-primary" style={{ background: 'rgba(255,255,255,0.03)', color: 'var(--text3)', height: 38, padding: '0 18px', fontSize: 10, border: 'none' }} disabled>
-                 <Loader className="spin" size={14} /> INITIALIZING...
+                 <NinjaEye size={16} labelled={false} /> INITIALIZING...
                </button>
              ) : isRunning ? (
                <button className="studio-btn-primary" style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444', height: 38, padding: '0 18px', fontSize: 10, border: 'none' }} onClick={interruptExecution}>
@@ -516,7 +517,7 @@ export default function PythonIDE({ onClose, onSubmitSolution }) {
                 <div className="studio-terminal-body mini-scrollbar" style={{ flex: 1, overflowY: 'auto', padding: '20px 24px', fontFamily: "'DM Mono', monospace", fontSize: 13 }}>
                   {isRunning && (
                     <div style={{ color: 'var(--neon)', display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, background: 'rgba(0, 255, 136, 0.03)', padding: '10px 14px', borderRadius: 8, border: 'none' }}>
-                        <Loader className="spin" size={14} />
+                        <NinjaEye size={16} labelled={false} />
                         <span style={{ fontWeight: 700, fontSize: 11, letterSpacing: 1 }}>INITIALIZING EXECUTION PROTOCOL...</span>
                     </div>
                   )}

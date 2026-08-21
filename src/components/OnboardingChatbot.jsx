@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { NinjaEye } from "./NinjaEye";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -265,7 +266,7 @@ function AssessmentView({ question, questionIndex, answers, currentAnswer, textI
 }
 
 function AnalyzingView() {
-  return <section className="pathfinder-analyzing"><div className="pathfinder-analysis-core"><span /><span /><span /><Sparkles size={24} /></div><span className="pathfinder-kicker"><span className="pathfinder-kicker-line" /> SYNTHESIZING YOUR SIGNAL</span><h2>Connecting the dots.</h2><p>We are matching your baseline and ambition against the paths, labs, manuals, and tools in your workspace.</p><div className="pathfinder-analysis-steps"><span><Check size={13} /> Reading your direction</span><span><Loader2 size={13} className="pathfinder-spin" /> Finding the right altitude</span><span><Zap size={13} /> Selecting first actions</span></div></section>;
+  return <section className="pathfinder-analyzing"><div className="pathfinder-analysis-core"><span /><span /><span /><Sparkles size={24} /></div><span className="pathfinder-kicker"><span className="pathfinder-kicker-line" /> SYNTHESIZING YOUR SIGNAL</span><h2>Connecting the dots.</h2><p>We are matching your baseline and ambition against the paths, labs, manuals, and tools in your workspace.</p><div className="pathfinder-analysis-steps"><span><Check size={13} /> Reading your direction</span><span><NinjaEye size={16} labelled={false} /> Finding the right altitude</span><span><Zap size={13} /> Selecting first actions</span></div></section>;
 }
 
 function ResultsView({ recommendation, answeredCount, isLocalResult, answers, onReset, onOpenRoadmap, onOpenSection, onOpenManual, onOpenReference }) {

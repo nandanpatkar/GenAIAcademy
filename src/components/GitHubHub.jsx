@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import "../styles/githubhub.css";
 import { X, GitBranch, TrendingUp, FolderTree, User, FileText, Plus, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -213,7 +214,7 @@ export default function GitHubHub({ onClose }) {
               className="gh-center-msg" 
               style={{ flex: 1 }}
             >
-              <Loader2 size={28} className="gh-spin" />
+              <NinjaEye size={30} labelled={false} />
               <span>Loading GitHub Hub…</span>
             </motion.div>
           ) : (

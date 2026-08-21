@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import {
   Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight,
   PanelLeft, Flame, Info, RefreshCw, Lock, ArrowUpRight,
@@ -538,7 +539,7 @@ export default function ChaiVisualCourse({ onClose }) {
             ) : null}
 
             <div className="cv-frame-wrap" hidden={lockedInFrame}>
-              {frameLoading ? <div className="cv-frame-loading">Loading…</div> : null}
+              {frameLoading ? <div className="cv-frame-loading"><NinjaLoader label="Loading" /></div> : null}
               <iframe
                 key={`${lesson ? lesson.path : extra.path}:${frameKey}`}
                 ref={frameRef}

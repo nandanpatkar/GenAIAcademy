@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -609,7 +610,7 @@ export default function AgentCoreViewer({ onClose, initialMode = "docs" }) {
               </div>
             </div>
           ) : loading ? (
-            <div className="ac-state"><div className="ac-spinner" /><span>Loading page…</span></div>
+            <div className="ac-state"><NinjaLoader label="Loading page" size="sm" /></div>
           ) : error ? (
             <div className="ac-state ac-state-err">
               <AlertCircle size={26} />

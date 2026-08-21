@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -558,7 +559,7 @@ export default function ExamsDocs({ onClose }) {
                 <PageMeta page={activePage} onPickDomain={pickDomain} />
 
                 {loading ? (
-                  <p className="ex-status"><Loader2 size={15} className="ex-spin" /> Loading…</p>
+                  <p className="ex-status"><NinjaEye size={16} labelled={false} /> Loading…</p>
                 ) : error ? (
                   <div className="ex-status ex-status--error" role="alert">
                     <AlertCircle size={15} /> <span>{error}</span>

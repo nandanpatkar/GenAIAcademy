@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { NinjaEye } from "../../NinjaEye";
 import { ArrowLeft, ArrowUpRight, ChevronLeft, ChevronRight, Loader2, RefreshCw, Sparkles, TriangleAlert } from "lucide-react";
 import { MODES, buildLesson, readLesson, providerStatus } from "../lesson";
 
@@ -135,7 +136,7 @@ export default function ModuleView({ track, module, index, onBack }) {
 
       {loading ? (
         <div className="amc-empty">
-          <Loader2 className="amc-spin" size={20} />
+          <NinjaEye size={22} labelled={false} />
           <div style={{ marginTop: 10 }}>{status || "Writing this lesson locally…"}</div>
         </div>
       ) : error ? (

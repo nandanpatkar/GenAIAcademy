@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { NinjaEye } from "../components/NinjaEye";
 import Editor from "@monaco-editor/react";
 import { configureMonaco } from "../config/monacoLoader";
 
@@ -360,7 +361,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
             <button className="leetcode-icon-button" onClick={() => navigateProblem(1)} aria-label="Next problem"><ChevronRight size={18} /></button>
           </nav>
           <div className="leetcode-lab-actions" aria-label="Code actions">
-            <button className="leetcode-run-top" onClick={handleRun} disabled={Boolean(judgeAction) || !judgeReady}>{isRunning ? <Terminal size={15} className="leetcode-spin" /> : <Play size={15} fill="currentColor" />}<span>{isRunning ? "Running" : "Run"}</span></button>
+            <button className="leetcode-run-top" onClick={handleRun} disabled={Boolean(judgeAction) || !judgeReady}>{isRunning ? <NinjaEye size={16} labelled={false} /> : <Play size={15} fill="currentColor" />}<span>{isRunning ? "Running" : "Run"}</span></button>
             <button className={`leetcode-submit-top ${completed.includes(selected.slug) ? "completed" : ""}`} onClick={handleSubmit} disabled={Boolean(judgeAction) || !judgeReady}><Check size={16} /><span>{isSubmitting ? "Judging..." : completed.includes(selected.slug) ? "Accepted" : "Submit"}</span></button>
           </div>
           <div className="leetcode-nav-actions"><button onClick={() => setView("home")}><Home size={14} /> Home</button><span className="leetcode-top-stat"><Flame size={15} /> {streak} day streak</span><button className="leetcode-ai-button" onClick={() => setShowTutor(true)}><Sparkles size={14} /> AI Coach</button><button className="leetcode-close" onClick={onClose} aria-label="Close Code Lab"><X size={17} /></button></div>
@@ -455,7 +456,7 @@ export default function LeetCodePage({ onClose, onSubmitLeetCode, savedSubmissio
                       {selected.source === "authored" && <span className="leetcode-tag muted">Classic</span>}
                     </div>
                   </div>
-                  {detailLoading && <div className="leetcode-detail-state"><Loader2 size={15} className="leetcode-spin" /> Loading problem…</div>}
+                  {detailLoading && <div className="leetcode-detail-state"><NinjaEye size={16} labelled={false} /> Loading problem…</div>}
                   {detailError && <div className="leetcode-detail-state error">{detailError}</div>}
                   {!detailLoading && !detailError && detail && (showSolution
                     ? <div className="leetcode-solution-view">

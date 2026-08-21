@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { NinjaEye } from "../NinjaEye";
 import { TrendingUp, Search, Star, GitFork, ExternalLink, Plus, Loader2, RefreshCw, X, Filter } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchTrendingRepos, getAvailableTopics, formatCount, timeAgo, LANG_COLORS } from "../../services/githubService";
@@ -135,7 +136,7 @@ export default function TrendingFeed({ onSaveRepo }) {
       <div className="gh-trending-list">
         {loading ? (
           <div className="gh-center-msg">
-            <Loader2 size={28} className="gh-spin" />
+            <NinjaEye size={30} labelled={false} />
             <span>Searching GitHub…</span>
           </div>
         ) : error ? (

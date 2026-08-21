@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { NinjaEye } from "./NinjaEye";
 import { X, Search, ChevronDown, ChevronUp, PanelLeft, Link2 as LinkIcon, Globe, BookOpen, ArrowUpRight, Loader2, Plus, Trash2, Edit2, Star, GitFork, GitBranch } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../config/supabaseClient";
@@ -103,7 +104,7 @@ function PreviewCard({ item }) {
               display: "flex", alignItems: "center", justifyContent: "center",
               gap: 8, color: "var(--text3)", fontSize: 12,
             }}>
-              <Loader2 size={16} style={{ animation: "aiml-spin 1s linear infinite" }} />
+              <NinjaEye size={16} labelled={false} />
               Fetching preview…
             </div>
           ) : preview?.image ? (
@@ -620,7 +621,7 @@ export default function LinksCompanion({ isEditMode, onClose, initialTab = "link
             <div className="links-companion-list" style={{ flex: 1, overflowY: "auto", padding: "4px 0" }}>
               {isLoading ? (
                 <div style={{ padding: 40, textAlign: 'center', color: 'var(--text3)' }}>
-                  <Loader2 size={24} style={{ animation: "aiml-spin 1s linear infinite", marginBottom: 12 }} />
+                  <NinjaEye size={30} labelled={false} style={{ marginBottom: 12 }} />
                   <div style={{ fontSize: 12 }}>Syncing with database…</div>
                 </div>
               ) : filteredItems.length === 0 ? (

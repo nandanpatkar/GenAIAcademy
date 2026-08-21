@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { NinjaEye } from '../NinjaEye';
 import { Settings, GitBranch, Terminal, Package, Plus, Trash2, Eye, EyeOff } from 'lucide-react';
 import { useProjects } from '../../contexts/ProjectsContext';
 import { updateProject } from '../../services/projectService';
@@ -93,7 +94,7 @@ function GitHubTab({ form, setForm, onValidateToken }) {
             onClick={handleValidate}
             disabled={validating || !token.trim()}
           >
-            {validating ? <span className="ide-spinner" /> : 'Validate'}
+            {validating ? <NinjaEye size={16} labelled={false} /> : 'Validate'}
           </button>
         </div>
         {tokenStatus && (
@@ -307,7 +308,7 @@ export default function ProjectSettings({ onClose, onToast }) {
         <div className="ide-modal-footer">
           <button className="ide-modal-btn secondary" onClick={onClose}>Cancel</button>
           <button className="ide-modal-btn primary" onClick={handleSave} disabled={saving}>
-            {saving ? <><span className="ide-spinner" /> Saving…</> : '✓ Save Settings'}
+            {saving ? <><NinjaEye size={16} labelled={false} /> Saving…</> : '✓ Save Settings'}
           </button>
         </div>
       </div>

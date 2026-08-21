@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { NinjaEye } from "./NinjaEye";
 import Editor from "@monaco-editor/react";
 import { configureMonaco } from "../config/monacoLoader";
 
@@ -424,7 +425,7 @@ export default function SqlLab({ onClose }) {
               <span>query.sql</span>
               <div className="sqll-run-group">
                 <button className="sqll-run" onClick={runSql} disabled={running}>
-                  {running ? <Loader2 size={13} className="sqll-spin" /> : <Play size={13} />} Run
+                  {running ? <NinjaEye size={16} labelled={false} /> : <Play size={13} />} Run
                   <kbd>⌘↵</kbd>
                 </button>
                 <button className="sqll-explain" onClick={explainSql} disabled={running}>

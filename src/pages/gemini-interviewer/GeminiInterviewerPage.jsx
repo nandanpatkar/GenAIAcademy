@@ -4,6 +4,7 @@ import { buildDataScienceInterviewerPrompt, getFocusChips, getRolePlaybook, INTE
 import { GeminiLiveSession } from "../../services/geminiLiveService";
 import { generateInterviewAnalysis } from "../../services/aiService";
 import VoiceOrb3D from "../../components/VoiceOrb3D";
+import { NinjaEye, NinjaLoader } from "../../components/NinjaEye";
 import InterviewAnalyticsReport from "./InterviewAnalyticsReport";
 import "../../styles/GeminiInterviewer.css";
 import "../../styles/GeminiInterviewerFullscreen.css";
@@ -125,13 +126,13 @@ export default function GeminiInterviewerPage({ onClose }) {
     </section>}
 
     {stage === "loading_report" && <section className="gemini-loading-report">
-      <Loader2 size={40} className="gemini-spin" />
+      <NinjaEye size={72} labelled={false} />
       <h2>Analyzing your performance…</h2>
       <p>Atlas is scoring your answers and preparing a detailed report.</p>
     </section>}
 
     {stage === "report" && analysis && <InterviewAnalyticsReport analysis={analysis} transcript={transcript} form={form} elapsedSeconds={elapsed} onRestart={restart} onClose={onClose} />}
 
-    {codeOpen && <div className="gemini-ide-overlay"><div className="gemini-ide-window"><Suspense fallback={<div className="gemini-ide-loading"><Timer /> Loading coding workspace…</div>}><PythonIDE onClose={() => setCodeOpen(false)} onSubmitSolution={submitSolution} /></Suspense></div></div>}
+    {codeOpen && <div className="gemini-ide-overlay"><div className="gemini-ide-window"><Suspense fallback={<div className="gemini-ide-loading"><NinjaLoader label="Loading coding workspace" /></div>}><PythonIDE onClose={() => setCodeOpen(false)} onSubmitSolution={submitSolution} /></Suspense></div></div>}
   </main>;
 }

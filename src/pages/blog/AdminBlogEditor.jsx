@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NinjaEye } from "../../components/NinjaEye";
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -245,7 +246,7 @@ export default function AdminBlogEditor({ blog, onClose }) {
                   onClick={() => !isUploadingCover && coverInputRef.current?.click()}
                   style={{ width: '100%', height: 120, border: '1px dashed var(--border)', borderRadius: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: isUploadingCover ? 'not-allowed' : 'pointer', background: 'var(--bg)', color: 'var(--text2)' }}
                 >
-                  {isUploadingCover ? <Loader2 size={24} className="animate-spin" /> : <Upload size={24} />}
+                  {isUploadingCover ? <NinjaEye size={30} labelled={false} /> : <Upload size={24} />}
                   <span style={{ fontSize: 13, marginTop: 8 }}>{isUploadingCover ? "Uploading..." : "Upload Cover Image"}</span>
                 </div>
               )}
@@ -260,7 +261,7 @@ export default function AdminBlogEditor({ blog, onClose }) {
               disabled={isSaving}
               style={{ width: '100%', background: 'var(--primary)', color: '#000', border: 'none', borderRadius: 6, padding: '12px', fontSize: 14, fontWeight: 700, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, opacity: isSaving ? 0.7 : 1 }}
             >
-              {isSaving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+              {isSaving ? <NinjaEye size={16} labelled={false} /> : <Save size={18} />}
               {isSaving ? "Saving..." : (status === "published" ? "Publish Article" : "Save Draft")}
             </button>
           </div>

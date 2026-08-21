@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { NinjaEye } from '../NinjaEye';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   Plus, Search, FolderCode, GitBranch, FileText, MoreVertical,
@@ -134,7 +135,7 @@ function NewProjectModal({ onClose, onCreate }) {
             onClick={handleCreate}
             disabled={!name.trim() || loading}
           >
-            {loading ? <><span className="ide-spinner" /> Creating…</> : <><Plus size={13} /> Create Project</>}
+            {loading ? <><NinjaEye size={16} labelled={false} /> Creating…</> : <><Plus size={13} /> Create Project</>}
           </button>
         </div>
       </div>
@@ -396,7 +397,7 @@ export default function ProjectsDashboard({ onClose }) {
         {/* Content */}
         {loading ? (
           <div className="projects-empty">
-            <div className="ide-spinner" style={{ width: 32, height: 32, borderWidth: 3 }} />
+            <NinjaEye size={40} labelled={false} />
             <div style={{ color: 'var(--ide-text-muted)', fontSize: 14 }}>Loading projects…</div>
           </div>
         ) : filtered.length === 0 ? (

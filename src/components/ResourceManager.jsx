@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { NinjaEye } from "./NinjaEye";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Folder, File, Download, Upload, Video, Search, Globe, BookOpen, Trash2,
@@ -1257,7 +1258,7 @@ export default function ResourceManager({ pathsData, setPathsData, onClose, isEd
                   display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap'
                 }}
               >
-                {playlistLoading ? <Loader2 size={14} className="spin" /> : null}
+                {playlistLoading ? <NinjaEye size={16} labelled={false} /> : null}
                 {playlistLoading ? 'FETCHING' : 'FETCH'}
               </button>
             </div>

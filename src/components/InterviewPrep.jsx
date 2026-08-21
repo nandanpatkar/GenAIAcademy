@@ -8,6 +8,7 @@ import {
   Bot, Send, Globe, NotebookText
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { NinjaEye } from "./NinjaEye";
 import remarkGfm from "remark-gfm";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -541,7 +542,7 @@ export default function InterviewPrep({ onClose, initialLessonId = null, pathsDa
             )}
 
             {/* Loading / error */}
-            {loading && <div className="ip-state"><Loader2 size={18} className="ip-spin" /><span>Loading…</span></div>}
+            {loading && <div className="ip-state"><NinjaEye size={16} labelled={false} /><span>Loading…</span></div>}
             {error   && <div className="ip-state ip-error"><AlertCircle size={18} /><span>{error}</span></div>}
 
             {/* ── Search results ──────────────────────────────────────── */}
@@ -922,7 +923,7 @@ export default function InterviewPrep({ onClose, initialLessonId = null, pathsDa
                         ))}
                         {aiLoading && (
                           <div className="ip-ai-msg model loading">
-                            <Loader2 size={14} className="spin" /> {aiLoadingLabel}
+                            <NinjaEye size={18} labelled={false} /> {aiLoadingLabel}
                           </div>
                         )}
                       </div>

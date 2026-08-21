@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { NinjaEye } from "./NinjaEye";
 import { MessageSquare, X, Send, Sparkles, User, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // Assuming installed if they have tables, else we drop it
@@ -169,7 +170,7 @@ export default function AITutorPanel({ isOpen, onClose, activeTopic, activeModul
               <Sparkles size={16} />
             </div>
             <div style={{ padding: "12px 16px", borderRadius: 12, borderTopLeftRadius: 4, background: "var(--bg3)", border: "1px solid var(--border)", display: "flex", alignItems: "center", gap: 8 }}>
-              <Loader2 size={14} className="spin" style={{ color: "var(--neon)" }} /> <span style={{ color: "var(--text2)", fontSize: 13 }}>Thinking contextually...</span>
+              <NinjaEye size={16} labelled={false} /> <span style={{ color: "var(--text2)", fontSize: 13 }}>Thinking contextually...</span>
             </div>
           </div>
         )}

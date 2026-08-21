@@ -157,8 +157,7 @@
 .blog-favorites-all-button { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; min-height: 44px; padding: 0 15px; color: var(--blog-accent); border: 1px solid rgba(141,231,209,.35); border-radius: 10px; background: rgba(5, 15, 18, .42); cursor: pointer; font: 700 11px var(--blog-mono); }
 .blog-favorites-all-button:hover { color: #03110d; border-color: var(--blog-accent); background: var(--blog-accent); }
 .blog-loading-state > div { display: grid; justify-items: center; gap: 14px; }
-.blog-loading-orbit { width: 28px; height: 28px; border: 1px solid rgba(141,231,209,.25); border-top-color: var(--blog-accent); border-radius: 50%; animation: blog-spin 1s linear infinite; }
-@keyframes blog-spin { to { transform: rotate(360deg); } }
+/* .blog-loading-orbit was replaced by <NinjaLoader> (src/components/NinjaEye.jsx). */
 
 @media (max-width: 1120px) { .blog-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 820px) {
@@ -214,7 +213,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .blog-card, .blog-write-button, .year-filter, .blog-close-button { transition: none; }
-  .blog-loading-orbit { animation: none; }
 }
 
 .blog-detail-shell { min-height: 100%; background: linear-gradient(135deg, rgba(11,25,31,.76), rgba(4,9,13,.9)); }

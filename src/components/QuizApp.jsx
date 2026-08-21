@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NinjaEye } from "./NinjaEye";
 import { Upload, X, Play, RefreshCw, CheckCircle, FileJson, Bot, MessageSquare, Send, Loader2, Settings2, Settings, Flag, Save, LogOut } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -926,7 +927,7 @@ export default function QuizApp({ onClose }) {
                       ))}
                       {aiLoading && (
                         <div className="quiz-ai-msg model loading">
-                          <Loader2 size={16} className="spin" /> Thinking...
+                          <NinjaEye size={18} labelled={false} /> Thinking...
                         </div>
                       )}
                     </div>

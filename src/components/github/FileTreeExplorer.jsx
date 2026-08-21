@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import { NinjaEye } from "../NinjaEye";
 import { FolderOpen, File, ChevronRight, ChevronDown, Loader2, Search, ArrowLeft, Copy, ExternalLink, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -100,7 +101,7 @@ export default function FileTreeExplorer({ initialUrl }) {
       <div className="gh-explorer-input-bar">
         <Search size={16} style={{color:"var(--text3)",flexShrink:0}}/>
         <input className="gh-explorer-input" placeholder="Paste GitHub repo URL…" value={url} onChange={e=>setUrl(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")load();}}/>
-        <button className="gh-explore-btn" onClick={load} disabled={loading||!url}>{loading?<Loader2 size={14} className="gh-spin"/>:"Explore"}</button>
+        <button className="gh-explore-btn" onClick={load} disabled={loading||!url}>{loading?<NinjaEye size={16} labelled={false} />:"Explore"}</button>
       </div>
       {error && <div className="gh-error-msg">⚠️ {error}</div>}
       {tree && (
@@ -129,7 +130,7 @@ export default function FileTreeExplorer({ initialUrl }) {
                 {content?.decodedContent && <button className="gh-file-copy" onClick={()=>navigator.clipboard.writeText(content.decodedContent)}><Copy size={12}/> Copy</button>}
               </div>
               <div className="gh-file-content">
-                {fLoading ? <div className="gh-center-msg"><Loader2 size={24} className="gh-spin"/></div>
+                {fLoading ? <div className="gh-center-msg"><NinjaEye size={30} labelled={false} /></div>
                 : content?.decodedContent ? (isMd
                   ? <div className="gh-markdown-body"><ReactMarkdown remarkPlugins={[remarkGfm]}>{content.decodedContent}</ReactMarkdown></div>
                   : <SyntaxHighlighter language={lang} style={oneDark} customStyle={{margin:0,borderRadius:0,background:"transparent",fontSize:12,lineHeight:1.6}} showLineNumbers wrapLongLines>{content.decodedContent}</SyntaxHighlighter>

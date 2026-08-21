@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -528,7 +529,7 @@ export default function StrandsDocs({ product: initialProduct = "guide", onClose
                 ) : null}
 
                 {loading ? (
-                  <p className="lc-status"><Loader2 size={15} className="lc-spin" /> Loading…</p>
+                  <p className="lc-status"><NinjaEye size={16} labelled={false} /> Loading…</p>
                 ) : error ? (
                   <div className="lc-status lc-status--error" role="alert">
                     <AlertCircle size={15} /> <span>{error}</span>

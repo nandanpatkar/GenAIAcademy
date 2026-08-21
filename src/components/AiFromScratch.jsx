@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -429,7 +430,7 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
   /* ── lesson panes ── */
 
   const renderCode = () => {
-    if (bundleState === "loading") return <div className="aifs-state"><Loader2 className="aifs-spin" size={18} /> Loading code…</div>;
+    if (bundleState === "loading") return <div className="aifs-state"><NinjaEye size={16} labelled={false} /> Loading code…</div>;
     const files = bundle?.code || [];
     if (!files.length) return <div className="aifs-state">This lesson ships no code files.</div>;
     const file = files[Math.min(activeFile, files.length - 1)];
@@ -457,7 +458,7 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
   };
 
   const renderArtifacts = () => {
-    if (bundleState === "loading") return <div className="aifs-state"><Loader2 className="aifs-spin" size={18} /> Loading artifacts…</div>;
+    if (bundleState === "loading") return <div className="aifs-state"><NinjaEye size={16} labelled={false} /> Loading artifacts…</div>;
     const artifacts = bundle?.artifacts || [];
     if (!artifacts.length) return <div className="aifs-state">This lesson ships no reusable artifact.</div>;
     const artifact = artifacts[Math.min(activeArtifact, artifacts.length - 1)];
@@ -574,7 +575,7 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
                 <div className="aifs-column">
                   {tab === "lesson" ? (
                     loading ? (
-                      <div className="aifs-state"><Loader2 className="aifs-spin" size={18} /> Loading lesson…</div>
+                      <div className="aifs-state"><NinjaEye size={16} labelled={false} /> Loading lesson…</div>
                     ) : error ? (
                       <div className="aifs-state aifs-state--error"><AlertCircle size={18} /> {error}</div>
                     ) : (
@@ -590,7 +591,7 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
                   {tab === "artifacts" ? renderArtifacts() : null}
                   {tab === "quiz" ? (
                     bundleState === "loading"
-                      ? <div className="aifs-state"><Loader2 className="aifs-spin" size={18} /> Loading quiz…</div>
+                      ? <div className="aifs-state"><NinjaEye size={16} labelled={false} /> Loading quiz…</div>
                       : <Quiz key={lesson.slug} questions={bundle?.quiz || []} />
                   ) : null}
 

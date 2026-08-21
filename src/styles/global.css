@@ -6466,7 +6466,7 @@ pre, code,
   animation: notion-loading-core-pulse 2s ease-in-out infinite;
 }
 
-.notion-loading-core svg { animation: notion-loading-spin 1.25s linear infinite; }
+/* The core holds a <NinjaEye>, which drives its own motion — do not rotate it. */
 
 .notion-loading-ring {
   position: absolute;
@@ -6588,7 +6588,6 @@ pre, code,
 .notion-loading-skeleton-title { width: 46% !important; height: 13px !important; background-image: linear-gradient(90deg, rgba(255, 194, 103, .12), rgba(255, 194, 103, .38), rgba(255, 194, 103, .12)) !important; }
 .notion-loading-skeleton-short { width: 68% !important; }
 
-@keyframes notion-loading-spin { to { transform: rotate(360deg); } }
 @keyframes notion-loading-orbit { to { transform: rotate(336deg) scaleX(.62); } }
 @keyframes notion-loading-packet { to { transform: rotate(360deg); } }
 @keyframes notion-loading-core-pulse { 50% { box-shadow: 0 0 0 11px rgba(56, 189, 248, .08), 0 0 42px rgba(56, 189, 248, .46); } }
@@ -7591,6 +7590,32 @@ pre, code,
   gap: 16px;
 }
 .view-skeleton-card { height: 132px; }
+
+/* The eye sits above the skeleton bars rather than replacing them: the bars are
+   what stop the shell reflowing when the chunk lands, the eye is what tells you
+   the app is still working. */
+.view-skeleton-watch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.view-skeleton-watch-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+/* First paint, before MainApp has decided what the page looks like. */
+.app-boot {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: var(--bg, #0a0a0c);
+}
 
 @keyframes view-skeleton-shimmer {
   0%   { background-position: 100% 50%; }

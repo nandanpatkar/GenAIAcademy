@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NinjaEye } from "../../NinjaEye";
 import { AlertTriangle, ChevronRight, Loader2 } from "lucide-react";
 import { safeFetchJson } from "./apiHelpers";
 
@@ -135,7 +136,7 @@ export default function PracticeTab({ exam, onStartExam }) {
         style={{ padding: '16px 40px', fontSize: 18, width: '100%', justifyContent: 'center' }}
       >
         {fetching ? (
-          <><Loader2 size={18} className="spin" style={{ marginRight: 8 }} /> Fetching Questions…</>
+          <><NinjaEye size={16} labelled={false} style={{ marginRight: 8 }} /> Fetching Questions…</>
         ) : (
           <>Start Exam <ChevronRight size={18} /></>
         )}

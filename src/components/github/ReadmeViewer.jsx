@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { NinjaEye } from "../NinjaEye";
 import { Loader2, Search, Star, GitFork, Eye, Users, Scale, Calendar, Activity, ExternalLink, Hash } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -82,10 +83,10 @@ export default function ReadmeViewer({ initialUrl }) {
       <div className="gh-explorer-input-bar">
         <Search size={16} style={{ color: "var(--text3)", flexShrink: 0 }} />
         <input className="gh-explorer-input" placeholder="Paste GitHub repo URL…" value={url} onChange={e => setUrl(e.target.value)} onKeyDown={e => { if (e.key === "Enter") load(); }} />
-        <button className="gh-explore-btn" onClick={() => load()} disabled={loading || !url}>{loading ? <Loader2 size={14} className="gh-spin" /> : "Load"}</button>
+        <button className="gh-explore-btn" onClick={() => load()} disabled={loading || !url}>{loading ? <NinjaEye size={16} labelled={false} /> : "Load"}</button>
       </div>
       {error && <div className="gh-error-msg">⚠️ {error}</div>}
-      {loading && <div className="gh-center-msg" style={{ flex: 1 }}><Loader2 size={28} className="gh-spin" /><span>Loading repository…</span></div>}
+      {loading && <div className="gh-center-msg" style={{ flex: 1 }}><NinjaEye size={30} labelled={false} /><span>Loading repository…</span></div>}
       {repo && !loading && (
         <div className="gh-readme-body">
           {/* Health Sidebar */}

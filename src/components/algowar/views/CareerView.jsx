@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { NinjaLoader } from "../../NinjaEye";
 import Icon from "../icons";
 import { worlds, loadWorld, loadLevel, gradientFor, themeIcon } from "../data";
 import { getProgress, nodeState, worldProgress } from "../progress";
@@ -245,7 +246,7 @@ export default function CareerView() {
 
           <div className="aw-map-scroll">
             <div className="aw-map-fade top" aria-hidden="true" />
-            {!world && <p className="aw-muted-sm aw-map-loading">Loading campaign map…</p>}
+            {!world && <div className="aw-map-loading"><NinjaLoader label="Loading campaign map" size="sm" /></div>}
 
             {world && (
               <ol className="aw-nodes">

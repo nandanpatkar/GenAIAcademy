@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NinjaEye } from "../../NinjaEye";
 import { RefreshCw, AlertTriangle, Play } from "lucide-react";
 import { safeFetchJson } from "./apiHelpers";
 
@@ -32,7 +33,7 @@ export default function VideosTab({ exam }) {
   if (!videos) {
     return (
       <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-muted)" }}>
-        <RefreshCw size={24} className="spin" style={{ marginBottom: 8 }} />
+        <NinjaEye size={30} labelled={false} style={{ marginBottom: 8 }} />
         <div>Loading videos…</div>
       </div>
     );

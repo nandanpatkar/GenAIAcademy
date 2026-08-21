@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import {
   Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight,
   PanelLeft, Trophy, Flame, Info, CheckCircle2, RefreshCw,
@@ -447,7 +448,7 @@ export default function DataScienceCourse({ onClose }) {
             </div>
 
             <div className="ds-frame-wrap">
-              {frameLoading ? <div className="ds-frame-loading">Loading lesson…</div> : null}
+              {frameLoading ? <div className="ds-frame-loading"><NinjaLoader label="Loading lesson" /></div> : null}
               <iframe
                 key={`${lesson.path}:${frameKey}`}
                 ref={frameRef}

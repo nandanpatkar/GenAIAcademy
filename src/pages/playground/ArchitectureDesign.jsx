@@ -5,6 +5,7 @@
 // ╚══════════════════════════════════════════════════════════════════════════╝
 
 import React, { useState, useCallback, useRef } from "react";
+import { NinjaEye } from "../../components/NinjaEye";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -742,7 +743,7 @@ function ArchCanvas() {
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => setShowAI(false)} style={{ flex: 1, background: "none", border: "1px solid var(--pg-border, #30363d)", borderRadius: 7, color: "#8b949e", fontSize: 11, padding: "9px", cursor: "pointer", fontFamily: "'DM Mono',monospace" }}>Cancel</button>
               <button onClick={generateFromAI} disabled={aiLoading || !aiPrompt.trim()} style={{ flex: 3, background: aiLoading ? "#818cf844" : "linear-gradient(135deg,#818cf8,#a78bfa)", border: "none", borderRadius: 7, color: "#fff", fontSize: 11, fontWeight: 700, padding: "9px", cursor: aiLoading ? "not-allowed" : "pointer", fontFamily: "'DM Mono',monospace", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-                {aiLoading ? <><Loader2 size={13} style={{ animation: "spin 1s linear infinite" }} /> Generating…</> : <><Sparkles size={13} /> Generate Diagram</>}
+                {aiLoading ? <><NinjaEye size={16} labelled={false} /> Generating…</> : <><Sparkles size={13} /> Generate Diagram</>}
               </button>
             </div>
             <div style={{ marginTop: 8, fontSize: 9, color: "#6b7280", textAlign: "center" }}>⌘ + Enter to generate</div>

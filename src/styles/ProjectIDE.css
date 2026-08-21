@@ -1837,14 +1837,9 @@
 }
 
 /* Spinner */
-.ide-spinner {
-  width: 16px; height: 16px;
-  border: 2px solid rgba(var(--neon-rgb, 0, 255, 136),0.2);
-  border-top-color: var(--ide-accent);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-  flex-shrink: 0;
-}
+/* .ide-spinner was replaced by <NinjaEye> (src/components/NinjaEye.jsx).
+   `spin` stays: it is declared in several stylesheets and dropping this copy
+   would only change which identical declaration wins the cascade. */
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* Status Bar */

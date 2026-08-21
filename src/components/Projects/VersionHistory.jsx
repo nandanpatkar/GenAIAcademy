@@ -6,6 +6,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { NinjaEye } from '../NinjaEye';
 import { DiffEditor } from '@monaco-editor/react';
 import { configureMonaco } from "../../config/monacoLoader";
 
@@ -98,7 +99,7 @@ export default function VersionHistory({ onClose, onToast }) {
           }}>
             {loading ? (
               <div style={{ textAlign: 'center', padding: 16 }}>
-                <span className="ide-spinner" style={{ margin: '0 auto' }} />
+                <NinjaEye size={28} labelled={false} style={{ margin: '0 auto' }} />
               </div>
             ) : versions.length === 0 ? (
               <div style={{ textAlign: 'center', fontSize: 12, color: 'var(--ide-text-muted)', padding: 20 }}>
@@ -165,7 +166,7 @@ export default function VersionHistory({ onClose, onToast }) {
                     disabled={restoring}
                   >
                     {restoring
-                      ? <><span className="ide-spinner" style={{ width: 10, height: 10 }} /> Restoring…</>
+                      ? <><NinjaEye size={14} labelled={false} /> Restoring…</>
                       : <><RotateCcw size={11} /> Restore this Version</>}
                   </button>
                 </div>

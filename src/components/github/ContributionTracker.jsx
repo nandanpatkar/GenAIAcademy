@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { NinjaEye } from "../NinjaEye";
 import { User, Loader2, GitPullRequest, GitCommit, Star, GitFork, Award, Flame, Target, BookOpen, Trophy, Zap, ExternalLink, Search } from "lucide-react";
 import { fetchUserProfile, fetchUserEvents, fetchUserRepos, timeAgo, LANG_COLORS } from "../../services/githubService";
 
@@ -136,7 +137,7 @@ export default function ContributionTracker({ githubUsername, onSetUsername }) {
     );
   }
 
-  if (loading) return <div className="gh-center-msg" style={{ flex: 1 }}><Loader2 size={28} className="gh-spin" /><span>Loading profile…</span></div>;
+  if (loading) return <div className="gh-center-msg" style={{ flex: 1 }}><NinjaEye size={30} labelled={false} /><span>Loading profile…</span></div>;
   if (error) return <div className="gh-center-msg gh-error" style={{ flex: 1 }}>⚠️ {error}</div>;
   if (!profile) return null;
 

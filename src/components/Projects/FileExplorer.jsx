@@ -6,6 +6,7 @@
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { NinjaEye } from '../NinjaEye';
 import {
   ChevronRight, File, Folder, FolderOpen, Plus, FolderPlus,
   Trash2, Edit2, Copy, Upload, MoreHorizontal, RefreshCw, PanelLeftClose
@@ -395,7 +396,7 @@ export default function FileExplorer({ onFileOpen, onToast, onCollapse }) {
       >
         {loading && children.length === 0 && (
           <div style={{ padding: '16px', textAlign: 'center' }}>
-            <div className="ide-spinner" style={{ margin: '0 auto' }} />
+            <NinjaEye size={28} labelled={false} style={{ margin: '0 auto' }} />
           </div>
         )}
 

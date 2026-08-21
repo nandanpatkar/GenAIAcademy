@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { NinjaEye } from "../../components/NinjaEye";
 import ReactFlow, {
   addEdge,
   Background,
@@ -565,7 +566,7 @@ function StudioDrawer({ prompt, setPrompt, onGenerate, onApplyJson, projectJson,
     <p className="g2-muted">Describe the content, relationships, constraints, and visual intent. Ask for “icon-only nodes” and named regions such as “private VPC” or “hot path”; Studio creates editable frames, labels, nodes, and connections.</p>
     <div className="g2-studio-appearance"><span>Architecture components</span><div className="g2-component-display" role="group" aria-label="Generated component appearance"><button className={componentDisplay === "card" ? "active" : ""} onClick={() => setComponentDisplay("card")}><RectangleHorizontal size={14} /> Cards</button><button className={componentDisplay === "icon" ? "active" : ""} onClick={() => setComponentDisplay("icon")}><Sparkles size={14} /> Icons only</button></div></div>
     <textarea className="g2-textarea" value={prompt} onChange={(event) => setPrompt(event.target.value)} placeholder="Build an icon-only AWS RAG architecture with frames for edge, private VPC, data plane, and observability…" />
-    <button className="g2-primary-btn" onClick={onGenerate} disabled={isGenerating}>{isGenerating ? <RefreshCw size={15} className="g2-spin" /> : <Sparkles size={15} />} {isGenerating ? `Generating ${formatLabel.toLowerCase()}…` : `Generate ${formatLabel.toLowerCase()}`}</button>
+    <button className="g2-primary-btn" onClick={onGenerate} disabled={isGenerating}>{isGenerating ? <NinjaEye size={16} labelled={false} /> : <Sparkles size={15} />} {isGenerating ? `Generating ${formatLabel.toLowerCase()}…` : `Generate ${formatLabel.toLowerCase()}`}</button>
     {studioError && <div className="g2-studio-error"><AlertCircle size={14} /><span>{studioError}</span></div>}
     <div className="g2-section-label">Try a direction</div>
     <div className="g2-prompt-grid">

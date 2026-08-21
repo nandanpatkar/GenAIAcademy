@@ -15,6 +15,7 @@
  * both from the body, and nothing here adds them back.
  */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { NinjaLoader } from "../../components/NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -228,8 +229,7 @@ export default function AVArticle({ post, dark = true, onTocChange, onLoaded }) 
   if (state === "loading") {
     return (
       <div className="av-article-state">
-        <div className="blog-loading-orbit" />
-        <span>Loading article…</span>
+        <NinjaLoader label="Loading article" />
       </div>
     );
   }

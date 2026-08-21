@@ -6,6 +6,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { NinjaEye } from '../NinjaEye';
 import { Search, GitBranch, Lock, Globe } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useProjects } from '../../contexts/ProjectsContext';
@@ -245,7 +246,7 @@ export default function ImportGitHubModal({ onClose, onImported, onToast }) {
                   <div className="ide-repo-list">
                     {loadingRepos && (
                       <div style={{ textAlign: 'center', padding: 16 }}>
-                        <span className="ide-spinner" style={{ margin: '0 auto' }} />
+                        <NinjaEye size={28} labelled={false} style={{ margin: '0 auto' }} />
                       </div>
                     )}
                     {filteredRepos.map(repo => (

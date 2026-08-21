@@ -29,6 +29,10 @@ import { loadCurriculumRow, resetCurriculumCache, primeCurriculumCache } from ".
 import { MAIN_STEPS, SECTION_STEPS, SIDEBAR_OVERVIEW_STEPS } from "./data/walkthroughSteps";
 import { AnimatePresence } from "framer-motion";
 import useIsMobile from "./hooks/useIsMobile";
+// Not lazy: this is what every Suspense fallback in the app renders, including
+// the one covering the first paint. Lazy-loading the loading indicator would
+// mean showing nothing while the loading indicator loads.
+import { NinjaEye, NinjaLoader } from "./components/NinjaEye";
 import "./styles/global.css";
 import "./styles/mobile-foundation.css";
 import "./styles/mobile-destination-overrides.css";
@@ -1742,7 +1746,7 @@ function MainApp() {
                             showAimlCompanion ? <AimlCompanion onClose={() => setShowAimlCompanion(false)} /> :
                               showGitHubHub ? <GitHubHub onClose={() => setShowGitHubHub(false)} /> :
                                 showLinks ? <LinksCompanion isEditMode={isEditMode} initialTab={linksInitialTab} onClose={() => setShowLinks(false)} /> :
-                                  showGenAIPlayground2 ? <React.Suspense fallback={<div style={{ display: "grid", placeItems: "center", width: "100%", height: "100%", background: "#f7f8ff", color: "#64748b", fontSize: 12 }}>Loading Gen AI Playground 2.0…</div>}><GenAIPlayground2 theme={theme} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} onClose={closeGenAIPlayground2} /></React.Suspense> :
+                                  showGenAIPlayground2 ? <React.Suspense fallback={<div style={{ display: "grid", placeItems: "center", width: "100%", height: "100%", background: "#f7f8ff" }}><NinjaLoader label="Loading Gen AI Playground 2.0" /></div>}><GenAIPlayground2 theme={theme} isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} onClose={closeGenAIPlayground2} /></React.Suspense> :
                                     showPlayground ? <SystemDesignPlayground key={playgroundInitialTab} initialTab={playgroundInitialTab} theme={theme} onClose={() => setShowPlayground(false)} /> :
                                     showProgress ? <ProgressTracker pathsData={visiblePaths} onClose={() => setShowProgress(false)} /> :
                                       showProjects ? (
@@ -2213,6 +2217,10 @@ function useViewState(initial) {
 function ViewLoadingSkeleton() {
   return (
     <div className="view-skeleton" aria-busy="true" aria-live="polite">
+      <div className="view-skeleton-watch">
+        <NinjaEye size={44} labelled={false} />
+        <span className="view-skeleton-watch-label">Loading view</span>
+      </div>
       <div className="view-skeleton-bar" style={{ width: "38%", height: 28 }} />
       <div className="view-skeleton-bar" style={{ width: "62%" }} />
       <div className="view-skeleton-grid">
@@ -2289,13 +2297,29 @@ function MobileBottomNav({ activeView, setView, onMore, isMoreOpen }) {
   );
 }
 
+/**
+ * First paint. Until this point the user has downloaded the shell and nothing
+ * else, so the boot screen has to be cheap: one inline SVG and no chunk of its
+ * own. It is full-bleed rather than a skeleton because there is no layout to
+ * preserve yet — MainApp decides what the page looks like.
+ */
+function AppBootScreen() {
+  return (
+    <div className="app-boot">
+      <NinjaLoader
+        size="xl"
+        label="Entering the dojo"
+        hint="Sharpening the curriculum. One moment."
+      />
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <React.Suspense
-          fallback={<div style={{ minHeight: "100vh", background: "var(--bg, #0b1020)" }} />}
-        >
+        <React.Suspense fallback={<AppBootScreen />}>
           <MainApp />
         </React.Suspense>
       </ThemeProvider>

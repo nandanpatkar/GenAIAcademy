@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { NinjaEye } from "./NinjaEye";
 import Editor from '@monaco-editor/react';
 import { configureMonaco } from "../config/monacoLoader";
 
@@ -692,7 +693,7 @@ export default function AlgoVisualizer({
               opacity: (isLoading || isExecuting) ? 0.7 : 1
             }}
           >
-            {isExecuting ? <Activity size={14} className="spin" /> : <Play size={14} fill="currentColor" />}
+            {isExecuting ? <NinjaEye size={16} labelled={false} /> : <Play size={14} fill="currentColor" />}
             {isExecuting ? 'RUNNING...' : 'RUN'}
           </button>
 

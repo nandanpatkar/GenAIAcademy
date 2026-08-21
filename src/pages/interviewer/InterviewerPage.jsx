@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { NinjaEye } from "../../components/NinjaEye";
 import { RetellWebClient } from "retell-client-js-sdk";
 import { createRetellWebCall, generateInterviewAnalysis, updateRetellCallVariables } from "../../services/aiService";
 import { 
@@ -416,7 +417,7 @@ sys.stdout = io.StringIO()
                 <div className="setup-card-footer">
                   <div className="setup-footer-note"><Zap size={14} /><span>Your interviewer will adapt to your answers in real time.</span></div>
                   <button className="start-btn" onClick={handleStartCall} disabled={loading}>
-                    {loading ? <Loader2 className="animate-spin" size={19} /> : <Zap size={19} />}
+                    {loading ? <NinjaEye size={20} labelled={false} /> : <Zap size={19} />}
                     <span>{loading ? "INITIALIZING AGENT..." : "START VOICE INTERVIEW"}</span><ChevronRight size={17} />
                   </button>
                 </div>
@@ -504,11 +505,11 @@ sys.stdout = io.StringIO()
                       <div className="ide-title">
                         <Code2 size={16} color="#00ff88" /> 
                         <span>PYTHON 3.11 SANDBOX</span>
-                        {pyodideLoading && <Loader2 size={12} className="spin-animate" style={{ marginLeft: 8 }} />}
+                        {pyodideLoading && <NinjaEye size={14} labelled={false} style={{ marginLeft: 8 }} />}
                       </div>
                       <div className="ide-actions">
                         <button onClick={runCode} className="ide-run-btn" disabled={pyodideLoading}>
-                          {pyodideLoading ? <Loader2 size={12} className="spin-animate" /> : <Play size={14} />} 
+                          {pyodideLoading ? <NinjaEye size={14} labelled={false} /> : <Play size={14} />} 
                           {pyodideLoading ? " LOADING..." : " RUN"}
                         </button>
                         <button 

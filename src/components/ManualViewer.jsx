@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import { NinjaLoader } from "./NinjaEye";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -807,8 +808,7 @@ export default function ManualViewer({ activePhase, onSelectPhase, onClose }) {
         <div className="manual-content-container">
           {loading ? (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 0", gap: 16 }}>
-              <div className="loading-orb" style={{ width: 32, height: 32, border: "2px solid var(--neon)", borderTopColor: "transparent", borderRadius: "50%", animation: "spin 1s linear infinite" }} />
-              <span style={{ fontSize: 13, color: "var(--text3)" }}>Loading manual phase...</span>
+              <NinjaLoader label="Loading manual phase" />
             </div>
           ) : error ? (
             <div role="alert" style={{ padding: "40px 24px", textAlign: "center", border: "1px solid rgba(239, 68, 68, 0.2)", background: "rgba(239, 68, 68, 0.02)", borderRadius: 12 }}>

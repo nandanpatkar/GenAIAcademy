@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
+import { NinjaEye } from '../NinjaEye';
 import { DiffEditor } from '@monaco-editor/react';
 import { configureMonaco } from "../../config/monacoLoader";
 
@@ -205,7 +206,7 @@ export default function GitPanel({ onToast }) {
               onClick={handlePull}
               disabled={pulling}
             >
-              {pulling ? <><span className="ide-spinner" style={{ width: 10, height: 10 }} /> Pulling…</> : <><Download size={11} /> Pull</>}
+              {pulling ? <><NinjaEye size={14} labelled={false} /> Pulling…</> : <><Download size={11} /> Pull</>}
             </button>
           </>
         )}
@@ -321,7 +322,7 @@ export default function GitPanel({ onToast }) {
             title={!hasGitHub ? 'Connect GitHub in Project Settings' : ''}
           >
             {pushing
-              ? <><span className="ide-spinner" style={{ width: 10, height: 10 }} /> Pushing…</>
+              ? <><NinjaEye size={14} labelled={false} /> Pushing…</>
               : <><Upload size={11} /> {hasGitHub ? 'Commit & Push' : 'Commit'}</>
             }
           </button>

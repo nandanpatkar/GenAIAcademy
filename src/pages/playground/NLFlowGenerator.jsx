@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { NinjaEye } from "../../components/NinjaEye";
 import { Sparkles, X, ArrowRight, Loader, AlertCircle, CheckCircle2, RefreshCw } from "lucide-react";
 import { MarkerType } from "reactflow";
 import { generateFlowArchitecture } from "../../services/aiService";
@@ -290,7 +291,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
               border: "1px solid rgba(129,140,248,0.2)",
               borderRadius: 8,
             }}>
-              <Loader size={14} color="#818cf8" style={{ animation: "spin 0.8s linear infinite", flexShrink: 0 }} />
+              <NinjaEye size={16} labelled={false} />
               <div>
                 <div style={{ fontSize: 11, color: "#818cf8", fontWeight: 700 }}>Generating architecture…</div>
                 <div style={{ fontSize: 9, color: "var(--pg-text3)", marginTop: 2 }}>Gemini is designing your system</div>
@@ -431,7 +432,7 @@ export default function NLFlowGenerator({ onClose, onApply, hasExistingNodes }) 
                   transition: "all 0.12s",
                 }}
               >
-                {loading ? <><Loader size={11} style={{ animation: "spin 0.8s linear infinite" }} /> GENERATING…</> : <><Sparkles size={11} /> GENERATE FLOW</>}
+                {loading ? <><NinjaEye size={14} labelled={false} /> GENERATING…</> : <><Sparkles size={11} /> GENERATE FLOW</>}
               </button>
             </>
           ) : (

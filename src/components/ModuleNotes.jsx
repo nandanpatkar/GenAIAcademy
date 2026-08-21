@@ -3,6 +3,7 @@
 // Table: module_notes (id uuid PK, user_id uuid FK, module_id text, content jsonb, updated_at timestamptz)
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { NinjaEye } from "./NinjaEye";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
@@ -89,7 +90,7 @@ function Toolbar({ editor, saveStatus, onSaveNow }) {
 
       {/* Save status badge */}
       <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontWeight: 700, letterSpacing: "0.5px" }}>
-        {saveStatus === "saving" && <><Loader2 size={11} style={{ animation: "spin 1s linear infinite", color: "var(--text3)" }} /><span style={{ color: "var(--text3)" }}>SAVING</span></>}
+        {saveStatus === "saving" && <><NinjaEye size={14} labelled={false} /><span style={{ color: "var(--text3)" }}>SAVING</span></>}
         {saveStatus === "saved"  && <><CheckCircle2 size={11} style={{ color: "#22c55e" }} /><span style={{ color: "#22c55e" }}>SAVED</span></>}
         {saveStatus === "error"  && <><span style={{ color: "#ef4444" }}>SAVE FAILED</span></>}
       </div>
@@ -240,7 +241,7 @@ export default function ModuleNotes({ moduleId, userId, pathColor }) {
             alignItems: "center", justifyContent: "center",
             background: "var(--bg)", zIndex: 10,
           }}>
-            <Loader2 size={18} style={{ animation: "spin 1s linear infinite", color: "var(--text3)" }} />
+            <NinjaEye size={30} labelled={false} />
           </div>
         )}
 

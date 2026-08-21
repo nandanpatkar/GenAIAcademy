@@ -5,6 +5,7 @@
 //                   dashed purple lines, modules with no notes float grey & isolated
 
 import React, { useEffect, useRef, useMemo, useState, useCallback } from "react";
+import { NinjaEye } from "../components/NinjaEye";
 import * as d3 from "d3";
 import {
   X, ZoomIn, ZoomOut, Maximize2, RotateCcw,
@@ -661,7 +662,7 @@ export default function KnowledgeGraph({ pathsData, userId, onClose, onNavigate 
         }}>
           <FileText size={11} />
           Connections come from your subtopic notes &amp; module notes. Write more to strengthen the graph.
-          {notesLoading && <><Loader2 size={11} style={{ animation: "spin 1s linear infinite", marginLeft: 6 }} /> Loading notes…</>}
+          {notesLoading && <><NinjaEye size={14} labelled={false} style={{ marginLeft: 6 }} /> Loading notes…</>}
         </div>
       )}
 

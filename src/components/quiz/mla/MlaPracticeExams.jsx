@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { NinjaEye } from "../../NinjaEye";
 import {
   X, Play, Clock, ListChecks, Trophy, Loader2, AlertCircle, GraduationCap,
   BookOpen, Timer, RotateCcw, CheckCircle2, Target, CloudOff, Sun, Moon,
@@ -486,7 +487,7 @@ export default function MlaPracticeExams({ onClose }) {
         )}
 
         {busy && (
-          <div className="mla-busy"><Loader2 className="mla-spin" size={18} /> Loading questions…</div>
+          <div className="mla-busy"><NinjaEye size={16} labelled={false} /> Loading questions…</div>
         )}
       </div>
     </div>

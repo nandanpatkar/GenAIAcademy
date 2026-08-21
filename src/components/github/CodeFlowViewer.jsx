@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NinjaEye } from "../NinjaEye";
 import { Loader2, ArrowLeft, Maximize, Minimize } from "lucide-react";
 
 export default function CodeFlowViewer({ initialUrl, onClose }) {
@@ -56,7 +57,7 @@ export default function CodeFlowViewer({ initialUrl, onClose }) {
       <div style={{ flex: 1, position: "relative" }}>
         {isLoading && (
           <div className="gh-center-msg" style={{ position: "absolute", inset: 0, zIndex: 10, background: "var(--bg0)" }}>
-            <Loader2 size={24} className="gh-spin" />
+            <NinjaEye size={30} labelled={false} />
             <span style={{ marginTop: 12 }}>Loading CodeFlow...</span>
           </div>
         )}

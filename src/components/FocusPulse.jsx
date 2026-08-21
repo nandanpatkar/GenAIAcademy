@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import { NinjaEye } from "./NinjaEye";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -965,9 +966,7 @@ const FocusPulse = ({ node, module, onClose, onToggleSubtopicStatus, onVideoSele
                     }}
                   >
                     {isSearching ? (
-                      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
-                        <Loader2 size={16} />
-                      </motion.div>
+                      <NinjaEye size={16} labelled={false} />
                     ) : (
                       <Search size={16} />
                     )}

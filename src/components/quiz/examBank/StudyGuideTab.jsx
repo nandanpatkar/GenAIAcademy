@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NinjaEye } from "../../NinjaEye";
 import { RefreshCw, AlertTriangle, FileText } from "lucide-react";
 import { safeFetchJson } from "./apiHelpers";
 
@@ -56,7 +57,7 @@ export default function StudyGuideTab({ exam }) {
   if (!toc) {
     return (
       <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-muted)" }}>
-        <RefreshCw size={24} className="spin" style={{ marginBottom: 8 }} />
+        <NinjaEye size={30} labelled={false} style={{ marginBottom: 8 }} />
         <div>Loading study guide…</div>
       </div>
     );
@@ -91,7 +92,7 @@ export default function StudyGuideTab({ exam }) {
 
         {activePath && articleLoading && (
           <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-muted)" }}>
-            <RefreshCw size={24} className="spin" style={{ marginBottom: 8 }} />
+            <NinjaEye size={30} labelled={false} style={{ marginBottom: 8 }} />
             <div>Fetching chapter details…</div>
           </div>
         )}

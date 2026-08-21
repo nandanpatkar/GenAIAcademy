@@ -789,15 +789,7 @@
   color: var(--text3);
 }
 .ac-state-err { color: #ef4444; }
-.ac-spinner {
-  width: 26px;
-  height: 26px;
-  border: 2px solid var(--neon);
-  border-top-color: transparent;
-  border-radius: 50%;
-  animation: ac-spin 0.9s linear infinite;
-}
-@keyframes ac-spin { to { transform: rotate(360deg); } }
+/* .ac-spinner was replaced by <NinjaLoader> (src/components/NinjaEye.jsx). */
 
 /* ════════ samples ════════ */
 
