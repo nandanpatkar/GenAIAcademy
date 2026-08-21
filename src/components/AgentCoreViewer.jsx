@@ -19,6 +19,7 @@ import { makeMarkdownComponents, extractToc } from "./AgentCoreMarkdown";
 import { useTheme } from "../contexts/ThemeContext";
 import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/AgentCore.css";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 // Section icons live in the generated index as names so it stays serializable.
 const ICONS = {
@@ -609,7 +610,7 @@ export default function AgentCoreViewer({ onClose, initialMode = "docs" }) {
               </div>
             </div>
           ) : loading ? (
-            <div className="ac-state"><div className="ac-spinner" /><span>Loading page…</span></div>
+            <div className="ac-state"><WanderingEyesLoader size={22} /><span>Loading page…</span></div>
           ) : error ? (
             <div className="ac-state ac-state-err">
               <AlertCircle size={26} />

@@ -2,8 +2,7 @@ import React, { useState, useEffect, useMemo, useRef, useCallback } from "react"
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
-  Search, X, ArrowLeft, ArrowRight, List, FileText, PanelLeft, Loader2,
-  AlertCircle, BookMarked, ChevronRight,
+  Search, X, ArrowLeft, ArrowRight, List, FileText, PanelLeft, AlertCircle, BookMarked, ChevronRight,
 } from "lucide-react";
 import {
   DOC_SECTIONS, DOC_PAGES, DOC_ORDER, DOC_BY_SLUG, DEFAULT_DOC_SLUG, docUrl,
@@ -13,6 +12,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/LangChainDocs.css";
 import "../styles/Documentation.css";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 /* Project documentation, read in-app (About → Documentation).
  *
@@ -295,7 +295,7 @@ export default function Documentation({ onClose }) {
             ) : null}
 
             {loading ? (
-              <p className="lc-status"><Loader2 size={15} className="lc-spin" /> Loading…</p>
+              <p className="lc-status"><WanderingEyesLoader size={13} /> Loading…</p>
             ) : error ? (
               <div className="lc-status lc-status--error" role="alert">
                 <AlertCircle size={15} /> <span>{error}</span>

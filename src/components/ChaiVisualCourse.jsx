@@ -8,6 +8,7 @@ import {
 } from "../data/chaiVisualCourseData";
 import { useTheme } from "../contexts/ThemeContext";
 import "../styles/ChaiVisualCourse.css";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 /* Visual Learning, read in-app.
  *
@@ -538,7 +539,7 @@ export default function ChaiVisualCourse({ onClose }) {
             ) : null}
 
             <div className="cv-frame-wrap" hidden={lockedInFrame}>
-              {frameLoading ? <div className="cv-frame-loading">Loading…</div> : null}
+              {frameLoading ? <div className="cv-frame-loading"><WanderingEyesLoader size={20} label="Loading…" block showLabel /></div> : null}
               <iframe
                 key={`${lesson ? lesson.path : extra.path}:${frameKey}`}
                 ref={frameRef}

@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight, List,
-  ExternalLink, FileText, Clock, Layers, PanelLeft, Loader2, AlertCircle,
+  ExternalLink, FileText, Clock, Layers, PanelLeft, AlertCircle,
   BookOpen, Braces, Play, Users, GitBranch, Tag,
 } from "lucide-react";
 import {
@@ -14,6 +14,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/LangChainDocs.css";
 import "../styles/StrandsDocs.css";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 /* The Strands Agents documentation, read in-app.
  *
@@ -528,7 +529,7 @@ export default function StrandsDocs({ product: initialProduct = "guide", onClose
                 ) : null}
 
                 {loading ? (
-                  <p className="lc-status"><Loader2 size={15} className="lc-spin" /> Loading…</p>
+                  <p className="lc-status"><WanderingEyesLoader size={13} /> Loading…</p>
                 ) : error ? (
                   <div className="lc-status lc-status--error" role="alert">
                     <AlertCircle size={15} /> <span>{error}</span>

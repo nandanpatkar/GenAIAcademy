@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight, List,
-  FileText, Clock, Layers, PanelLeft, Loader2, AlertCircle,
+  FileText, Clock, Layers, PanelLeft, AlertCircle,
   BadgeCheck, Sparkles, DatabaseZap, Sigma, Boxes, Bot, ShieldCheck,
   Target, CircleCheck, Circle, Filter, Timer,
 } from "lucide-react";
@@ -16,6 +16,7 @@ import { extractToc } from "./LangChainMarkdown";
 import { useTheme } from "../contexts/ThemeContext";
 import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/ExamsDocs.css";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 /* The AWS Machine Learning certification notes, read in-app.
  *
@@ -558,7 +559,7 @@ export default function ExamsDocs({ onClose }) {
                 <PageMeta page={activePage} onPickDomain={pickDomain} />
 
                 {loading ? (
-                  <p className="ex-status"><Loader2 size={15} className="ex-spin" /> Loading…</p>
+                  <p className="ex-status"><WanderingEyesLoader size={13} /> Loading…</p>
                 ) : error ? (
                   <div className="ex-status ex-status--error" role="alert">
                     <AlertCircle size={15} /> <span>{error}</span>

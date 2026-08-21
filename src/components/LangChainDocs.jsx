@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   Search, X, ChevronRight, ChevronDown, ArrowLeft, ArrowRight, List,
-  ExternalLink, FileText, Clock, Layers, PanelLeft, Loader2, AlertCircle,
+  ExternalLink, FileText, Clock, Layers, PanelLeft, AlertCircle,
 } from "lucide-react";
 import {
   LANGCHAIN_PRODUCTS, LANGCHAIN_ALL_PAGES, LANGCHAIN_TOTAL_PAGES,
@@ -13,6 +13,7 @@ import { makeLangChainComponents, extractToc, langChainUrlTransform } from "./La
 import { useTheme } from "../contexts/ThemeContext";
 import { fetchMarkdown } from "../utils/fetchMarkdown";
 import "../styles/LangChainDocs.css";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 /* The LangChain Python documentation, read in-app.
  *
@@ -425,7 +426,7 @@ export default function LangChainDocs({ product: initialProduct = "langchain", o
                 {activePage.desc ? <p className="lc-lede">{activePage.desc}</p> : null}
 
                 {loading ? (
-                  <p className="lc-status"><Loader2 size={15} className="lc-spin" /> Loading…</p>
+                  <p className="lc-status"><WanderingEyesLoader size={13} /> Loading…</p>
                 ) : error ? (
                   <div className="lc-status lc-status--error" role="alert">
                     <AlertCircle size={15} /> <span>{error}</span>

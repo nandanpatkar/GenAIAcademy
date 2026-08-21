@@ -19,6 +19,7 @@ import ApiBeamConnectionNotice from "./ApiBeamConnectionNotice";
 import { searchWeb } from "../services/webSearchService";
 import { tiptapToText, extractKeywords, keywordOverlapScore } from "../utils/tiptapToText";
 import "../styles/InterviewPrep.css";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 const DATA_URL = "/data/interview-prep.json";
 
@@ -541,7 +542,7 @@ export default function InterviewPrep({ onClose, initialLessonId = null, pathsDa
             )}
 
             {/* Loading / error */}
-            {loading && <div className="ip-state"><Loader2 size={18} className="ip-spin" /><span>Loading…</span></div>}
+            {loading && <div className="ip-state"><WanderingEyesLoader size={16} /><span>Loading…</span></div>}
             {error   && <div className="ip-state ip-error"><AlertCircle size={18} /><span>{error}</span></div>}
 
             {/* ── Search results ──────────────────────────────────────── */}

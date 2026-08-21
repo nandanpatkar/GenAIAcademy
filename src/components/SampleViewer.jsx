@@ -6,6 +6,7 @@ import {
   Folder, Cpu, Layers,
 } from "lucide-react";
 import { makeMarkdownComponents, CodeBlock } from "./AgentCoreMarkdown";
+import WanderingEyesLoader from "./WanderingEyesLoader";
 
 const KIND_LABEL = {
   "getting-started": "Getting started", feature: "Feature", "use-case": "Use case",
@@ -143,7 +144,7 @@ export default function SampleViewer({ sample, sectionLabel, sectionColor }) {
         {/* content */}
         <div className="ac-sample-body" ref={bodyRef}>
           {loading ? (
-            <div className="ac-state"><div className="ac-spinner" /><span>Loading…</span></div>
+            <div className="ac-state"><WanderingEyesLoader size={22} /><span>Loading…</span></div>
           ) : error ? (
             <div className="ac-state ac-state-err"><AlertCircle size={24} /><span>{error}</span></div>
           ) : activeFile ? (

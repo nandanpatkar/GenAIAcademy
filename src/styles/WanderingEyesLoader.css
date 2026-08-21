@@ -1,0 +1,111 @@
+/* ── Wandering-eyes loading indicator ───────────────────────────────────────
+   Two eyes that glance left → right → down and blink on the way. Everything is
+   driven off a single --we-eye size so one component scales from a 14px inline
+   indicator to a full-page loader without any other value being re-tuned.
+
+   Colour comes from currentColor, so a loader picks up whatever text colour its
+   container already uses: set `color` on (or above) the element to re-tint it. */
+
+.wandering-eyes {
+  /* Diameter of one eye. Every other measurement below derives from it. */
+  --we-eye: 20px;
+  /* Gap and pupil/blink/travel ratios are proportions of --we-eye. */
+  --we-gap: calc(var(--we-eye) * 0.145);
+  --we-pupil-scale: 0.32;
+  --we-blink-scale: 0.375;
+  --we-travel-scale: 0.3125;
+  --we-duration: 10s;
+  --we-eye-color: color-mix(in srgb, currentColor 16%, transparent);
+  --we-pupil-color: currentColor;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  /* Fixed height: the blink shrinks each eye, and a fixed box keeps that from
+     nudging surrounding text up and down. */
+  height: var(--we-eye);
+}
+
+.wandering-eyes__pair {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--we-gap);
+}
+
+.wandering-eyes__eye {
+  flex: 0 0 auto;
+  display: inline-block;
+  width: var(--we-eye);
+  height: var(--we-eye);
+  border-radius: 50%;
+  background-color: var(--we-eye-color);
+  /* The pupil is a background image rather than a child element so that both
+     its position (the glance) and the eye's height (the blink) can animate on
+     one node — a child pupil would need counter-scaling to survive the blink. */
+  background-image: radial-gradient(
+    circle calc(var(--we-eye) * var(--we-pupil-scale)),
+    var(--we-pupil-color) 100%,
+    transparent 0
+  );
+  background-repeat: no-repeat;
+  animation:
+    wandering-eyes-move var(--we-duration) infinite,
+    wandering-eyes-blink var(--we-duration) infinite;
+}
+
+@keyframes wandering-eyes-move {
+  0%, 10%    { background-position: 0 0; }
+  13%, 40%   { background-position: calc(var(--we-eye) * var(--we-travel-scale) * -1) 0; }
+  43%, 70%   { background-position: calc(var(--we-eye) * var(--we-travel-scale)) 0; }
+  73%, 90%   { background-position: 0 calc(var(--we-eye) * var(--we-travel-scale)); }
+  93%, 100%  { background-position: 0 0; }
+}
+
+@keyframes wandering-eyes-blink {
+  0%, 10%, 12%, 20%, 22%, 40%, 42%, 60%, 62%, 70%, 72%, 90%, 92%, 98%, 100% {
+    height: var(--we-eye);
+  }
+  11%, 21%, 41%, 61%, 71%, 91%, 99% {
+    height: calc(var(--we-eye) * var(--we-blink-scale));
+  }
+}
+
+/* Self-contained copy of the visually-hidden helper so the loader carries its
+   own screen-reader label even outside the global stylesheet's scope. */
+.wandering-eyes .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Centred block form, for empty panels and full-page waits. */
+.wandering-eyes-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.wandering-eyes-block__label {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0.62;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wandering-eyes__eye {
+    animation: none;
+  }
+}
