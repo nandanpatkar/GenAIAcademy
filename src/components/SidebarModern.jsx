@@ -1043,11 +1043,18 @@ const styles = `
   }
 
   body.light-theme .sb-modern.sidebar {
-    background: var(--sb-surface);
+    /* !important, deliberately. The .panel-glass rule in global.css claims the
+       sidebar background with its own !important, and panelStyle defaults to
+       'glass' — so without this the rail is whatever that rule says, which for
+       a long time was a near-black tuned for the dark canvas. This stylesheet
+       is injected by the component itself and is the sidebar's own authority on
+       its surface; nothing outside should be able to repaint the rail out from
+       under light-mode text. Glass still applies to cards, modals and panels. */
+    background: var(--sb-surface) !important;
     /* Opaque: nothing meaningful shows through a light rail, so the
        full-height backdrop blur was a per-frame cost for no visible effect. */
-    backdrop-filter: none; -webkit-backdrop-filter: none;
-    border-right: 1px solid var(--sb-line);
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+    border-right: 1px solid var(--sb-line) !important;
     /* The dark 60px spread smeared grey across the content area. */
     box-shadow: inset -1px 0 var(--sb-line-soft), 6px 0 20px color-mix(in srgb, var(--text) 4%, transparent);
   }
