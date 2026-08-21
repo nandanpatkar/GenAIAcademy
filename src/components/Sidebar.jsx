@@ -82,6 +82,7 @@ function Sidebar({
   showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
   showStrandsDocs, setShowStrandsDocs,
   showExamsDocs, setShowExamsDocs,
+  showMlaPractice, setShowMlaPractice,
   showDocumentation, setShowDocumentation,
   showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
   showOnboarding, setShowOnboarding,
@@ -329,6 +330,7 @@ function Sidebar({
     if (showLangChainDocs) return langChainProduct || "langchain";
     if (showStrandsDocs) return "strands";
     if (showExamsDocs) return "exams";
+    if (showMlaPractice) return "mla_practice";
     if (showDocumentation) return "documentation";
     if (showAiFromScratch) return `aifs_${aifsTrack === "guides" ? "reference" : aifsTrack || "curriculum"}`;
     if (!activeNode) return "overview";
@@ -399,6 +401,7 @@ function Sidebar({
     if (setShowLangChainDocs) setShowLangChainDocs(false);
     if (setShowStrandsDocs) setShowStrandsDocs(false);
     if (setShowExamsDocs) setShowExamsDocs(false);
+    if (setShowMlaPractice) setShowMlaPractice(false);
     if (setShowDocumentation) setShowDocumentation(false);
     if (setShowAiFromScratch) setShowAiFromScratch(false);
     if (setShowOnboarding) setShowOnboarding(false);
@@ -441,6 +444,9 @@ function Sidebar({
         break;
       case "exams":
         if (setShowExamsDocs) setShowExamsDocs(true);
+        break;
+      case "mla_practice":
+        if (setShowMlaPractice) setShowMlaPractice(true);
         break;
       case "documentation":
         if (setShowDocumentation) setShowDocumentation(true);

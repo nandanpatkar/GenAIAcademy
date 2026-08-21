@@ -18,6 +18,7 @@
     "build:langchain": "python3 scripts/build_langchain_docs.py",
     "build:strands": "python3 scripts/build_strands_docs.py",
     "build:exams": "python3 scripts/build_exams_docs.py",
+    "build:mla-practice": "python3 scripts/build_mla_practice_exams.py",
     "build:apihub": "python3 scripts/build_apihub_docs.py",
     "build:aifs": "python3 scripts/build_ai_from_scratch.py",
     "build:datascience": "python3 scripts/build_datascience_course.py && python3 scripts/build_datascience_mirror.py",

@@ -90,6 +90,7 @@ export function getActiveNavId(p) {
   if (p.showStrandsDocs) return "strands";
   // One nav item over seven in-viewer tracks, so no extra mapping.
   if (p.showExamsDocs) return "exams";
+  if (p.showMlaPractice) return "mla_practice";
   // Same shape: one nav item over the whole project-documentation viewer.
   if (p.showDocumentation) return "documentation";
   // The AI from Scratch track id doubles as the nav id, minus the prefix.
@@ -164,6 +165,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowLangChainDocs) p.setShowLangChainDocs(false);
   if (p.setShowStrandsDocs) p.setShowStrandsDocs(false);
   if (p.setShowExamsDocs) p.setShowExamsDocs(false);
+  if (p.setShowMlaPractice) p.setShowMlaPractice(false);
   if (p.setShowAiFromScratch) p.setShowAiFromScratch(false);
   if (p.setShowOnboarding) p.setShowOnboarding(false);
 
@@ -219,6 +221,9 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "exams":
       if (p.setShowExamsDocs) p.setShowExamsDocs(true);
+      break;
+    case "mla_practice":
+      if (p.setShowMlaPractice) p.setShowMlaPractice(true);
       break;
     case "documentation":
       if (p.setShowDocumentation) p.setShowDocumentation(true);

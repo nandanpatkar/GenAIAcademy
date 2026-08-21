@@ -84,6 +84,7 @@ const ReferenceViewer = React.lazy(() => import("./components/ReferenceViewer"))
 const AgentCoreViewer = React.lazy(() => import("./components/AgentCoreViewer"));
 const LangChainDocs = React.lazy(() => import("./components/LangChainDocs"));
 const ExamsDocs = React.lazy(() => import("./components/ExamsDocs"));
+const MlaPracticeExams = React.lazy(() => import("./components/quiz/mla/MlaPracticeExams"));
 const Documentation = React.lazy(() => import("./components/Documentation"));
 const StrandsDocs = React.lazy(() => import("./components/StrandsDocs"));
 const ApiHub = React.lazy(() => import("./components/ApiHub"));
@@ -661,6 +662,7 @@ function MainApp() {
   const [langChainProduct, setLangChainProduct] = useState(savedViews.langChainProduct ?? "langchain");
   const [showStrandsDocs, setShowStrandsDocs] = useViewState(savedViews.showStrandsDocs ?? false);
   const [showExamsDocs, setShowExamsDocs] = useViewState(savedViews.showExamsDocs ?? false);
+  const [showMlaPractice, setShowMlaPractice] = useViewState(savedViews.showMlaPractice ?? false);
   const [showDocumentation, setShowDocumentation] = useViewState(savedViews.showDocumentation ?? false);
   const [showApiHub, setShowApiHub] = useViewState(savedViews.showApiHub ?? false);
   const [showDataScience, setShowDataScience] = useViewState(savedViews.showDataScience ?? false);
@@ -728,7 +730,7 @@ function MainApp() {
         showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
         showKnowledgeGraph, showReference, showAgentCore,
         showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
-        showExamsDocs, showDocumentation,
+        showExamsDocs, showMlaPractice, showDocumentation,
         showDataScience, showChaiVisual,
         showAiFromScratch, aifsTrack
       }));
@@ -744,7 +746,7 @@ function MainApp() {
     showProjects, showGitHubHub, showIntelligenceHub, showHome3, showWorkplaceLab,
     showKnowledgeGraph, showReference, showAgentCore,
     showLangChainDocs, langChainProduct, showStrandsDocs, showApiHub,
-    showExamsDocs, showDocumentation,
+    showExamsDocs, showMlaPractice, showDocumentation,
     showDataScience, showChaiVisual,
     showAiFromScratch, aifsTrack
   ]);
@@ -921,6 +923,7 @@ function MainApp() {
     setShowLangChainDocs(false);
     setShowStrandsDocs(false);
     setShowExamsDocs(false);
+    setShowMlaPractice(false);
     setShowDocumentation(false);
     setShowAiFromScratch(false);
     setShowLeetCode(false);
@@ -1059,6 +1062,7 @@ function MainApp() {
         break;
       case "strands": setShowStrandsDocs(true); break;
       case "exams": setShowExamsDocs(true); break;
+      case "mla_practice": setShowMlaPractice(true); break;
       case "documentation": setShowDocumentation(true); break;
       case "learn_api": setShowApiHub(true); break;
       case "data_science": setShowDataScience(true); break;
@@ -1595,6 +1599,7 @@ function MainApp() {
     showLangChainDocs, setShowLangChainDocs, langChainProduct, setLangChainProduct,
     showStrandsDocs, setShowStrandsDocs,
     showExamsDocs, setShowExamsDocs,
+    showMlaPractice, setShowMlaPractice,
     showDocumentation, setShowDocumentation,
     showApiHub, setShowApiHub,
     showDataScience, setShowDataScience,
@@ -1787,6 +1792,7 @@ function MainApp() {
                                                         showLangChainDocs ? <ErrorBoundary><LangChainDocs product={langChainProduct} onClose={() => setShowLangChainDocs(false)} /></ErrorBoundary> :
                                                         showStrandsDocs ? <ErrorBoundary><StrandsDocs onClose={() => setShowStrandsDocs(false)} /></ErrorBoundary> :
                                                         showExamsDocs ? <ErrorBoundary><ExamsDocs onClose={() => setShowExamsDocs(false)} /></ErrorBoundary> :
+                                                        showMlaPractice ? <ErrorBoundary><MlaPracticeExams onClose={() => setShowMlaPractice(false)} /></ErrorBoundary> :
                                                         showDocumentation ? <ErrorBoundary><Documentation onClose={() => setShowDocumentation(false)} /></ErrorBoundary> :
                                                         showApiHub ? <ErrorBoundary><ApiHub onClose={() => setShowApiHub(false)} /></ErrorBoundary> :
                                                         showDataScience ? <ErrorBoundary><DataScienceCourse onClose={() => setShowDataScience(false)} /></ErrorBoundary> :
