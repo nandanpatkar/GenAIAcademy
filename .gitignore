@@ -165,3 +165,17 @@ arena.algowars.online/
 # aimlcompanion.ai site mirror (HTTrack copy, ~50MB). Only the catalog extracted from
 # it by scripts/extract_aimlcompanion_catalog.mjs ships, in src/data/aimlcompanion/.
 aimlcompanion.ai/
+
+# aimlcompanion.ai authenticated scrape — same deal as the chaivisual entries
+# above: the chrome_user_data* profiles hold a real login session and the
+# extracted_* / public/aimlcompanion2 captures are paid course content, about
+# 2.9 GB in total. Neither is a build input worth committing; re-run the
+# extractor scripts instead.
+/chrome_user_data/
+/chrome_user_data_redo/
+/extracted_aimlcompanion_site/
+/extracted_aimlcompanion_site_authenticated/
+/extracted_aimlcompanion_site_authenticated_redo/
+/extracted_aimlcompanion_lessons/
+/public/aimlcompanion2/
+/.amc2-harness/
