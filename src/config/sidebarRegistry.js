@@ -26,6 +26,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 
   ide: { icon: Terminal, label: "Coding Practice", description: "Write and run code" },
   leetcode: { icon: Code2, label: "Code Lab", description: "Practice LeetCode problems" },
+  dsa_hub: { icon: Binary, label: "DSA", description: "Your DSA practice workspace" },
   algowar: { icon: Swords, label: "AlgoWar Arena", description: "Compete in real-time coding battles" },
   playground: { icon: Boxes, label: "AI Playground", description: "Experiment with AI systems" },
   genai_playground2: { icon: Sparkles, label: "Gen AI Playground 2.0", description: "Design systems, diagrams, and AI whiteboards" },
@@ -234,6 +235,7 @@ export const SIDEBAR_ITEM_REGISTRY = {
 // (sidebarConfig.layout) has been saved yet.
 export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn", label: "Learn", itemIds: ["overview", "home2", "home3", "curriculum_map", "roadmap2", "roadmap3", "progress", "galaxy", "knowledge_graph"] },
+  { id: "dsa", label: "DSA", itemIds: ["dsa_hub"] },
   { id: "practice", label: "Practice", itemIds: ["ide", "leetcode", "playground", "genai_playground2", "simulator", "algo_visualizer", "learnbug", "sql_lab"] },
   { id: "python_labs", label: "Python Labs", itemIds: ["concurrency_lab"] },
   { id: "data_science", label: "Data Science", itemIds: ["data_science"] },
@@ -420,12 +422,26 @@ export const resolveEffectiveLayout = (savedLayout) => {
   const source = savedLayout && savedLayout.length ? savedLayout : DEFAULT_SIDEBAR_LAYOUT;
   const groups = source.map((group) => ({ ...group, itemIds: [...group.itemIds] }));
 
+  // DSA Hub is additive: existing sections and item placements stay exactly as
+  // they were. Profiles saved before the hub shipped receive one new DSA group,
+  // while admins who later move the item keep their customized placement.
+  const dsaAlreadyPlaced = groups.some((group) => group.itemIds.includes("dsa_hub"));
+  let dsaGroup = groups.find((group) => group.id === "dsa");
+  if (!dsaGroup) {
+    dsaGroup = { id: "dsa", label: "DSA", itemIds: [] };
+    const learnIndex = groups.findIndex((group) => group.id === "learn");
+    groups.splice(learnIndex === -1 ? 0 : learnIndex + 1, 0, dsaGroup);
+  }
+  dsaGroup.label = "DSA";
+  if (!dsaAlreadyPlaced) dsaGroup.itemIds.push("dsa_hub");
+
   // Home 3.0 belongs next to the other home screens. Without this, everyone
   // with a saved layout (i.e. anyone who has customized the sidebar) would
   // find it appended to "More tools" as an orphan instead.
   if (!groups.some((group) => group.itemIds.includes("home3"))) {
     const host = groups.find((group) => group.itemIds.includes("home2"))
       || groups.find((group) => group.id === "learn")
+      || groups.find((group) => group.id !== "dsa")
       || groups[0];
     if (host) {
       const anchor = host.itemIds.indexOf("home2");

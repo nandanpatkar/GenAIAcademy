@@ -70,6 +70,7 @@ function Sidebar({
   onSectionWalkthrough,
   showQuiz, setShowQuiz,
   showLeetCode, setShowLeetCode,
+  showDsaHub, setShowDsaHub,
   showAlgoWar, setShowAlgoWar,
   showNoSignups, setShowNoSignups,
   showFreeSystemDesign, setShowFreeSystemDesign,
@@ -109,6 +110,7 @@ function Sidebar({
   const [draggedItem, setDraggedItem] = useState(null); // { id, groupId } while a sidebar item drag is in flight
   const [expandedGroups, setExpandedGroups] = useState({
     learn: true,
+    dsa: true,
     practice: true,
     python_labs: true,
     algowar: true,
@@ -256,6 +258,7 @@ function Sidebar({
   };
 
   const getActiveId = () => {
+    if (showDsaHub) return "dsa_hub";
     if (showOnboarding) return "onboarding_chat";
     if (activeToolHome === "interview") return "interview_prep";
     if (activeToolHome === "quiz") return "quiz";
@@ -393,6 +396,7 @@ function Sidebar({
     if (setShowLegacyIntelligenceHub) setShowLegacyIntelligenceHub(false);
     if (setShowQuiz) setShowQuiz(false);
     if (setShowLeetCode) setShowLeetCode(false);
+    if (setShowDsaHub) setShowDsaHub(false);
     if (setShowAlgoWar) setShowAlgoWar(false);
     if (setShowManual) setShowManual(false);
     if (setShowReference) setShowReference(false);
@@ -684,6 +688,9 @@ function Sidebar({
         break;
       case "leetcode":
         if (setShowLeetCode) setShowLeetCode(true);
+        break;
+      case "dsa_hub":
+        if (setShowDsaHub) setShowDsaHub(true);
         break;
       case "algowar":
         if (setShowAlgoWar) setShowAlgoWar(true);

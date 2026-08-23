@@ -180,11 +180,14 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
     await persistSidebarConfig({ ...(sidebarConfig || {}), layout: null });
   };
   // 'modern' (the redesigned rail) is the default whenever no variant is stored.
-  const sidebarVariant = sidebarConfig?.variant === "legacy" ? "legacy" : "modern";
+  const sidebarVariant = ["legacy", "studio"].includes(sidebarConfig?.variant) ? sidebarConfig.variant : "modern";
   const handleSetSidebarVariant = async (variant) => {
     if (sidebarVariant === variant) return;
     await persistSidebarConfig({ ...(sidebarConfig || {}), variant });
-    setSuccessInfo(variant === "legacy" ? "Switched to the legacy sidebar." : "Switched to the redesigned sidebar.");
+    setSuccessInfo({
+      legacy: "Switched to the legacy sidebar.",
+      studio: "Switched to the DSA Studio sidebar.",
+    }[variant] || "Switched to the redesigned sidebar.");
   };
   const handleUpdateAiConfig = async () => {
     updateGeminiKey(newGeminiKey); updateAiProvider(newAiProvider); updateAzureEndpoint(newAzureEndpoint); updateAzureKey(newAzureKey);
@@ -300,12 +303,17 @@ export default function AdminManagement({ onClose, pathsData, setPathsData }) {
 
           {activeTab === "sidebar" && <div className="admin-view admin-view-sidebarcfg">
             <section className="admin-panel admin-sidebarcfg-variant">
-              <div className="admin-panel-heading"><div><span className="admin-card-kicker">Appearance</span><h3>Sidebar design</h3><p>Choose the navigation rail everyone sees. The redesigned rail is on by default; switch to legacy anytime.</p></div></div>
+              <div className="admin-panel-heading"><div><span className="admin-card-kicker">Appearance</span><h3>Sidebar design</h3><p>Choose the navigation rail everyone sees. The redesigned rail is on by default; switch to DSA Studio or legacy anytime.</p></div></div>
               <div className="admin-variant-grid">
                 <button type="button" className={`admin-variant-card${sidebarVariant === "modern" ? " active" : ""}`} onClick={() => handleSetSidebarVariant("modern")}>
                   <span className="admin-variant-preview modern"><span /><span /><span /></span>
                   <span className="admin-variant-copy"><strong>Neural Console <em>· default</em></strong><small>Aurora backdrop, liquid active pill, orbiting logo, ripple clicks, progress rings.</small></span>
                   {sidebarVariant === "modern" && <span className="admin-variant-check"><CheckCircle2 size={16} /></span>}
+                </button>
+                <button type="button" className={`admin-variant-card${sidebarVariant === "studio" ? " active" : ""}`} onClick={() => handleSetSidebarVariant("studio")}>
+                  <span className="admin-variant-preview studio"><span /><span /><span /></span>
+                  <span className="admin-variant-copy"><strong>DSA Studio</strong><small>The DSA workspace rail: flat zinc console, purple accent, accordion sections, account footer.</small></span>
+                  {sidebarVariant === "studio" && <span className="admin-variant-check"><CheckCircle2 size={16} /></span>}
                 </button>
                 <button type="button" className={`admin-variant-card${sidebarVariant === "legacy" ? " active" : ""}`} onClick={() => handleSetSidebarVariant("legacy")}>
                   <span className="admin-variant-preview legacy"><span /><span /><span /></span>

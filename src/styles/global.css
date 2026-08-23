@@ -772,6 +772,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--font); font
   z-index: 3001 !important;
 }
 
+/* The DSA problem workspace is `position: fixed; inset: 0` with its own z-index,
+   but `isolation: isolate` on this container traps that value inside the local
+   stacking context, so the workspace rendered *under* the navigation rail. Lift
+   the parent instead — the same fix the focus overlay above needs. */
+.app-primary-content:has(.dsa-workspace-shell) {
+  z-index: 3000;
+}
+
 /* ── SIDEBAR ─────────────────────────────────────────────── */
 .sidebar {
   width: 240px;

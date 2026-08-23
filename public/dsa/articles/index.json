@@ -1,0 +1,2938 @@
+[
+  {
+    "id": "68cd3443fe0250113aa13109",
+    "title": "    Remove Zero Sum Consecutive Nodes from Linked List ",
+    "slug": "remove-zero-sum-consecutive-nodes-from-linked-list",
+    "originalSlug": "remove-zero-sum-consecutive-nodes-from-linked-list",
+    "description": "Remove Zero Sum Consecutive Nodes from Linked List – Brute Force and Optimal Approach with Dry Run (C++, Java, Python)",
+    "keywords": [
+      "Remove Zero Sum Consecutive Nodes from Linked List",
+      "Zero Sum Linked List"
+    ],
+    "image": "6a3ec608c643b84ab4ce4b64",
+    "publishedAt": "2026-06-26T18:34:59.845Z",
+    "updatedAt": "2026-06-26T18:34:59.856Z",
+    "mdPath": "content/articles/remove-zero-sum-consecutive-nodes-from-linked-list.md",
+    "jsonPath": "content/articles_json/remove-zero-sum-consecutive-nodes-from-linked-list.json"
+  },
+  {
+    "id": "6a0b4960cc7fd6603524259a",
+    "title": " Partition List",
+    "slug": "partition-list",
+    "originalSlug": "partition-list",
+    "description": "Learn how to partition a linked list around a given value using an efficient approach, with examples, explanation, and code implementation.",
+    "keywords": [
+      "Partition List",
+      "Linked list"
+    ],
+    "image": "6a4fdcac2e81bcf65278766a",
+    "publishedAt": "2026-07-09T17:39:56.938Z",
+    "updatedAt": "2026-07-09T17:39:56.945Z",
+    "mdPath": "content/articles/partition-list.md",
+    "jsonPath": "content/articles_json/partition-list.json"
+  },
+  {
+    "id": "69e1c092490fb70ec8aba8d8",
+    "title": "Abstraction  in Java",
+    "slug": "abstraction-in-java-article",
+    "originalSlug": "abstraction-in-java-article",
+    "description": "Learn Abstraction in Java with examples. Understand abstract classes vs interfaces, benefits, and OOP concepts clearly.",
+    "keywords": [],
+    "image": "69e1ee91490fb70ec8aba901",
+    "publishedAt": "2026-04-17T08:25:55.849Z",
+    "updatedAt": "2026-04-17T08:25:55.851Z",
+    "mdPath": "content/articles/abstraction-in-java-article.md",
+    "jsonPath": "content/articles_json/abstraction-in-java-article.json"
+  },
+  {
+    "id": "6a15843dbe5e699564b5ba79",
+    "title": "Add Two Numbers Represented By Two Arrays",
+    "slug": "add-two-numbers-represented-by-two-arrays-article",
+    "originalSlug": "add-two-numbers-represented-by-two-arrays-article",
+    "description": "Add Two Numbers DSA solution using array traversal, carry handling, reverse digits, simulation algorithm, C++, Java & Python.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43f70864b25c8c10cb98aa",
+    "publishedAt": "2026-06-30T17:04:39.426Z",
+    "updatedAt": "2026-06-30T17:04:39.429Z",
+    "mdPath": "content/articles/add-two-numbers-represented-by-two-arrays-article.md",
+    "jsonPath": "content/articles_json/add-two-numbers-represented-by-two-arrays-article.json"
+  },
+  {
+    "id": "69b2ce82307f479fe36760b8",
+    "title": "Algorithms",
+    "slug": "algorithms",
+    "originalSlug": "algorithms",
+    "description": "Learn C++ STL algorithms like find, sort, count, accumulate, binary_search, and heap operations for efficient data processing.",
+    "keywords": [],
+    "image": {
+      "$oid": "69b2f62b307f479fe36792d8"
+    },
+    "publishedAt": "2026-03-12T18:44:21.871Z",
+    "updatedAt": "2026-03-27T21:46:22.568Z",
+    "mdPath": "content/articles/algorithms.md",
+    "jsonPath": "content/articles_json/algorithms.json"
+  },
+  {
+    "id": "697a1950279dc6a270c8d9b8",
+    "title": "Array Subset of another array",
+    "slug": "article-1769609552580-yxxqzh",
+    "originalSlug": "article-1769609552580-yxxqzh",
+    "description": "Learn how to check if one array is a subset of another using Map and Trie. Step-by-step examples and explanations to handle duplicates.",
+    "keywords": [
+      "Array Subset of another array",
+      "Subset",
+      "Map N Tries",
+      "Map",
+      "Tries",
+      "Array"
+    ],
+    "image": "https://cdn.codehelp.in/media/Array Subset of another array.png",
+    "publishedAt": "2026-07-13T17:21:31.539Z",
+    "updatedAt": "2026-07-13T17:21:31.641Z",
+    "mdPath": "content/articles/article-1769609552580-yxxqzh.md",
+    "jsonPath": "content/articles_json/article-1769609552580-yxxqzh.json"
+  },
+  {
+    "id": "69d887ffefb20caa2f75488c",
+    "title": "Arrays in Java",
+    "slug": "arrays-in-java",
+    "originalSlug": "arrays-in-java",
+    "description": "In this Article, we are going to cover the cover the basics of 1D and 2D array and then move to some problems to get a heck of it",
+    "keywords": [
+      "array",
+      "1d array",
+      "2d array",
+      "array problems",
+      "array java",
+      "arrays java",
+      "java dsa course",
+      "codehelp"
+    ],
+    "image": "https://cdn.codehelp.in/media/codehelp-1.jpg",
+    "publishedAt": "2026-04-16T20:01:08.701Z",
+    "updatedAt": "2026-04-16T20:01:08.708Z",
+    "mdPath": "content/articles/arrays-in-java.md",
+    "jsonPath": "content/articles_json/arrays-in-java.json"
+  },
+  {
+    "id": "68da5b65c8d49c16b7652a8a",
+    "title": "Asteroid Collision",
+    "slug": "asteroid-collision",
+    "originalSlug": "asteroid-collision",
+    "description": "Learn how to solve the Asteroid Collision problem using stacks, with clear examples, step-by-step logic, real-life analogy, and time and space complexity analysis.",
+    "keywords": [
+      "Asteroid Collision",
+      "Stacks"
+    ],
+    "image": "6a89da6cf695d4d77644fcf1",
+    "publishedAt": "2026-08-22T17:20:57.634Z",
+    "updatedAt": "2026-08-22T17:20:57.638Z",
+    "mdPath": "content/articles/asteroid-collision.md",
+    "jsonPath": "content/articles_json/asteroid-collision.json"
+  },
+  {
+    "id": "68e00099c8d49c16b7660a9e",
+    "title": "Balanced Binary Search Tree",
+    "slug": "balanced-binary-search-tree",
+    "originalSlug": "balanced-binary-search-tree",
+    "description": "Balance BST algorithm | inorder traversal + build balanced tree from sorted array | O(N) time, O(N) space.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a6a4f6ad4d58f79c62c4a20",
+    "publishedAt": "2026-07-29T19:07:38.190Z",
+    "updatedAt": "2026-07-29T19:07:38.193Z",
+    "mdPath": "content/articles/balanced-binary-search-tree.md",
+    "jsonPath": "content/articles_json/balanced-binary-search-tree.json"
+  },
+  {
+    "id": "69da49d78d6b12c242a7e97b",
+    "title": "Basic Maths for DSA",
+    "slug": "basic-maths-for-dsa",
+    "originalSlug": "basic-maths-for-dsa",
+    "description": "In this Article, we will cover the basics Maths needed for have a solid foundation of DSA and its various concepts and solve a lot of coding problems on those concepts.",
+    "keywords": [
+      "maths for DSA",
+      "Maths for coding",
+      "Basic maths for coding"
+    ],
+    "image": "https://cdn.codehelp.in/media/codehelp-1.jpg",
+    "publishedAt": "2026-04-16T21:18:54.647Z",
+    "updatedAt": "2026-04-16T21:18:54.740Z",
+    "mdPath": "content/articles/basic-maths-for-dsa.md",
+    "jsonPath": "content/articles_json/basic-maths-for-dsa.json"
+  },
+  {
+    "id": "68dffe68c8d49c16b766045c",
+    "title": "Binary Search Tree to Greater Sum Tree",
+    "slug": "binary-search-tree-to-greater-sum-tree",
+    "originalSlug": "binary-search-tree-to-greater-sum-tree",
+    "description": "Convert a Binary Search Tree to a Greater Sum Tree with reverse inorder traversal, Java code, and step-by-step explanation.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a6a5144d4d58f79c62c4a37",
+    "publishedAt": "2026-07-29T19:17:38.348Z",
+    "updatedAt": "2026-07-29T19:17:38.351Z",
+    "mdPath": "content/articles/binary-search-tree-to-greater-sum-tree.md",
+    "jsonPath": "content/articles_json/binary-search-tree-to-greater-sum-tree.json"
+  },
+  {
+    "id": "6942a62ba01ff48c7adbe0a9",
+    "title": "Binary Tree Right Side View",
+    "slug": "binary-tree-right-side-view-article",
+    "originalSlug": "binary-tree-right-side-view-article",
+    "description": "DSA Right view of binary tree: level order traversal to collect last node of every level. Time O(N), space O(N).",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Binary Tree Right Side View.png",
+    "publishedAt": "2026-04-24T10:19:13.678Z",
+    "updatedAt": "2026-04-24T10:19:13.680Z",
+    "mdPath": "content/articles/binary-tree-right-side-view-article.md",
+    "jsonPath": "content/articles_json/binary-tree-right-side-view-article.json"
+  },
+  {
+    "id": "6a16efd3292d16b912394716",
+    "title": "Binary Tree to Doubly Linked List",
+    "slug": "binary-tree-to-doubly-linked-list-article",
+    "originalSlug": "binary-tree-to-doubly-linked-list-article",
+    "description": "Convert a binary tree to a sorted doubly linked list using in-order traversal. Learn the O(N) in-place approach with C++, Java, and Python.",
+    "keywords": [
+      "BST",
+      "Tree",
+      "Linkedlist"
+    ],
+    "image": "6a6f07dfcddbc98100890d32",
+    "publishedAt": "2026-08-02T09:05:11.929Z",
+    "updatedAt": "2026-08-02T09:05:11.938Z",
+    "mdPath": "content/articles/binary-tree-to-doubly-linked-list-article.md",
+    "jsonPath": "content/articles_json/binary-tree-to-doubly-linked-list-article.json"
+  },
+  {
+    "id": "69aefac4307f479fe366467f",
+    "title": "Binary decimal number system",
+    "slug": "binary-decimal-number-system",
+    "originalSlug": "binary-decimal-number-system",
+    "description": "Learn binary and decimal number systems, base-2 vs base-10, and step-by-step methods to convert numbers between binary and decimal.",
+    "keywords": [],
+    "image": {
+      "$oid": "69aefb19307f479fe3664728"
+    },
+    "publishedAt": "2026-03-09T17:02:40.202Z",
+    "updatedAt": "2026-03-27T21:46:22.188Z",
+    "mdPath": "content/articles/binary-decimal-number-system.md",
+    "jsonPath": "content/articles_json/binary-decimal-number-system.json"
+  },
+  {
+    "id": "69eb23f4e129d0a7535390d0",
+    "title": "Bitwise Operators and Problem Solving",
+    "slug": "bitwise-operators-and-problem-solving",
+    "originalSlug": "bitwise-operators-and-problem-solving",
+    "description": "In this article, we are going to learn about the basics of Bitwise Operators in java and apply it on various programming problems to get a heck of it.",
+    "keywords": [
+      "bitwise operators in java"
+    ],
+    "image": "69620aaa39b05fb4df627a5b",
+    "publishedAt": "2026-04-25T09:21:25.440Z",
+    "updatedAt": "2026-04-25T09:21:25.458Z",
+    "mdPath": "content/articles/bitwise-operators-and-problem-solving.md",
+    "jsonPath": "content/articles_json/bitwise-operators-and-problem-solving.json"
+  },
+  {
+    "id": "6942adefa01ff48c7adbf1ec",
+    "title": "Boundary Traversal of a Binary Tree",
+    "slug": "boundary-traversal-of-a-binary-tree-article",
+    "originalSlug": "boundary-traversal-of-a-binary-tree-article",
+    "description": "Boundary traversal of binary tree anti-clockwise using left boundary + leaf nodes + right boundary reverse. O(N) time DSA.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Boundary Traversal_.png",
+    "publishedAt": "2026-04-24T10:18:26.432Z",
+    "updatedAt": "2026-04-24T10:18:26.433Z",
+    "mdPath": "content/articles/boundary-traversal-of-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/boundary-traversal-of-a-binary-tree-article.json"
+  },
+  {
+    "id": "68dffc80c8d49c16b765ff58",
+    "title": "Brothers from Different Roots",
+    "slug": "brothers-from-different-roots",
+    "originalSlug": "brothers-from-different-roots",
+    "description": "Solve Brothers from Different Roots using two BST traversals + two pointers to count valid pairs with sum X.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a6a5346d4d58f79c62c4a4e",
+    "publishedAt": "2026-07-29T19:24:05.353Z",
+    "updatedAt": "2026-07-29T19:24:05.356Z",
+    "mdPath": "content/articles/brothers-from-different-roots.md",
+    "jsonPath": "content/articles_json/brothers-from-different-roots.json"
+  },
+  {
+    "id": "696ca06de9254dc85152c7d2",
+    "title": "Camelcase Matching",
+    "slug": "article-1768726637899-okic3h",
+    "originalSlug": "article-1768726637899-okic3h",
+    "description": "Learn how to solve Camelcase Matching problems using Map and Trie for string pattern matching. Step-by-step examples to handle prefixes.",
+    "keywords": [
+      "Camelcase Matching",
+      "Map N Tries",
+      "Map",
+      "Tries"
+    ],
+    "image": "https://cdn.codehelp.in/media/Camelcase Matching.png",
+    "publishedAt": "2026-07-13T16:49:56.896Z",
+    "updatedAt": "2026-07-13T16:49:56.908Z",
+    "mdPath": "content/articles/article-1768726637899-okic3h.md",
+    "jsonPath": "content/articles_json/article-1768726637899-okic3h.json"
+  },
+  {
+    "id": "68dffb67c8d49c16b765fc5c",
+    "title": "Check Whether the BST Contains Dead End",
+    "slug": "check-whether-the-bst-contains-dead-end",
+    "originalSlug": "check-whether-the-bst-contains-dead-end",
+    "description": "BST Dead End DSA solution using recursion and min-max range tracking. Includes algorithm steps and complexity.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a5f870de67576629cc4d208",
+    "publishedAt": "2026-07-21T14:50:02.699Z",
+    "updatedAt": "2026-07-21T14:50:02.702Z",
+    "mdPath": "content/articles/check-whether-the-bst-contains-dead-end.md",
+    "jsonPath": "content/articles_json/check-whether-the-bst-contains-dead-end.json"
+  },
+  {
+    "id": "68dbe4abc8d49c16b7654969",
+    "title": "Check if Binary Tree is Heap or Not",
+    "slug": "check-if-binary-tree-is-heap-or-not",
+    "originalSlug": "check-if-binary-tree-is-heap-or-not",
+    "description": "Check if a binary tree is a max-heap by  heap order. Learn BFS and index-based methods with examples, edge cases, and O(n) optimized solution.",
+    "keywords": [
+      "Check if Binary Tree is Heap or Not",
+      "Heap",
+      "Binary Tree"
+    ],
+    "image": "https://cdn.codehelp.in/media/Check if Binary Tree is heap or not.png",
+    "publishedAt": "2026-07-07T18:35:30.532Z",
+    "updatedAt": "2026-07-07T18:35:30.633Z",
+    "mdPath": "content/articles/check-if-binary-tree-is-heap-or-not.md",
+    "jsonPath": "content/articles_json/check-if-binary-tree-is-heap-or-not.json"
+  },
+  {
+    "id": "6920009ea01ff48c7ada6cbf",
+    "title": "Check if a String is a Palindrome",
+    "slug": "check-if-a-string-is-a-palindrome",
+    "originalSlug": "check-if-a-string-is-a-palindrome",
+    "description": "Learn how to check if a string is a palindrome with step-by-step examples. Explore efficient approaches to handle different cases.",
+    "keywords": [
+      "Check if a string is a Palindrome",
+      "Palindrome String"
+    ],
+    "image": "6a497bf538cb2da009adbf95",
+    "publishedAt": "2026-07-04T21:32:39.844Z",
+    "updatedAt": "2026-07-04T21:32:39.850Z",
+    "mdPath": "content/articles/check-if-a-string-is-a-palindrome.md",
+    "jsonPath": "content/articles_json/check-if-a-string-is-a-palindrome.json"
+  },
+  {
+    "id": "69ec63db29eef5ac4bf3ac3d",
+    "title": "Collection Framework Bonus Module",
+    "slug": "bonus",
+    "originalSlug": "bonus",
+    "description": "Learn Java Map interface with key-value pairs, HashMap, TreeMap, LinkedHashMap, methods, Comparable vs Comparator, lambda expressions, and sorting.",
+    "keywords": [
+      "Collection Framework Bonus Module"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1777111469659-b827bf73-PHOTO-2026-04-25-13-08-17.jpg",
+    "publishedAt": "2026-04-27T05:43:14.943Z",
+    "updatedAt": "2026-04-27T05:43:14.949Z",
+    "mdPath": "content/articles/bonus.md",
+    "jsonPath": "content/articles_json/bonus.json"
+  },
+  {
+    "id": "6a157aa4be5e699564b5ba46",
+    "title": "Common Elements In 3 Sorted Array",
+    "slug": "common-elements-in-3-sorted-array-article",
+    "originalSlug": "common-elements-in-3-sorted-array-article",
+    "description": "Common Elements in Three Sorted Arrays DSA solution using three pointers. O(n1+n2+n3) algorithm explained.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a44ed5403760e05bbb1cfd0",
+    "publishedAt": "2026-07-01T10:35:09.015Z",
+    "updatedAt": "2026-07-01T10:35:09.018Z",
+    "mdPath": "content/articles/common-elements-in-3-sorted-array-article.md",
+    "jsonPath": "content/articles_json/common-elements-in-3-sorted-array-article.json"
+  },
+  {
+    "id": "69cd905220d7a7bb3683f488",
+    "title": "Conditionals in Java",
+    "slug": "conditionals-in-java",
+    "originalSlug": "conditionals-in-java",
+    "description": "In this Article, you will learn about important conditionals in java like if statement, if-else block, if-elseif ladder, switch statement, ternary operator etc.",
+    "keywords": [
+      "conditionals in java",
+      "if statement",
+      "if keyword",
+      "if else statement",
+      "if elseif ladder",
+      "switch statement",
+      "ternary operator"
+    ],
+    "image": "69620aaa39b05fb4df627a5b",
+    "publishedAt": "2026-04-16T20:55:35.569Z",
+    "updatedAt": "2026-04-16T20:55:35.571Z",
+    "mdPath": "content/articles/conditionals-in-java.md",
+    "jsonPath": "content/articles_json/conditionals-in-java.json"
+  },
+  {
+    "id": "68dfc52bc8d49c16b765d801",
+    "title": "Construct Binary Search Tree from Preorder Traversal",
+    "slug": "construct-binary-search-tree-from-preorder-traversal",
+    "originalSlug": "construct-binary-search-tree-from-preorder-traversal",
+    "description": "Construct BST from Preorder DSA solution using bound recursion. Build valid BST in O(N) with algorithm & complexity.",
+    "keywords": [
+      "Binary Search Tree",
+      "BST",
+      "Tree"
+    ],
+    "image": "6a4baeeed5b821217b7852d2",
+    "publishedAt": "2026-07-06T13:34:44.778Z",
+    "updatedAt": "2026-07-06T13:34:44.781Z",
+    "mdPath": "content/articles/construct-binary-search-tree-from-preorder-traversal.md",
+    "jsonPath": "content/articles_json/construct-binary-search-tree-from-preorder-traversal.json"
+  },
+  {
+    "id": "6943f222a01ff48c7adc073c",
+    "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+    "slug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "originalSlug": "construct-binary-tree-from-preorder-and-inorder-traversal",
+    "description": "Binary tree construction from preorder and inorder traversal explained with intuition, algorithm and time complexity.",
+    "keywords": [
+      "Tree"
+    ],
+    "image": "https://cdn.codehelp.in/media/Construct Binary Tree from preorder and inorder traversal.png",
+    "publishedAt": "2026-07-21T15:24:26.495Z",
+    "updatedAt": "2026-07-21T15:24:26.500Z",
+    "mdPath": "content/articles/construct-binary-tree-from-preorder-and-inorder-traversal.md",
+    "jsonPath": "content/articles_json/construct-binary-tree-from-preorder-and-inorder-traversal.json"
+  },
+  {
+    "id": "69b2c86a307f479fe36758d5",
+    "title": "Containers",
+    "slug": "containers",
+    "originalSlug": "containers",
+    "description": "Learn common C++ STL containers like vector, list, deque, stack, queue, priority queue, set, and map with examples and key features.",
+    "keywords": [],
+    "image": {
+      "id": "69b2f5e3307f479fe3679221",
+      "url": "https://cdn.codehelp.in/payload/WhatsApp Image 2026-03-12 at 21.45.52 (2).jpeg"
+    },
+    "publishedAt": "2026-03-12T02:19:00.000Z",
+    "updatedAt": "2026-03-27T21:46:22.400Z",
+    "mdPath": "content/articles/containers.md",
+    "jsonPath": "content/articles_json/containers.json"
+  },
+  {
+    "id": "69aaeab19c9c7e6e28101f61",
+    "title": "Control Flow",
+    "slug": "control-flow",
+    "originalSlug": "control-flow",
+    "description": "Learn C++ control flow statements including if, else, switch, and loops (for, while, do-while) to control program execution and decision-making.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe529307f479fe3652836"
+    },
+    "publishedAt": "2026-03-07T08:43:25.719Z",
+    "updatedAt": "2026-03-27T21:46:20.836Z",
+    "mdPath": "content/articles/control-flow.md",
+    "jsonPath": "content/articles_json/control-flow.json"
+  },
+  {
+    "id": "68dfc2d4c8d49c16b765d2ea",
+    "title": "Convert Sorted List to Binary Search Tree",
+    "slug": "convert-sorted-list-to-binary-search-tree",
+    "originalSlug": "convert-sorted-list-to-binary-search-tree",
+    "description": "Convert sorted list to height balanced BST using middle element approach. Complete DSA algorithm with complexity.",
+    "keywords": [
+      "BST",
+      "Tree",
+      "List",
+      "Binary Search Tree"
+    ],
+    "image": "6a4bae7bd5b821217b7852ca",
+    "publishedAt": "2026-07-06T13:32:52.531Z",
+    "updatedAt": "2026-07-06T13:32:52.534Z",
+    "mdPath": "content/articles/convert-sorted-list-to-binary-search-tree.md",
+    "jsonPath": "content/articles_json/convert-sorted-list-to-binary-search-tree.json"
+  },
+  {
+    "id": "68dfbddcc8d49c16b765cbcc",
+    "title": "Convert Sorted array to BST",
+    "slug": "convert-sorted-array-to-bst",
+    "originalSlug": "convert-sorted-array-to-bst",
+    "description": "Construct height-balanced BST from sorted array using mid element technique. Efficient solution with complexity.",
+    "keywords": [
+      "Binary Search Tree",
+      "BST",
+      "Tree",
+      "Array"
+    ],
+    "image": "6a4bae14d5b821217b7852c3",
+    "publishedAt": "2026-07-06T13:31:09.184Z",
+    "updatedAt": "2026-07-06T13:31:09.188Z",
+    "mdPath": "content/articles/convert-sorted-array-to-bst.md",
+    "jsonPath": "content/articles_json/convert-sorted-array-to-bst.json"
+  },
+  {
+    "id": "6921592da01ff48c7ada9b1f",
+    "title": "Convert a String to Lowercase",
+    "slug": "convert-a-string-to-lowercase",
+    "originalSlug": "convert-a-string-to-lowercase",
+    "description": "Learn how to convert any string to lowercase using built-in methods and custom approaches. Step-by-step examples for easy implementation.",
+    "keywords": [
+      "Convert a String to Lowercase",
+      "Lowercase"
+    ],
+    "image": "https://cdn.codehelp.in/media/Convert a String lower.png",
+    "publishedAt": "2026-07-04T21:11:47.117Z",
+    "updatedAt": "2026-07-04T21:11:47.134Z",
+    "mdPath": "content/articles/convert-a-string-to-lowercase.md",
+    "jsonPath": "content/articles_json/convert-a-string-to-lowercase.json"
+  },
+  {
+    "id": "6921517aa01ff48c7ada926d",
+    "title": "Convert a String to Uppercase",
+    "slug": "convert-a-string-to-uppercase",
+    "originalSlug": "convert-a-string-to-uppercase",
+    "description": "Learn how to convert a string to uppercase using simple methods and examples. Step-by-step guide to handle strings efficiently in any language.",
+    "keywords": [
+      "Convert a String to Uppercase",
+      "Uppercase"
+    ],
+    "image": "https://cdn.codehelp.in/media/Convert a String upper.png",
+    "publishedAt": "2026-07-04T21:21:49.930Z",
+    "updatedAt": "2026-07-04T21:21:49.936Z",
+    "mdPath": "content/articles/convert-a-string-to-uppercase.md",
+    "jsonPath": "content/articles_json/convert-a-string-to-uppercase.json"
+  },
+  {
+    "id": "6a16e8e3292d16b912394700",
+    "title": "Count Complete Binary Tree Nodes",
+    "slug": "count-complete-binary-tree-nodes-article",
+    "originalSlug": "count-complete-binary-tree-nodes-article",
+    "description": "Count nodes in a complete binary tree using height comparison. Learn the O((log N)²) solution with C++, Java, and Python.",
+    "keywords": [
+      "Tree",
+      "Binary Tree"
+    ],
+    "image": "6a6f0de2cddbc98100890d7e",
+    "publishedAt": "2026-08-02T09:30:14.107Z",
+    "updatedAt": "2026-08-02T09:30:14.110Z",
+    "mdPath": "content/articles/count-complete-binary-tree-nodes-article.md",
+    "jsonPath": "content/articles_json/count-complete-binary-tree-nodes-article.json"
+  },
+  {
+    "id": "68dfa649c8d49c16b765b8b2",
+    "title": "Count the Number of Zeros and Ones in an Array",
+    "slug": "count-the-number-of-zeros-and-ones-in-an-array-article",
+    "originalSlug": "count-the-number-of-zeros-and-ones-in-an-array-article",
+    "description": "DSA solution to count zeros and ones in a binary array. Single pass approach with O(N) time and O(1) space.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:09:30.413Z",
+    "updatedAt": "2026-04-07T10:09:30.415Z",
+    "mdPath": "content/articles/count-the-number-of-zeros-and-ones-in-an-array-article.md",
+    "jsonPath": "content/articles_json/count-the-number-of-zeros-and-ones-in-an-array-article.json"
+  },
+  {
+    "id": "692e7ea9a01ff48c7adb4cc0",
+    "title": "Custom Comparator Based String Sorting",
+    "slug": "custom-comparator-based-string-sorting",
+    "originalSlug": "custom-comparator-based-string-sorting",
+    "description": "Learn how to sort strings using a custom alphabet order with comparator-based sorting, including intuition, explanation, and optimal solution.",
+    "keywords": [
+      "Custom Comparator Based String Sorting",
+      "String",
+      "Custom based Sorting",
+      "Sorting"
+    ],
+    "image": "6a496ed938cb2da009adbf1a",
+    "publishedAt": "2026-07-04T20:39:03.911Z",
+    "updatedAt": "2026-07-04T20:39:03.917Z",
+    "mdPath": "content/articles/custom-comparator-based-string-sorting.md",
+    "jsonPath": "content/articles_json/custom-comparator-based-string-sorting.json"
+  },
+  {
+    "id": "68d7b028c8d49c16b764777b",
+    "title": "Daily Temperatures",
+    "slug": "daily-temperatures",
+    "originalSlug": "daily-temperatures",
+    "description": "Learn how to solve the Daily Temperatures problem using stacks, with clear examples, step-by-step logic, and time and space complexity analysis.",
+    "keywords": [
+      "Daily Temperatures",
+      "Stacks"
+    ],
+    "image": "6a89d952f695d4d77644fce0",
+    "publishedAt": "2026-08-22T17:17:03.748Z",
+    "updatedAt": "2026-08-22T17:17:03.751Z",
+    "mdPath": "content/articles/daily-temperatures.md",
+    "jsonPath": "content/articles_json/daily-temperatures.json"
+  },
+  {
+    "id": "69a51f69ded6f005f5b28787",
+    "title": "Datatypes in Java",
+    "slug": "article-1772429161660-5shizn",
+    "originalSlug": "article-1772429161660-5shizn",
+    "description": "Learn Java data types, primitive vs reference types, ranges, memory sizes, and why choosing the right type matters in coding and interviews.",
+    "keywords": [
+      "Datatypes in java"
+    ],
+    "image": "69d100ae547d873896119074",
+    "publishedAt": "2026-04-16T16:27:49.896Z",
+    "updatedAt": "2026-04-16T16:27:49.935Z",
+    "mdPath": "content/articles/article-1772429161660-5shizn.md",
+    "jsonPath": "content/articles_json/article-1772429161660-5shizn.json"
+  },
+  {
+    "id": "68d41cccc8d49c16b7641eef",
+    "title": "Decode String",
+    "slug": "decode-string",
+    "originalSlug": "decode-string",
+    "description": "Learn how to decode an encoded string using stacks, with clear examples, step-by-step logic, real-life analogy, and complexity analysis.",
+    "keywords": [
+      "Decode String",
+      "Stacks"
+    ],
+    "image": "https://cdn.codehelp.in/media/Decode.png",
+    "publishedAt": "2026-08-22T17:00:28.076Z",
+    "updatedAt": "2026-08-22T17:00:28.082Z",
+    "mdPath": "content/articles/decode-string.md",
+    "jsonPath": "content/articles_json/decode-string.json"
+  },
+  {
+    "id": "6921ca08a01ff48c7adab0c5",
+    "title": "Decode a Message",
+    "slug": "decode-a-message",
+    "originalSlug": "decode-a-message",
+    "description": "Learn how to decode an encoded message using string traversal, with clear examples, a real-life analogy, and time and space complexity analysis.",
+    "keywords": [
+      "Decode Encode",
+      "Strings"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1783104876725-f88df844-Decode.png",
+    "publishedAt": "2026-07-04T20:56:29.155Z",
+    "updatedAt": "2026-07-04T20:56:29.162Z",
+    "mdPath": "content/articles/decode-a-message.md",
+    "jsonPath": "content/articles_json/decode-a-message.json"
+  },
+  {
+    "id": "68d3c24357410affc6a68067",
+    "title": "Deep Copy of a Linked List with Random Pointer",
+    "slug": "deep-copy-of-a-linked-list-with-random-pointer5",
+    "originalSlug": "deep-copy-of-a-linked-list-with-random-pointer5",
+    "description": "Learn Deep Copy of a Linked List with Random Pointer , Brute Force and Optimal Approach (C++, Java, Python)",
+    "keywords": [
+      "Deep Copy of a Linked List with Random Pointer",
+      "Pointer",
+      "Linked List",
+      "Random Pointer"
+    ],
+    "image": "https://cdn.codehelp.in/media/Deep Copy of a_.png",
+    "publishedAt": "2026-07-09T07:47:01.924Z",
+    "updatedAt": "2026-07-09T07:47:01.934Z",
+    "mdPath": "content/articles/deep-copy-of-a-linked-list-with-random-pointer5.md",
+    "jsonPath": "content/articles_json/deep-copy-of-a-linked-list-with-random-pointer5.json"
+  },
+  {
+    "id": "68d2492d03007751b41fed76",
+    "title": "Delete N Nodes after M Nodes of a Linked List",
+    "slug": "delete-n-nodes-after-m-nodes-of-a-linked-list7",
+    "originalSlug": "delete-n-nodes-after-m-nodes-of-a-linked-list7",
+    "description": "Learn how to skip M nodes and delete N nodes in a linked list. Explore brute-force and optimal in-place approaches with explanations.",
+    "keywords": [
+      "Delete N nodes after M nodes of a Linked List",
+      "Linked list"
+    ],
+    "image": "6a3ebf4cc643b84ab4ce4b23",
+    "publishedAt": "2026-06-26T18:05:23.826Z",
+    "updatedAt": "2026-06-26T18:05:23.834Z",
+    "mdPath": "content/articles/delete-n-nodes-after-m-nodes-of-a-linked-list7.md",
+    "jsonPath": "content/articles_json/delete-n-nodes-after-m-nodes-of-a-linked-list7.json"
+  },
+  {
+    "id": "68d624b3c8d49c16b764297a",
+    "title": "Design Browser History",
+    "slug": "design-browser-history",
+    "originalSlug": "design-browser-history",
+    "description": "Learn how to design and implement Browser History using stacks, with a clear explanation, step-by-step examples, and complexity analysis.\n",
+    "keywords": [
+      "Design Browser History",
+      "Stack"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1787415932093-1b1063db-Design_Browser__History.png",
+    "publishedAt": "2026-08-22T16:28:41.258Z",
+    "updatedAt": "2026-08-22T16:28:41.262Z",
+    "mdPath": "content/articles/design-browser-history.md",
+    "jsonPath": "content/articles_json/design-browser-history.json"
+  },
+  {
+    "id": "68d1197303007751b41f6f58",
+    "title": "Determine if a String is Valid",
+    "slug": "determine-if-a-string-is-valid",
+    "originalSlug": "determine-if-a-string-is-valid",
+    "description": "Learn how to determine if a string is valid using stacks, with clear examples, step-by-step logic, real-life analogy, and complexity analysis.",
+    "keywords": [
+      "Determine if a String is Valid",
+      "String Valid",
+      "Stacks"
+    ],
+    "image": "6a89d1c1f695d4d77644fc5d",
+    "publishedAt": "2026-08-22T16:44:00.209Z",
+    "updatedAt": "2026-08-22T16:44:00.213Z",
+    "mdPath": "content/articles/determine-if-a-string-is-valid.md",
+    "jsonPath": "content/articles_json/determine-if-a-string-is-valid.json"
+  },
+  {
+    "id": "6942ab37a01ff48c7adbec50",
+    "title": "Diagonal Traversal in a Binary Tree",
+    "slug": "diagonal-traversal-in-a-binary-tree-article",
+    "originalSlug": "diagonal-traversal-in-a-binary-tree-article",
+    "description": "Understand diagonal traversal in binary tree with intuition, naive TreeMap approach and optimized queue method.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Diagonal Traversal in a binary tree.png",
+    "publishedAt": "2026-04-24T10:20:30.838Z",
+    "updatedAt": "2026-04-24T10:20:30.846Z",
+    "mdPath": "content/articles/diagonal-traversal-in-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/diagonal-traversal-in-a-binary-tree-article.json"
+  },
+  {
+    "id": "6942afa7a01ff48c7adbf5f9",
+    "title": "Diameter of a Binary Tree",
+    "slug": "diameter-of-a-binary-tree-article",
+    "originalSlug": "diameter-of-a-binary-tree-article",
+    "description": "Find diameter of binary tree (longest path between two nodes) using recursion, subtree height and O(N) solution.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Diameter of a binary tree.png",
+    "publishedAt": "2026-04-24T10:18:45.889Z",
+    "updatedAt": "2026-04-24T10:18:45.890Z",
+    "mdPath": "content/articles/diameter-of-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/diameter-of-a-binary-tree-article.json"
+  },
+  {
+    "id": "69abf13b307f479fe3653840",
+    "title": "Do-While Loop in C++",
+    "slug": "do-while-loop-in-c",
+    "originalSlug": "do-while-loop-in-c",
+    "description": "Learn the C++ do-while loop, syntax, examples, nested loops, and common mistakes like infinite loops and off-by-one errors.",
+    "keywords": [],
+    "image": {
+      "$oid": "69aef461307f479fe3663c1e"
+    },
+    "publishedAt": "2026-03-09T17:01:27.246Z",
+    "updatedAt": "2026-03-27T21:46:21.535Z",
+    "mdPath": "content/articles/do-while-loop-in-c.md",
+    "jsonPath": "content/articles_json/do-while-loop-in-c.json"
+  },
+  {
+    "id": "68cd33d9fe0250113aa130ce",
+    "title": "Double a Linked List Integer Representation",
+    "slug": "double-a-linked-list-integer-representation",
+    "originalSlug": "double-a-linked-list-integer-representation",
+    "description": "Learn How to Double a Linked List Integer Representation – Brute Force and Optimal Approach with Dry Run (C++, Java, Python)",
+    "keywords": [
+      "Double a Linked List Integer Representation",
+      "Linked List"
+    ],
+    "image": "6a4f65232e81bcf652787536",
+    "publishedAt": "2026-07-09T09:14:20.401Z",
+    "updatedAt": "2026-07-09T09:14:20.407Z",
+    "mdPath": "content/articles/double-a-linked-list-integer-representation.md",
+    "jsonPath": "content/articles_json/double-a-linked-list-integer-representation.json"
+  },
+  {
+    "id": "69e127b9490fb70ec8aba8b3",
+    "title": "Encapsulation in Java",
+    "slug": "encapsulation-in-java",
+    "originalSlug": "encapsulation-in-java",
+    "description": "Learn encapsulation in Java with concepts like data hiding, getters and setters, access modifiers, and real-world examples for OOP.\n",
+    "keywords": [
+      "Encapsulation",
+      "Implementation of Encapsulation"
+    ],
+    "image": "69e1e16a490fb70ec8aba8fe",
+    "publishedAt": "2026-04-17T07:30:06.949Z",
+    "updatedAt": "2026-04-17T07:30:06.951Z",
+    "mdPath": "content/articles/encapsulation-in-java.md",
+    "jsonPath": "content/articles_json/encapsulation-in-java.json"
+  },
+  {
+    "id": "69a01ccb6cecc6985b21f309",
+    "title": "Find Duplicate Number",
+    "slug": "Find-Duplicate-Number-article",
+    "originalSlug": "Find-Duplicate-Number-article",
+    "description": "Find duplicate number in array using Floyd’s Cycle Detection (tortoise and hare) in DSA with O(N) time and O(1) space.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:13:46.935Z",
+    "updatedAt": "2026-04-07T10:13:46.937Z",
+    "mdPath": "content/articles/Find-Duplicate-Number-article.md",
+    "jsonPath": "content/articles_json/Find-Duplicate-Number-article.json"
+  },
+  {
+    "id": "69a023916cecc6985b21f553",
+    "title": "Find First Repeating Element",
+    "slug": "Find-First-Repeating-Element-article",
+    "originalSlug": "Find-First-Repeating-Element-article",
+    "description": "Find first repeating element in array (DSA) using hashing. Efficient approach with step-by-step algorithm and complexity.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:13:15.170Z",
+    "updatedAt": "2026-04-07T10:13:15.171Z",
+    "mdPath": "content/articles/Find-First-Repeating-Element-article.md",
+    "jsonPath": "content/articles_json/Find-First-Repeating-Element-article.json"
+  },
+  {
+    "id": "696b7634e9254dc851527731",
+    "title": "Find First Unsorted Element in Array",
+    "slug": "Find-First-Unsorted-Element-in-Array-article",
+    "originalSlug": "Find-First-Unsorted-Element-in-Array-article",
+    "description": "Find the first element that breaks sorted order in an array. Simple linear scan approach with O(n) time and O(1) space.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:11:53.514Z",
+    "updatedAt": "2026-04-07T10:11:53.516Z",
+    "mdPath": "content/articles/Find-First-Unsorted-Element-in-Array-article.md",
+    "jsonPath": "content/articles_json/Find-First-Unsorted-Element-in-Array-article.json"
+  },
+  {
+    "id": "69a015d96cecc6985b21e6ea",
+    "title": "Find Pivot Index",
+    "slug": "article-Find-Pivot-Index",
+    "originalSlug": "article-Find-Pivot-Index",
+    "description": "Find pivot index in array using prefix and suffix sums in DSA. Equal left and right sum with O(N) time complexity.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:09:58.435Z",
+    "updatedAt": "2026-04-07T10:09:58.436Z",
+    "mdPath": "content/articles/article-Find-Pivot-Index.md",
+    "jsonPath": "content/articles_json/article-Find-Pivot-Index.json"
+  },
+  {
+    "id": "69318ad9a01ff48c7adb6645",
+    "title": "Find and Replace Pattern in Strings",
+    "slug": "find-and-replace-pattern-in-strings",
+    "originalSlug": "find-and-replace-pattern-in-strings",
+    "description": "Learn how to find words matching a given pattern using bijection and normalization, with clear examples, intuition, and step-by-step explanation.",
+    "keywords": [
+      "Find and Replace Pattern in Strings",
+      "Pattern in Strings",
+      "Replace Pattern"
+    ],
+    "image": "6a4969b238cb2da009adbedb",
+    "publishedAt": "2026-07-04T20:23:34.617Z",
+    "updatedAt": "2026-07-04T20:23:34.623Z",
+    "mdPath": "content/articles/find-and-replace-pattern-in-strings.md",
+    "jsonPath": "content/articles_json/find-and-replace-pattern-in-strings.json"
+  },
+  {
+    "id": "691dc0c2a01ff48c7ad9ef52",
+    "title": "Find length of a String",
+    "slug": "find-length-of-a-string",
+    "originalSlug": "find-length-of-a-string",
+    "description": "Learn how to find the length of a string using simple and efficient methods. Step-by-step explanation with examples.",
+    "keywords": [
+      "Find length of a string"
+    ],
+    "image": "https://cdn.codehelp.in/media/Length of string.png",
+    "publishedAt": "2026-07-04T21:47:05.648Z",
+    "updatedAt": "2026-07-04T21:47:05.653Z",
+    "mdPath": "content/articles/find-length-of-a-string.md",
+    "jsonPath": "content/articles_json/find-length-of-a-string.json"
+  },
+  {
+    "id": "68da9d54c8d49c16b7653195",
+    "title": "Find the Average of Array Elements",
+    "slug": "find-the-average-of-array-elements",
+    "originalSlug": "find-the-average-of-array-elements",
+    "description": "Find Average of an Array DSA solution using array traversal. Compute mean value with O(N) time complexity.",
+    "keywords": [
+      "Array",
+      "Math"
+    ],
+    "image": "6a33e3ab5df01223634351d6",
+    "publishedAt": "2026-06-18T12:25:54.449Z",
+    "updatedAt": "2026-06-18T12:25:54.454Z",
+    "mdPath": "content/articles/find-the-average-of-array-elements.md",
+    "jsonPath": "content/articles_json/find-the-average-of-array-elements.json"
+  },
+  {
+    "id": "691962dda01ff48c7ad91c4f",
+    "title": "Find the Index of the First Occurrence in a String",
+    "slug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "originalSlug": "find-the-index-of-the-first-occurrence-in-a-string",
+    "description": "Find the first occurrence of a substring in a string. Learn brute-force and pointer-based approaches with dry runs, algorithms, and complexity analysis.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/find the index.png",
+    "publishedAt": "2026-07-07T18:36:25.159Z",
+    "updatedAt": "2026-07-07T18:36:25.168Z",
+    "mdPath": "content/articles/find-the-index-of-the-first-occurrence-in-a-string.md",
+    "jsonPath": "content/articles_json/find-the-index-of-the-first-occurrence-in-a-string.json"
+  },
+  {
+    "id": "68dfa409c8d49c16b765b4f6",
+    "title": "Find the Maximum Element in an Array",
+    "slug": "find-the-maximum-element-in-an-array",
+    "originalSlug": "find-the-maximum-element-in-an-array",
+    "description": "Find the maximum element in an array using a single traversal. Step-by-step approach with complexity analysis.",
+    "keywords": [
+      "Math",
+      "Array"
+    ],
+    "image": "6a33e49c5df01223634351e7",
+    "publishedAt": "2026-06-18T12:31:47.203Z",
+    "updatedAt": "2026-06-18T12:31:47.208Z",
+    "mdPath": "content/articles/find-the-maximum-element-in-an-array.md",
+    "jsonPath": "content/articles_json/find-the-maximum-element-in-an-array.json"
+  },
+  {
+    "id": "68dffa61c8d49c16b765f96a",
+    "title": "Find the Median of BST",
+    "slug": "find-the-median-of-bst",
+    "originalSlug": "find-the-median-of-bst",
+    "description": "Median of BST DSA solution using inorder traversal. Find middle element(s) in sorted order with complexity analysis.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a5f845ee67576629cc4d1e6",
+    "publishedAt": "2026-07-21T14:42:44.182Z",
+    "updatedAt": "2026-07-21T14:42:44.185Z",
+    "mdPath": "content/articles/find-the-median-of-bst.md",
+    "jsonPath": "content/articles_json/find-the-median-of-bst.json"
+  },
+  {
+    "id": "696b7865e9254dc851527a79",
+    "title": "Find the Mode of the Array",
+    "slug": "article-1768650853849-x4w6fy",
+    "originalSlug": "article-1768650853849-x4w6fy",
+    "description": "Find mode in array DSA problem using HashMap. Count frequencies, handle ties, return smallest most frequent element. O(n).",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43f3eb64b25c8c10cb98a2",
+    "publishedAt": "2026-06-30T16:50:58.546Z",
+    "updatedAt": "2026-06-30T16:50:58.549Z",
+    "mdPath": "content/articles/article-1768650853849-x4w6fy.md",
+    "jsonPath": "content/articles_json/article-1768650853849-x4w6fy.json"
+  },
+  {
+    "id": "696b3da7e9254dc8515266ad",
+    "title": "Find the Unique Element in an Array",
+    "slug": "Find--the-Unique-Element-in-an-Array-article",
+    "originalSlug": "Find -the-Unique-Element-in-an-Array-article",
+    "description": "Find single element in array where others appear twice. Efficient XOR based DSA approach with linear time and constant space.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:15:51.568Z",
+    "updatedAt": "2026-04-07T10:15:51.570Z",
+    "mdPath": "content/articles/Find--the-Unique-Element-in-an-Array-article.md",
+    "jsonPath": "content/articles_json/Find--the-Unique-Element-in-an-Array-article.json"
+  },
+  {
+    "id": "6a365963e40ff938cfc7f269",
+    "title": "First Non-Repeating Character in a Stream",
+    "slug": "first-non-repeating-character-in-a-stream-article",
+    "originalSlug": "first-non-repeating-character-in-a-stream-article",
+    "description": "Learn how to find the first non-repeating character in a stream using a queue and frequency map, with clear examples, step-by-step explanation.",
+    "keywords": [
+      "First Non-Repeating Character in a Stream",
+      "Queues",
+      "Frequency Map"
+    ],
+    "image": "6a81a2124ec8f3318bcefb3b",
+    "publishedAt": "2026-08-16T11:43:21.595Z",
+    "updatedAt": "2026-08-16T11:43:21.600Z",
+    "mdPath": "content/articles/first-non-repeating-character-in-a-stream-article.md",
+    "jsonPath": "content/articles_json/first-non-repeating-character-in-a-stream-article.json"
+  },
+  {
+    "id": "69aa88f69c9c7e6e280ff1a1",
+    "title": "First cpp program",
+    "slug": "first-cpp-program",
+    "originalSlug": "first-cpp-program",
+    "description": "Learn the first C++ program “Namaste Dunia”, including the main() function, return 0, iostream, namespace std, and how cout prints output.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe474307f479fe3652633"
+    },
+    "publishedAt": "2026-03-07T08:40:26.387Z",
+    "updatedAt": "2026-03-27T21:46:20.289Z",
+    "mdPath": "content/articles/first-cpp-program.md",
+    "jsonPath": "content/articles_json/first-cpp-program.json"
+  },
+  {
+    "id": "68dfff71c8d49c16b766076f",
+    "title": "Flatten BST to Sorted Linked List",
+    "slug": "flatten-bst-to-sorted-linked-list",
+    "originalSlug": "flatten-bst-to-sorted-linked-list",
+    "description": "BST to sorted linked list | inorder traversal flattening | in-place pointer rewiring | O(N) time explained.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a5f8bd59d1d30b9304cbb44",
+    "publishedAt": "2026-07-21T15:10:22.774Z",
+    "updatedAt": "2026-07-21T15:10:22.778Z",
+    "mdPath": "content/articles/flatten-bst-to-sorted-linked-list.md",
+    "jsonPath": "content/articles_json/flatten-bst-to-sorted-linked-list.json"
+  },
+  {
+    "id": "6943f6daa01ff48c7adc0dc9",
+    "title": "Flatten Binary Tree to Linked List",
+    "slug": "flatten-binary-tree-to-linked-list",
+    "originalSlug": "flatten-binary-tree-to-linked-list",
+    "description": "Flatten binary tree to linked list in-place using preorder traversal. Recursive and Morris traversal approach with O(1) space.",
+    "keywords": [
+      "Binary Tree",
+      "Tree",
+      "Linkedlist"
+    ],
+    "image": "https://cdn.codehelp.in/media/Flatten Binary Tree to linkedlist.png",
+    "publishedAt": "2026-07-02T07:24:07.161Z",
+    "updatedAt": "2026-07-02T07:24:07.167Z",
+    "mdPath": "content/articles/flatten-binary-tree-to-linked-list.md",
+    "jsonPath": "content/articles_json/flatten-binary-tree-to-linked-list.json"
+  },
+  {
+    "id": "68d3ceeb57410affc6a69825",
+    "title": "Flatten Linked List",
+    "slug": "flatten-linked-list3",
+    "originalSlug": "flatten-linked-list3",
+    "description": "Learn the flatten multilevel doubly linked list problem with intuitive explanations, optimal solutions, and code implementations.",
+    "keywords": [
+      "Flatten Linked List",
+      "flattening linked list"
+    ],
+    "image": "6a4f4c4f2e81bcf6527874a3",
+    "publishedAt": "2026-07-09T07:33:44.351Z",
+    "updatedAt": "2026-07-09T07:33:44.361Z",
+    "mdPath": "content/articles/flatten-linked-list3.md",
+    "jsonPath": "content/articles_json/flatten-linked-list3.json"
+  },
+  {
+    "id": "6a0b55b3cc7fd660352425cc",
+    "title": "Flatten a Multilevel Doubly Linked List",
+    "slug": "check",
+    "originalSlug": "check",
+    "description": "Learn how to flatten a multilevel doubly linked list using an efficient approach, with examples, explanation, code implementation.",
+    "keywords": [
+      "Flattern a Multilevel Doubly Linked List",
+      "Multilevel Doubly Linkedlist",
+      "Linked list",
+      "Doubly Linked list"
+    ],
+    "image": "6a511ff9f5904fb07752e960",
+    "publishedAt": "2026-07-10T16:38:53.952Z",
+    "updatedAt": "2026-07-10T16:38:53.959Z",
+    "mdPath": "content/articles/check.md",
+    "jsonPath": "content/articles_json/check.json"
+  },
+  {
+    "id": "69ab224f9c9c7e6e28103a0d",
+    "title": "For and While Loop",
+    "slug": "for-and-while-loop",
+    "originalSlug": "for-and-while-loop",
+    "description": "Learn C++ loops including for and while loops, syntax, examples, infinite loops, and common mistakes in iterative programming.",
+    "keywords": [
+      "loops in java",
+      "loops in programming",
+      "for loop",
+      "while loop",
+      "do while loop"
+    ],
+    "image": "69abe73c307f479fe3652c6a",
+    "publishedAt": "2026-04-16T16:32:19.845Z",
+    "updatedAt": "2026-04-16T16:32:19.847Z",
+    "mdPath": "content/articles/for-and-while-loop.md",
+    "jsonPath": "content/articles_json/for-and-while-loop.json"
+  },
+  {
+    "id": "69aef687307f479fe3663e8d",
+    "title": "Functions in C++",
+    "slug": "functions-in-c",
+    "originalSlug": "functions-in-c",
+    "description": "Learn C++ functions, parameters vs arguments, function declaration, and the difference between call by value and call by reference with examples.",
+    "keywords": [],
+    "image": {
+      "$oid": "69aef6c9307f479fe3663f25"
+    },
+    "publishedAt": "2026-03-09T17:03:33.755Z",
+    "updatedAt": "2026-03-27T21:46:21.875Z",
+    "mdPath": "content/articles/functions-in-c.md",
+    "jsonPath": "content/articles_json/functions-in-c.json"
+  },
+  {
+    "id": "69b2f7a2307f479fe36793a5",
+    "title": "Functors",
+    "slug": "functors",
+    "originalSlug": "functors",
+    "description": "Learn C++ functors (function objects), operator() overloading, built-in STL functors, and how they customize algorithms like sort and find.",
+    "keywords": [],
+    "image": {
+      "$oid": "69b302b5307f479fe367a2c8"
+    },
+    "publishedAt": "2026-03-12T18:44:16.125Z",
+    "updatedAt": "2026-03-27T21:46:22.949Z",
+    "mdPath": "content/articles/functors.md",
+    "jsonPath": "content/articles_json/functors.json"
+  },
+  {
+    "id": "69292c9ca01ff48c7adb22d2",
+    "title": "Garbage Collection Problem",
+    "slug": "garbage-collection-problem",
+    "originalSlug": "garbage-collection-problem",
+    "description": "Learn how to solve the Garbage Collection Problem using traversal and techniques, including intuition, explanation, and optimal solution.",
+    "keywords": [
+      "Garbage Collection Problem"
+    ],
+    "image": "6a4971e338cb2da009adbf33",
+    "publishedAt": "2026-07-04T20:51:27.438Z",
+    "updatedAt": "2026-07-04T20:51:27.444Z",
+    "mdPath": "content/articles/garbage-collection-problem.md",
+    "jsonPath": "content/articles_json/garbage-collection-problem.json"
+  },
+  {
+    "id": "697f1116279dc6a270ca5f0f",
+    "title": "Get Biggest Three Distinct Rhombus Sums in a Matrix",
+    "slug": "article-1769935126787-0vdp82",
+    "originalSlug": "article-1769935126787-0vdp82",
+    "description": "Learn how to find the biggest three distinct rhombus sums in a matrix using efficient traversal techniques. Step-by-step explanation with examples.",
+    "keywords": [
+      "Get Biggest Three Distinct Rhombus Sums in a Matrix",
+      "Heap",
+      "Biggest Three Distinct Rhombus",
+      "Matrix"
+    ],
+    "image": "https://cdn.codehelp.in/media/Get Biggest Three_.png",
+    "publishedAt": "2026-07-10T17:29:25.683Z",
+    "updatedAt": "2026-07-10T17:29:25.737Z",
+    "mdPath": "content/articles/article-1769935126787-0vdp82.md",
+    "jsonPath": "content/articles_json/article-1769935126787-0vdp82.json"
+  },
+  {
+    "id": "69184089a01ff48c7ad8cc5a",
+    "title": "Group Anagrams",
+    "slug": "group-anagrams",
+    "originalSlug": "group-anagrams",
+    "description": "Group words that are anagrams of each other using sorting and hash maps. Learn brute-force vs optimal approaches with examples and complexity.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/Group anagrams.png",
+    "publishedAt": "2026-07-05T12:40:05.620Z",
+    "updatedAt": "2026-07-05T12:40:05.638Z",
+    "mdPath": "content/articles/group-anagrams.md",
+    "jsonPath": "content/articles_json/group-anagrams.json"
+  },
+  {
+    "id": "69416424a01ff48c7adbc089",
+    "title": "Height-Balanced Binary Tree",
+    "slug": "height-balanced-binary-tree-article",
+    "originalSlug": "height-balanced-binary-tree-article",
+    "description": "Binary Tree Balanced or Not (Height Balanced) DSA solution in C++/Java using DFS recursion with O(n) time.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Height-Balanced Binary Tree.png",
+    "publishedAt": "2026-04-24T10:19:42.776Z",
+    "updatedAt": "2026-04-24T10:19:42.778Z",
+    "mdPath": "content/articles/height-balanced-binary-tree-article.md",
+    "jsonPath": "content/articles_json/height-balanced-binary-tree-article.json"
+  },
+  {
+    "id": "69e122fd490fb70ec8aba8af",
+    "title": "How to Create Objects in Java",
+    "slug": "how-to-create-objects-in-java",
+    "originalSlug": "how-to-create-objects-in-java",
+    "description": "Learn what an object is in Java, how to create objects using classes, constructors, and the new keyword, with examples.",
+    "keywords": [
+      "Objects in Java"
+    ],
+    "image": null,
+    "publishedAt": "2026-04-16T19:44:51.376Z",
+    "updatedAt": "2026-04-16T19:44:51.379Z",
+    "mdPath": "content/articles/how-to-create-objects-in-java.md",
+    "jsonPath": "content/articles_json/how-to-create-objects-in-java.json"
+  },
+  {
+    "id": "699fd80783db4645880db98d",
+    "title": "Identify Elements with Highest and Lowest Frequency Separately",
+    "slug": "Identify-Elements-with-Highest-and-Lowest-Frequency-Separately-atricle",
+    "originalSlug": "Identify-Elements-with-Highest-and-Lowest-Frequency-Separately-atricle",
+    "description": "Find mode of array in DSA using hash map. Return most frequent element with tie-breaking by smallest value, O(N).",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:11:17.608Z",
+    "updatedAt": "2026-04-07T10:11:17.609Z",
+    "mdPath": "content/articles/Identify-Elements-with-Highest-and-Lowest-Frequency-Separately-atricle.md",
+    "jsonPath": "content/articles_json/Identify-Elements-with-Highest-and-Lowest-Frequency-Separately-atricle.json"
+  },
+  {
+    "id": "68cef82bd80af5e8789ed1e7",
+    "title": "Implement Queue using Stack",
+    "slug": "implement-queue-using-stack",
+    "originalSlug": "implement-queue-using-stack",
+    "description": "Learn how to implement a queue using stacks, with a clear explanation of FIFO behaviour, step-by-step examples, and time and space complexity.",
+    "keywords": [
+      "Implement Queue using Stack",
+      "Queue",
+      "Stack",
+      "Implementation"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1786277387720-5a01240f-3.png",
+    "publishedAt": "2026-08-16T14:32:46.654Z",
+    "updatedAt": "2026-08-16T14:32:46.660Z",
+    "mdPath": "content/articles/implement-queue-using-stack.md",
+    "jsonPath": "content/articles_json/implement-queue-using-stack.json"
+  },
+  {
+    "id": "69f469469b5bb0758ffd8b98",
+    "title": "Implement Quick Sort Algorithm on Array",
+    "slug": "implement-quick-sort-algorithm-on-array",
+    "originalSlug": "implement-quick-sort-algorithm-on-array",
+    "description": "Learn how to implement the Quick Sort algorithm on an array using partitioning and recursion, with examples and  complexity analysis.",
+    "keywords": [
+      "Quick Sort",
+      "Implementation",
+      "Partitioning and Recursion"
+    ],
+    "image": "6a47fa3718e7ea53cc9ad708",
+    "publishedAt": "2026-07-03T18:08:04.041Z",
+    "updatedAt": "2026-07-03T18:08:04.050Z",
+    "mdPath": "content/articles/implement-quick-sort-algorithm-on-array.md",
+    "jsonPath": "content/articles_json/implement-quick-sort-algorithm-on-array.json"
+  },
+  {
+    "id": "68cf022dd80af5e8789f001e",
+    "title": "Implement stack using queue",
+    "slug": "implement-stack-using-queue",
+    "originalSlug": "implement-stack-using-queue",
+    "description": "Learn how to implement a stack using a queue, with a  explanation, step-by-step examples, and time and space complexity analysis.",
+    "keywords": [
+      "Implement Stack using queue",
+      "stack",
+      "queues"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1786276400296-ab88af03-2.png",
+    "publishedAt": "2026-08-09T12:40:54.986Z",
+    "updatedAt": "2026-08-09T12:40:54.993Z",
+    "mdPath": "content/articles/implement-stack-using-queue.md",
+    "jsonPath": "content/articles_json/implement-stack-using-queue.json"
+  },
+  {
+    "id": "69e12bd3490fb70ec8aba8ba",
+    "title": "Inheritance in Java",
+    "slug": "inheritance-in-java",
+    "originalSlug": "inheritance-in-java",
+    "description": "Learn Java inheritance with clear examples, types (single, multilevel, hierarchical), access modifiers, constructors, and real-world use cases.",
+    "keywords": [
+      "Inheritance in Java",
+      "Types of Inheritance",
+      "Implementation"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1776364702040-03ecfc34-WhatsApp_Image_2026-03-16_at_16.59.48.jpeg",
+    "publishedAt": "2026-04-17T07:13:50.048Z",
+    "updatedAt": "2026-04-17T07:13:50.053Z",
+    "mdPath": "content/articles/inheritance-in-java.md",
+    "jsonPath": "content/articles_json/inheritance-in-java.json"
+  },
+  {
+    "id": "68dfebd4c8d49c16b765f36a",
+    "title": "Inorder Predecessor of Node in BST",
+    "slug": "inorder-predecessor-of-node-in-bst",
+    "originalSlug": "inorder-predecessor-of-node-in-bst",
+    "description": "BST inorder predecessor problem solved using iterative traversal. Full DSA approach with steps and complexity.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a6a5485d4d58f79c62c4a5f",
+    "publishedAt": "2026-07-29T19:29:30.166Z",
+    "updatedAt": "2026-07-29T19:29:30.168Z",
+    "mdPath": "content/articles/inorder-predecessor-of-node-in-bst.md",
+    "jsonPath": "content/articles_json/inorder-predecessor-of-node-in-bst.json"
+  },
+  {
+    "id": "68dfcc12c8d49c16b765e757",
+    "title": "Inorder Successor of Node in BST",
+    "slug": "inorder-successor-of-node-in-bst",
+    "originalSlug": "inorder-successor-of-node-in-bst",
+    "description": "Inorder successor in BST DSA solution using iterative traversal. Find next greater node with O(H) time.",
+    "keywords": [
+      "BST",
+      "Binary Search Tree",
+      "Tree"
+    ],
+    "image": "6a4bb034d5b821217b7852eb",
+    "publishedAt": "2026-07-06T13:40:11.258Z",
+    "updatedAt": "2026-07-06T13:40:11.261Z",
+    "mdPath": "content/articles/inorder-successor-of-node-in-bst.md",
+    "jsonPath": "content/articles_json/inorder-successor-of-node-in-bst.json"
+  },
+  {
+    "id": "69a544137660ba5f961b07f0",
+    "title": "Input & Output in Java",
+    "slug": "article-1772438547414-ibuabp",
+    "originalSlug": "article-1772438547414-ibuabp",
+    "description": "Learn Java input and output using print, println, printf, and Scanner, with examples of user input, formatting, and common mistakes for coding and interviews.",
+    "keywords": [
+      "input output in java",
+      "scanner class in java",
+      "sout in java"
+    ],
+    "image": "69620aaa39b05fb4df627a5b",
+    "publishedAt": "2026-04-16T15:50:29.907Z",
+    "updatedAt": "2026-04-16T15:50:29.909Z",
+    "mdPath": "content/articles/article-1772438547414-ibuabp.md",
+    "jsonPath": "content/articles_json/article-1772438547414-ibuabp.json"
+  },
+  {
+    "id": "6919c2d3a01ff48c7ad946c8",
+    "title": "Integers to Romans",
+    "slug": "integers-to-roman",
+    "originalSlug": "integers-to-roman",
+    "description": "Convert integers to Roman numerals efficiently. Learn brute-force and greedy approaches with constant time and space complexity explained.",
+    "keywords": [
+      "Integers to Roman",
+      "Integers",
+      "Roman"
+    ],
+    "image": "https://cdn.codehelp.in/media/Integers to romans.png",
+    "publishedAt": "2026-07-05T12:11:35.174Z",
+    "updatedAt": "2026-07-05T12:11:35.237Z",
+    "mdPath": "content/articles/integers-to-roman.md",
+    "jsonPath": "content/articles_json/integers-to-roman.json"
+  },
+  {
+    "id": "69aa650e9c9c7e6e280fdbb2",
+    "title": "Introduction to C++",
+    "slug": "introduction-to-c",
+    "originalSlug": "introduction-to-c",
+    "description": "Introduction to programming languages, C++ basics, real-world uses, and the compilation process from source code to executable program.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe388307f479fe36523ec"
+    },
+    "publishedAt": "2026-03-07T08:36:45.864Z",
+    "updatedAt": "2026-03-27T21:46:19.719Z",
+    "mdPath": "content/articles/introduction-to-c.md",
+    "jsonPath": "content/articles_json/introduction-to-c.json"
+  },
+  {
+    "id": "6a16d4c0292d16b9123946d8",
+    "title": "Is Binary Tree Heap?",
+    "slug": "is-binary-tree-heap-article",
+    "originalSlug": "is-binary-tree-heap-article",
+    "description": "Learn how to check if a binary tree is a valid Max-Heap using BFS and recursion with efficient O(N) C++, Java, and Python solutions.",
+    "keywords": [
+      "Tree"
+    ],
+    "image": "6a6f0afccddbc98100890d57",
+    "publishedAt": "2026-08-02T09:23:08.522Z",
+    "updatedAt": "2026-08-02T09:23:08.526Z",
+    "mdPath": "content/articles/is-binary-tree-heap-article.md",
+    "jsonPath": "content/articles_json/is-binary-tree-heap-article.json"
+  },
+  {
+    "id": "6915e1c7a01ff48c7ad8aed5",
+    "title": "Isomorphic Strings",
+    "slug": "isomorphic-strings",
+    "originalSlug": "isomorphic-strings",
+    "description": "Learn how to check if two strings are isomorphic using efficient mapping techniques. Maintain one-to-one character with examples and complexity.",
+    "keywords": [],
+    "image": "6a4a528538cb2da009adc122",
+    "publishedAt": "2026-07-05T13:20:15.514Z",
+    "updatedAt": "2026-07-05T13:20:15.548Z",
+    "mdPath": "content/articles/isomorphic-strings.md",
+    "jsonPath": "content/articles_json/isomorphic-strings.json"
+  },
+  {
+    "id": "69b2f3a3307f479fe3678e86",
+    "title": "Iterators",
+    "slug": "iterators",
+    "originalSlug": "iterators",
+    "description": "Learn C++ iterators, their types, and how they traverse STL containers like vector, list, and set for efficient element access.",
+    "keywords": [],
+    "image": {
+      "$oid": "69b2f422307f479fe3678f2e"
+    },
+    "publishedAt": "2026-03-12T18:44:22.397Z",
+    "updatedAt": "2026-03-27T21:46:22.768Z",
+    "mdPath": "content/articles/iterators.md",
+    "jsonPath": "content/articles_json/iterators.json"
+  },
+  {
+    "id": "69d0fc837363c179a6d5c1db",
+    "title": "Java Framework Module 1",
+    "slug": "java-framework",
+    "originalSlug": "java-framework",
+    "description": "Learn Java Collection Framework with interfaces, List, ArrayList, LinkedList, methods, and real-world usage for efficient data handling and coding interviews.",
+    "keywords": [
+      "Java Framework Module 1"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1776871088267-b84766e8-Frame.jpg",
+    "publishedAt": "2026-04-25T11:07:14.396Z",
+    "updatedAt": "2026-04-25T11:07:14.403Z",
+    "mdPath": "content/articles/java-framework.md",
+    "jsonPath": "content/articles_json/java-framework.json"
+  },
+  {
+    "id": "69d2afd112ab9c424616b3de",
+    "title": "Java Framework Module 2",
+    "slug": "java-framework-module-2",
+    "originalSlug": "java-framework-module-2",
+    "description": "Learn Java Queue and Set interfaces with ArrayDeque, PriorityQueue, HashSet, LinkedHashSet, TreeSet, methods, differences, and time complexity.",
+    "keywords": [
+      "Java Framework Module 2"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1777098806233-9dd7b79b-PHOTO-2026-04-25-12-02-39.jpg",
+    "publishedAt": "2026-04-25T11:09:46.008Z",
+    "updatedAt": "2026-04-25T11:09:46.016Z",
+    "mdPath": "content/articles/java-framework-module-2.md",
+    "jsonPath": "content/articles_json/java-framework-module-2.json"
+  },
+  {
+    "id": "697f01c0279dc6a270ca4ad9",
+    "title": "K-Closest Points to Origin",
+    "slug": "article-1769931200357-e18x82",
+    "originalSlug": "article-1769931200357-e18x82",
+    "description": "Learn how to find the K closest points to the origin using efficient approaches like Heap. Step-by-step explanation with distance calculation.",
+    "keywords": [
+      "K-Closest Points to Origin",
+      "Heap"
+    ],
+    "image": "https://cdn.codehelp.in/media/K-Closest Points to Origin.png",
+    "publishedAt": "2026-07-10T17:28:05.642Z",
+    "updatedAt": "2026-07-10T17:28:05.655Z",
+    "mdPath": "content/articles/article-1769931200357-e18x82.md",
+    "jsonPath": "content/articles_json/article-1769931200357-e18x82.json"
+  },
+  {
+    "id": "6a1599d8be5e699564b5baca",
+    "title": "Kth Largest Element in an Array",
+    "slug": "kth-largest-element-in-an-array-article",
+    "originalSlug": "kth-largest-element-in-an-array-article",
+    "description": "Find the Kth Largest Element using a min-heap (priority queue). DSA solution with C++, Java, Python, and O(n log k).",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43fbeb64b25c8c10cb98dd",
+    "publishedAt": "2026-06-30T17:25:08.065Z",
+    "updatedAt": "2026-06-30T17:25:08.068Z",
+    "mdPath": "content/articles/kth-largest-element-in-an-array-article.md",
+    "jsonPath": "content/articles_json/kth-largest-element-in-an-array-article.json"
+  },
+  {
+    "id": "68dfd1f1c8d49c16b765ead9",
+    "title": "Kth Smallest Element in a BST",
+    "slug": "kth-smallest-element-in-a-bst",
+    "originalSlug": "kth-smallest-element-in-a-bst",
+    "description": "Kth smallest element in BST DSA solution using inorder traversal. Brute force and optimized counting approach.",
+    "keywords": [
+      "Tree",
+      "BST"
+    ],
+    "image": "6a5f7ef0e67576629cc4d1bc",
+    "publishedAt": "2026-07-21T14:15:29.532Z",
+    "updatedAt": "2026-07-21T14:15:29.537Z",
+    "mdPath": "content/articles/kth-smallest-element-in-a-bst.md",
+    "jsonPath": "content/articles_json/kth-smallest-element-in-a-bst.json"
+  },
+  {
+    "id": "6975c3a219e4fd8fad3f7be6",
+    "title": "Largest subarray with 0 sum",
+    "slug": "article-1769325474870-u2pa45",
+    "originalSlug": "article-1769325474870-u2pa45",
+    "description": "Learn how to find the largest subarray with sum 0 using Map and Trie. Step-by-step explanations and examples to handle duplicates.",
+    "keywords": [
+      "Largest Subarray with 0 sum",
+      "Map N Tries",
+      "Zero Sum",
+      "Map",
+      "Tries",
+      "Subarray"
+    ],
+    "image": "https://cdn.codehelp.in/media/Largest subarray with 0 sum.png",
+    "publishedAt": "2026-07-13T17:18:02.537Z",
+    "updatedAt": "2026-07-13T17:18:02.548Z",
+    "mdPath": "content/articles/article-1769325474870-u2pa45.md",
+    "jsonPath": "content/articles_json/article-1769325474870-u2pa45.json"
+  },
+  {
+    "id": "69809d659798c725a56901c3",
+    "title": "Last Stone Weight",
+    "slug": "article-1770036581835-7hp0af",
+    "originalSlug": "article-1770036581835-7hp0af",
+    "description": "Learn how to solve the Last Stone Weight problem using a heap. Step-by-step explanation with examples to simulate stone smashing and find the final weight.",
+    "keywords": [
+      "Last Stone Weight",
+      "Heap"
+    ],
+    "image": "https://cdn.codehelp.in/media/Last Stone Weight.png",
+    "publishedAt": "2026-07-10T17:34:25.624Z",
+    "updatedAt": "2026-07-10T17:34:25.639Z",
+    "mdPath": "content/articles/article-1770036581835-7hp0af.md",
+    "jsonPath": "content/articles_json/article-1770036581835-7hp0af.json"
+  },
+  {
+    "id": "6942a103a01ff48c7adbd8f4",
+    "title": "Level order Traversal of a binary tree",
+    "slug": "level-order-traversal-of-a-binary-tree-article",
+    "originalSlug": "level-order-traversal-of-a-binary-tree-article",
+    "description": "Binary Tree Level Order Traversal (BFS) using Queue in C++/Java. Step-by-step algorithm + O(n) complexity.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Level order Traversal of a binary tree.png",
+    "publishedAt": "2026-04-24T10:16:39.142Z",
+    "updatedAt": "2026-04-24T10:16:39.144Z",
+    "mdPath": "content/articles/level-order-traversal-of-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/level-order-traversal-of-a-binary-tree-article.json"
+  },
+  {
+    "id": "69148315a01ff48c7ad863fa",
+    "title": "Longest Common Prefix in a String",
+    "slug": "longest-common-prefix-in-a-string",
+    "originalSlug": "longest-common-prefix-in-a-string",
+    "description": "Find the longest common prefix among an array of strings. Learn brute-force and vertical scanning methods with examples, edge cases, and complexity.",
+    "keywords": [
+      "Longest Common Prefix in a String"
+    ],
+    "image": "6a4a5c2738cb2da009adc139",
+    "publishedAt": "2026-07-05T13:29:32.315Z",
+    "updatedAt": "2026-07-05T13:29:32.335Z",
+    "mdPath": "content/articles/longest-common-prefix-in-a-string.md",
+    "jsonPath": "content/articles_json/longest-common-prefix-in-a-string.json"
+  },
+  {
+    "id": "694a9980a01ff48c7adc5682",
+    "title": "Longest Increasing Subsequence",
+    "slug": "longest-increasing-subsequence",
+    "originalSlug": "longest-increasing-subsequence",
+    "description": "Longest Increasing Subsequence | CodehelpLongest Increasing Subsequence | CodehelpLongest Increasing Subsequence | CodehelpLongest Increasing Subsequence | CodehelpLongest Increasing Subsequence | Codehelp",
+    "keywords": [],
+    "image": {
+      "$oid": "694150a5a01ff48c7adbb9d8"
+    },
+    "publishedAt": "2026-01-09T19:35:41.709Z",
+    "updatedAt": "2026-03-27T21:46:11.978Z",
+    "mdPath": "content/articles/longest-increasing-subsequence.md",
+    "jsonPath": "content/articles_json/longest-increasing-subsequence.json"
+  },
+  {
+    "id": "69187507a01ff48c7ad90763",
+    "title": "Longest Palindromic Substrings",
+    "slug": "longest-palindromic-substring",
+    "originalSlug": "longest-palindromic-substring",
+    "description": "Find the longest palindromic substring in a string using brute-force and center-expansion methods. Learn algorithms, dry runs, and time-space analysis.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/longest pal substring.png",
+    "publishedAt": "2026-07-05T12:36:17.503Z",
+    "updatedAt": "2026-07-05T12:36:17.534Z",
+    "mdPath": "content/articles/longest-palindromic-substring.md",
+    "jsonPath": "content/articles_json/longest-palindromic-substring.json"
+  },
+  {
+    "id": "68d7d908c8d49c16b7649a20",
+    "title": "Longest Valid Parentheses",
+    "slug": "longest-valid-parentheses",
+    "originalSlug": "longest-valid-parentheses",
+    "description": "Learn how to find the length of the longest valid parentheses substring using stacks, with examples, logic,  and complexity analysis.",
+    "keywords": [
+      "Longest Valid Parentheses",
+      "Stacks"
+    ],
+    "image": "https://cdn.codehelp.in/media/Longest Valid_.png",
+    "publishedAt": "2026-08-22T17:01:25.685Z",
+    "updatedAt": "2026-08-22T17:01:25.688Z",
+    "mdPath": "content/articles/longest-valid-parentheses.md",
+    "jsonPath": "content/articles_json/longest-valid-parentheses.json"
+  },
+  {
+    "id": "69d0cedba671a70679b8e6d5",
+    "title": "Loops in Java",
+    "slug": "loops-in-java",
+    "originalSlug": "loops-in-java",
+    "description": "Learn Java loops (for, while, do-while), syntax, examples, nested loops, break, continue, and common mistakes for DSA and coding practice.",
+    "keywords": [
+      "loops in java",
+      "for loop",
+      "while loop",
+      "do while loop"
+    ],
+    "image": "https://cdn.codehelp.in/media/codehelp-1.jpg",
+    "publishedAt": "2026-08-18T10:55:08.350Z",
+    "updatedAt": "2026-08-18T10:55:08.436Z",
+    "mdPath": "content/articles/loops-in-java.md",
+    "jsonPath": "content/articles_json/loops-in-java.json"
+  },
+  {
+    "id": "6942b1f3a01ff48c7adbf9e0",
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "slug": "lowest-common-ancestor-of-a-binary-tree-article",
+    "originalSlug": "lowest-common-ancestor-of-a-binary-tree-article",
+    "description": "Lowest Common Ancestor (LCA) in binary tree using recursion/DFS. Brute force root-to-node paths vs optimal O(N) solution.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Lowest Common Ancestor of a Binary Tree.png",
+    "publishedAt": "2026-04-24T10:15:05.746Z",
+    "updatedAt": "2026-04-24T10:15:05.747Z",
+    "mdPath": "content/articles/lowest-common-ancestor-of-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/lowest-common-ancestor-of-a-binary-tree-article.json"
+  },
+  {
+    "id": "68dfca67c8d49c16b765e357",
+    "title": "Lowest Common Ancestor(LCA) of a Binary Search Tree",
+    "slug": "lowest-common-ancestorlca-of-a-binary-search-tree",
+    "originalSlug": "lowest-common-ancestorlca-of-a-binary-search-tree",
+    "description": "Find Lowest Common Ancestor (LCA) in a BST using BST properties. Step-by-step solution with complexity.",
+    "keywords": [
+      "LCA",
+      "Binary Search Tree",
+      "Tree",
+      "Lowest Common  Ancestor"
+    ],
+    "image": "6a4bafa9d5b821217b7852e2",
+    "publishedAt": "2026-07-06T13:38:15.849Z",
+    "updatedAt": "2026-07-06T13:38:15.852Z",
+    "mdPath": "content/articles/lowest-common-ancestorlca-of-a-binary-search-tree.md",
+    "jsonPath": "content/articles_json/lowest-common-ancestorlca-of-a-binary-search-tree.json"
+  },
+  {
+    "id": "69060e7fa01ff48c7ad779ad",
+    "title": "Max Sliding Window",
+    "slug": "max-sliding-window_3",
+    "originalSlug": "max-sliding-window_3",
+    "description": "Learn how to solve the Max Sliding Window problem using brute and optimal, with explanations, examples, complexity analysis.",
+    "keywords": [
+      "Max Sliding Window",
+      "Heap",
+      "Sliding Window"
+    ],
+    "image": "6a5129cef5904fb07752e9a4",
+    "publishedAt": "2026-07-10T17:22:38.137Z",
+    "updatedAt": "2026-07-10T17:22:38.241Z",
+    "mdPath": "content/articles/max-sliding-window_3.md",
+    "jsonPath": "content/articles_json/max-sliding-window_3.json"
+  },
+  {
+    "id": "69429ec8a01ff48c7adbd4b2",
+    "title": "Maximum depth of a Binary tree",
+    "slug": "maximum-depth-of-a-binary-tree-article",
+    "originalSlug": "maximum-depth-of-a-binary-tree-article",
+    "description": "Maximum Depth of Binary Tree (Height) using BFS Level Order Traversal and DFS Recursion. DSA solution + complexity.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Maximum depth of a Binary tree.png",
+    "publishedAt": "2026-04-24T10:20:03.042Z",
+    "updatedAt": "2026-04-24T10:20:03.044Z",
+    "mdPath": "content/articles/maximum-depth-of-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/maximum-depth-of-a-binary-tree-article.json"
+  },
+  {
+    "id": "6a09c1ce81c02f7425df89a8",
+    "title": "Merge Nodes in Between Zeros",
+    "slug": "merge-nodes-in-between-zeroes",
+    "originalSlug": "merge-nodes-in-between-zeroes",
+    "description": "Learn How to Merge Nodes in Between Zeros – Brute Force and Optimal Approach with Dry Run (C++, Java, Python).",
+    "keywords": [
+      "Merge Nodes Between Zeros",
+      "Merge Nodes Linked List"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1783586900308-b13258af-Merge_Nodes_in_Between_Zeros.png",
+    "publishedAt": "2026-07-09T08:54:06.596Z",
+    "updatedAt": "2026-07-09T08:54:06.602Z",
+    "mdPath": "content/articles/merge-nodes-in-between-zeroes.md",
+    "jsonPath": "content/articles_json/merge-nodes-in-between-zeroes.json"
+  },
+  {
+    "id": "68dffd89c8d49c16b76601fe",
+    "title": "Merge Two BSTs",
+    "slug": "merge-two-bsts",
+    "originalSlug": "merge-two-bsts",
+    "description": "Merge two BSTs solution | inorder traversal with two stacks | sorted merge + unique elements | O(N+M).",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a5f898e9d1d30b9304cbb30",
+    "publishedAt": "2026-07-21T15:00:53.005Z",
+    "updatedAt": "2026-07-21T15:00:53.008Z",
+    "mdPath": "content/articles/merge-two-bsts.md",
+    "jsonPath": "content/articles_json/merge-two-bsts.json"
+  },
+  {
+    "id": "69005013c8d49c16b767c340",
+    "title": "Merge Two Binary Max Heap",
+    "slug": "merge-two-binary-max-heap_2",
+    "originalSlug": "merge-two-binary-max-heap_2",
+    "description": "Learn how to merge two Binary Max Heaps using brute and optimal approaches, with  explanations, complexity analysis, and code implementations.",
+    "keywords": [
+      "Merge Two Binary Max Heap",
+      "Binary",
+      "Heap",
+      "Merge"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1783702722733-e685bc42-Merge_Two_Binary_Max_Heap.png",
+    "publishedAt": "2026-07-10T17:22:14.809Z",
+    "updatedAt": "2026-07-10T17:22:14.838Z",
+    "mdPath": "content/articles/merge-two-binary-max-heap_2.md",
+    "jsonPath": "content/articles_json/merge-two-binary-max-heap_2.json"
+  },
+  {
+    "id": "68d3d890c8d49c16b764051b",
+    "title": "Merge Two Sorted Lists",
+    "slug": "merge-two-sorted-lists",
+    "originalSlug": "merge-two-sorted-lists",
+    "description": "Learn how to merge two sorted linked lists. Explore both brute-force and optimal two-pointer approaches with explanations and code implementations.",
+    "keywords": [
+      "Linked List",
+      "Sorted Lists",
+      "Merge Two Sorted List"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1782403404211-932951be-WhatsApp_Image_2026-06-25_at_9.30.31_PM.jpeg",
+    "publishedAt": "2026-06-26T17:01:17.856Z",
+    "updatedAt": "2026-06-26T17:01:17.934Z",
+    "mdPath": "content/articles/merge-two-sorted-lists.md",
+    "jsonPath": "content/articles_json/merge-two-sorted-lists.json"
+  },
+  {
+    "id": "6a84a984f695d4d77644f914",
+    "title": "Methods in Java",
+    "slug": "methods-in-java",
+    "originalSlug": "methods-in-java",
+    "description": "Learn Java methods, syntax, parameters, return types, method overloading, call by value, variable scope, and call stack.",
+    "keywords": [
+      "Methods in Java",
+      "Java",
+      "Static Keyword",
+      "Method",
+      "Function",
+      "Method Overloading",
+      "Overriding",
+      "Arguments",
+      "Parameters",
+      "call by value"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1776357775485-4fb24f6f-codehelp-1.jpg.png",
+    "publishedAt": "2026-08-18T19:46:53.420Z",
+    "updatedAt": "2026-08-18T19:46:53.426Z",
+    "mdPath": "content/articles/methods-in-java.md",
+    "jsonPath": "content/articles_json/methods-in-java.json"
+  },
+  {
+    "id": "68d2dfa957410affc6a6389e",
+    "title": "Minimum Add to Make Parentheses Valid",
+    "slug": "minimum-add-to-make-parentheses-valid",
+    "originalSlug": "minimum-add-to-make-parentheses-valid",
+    "description": "Learn how to find the minimum additions needed to make parentheses valid using stacks, with examples, real-life analogy, and complexity analysis.",
+    "keywords": [
+      "Minimum Add to Make Parentheses Valid",
+      "Parentheses Valid",
+      "Stacks"
+    ],
+    "image": "https://cdn.codehelp.in/media/min add paranth valid.png",
+    "publishedAt": "2026-08-22T16:46:13.194Z",
+    "updatedAt": "2026-08-22T16:46:13.200Z",
+    "mdPath": "content/articles/minimum-add-to-make-parentheses-valid.md",
+    "jsonPath": "content/articles_json/minimum-add-to-make-parentheses-valid.json"
+  },
+  {
+    "id": "68d2fb9d57410affc6a65919",
+    "title": "Minimum Bracket Reversal",
+    "slug": "minimum-bracket-reversal",
+    "originalSlug": "minimum-bracket-reversal",
+    "description": "Learn how to find the minimum bracket reversals  using stacks, with example,  real-life analogy, and complexity analysis.",
+    "keywords": [
+      "Minimum Bracket Reversal",
+      "Stacks",
+      "Reversal"
+    ],
+    "image": "6a89cec2f695d4d77644fc49",
+    "publishedAt": "2026-08-22T16:32:58.652Z",
+    "updatedAt": "2026-08-22T16:32:58.656Z",
+    "mdPath": "content/articles/minimum-bracket-reversal.md",
+    "jsonPath": "content/articles_json/minimum-bracket-reversal.json"
+  },
+  {
+    "id": "6a16c845292d16b91239469c",
+    "title": "Minimum Distance between BST Nodes",
+    "slug": "minimum-distance-between-bst-nodes-article",
+    "originalSlug": "minimum-distance-between-bst-nodes-article",
+    "description": "Find the minimum absolute difference in a BST using in-order traversal. Learn the O(N) solution with C++, Java, and Python.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a6f0a3bcddbc98100890d4c",
+    "publishedAt": "2026-08-02T09:14:13.548Z",
+    "updatedAt": "2026-08-02T09:14:13.551Z",
+    "mdPath": "content/articles/minimum-distance-between-bst-nodes-article.md",
+    "jsonPath": "content/articles_json/minimum-distance-between-bst-nodes-article.json"
+  },
+  {
+    "id": "693199f8a01ff48c7adb7028",
+    "title": "Minimum Time Difference",
+    "slug": "minimum-time-difference",
+    "originalSlug": "minimum-time-difference",
+    "description": "Learn how to find the Minimum Time Difference using Sorting with clear examples, real-life analogy, intuition, algorithm, and complexity analysis.",
+    "keywords": [
+      "Minimum Time Difference",
+      "String"
+    ],
+    "image": "6a4966b638cb2da009adbec1",
+    "publishedAt": "2026-07-04T20:05:02.493Z",
+    "updatedAt": "2026-07-04T20:05:02.498Z",
+    "mdPath": "content/articles/minimum-time-difference.md",
+    "jsonPath": "content/articles_json/minimum-time-difference.json"
+  },
+  {
+    "id": "69a017426cecc6985b21e97c",
+    "title": "Missing Number",
+    "slug": "article-missing-number",
+    "originalSlug": "article-missing-number",
+    "description": "Find the missing number in an array using XOR. Learn an efficient O(n) DSA approach with step-by-step explanation and examples.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-04-07T10:10:17.650Z",
+    "updatedAt": "2026-04-07T10:10:17.652Z",
+    "mdPath": "content/articles/article-missing-number.md",
+    "jsonPath": "content/articles_json/article-missing-number.json"
+  },
+  {
+    "id": "68df9ecac8d49c16b765ae5e",
+    "title": "Multiply Each Element of an Array by 10",
+    "slug": "multiply-each-element-of-an-array-by-10",
+    "originalSlug": "multiply-each-element-of-an-array-by-10",
+    "description": "Multiply each element in an array by 10 using a simple loop. Learn an easy DSA transformation problem with O(n) solution.",
+    "keywords": [],
+    "image": {
+      "id": "69d3ae7e9d1c5a8b85044168",
+      "url": "https://cdn.codehelp.in/media/articles/1775480442620-0540f071-Multiply_Each_.webp"
+    },
+    "publishedAt": "2026-04-06T13:02:36.536Z",
+    "updatedAt": "2026-04-06T13:02:36.633Z",
+    "mdPath": "content/articles/multiply-each-element-of-an-array-by-10.md",
+    "jsonPath": "content/articles_json/multiply-each-element-of-an-array-by-10.json"
+  },
+  {
+    "id": "6a35027e5df012236343533b",
+    "title": "Next Greater Node In Linked List",
+    "slug": "next-greater-node-in-linked-list-article",
+    "originalSlug": "next-greater-node-in-linked-list-article",
+    "description": "Learn how to find the next greater node in a linked list using stacks, with clear examples, step-by-step logic, and complexity analysis.",
+    "keywords": [
+      "Next Greater Node In Linked List",
+      "Stacks"
+    ],
+    "image": "6a89d88ff695d4d77644fcd7",
+    "publishedAt": "2026-08-22T17:12:56.638Z",
+    "updatedAt": "2026-08-22T17:12:56.642Z",
+    "mdPath": "content/articles/next-greater-node-in-linked-list-article.md",
+    "jsonPath": "content/articles_json/next-greater-node-in-linked-list-article.json"
+  },
+  {
+    "id": "68ca66acfe0250113aa12a2f",
+    "title": "Nodes Between Critical Points ",
+    "slug": "nodes-between-critical-points",
+    "originalSlug": "nodes-between-critical-points-",
+    "description": "Learn How to Find the Minimum and Maximum Distance Between Critical Points in a Linked List – Brute Force and Optimal Approach with Dry Run",
+    "keywords": [
+      "Nodes Between Critical Points",
+      "CriticalPoints"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1783583620625-7f607276-Nodes_Between_.png",
+    "publishedAt": "2026-07-09T08:51:33.641Z",
+    "updatedAt": "2026-07-09T08:51:33.651Z",
+    "mdPath": "content/articles/nodes-between-critical-points.md",
+    "jsonPath": "content/articles_json/nodes-between-critical-points.json"
+  },
+  {
+    "id": "691af442a01ff48c7ad966c4",
+    "title": "Number of Laser Beams in a Bank",
+    "slug": "number-of-laser-beams-in-a-bank",
+    "originalSlug": "number-of-laser-beams-in-a-bank",
+    "description": "Calculate total laser beams in a bank grid. Learn brute-force and optimal row-by-row approaches with linear space and O(M×N) time efficiency.",
+    "keywords": [
+      "Number of Laser Beams in a Bank"
+    ],
+    "image": "https://cdn.codehelp.in/media/No of laser beam.png",
+    "publishedAt": "2026-07-05T12:08:56.099Z",
+    "updatedAt": "2026-07-05T12:08:56.136Z",
+    "mdPath": "content/articles/number-of-laser-beams-in-a-bank.md",
+    "jsonPath": "content/articles_json/number-of-laser-beams-in-a-bank.json"
+  },
+  {
+    "id": "69e11cc0490fb70ec8aba89d",
+    "title": "OOPs is Life",
+    "slug": "oops-is-life",
+    "originalSlug": "oops-is-life",
+    "description": "Master Object-Oriented Programming (OOP) in Java with concepts like classes, objects, encapsulation, inheritance, polymorphism, and abstraction.",
+    "keywords": [
+      "OOPs in Java",
+      "Abstraction",
+      "Polymorphism",
+      "Inheritance",
+      "Encapsulation"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1776361744656-3ee9d21f-WhatsApp_Image_2026-03-16_at_16.59.49.jpeg",
+    "publishedAt": "2026-04-17T07:15:49.875Z",
+    "updatedAt": "2026-04-17T07:15:49.881Z",
+    "mdPath": "content/articles/oops-is-life.md",
+    "jsonPath": "content/articles_json/oops-is-life.json"
+  },
+  {
+    "id": "6a09af4181c02f7425df8949",
+    "title": "Odd-Even Linked List",
+    "slug": "odd-even-linked-list",
+    "originalSlug": "odd-even-linked-list",
+    "description": "Learn how to rearrange a linked list by grouping odd and even indexed nodes using brute-force and optimal approaches.",
+    "keywords": [
+      "Odd Even Linked List Problem",
+      "Rearrange Linked List Odd Even"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1782497068870-eeb81485-WhatsApp_Image_2026-06-26_at_11.19.49_PM.jpeg",
+    "publishedAt": "2026-07-09T07:52:08.075Z",
+    "updatedAt": "2026-07-09T07:52:08.083Z",
+    "mdPath": "content/articles/odd-even-linked-list.md",
+    "jsonPath": "content/articles_json/odd-even-linked-list.json"
+  },
+  {
+    "id": "69aef4ee307f479fe3663c97",
+    "title": "Operators in C++",
+    "slug": "operators-in-c",
+    "originalSlug": "operators-in-c",
+    "description": "Learn C++ operators including arithmetic, relational, logical, assignment, bitwise, unary, and ternary operators with examples and precedence rules.",
+    "keywords": [],
+    "image": {
+      "id": "69aef53c307f479fe3663d4b",
+      "url": "https://cdn.codehelp.in/payload/WhatsApp Image 2026-03-07 at 16.03.30.jpeg"
+    },
+    "publishedAt": "2026-03-09T00:34:00.000Z",
+    "updatedAt": "2026-03-27T21:46:21.707Z",
+    "mdPath": "content/articles/operators-in-c.md",
+    "jsonPath": "content/articles_json/operators-in-c.json"
+  },
+  {
+    "id": "69a5347a7660ba5f961af7ea",
+    "title": "Operators in Java",
+    "slug": "article-1772434554818-73gl28",
+    "originalSlug": "article-1772434554818-73gl28",
+    "description": "Learn Java operators including arithmetic, relational, logical, unary, bitwise, and ternary operators with examples and precedence rules.",
+    "keywords": [
+      "operators in java"
+    ],
+    "image": "69d0fd387363c179a6d5c1df",
+    "publishedAt": "2026-04-16T15:54:02.338Z",
+    "updatedAt": "2026-04-16T15:54:02.351Z",
+    "mdPath": "content/articles/article-1772434554818-73gl28.md",
+    "jsonPath": "content/articles_json/article-1772434554818-73gl28.json"
+  },
+  {
+    "id": "6963c9f7d17b0506d785ba94",
+    "title": "Palindrome Pairs",
+    "slug": "article-1768147447811-xvu1zm",
+    "originalSlug": "article-1768147447811-xvu1zm",
+    "description": "Learn how to find all palindrome pairs in a list of words using Map and Trie. Step-by-step examples to handle palindromes in strings.",
+    "keywords": [
+      "Palindrome Pairs",
+      "Map N tries",
+      "Map",
+      "Tries"
+    ],
+    "image": "https://cdn.codehelp.in/media/Palindrome Pairs.png",
+    "publishedAt": "2026-07-13T16:41:52.017Z",
+    "updatedAt": "2026-07-13T16:41:52.027Z",
+    "mdPath": "content/articles/article-1768147447811-xvu1zm.md",
+    "jsonPath": "content/articles_json/article-1768147447811-xvu1zm.json"
+  },
+  {
+    "id": "6942b3fda01ff48c7adbfdde",
+    "title": "Path Sum",
+    "slug": "path-sum-article",
+    "originalSlug": "path-sum-article",
+    "description": "Path Sum binary tree problem: root-to-leaf DFS recursion to check if any path equals targetSum. O(N) time solution.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/path sum.png",
+    "publishedAt": "2026-04-22T11:12:18.565Z",
+    "updatedAt": "2026-04-22T11:12:18.570Z",
+    "mdPath": "content/articles/path-sum-article.md",
+    "jsonPath": "content/articles_json/path-sum-article.json"
+  },
+  {
+    "id": "68cfe06ed80af5e8789f3e0c",
+    "title": "People Aware of a Secret",
+    "slug": "people-aware-of-a-secret",
+    "originalSlug": "people-aware-of-a-secret",
+    "description": "Learn how to solve the People Aware of a Secret problem, with clear examples, step-by-step explanation, and time and space complexity analysis.",
+    "keywords": [
+      "Number of People Aware of Secret",
+      "People Aware of a Secret",
+      "Queues",
+      "Brute",
+      "Optimal"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1786862734191-bad90dcb-6.png",
+    "publishedAt": "2026-08-16T07:32:32.798Z",
+    "updatedAt": "2026-08-16T07:32:32.806Z",
+    "mdPath": "content/articles/people-aware-of-a-secret.md",
+    "jsonPath": "content/articles_json/people-aware-of-a-secret.json"
+  },
+  {
+    "id": "69e13255490fb70ec8aba8be",
+    "title": "Polymorphism in Java",
+    "slug": "polymorphism-in-java",
+    "originalSlug": "polymorphism-in-java",
+    "description": "Learn polymorphism in Java with clear explanations of method overloading and method overriding, compile-time vs run-time polymorphism.",
+    "keywords": [
+      "Polymorphism"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1776366394815-b365f056-WhatsApp_Image_2026-03-16_at_16.59.49__1_.jpeg",
+    "publishedAt": "2026-04-17T07:15:30.856Z",
+    "updatedAt": "2026-04-17T07:15:30.860Z",
+    "mdPath": "content/articles/polymorphism-in-java.md",
+    "jsonPath": "content/articles_json/polymorphism-in-java.json"
+  },
+  {
+    "id": "68d3b64257410affc6a66f43",
+    "title": "Print Kth Node from the End of a Linked List",
+    "slug": "print-kth-node-from-the-end-of-a-linked-list-6",
+    "originalSlug": "print-kth-node-from-the-end-of-a-linked-list-6",
+    "description": "Learn How to Print the Kth Node from the End of a Linked List, Brute Force and Optimal Approach with Dry Run.",
+    "keywords": [
+      "Print Kth Node from the End of a Linked List",
+      "LinkedList",
+      "Kth Node"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1783583048747-090c92cb-_Print_Kth_Node_.png",
+    "publishedAt": "2026-07-09T07:47:19.080Z",
+    "updatedAt": "2026-07-09T07:47:19.086Z",
+    "mdPath": "content/articles/print-kth-node-from-the-end-of-a-linked-list-6.md",
+    "jsonPath": "content/articles_json/print-kth-node-from-the-end-of-a-linked-list-6.json"
+  },
+  {
+    "id": "6a1590b1be5e699564b5ba92",
+    "title": "Print the Sum of Each Column in a 2D Array",
+    "slug": "print-the-sum-of-each-column-in-a-2d-array-article",
+    "originalSlug": "print-the-sum-of-each-column-in-a-2d-array-article",
+    "description": "DSA solution to calculate the sum of each column in a 2D array using matrix traversal. Includes C++, Java, Python, and complexity.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43f97f64b25c8c10cb98bf",
+    "publishedAt": "2026-06-30T17:15:02.615Z",
+    "updatedAt": "2026-06-30T17:15:02.618Z",
+    "mdPath": "content/articles/print-the-sum-of-each-column-in-a-2d-array-article.md",
+    "jsonPath": "content/articles_json/print-the-sum-of-each-column-in-a-2d-array-article.json"
+  },
+  {
+    "id": "6a158ed8be5e699564b5ba86",
+    "title": "Print the Sum of Each Row in a 2D Array",
+    "slug": "print-the-sum-of-each-row-in-a-2d-array-article",
+    "originalSlug": "print-the-sum-of-each-row-in-a-2d-array-article",
+    "description": "Learn how to find row sums in a 2D array using nested loops. Step-by-step DSA solution with C++, Java, and Python.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43f7a764b25c8c10cb98b2",
+    "publishedAt": "2026-06-30T17:11:03.871Z",
+    "updatedAt": "2026-06-30T17:11:03.874Z",
+    "mdPath": "content/articles/print-the-sum-of-each-row-in-a-2d-array-article.md",
+    "jsonPath": "content/articles_json/print-the-sum-of-each-row-in-a-2d-array-article.json"
+  },
+  {
+    "id": "68dfe918c8d49c16b765efb4",
+    "title": "Range Sum of BST",
+    "slug": "range-sum-of-bst",
+    "originalSlug": "range-sum-of-bst",
+    "description": "Range Sum in BST DSA solution: calculate sum of nodes within [low, high] using optimized BST traversal.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a5f8038e67576629cc4d1c5",
+    "publishedAt": "2026-07-21T14:36:40.399Z",
+    "updatedAt": "2026-07-21T14:36:40.402Z",
+    "mdPath": "content/articles/range-sum-of-bst.md",
+    "jsonPath": "content/articles_json/range-sum-of-bst.json"
+  },
+  {
+    "id": "68ce96a2fe0250113aa196ab",
+    "title": "Recent Counter",
+    "slug": "recent-counter",
+    "originalSlug": "recent-counter",
+    "description": "Learn how to design and implement a Recent Counter using a queue. Understand the working, approach,  example, and time and space complexity with code.",
+    "keywords": [
+      "Recent Counter",
+      "Queues"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1786365809589-c6fc60d9-5.png",
+    "publishedAt": "2026-08-15T10:55:43.062Z",
+    "updatedAt": "2026-08-15T10:55:43.068Z",
+    "mdPath": "content/articles/recent-counter.md",
+    "jsonPath": "content/articles_json/recent-counter.json"
+  },
+  {
+    "id": "6a312aead74220a1d1f24ef9",
+    "title": "Recursion Series || Day - 1",
+    "slug": "recursion-series-day-1",
+    "originalSlug": "recursion-series-day-1",
+    "description": "With this lecture, we are marking the start of Codehelp's Recursion Series, where we will master all the easy/medium/hard concepts or problems related to recursion.",
+    "keywords": [
+      "recursion",
+      "recursion series"
+    ],
+    "image": "69620aaa39b05fb4df627a5b",
+    "publishedAt": "2026-06-16T11:08:16.001Z",
+    "updatedAt": "2026-06-16T11:08:16.008Z",
+    "mdPath": "content/articles/recursion-series-day-1.md",
+    "jsonPath": "content/articles_json/recursion-series-day-1.json"
+  },
+  {
+    "id": "6a33e4955df01223634351e2",
+    "title": "Recursive Time & Space Complexity ||  Recursion Series || Day-2",
+    "slug": "recursive-time-space-complexity-recursion-series-day-2",
+    "originalSlug": "recursive-time-space-complexity-recursion-series-day-2",
+    "description": "With this article, we are going to learn about finding time and space complexities of recursive solutions.",
+    "keywords": [
+      "recursion",
+      "recursion time complexity",
+      "recursion space complexity",
+      "recursive time and space complexity"
+    ],
+    "image": "69620aaa39b05fb4df627a5b",
+    "publishedAt": "2026-06-18T12:40:48.970Z",
+    "updatedAt": "2026-06-18T12:40:49.041Z",
+    "mdPath": "content/articles/recursive-time-space-complexity-recursion-series-day-2.md",
+    "jsonPath": "content/articles_json/recursive-time-space-complexity-recursion-series-day-2.json"
+  },
+  {
+    "id": "69aef922307f479fe366435b",
+    "title": "Reference typecasting in C++",
+    "slug": "reference-typecasting-in-c",
+    "originalSlug": "reference-typecasting-in-c",
+    "description": "Learn implicit and explicit typecasting in C++, automatic conversions, static_cast, and how type conversion affects precision and data loss.",
+    "keywords": [],
+    "image": {
+      "$oid": "69aef95a307f479fe36643cb"
+    },
+    "publishedAt": "2026-03-09T17:03:11.906Z",
+    "updatedAt": "2026-03-27T21:46:22.016Z",
+    "mdPath": "content/articles/reference-typecasting-in-c.md",
+    "jsonPath": "content/articles_json/reference-typecasting-in-c.json"
+  },
+  {
+    "id": "68d3005b57410affc6a65ccc",
+    "title": "Remove All Adjacent Duplicates in String",
+    "slug": "remove-all-adjacent-duplicates-in-string",
+    "originalSlug": "remove-all-adjacent-duplicates-in-string",
+    "description": "Learn how to remove all adjacent duplicates from a string using stacks, with examples, step-by-step logic, real-life analogy, and complexity analysis.",
+    "keywords": [
+      "Remove All Adjacent Duplicates in String",
+      "Stacks",
+      "Remove",
+      "Duplicates in String"
+    ],
+    "image": "https://cdn.codehelp.in/media/Remove All string 1.png",
+    "publishedAt": "2026-08-22T16:28:21.814Z",
+    "updatedAt": "2026-08-22T16:28:21.818Z",
+    "mdPath": "content/articles/remove-all-adjacent-duplicates-in-string.md",
+    "jsonPath": "content/articles_json/remove-all-adjacent-duplicates-in-string.json"
+  },
+  {
+    "id": "691c658ca01ff48c7ad9932d",
+    "title": "Remove All Adjacent Duplicates in String II",
+    "slug": "remove-all-adjacent-duplicates-in-string-ii",
+    "originalSlug": "remove-all-adjacent-duplicates-in-string-ii",
+    "description": "Remove k-adjacent duplicates from a string efficiently. Learn brute-force rescanning and optimal stack-based linear-time approaches with examples.",
+    "keywords": [
+      "Remove All Adjacent Duplicates in String"
+    ],
+    "image": "https://cdn.codehelp.in/media/Remove All string 2.png",
+    "publishedAt": "2026-07-04T22:01:07.865Z",
+    "updatedAt": "2026-07-04T22:01:07.877Z",
+    "mdPath": "content/articles/remove-all-adjacent-duplicates-in-string-ii.md",
+    "jsonPath": "content/articles_json/remove-all-adjacent-duplicates-in-string-ii.json"
+  },
+  {
+    "id": "691c73cea01ff48c7ad9b025",
+    "title": "Remove All Occurrences of a Substring",
+    "slug": "remove-all-occurrences-of-a-substring",
+    "originalSlug": "remove-all-occurrences-of-a-substring",
+    "description": "Learn how to remove all occurrences of a substring from a string using Map and Trie. Step-by-step examples and optimized solutions.",
+    "keywords": [
+      "Remove all Occurrence of a Substring",
+      "Substring"
+    ],
+    "image": "https://cdn.codehelp.in/media/Remove substring.png",
+    "publishedAt": "2026-07-04T21:52:23.282Z",
+    "updatedAt": "2026-07-04T21:52:23.331Z",
+    "mdPath": "content/articles/remove-all-occurrences-of-a-substring.md",
+    "jsonPath": "content/articles_json/remove-all-occurrences-of-a-substring.json"
+  },
+  {
+    "id": "68d97dd0c8d49c16b765257f",
+    "title": "Remove K Digits",
+    "slug": "remove-k-digits",
+    "originalSlug": "remove-k-digits",
+    "description": "Learn how to remove K digits to form the smallest possible number using stacks, step-by-step logic, and complexity analysis.",
+    "keywords": [
+      "Remove K Digits",
+      "Stacks"
+    ],
+    "image": "6a89d699f695d4d77644fcc2",
+    "publishedAt": "2026-08-22T17:04:51.472Z",
+    "updatedAt": "2026-08-22T17:04:51.475Z",
+    "mdPath": "content/articles/remove-k-digits.md",
+    "jsonPath": "content/articles_json/remove-k-digits.json"
+  },
+  {
+    "id": "6915e1d2a01ff48c7ad8af22",
+    "title": "Reorganize String ",
+    "slug": "reorganize-string",
+    "originalSlug": "reorganize-string-",
+    "description": "Rearrange a string so no two adjacent characters are the same. Learn greedy frequency-based logic with examples, edge cases, and complexity analysis.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/reoganise string.png",
+    "publishedAt": "2026-07-03T19:39:38.440Z",
+    "updatedAt": "2026-07-03T19:39:38.448Z",
+    "mdPath": "content/articles/reorganize-string.md",
+    "jsonPath": "content/articles_json/reorganize-string.json"
+  },
+  {
+    "id": "696e38f1e9254dc851534cb4",
+    "title": "Replace Words",
+    "slug": "article-1768831217602-7lk12p",
+    "originalSlug": "article-1768831217602-7lk12p",
+    "description": "Learn how to replace words in a sentence using Trie and Map. Step-by-step examples to handle prefixes and optimize word replacement in large datasets.",
+    "keywords": [
+      "Replace Words",
+      "Map N Tries",
+      "Map",
+      "Trie"
+    ],
+    "image": "https://cdn.codehelp.in/media/Replace Words.png",
+    "publishedAt": "2026-07-13T17:05:08.584Z",
+    "updatedAt": "2026-07-13T17:05:08.599Z",
+    "mdPath": "content/articles/article-1768831217602-7lk12p.md",
+    "jsonPath": "content/articles_json/article-1768831217602-7lk12p.json"
+  },
+  {
+    "id": "6921c84ea01ff48c7adaaee2",
+    "title": "Replace a Character in a String",
+    "slug": "replace-a-character-in-a-string",
+    "originalSlug": "replace-a-character-in-a-string",
+    "description": "Learn how to replace a character in a string with step-by-step examples. Includes efficient methods for string manipulation in programming.",
+    "keywords": [
+      "Replace a Character in a String",
+      "Replace",
+      "String Character"
+    ],
+    "image": "6a497c4a38cb2da009adbfa0",
+    "publishedAt": "2026-07-04T21:34:12.859Z",
+    "updatedAt": "2026-07-04T21:34:12.868Z",
+    "mdPath": "content/articles/replace-a-character-in-a-string.md",
+    "jsonPath": "content/articles_json/replace-a-character-in-a-string.json"
+  },
+  {
+    "id": "691353cfa01ff48c7ad8349e",
+    "title": "Reverse Only Letters - Reverse a string without affecting special characters",
+    "slug": "reverse-only-letters---reverse-a-string-without-affecting-special-characters",
+    "originalSlug": "reverse-only-letters---reverse-a-string-without-affecting-special-characters",
+    "description": "Reverse only letters in a string while keeping non-letter characters in place. Learn brute-force and two-pointer methods with examples and complexity.",
+    "keywords": [],
+    "image": "6a4a5c8038cb2da009adc13e",
+    "publishedAt": "2026-07-05T13:32:04.638Z",
+    "updatedAt": "2026-07-05T13:32:04.648Z",
+    "mdPath": "content/articles/reverse-only-letters---reverse-a-string-without-affecting-special-characters.md",
+    "jsonPath": "content/articles_json/reverse-only-letters---reverse-a-string-without-affecting-special-characters.json"
+  },
+  {
+    "id": "6914833aa01ff48c7ad86476",
+    "title": "Reverse Vowels of a String",
+    "slug": "reverse-vowels-of-a-string",
+    "originalSlug": "reverse-vowels-of-a-string",
+    "description": "Reverse only the vowels in a string while keeping other characters in place. Learn brute-force and two-pointer methods with examples and complexity.",
+    "keywords": [
+      "Reverse Vowels of a String",
+      "Reverse Vowels",
+      "String"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1783106612272-c84d362e-Reverse_Vowels.png",
+    "publishedAt": "2026-07-05T13:23:33.904Z",
+    "updatedAt": "2026-07-05T13:23:33.936Z",
+    "mdPath": "content/articles/reverse-vowels-of-a-string.md",
+    "jsonPath": "content/articles_json/reverse-vowels-of-a-string.json"
+  },
+  {
+    "id": "691fff3aa01ff48c7ada6a6e",
+    "title": "Reverse a Character Array",
+    "slug": "reverse-a-character-array",
+    "originalSlug": "reverse-a-character-array",
+    "description": "Learn how to reverse a character array. Step-by-step explanation with examples to handle strings and array manipulations.",
+    "keywords": [
+      "Reverse a Character Array"
+    ],
+    "image": "https://cdn.codehelp.in/media/Reverse  a.png",
+    "publishedAt": "2026-07-04T21:41:19.795Z",
+    "updatedAt": "2026-07-04T21:41:19.800Z",
+    "mdPath": "content/articles/reverse-a-character-array.md",
+    "jsonPath": "content/articles_json/reverse-a-character-array.json"
+  },
+  {
+    "id": "6968fed2e9254dc85151f3e7",
+    "title": "Reverse a Vector",
+    "slug": "article-1768488658133-lxybpx",
+    "originalSlug": "article-1768488658133-lxybpx",
+    "description": "DSA solution to reverse an array and return a new reversed array without modifying original. O(n) time and O(n) space.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43f35b64b25c8c10cb989a",
+    "publishedAt": "2026-06-30T16:48:52.862Z",
+    "updatedAt": "2026-06-30T16:48:52.865Z",
+    "mdPath": "content/articles/article-1768488658133-lxybpx.md",
+    "jsonPath": "content/articles_json/article-1768488658133-lxybpx.json"
+  },
+  {
+    "id": "6969045ae9254dc85151fb8a",
+    "title": "Rotate an Array",
+    "slug": "Rotate-an-Array-article",
+    "originalSlug": "Rotate-an-Array-article",
+    "description": "Rotate an array to the right by k positions using reversal algorithm. Efficient in-place DSA solution with O(n) time.",
+    "keywords": [],
+    "image": null,
+    "publishedAt": "2026-06-26T19:12:23.535Z",
+    "updatedAt": "2026-06-26T19:12:23.538Z",
+    "mdPath": "content/articles/Rotate-an-Array-article.md",
+    "jsonPath": "content/articles_json/Rotate-an-Array-article.json"
+  },
+  {
+    "id": "6a1597aebe5e699564b5babd",
+    "title": "Rotate image",
+    "slug": "rotate-image-article",
+    "originalSlug": "rotate-image-article",
+    "description": "Learn how to rotate a matrix 90 degrees clockwise in-place using transpose and reverse rows. Complete DSA explanation.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43fb3364b25c8c10cb98d3",
+    "publishedAt": "2026-06-30T17:22:15.267Z",
+    "updatedAt": "2026-06-30T17:22:15.270Z",
+    "mdPath": "content/articles/rotate-image-article.md",
+    "jsonPath": "content/articles_json/rotate-image-article.json"
+  },
+  {
+    "id": "68dfa202c8d49c16b765b24e",
+    "title": "Search for an Element in an Array",
+    "slug": "search-for-an-element-in-an-array",
+    "originalSlug": "search-for-an-element-in-an-array",
+    "description": "Search for a target element using linear search. Beginner-friendly DSA approach with step-by-step explanation.",
+    "keywords": [],
+    "image": {
+      "id": "69d3ae6c9d1c5a8b85044167",
+      "url": "https://cdn.codehelp.in/media/articles/1775480425256-c161353d-Search_for_an_.webp"
+    },
+    "publishedAt": "2026-04-06T13:02:57.398Z",
+    "updatedAt": "2026-04-06T13:02:57.399Z",
+    "mdPath": "content/articles/search-for-an-element-in-an-array.md",
+    "jsonPath": "content/articles_json/search-for-an-element-in-an-array.json"
+  },
+  {
+    "id": "69aa7ed99c9c7e6e280fe42f",
+    "title": "Setting up vs code for c++ coding mac devices",
+    "slug": "setting-up-vs-code-for-c-coding-mac-devices",
+    "originalSlug": "setting-up-vs-code-for-c-coding-mac-devices",
+    "description": "Learn how to install VS Code and set up a C++ development environment on macOS using Homebrew, GCC, and required VS Code extensions.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe430307f479fe365258a"
+    },
+    "publishedAt": "2026-03-07T08:39:17.685Z",
+    "updatedAt": "2026-03-27T21:46:20.100Z",
+    "mdPath": "content/articles/setting-up-vs-code-for-c-coding-mac-devices.md",
+    "jsonPath": "content/articles_json/setting-up-vs-code-for-c-coding-mac-devices.json"
+  },
+  {
+    "id": "69aa74a49c9c7e6e280fe014",
+    "title": "Setting up vs code for c++ coding windows",
+    "slug": "setting-up-vs-code-for-c-coding-windows",
+    "originalSlug": "setting-up-vs-code-for-c-coding-windows",
+    "description": "Step-by-step guide to install VS Code, set up the MinGW C++ compiler, configure extensions, and compile and run C++ programs easily.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe3e7307f479fe36524f5"
+    },
+    "publishedAt": "2026-03-07T08:38:06.028Z",
+    "updatedAt": "2026-03-27T21:46:19.907Z",
+    "mdPath": "content/articles/setting-up-vs-code-for-c-coding-windows.md",
+    "jsonPath": "content/articles_json/setting-up-vs-code-for-c-coding-windows.json"
+  },
+  {
+    "id": "696901bbe9254dc85151f842",
+    "title": "Shift Array Elements by One Position",
+    "slug": "article-1768489403609-wvl2uf",
+    "originalSlug": "article-1768489403609-wvl2uf",
+    "description": "DSA solution to right shift an array by one position. Last element moves to front with O(n) time and O(n) space.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43f2d064b25c8c10cb9895",
+    "publishedAt": "2026-06-30T16:46:32.179Z",
+    "updatedAt": "2026-06-30T16:46:32.182Z",
+    "mdPath": "content/articles/article-1768489403609-wvl2uf.md",
+    "jsonPath": "content/articles_json/article-1768489403609-wvl2uf.json"
+  },
+  {
+    "id": "68d308e757410affc6a66ab7",
+    "title": "Simplify Path",
+    "slug": "simplify-path",
+    "originalSlug": "simplify-path",
+    "description": "Learn how to simplify a Unix-style file path using stacks, with clear examples, step-by-step logic, real-life analogy, and complexity analysis.",
+    "keywords": [
+      "Simplify Path",
+      "Stacks"
+    ],
+    "image": "https://cdn.codehelp.in/media/simplify path.png",
+    "publishedAt": "2026-08-22T17:00:03.068Z",
+    "updatedAt": "2026-08-22T17:00:03.071Z",
+    "mdPath": "content/articles/simplify-path.md",
+    "jsonPath": "content/articles_json/simplify-path.json"
+  },
+  {
+    "id": "69d0076f8428d05587e3c937",
+    "title": "Solve any Pattern Printing Problem",
+    "slug": "solve-any-pattern-printing-problem",
+    "originalSlug": "solve-any-pattern-printing-problem",
+    "description": "Only Trick to solve any pattern printing problem. Here, you will learn how to approach Coding problems based on pattern printing and PFA a assignment of 21 Pattern problems to practice",
+    "keywords": [
+      "pattern printing"
+    ],
+    "image": "https://cdn.codehelp.in/media/codehelp-1.jpg",
+    "publishedAt": "2026-04-16T15:52:00.849Z",
+    "updatedAt": "2026-04-16T15:52:01.032Z",
+    "mdPath": "content/articles/solve-any-pattern-printing-problem.md",
+    "jsonPath": "content/articles_json/solve-any-pattern-printing-problem.json"
+  },
+  {
+    "id": "6a08b7f4cbac4248205a1429",
+    "title": "Sort Linked List",
+    "slug": "sort-linked-list",
+    "originalSlug": "sort-linked-list",
+    "description": "Learn how to sort a linked list in ascending order. Explore both brute-force and optimal merge sort approaches with explanations.",
+    "keywords": [
+      "Sort Linked List",
+      "Sort",
+      "linked list sorting"
+    ],
+    "image": "6a3d5c587b2386948e75fa25",
+    "publishedAt": "2026-06-25T16:50:37.215Z",
+    "updatedAt": "2026-06-25T16:50:37.222Z",
+    "mdPath": "content/articles/sort-linked-list.md",
+    "jsonPath": "content/articles_json/sort-linked-list.json"
+  },
+  {
+    "id": "6a364560e40ff938cfc7f249",
+    "title": "Sorted Insert",
+    "slug": "sorted-insert-article",
+    "originalSlug": "sorted-insert-article",
+    "description": "Learn how to insert an element into a sorted stack, with a clear approach, example, and time and space complexity analysis.",
+    "keywords": [
+      "Sorted Insert",
+      "Stack",
+      "Sorted"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1787401157160-28597bf4-8.png",
+    "publishedAt": "2026-08-22T14:46:48.869Z",
+    "updatedAt": "2026-08-22T14:46:48.874Z",
+    "mdPath": "content/articles/sorted-insert-article.md",
+    "jsonPath": "content/articles_json/sorted-insert-article.json"
+  },
+  {
+    "id": "6a157f91be5e699564b5ba5f",
+    "title": "Spiral Print A Matrix",
+    "slug": "spiral-print-a-matrix-article",
+    "originalSlug": "spiral-print-a-matrix-article",
+    "description": "Traverse a matrix in spiral order using four boundaries. DSA solution with C++, Java, Python, and O(m×n) complexity.",
+    "keywords": [
+      "Array",
+      "Matrix"
+    ],
+    "image": "6a44eef803760e05bbb1cfe5",
+    "publishedAt": "2026-07-01T10:43:34.197Z",
+    "updatedAt": "2026-07-01T10:43:34.201Z",
+    "mdPath": "content/articles/spiral-print-a-matrix-article.md",
+    "jsonPath": "content/articles_json/spiral-print-a-matrix-article.json"
+  },
+  {
+    "id": "6a0b2cc830d583a4a38d8248",
+    "title": "Split linked list in parts",
+    "slug": "split-linked-list-in-parts",
+    "originalSlug": "split-linked-list-in-parts",
+    "description": "Learn how to split a linked list into parts using an efficient approach, with examples, explanation, code implementation, and complexity analysis.",
+    "keywords": [
+      "Split Linked list in parts",
+      "split linkedlist",
+      "linkedlist"
+    ],
+    "image": "6a4fb06b2e81bcf6527875db",
+    "publishedAt": "2026-07-09T14:30:35.331Z",
+    "updatedAt": "2026-07-09T14:30:35.339Z",
+    "mdPath": "content/articles/split-linked-list-in-parts.md",
+    "jsonPath": "content/articles_json/split-linked-list-in-parts.json"
+  },
+  {
+    "id": "68d7a956c8d49c16b7647601",
+    "title": "Stock Span Problem",
+    "slug": "stock-span-problem",
+    "originalSlug": "stock-span-problem",
+    "description": "Learn how to solve the Stock Span Problem using stacks, with clear examples, step-by-step logic, and time and space complexity analysis.",
+    "keywords": [
+      "Stock Span Problem",
+      "Stacks"
+    ],
+    "image": "https://cdn.codehelp.in/media/Stock Span Problem.png",
+    "publishedAt": "2026-08-22T17:07:50.919Z",
+    "updatedAt": "2026-08-22T17:07:50.923Z",
+    "mdPath": "content/articles/stock-span-problem.md",
+    "jsonPath": "content/articles_json/stock-span-problem.json"
+  },
+  {
+    "id": "6919b0dfa01ff48c7ad93831",
+    "title": "String Compression",
+    "slug": "string-compression",
+    "originalSlug": "string-compression",
+    "description": "Learn how to compress a character array in place using two pointers. Covers brute-force vs optimal approach with time and space complexity explained.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/string comp.png",
+    "publishedAt": "2026-07-05T12:14:52.633Z",
+    "updatedAt": "2026-07-05T12:14:52.657Z",
+    "mdPath": "content/articles/string-compression.md",
+    "jsonPath": "content/articles_json/string-compression.json"
+  },
+  {
+    "id": "69198c1fa01ff48c7ad92b38",
+    "title": "String to Integer (atoi)",
+    "slug": "string-to-integer-atoi",
+    "originalSlug": "string-to-integer-atoi",
+    "description": "Learn how to convert a string to a 32-bit integer with myAtoi. Covers brute-force and state-machine approaches with complexity and dry runs.",
+    "keywords": [
+      "String to Integer",
+      "String",
+      "Conversion"
+    ],
+    "image": "https://cdn.codehelp.in/media/String to integr.png",
+    "publishedAt": "2026-07-03T19:14:53.540Z",
+    "updatedAt": "2026-07-03T19:14:53.547Z",
+    "mdPath": "content/articles/string-to-integer-atoi.md",
+    "jsonPath": "content/articles_json/string-to-integer-atoi.json"
+  },
+  {
+    "id": "69d9de6276a0d0fe6eb9d712",
+    "title": "Strings in Java",
+    "slug": "strings-in-java",
+    "originalSlug": "strings-in-java",
+    "description": "In this Article, we are going to study the basics of Strings and make a solid foundation for upcoming medium & hard questions based on Strings.",
+    "keywords": [
+      "string",
+      "strings in java",
+      "basics of strings"
+    ],
+    "image": "https://cdn.codehelp.in/media/codehelp-1.jpg",
+    "publishedAt": "2026-04-16T15:54:23.133Z",
+    "updatedAt": "2026-04-16T15:54:23.135Z",
+    "mdPath": "content/articles/strings-in-java.md",
+    "jsonPath": "content/articles_json/strings-in-java.json"
+  },
+  {
+    "id": "696f7c13e9254dc85153961a",
+    "title": "Sum equals to Sum",
+    "slug": "article-1768913939616-rx1bw7",
+    "originalSlug": "article-1768913939616-rx1bw7",
+    "description": "Learn how to find subsets in arrays where the sum matches a target using Map and Trie. Step-by-step explanation with examples to handle duplicates.",
+    "keywords": [
+      "Sum equals to Sum",
+      "Map N Tries",
+      "Map",
+      "Trie"
+    ],
+    "image": "https://cdn.codehelp.in/media/Sum equals to Sum.png",
+    "publishedAt": "2026-07-13T17:13:49.776Z",
+    "updatedAt": "2026-07-13T17:13:49.784Z",
+    "mdPath": "content/articles/article-1768913939616-rx1bw7.md",
+    "jsonPath": "content/articles_json/article-1768913939616-rx1bw7.json"
+  },
+  {
+    "id": "68cf10aed80af5e8789f2ac0",
+    "title": "Sum of Min and Max Elements of All Subarrays of Size k",
+    "slug": "sum-of-min-and-max-elements-of-all-subarrays-of-size-k",
+    "originalSlug": "sum-of-min-and-max-elements-of-all-subarrays-of-size-k",
+    "description": "Learn how to find the sum of the minimum and maximum elements of all subarrays of size k with examples and efficient approaches.\n",
+    "keywords": [
+      "Sum of Min and Max Elements of All Subarray of Size K",
+      "Queues",
+      "Subarrays"
+    ],
+    "image": "https://cdn.codehelp.in/media/articles/1786276567777-5965b97a-7.png",
+    "publishedAt": "2026-08-09T12:08:08.534Z",
+    "updatedAt": "2026-08-09T12:08:08.539Z",
+    "mdPath": "content/articles/sum-of-min-and-max-elements-of-all-subarrays-of-size-k.md",
+    "jsonPath": "content/articles_json/sum-of-min-and-max-elements-of-all-subarrays-of-size-k.json"
+  },
+  {
+    "id": "68d2448803007751b41fdaaf",
+    "title": "Swap Nodes in Linked List",
+    "slug": "swap-nodes-in-linked-list-9",
+    "originalSlug": "swap-nodes-in-linked-list-9",
+    "description": "Swapping Nodes in a Linked List – Step-by-Step Explanation, Dry Run, Complexity Analysis, and Code (C++, Java, Python)",
+    "keywords": [
+      "Swapping Nodes in a Linked List",
+      "Linked List Two Pointer",
+      "Swap Kth Nodes"
+    ],
+    "image": "6a48064618e7ea53cc9ad752",
+    "publishedAt": "2026-07-03T18:58:27.052Z",
+    "updatedAt": "2026-07-03T18:58:27.059Z",
+    "mdPath": "content/articles/swap-nodes-in-linked-list-9.md",
+    "jsonPath": "content/articles_json/swap-nodes-in-linked-list-9.json"
+  },
+  {
+    "id": "69aaee269c9c7e6e28102274",
+    "title": "Switch case in C++",
+    "slug": "switch-case-in-c",
+    "originalSlug": "switch-case-in-c",
+    "description": "Learn the C++ switch case statement, syntax, valid data types, break and default usage, and how it simplifies multiple conditional checks.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe55c307f479fe36528e5"
+    },
+    "publishedAt": "2026-03-07T08:44:16.445Z",
+    "updatedAt": "2026-03-27T21:46:21.010Z",
+    "mdPath": "content/articles/switch-case-in-c.md",
+    "jsonPath": "content/articles_json/switch-case-in-c.json"
+  },
+  {
+    "id": "69aaf0569c9c7e6e28102524",
+    "title": "Ternary operator in C++",
+    "slug": "ternary-operator-in-c",
+    "originalSlug": "ternary-operator-in-c",
+    "description": "Learn the C++ ternary operator (?:), its syntax, examples, and how it provides a concise alternative to simple if-else conditions.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe58d307f479fe3652999"
+    },
+    "publishedAt": "2026-03-07T08:45:06.075Z",
+    "updatedAt": "2026-03-27T21:46:21.193Z",
+    "mdPath": "content/articles/ternary-operator-in-c.md",
+    "jsonPath": "content/articles_json/ternary-operator-in-c.json"
+  },
+  {
+    "id": "68da879dc8d49c16b7652e7a",
+    "title": "The Celebrity Problem",
+    "slug": "the-celebrity-problem",
+    "originalSlug": "the-celebrity-problem",
+    "description": "Learn how to solve the Celebrity Problem using stacks, with clear examples, step-by-step logic, and time and space complexity analysis.",
+    "keywords": [
+      "The Celebrity Problem",
+      "Stacks"
+    ],
+    "image": "https://cdn.codehelp.in/media/Celebrity Problem.png",
+    "publishedAt": "2026-08-22T17:23:56.819Z",
+    "updatedAt": "2026-08-22T17:23:56.823Z",
+    "mdPath": "content/articles/the-celebrity-problem.md",
+    "jsonPath": "content/articles_json/the-celebrity-problem.json"
+  },
+  {
+    "id": "69e5ca8d760bb0096101e0f7",
+    "title": "Time and Space Complexity for DSA",
+    "slug": "time-and-space-complexity-for-dsa",
+    "originalSlug": "time-and-space-complexity-for-dsa",
+    "description": "In this Article , we will learn in great detail about the Time and Space Complexity concepts that can tell, guide, help us in writing and thinking about optimised coding practices.",
+    "keywords": [
+      "time complexity",
+      "space complexity",
+      "DSA",
+      "Data Structures and Algorithms"
+    ],
+    "image": "https://cdn.codehelp.in/media/codehelp-1.jpg",
+    "publishedAt": "2026-04-21T13:55:11.553Z",
+    "updatedAt": "2026-04-21T13:55:11.563Z",
+    "mdPath": "content/articles/time-and-space-complexity-for-dsa.md",
+    "jsonPath": "content/articles_json/time-and-space-complexity-for-dsa.json"
+  },
+  {
+    "id": "696cee78e9254dc85152eef8",
+    "title": "Top K Frequent Words",
+    "slug": "article-1768746616794-ji1mqf",
+    "originalSlug": "article-1768746616794-ji1mqf",
+    "description": "Learn how to find the top K frequent words using Map and Trie. Step-by-step examples help you handle duplicates, optimise performance.",
+    "keywords": [
+      "Top K Frequent Words",
+      "Map N Tries",
+      "Map",
+      "Tries"
+    ],
+    "image": "https://cdn.codehelp.in/media/Top K Frequent Words.png",
+    "publishedAt": "2026-07-13T16:58:11.431Z",
+    "updatedAt": "2026-07-13T16:58:11.442Z",
+    "mdPath": "content/articles/article-1768746616794-ji1mqf.md",
+    "jsonPath": "content/articles_json/article-1768746616794-ji1mqf.json"
+  },
+  {
+    "id": "6942a7aca01ff48c7adbe40c",
+    "title": "Top View of Binary Tree",
+    "slug": "top-view-of-binary-tree-article",
+    "originalSlug": "top-view-of-binary-tree-article",
+    "description": "Binary tree top view explained with BFS traversal, horizontal distance mapping and sorted output using TreeMap.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Top View of Binary Tree.png",
+    "publishedAt": "2026-04-24T10:18:05.744Z",
+    "updatedAt": "2026-04-24T10:18:05.746Z",
+    "mdPath": "content/articles/top-view-of-binary-tree-article.md",
+    "jsonPath": "content/articles_json/top-view-of-binary-tree-article.json"
+  },
+  {
+    "id": "6a1593c8be5e699564b5ba9f",
+    "title": "Transpose of a Matrix",
+    "slug": "transpose-of-a-matrix-article",
+    "originalSlug": "transpose-of-a-matrix-article",
+    "description": "Matrix Transpose algorithm explained with 2D array traversal, row-column interchange, and C++, Java, Python solutions.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a43fa0a64b25c8c10cb98c8",
+    "publishedAt": "2026-06-30T17:19:28.472Z",
+    "updatedAt": "2026-06-30T17:19:28.475Z",
+    "mdPath": "content/articles/transpose-of-a-matrix-article.md",
+    "jsonPath": "content/articles_json/transpose-of-a-matrix-article.json"
+  },
+  {
+    "id": "68dff96cc8d49c16b765f68e",
+    "title": "Two Sum IV - Input is a BST",
+    "slug": "two-sum-iv---input-is-a-bst",
+    "originalSlug": "two-sum-iv---input-is-a-bst",
+    "description": "Two Sum in BST DSA solution using inorder traversal + two-pointer technique to check if pair sum equals k.",
+    "keywords": [
+      "BST",
+      "Tree"
+    ],
+    "image": "6a6a5621d4d58f79c62c4a74",
+    "publishedAt": "2026-07-29T19:36:22.297Z",
+    "updatedAt": "2026-07-29T19:36:22.300Z",
+    "mdPath": "content/articles/two-sum-iv---input-is-a-bst.md",
+    "jsonPath": "content/articles_json/two-sum-iv---input-is-a-bst.json"
+  },
+  {
+    "id": "697b6f57279dc6a270c9342b",
+    "title": "Union of Two Linked Lists",
+    "slug": "article-1769697111862-8asheh",
+    "originalSlug": "article-1769697111862-8asheh",
+    "description": "Learn how to find the union of two linked lists using approaches like Map and Trie. Step-by-step explanation with examples to handle duplicates.",
+    "keywords": [
+      "Union of Two Linked Lists",
+      "Union of Linked List",
+      "Linked List",
+      "Map N Tries",
+      "Map",
+      "Tries"
+    ],
+    "image": "https://cdn.codehelp.in/media/8. Union of Two Linked Lists.png",
+    "publishedAt": "2026-07-13T17:25:18.937Z",
+    "updatedAt": "2026-07-13T17:25:18.946Z",
+    "mdPath": "content/articles/article-1769697111862-8asheh.md",
+    "jsonPath": "content/articles_json/article-1769697111862-8asheh.json"
+  },
+  {
+    "id": "69aae5459c9c7e6e281019f5",
+    "title": "User Input in C++",
+    "slug": "user-input-in-c",
+    "originalSlug": "user-input-in-c",
+    "description": "Learn C++ user input using cin, extraction (>>) and insertion (<<) operators, getline(), and cin.ignore() for handling strings and input buffers.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe4e7307f479fe3652788"
+    },
+    "publishedAt": "2026-03-07T08:42:22.688Z",
+    "updatedAt": "2026-03-27T21:46:20.657Z",
+    "mdPath": "content/articles/user-input-in-c.md",
+    "jsonPath": "content/articles_json/user-input-in-c.json"
+  },
+  {
+    "id": "691191d9a01ff48c7ad7fee4",
+    "title": "Valid Anagram - Check if two Strings are anagrams of each other",
+    "slug": "valid-anagram---check-if-two-strings-are-anagrams-of-each-other",
+    "originalSlug": "valid-anagram---check-if-two-strings-are-anagrams-of-each-other",
+    "description": "Learn how to check if two strings are anagrams using sorting and hash maps, with clear examples, real-life analogy, and complexity analysis.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/_Valid_.png",
+    "publishedAt": "2026-08-09T07:25:08.601Z",
+    "updatedAt": "2026-08-09T07:25:08.631Z",
+    "mdPath": "content/articles/valid-anagram---check-if-two-strings-are-anagrams-of-each-other.md",
+    "jsonPath": "content/articles_json/valid-anagram---check-if-two-strings-are-anagrams-of-each-other.json"
+  },
+  {
+    "id": "68dfc7c2c8d49c16b765ddc3",
+    "title": "Valid BST from Preorder",
+    "slug": "valid-bst-from-preorder",
+    "originalSlug": "valid-bst-from-preorder",
+    "description": "Valid BST from Preorder: check if preorder traversal can construct a BST using min-max range recursion. O(N) solution.",
+    "keywords": [
+      "Binary Search Tree",
+      "BST",
+      "Tree"
+    ],
+    "image": "6a4baf40d5b821217b7852da",
+    "publishedAt": "2026-07-06T13:36:06.695Z",
+    "updatedAt": "2026-07-06T13:36:06.698Z",
+    "mdPath": "content/articles/valid-bst-from-preorder.md",
+    "jsonPath": "content/articles_json/valid-bst-from-preorder.json"
+  },
+  {
+    "id": "691c71b1a01ff48c7ad9ad6d",
+    "title": "Valid Palindrome",
+    "slug": "valid-palindrome",
+    "originalSlug": "valid-palindrome",
+    "description": "Learn how to check if a string is a valid palindrome. Explore both brute-force and optimal two-pointer approaches with examples and complexity.",
+    "keywords": [
+      "Valid Palindrome",
+      "Palindrome",
+      "Check Palindrome"
+    ],
+    "image": "https://cdn.codehelp.in/media/valid palindrome.png",
+    "publishedAt": "2026-07-04T21:54:52.045Z",
+    "updatedAt": "2026-07-04T21:54:52.136Z",
+    "mdPath": "content/articles/valid-palindrome.md",
+    "jsonPath": "content/articles_json/valid-palindrome.json"
+  },
+  {
+    "id": "69aa8b549c9c7e6e280ff26b",
+    "title": "Variables and Datatypes in C++",
+    "slug": "variables-and-datatypes-in-c",
+    "originalSlug": "variables-and-datatypes-in-c",
+    "description": "Learn C++ variables, data types, declaration, initialization, and how primitive, derived, and user-defined types store data in memory.",
+    "keywords": [],
+    "image": {
+      "$oid": "69abe4b3307f479fe36526e0"
+    },
+    "publishedAt": "2026-03-07T08:41:28.448Z",
+    "updatedAt": "2026-03-27T21:46:20.480Z",
+    "mdPath": "content/articles/variables-and-datatypes-in-c.md",
+    "jsonPath": "content/articles_json/variables-and-datatypes-in-c.json"
+  },
+  {
+    "id": "69a2f395ccb5204ec3113ce8",
+    "title": "Variables and literals ",
+    "slug": "article-1772286869868-a368lm",
+    "originalSlug": "article-1772286869868-a368lm",
+    "description": "Learn Java variables and literals, how data is stored, types of literals, syntax rules, and why they matter for coding, DSA, and interviews.",
+    "keywords": [
+      "variables in java",
+      "literals in java"
+    ],
+    "image": "69d1065c6068419dc789e870",
+    "publishedAt": "2026-04-16T15:49:21.708Z",
+    "updatedAt": "2026-04-16T15:49:21.718Z",
+    "mdPath": "content/articles/article-1772286869868-a368lm.md",
+    "jsonPath": "content/articles_json/article-1772286869868-a368lm.json"
+  },
+  {
+    "id": "6942a972a01ff48c7adbe82b",
+    "title": "Vertical Order Traversal of a Binary Tree",
+    "slug": "vertical-order-traversal-of-a-binary-tree-article",
+    "originalSlug": "vertical-order-traversal-of-a-binary-tree-article",
+    "description": "Binary tree vertical order traversal explained with BFS traversal, coordinate mapping and sorted output rules.",
+    "keywords": [
+      "Test"
+    ],
+    "image": "https://cdn.codehelp.in/media/Vertical Order traversal of a binary tree.png",
+    "publishedAt": "2026-04-24T10:17:38.180Z",
+    "updatedAt": "2026-04-24T10:17:38.182Z",
+    "mdPath": "content/articles/vertical-order-traversal-of-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/vertical-order-traversal-of-a-binary-tree-article.json"
+  },
+  {
+    "id": "6a157e05be5e699564b5ba53",
+    "title": "Wave Print A Matrix",
+    "slug": "wave-print-a-matrix-article",
+    "originalSlug": "wave-print-a-matrix-article",
+    "description": "Wave Print Matrix DSA solution using column-wise zig-zag traversal. Efficient O(m×n) algorithm explained.",
+    "keywords": [
+      "Array"
+    ],
+    "image": "6a44ede603760e05bbb1cfd8",
+    "publishedAt": "2026-07-01T10:37:37.161Z",
+    "updatedAt": "2026-07-01T10:37:37.164Z",
+    "mdPath": "content/articles/wave-print-a-matrix-article.md",
+    "jsonPath": "content/articles_json/wave-print-a-matrix-article.json"
+  },
+  {
+    "id": "69a2ed8eccb5204ec31132a3",
+    "title": "Write your first JAVA Program",
+    "slug": "article-1772285326476-ubnraw",
+    "originalSlug": "article-1772285326476-ubnraw",
+    "description": "In this Article, you will learn how to code your first JAVA Program. You will learn basics about the boilerplate code and get comfortable with the basic syntax,",
+    "keywords": [
+      "first Java Program",
+      "Hello World in java",
+      "Java Boilerplate code"
+    ],
+    "image": "69620aaa39b05fb4df627a5b",
+    "publishedAt": "2026-04-16T20:49:15.758Z",
+    "updatedAt": "2026-04-16T20:49:15.763Z",
+    "mdPath": "content/articles/article-1772285326476-ubnraw.md",
+    "jsonPath": "content/articles_json/article-1772285326476-ubnraw.json"
+  },
+  {
+    "id": "6942a324a01ff48c7adbdcf4",
+    "title": "Zig-zag Level order Traversal of a binary tree",
+    "slug": "zig-zag-level-order-traversal-of-a-binary-tree-article",
+    "originalSlug": "zig-zag-level-order-traversal-of-a-binary-tree-article",
+    "description": "Binary Tree Zigzag Level Order Traversal using BFS Queue. Spiral/Wavy traversal solution with O(N) time complexity.",
+    "keywords": [],
+    "image": "https://cdn.codehelp.in/media/Zig-zag Level order Traversal of a binary tree.png",
+    "publishedAt": "2026-04-07T11:19:51.607Z",
+    "updatedAt": "2026-04-07T11:19:51.608Z",
+    "mdPath": "content/articles/zig-zag-level-order-traversal-of-a-binary-tree-article.md",
+    "jsonPath": "content/articles_json/zig-zag-level-order-traversal-of-a-binary-tree-article.json"
+  },
+  {
+    "id": "6a78946f4ec8f3318bcef4e6",
+    "title": "k Queues in an Array",
+    "slug": "k-queues-in-an-array",
+    "originalSlug": "k-queues-in-an-array",
+    "description": "Learn how to implement K Queues in an Array, with a clear explanation of multiple queue management, step-by-step examples, and complexity analysis.\n",
+    "keywords": [
+      "K Queues in an Array",
+      "Queues"
+    ],
+    "image": "6a79c07b4ec8f3318bcef6e7",
+    "publishedAt": "2026-08-10T12:14:07.356Z",
+    "updatedAt": "2026-08-10T12:14:07.364Z",
+    "mdPath": "content/articles/k-queues-in-an-array.md",
+    "jsonPath": "content/articles_json/k-queues-in-an-array.json"
+  }
+]

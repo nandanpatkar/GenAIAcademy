@@ -10,6 +10,7 @@ import { SIDEBAR_ITEM_REGISTRY } from "./sidebarRegistry";
 // Mirrors Sidebar.jsx's getActiveId — derives which nav id is currently active
 // from App.jsx's view flags. `p` is the full sidebar props object.
 export function getActiveNavId(p) {
+  if (p.showDsaHub) return "dsa_hub";
   if (p.showOnboarding) return "onboarding_chat";
   if (p.activeToolHome === "interview") return "interview_prep";
   if (p.activeToolHome === "quiz") return "quiz";
@@ -155,6 +156,7 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowLegacyIntelligenceHub) p.setShowLegacyIntelligenceHub(false);
   if (p.setShowQuiz) p.setShowQuiz(false);
   if (p.setShowLeetCode) p.setShowLeetCode(false);
+  if (p.setShowDsaHub) p.setShowDsaHub(false);
   if (p.setShowAlgoWar) p.setShowAlgoWar(false);
   if (p.setShowManual) p.setShowManual(false);
   if (p.setShowReference) p.setShowReference(false);
@@ -454,6 +456,9 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "leetcode":
       if (p.setShowLeetCode) p.setShowLeetCode(true);
+      break;
+    case "dsa_hub":
+      if (p.setShowDsaHub) p.setShowDsaHub(true);
       break;
     case "algowar":
       if (p.setShowAlgoWar) p.setShowAlgoWar(true);

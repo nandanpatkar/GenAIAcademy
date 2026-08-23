@@ -217,7 +217,7 @@ export default function Home2Voyage() {
     ship.position.set(0, 1.35, 3.6);
     scene.add(ship);
 
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
     const mouse = { x: 0, y: 0 };
     let raf = 0;
     let inView = false;
@@ -231,9 +231,10 @@ export default function Home2Voyage() {
       camera.updateProjectionMatrix();
     };
 
-    const frame = () => {
-      const dt = Math.min(clock.getDelta(), 0.05);
-      const t = clock.elapsedTime;
+    const frame = (timestamp) => {
+      timer.update(timestamp);
+      const dt = Math.min(timer.getDelta(), 0.05);
+      const t = timer.getElapsed();
 
       gridUniforms.uScroll.value += dt * 7.0;
       sunUniforms.uTime.value = t;
@@ -258,7 +259,7 @@ export default function Home2Voyage() {
       raf = requestAnimationFrame(frame);
     };
 
-    const start = () => { if (!raf && !reducedMotion) { clock.getDelta(); raf = requestAnimationFrame(frame); } };
+    const start = () => { if (!raf && !reducedMotion) { timer.reset(); raf = requestAnimationFrame(frame); } };
     const stop = () => { if (raf) { cancelAnimationFrame(raf); raf = 0; } };
 
     const onPointerMove = (event) => {

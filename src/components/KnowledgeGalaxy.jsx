@@ -836,10 +836,11 @@ export default function KnowledgeGalaxy({ nodes: pathsData, activePath, onNodeCl
     updateHover(null);
 
     let animationFrame;
-    const motionClock = new THREE.Clock();
-    const animate = () => {
-      const delta = motionClock.getDelta();
-      const elapsed = motionClock.elapsedTime;
+    const motionTimer = new THREE.Timer();
+    const animate = timestamp => {
+      motionTimer.update(timestamp);
+      const delta = motionTimer.getDelta();
+      const elapsed = motionTimer.getElapsed();
       if (motionEnabled3d) {
         rotationY += delta * 0.075;
         movingNodes.forEach(item => {

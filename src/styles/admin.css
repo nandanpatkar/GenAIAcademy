@@ -111,7 +111,7 @@
 
 .admin-view-sidebarcfg { display: grid; gap: 14px; }.admin-sidebarcfg-intro { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }.admin-sidebarcfg-intro p { max-width: 580px; margin-top: 6px; color: var(--text2); font-size: 11px; line-height: 1.55; }.admin-sidebarcfg-intro .admin-secondary-button { flex: none; white-space: nowrap; }.admin-sidebarcfg-group { padding: 18px 22px; }.admin-sidebarcfg-group .admin-panel-heading { margin-bottom: 10px; }.admin-sidebarcfg-list { display: grid; gap: 2px; }.admin-sidebarcfg-row { display: flex; align-items: center; gap: 12px; padding: 11px 4px; border-bottom: 1px solid var(--admin-line); }.admin-sidebarcfg-row:last-child { border-bottom: 0; }.admin-sidebarcfg-icon { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 30px; color: var(--admin-accent); background: var(--admin-accent-soft); border-radius: 8px; }.admin-sidebarcfg-copy { min-width: 0; flex: 1; }.admin-sidebarcfg-copy strong { display: block; color: var(--text); font-size: 12px; font-weight: 700; }.admin-sidebarcfg-copy small { display: block; margin-top: 2px; overflow: hidden; color: var(--text3); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }.admin-sidebarcfg-empty { padding: 6px 4px; color: var(--text3); font-size: 11px; }.admin-segmented { display: flex; flex: 0 0 auto; padding: 3px; background: var(--white-3); border: 1px solid var(--admin-line); border-radius: 8px; }.admin-segmented button { padding: 6px 11px; color: var(--text3); background: transparent; border: 0; border-radius: 5px; font: inherit; font-size: 10px; font-weight: 700; white-space: nowrap; cursor: pointer; }.admin-segmented button:first-child.active { color: var(--admin-accent); background: var(--admin-accent-soft); }.admin-segmented button:last-child.active { color: #e6ae63; background: rgba(230, 174, 99, .14); }
 .admin-sidebarcfg-variant .admin-panel-heading { margin-bottom: 16px; }
-.admin-variant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.admin-variant-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
 .admin-variant-card { position: relative; display: flex; align-items: center; gap: 14px; padding: 16px; text-align: left; background: var(--white-2); border: 1px solid var(--admin-line); border-radius: 14px; cursor: pointer; transition: all .18s ease; }
 .admin-variant-card:hover { border-color: var(--admin-accent); background: var(--white-3); }
 .admin-variant-card.active { border-color: var(--admin-accent); background: var(--admin-accent-soft); box-shadow: 0 0 0 1px var(--admin-accent) inset; }
@@ -120,6 +120,14 @@
 .admin-variant-preview.modern { background: linear-gradient(160deg, color-mix(in srgb, var(--admin-accent) 22%, transparent), transparent); }
 .admin-variant-preview.modern span { background: var(--admin-accent); opacity: .35; }
 .admin-variant-preview.modern span:first-child { opacity: .9; width: 80%; }
+/* The DSA rail's own palette, so the swatch reads as that surface and not as
+   another tint of the workspace accent. */
+.admin-variant-preview.studio { background: #131213; border-color: #27272a; }
+.admin-variant-preview.studio span { background: #a1a1aa; opacity: .3; }
+.admin-variant-preview.studio span:first-child { background: #ac84eb; opacity: .95; width: 70%; }
+.light-theme .admin-variant-preview.studio { background: #fafafa; border-color: #e4e4e7; }
+.light-theme .admin-variant-preview.studio span { background: #52525b; opacity: .32; }
+.light-theme .admin-variant-preview.studio span:first-child { background: #7a3ddb; opacity: 1; }
 .admin-variant-preview.legacy { background: var(--white-4); }
 .admin-variant-preview.legacy span { background: var(--text3); opacity: .3; }
 .admin-variant-preview.legacy span:first-child { opacity: .55; }

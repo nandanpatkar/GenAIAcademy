@@ -37,6 +37,7 @@ import "./styles/mobile-destination-overrides.css";
 // graphing libraries, editors, and simulators out of the landing-page download.
 const Sidebar = React.lazy(() => import("./components/Sidebar"));
 const SidebarModern = React.lazy(() => import("./components/SidebarModern"));
+const SidebarStudio = React.lazy(() => import("./components/SidebarStudio"));
 const MobileNavigationSheet = React.lazy(() => import("./components/mobile/MobileNavigationSheet"));
 const GlobalSearchPalette = React.lazy(() => import("./components/GlobalSearchPalette"));
 const RoadmapGraph = React.lazy(() => import("./components/RoadmapGraph"));
@@ -94,6 +95,7 @@ const AiFromScratch = React.lazy(() => import("./components/AiFromScratch"));
 const InterviewPrep = React.lazy(() => import("./components/InterviewPrep"));
 const QuizApp = React.lazy(() => import("./components/QuizApp"));
 const LeetCodePage = React.lazy(() => import("./pages/LeetCodePage"));
+const DsaHubPage = React.lazy(() => import("./pages/dsa/DsaHubPage"));
 const AlgoWarArena = React.lazy(() => import("./components/algowar/AlgoWarApp"));
 const ProjectIDE = React.lazy(() => import("./components/Projects/ProjectIDE"));
 const IntelligenceHub = React.lazy(() => import("./components/IntelligenceHub"));
@@ -288,11 +290,20 @@ const injectDefaultIcons = (paths) => {
   return updated;
 };
 
+// Sidebar variants, keyed by the value stored in sidebarConfig.variant. Anything
+// unknown (including undefined, i.e. a profile that never picked one) falls back
+// to the modern rail — see MainApp below.
+const SIDEBAR_VARIANTS = {
+  legacy: Sidebar,
+  modern: SidebarModern,
+  studio: SidebarStudio,
+};
+
 function MainApp() {
   const { user, isAdmin, isLocked, signOut, aiProvider, providerConfigs, sidebarConfig } = useAuth();
-  // 'modern' (redesigned rail) is the default; admins can switch back to the
-  // 'legacy' sidebar from the Admin Panel › Sidebar tab.
-  const ActiveSidebar = (sidebarConfig?.variant === "legacy") ? Sidebar : SidebarModern;
+  // 'modern' (redesigned rail) is the default; admins can switch to the
+  // 'legacy' rail or the DSA-styled 'studio' rail from Admin Panel › Sidebar.
+  const ActiveSidebar = SIDEBAR_VARIANTS[sidebarConfig?.variant] || SidebarModern;
   const { theme, toggleTheme } = useTheme();
   // isMobile now comes from the centralized useIsMobile hook (Phase 0 of
   // the mobile redesign) instead of an inline `width <= 768` check.
@@ -351,6 +362,7 @@ function MainApp() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
   const [showLeetCode, setShowLeetCode] = useState(false);
+  const [showDsaHub, setShowDsaHub] = useState(false);
   const [showAlgoWar, setShowAlgoWar] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingMode, setOnboardingMode] = useState("modal"); // "modal" (first login) | "panel" (sidebar reopen)
@@ -927,6 +939,7 @@ function MainApp() {
     setShowDocumentation(false);
     setShowAiFromScratch(false);
     setShowLeetCode(false);
+    setShowDsaHub(false);
     setShowAlgoWar(false);
     setShowOnboarding(false);
     setInterviewDeepLinkId(null);
@@ -1048,6 +1061,7 @@ function MainApp() {
       case "interview_prep": setActiveToolHome("interview"); break;
       case "quiz": setActiveToolHome("quiz"); break;
       case "leetcode": setShowLeetCode(true); break;
+      case "dsa_hub": setShowDsaHub(true); break;
       case "algowar": setShowAlgoWar(true); break;
       // The Agents and AI-from-Scratch destinations were reachable from the
       // sidebar but not from here, so any surface calling navigateToSection
@@ -1609,6 +1623,7 @@ function MainApp() {
     showInterviewPrep, setShowInterviewPrep,
     activeToolHome, onOpenToolHome: setActiveToolHome,
     showQuiz, setShowQuiz, showLeetCode, setShowLeetCode,
+    showDsaHub, setShowDsaHub,
     showAlgoWar, setShowAlgoWar, showProjects, setShowProjects,
     setLinksInitialTab, onHubNav: handleHubNav,
     isMobileMenuOpen, setIsMobileMenuOpen,
@@ -1799,6 +1814,7 @@ function MainApp() {
                                                         showChaiVisual ? <ErrorBoundary><ChaiVisualCourse onClose={() => setShowChaiVisual(false)} /></ErrorBoundary> :
                                                         showAiFromScratch ? <ErrorBoundary><AiFromScratch track={aifsTrack} lesson={aifsLesson} onClose={() => { setAifsLesson(null); setShowAiFromScratch(false); }} /></ErrorBoundary> :
                                                       showInterviewPrep ? <InterviewPrep onClose={() => { setInterviewDeepLinkId(null); setShowInterviewPrep(false); }} initialLessonId={interviewDeepLinkId} pathsData={visiblePaths} /> :
+                                                      showDsaHub ? <DsaHubPage onClose={() => setShowDsaHub(false)} /> :
                                                       showLeetCode ? <LeetCodePage onClose={() => setShowLeetCode(false)} onSubmitLeetCode={handleLeetCodeSubmission} savedSubmissions={pathsData.leetcode?.submissions || {}} /> :
                                                       showAlgoWar ? <AlgoWarArena onClose={() => setShowAlgoWar(false)} /> :
                                                       showQuiz ? <QuizApp /> :

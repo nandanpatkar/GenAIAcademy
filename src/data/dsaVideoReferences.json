@@ -1,0 +1,2578 @@
+{
+  "two-sum-ii-input-array-is-sorted": {
+    "title": "Two Sum II",
+    "videoUrl": "https://www.youtube.com/watch?v=EX2tR_cgCz4",
+    "problemUrl": "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/",
+    "topic": "Array",
+    "pattern": "Two Pointer",
+    "matchedBy": "canonical-url"
+  },
+  "3sum": {
+    "title": "3Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=Euky4JTEK0I",
+    "problemUrl": "https://leetcode.com/problems/3sum/",
+    "topic": "Array",
+    "pattern": "Two Pointer",
+    "matchedBy": "canonical-url"
+  },
+  "sort-colors": {
+    "title": "Sort Colors",
+    "videoUrl": "https://www.youtube.com/watch?v=Gte7jygKt7E",
+    "problemUrl": "https://leetcode.com/problems/sort-colors/",
+    "topic": "Array",
+    "pattern": "Two Pointer",
+    "matchedBy": "canonical-url"
+  },
+  "move-zeroes": {
+    "title": "Move Zeroes",
+    "videoUrl": "https://www.youtube.com/watch?v=a2gP9uYrpQo",
+    "problemUrl": "https://leetcode.com/problems/move-zeroes/",
+    "topic": "Array",
+    "pattern": "Two Pointer",
+    "matchedBy": "canonical-url"
+  },
+  "container-with-most-water": {
+    "title": "Container With Most Water",
+    "videoUrl": "https://www.youtube.com/watch?v=ZwXCUznSym4",
+    "problemUrl": "https://leetcode.com/problems/container-with-most-water/",
+    "topic": "Array",
+    "pattern": "Two Pointer",
+    "matchedBy": "canonical-url"
+  },
+  "trapping-rain-water": {
+    "title": "Trapping Rain Water",
+    "videoUrl": "https://www.youtube.com/watch?v=TrzWAkEwVVs",
+    "problemUrl": "https://leetcode.com/problems/trapping-rain-water/",
+    "topic": "Array",
+    "pattern": "Two Pointer",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-sum-subarray-of-size-k": {
+    "title": "Maximum Sum Subarray of Size K",
+    "videoUrl": "https://www.youtube.com/watch?v=o3luQXt08W8",
+    "problemUrl": "https://leetcode.com/problems/max-consecutive-ones/",
+    "topic": "Array",
+    "pattern": "Sliding Window",
+    "matchedBy": "title"
+  },
+  "max-consecutive-ones": {
+    "title": "Max Consecutive ones",
+    "videoUrl": "https://www.youtube.com/watch?v=1QLnjtdEl9Y",
+    "problemUrl": "https://leetcode.com/problems/max-consecutive-ones/",
+    "topic": "Array",
+    "pattern": "Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "max-consecutive-ones-iii": {
+    "title": "Max Consecutive ones III",
+    "videoUrl": "https://www.youtube.com/watch?v=1QLnjtdEl9Y",
+    "problemUrl": "https://leetcode.com/problems/max-consecutive-ones-iii/",
+    "topic": "Array",
+    "pattern": "Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "subarray-product-less-than-k": {
+    "title": "Subarray Product Less Than K",
+    "videoUrl": "https://www.youtube.com/watch?v=ptz9_Ge-jw0",
+    "problemUrl": "https://leetcode.com/problems/subarray-product-less-than-k/",
+    "topic": "Array",
+    "pattern": "Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "sliding-window-maximum": {
+    "title": "Sliding Window Maximum",
+    "videoUrl": "https://www.youtube.com/watch?v=fSVnU0mCBBM",
+    "problemUrl": "https://leetcode.com/problems/sliding-window-maximum/",
+    "topic": "Heap",
+    "pattern": "Heap with Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "subarrays-with-k-different-integers": {
+    "title": "Subarray with k distinct integers",
+    "videoUrl": "https://www.youtube.com/watch?v=ueDbQudUYxQ",
+    "problemUrl": "https://leetcode.com/problems/subarrays-with-k-different-integers/",
+    "topic": "Array",
+    "pattern": "Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "fruit-into-baskets": {
+    "title": "Fruit Into Baskets",
+    "videoUrl": "https://www.youtube.com/watch?v=bXM1YNPmrwo",
+    "problemUrl": "https://leetcode.com/problems/fruit-into-baskets/",
+    "topic": "HashMap",
+    "pattern": "Sliding Window + HashMap",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-size-subarray-sum": {
+    "title": "Minimum Size Subarray Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=r5O9fODudVU",
+    "problemUrl": "https://leetcode.com/problems/minimum-size-subarray-sum/",
+    "topic": "Array",
+    "pattern": "Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "subarray-sum-equals-k": {
+    "title": "Subarray Sum Equals K",
+    "videoUrl": "https://www.youtube.com/watch?v=wGtHHvQCZSc",
+    "problemUrl": "https://leetcode.com/problems/subarray-sum-equals-k/",
+    "topic": "HashMap",
+    "pattern": "Prefix-Sum with Map",
+    "matchedBy": "canonical-url"
+  },
+  "matrix-block-sum": {
+    "title": "Running Sum 2D Array",
+    "videoUrl": "https://www.youtube.com/watch?v=oLGfWUt2gFY",
+    "problemUrl": "https://leetcode.com/problems/matrix-block-sum/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "canonical-url"
+  },
+  "product-of-array-except-self": {
+    "title": "Product of Array Except Self",
+    "videoUrl": "https://www.youtube.com/watch?v=Le4oEjbZlfo",
+    "problemUrl": "https://leetcode.com/problems/product-of-array-except-self/",
+    "topic": "Array",
+    "pattern": "Prefix Sum",
+    "matchedBy": "canonical-url"
+  },
+  "continuous-subarray-sum": {
+    "title": "Continuous Subarray Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=wGtHHvQCZSc",
+    "problemUrl": "https://leetcode.com/problems/continuous-subarray-sum/",
+    "topic": "HashMap",
+    "pattern": "Prefix-Sum with Map",
+    "matchedBy": "canonical-url"
+  },
+  "subarray-sums-divisible-by-k": {
+    "title": "Subarray Sums Divisible by K",
+    "videoUrl": "https://www.youtube.com/watch?v=o3luQXt08W8",
+    "problemUrl": "https://leetcode.com/problems/subarray-sums-divisible-by-k/",
+    "topic": "HashMap",
+    "pattern": "Prefix-Sum with Map",
+    "matchedBy": "canonical-url"
+  },
+  "find-pivot-index": {
+    "title": "Find Pivot Index",
+    "videoUrl": "https://www.youtube.com/watch?v=_B2JakopXLc",
+    "problemUrl": "https://leetcode.com/problems/find-pivot-index/",
+    "topic": "Array",
+    "pattern": "Prefix Sum",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-subarray": {
+    "title": "Maximum Subarray",
+    "videoUrl": "https://www.youtube.com/watch?v=o3luQXt08W8",
+    "problemUrl": "https://leetcode.com/problems/maximum-subarray/",
+    "topic": "Recursion",
+    "pattern": "Divide & Conquer",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-product-subarray": {
+    "title": "Maximum Product Subarray",
+    "videoUrl": "https://www.youtube.com/watch?v=QpmEco0r2Zs",
+    "problemUrl": "https://leetcode.com/problems/maximum-product-subarray/",
+    "topic": "Dynamic Programming",
+    "pattern": "1D / Linear DP",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-sum-circular-subarray": {
+    "title": "Maximum Sum Circular Subarray",
+    "videoUrl": "https://www.youtube.com/watch?v=HI-oHWuRYUU",
+    "problemUrl": "https://leetcode.com/problems/maximum-sum-circular-subarray/",
+    "topic": "Array",
+    "pattern": "Kadane’s Algorithm",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-absolute-sum-of-any-subarray": {
+    "title": "Maximum Absolute Sum of Any Subarray",
+    "videoUrl": "https://www.youtube.com/watch?v=o3luQXt08W8",
+    "problemUrl": "https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/",
+    "topic": "Array",
+    "pattern": "Kadane’s Algorithm",
+    "matchedBy": "canonical-url"
+  },
+  "reverse-string": {
+    "title": "Reverse String",
+    "videoUrl": "https://www.youtube.com/watch?v=EBd-u0ehi98",
+    "problemUrl": "https://leetcode.com/problems/reverse-string/",
+    "topic": "Recursion",
+    "pattern": "Linear Recursion",
+    "matchedBy": "canonical-url"
+  },
+  "valid-palindrome-ii": {
+    "title": "Valid Palindrome II",
+    "videoUrl": "https://www.youtube.com/watch?v=4cRWTrsyLSw",
+    "problemUrl": "https://leetcode.com/problems/valid-palindrome-ii/",
+    "topic": "Strings",
+    "pattern": "Two-Pointer (Palindrome)",
+    "matchedBy": "canonical-url"
+  },
+  "longest-palindromic-substring": {
+    "title": "Longest Palindromic Substring",
+    "videoUrl": "https://www.youtube.com/watch?v=HydqGuhkTi8",
+    "problemUrl": "https://leetcode.com/problems/longest-palindromic-substring/",
+    "topic": "Strings",
+    "pattern": "Manacher’s Algorithm (0/2)",
+    "matchedBy": "canonical-url"
+  },
+  "palindromic-substrings": {
+    "title": "Palindromic Substrings",
+    "videoUrl": "https://www.youtube.com/watch?v=RXsA5vYlPX8",
+    "problemUrl": "https://leetcode.com/problems/palindromic-substrings/",
+    "topic": "Strings",
+    "pattern": "Two-Pointer (Palindrome)",
+    "matchedBy": "canonical-url"
+  },
+  "find-all-anagrams-in-a-string": {
+    "title": "Find All Anagrams in a String",
+    "videoUrl": "https://www.youtube.com/watch?v=G8xtZy0fDKg",
+    "problemUrl": "https://leetcode.com/problems/find-all-anagrams-in-a-string/",
+    "topic": "HashMap",
+    "pattern": "Sliding Window + HashMap",
+    "matchedBy": "canonical-url"
+  },
+  "longest-substring-without-repeating-characters": {
+    "title": "Longest Substring Without Repeating Characters",
+    "videoUrl": "https://www.youtube.com/watch?v=_zpYpeIREPE",
+    "problemUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+    "topic": "HashMap",
+    "pattern": "Sliding Window + HashMap",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-window-substring": {
+    "title": "Minimum Window Substring",
+    "videoUrl": "https://www.youtube.com/watch?v=iT-OAsgWueY",
+    "problemUrl": "https://leetcode.com/problems/minimum-window-substring/",
+    "topic": "HashMap",
+    "pattern": "Sliding Window + HashMap",
+    "matchedBy": "canonical-url"
+  },
+  "longest-substring-with-at-most-k-distinct-characters": {
+    "title": "Longest Substring with At Most K Distinct Characters",
+    "videoUrl": "https://www.youtube.com/watch?v=_zpYpeIREPE",
+    "problemUrl": "https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/",
+    "topic": "HashMap",
+    "pattern": "Sliding Window + HashMap",
+    "matchedBy": "canonical-url"
+  },
+  "permutation-in-string": {
+    "title": "Permutation in String",
+    "videoUrl": "https://www.youtube.com/watch?v=wvf4ValChy4",
+    "problemUrl": "https://leetcode.com/problems/permutation-in-string/",
+    "topic": "Strings",
+    "pattern": "Sliding Window (String)",
+    "matchedBy": "canonical-url"
+  },
+  "longest-nice-substring": {
+    "title": "Longest Nice Substring",
+    "videoUrl": "https://www.youtube.com/watch?v=_zpYpeIREPE",
+    "problemUrl": "https://leetcode.com/problems/longest-nice-substring/",
+    "topic": "Strings",
+    "pattern": "Sliding Window (String)",
+    "matchedBy": "canonical-url"
+  },
+  "repeated-dna-sequences": {
+    "title": "Repeated DNA Sequences",
+    "videoUrl": "https://www.youtube.com/watch?v=wNp_FS1Sa_c",
+    "problemUrl": "https://leetcode.com/problems/repeated-dna-sequences/",
+    "topic": "Strings",
+    "pattern": "String Hashing / Rolling Hash (0/3)",
+    "matchedBy": "canonical-url"
+  },
+  "longest-duplicate-substring": {
+    "title": "Longest Duplicate Substring",
+    "videoUrl": "https://www.youtube.com/watch?v=_zpYpeIREPE",
+    "problemUrl": "https://leetcode.com/problems/longest-duplicate-substring/",
+    "topic": "Strings",
+    "pattern": "String Hashing / Rolling Hash (0/3)",
+    "matchedBy": "canonical-url"
+  },
+  "check-if-a-string-contains-all-binary-codes-of-size-k": {
+    "title": "Check If a String Contains All Binary Codes of Size K",
+    "videoUrl": "https://www.youtube.com/watch?v=qU32rTy_kOM",
+    "problemUrl": null,
+    "topic": "Strings",
+    "pattern": "String Hashing / Rolling Hash (0/3)",
+    "matchedBy": "title"
+  },
+  "find-the-index-of-the-first-occurrence-in-a-string": {
+    "title": "Implement strStr()",
+    "videoUrl": "https://www.youtube.com/watch?v=qKFGIJLE3mA",
+    "problemUrl": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/",
+    "topic": "Strings",
+    "pattern": "KMP Algorithm / Prefix Function (0/4)",
+    "matchedBy": "canonical-url"
+  },
+  "shortest-palindrome": {
+    "title": "Shortest Palindrome",
+    "videoUrl": "https://www.youtube.com/watch?v=uWYF8nL5E1A",
+    "problemUrl": "https://leetcode.com/problems/shortest-palindrome/",
+    "topic": "Strings",
+    "pattern": "KMP Algorithm / Prefix Function (0/4)",
+    "matchedBy": "canonical-url"
+  },
+  "repeated-substring-pattern": {
+    "title": "Repeated Substring Pattern",
+    "videoUrl": "https://www.youtube.com/watch?v=_zpYpeIREPE",
+    "problemUrl": null,
+    "topic": "Strings",
+    "pattern": "KMP Algorithm / Prefix Function (0/4)",
+    "matchedBy": "title"
+  },
+  "longest-happy-prefix": {
+    "title": "Longest Happy Prefix",
+    "videoUrl": "https://www.youtube.com/watch?v=2iY7YYLNLAA",
+    "problemUrl": null,
+    "topic": "Strings",
+    "pattern": "KMP Algorithm / Prefix Function (0/4)",
+    "matchedBy": "title"
+  },
+  "sum-of-scores-of-built-strings": {
+    "title": "Sum of Scores of Built Strings",
+    "videoUrl": "https://www.youtube.com/watch?v=98-CzNc1O6M",
+    "problemUrl": "https://leetcode.com/problems/sum-of-scores-of-built-strings/",
+    "topic": "Strings",
+    "pattern": "Z-Algorithm (0/3)",
+    "matchedBy": "canonical-url"
+  },
+  "longest-common-prefix": {
+    "title": "Longest common prefix",
+    "videoUrl": "https://www.youtube.com/watch?v=2iY7YYLNLAA",
+    "problemUrl": "https://leetcode.com/problems/longest-common-prefix/",
+    "topic": "Trie",
+    "pattern": "Basic Trie Operations",
+    "matchedBy": "canonical-url"
+  },
+  "binary-search": {
+    "title": "Binary Search",
+    "videoUrl": "https://www.youtube.com/watch?v=fM4Yat0dERo",
+    "problemUrl": "https://leetcode.com/problems/binary-search/",
+    "topic": "Recursion",
+    "pattern": "Divide & Conquer",
+    "matchedBy": "canonical-url"
+  },
+  "sqrtx": {
+    "title": "Sqrt(x)",
+    "videoUrl": "https://www.youtube.com/watch?v=fM4Yat0dERo",
+    "problemUrl": "https://leetcode.com/problems/sqrtx/",
+    "topic": "Binary Search",
+    "pattern": "Classic Binary Search",
+    "matchedBy": "canonical-url"
+  },
+  "search-insert-position": {
+    "title": "Search Insert Position",
+    "videoUrl": "https://www.youtube.com/watch?v=MhsEFYyImPs",
+    "problemUrl": "https://leetcode.com/problems/search-insert-position/",
+    "topic": "Binary Search",
+    "pattern": "Classic Binary Search",
+    "matchedBy": "canonical-url"
+  },
+  "search-in-rotated-sorted-array": {
+    "title": "Search in Rotated Sorted Array",
+    "videoUrl": "https://www.youtube.com/watch?v=46kRvrls5xM",
+    "problemUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array/",
+    "topic": "Recursion",
+    "pattern": "Divide & Conquer",
+    "matchedBy": "canonical-url"
+  },
+  "find-minimum-in-rotated-sorted-array": {
+    "title": "Find Minimum in Rotated Sorted Array",
+    "videoUrl": "https://www.youtube.com/watch?v=_B2JakopXLc",
+    "problemUrl": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+    "topic": "Binary Search",
+    "pattern": "Classic Binary Search",
+    "matchedBy": "canonical-url"
+  },
+  "find-peak-element": {
+    "title": "Find Peak Element",
+    "videoUrl": "https://www.youtube.com/watch?v=cVHxNix0aXA",
+    "problemUrl": "https://leetcode.com/problems/find-peak-element/",
+    "topic": "Binary Search",
+    "pattern": "Classic Binary Search",
+    "matchedBy": "canonical-url"
+  },
+  "find-first-and-last-position-of-element-in-sorted-array": {
+    "title": "Find First and Last Position of Element",
+    "videoUrl": "https://www.youtube.com/watch?v=ViotQxoHip4",
+    "problemUrl": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
+    "topic": "Binary Search",
+    "pattern": "Lower / Upper Bound",
+    "matchedBy": "canonical-url"
+  },
+  "find-kth-rotation": {
+    "title": "Find kth rotation",
+    "videoUrl": "https://www.youtube.com/watch?v=ViotQxoHip4",
+    "problemUrl": null,
+    "topic": "Binary Search",
+    "pattern": "Lower / Upper Bound",
+    "matchedBy": "title-alias"
+  },
+  "count-occurrences": {
+    "title": "Count Occurrences",
+    "videoUrl": "https://www.youtube.com/watch?v=Hs49-Lws_XM",
+    "problemUrl": null,
+    "topic": "Binary Search",
+    "pattern": "Lower / Upper Bound",
+    "matchedBy": "title-alias"
+  },
+  "ceiling-in-a-sorted-array": {
+    "title": "Ceiling in a Sorted Array",
+    "videoUrl": "https://www.youtube.com/watch?v=_T4Tr2Y6yd4",
+    "problemUrl": null,
+    "topic": "Binary Search",
+    "pattern": "Lower / Upper Bound",
+    "matchedBy": "title"
+  },
+  "floor-in-a-sorted-array": {
+    "title": "Floor in a Sorted Array",
+    "videoUrl": "https://www.youtube.com/watch?v=W1ombWDEPJg",
+    "problemUrl": null,
+    "topic": "Binary Search",
+    "pattern": "Lower / Upper Bound",
+    "matchedBy": "title"
+  },
+  "koko-eating-bananas": {
+    "title": "Koko Eating Bananas",
+    "videoUrl": "https://www.youtube.com/watch?v=iWs_RhBbMmM",
+    "problemUrl": "https://leetcode.com/problems/koko-eating-bananas/",
+    "topic": "Binary Search",
+    "pattern": "Binary Search on Answers",
+    "matchedBy": "canonical-url"
+  },
+  "capacity-to-ship-packages-within-d-days": {
+    "title": "Capacity To Ship Packages Within D Days",
+    "videoUrl": "https://www.youtube.com/watch?v=g0jbBFDkObs",
+    "problemUrl": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/",
+    "topic": "Binary Search",
+    "pattern": "Binary Search on Answers",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-speed-to-arrive-on-time": {
+    "title": "Min Speed to Arrive on Time",
+    "videoUrl": "https://www.youtube.com/watch?v=voRNrnZBsUQ",
+    "problemUrl": "https://leetcode.com/problems/minimum-speed-to-arrive-on-time/",
+    "topic": "Binary Search",
+    "pattern": "Binary Search on Answers",
+    "matchedBy": "canonical-url"
+  },
+  "aggressive-cows": {
+    "title": "Aggressive cows",
+    "videoUrl": "https://www.youtube.com/watch?v=fM4Yat0dERo",
+    "problemUrl": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/",
+    "topic": "Binary Search",
+    "pattern": "Binary Search on Answers",
+    "matchedBy": "title"
+  },
+  "minimum-number-of-days-to-make-m-bouquets": {
+    "title": "Min number of days to make m bouquets",
+    "videoUrl": "https://www.youtube.com/watch?v=3JWmkGlssOY",
+    "problemUrl": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/",
+    "topic": "Binary Search",
+    "pattern": "Binary Search on Answers",
+    "matchedBy": "canonical-url"
+  },
+  "magnetic-force-between-two-balls": {
+    "title": "Magnetic Force Between Two Balls",
+    "videoUrl": "https://www.youtube.com/watch?v=7Q6GtDmoM6M",
+    "problemUrl": "https://leetcode.com/problems/magnetic-force-between-two-balls/",
+    "topic": "Binary Search",
+    "pattern": "Binary Search on Answers",
+    "matchedBy": "canonical-url"
+  },
+  "split-array-largest-sum": {
+    "title": "Split Array Largest Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=YUF3_eBdzsk",
+    "problemUrl": "https://leetcode.com/problems/split-array-largest-sum/",
+    "topic": "Binary Search",
+    "pattern": "Binary Search on Answers",
+    "matchedBy": "canonical-url"
+  },
+  "search-a-2d-matrix": {
+    "title": "Search a 2D Matrix",
+    "videoUrl": "https://www.youtube.com/watch?v=sfVzamPfIrw",
+    "problemUrl": "https://leetcode.com/problems/search-a-2d-matrix/",
+    "topic": "Binary Search",
+    "pattern": "Search in 2D Matrix",
+    "matchedBy": "canonical-url"
+  },
+  "search-a-2d-matrix-ii": {
+    "title": "Search a 2D Matrix II",
+    "videoUrl": "https://www.youtube.com/watch?v=sfVzamPfIrw",
+    "problemUrl": "https://leetcode.com/problems/search-a-2d-matrix-ii/",
+    "topic": "Binary Search",
+    "pattern": "Search in 2D Matrix",
+    "matchedBy": "canonical-url"
+  },
+  "kth-smallest-element-in-a-sorted-matrix": {
+    "title": "Kth Smallest Element in Sorted Matrix",
+    "videoUrl": "https://www.youtube.com/watch?v=_iIFvJwFOxA",
+    "problemUrl": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/",
+    "topic": "Binary Search",
+    "pattern": "Search in 2D Matrix",
+    "matchedBy": "canonical-url"
+  },
+  "matrix-median": {
+    "title": "Matrix Median",
+    "videoUrl": "https://www.youtube.com/watch?v=sfVzamPfIrw",
+    "problemUrl": null,
+    "topic": "Binary Search",
+    "pattern": "Search in 2D Matrix",
+    "matchedBy": "title-alias"
+  },
+  "next-greater-element-i": {
+    "title": "Next Greater Element I",
+    "videoUrl": "https://www.youtube.com/watch?v=i7N07gXrqh0",
+    "problemUrl": "https://leetcode.com/problems/next-greater-element-i/",
+    "topic": "Stack",
+    "pattern": "Monotonic Stack",
+    "matchedBy": "canonical-url"
+  },
+  "next-greater-element-ii": {
+    "title": "Next Greater Element II",
+    "videoUrl": "https://www.youtube.com/watch?v=i7N07gXrqh0",
+    "problemUrl": "https://leetcode.com/problems/next-greater-element-ii/",
+    "topic": "Stack",
+    "pattern": "Monotonic Stack",
+    "matchedBy": "canonical-url"
+  },
+  "daily-temperatures": {
+    "title": "Daily Temperatures",
+    "videoUrl": "https://www.youtube.com/watch?v=o0KsjhJaLOM",
+    "problemUrl": "https://leetcode.com/problems/daily-temperatures/",
+    "topic": "Stack",
+    "pattern": "Monotonic Stack",
+    "matchedBy": "canonical-url"
+  },
+  "online-stock-span": {
+    "title": "Online Stock Span",
+    "videoUrl": "https://www.youtube.com/watch?v=MjdS3Pr6l6Q",
+    "problemUrl": "https://leetcode.com/problems/online-stock-span/",
+    "topic": "Stack",
+    "pattern": "Monotonic Stack",
+    "matchedBy": "canonical-url"
+  },
+  "largest-rectangle-in-histogram": {
+    "title": "Largest Rectangle in Histogram",
+    "videoUrl": "https://www.youtube.com/watch?v=pabSPbsmzFg",
+    "problemUrl": "https://leetcode.com/problems/largest-rectangle-in-histogram/",
+    "topic": "Stack",
+    "pattern": "Monotonic Stack",
+    "matchedBy": "canonical-url"
+  },
+  "maximal-rectangle": {
+    "title": "Maximal Rectangle",
+    "videoUrl": "https://www.youtube.com/watch?v=DPkDmhCyyuc",
+    "problemUrl": "https://leetcode.com/problems/maximal-rectangle/",
+    "topic": "Stack",
+    "pattern": "Monotonic Stack",
+    "matchedBy": "canonical-url"
+  },
+  "asteroid-collision": {
+    "title": "Asteroid Collision",
+    "videoUrl": "https://www.youtube.com/watch?v=VLw3GaRz_aQ",
+    "problemUrl": "https://leetcode.com/problems/asteroid-collision/",
+    "topic": "Stack",
+    "pattern": "Monotonic Stack",
+    "matchedBy": "canonical-url"
+  },
+  "basic-calculator": {
+    "title": "Basic Calculator I",
+    "videoUrl": "https://www.youtube.com/watch?v=mnNsoWg2IO0",
+    "problemUrl": "https://leetcode.com/problems/basic-calculator/",
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "canonical-url"
+  },
+  "basic-calculator-ii": {
+    "title": "Basic Calculator II",
+    "videoUrl": "https://www.youtube.com/watch?v=bWKQiEY_XGI",
+    "problemUrl": "https://leetcode.com/problems/basic-calculator-ii/",
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "canonical-url"
+  },
+  "evaluate-reverse-polish-notation": {
+    "title": "Evaluate Reverse Polish Notation",
+    "videoUrl": "https://www.youtube.com/watch?v=iu0082c4HDE",
+    "problemUrl": "https://leetcode.com/problems/evaluate-reverse-polish-notation/",
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "canonical-url"
+  },
+  "decode-string": {
+    "title": "Decode String",
+    "videoUrl": "https://www.youtube.com/watch?v=bLmV3phOqHI",
+    "problemUrl": "https://leetcode.com/problems/decode-string/",
+    "topic": "Recursion",
+    "pattern": "Recursive String Processing",
+    "matchedBy": "canonical-url"
+  },
+  "infix-to-prefix": {
+    "title": "infix to prefix",
+    "videoUrl": "https://www.youtube.com/watch?v=cWdtik-TGd0",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "title-alias"
+  },
+  "infix-to-postfix": {
+    "title": "infix to postfix",
+    "videoUrl": "https://www.youtube.com/watch?v=cWdtik-TGd0",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "title-alias"
+  },
+  "postfix-to-prefix": {
+    "title": "postfix to prefix",
+    "videoUrl": "https://www.youtube.com/watch?v=cWdtik-TGd0",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "title-alias"
+  },
+  "postfix-to-infix": {
+    "title": "postfix to infix",
+    "videoUrl": "https://www.youtube.com/watch?v=cWdtik-TGd0",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "title-alias"
+  },
+  "prefix-to-infix": {
+    "title": "prefix to infix",
+    "videoUrl": "https://www.youtube.com/watch?v=cWdtik-TGd0",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "title-alias"
+  },
+  "prefix-to-postfix": {
+    "title": "prefix to postfix",
+    "videoUrl": "https://www.youtube.com/watch?v=cWdtik-TGd0",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Expression Evaluation",
+    "matchedBy": "title-alias"
+  },
+  "backspace-string-compare": {
+    "title": "Backspace String Compare",
+    "videoUrl": "https://www.youtube.com/watch?v=PTGOlfb92c0",
+    "problemUrl": "https://leetcode.com/problems/backspace-string-compare/",
+    "topic": "Stack",
+    "pattern": "Stack Simulation / Undo Operation",
+    "matchedBy": "canonical-url"
+  },
+  "remove-all-adjacent-duplicates-in-string": {
+    "title": "Remove All Adjacent Duplicates",
+    "videoUrl": "https://www.youtube.com/watch?v=w6LcypDgC4w",
+    "problemUrl": "https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/",
+    "topic": "Stack",
+    "pattern": "Stack Simulation / Undo Operation",
+    "matchedBy": "canonical-url"
+  },
+  "make-the-string-great": {
+    "title": "Make the String Great",
+    "videoUrl": "https://www.youtube.com/watch?v=10tBWNjzvtw",
+    "problemUrl": "https://leetcode.com/problems/make-the-string-great/",
+    "topic": "Stack",
+    "pattern": "Stack Simulation / Undo Operation",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-string-length-after-removing-substrings": {
+    "title": "Minimum String Length After Removing Substrings",
+    "videoUrl": "https://www.youtube.com/watch?v=yBdULgU_EvY",
+    "problemUrl": "https://leetcode.com/problems/minimum-string-length-after-removing-substrings/",
+    "topic": "Stack",
+    "pattern": "Stack Simulation / Undo Operation",
+    "matchedBy": "canonical-url"
+  },
+  "valid-parentheses": {
+    "title": "Valid Parentheses",
+    "videoUrl": "https://www.youtube.com/watch?v=mnNsoWg2IO0",
+    "problemUrl": "https://leetcode.com/problems/valid-parentheses/",
+    "topic": "Stack",
+    "pattern": "Parenthesis & Scoring",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-add-to-make-parentheses-valid": {
+    "title": "Minimum Add to Make Parentheses Valid",
+    "videoUrl": "https://www.youtube.com/watch?v=UizI7R6ND9Q",
+    "problemUrl": "https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/",
+    "topic": "Stack",
+    "pattern": "Parenthesis & Scoring",
+    "matchedBy": "canonical-url"
+  },
+  "longest-valid-parentheses": {
+    "title": "Longest Valid Parentheses",
+    "videoUrl": "https://www.youtube.com/watch?v=yKyz-h7ZAf4",
+    "problemUrl": "https://leetcode.com/problems/longest-valid-parentheses/",
+    "topic": "Stack",
+    "pattern": "Parenthesis & Scoring",
+    "matchedBy": "canonical-url"
+  },
+  "score-of-parentheses": {
+    "title": "Score of Parentheses",
+    "videoUrl": "https://www.youtube.com/watch?v=mnNsoWg2IO0",
+    "problemUrl": "https://leetcode.com/problems/score-of-parentheses/",
+    "topic": "Stack",
+    "pattern": "Parenthesis & Scoring",
+    "matchedBy": "canonical-url"
+  },
+  "min-stack": {
+    "title": "Min Stack",
+    "videoUrl": "https://www.youtube.com/watch?v=8BZDEeY-yUc",
+    "problemUrl": "https://leetcode.com/problems/min-stack/",
+    "topic": "Stack",
+    "pattern": "Stack-Based Design",
+    "matchedBy": "canonical-url"
+  },
+  "max-stack": {
+    "title": "Max Stack",
+    "videoUrl": "https://www.youtube.com/watch?v=qP0L6LZ3i2Q",
+    "problemUrl": "https://leetcode.com/problems/max-stack/",
+    "topic": "Stack",
+    "pattern": "Stack-Based Design",
+    "matchedBy": "canonical-url"
+  },
+  "implement-queue-using-stacks": {
+    "title": "Implement Queue using Stacks",
+    "videoUrl": "https://www.youtube.com/watch?v=1U-FKK4p6VE",
+    "problemUrl": "https://leetcode.com/problems/implement-queue-using-stacks/",
+    "topic": "Stack",
+    "pattern": "Stack-Based Design",
+    "matchedBy": "canonical-url"
+  },
+  "implement-stack-using-queues": {
+    "title": "Implement Stack using Queues",
+    "videoUrl": "https://www.youtube.com/watch?v=qP0L6LZ3i2Q",
+    "problemUrl": "https://leetcode.com/problems/implement-stack-using-queues/",
+    "topic": "Stack",
+    "pattern": "Stack-Based Design",
+    "matchedBy": "canonical-url"
+  },
+  "design-a-stack-with-increment-operation": {
+    "title": "Design Stack with Increment Operation",
+    "videoUrl": "https://www.youtube.com/watch?v=7A0EFY8_SnI",
+    "problemUrl": "https://leetcode.com/problems/design-a-stack-with-increment-operation/",
+    "topic": "Stack",
+    "pattern": "Stack-Based Design",
+    "matchedBy": "canonical-url"
+  },
+  "reverse-a-stack-recursive": {
+    "title": "Reverse a Stack (Recursive)",
+    "videoUrl": "https://www.youtube.com/watch?v=VfgbBmjOUSg",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Recursive Stack",
+    "matchedBy": "pattern-title"
+  },
+  "insert-at-bottom-of-stack": {
+    "title": "Insert at Bottom of Stack",
+    "videoUrl": "https://www.youtube.com/watch?v=-CI6Lhv1fOw",
+    "problemUrl": "https://leetcode.com/problems/reverse-linked-list/",
+    "topic": "Recursion",
+    "pattern": "Recursive Stack / Linked List",
+    "matchedBy": "title-alias"
+  },
+  "delete-middle-element-of-stack": {
+    "title": "Delete Middle Element of Stack",
+    "videoUrl": "https://www.youtube.com/watch?v=whQLecVlnNM",
+    "problemUrl": null,
+    "topic": "Stack",
+    "pattern": "Recursive Stack",
+    "matchedBy": "pattern-title"
+  },
+  "search-in-linked-list": {
+    "title": "Search in Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=7YEZjO03JwA",
+    "problemUrl": "https://leetcode.com/problems/design-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Basic Operations",
+    "matchedBy": "title-alias"
+  },
+  "design-linked-list": {
+    "title": "Design Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=7YEZjO03JwA",
+    "problemUrl": "https://leetcode.com/problems/design-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Basic Operations",
+    "matchedBy": "canonical-url"
+  },
+  "delete-head-tail-nth-node": {
+    "title": "Delete Head / Tail / Nth Node",
+    "videoUrl": "https://www.youtube.com/watch?v=L7_0FCrajUA",
+    "problemUrl": "https://leetcode.com/problems/odd-even-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Basic Operations",
+    "matchedBy": "title-alias"
+  },
+  "odd-even-linked-list": {
+    "title": "Odd–Even Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=DFNPTtevXso",
+    "problemUrl": "https://leetcode.com/problems/odd-even-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Basic Operations",
+    "matchedBy": "canonical-url"
+  },
+  "middle-of-the-linked-list": {
+    "title": "Middle of the Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=7YEZjO03JwA",
+    "problemUrl": "https://leetcode.com/problems/middle-of-a-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Fast and Slow Pointers",
+    "matchedBy": "title"
+  },
+  "linked-list-cycle": {
+    "title": "Linked List Cycle",
+    "videoUrl": "https://www.youtube.com/watch?v=2MlUoKhIjA0",
+    "problemUrl": "https://leetcode.com/problems/linked-list-cycle/",
+    "topic": "Linked List",
+    "pattern": "Fast and Slow Pointers",
+    "matchedBy": "canonical-url"
+  },
+  "linked-list-cycle-ii": {
+    "title": "Linked List Cycle II",
+    "videoUrl": "https://www.youtube.com/watch?v=2MlUoKhIjA0",
+    "problemUrl": "https://leetcode.com/problems/linked-list-cycle-ii/",
+    "topic": "Linked List",
+    "pattern": "Fast and Slow Pointers",
+    "matchedBy": "canonical-url"
+  },
+  "remove-nth-node-from-end-of-list": {
+    "title": "Remove Nth Node From End",
+    "videoUrl": "https://www.youtube.com/watch?v=L7_0FCrajUA",
+    "problemUrl": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+    "topic": "Linked List",
+    "pattern": "Fast and Slow Pointers",
+    "matchedBy": "canonical-url"
+  },
+  "reverse-linked-list": {
+    "title": "Reverse a Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=8DJwQV3fjuI",
+    "problemUrl": "https://leetcode.com/problems/reverse-linked-list/",
+    "topic": "Recursion",
+    "pattern": "Recursive Stack / Linked List",
+    "matchedBy": "canonical-url"
+  },
+  "reverse-linked-list-ii": {
+    "title": "Reverse Linked List II (between m & n)",
+    "videoUrl": "https://www.youtube.com/watch?v=8DJwQV3fjuI",
+    "problemUrl": "https://leetcode.com/problems/reverse-linked-list-ii/",
+    "topic": "Linked List",
+    "pattern": "Reversal Pattern",
+    "matchedBy": "canonical-url"
+  },
+  "palindrome-linked-list": {
+    "title": "Palindrome Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=zDhsnfmMD10",
+    "problemUrl": "https://leetcode.com/problems/palindrome-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Reversal Pattern",
+    "matchedBy": "canonical-url"
+  },
+  "reverse-nodes-in-k-group": {
+    "title": "Reverse Nodes in k-Group",
+    "videoUrl": "https://www.youtube.com/watch?v=vqaO4oIJqnI",
+    "problemUrl": "https://leetcode.com/problems/reverse-nodes-in-k-group/",
+    "topic": "Linked List",
+    "pattern": "Reversal Pattern",
+    "matchedBy": "canonical-url"
+  },
+  "swap-nodes-in-pairs": {
+    "title": "Swap Nodes in Pairs",
+    "videoUrl": "https://www.youtube.com/watch?v=OY09-51I-K0",
+    "problemUrl": "https://leetcode.com/problems/swap-nodes-in-pairs/",
+    "topic": "Linked List",
+    "pattern": "Reversal Pattern",
+    "matchedBy": "canonical-url"
+  },
+  "rotate-list": {
+    "title": "Rotate List",
+    "videoUrl": "https://www.youtube.com/watch?v=NW7jm2ab7fU",
+    "problemUrl": "https://leetcode.com/problems/rotate-list/",
+    "topic": "Linked List",
+    "pattern": "Reversal Pattern",
+    "matchedBy": "canonical-url"
+  },
+  "merge-two-sorted-lists": {
+    "title": "Merge Two Sorted Lists",
+    "videoUrl": "https://www.youtube.com/watch?v=lYGA8H2uMc8",
+    "problemUrl": "https://leetcode.com/problems/merge-two-sorted-lists/",
+    "topic": "Recursion",
+    "pattern": "Recursive Stack / Linked List",
+    "matchedBy": "canonical-url"
+  },
+  "merge-k-sorted-lists": {
+    "title": "Merge K Sorted Lists",
+    "videoUrl": "https://www.youtube.com/watch?v=fhme5bG5fsE",
+    "problemUrl": "https://leetcode.com/problems/merge-k-sorted-lists/",
+    "topic": "Heap",
+    "pattern": "Merge K Sorted",
+    "matchedBy": "canonical-url"
+  },
+  "sort-list": {
+    "title": "Sort List",
+    "videoUrl": "https://www.youtube.com/watch?v=lYGA8H2uMc8",
+    "problemUrl": "https://leetcode.com/problems/sort-list/",
+    "topic": "Linked List",
+    "pattern": "Merge / Sort",
+    "matchedBy": "canonical-url"
+  },
+  "reorder-list": {
+    "title": "Reorder List",
+    "videoUrl": "https://www.youtube.com/watch?v=vIBG9x0a5A4",
+    "problemUrl": "https://leetcode.com/problems/reorder-list/",
+    "topic": "Linked List",
+    "pattern": "Merge / Sort",
+    "matchedBy": "canonical-url"
+  },
+  "remove-duplicates-from-sorted-list": {
+    "title": "Remove Duplicates from Sorted List",
+    "videoUrl": "https://www.youtube.com/watch?v=mKm3AmKTap0",
+    "problemUrl": "https://leetcode.com/problems/remove-duplicates-from-sorted-list/",
+    "topic": "Linked List",
+    "pattern": "Merge / Sort",
+    "matchedBy": "canonical-url"
+  },
+  "add-two-numbers": {
+    "title": "Add Two Numbers",
+    "videoUrl": "https://www.youtube.com/watch?v=Pn5GbrOAcZk",
+    "problemUrl": "https://leetcode.com/problems/add-two-numbers/",
+    "topic": "Linked List",
+    "pattern": "Linked List + Stack",
+    "matchedBy": "canonical-url"
+  },
+  "add-two-numbers-ii": {
+    "title": "Add Two Numbers II",
+    "videoUrl": "https://www.youtube.com/watch?v=Pn5GbrOAcZk",
+    "problemUrl": "https://leetcode.com/problems/add-two-numbers-ii/",
+    "topic": "Linked List",
+    "pattern": "Linked List + Stack",
+    "matchedBy": "canonical-url"
+  },
+  "next-greater-node-in-linked-list": {
+    "title": "Next Greater Node in Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=LdR2LIukDqc",
+    "problemUrl": "https://leetcode.com/problems/next-greater-node-in-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Linked List + Stack",
+    "matchedBy": "canonical-url"
+  },
+  "remove-nodes-from-linked-list": {
+    "title": "Remove Nodes From Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=6x0T-ldjwOE",
+    "problemUrl": "https://leetcode.com/problems/remove-nodes-from-linked-list/",
+    "topic": "Linked List",
+    "pattern": "Linked List + Stack",
+    "matchedBy": "canonical-url"
+  },
+  "implement-doubly-linked-list": {
+    "title": "Implement Doubly Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=N3T6wlfoEaM",
+    "problemUrl": "https://leetcode.com/problems/lru-cache/",
+    "topic": "Double Linked List",
+    "pattern": "Basic DLL Operations",
+    "matchedBy": "pattern-title"
+  },
+  "insert-a-node-in-a-doubly-linkedlist": {
+    "title": "Insert a node in a doubly Linkedlist",
+    "videoUrl": "https://www.youtube.com/watch?v=41q73CppGnc",
+    "problemUrl": "https://leetcode.com/problems/lfu-cache/",
+    "topic": "Double Linked List",
+    "pattern": "Basic DLL Operations",
+    "matchedBy": "pattern-title"
+  },
+  "delete-a-node-from-a-doubly-linkedlist": {
+    "title": "Delete a node from a doubly Linkedlist",
+    "videoUrl": "https://www.youtube.com/watch?v=L7_0FCrajUA",
+    "problemUrl": null,
+    "topic": "Double Linked List",
+    "pattern": "Basic DLL Operations",
+    "matchedBy": "pattern-title"
+  },
+  "reverse-doubly-linked-list": {
+    "title": "Reverse Doubly Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=G1Q1YQ6YbDA",
+    "problemUrl": null,
+    "topic": "Double Linked List",
+    "pattern": "Basic DLL Operations",
+    "matchedBy": "pattern-title"
+  },
+  "lru-cache": {
+    "title": "LRU Cache",
+    "videoUrl": "https://www.youtube.com/watch?v=wiMmDsFHna8",
+    "problemUrl": "https://leetcode.com/problems/lru-cache/",
+    "topic": "Double Linked List",
+    "pattern": "Basic DLL Operations",
+    "matchedBy": "canonical-url"
+  },
+  "lfu-cache": {
+    "title": "LFU Cache",
+    "videoUrl": "https://www.youtube.com/watch?v=n7w9U7w8jJE",
+    "problemUrl": "https://leetcode.com/problems/lfu-cache/",
+    "topic": "Double Linked List",
+    "pattern": "Basic DLL Operations",
+    "matchedBy": "canonical-url"
+  },
+  "merge-two-sorted-dlls": {
+    "title": "Merge Two Sorted DLLs",
+    "videoUrl": "https://www.youtube.com/watch?v=lYGA8H2uMc8",
+    "problemUrl": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/",
+    "topic": "Double Linked List",
+    "pattern": "Merge / Sort / Reorder",
+    "matchedBy": "title-alias"
+  },
+  "flatten-a-multilevel-doubly-linked-list": {
+    "title": "Flatten Multilevel DLL",
+    "videoUrl": "https://www.youtube.com/watch?v=wiMmDsFHna8",
+    "problemUrl": "https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/",
+    "topic": "Double Linked List",
+    "pattern": "Merge / Sort / Reorder",
+    "matchedBy": "canonical-url"
+  },
+  "convert-dll-to-binary-tree": {
+    "title": "Convert DLL to Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=wiMmDsFHna8",
+    "problemUrl": null,
+    "topic": "Double Linked List",
+    "pattern": "Merge / Sort / Reorder",
+    "matchedBy": "title-alias"
+  },
+  "majority-element": {
+    "title": "Majority Element",
+    "videoUrl": "https://www.youtube.com/watch?v=yf0KrGd9p50",
+    "problemUrl": "https://leetcode.com/problems/majority-element/",
+    "topic": "HashMap",
+    "pattern": "Frequency Map / Counting",
+    "matchedBy": "canonical-url"
+  },
+  "top-k-frequent-elements": {
+    "title": "Top K Frequent Elements",
+    "videoUrl": "https://www.youtube.com/watch?v=50jWMYBv7W8",
+    "problemUrl": "https://leetcode.com/problems/top-k-frequent-elements/",
+    "topic": "Heap",
+    "pattern": "Top-K Elements",
+    "matchedBy": "canonical-url"
+  },
+  "sort-characters-by-frequency": {
+    "title": "Sort characters by frequency",
+    "videoUrl": "https://www.youtube.com/watch?v=Ocd_uHpsQyg",
+    "problemUrl": "https://leetcode.com/problems/sort-characters-by-frequency/",
+    "topic": "Heap",
+    "pattern": "Top-K Elements",
+    "matchedBy": "canonical-url"
+  },
+  "task-scheduler": {
+    "title": "Task Scheduler",
+    "videoUrl": "https://www.youtube.com/watch?v=s8p8ukTyA2I",
+    "problemUrl": "https://leetcode.com/problems/task-scheduler/",
+    "topic": "Heap",
+    "pattern": "Heap with Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "top-k-frequent-words": {
+    "title": "K Frequent Words",
+    "videoUrl": "https://www.youtube.com/watch?v=50jWMYBv7W8",
+    "problemUrl": "https://leetcode.com/problems/top-k-frequent-words/",
+    "topic": "Heap",
+    "pattern": "Top-K Elements",
+    "matchedBy": "canonical-url"
+  },
+  "kth-largest-element-in-an-array": {
+    "title": "Kth Largest Element in an Array",
+    "videoUrl": "https://www.youtube.com/watch?v=CYka9r4l5_4",
+    "problemUrl": "https://leetcode.com/problems/kth-largest-element-in-an-array/",
+    "topic": "Heap",
+    "pattern": "Top-K Elements",
+    "matchedBy": "canonical-url"
+  },
+  "find-median-from-data-stream": {
+    "title": "Find Median from Data Stream",
+    "videoUrl": "https://www.youtube.com/watch?v=P7nf0EGGRcU",
+    "problemUrl": "https://leetcode.com/problems/find-median-from-data-stream/",
+    "topic": "Heap",
+    "pattern": "Top-K Elements",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-cost-to-connect-sticks": {
+    "title": "Minimum Cost to Connect Sticks",
+    "videoUrl": "https://www.youtube.com/watch?v=1Z0o5-Do0uw",
+    "problemUrl": "https://leetcode.com/problems/minimum-cost-to-connect-sticks/",
+    "topic": "Heap",
+    "pattern": "Huffman pattern",
+    "matchedBy": "canonical-url"
+  },
+  "find-k-pairs-with-smallest-sums": {
+    "title": "Find K Pairs with Smallest Sums",
+    "videoUrl": "https://www.youtube.com/watch?v=Youk8DDnLU8",
+    "problemUrl": "https://leetcode.com/problems/find-k-pairs-with-smallest-sums/",
+    "topic": "Heap",
+    "pattern": "Merge K Sorted",
+    "matchedBy": "canonical-url"
+  },
+  "smallest-range-covering-elements-from-k-lists": {
+    "title": "Smallest Range Covering Elements from K Lists",
+    "videoUrl": "https://www.youtube.com/watch?v=L_0aPFMgGpU",
+    "problemUrl": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/",
+    "topic": "Heap",
+    "pattern": "Merge K Sorted",
+    "matchedBy": "canonical-url"
+  },
+  "sliding-window-median": {
+    "title": "Sliding Window Median",
+    "videoUrl": "https://www.youtube.com/watch?v=WF905jBTLxs",
+    "problemUrl": "https://leetcode.com/problems/sliding-window-median/",
+    "topic": "Heap",
+    "pattern": "Heap with Sliding Window",
+    "matchedBy": "canonical-url"
+  },
+  "implement-priority-queue": {
+    "title": "Implement priority queue",
+    "videoUrl": "https://www.youtube.com/watch?v=FeoV_qD453A",
+    "problemUrl": null,
+    "topic": "Heap",
+    "pattern": "Implementation of Heap",
+    "matchedBy": "pattern-title"
+  },
+  "implement-min-heap": {
+    "title": "Implement min heap",
+    "videoUrl": "https://www.youtube.com/watch?v=Eq0TFkdsL0c",
+    "problemUrl": null,
+    "topic": "Heap",
+    "pattern": "Implementation of Heap",
+    "matchedBy": "pattern-title"
+  },
+  "implement-max-heap": {
+    "title": "Implement max heap",
+    "videoUrl": "https://www.youtube.com/watch?v=xdy3XyiJeyE",
+    "problemUrl": null,
+    "topic": "Heap",
+    "pattern": "Implementation of Heap",
+    "matchedBy": "pattern-title"
+  },
+  "reorganize-string": {
+    "title": "Reorganize String",
+    "videoUrl": "https://www.youtube.com/watch?v=2g_b1aYTHeg",
+    "problemUrl": "https://leetcode.com/problems/reorganize-string/",
+    "topic": "Heap",
+    "pattern": "Huffman pattern",
+    "matchedBy": "canonical-url"
+  },
+  "factorial-of-a-number": {
+    "title": "Factorial of a Number",
+    "videoUrl": "https://www.youtube.com/watch?v=HKltpsIOOro",
+    "problemUrl": "https://leetcode.com/problems/fibonacci-number/",
+    "topic": "Recursion",
+    "pattern": "Linear Recursion",
+    "matchedBy": "title"
+  },
+  "fibonacci-number": {
+    "title": "Fibonacci Number",
+    "videoUrl": "https://www.youtube.com/watch?v=33UUd-rkN9M",
+    "problemUrl": "https://leetcode.com/problems/fibonacci-number/",
+    "topic": "Recursion",
+    "pattern": "Linear Recursion",
+    "matchedBy": "canonical-url"
+  },
+  "powx-n": {
+    "title": "Power of X",
+    "videoUrl": "https://www.youtube.com/watch?v=wNp_FS1Sa_c",
+    "problemUrl": "https://leetcode.com/problems/powx-n/",
+    "topic": "Recursion",
+    "pattern": "Linear Recursion",
+    "matchedBy": "canonical-url"
+  },
+  "merge-sort": {
+    "title": "Merge Sort",
+    "videoUrl": "https://www.youtube.com/watch?v=ZDCoxXeksWM",
+    "problemUrl": "https://leetcode.com/problems/maximum-subarray/",
+    "topic": "Recursion",
+    "pattern": "Divide & Conquer",
+    "matchedBy": "title"
+  },
+  "valid-palindrome": {
+    "title": "Palindrome Check",
+    "videoUrl": "https://www.youtube.com/watch?v=ecZVpAZ37UI",
+    "problemUrl": "https://leetcode.com/problems/valid-palindrome/",
+    "topic": "Recursion",
+    "pattern": "Recursive String Processing",
+    "matchedBy": "canonical-url"
+  },
+  "different-ways-to-add-parentheses": {
+    "title": "Different Ways to Add Parentheses",
+    "videoUrl": "https://www.youtube.com/watch?v=cykVFFm5D3s",
+    "problemUrl": "https://leetcode.com/problems/different-ways-to-add-parentheses/",
+    "topic": "Recursion",
+    "pattern": "Recursive String Processing",
+    "matchedBy": "canonical-url"
+  },
+  "binary-tree-inorder-traversal": {
+    "title": "Inorder Traversal",
+    "videoUrl": "https://www.youtube.com/watch?v=ev0JrFgPO4E",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-inorder-traversal/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "binary-tree-preorder-traversal": {
+    "title": "Preorder Traversal",
+    "videoUrl": "https://www.youtube.com/watch?v=JwVhYBDVUQ0",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-preorder-traversal/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "binary-tree-postorder-traversal": {
+    "title": "Postorder Traversal",
+    "videoUrl": "https://www.youtube.com/watch?v=ev0JrFgPO4E",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-postorder-traversal/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "same-tree": {
+    "title": "Same Tree Check (DFS variant)",
+    "videoUrl": "https://www.youtube.com/watch?v=zvJZ8A7mBOY",
+    "problemUrl": "https://leetcode.com/problems/same-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "diameter-of-binary-tree": {
+    "title": "Diameter of Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=KsADe9oiK1A",
+    "problemUrl": "https://leetcode.com/problems/diameter-of-binary-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-depth-of-binary-tree": {
+    "title": "Maximum Depth of Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=o3luQXt08W8",
+    "problemUrl": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "path-sum": {
+    "title": "Path Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=kpEWBjT3gbI",
+    "problemUrl": "https://leetcode.com/problems/path-sum/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "binary-tree-maximum-path-sum": {
+    "title": "Binary Tree Maximum Path Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=kpEWBjT3gbI",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "cousins-in-binary-tree": {
+    "title": "Check if Nodes are Cousins",
+    "videoUrl": "https://www.youtube.com/watch?v=f7IZ0IXLvhI",
+    "problemUrl": "https://leetcode.com/problems/cousins-in-binary-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-depth-of-binary-tree": {
+    "title": "Minimum Height of a Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=qYMxdq2abD8",
+    "problemUrl": "https://leetcode.com/problems/minimum-depth-of-binary-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "all-nodes-distance-k-in-binary-tree": {
+    "title": "Print All Nodes at Distance K",
+    "videoUrl": "https://www.youtube.com/watch?v=4kwl5eCAqYc",
+    "problemUrl": "https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "boundary-traversal-of-a-binary-tree": {
+    "title": "Boundary Traversal of a Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=ScDd1Z2zToI",
+    "problemUrl": "https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "title"
+  },
+  "vertical-order-traversal-of-a-binary-tree": {
+    "title": "Vertical Order Traversal",
+    "videoUrl": "https://www.youtube.com/watch?v=tRhWzxU-oH0",
+    "problemUrl": "https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "top-view-of-a-binary-tree": {
+    "title": "Top View of a Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=g8cmtH2pCj8",
+    "problemUrl": null,
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "title"
+  },
+  "binary-tree-cameras": {
+    "title": "Binary Tree Cameras",
+    "videoUrl": "https://www.youtube.com/watch?v=qYMxdq2abD8",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-cameras/",
+    "topic": "Tree",
+    "pattern": "DFS Traversals",
+    "matchedBy": "canonical-url"
+  },
+  "binary-tree-level-order-traversal": {
+    "title": "Binary Tree Level Order Traversal",
+    "videoUrl": "https://www.youtube.com/watch?v=tRhWzxU-oH0",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+    "topic": "Tree",
+    "pattern": "BFS / Level-Order",
+    "matchedBy": "canonical-url"
+  },
+  "binary-tree-zigzag-level-order-traversal": {
+    "title": "Binary Tree Zigzag Level Order Traversal",
+    "videoUrl": "https://www.youtube.com/watch?v=tRhWzxU-oH0",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/",
+    "topic": "Tree",
+    "pattern": "BFS / Level-Order",
+    "matchedBy": "canonical-url"
+  },
+  "binary-tree-right-side-view": {
+    "title": "Binary Tree Right Side View",
+    "videoUrl": "https://www.youtube.com/watch?v=91dm6RRruhM",
+    "problemUrl": "https://leetcode.com/problems/binary-tree-right-side-view/",
+    "topic": "Tree",
+    "pattern": "BFS / Level-Order",
+    "matchedBy": "canonical-url"
+  },
+  "average-of-levels-in-binary-tree": {
+    "title": "Average of Levels in Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=fB6ffkJ_gI8",
+    "problemUrl": "https://leetcode.com/problems/average-of-levels-in-binary-tree/",
+    "topic": "Tree",
+    "pattern": "BFS / Level-Order",
+    "matchedBy": "canonical-url"
+  },
+  "lowest-common-ancestor-of-a-binary-tree": {
+    "title": "Lowest Common Ancestor of Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=huVyorR9rxE",
+    "problemUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
+    "topic": "Tree",
+    "pattern": "Lowest Common Ancestor",
+    "matchedBy": "canonical-url"
+  },
+  "distance-between-two-nodes-in-a-tree": {
+    "title": "Distance Between Two Nodes in a Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=JIVnSenyoRU",
+    "problemUrl": null,
+    "topic": "Tree",
+    "pattern": "Lowest Common Ancestor",
+    "matchedBy": "pattern-title"
+  },
+  "serialize-and-deserialize-binary-tree": {
+    "title": "Serialize and Deserialize Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=u4JAi2JJhI8",
+    "problemUrl": "https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",
+    "topic": "Tree",
+    "pattern": "Serialization / Construction",
+    "matchedBy": "canonical-url"
+  },
+  "flatten-binary-tree-to-linked-list": {
+    "title": "Flatten Binary Tree to Linked List",
+    "videoUrl": "https://www.youtube.com/watch?v=zvJZ8A7mBOY",
+    "problemUrl": "https://leetcode.com/problems/flatten-binary-tree-to-linked-list/",
+    "topic": "Tree",
+    "pattern": "Serialization / Construction",
+    "matchedBy": "canonical-url"
+  },
+  "populating-next-right-pointers-in-each-node": {
+    "title": "Populating Next Right Pointers",
+    "videoUrl": "https://www.youtube.com/watch?v=U4hFQCa1Cq0",
+    "problemUrl": "https://leetcode.com/problems/populating-next-right-pointers-in-each-node/",
+    "topic": "Tree",
+    "pattern": "Serialization / Construction",
+    "matchedBy": "canonical-url"
+  },
+  "invert-binary-tree": {
+    "title": "Invert Binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=OM4wPPqijis",
+    "problemUrl": "https://leetcode.com/problems/invert-binary-tree/",
+    "topic": "Tree",
+    "pattern": "Serialization / Construction",
+    "matchedBy": "canonical-url"
+  },
+  "construct-binary-tree-from-preorder-and-inorder-traversal": {
+    "title": "Construct Binary Tree from Preorder & Inorder",
+    "videoUrl": "https://www.youtube.com/watch?v=ev0JrFgPO4E",
+    "problemUrl": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+    "topic": "Tree",
+    "pattern": "Serialization / Construction",
+    "matchedBy": "canonical-url"
+  },
+  "convert-sorted-array-to-binary-search-tree": {
+    "title": "Convert Sorted Array to BST",
+    "videoUrl": "https://www.youtube.com/watch?v=XsWPrkDqmtM",
+    "problemUrl": "https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "canonical-url"
+  },
+  "search-in-a-binary-search-tree": {
+    "title": "Search in a BST",
+    "videoUrl": "https://www.youtube.com/watch?v=_zpYpeIREPE",
+    "problemUrl": "https://leetcode.com/problems/search-in-a-binary-search-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "canonical-url"
+  },
+  "insert-into-a-binary-search-tree": {
+    "title": "Insert into a BST",
+    "videoUrl": "https://www.youtube.com/watch?v=CLdBM8j_J3c",
+    "problemUrl": "https://leetcode.com/problems/insert-into-a-binary-search-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "canonical-url"
+  },
+  "validate-binary-search-tree": {
+    "title": "Validate Binary Search Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=ah604p9o5rA",
+    "problemUrl": "https://leetcode.com/problems/validate-binary-search-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "canonical-url"
+  },
+  "delete-node-in-a-bst": {
+    "title": "Delete Node in a BST",
+    "videoUrl": "https://www.youtube.com/watch?v=GKvN-M15NkE",
+    "problemUrl": "https://leetcode.com/problems/delete-node-in-a-bst/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "canonical-url"
+  },
+  "recover-binary-search-tree": {
+    "title": "Recover BST",
+    "videoUrl": "https://www.youtube.com/watch?v=31g6lkNiEik",
+    "problemUrl": "https://leetcode.com/problems/recover-binary-search-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "canonical-url"
+  },
+  "merge-2-bst": {
+    "title": "Validate Binary Search Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=ah604p9o5rA",
+    "problemUrl": "https://leetcode.com/problems/validate-binary-search-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "pattern-title"
+  },
+  "maximum-sum-bst-in-binary-tree": {
+    "title": "Maximum sum BST in binary Tree",
+    "videoUrl": "https://www.youtube.com/watch?v=kpEWBjT3gbI",
+    "problemUrl": "https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "BST Operations",
+    "matchedBy": "canonical-url"
+  },
+  "lowest-common-ancestor-of-a-binary-search-tree": {
+    "title": "Lowest Common Ancestor of BST",
+    "videoUrl": "https://www.youtube.com/watch?v=huVyorR9rxE",
+    "problemUrl": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",
+    "topic": "Binary Search Tree",
+    "pattern": "LCA & Range Queries",
+    "matchedBy": "canonical-url"
+  },
+  "distance-between-two-nodes-in-bst": {
+    "title": "Distance Between Two Nodes in BST",
+    "videoUrl": "https://www.youtube.com/watch?v=joxx4hTYwcw",
+    "problemUrl": "https://leetcode.com/problems/closest-binary-search-tree-value/",
+    "topic": "Binary Search Tree",
+    "pattern": "LCA & Range Queries",
+    "matchedBy": "pattern-title"
+  },
+  "closest-binary-search-tree-value": {
+    "title": "Closest Binary Search Tree Value",
+    "videoUrl": "https://www.youtube.com/watch?v=CLdBM8j_J3c",
+    "problemUrl": "https://leetcode.com/problems/closest-binary-search-tree-value/",
+    "topic": "Binary Search Tree",
+    "pattern": "LCA & Range Queries",
+    "matchedBy": "canonical-url"
+  },
+  "closest-leaf-in-bst": {
+    "title": "Closest Leaf in BST",
+    "videoUrl": "https://www.youtube.com/watch?v=31g6lkNiEik",
+    "problemUrl": null,
+    "topic": "Binary Search Tree",
+    "pattern": "LCA & Range Queries",
+    "matchedBy": "title-alias"
+  },
+  "01-matrix": {
+    "title": "01 Matrix",
+    "videoUrl": "https://www.youtube.com/watch?v=p-omSwqOjaI",
+    "problemUrl": "https://leetcode.com/problems/01-matrix/",
+    "topic": "Graph",
+    "pattern": "BFS (Unweighted Path)",
+    "matchedBy": "canonical-url"
+  },
+  "word-ladder": {
+    "title": "Word Ladder",
+    "videoUrl": "https://www.youtube.com/watch?v=hxZQY5U__NM",
+    "problemUrl": "https://leetcode.com/problems/word-ladder/",
+    "topic": "Graph",
+    "pattern": "BFS (Unweighted Path)",
+    "matchedBy": "canonical-url"
+  },
+  "clone-graph": {
+    "title": "Clone Graph",
+    "videoUrl": "https://www.youtube.com/watch?v=lxOw5e7ZuVg",
+    "problemUrl": "https://leetcode.com/problems/clone-graph/",
+    "topic": "Graph",
+    "pattern": "BFS (Unweighted Path)",
+    "matchedBy": "canonical-url"
+  },
+  "rotting-oranges": {
+    "title": "Rotting Oranges",
+    "videoUrl": "https://www.youtube.com/watch?v=sBspSzNU7Oc",
+    "problemUrl": "https://leetcode.com/problems/rotting-oranges/",
+    "topic": "Graph",
+    "pattern": "BFS (Unweighted Path)",
+    "matchedBy": "canonical-url"
+  },
+  "shortest-path-in-binary-matrix": {
+    "title": "Shortest Path in Binary Matrix",
+    "videoUrl": "https://www.youtube.com/watch?v=u6iPL2SQ0Fo",
+    "problemUrl": "https://leetcode.com/problems/shortest-path-in-binary-matrix/",
+    "topic": "Graph",
+    "pattern": "BFS (Unweighted Path)",
+    "matchedBy": "canonical-url"
+  },
+  "walls-and-gates": {
+    "title": "Walls and Gates",
+    "videoUrl": "https://www.youtube.com/watch?v=e69C6xhiSQE",
+    "problemUrl": "https://leetcode.com/problems/walls-and-gates/",
+    "topic": "Graph",
+    "pattern": "BFS (Unweighted Path)",
+    "matchedBy": "canonical-url"
+  },
+  "number-of-islands": {
+    "title": "Number of Islands",
+    "videoUrl": "https://www.youtube.com/watch?v=_vh_eWEiEl8",
+    "problemUrl": "https://leetcode.com/problems/number-of-islands/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "all-paths-from-source-to-target": {
+    "title": "All paths from source to target",
+    "videoUrl": "https://www.youtube.com/watch?v=AFKXmplbjg8",
+    "problemUrl": "https://leetcode.com/problems/all-paths-from-source-to-target/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "flood-fill": {
+    "title": "Flood Fill",
+    "videoUrl": "https://www.youtube.com/watch?v=nisRNyt4ww4",
+    "problemUrl": "https://leetcode.com/problems/flood-fill/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "find-eventual-safe-states": {
+    "title": "Find Eventual Safe States",
+    "videoUrl": "https://www.youtube.com/watch?v=bJLIEOPH4Nc",
+    "problemUrl": "https://leetcode.com/problems/find-eventual-safe-states/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "number-of-connected-components-in-an-undirected-graph": {
+    "title": "Number of Connected Components in Graph",
+    "videoUrl": "https://www.youtube.com/watch?v=YSROdEqf3ow",
+    "problemUrl": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+    "topic": "Graph",
+    "pattern": "MST / Union-Find",
+    "matchedBy": "canonical-url"
+  },
+  "surrounded-regions": {
+    "title": "Surrounded Regions",
+    "videoUrl": "https://www.youtube.com/watch?v=n05WmMKTcGo",
+    "problemUrl": "https://leetcode.com/problems/surrounded-regions/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "is-graph-bipartite": {
+    "title": "Is Graph Bipartite",
+    "videoUrl": "https://www.youtube.com/watch?v=tJXPMjy5eEM",
+    "problemUrl": "https://leetcode.com/problems/is-graph-bipartite/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "directed-cycle-detection": {
+    "title": "Cycle Detection in Directed Graph",
+    "videoUrl": "https://www.youtube.com/watch?v=2MlUoKhIjA0",
+    "problemUrl": null,
+    "topic": "Graph",
+    "pattern": "Topological Sort",
+    "matchedBy": "title-alias"
+  },
+  "undirected-cycle-detection": {
+    "title": "Undirected Cycle Detection",
+    "videoUrl": "https://www.youtube.com/watch?v=2MlUoKhIjA0",
+    "problemUrl": "https://leetcode.com/problems/critical-connections-in-a-network/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "title-alias"
+  },
+  "longest-cycle-in-a-graph": {
+    "title": "Longest Cycle in a Graph",
+    "videoUrl": "https://www.youtube.com/watch?v=JIVnSenyoRU",
+    "problemUrl": "https://leetcode.com/problems/longest-cycle-in-a-graph/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "articulation-points": {
+    "title": "Articulation Points",
+    "videoUrl": "https://www.youtube.com/watch?v=YS4FmJBHHDI",
+    "problemUrl": null,
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "title-alias"
+  },
+  "critical-connections-in-a-network": {
+    "title": "Bridges in Graph / Critical Connections",
+    "videoUrl": "https://www.youtube.com/watch?v=laRgnK9uwCE",
+    "problemUrl": "https://leetcode.com/problems/critical-connections-in-a-network/",
+    "topic": "Graph",
+    "pattern": "DFS (Connectivity)",
+    "matchedBy": "canonical-url"
+  },
+  "course-schedule": {
+    "title": "Task Scheduling with Dependencies",
+    "videoUrl": "https://www.youtube.com/watch?v=q2mquGGPmwI",
+    "problemUrl": "https://leetcode.com/problems/course-schedule/",
+    "topic": "Graph",
+    "pattern": "Topological Sort",
+    "matchedBy": "canonical-url"
+  },
+  "course-schedule-ii": {
+    "title": "Course Schedule II",
+    "videoUrl": "https://www.youtube.com/watch?v=q2mquGGPmwI",
+    "problemUrl": "https://leetcode.com/problems/course-schedule-ii/",
+    "topic": "Graph",
+    "pattern": "Topological Sort",
+    "matchedBy": "canonical-url"
+  },
+  "alien-dictionary": {
+    "title": "Alien Dictionary",
+    "videoUrl": "https://www.youtube.com/watch?v=YjRRRTI3Bmo",
+    "problemUrl": "https://leetcode.com/problems/alien-dictionary/",
+    "topic": "Graph",
+    "pattern": "Topological Sort",
+    "matchedBy": "canonical-url"
+  },
+  "reconstruct-itinerary": {
+    "title": "Reconstruct Itinerary",
+    "videoUrl": "https://www.youtube.com/watch?v=laRgnK9uwCE",
+    "problemUrl": "https://leetcode.com/problems/reconstruct-itinerary/",
+    "topic": "Graph",
+    "pattern": "Topological Sort",
+    "matchedBy": "canonical-url"
+  },
+  "kruskal-s-algorithm": {
+    "title": "Kruskal’s algorithm",
+    "videoUrl": "https://www.youtube.com/watch?v=LdknY_dfTyo",
+    "problemUrl": "https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",
+    "topic": "Graph",
+    "pattern": "MST / Union-Find",
+    "matchedBy": "title-alias"
+  },
+  "lexicographically-smallest-equivalent-string": {
+    "title": "Lexicographically Smallest Equivalent String",
+    "videoUrl": "https://www.youtube.com/watch?v=bETKbaNl0pk",
+    "problemUrl": "https://leetcode.com/problems/lexicographically-smallest-equivalent-string/",
+    "topic": "Graph",
+    "pattern": "MST / Union-Find",
+    "matchedBy": "canonical-url"
+  },
+  "redundant-connection": {
+    "title": "Redundant Connection",
+    "videoUrl": "https://www.youtube.com/watch?v=YS4FmJBHHDI",
+    "problemUrl": "https://leetcode.com/problems/redundant-connection/",
+    "topic": "Graph",
+    "pattern": "MST / Union-Find",
+    "matchedBy": "canonical-url"
+  },
+  "connecting-cities-with-minimum-cost": {
+    "title": "Connecting Cities With Minimum Cost",
+    "videoUrl": "https://www.youtube.com/watch?v=LdknY_dfTyo",
+    "problemUrl": "https://leetcode.com/problems/connecting-cities-with-minimum-cost/",
+    "topic": "Graph",
+    "pattern": "MST / Union-Find",
+    "matchedBy": "canonical-url"
+  },
+  "accounts-merge": {
+    "title": "Accounts Merge",
+    "videoUrl": "https://www.youtube.com/watch?v=fhme5bG5fsE",
+    "problemUrl": "https://leetcode.com/problems/accounts-merge/",
+    "topic": "Graph",
+    "pattern": "MST / Union-Find",
+    "matchedBy": "canonical-url"
+  },
+  "dijkstra-implementation": {
+    "title": "Dijkstra Implementation",
+    "videoUrl": "https://www.youtube.com/watch?v=FfTbMO4o9OI",
+    "problemUrl": "https://leetcode.com/problems/minimum-cost-path-in-grid/ (similar)",
+    "topic": "Graph",
+    "pattern": "Dijkstra (Weighted)",
+    "matchedBy": "title-alias"
+  },
+  "shortest-path-in-weighted-graph": {
+    "title": "Shortest Path in Weighted Graph",
+    "videoUrl": "https://www.youtube.com/watch?v=b8IB5UJ1p4U",
+    "problemUrl": "https://leetcode.com/problems/network-delay-time/",
+    "topic": "Graph",
+    "pattern": "Dijkstra (Weighted)",
+    "matchedBy": "pattern-title"
+  },
+  "minimum-path-sum": {
+    "title": "Minimum Path Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=oLGfWUt2gFY",
+    "problemUrl": "https://leetcode.com/problems/minimum-path-sum/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "canonical-url"
+  },
+  "network-delay-time": {
+    "title": "Network Delay Time",
+    "videoUrl": "https://www.youtube.com/watch?v=YrGmFpJAC1A",
+    "problemUrl": "https://leetcode.com/problems/network-delay-time/",
+    "topic": "Graph",
+    "pattern": "Dijkstra (Weighted)",
+    "matchedBy": "canonical-url"
+  },
+  "cheapest-flights-within-k-stops": {
+    "title": "Cheapest Flights Within K Stops",
+    "videoUrl": "https://www.youtube.com/watch?v=8UJ4iq3LBUw",
+    "problemUrl": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
+    "topic": "Graph",
+    "pattern": "Dijkstra (Weighted)",
+    "matchedBy": "canonical-url"
+  },
+  "swim-in-rising-water": {
+    "title": "Swim in Rising Water",
+    "videoUrl": "https://www.youtube.com/watch?v=amvrKlMLuGY",
+    "problemUrl": "https://leetcode.com/problems/swim-in-rising-water/",
+    "topic": "Graph",
+    "pattern": "Dijkstra (Weighted)",
+    "matchedBy": "canonical-url"
+  },
+  "path-with-minimum-effort": {
+    "title": "Path With Minimum Effort",
+    "videoUrl": "https://www.youtube.com/watch?v=scW82V_e1FY",
+    "problemUrl": "https://leetcode.com/problems/path-with-minimum-effort/",
+    "topic": "Graph",
+    "pattern": "Dijkstra (Weighted)",
+    "matchedBy": "canonical-url"
+  },
+  "negative-weight-cycle-detection": {
+    "title": "Negative Weight Cycle Detection",
+    "videoUrl": "https://www.youtube.com/watch?v=2MlUoKhIjA0",
+    "problemUrl": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
+    "topic": "Graph",
+    "pattern": "Bellman-Ford",
+    "matchedBy": "title-alias"
+  },
+  "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance": {
+    "title": "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
+    "videoUrl": "https://www.youtube.com/watch?v=KludkoXzOXY",
+    "problemUrl": "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/",
+    "topic": "Graph",
+    "pattern": "Bellman-Ford",
+    "matchedBy": "canonical-url"
+  },
+  "transitive-closure": {
+    "title": "Transitive Closure",
+    "videoUrl": "https://www.youtube.com/watch?v=eqch9gKiWEQ",
+    "problemUrl": null,
+    "topic": "Graph",
+    "pattern": "Floyd-Warshall",
+    "matchedBy": "title-alias"
+  },
+  "all-pairs-shortest-path": {
+    "title": "All-Pairs Shortest Path",
+    "videoUrl": "https://www.youtube.com/watch?v=LULHxlvOhGc",
+    "problemUrl": null,
+    "topic": "Graph",
+    "pattern": "Floyd-Warshall",
+    "matchedBy": "title-alias"
+  },
+  "detect-negative-cycle-using-floyd-warshall": {
+    "title": "Detect Negative Cycle Using Floyd-Warshall",
+    "videoUrl": "https://www.youtube.com/watch?v=7C_w5RIEyoU",
+    "problemUrl": null,
+    "topic": "Graph",
+    "pattern": "Floyd-Warshall",
+    "matchedBy": "pattern-title"
+  },
+  "subsets": {
+    "title": "Subsets",
+    "videoUrl": "https://www.youtube.com/watch?v=Cytbo-kPJ3A",
+    "problemUrl": "https://leetcode.com/problems/subsets/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "subsets-ii": {
+    "title": "Subsets II",
+    "videoUrl": "https://www.youtube.com/watch?v=Cytbo-kPJ3A",
+    "problemUrl": "https://leetcode.com/problems/subsets-ii/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "combination-sum": {
+    "title": "Combination Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=98-CzNc1O6M",
+    "problemUrl": "https://leetcode.com/problems/combination-sum/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "combination-sum-ii": {
+    "title": "Combination Sum II",
+    "videoUrl": "https://www.youtube.com/watch?v=98-CzNc1O6M",
+    "problemUrl": "https://leetcode.com/problems/combination-sum-ii/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "permutations": {
+    "title": "Permutations",
+    "videoUrl": "https://www.youtube.com/watch?v=_sYOnD9VF9k",
+    "problemUrl": "https://leetcode.com/problems/permutations/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "permutations-ii": {
+    "title": "Permutations II",
+    "videoUrl": "https://www.youtube.com/watch?v=_sYOnD9VF9k",
+    "problemUrl": "https://leetcode.com/problems/permutations-ii/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "next-permutation": {
+    "title": "Next Permutation",
+    "videoUrl": "https://www.youtube.com/watch?v=W5vGSAd4MFQ",
+    "problemUrl": "https://leetcode.com/problems/next-permutation/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "generate-parentheses": {
+    "title": "Generate Parentheses",
+    "videoUrl": "https://www.youtube.com/watch?v=8BqjZR-1jdg",
+    "problemUrl": "https://leetcode.com/problems/generate-parentheses/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "palindrome-partitioning": {
+    "title": "Palindrome Partitioning",
+    "videoUrl": "https://www.youtube.com/watch?v=NOlgBwuHfjI",
+    "problemUrl": "https://leetcode.com/problems/palindrome-partitioning/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "restore-ip-addresses": {
+    "title": "Restore IP Addresses",
+    "videoUrl": "https://www.youtube.com/watch?v=98-CzNc1O6M",
+    "problemUrl": "https://leetcode.com/problems/restore-ip-addresses/",
+    "topic": "Backtracking",
+    "pattern": "Choice-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "n-queens": {
+    "title": "N-Queens",
+    "videoUrl": "https://www.youtube.com/watch?v=BxSXlYzXWAk",
+    "problemUrl": "https://leetcode.com/problems/n-queens/",
+    "topic": "Backtracking",
+    "pattern": "Constraint-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "n-queens-ii": {
+    "title": "N-Queens II",
+    "videoUrl": "https://www.youtube.com/watch?v=BxSXlYzXWAk",
+    "problemUrl": "https://leetcode.com/problems/n-queens-ii/",
+    "topic": "Backtracking",
+    "pattern": "Constraint-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "graph-coloring-m-coloring-problem": {
+    "title": "Graph Coloring (M-Coloring Problem)",
+    "videoUrl": "https://www.youtube.com/watch?v=HpFUssk1v9o",
+    "problemUrl": "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/",
+    "topic": "Backtracking",
+    "pattern": "Constraint-Based Backtracking",
+    "matchedBy": "title-alias"
+  },
+  "knight-s-tour": {
+    "title": "Knight’s Tour",
+    "videoUrl": "https://www.youtube.com/watch?v=YWEvDDgoIts",
+    "problemUrl": null,
+    "topic": "Backtracking",
+    "pattern": "Constraint-Based Backtracking",
+    "matchedBy": "title"
+  },
+  "partition-to-k-equal-sum-subsets": {
+    "title": "Partition to K Equal Sum Subsets",
+    "videoUrl": "https://www.youtube.com/watch?v=s57L65SYkHc",
+    "problemUrl": "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/",
+    "topic": "Backtracking",
+    "pattern": "Constraint-Based Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "rat-in-a-maze": {
+    "title": "Rat in a Maze",
+    "videoUrl": "https://www.youtube.com/watch?v=kjAtKzMJ-GM",
+    "problemUrl": "https://leetcode.com/problems/sudoku-solver/",
+    "topic": "Backtracking",
+    "pattern": "Grid / Path Backtracking",
+    "matchedBy": "title"
+  },
+  "sudoku-solver": {
+    "title": "Sudoku Solver",
+    "videoUrl": "https://www.youtube.com/watch?v=bp3fm4qvBpw",
+    "problemUrl": "https://leetcode.com/problems/sudoku-solver/",
+    "topic": "Backtracking",
+    "pattern": "Grid / Path Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "word-search-ii": {
+    "title": "Word Search II",
+    "videoUrl": "https://www.youtube.com/watch?v=JkPYpeLl4_Q",
+    "problemUrl": "https://leetcode.com/problems/word-search-ii/",
+    "topic": "Backtracking",
+    "pattern": "Grid / Path Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "unique-paths-iii": {
+    "title": "Unique Paths III",
+    "videoUrl": "https://www.youtube.com/watch?v=dZNV9dDvo4g",
+    "problemUrl": "https://leetcode.com/problems/unique-paths-iii/",
+    "topic": "Backtracking",
+    "pattern": "Grid / Path Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "path-with-maximum-gold": {
+    "title": "Path with Maximum Gold",
+    "videoUrl": "https://www.youtube.com/watch?v=tMormiipKGU",
+    "problemUrl": "https://leetcode.com/problems/path-with-maximum-gold/",
+    "topic": "Backtracking",
+    "pattern": "Grid / Path Backtracking",
+    "matchedBy": "canonical-url"
+  },
+  "letter-combinations-of-a-phone-number": {
+    "title": "Letter Combinations of a Phone Number",
+    "videoUrl": "https://www.youtube.com/watch?v=vINkGJQI9i0",
+    "problemUrl": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+    "topic": "Backtracking",
+    "pattern": "Decision Tree / Sequence Generation",
+    "matchedBy": "canonical-url"
+  },
+  "expression-add-operators": {
+    "title": "Expression Add Operators",
+    "videoUrl": "https://www.youtube.com/watch?v=tunRDBsP7OQ",
+    "problemUrl": "https://leetcode.com/problems/expression-add-operators/",
+    "topic": "Backtracking",
+    "pattern": "Decision Tree / Sequence Generation",
+    "matchedBy": "canonical-url"
+  },
+  "all-possible-full-binary-trees": {
+    "title": "All possible Full binary Trees",
+    "videoUrl": "https://www.youtube.com/watch?v=nZtrZPTTCAo",
+    "problemUrl": "https://leetcode.com/problems/all-possible-full-binary-trees/",
+    "topic": "Backtracking",
+    "pattern": "Decision Tree / Sequence Generation",
+    "matchedBy": "canonical-url"
+  },
+  "word-break-ii": {
+    "title": "Word Break 2",
+    "videoUrl": "https://www.youtube.com/watch?v=JkPYpeLl4_Q",
+    "problemUrl": "https://leetcode.com/problems/word-break-ii/",
+    "topic": "Backtracking",
+    "pattern": "Decision Tree / Sequence Generation",
+    "matchedBy": "canonical-url"
+  },
+  "merge-intervals": {
+    "title": "Merge Intervals",
+    "videoUrl": "https://www.youtube.com/watch?v=ykkJsmVw9yU",
+    "problemUrl": "https://leetcode.com/problems/merge-intervals/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "insert-interval": {
+    "title": "Insert Interval",
+    "videoUrl": "https://www.youtube.com/watch?v=ykkJsmVw9yU",
+    "problemUrl": "https://leetcode.com/problems/insert-interval/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "non-overlapping-intervals": {
+    "title": "Non-overlapping Intervals",
+    "videoUrl": "https://www.youtube.com/watch?v=nONCGxWoUfM",
+    "problemUrl": "https://leetcode.com/problems/non-overlapping-intervals/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "meeting-rooms-ii": {
+    "title": "Meeting Rooms II",
+    "videoUrl": "https://www.youtube.com/watch?v=OnQlEihg1sA",
+    "problemUrl": "https://leetcode.com/problems/meeting-rooms-ii/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-number-of-arrows-to-burst-balloons": {
+    "title": "Minimum Number of Arrows to Burst Balloons",
+    "videoUrl": "https://www.youtube.com/watch?v=mojcGP939zY",
+    "problemUrl": "https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "activity-selection-problem": {
+    "title": "Activity Selection Problem",
+    "videoUrl": "https://www.youtube.com/watch?v=OnQlEihg1sA",
+    "problemUrl": "https://leetcode.com/problems/jump-game/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "title"
+  },
+  "jump-game": {
+    "title": "Jump Game",
+    "videoUrl": "https://www.youtube.com/watch?v=kw8mIiTkLK4",
+    "problemUrl": "https://leetcode.com/problems/jump-game/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "jump-game-ii": {
+    "title": "Jump Game II",
+    "videoUrl": "https://www.youtube.com/watch?v=kw8mIiTkLK4",
+    "problemUrl": "https://leetcode.com/problems/jump-game-ii/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-number-of-taps-to-open-to-water-a-garden": {
+    "title": "Minimum Number of Taps to Open to Water Garden",
+    "videoUrl": "https://www.youtube.com/watch?v=086yTsjuLSc",
+    "problemUrl": "https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "car-pooling": {
+    "title": "Car Pooling / Capacity to Transport",
+    "videoUrl": "https://www.youtube.com/watch?v=K_qtZbLSYm0",
+    "problemUrl": "https://leetcode.com/problems/car-pooling/",
+    "topic": "Greedy",
+    "pattern": "Intervals & Reach",
+    "matchedBy": "canonical-url"
+  },
+  "largest-number": {
+    "title": "Largest Number",
+    "videoUrl": "https://www.youtube.com/watch?v=kOiapvrtjo0",
+    "problemUrl": "https://leetcode.com/problems/largest-number/",
+    "topic": "Greedy",
+    "pattern": "Sorting / Local Choice",
+    "matchedBy": "canonical-url"
+  },
+  "fractional-knapsack": {
+    "title": "Fractional Knapsack",
+    "videoUrl": "https://www.youtube.com/watch?v=K_qtZbLSYm0",
+    "problemUrl": "https://leetcode.com/problems/partition-labels/",
+    "topic": "Greedy",
+    "pattern": "Sorting / Local Choice",
+    "matchedBy": "title"
+  },
+  "partition-labels": {
+    "title": "Partition Labels",
+    "videoUrl": "https://www.youtube.com/watch?v=v2630sQETq4",
+    "problemUrl": "https://leetcode.com/problems/partition-labels/",
+    "topic": "Greedy",
+    "pattern": "Sorting / Local Choice",
+    "matchedBy": "canonical-url"
+  },
+  "candy": {
+    "title": "Candy Distribution",
+    "videoUrl": "https://www.youtube.com/watch?v=Ouvvw6R4pyk",
+    "problemUrl": "https://leetcode.com/problems/candy/",
+    "topic": "Greedy",
+    "pattern": "Sorting / Local Choice",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-platforms-resource-allocation": {
+    "title": "Minimum Platforms / Resource Allocation",
+    "videoUrl": "https://www.youtube.com/watch?v=z5yb0JGi4OE",
+    "problemUrl": null,
+    "topic": "Greedy",
+    "pattern": "Sorting / Local Choice",
+    "matchedBy": "title-alias"
+  },
+  "maximum-units-on-a-truck": {
+    "title": "Maximum Units on a Truck",
+    "videoUrl": "https://www.youtube.com/watch?v=jzUVZsJXxIc",
+    "problemUrl": "https://leetcode.com/problems/maximum-units-on-a-truck/",
+    "topic": "Greedy",
+    "pattern": "Sorting / Local Choice",
+    "matchedBy": "canonical-url"
+  },
+  "climbing-stairs": {
+    "title": "Climbing Stairs",
+    "videoUrl": "https://www.youtube.com/watch?v=VB_Qj4VWYRg",
+    "problemUrl": "https://leetcode.com/problems/climbing-stairs/",
+    "topic": "Dynamic Programming",
+    "pattern": "1D / Linear DP",
+    "matchedBy": "canonical-url"
+  },
+  "house-robber": {
+    "title": "House Robber",
+    "videoUrl": "https://www.youtube.com/watch?v=9DXrm35Cvds",
+    "problemUrl": "https://leetcode.com/problems/house-robber/",
+    "topic": "Dynamic Programming",
+    "pattern": "1D / Linear DP",
+    "matchedBy": "canonical-url"
+  },
+  "decode-ways": {
+    "title": "Decode Ways",
+    "videoUrl": "https://www.youtube.com/watch?v=6aEyTjOwlJU",
+    "problemUrl": "https://leetcode.com/problems/decode-ways/",
+    "topic": "Dynamic Programming",
+    "pattern": "1D / Linear DP",
+    "matchedBy": "canonical-url"
+  },
+  "unique-paths": {
+    "title": "Unique Paths",
+    "videoUrl": "https://www.youtube.com/watch?v=DBqyiEdYTLI",
+    "problemUrl": "https://leetcode.com/problems/unique-paths/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "canonical-url"
+  },
+  "unique-paths-ii": {
+    "title": "Unique Paths 2",
+    "videoUrl": "https://www.youtube.com/watch?v=DBqyiEdYTLI",
+    "problemUrl": "https://leetcode.com/problems/unique-paths-ii/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "canonical-url"
+  },
+  "dungeon-game": {
+    "title": "Dungeon Game",
+    "videoUrl": "https://www.youtube.com/watch?v=pbIWcpuzvYs",
+    "problemUrl": "https://leetcode.com/problems/dungeon-game/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "canonical-url"
+  },
+  "cherry-pickup": {
+    "title": "Cherry Pickup",
+    "videoUrl": "https://www.youtube.com/watch?v=R2wbmFgbQMY",
+    "problemUrl": "https://leetcode.com/problems/cherry-pickup/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-path-sum-in-grid": {
+    "title": "Maximum Path Sum in Grid",
+    "videoUrl": "https://www.youtube.com/watch?v=cB8jXLNCN9Y",
+    "problemUrl": "https://leetcode.com/problems/minimum-falling-path-sum/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "pattern-title"
+  },
+  "minimum-falling-path-sum": {
+    "title": "Minimum Falling Path Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=cB8jXLNCN9Y",
+    "problemUrl": "https://leetcode.com/problems/minimum-falling-path-sum/",
+    "topic": "Dynamic Programming",
+    "pattern": "2D / Grid DP",
+    "matchedBy": "canonical-url"
+  },
+  "longest-common-subsequence": {
+    "title": "Longest Common Subsequence",
+    "videoUrl": "https://www.youtube.com/watch?v=Qv0ZXe2L90I",
+    "problemUrl": "https://leetcode.com/problems/longest-common-subsequence/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "longest-palindromic-subsequence": {
+    "title": "Longest Palindromic Subsequence",
+    "videoUrl": "https://www.youtube.com/watch?v=RXsA5vYlPX8",
+    "problemUrl": "https://leetcode.com/problems/longest-palindromic-subsequence/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-insertion-steps-to-make-a-string-palindrome": {
+    "title": "Minimum Insertions to Make String Palindrome",
+    "videoUrl": "https://www.youtube.com/watch?v=uWYF8nL5E1A",
+    "problemUrl": "https://leetcode.com/problems/edit-distance/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "pattern-title"
+  },
+  "minimum-number-of-insertions-and-deletions": {
+    "title": "Minimum Number of Insertions and Deletions",
+    "videoUrl": "https://www.youtube.com/watch?v=ZVWVhg0JqtM",
+    "problemUrl": "https://leetcode.com/problems/regular-expression-matching/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "title-alias"
+  },
+  "edit-distance": {
+    "title": "Edit Distance",
+    "videoUrl": "https://www.youtube.com/watch?v=KZC4ad0rePY",
+    "problemUrl": "https://leetcode.com/problems/edit-distance/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "regular-expression-matching": {
+    "title": "Regular Expression Matching",
+    "videoUrl": "https://www.youtube.com/watch?v=WzM81sINyW4",
+    "problemUrl": "https://leetcode.com/problems/regular-expression-matching/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "distinct-subsequences": {
+    "title": "Distinct Subsequences",
+    "videoUrl": "https://www.youtube.com/watch?v=wNp_FS1Sa_c",
+    "problemUrl": "https://leetcode.com/problems/distinct-subsequences/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "palindrome-partitioning-ii": {
+    "title": "Palindrome Partitioning II",
+    "videoUrl": "https://www.youtube.com/watch?v=NOlgBwuHfjI",
+    "problemUrl": "https://leetcode.com/problems/palindrome-partitioning-ii/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "shortest-common-supersequence": {
+    "title": "Shortest Common Supersequence",
+    "videoUrl": "https://www.youtube.com/watch?v=JkjQNJSxXN0",
+    "problemUrl": "https://leetcode.com/problems/shortest-common-supersequence/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "scramble-string": {
+    "title": "Scramble String",
+    "videoUrl": "https://www.youtube.com/watch?v=_zpYpeIREPE",
+    "problemUrl": "https://leetcode.com/problems/scramble-string/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Strings",
+    "matchedBy": "canonical-url"
+  },
+  "matrix-chain-multiplication-mcm": {
+    "title": "Matrix Chain Multiplication (MCM)",
+    "videoUrl": "https://www.youtube.com/watch?v=yv4z9fJ_lB0",
+    "problemUrl": "https://leetcode.com/problems/burst-balloons/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Intervals",
+    "matchedBy": "pattern-title"
+  },
+  "burst-balloons": {
+    "title": "Burst Balloons",
+    "videoUrl": "https://www.youtube.com/watch?v=KUv84xzPZM4",
+    "problemUrl": "https://leetcode.com/problems/burst-balloons/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Intervals",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-cost-to-merge-stones": {
+    "title": "Minimum Cost to Merge Stones",
+    "videoUrl": "https://www.youtube.com/watch?v=qASaHbcS07g",
+    "problemUrl": "https://leetcode.com/problems/minimum-cost-to-merge-stones/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Intervals",
+    "matchedBy": "canonical-url"
+  },
+  "minimum-cost-to-cut-a-stick": {
+    "title": "Min cost to cut a stick",
+    "videoUrl": "https://www.youtube.com/watch?v=EVxTO5I0d7w",
+    "problemUrl": "https://leetcode.com/problems/minimum-cost-to-cut-a-stick/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Intervals",
+    "matchedBy": "canonical-url"
+  },
+  "merge-intervals-with-cost": {
+    "title": "Minimum Cost to Merge Stones",
+    "videoUrl": "https://www.youtube.com/watch?v=qASaHbcS07g",
+    "problemUrl": "https://leetcode.com/problems/minimum-cost-to-merge-stones/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Intervals",
+    "matchedBy": "pattern-title"
+  },
+  "evaluate-expression-to-true-boolean-parenthesization": {
+    "title": "Evaluate Expression to True (Boolean Parenthesization)",
+    "videoUrl": "https://www.youtube.com/watch?v=mnNsoWg2IO0",
+    "problemUrl": null,
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Intervals",
+    "matchedBy": "title"
+  },
+  "house-robber-iii": {
+    "title": "House Robber III",
+    "videoUrl": "https://www.youtube.com/watch?v=9DXrm35Cvds",
+    "problemUrl": "https://leetcode.com/problems/house-robber-iii/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Trees / DAGs",
+    "matchedBy": "canonical-url"
+  },
+  "path-sum-iii": {
+    "title": "Path Sum III",
+    "videoUrl": "https://www.youtube.com/watch?v=kpEWBjT3gbI",
+    "problemUrl": "https://leetcode.com/problems/path-sum-iii/",
+    "topic": "Dynamic Programming",
+    "pattern": "DP on Trees / DAGs",
+    "matchedBy": "canonical-url"
+  },
+  "0-1-knapsack": {
+    "title": "0-1 Knapsack",
+    "videoUrl": "https://www.youtube.com/watch?v=pqL1iTVUyes",
+    "problemUrl": "https://leetcode.com/problems/partition-equal-subset-sum/",
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "title"
+  },
+  "partition-equal-subset-sum": {
+    "title": "Partition Equal Subset Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=s57L65SYkHc",
+    "problemUrl": "https://leetcode.com/problems/partition-equal-subset-sum/",
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "canonical-url"
+  },
+  "partition-with-given-difference": {
+    "title": "Partition with given difference",
+    "videoUrl": "https://www.youtube.com/watch?v=NJUgtVIe76o",
+    "problemUrl": "https://leetcode.com/problems/coin-change-ii/",
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "pattern-title"
+  },
+  "coin-change": {
+    "title": "Coin Change",
+    "videoUrl": "https://www.youtube.com/watch?v=iNsTYluWRl8",
+    "problemUrl": "https://leetcode.com/problems/coin-change/",
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "canonical-url"
+  },
+  "coin-change-ii": {
+    "title": "Coin Change II",
+    "videoUrl": "https://www.youtube.com/watch?v=iNsTYluWRl8",
+    "problemUrl": "https://leetcode.com/problems/coin-change-ii/",
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "canonical-url"
+  },
+  "target-sum": {
+    "title": "Target Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=GDG84KrUfUQ",
+    "problemUrl": "https://leetcode.com/problems/target-sum/",
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "canonical-url"
+  },
+  "subset-sum": {
+    "title": "Subset Sum",
+    "videoUrl": "https://www.youtube.com/watch?v=GDG84KrUfUQ",
+    "problemUrl": null,
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "title"
+  },
+  "combination-sum-iv": {
+    "title": "Combination Sum IV",
+    "videoUrl": "https://www.youtube.com/watch?v=98-CzNc1O6M",
+    "problemUrl": "https://leetcode.com/problems/combination-sum-iv/",
+    "topic": "Dynamic Programming",
+    "pattern": "Knapsack / Subset Sum",
+    "matchedBy": "canonical-url"
+  },
+  "implement-trie-prefix-tree": {
+    "title": "Implement Trie (Prefix Tree)",
+    "videoUrl": "https://www.youtube.com/watch?v=qKFGIJLE3mA",
+    "problemUrl": "https://leetcode.com/problems/implement-trie-prefix-tree/",
+    "topic": "Trie",
+    "pattern": "Basic Trie Operations",
+    "matchedBy": "canonical-url"
+  },
+  "design-add-and-search-words-data-structure": {
+    "title": "Add and Search Word",
+    "videoUrl": "https://www.youtube.com/watch?v=9gDAwZzJnZ4",
+    "problemUrl": "https://leetcode.com/problems/add-and-search-word-data-structure-design/",
+    "topic": "Trie",
+    "pattern": "Basic Trie Operations",
+    "matchedBy": "title-alias"
+  },
+  "longest-word-in-dictionary": {
+    "title": "Longest word in dictionary",
+    "videoUrl": "https://www.youtube.com/watch?v=2iY7YYLNLAA",
+    "problemUrl": "https://leetcode.com/problems/longest-word-in-dictionary/",
+    "topic": "Trie",
+    "pattern": "Basic Trie Operations",
+    "matchedBy": "canonical-url"
+  },
+  "search-suggestions-system": {
+    "title": "Search Suggestions System",
+    "videoUrl": "https://www.youtube.com/watch?v=qKFGIJLE3mA",
+    "problemUrl": "https://leetcode.com/problems/search-suggestions-system/",
+    "topic": "Trie",
+    "pattern": "Basic Trie Operations",
+    "matchedBy": "canonical-url"
+  },
+  "word-break": {
+    "title": "Word Break",
+    "videoUrl": "https://www.youtube.com/watch?v=nTzyGe6s0SU",
+    "problemUrl": "https://leetcode.com/problems/word-break/",
+    "topic": "Trie",
+    "pattern": "Word Break / Segmentation",
+    "matchedBy": "canonical-url"
+  },
+  "concatenated-words": {
+    "title": "Concatenated Words",
+    "videoUrl": "https://www.youtube.com/watch?v=EBd-u0ehi98",
+    "problemUrl": "https://leetcode.com/problems/concatenated-words/",
+    "topic": "Trie",
+    "pattern": "Word Break / Segmentation",
+    "matchedBy": "canonical-url"
+  },
+  "replace-words": {
+    "title": "Replace Words",
+    "videoUrl": "https://www.youtube.com/watch?v=EBd-u0ehi98",
+    "problemUrl": "https://leetcode.com/problems/replace-words/",
+    "topic": "Trie",
+    "pattern": "Word Break / Segmentation",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-xor-of-two-numbers-in-an-array": {
+    "title": "Maximum XOR of Two Numbers in Array",
+    "videoUrl": "https://www.youtube.com/watch?v=KgkOp17GzeY",
+    "problemUrl": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/",
+    "topic": "Trie",
+    "pattern": "Bitwise Trie / XOR",
+    "matchedBy": "canonical-url"
+  },
+  "maximum-xor-with-an-element-from-array": {
+    "title": "Maximum XOR With an Element From Array",
+    "videoUrl": "https://www.youtube.com/watch?v=K0YpJf2UqN4",
+    "problemUrl": null,
+    "topic": "Bit Manipulation",
+    "pattern": "Advanced XOR",
+    "matchedBy": "title"
+  },
+  "sum-of-all-subset-xor-totals": {
+    "title": "Sum of Subset XOR Totals",
+    "videoUrl": "https://www.youtube.com/watch?v=ANYKrJMPOxI",
+    "problemUrl": "https://leetcode.com/problems/sum-of-all-subset-xor-totals/",
+    "topic": "Bit Manipulation",
+    "pattern": "Advanced XOR",
+    "matchedBy": "canonical-url"
+  },
+  "missing-number": {
+    "title": "Missing Number",
+    "videoUrl": "https://www.youtube.com/watch?v=Zo1d2EqX45U",
+    "problemUrl": "https://leetcode.com/problems/missing-number/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "canonical-url"
+  },
+  "number-of-1-bits": {
+    "title": "Number of 1 Bits / Hamming Weight",
+    "videoUrl": "https://www.youtube.com/watch?v=Dhw3zuXMup4",
+    "problemUrl": "https://leetcode.com/problems/number-of-1-bits/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "canonical-url"
+  },
+  "binary-number-with-alternating-bits": {
+    "title": "Alternating Bits",
+    "videoUrl": "https://www.youtube.com/watch?v=RPXY-k9DSnE",
+    "problemUrl": "https://leetcode.com/problems/binary-number-with-alternating-bits/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "canonical-url"
+  },
+  "check-kth-bit-is-set-or-not": {
+    "title": "Check kth bit is set or not",
+    "videoUrl": "https://www.youtube.com/watch?v=Cytbo-kPJ3A",
+    "problemUrl": "https://leetcode.com/problems/power-of-two/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "title-alias"
+  },
+  "power-of-two": {
+    "title": "Power of Two",
+    "videoUrl": "https://www.youtube.com/watch?v=Cytbo-kPJ3A",
+    "problemUrl": "https://leetcode.com/problems/power-of-two/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "canonical-url"
+  },
+  "single-number-iii": {
+    "title": "Single Number III",
+    "videoUrl": "https://www.youtube.com/watch?v=K0YpJf2UqN4",
+    "problemUrl": "https://leetcode.com/problems/single-number-iii/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "canonical-url"
+  },
+  "single-number": {
+    "title": "Single Number",
+    "videoUrl": "https://www.youtube.com/watch?v=K0YpJf2UqN4",
+    "problemUrl": "https://leetcode.com/problems/single-number/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "canonical-url"
+  },
+  "single-number-ii": {
+    "title": "Single Number II",
+    "videoUrl": "https://www.youtube.com/watch?v=K0YpJf2UqN4",
+    "problemUrl": "https://leetcode.com/problems/single-number-ii/",
+    "topic": "Bit Manipulation",
+    "pattern": "Basic Bit Operations",
+    "matchedBy": "canonical-url"
+  },
+  "xor-queries-of-a-subarray": {
+    "title": "Subarray XOR Queries / K-th XOR",
+    "videoUrl": "https://www.youtube.com/watch?v=K0YpJf2UqN4",
+    "problemUrl": null,
+    "topic": "Bit Manipulation",
+    "pattern": "Advanced XOR",
+    "matchedBy": "title-alias"
+  }
+}
