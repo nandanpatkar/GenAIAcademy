@@ -203,6 +203,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), apiMiddleware(), staticMirrors()],
+    // The DSA hub's SQL worker (src/pages/dsa/prep/sql) lazy-loads PGlite, and
+    // the default IIFE worker format can't hold a code-split dynamic import.
+    worker: { format: "es" },
     base: "./",
     // Avoid serializing the dependency map for every lazy feature (including
     // thousands of studio icon assets) into the app's startup bundle. Lazy

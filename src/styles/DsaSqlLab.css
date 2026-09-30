@@ -1,0 +1,102 @@
+/* ── DSA › Learn › SQL & Query Plans ──────────────────────────────────────
+   The SQL & Query Plan Lab (components/SqlLab.css) wears an obsidian/neon
+   skin of its own, dark only. Inside the DSA hub it is re-skinned with the
+   hub's --dsa-* tokens instead, so it follows light/dark like every other
+   section: the neon green accent becomes the hub's blue, cyan its purple, and
+   green is kept for what it means everywhere else in the hub — solved, and a
+   query plan node that's doing the fast thing. Scoped to .dsq-host, so the
+   lab in the main sidebar keeps its own look.
+   ──────────────────────────────────────────────────────────────────────── */
+
+.dsq-host { height: 100%; min-height: 560px; display: flex; }
+
+.dsq-host .sql-lab {
+  --sq-ink: var(--dsa-text);
+  --sq-muted: var(--dsa-muted);
+  --sq-dim: var(--dsa-dim);
+  --sq-line: var(--dsa-border);
+  --sq-line-strong: var(--dsa-border-strong);
+  --sq-green: var(--dsa-blue);
+  --sq-green-strong: var(--dsa-green);
+  --sq-cyan: var(--dsa-purple);
+  --sq-amber: var(--dsp-amber);
+  --sq-red: var(--dsp-red);
+  --sq-violet: var(--dsa-purple);
+  --sq-panel: var(--dsa-surface);
+  --sq-bg: var(--dsa-bg);
+  background: var(--dsa-bg);
+  font-family: var(--dsa-font);
+}
+
+/* top bar */
+.dsq-host .sqll-topbar { border-bottom-color: var(--dsa-border); background: var(--dsa-surface); backdrop-filter: none; }
+.dsq-host .sqll-brand-mark { border-color: var(--dsa-border); background: var(--dsp-blue-soft); box-shadow: none; }
+.dsq-host .sqll-live { color: var(--dsa-green); }
+.dsq-host .sqll-live i { box-shadow: none; }
+.dsq-host .sqll-top-actions button { border-color: var(--dsa-border-strong); background: var(--dsa-surface-3); }
+.dsq-host .sqll-top-actions button:hover:not(:disabled) { border-color: var(--dsa-border-strong); background: var(--dsa-hover); }
+
+/* left rail */
+.dsq-host .sqll-rail { border-right-color: var(--dsa-border); background: var(--dsa-rail); }
+.dsq-host .sqll-rail-section h4 { color: var(--dsa-dim); }
+.dsq-host .sqll-challenge { background: transparent; }
+.dsq-host .sqll-challenge:hover { border-color: var(--dsa-border); background: var(--dsa-hover); }
+.dsq-host .sqll-challenge.is-active { border-color: color-mix(in srgb, var(--dsa-blue) 42%, transparent); background: var(--dsp-blue-soft); box-shadow: inset 2px 0 0 var(--dsa-blue); }
+.dsq-host .sqll-challenge.is-solved .sqll-challenge-title, .dsq-host .sqll-tick { color: var(--dsa-green); }
+.dsq-host .sqll-table { background: var(--dsa-surface-2); }
+.dsq-host .sqll-index { background: var(--dsa-purple-soft); }
+.dsq-host .sqll-index b { color: var(--dsa-accent-ink); }
+.dsq-host .sqll-snippet { border-color: var(--dsa-border); }
+.dsq-host .sqll-snippet:hover { border-color: var(--dsa-border-strong); background: var(--dsa-hover); }
+
+/* brief, editor */
+.dsq-host .sqll-brief { border-color: var(--dsa-border); background: var(--dsa-surface); }
+.dsq-host .sqll-chip { color: var(--dsa-accent-ink); background: var(--dsa-purple-soft); }
+.dsq-host .sqll-hint-btn { border-color: color-mix(in srgb, var(--dsp-amber) 35%, transparent); background: var(--dsp-amber-soft); }
+.dsq-host .sqll-brief code { color: var(--dsa-blue); background: var(--dsp-blue-soft); }
+.dsq-host .sqll-hint { color: var(--dsa-copy); background: var(--dsp-amber-soft); }
+.dsq-host .sqll-editor { border-color: var(--dsa-border); background: var(--dsa-surface); }
+.dsq-host .sqll-editor-head { border-bottom-color: var(--dsa-border); background: var(--dsa-surface-2); }
+.dsq-host .sqll-run { border-color: transparent; color: #fff; background: var(--dsa-blue); }
+.dsq-host .sqll-run:hover:not(:disabled) { transform: none; box-shadow: none; background: color-mix(in srgb, var(--dsa-blue) 86%, #fff); }
+.dsq-host .sqll-explain { border-color: color-mix(in srgb, var(--dsa-purple) 40%, transparent); color: var(--dsa-accent-ink); background: var(--dsa-purple-soft); }
+.dsq-host .sqll-explain:hover:not(:disabled) { background: color-mix(in srgb, var(--dsa-purple) 22%, transparent); }
+.dsq-host .sqll-run kbd, .dsq-host .sqll-explain kbd { background: rgba(0, 0, 0, .16); }
+
+/* output */
+.dsq-host .sqll-output { border-color: var(--dsa-border); background: var(--dsa-surface); }
+.dsq-host .sqll-tabs { border-bottom-color: var(--dsa-border); }
+.dsq-host .sqll-tabs > button:hover:not(:disabled) { background: var(--dsa-hover); }
+.dsq-host .sqll-tabs > button.is-on { color: var(--dsa-blue); background: var(--dsp-blue-soft); }
+.dsq-host .sqll-tabs > button span { background: var(--dsa-surface-3); }
+.dsq-host .sqll-verdict.is-pass { color: var(--dsa-green); background: var(--dsp-green-soft); border-bottom-color: color-mix(in srgb, var(--dsa-green) 25%, transparent); }
+.dsq-host .sqll-verdict.is-fail { color: var(--dsp-amber); background: var(--dsp-amber-soft); border-bottom-color: color-mix(in srgb, var(--dsp-amber) 25%, transparent); }
+.dsq-host .sqll-error { background: var(--dsp-red-soft); }
+.dsq-host .sqll-table-wrap th { border-bottom-color: var(--dsa-border); color: var(--dsa-muted); background: var(--dsa-surface-2); }
+.dsq-host .sqll-table-wrap td { border-bottom-color: var(--dsa-border-soft); }
+.dsq-host .sqll-table-wrap tr:hover td { background: var(--dsa-hover); }
+
+/* plan tree: the hub's soft pills, readable in both themes */
+.dsq-host .sqll-plan-node { border-bottom-color: var(--dsa-border-soft); }
+.dsq-host .sqll-node-badge.tone-warn { color: var(--dsp-amber); background: var(--dsp-amber-soft); }
+.dsq-host .sqll-node-badge.tone-good, .dsq-host .sqll-node-badge.tone-best { color: var(--dsa-green); background: var(--dsp-green-soft); }
+.dsq-host .sqll-node-badge.tone-join { color: var(--dsa-accent-ink); background: var(--dsa-purple-soft); }
+.dsq-host .sqll-node-badge.tone-note { color: var(--dsa-blue); background: var(--dsp-blue-soft); }
+.dsq-host .sqll-node-badge.tone-plain { color: var(--dsa-muted); background: var(--dsa-surface-3); }
+.dsq-host .sqll-node-idx { color: var(--dsa-accent-ink); }
+.dsq-host .sqll-node-drift { background: var(--dsp-amber-soft); }
+.dsq-host .sqll-plan-bar { background: var(--dsa-border); }
+.dsq-host .sqll-plan-bar-fill.tone-note, .dsq-host .sqll-plan-legend i.tone-note { background: var(--dsa-blue); }
+.dsq-host .sqll-plan-bar-fill.tone-plain { background: var(--dsa-border-strong); }
+.dsq-host .sqll-plan-legend { border-top-color: var(--dsa-border); }
+
+/* boot and error screens */
+.dsq-host .sqll-boot-card { border-color: var(--dsa-border); background: var(--dsa-surface); backdrop-filter: none; }
+.dsq-host .sqll-boot-card svg { color: var(--dsa-blue); }
+.dsq-host .sqll-boot-bar { background: var(--dsa-border); }
+.dsq-host .sqll-boot-bar span { background: linear-gradient(90deg, transparent, var(--dsa-blue), transparent); }
+.dsq-host .sqll-primary { color: #fff; background: var(--dsa-blue); }
+
+@media (max-width: 1080px) {
+  .dsq-host .sqll-rail { border-bottom-color: var(--dsa-border); }
+}

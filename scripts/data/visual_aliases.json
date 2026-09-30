@@ -1,0 +1,43 @@
+{
+  "_comment": "Hand-checked links from Visual Learning lessons to practice problem ids, for lessons whose slug and title don't match the practice set (see scripts/build_visual_links.mjs). A value of null means deliberately unlinked. `concepts` are pattern-level lessons that teach a topic rather than one problem; they are offered alongside the intros.",
+  "links": {
+    "two-pointers/two-sum-ii": "two-sum-ii-input-array-is-sorted",
+    "arrays-hashing/longest-consecutive": "longest-consecutive-sequence-in-an-array-1",
+    "sliding-window/max-sum-subarray-k": "maximum-sum-subarray-of-size-k",
+    "sliding-window/max-points-cards": "maximum-points-you-can-obtain-from-cards-",
+    "sliding-window/longest-substring-no-repeat": "longest-substring-without-repeating-characters",
+    "stack/largest-rectangle-histogram": "largest-rectangle-in-histogram",
+    "linked-list/remove-nth-from-end": "remove-nth-node-from-end-of-list",
+    "heap/median-from-data-stream": ["find-median-from-data-stream", "find-median-in-a-stream"],
+    "binary-search/search-rotated-sorted": "search-in-rotated-sorted-array-i",
+    "binary-search/search-2d-matrix": "search-a-2d-matrix",
+    "binary-search/kth-smallest-sorted-matrix": "kth-smallest-element-in-a-sorted-matrix",
+    "binary-search/minimum-shipping-capacity": "capacity-to-ship-packages-within-d-days",
+    "dfs/maximum-depth": "maximum-depth-of-binary-tree",
+    "dfs/validate-bst": "validate-binary-search-tree",
+    "dfs/diameter": "diameter-of-binary-tree",
+    "dfs/lowest-common-ancestor": "lowest-common-ancestor-of-a-binary-tree",
+    "dfs/binary-tree-max-path-sum": "binary-tree-maximum-path-sum",
+    "dfs/serialize-deserialize": "serialize-and-deserialize-binary-tree",
+    "dfs/copy-graph": "clone-graph",
+    "dp/max-subarray": "maximum-subarray",
+    "graphs/cheapest-flights": "cheapest-flights-within-k-stops",
+    "graphs/find-the-city": "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance",
+    "graphs/connected-components": "number-of-connected-components-in-an-undirected-graph",
+    "bfs/zigzag-level-order": "binary-tree-zigzag-level-order-traversal",
+    "bfs/maximum-width": "maximum-width-of-bt",
+    "trie/implement-trie": "implement-trie-prefix-tree",
+    "dfs/path-sum-ii": null,
+    "intervals/meeting-rooms": null
+  },
+  "concepts": [
+    "dfs/return-values",
+    "dfs/passing-values",
+    "dfs/adjacency-list",
+    "dp/solving-with-dp",
+    "graphs/shortest-path-algorithms",
+    "graphs/union-find",
+    "backtracking/solution-space-trees",
+    "trie/prefix-matching"
+  ]
+}

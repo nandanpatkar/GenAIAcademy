@@ -1,37 +1,47 @@
-/* ── Chai Visual course viewer ────────────────────────────────────────────
-   The lesson renders in a frame served from /chai-visual/. That mirror ships
-   a real light palette and a real dark one, keyed off data-theme on <html>,
-   so unlike the Data Science viewer this shell follows the app's theme and
-   the framed document is switched to match.
-
-   Both palettes below are the site's own, lifted from its stylesheet rather
-   than eyeballed (_next/static/css/a2d5eb…css):
-
-     light  --paper 250 246 238   --ink 38 30 24    --accent 226 109 58
-     dark   --paper  20  16  12   --ink 236 229 214 --accent 240 130 78
-
-   Its faces are a hand-drawn display pairing; the app's own stack stands in
-   for those, since the frame loads them for itself and the rail should read
-   as app chrome rather than as a second copy of the site's masthead.
+/* ── Visual Learning viewer ──────────────────────────────────────────────
+   The lesson renders in a frame served from /chai-visual/ (see
+   components/visual/VisualLessonFrame.jsx). Both the shell and the framed
+   page wear the DSA hub's palette — zinc greys, the hub's blue as the primary
+   accent and its purple as the secondary, Plus Jakarta Sans — so the course
+   reads as part of the same product whether it is opened from the main
+   sidebar or from DSA › Learn. The values below mirror DsaHub.css's --dsa-*
+   tokens; the framed page gets the same ones from visualTheme.js.
    ──────────────────────────────────────────────────────────────────────── */
 
+@font-face {
+  font-family: "Plus Jakarta Sans DSA";
+  src: url("../assets/fonts/PlusJakartaSans-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
 .cv-root {
-  --cv-paper: rgb(250 246 238);
-  --cv-surface: rgb(255 252 247);
-  --cv-ink: rgb(38 30 24);
-  --cv-sketch: rgb(92 78 64);
-  --cv-mute: rgb(168 159 140);
-  --cv-accent: rgb(226 109 58);
-  --cv-accent2: rgb(58 120 194);
-  --cv-card: rgba(31, 24, 18, 0.022);
-  --cv-card-hi: rgba(31, 24, 18, 0.045);
-  --cv-line: rgba(31, 24, 18, 0.11);
-  --cv-line-hi: rgba(31, 24, 18, 0.2);
-  --cv-done: rgb(58 157 93);
+  --cv-paper: #ffffff;
+  --cv-surface: #fafafa;
+  --cv-ink: #09090b;
+  --cv-sketch: #3f3f46;
+  --cv-mute: #71717a;
+  --cv-accent: #3b5fe3;
+  --cv-accent2: #7a3ddb;
+  --cv-accent-soft: #e4eafc;
+  --cv-card: rgba(9, 9, 11, 0.022);
+  --cv-card-hi: rgba(9, 9, 11, 0.045);
+  --cv-line: #e4e4e7;
+  --cv-line-hi: #d4d4d8;
+  --cv-done: #059669;
+
+  /* Read by the shared lesson frame (VisualLearning.css). */
+  --vl-bg: var(--cv-paper);
+  --vl-surface: var(--cv-surface);
+  --vl-text: var(--cv-ink);
+  --vl-muted: var(--cv-mute);
+  --vl-border: var(--cv-line);
+  --vl-accent: var(--cv-accent);
 
   --cv-rail: 288px;
-  --cv-font: var(--font, system-ui), system-ui, sans-serif;
-  --cv-mono: var(--mono, ui-monospace), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --cv-font: "Plus Jakarta Sans DSA", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --cv-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   display: flex;
   flex: 1;
@@ -42,21 +52,24 @@
   background: var(--cv-paper);
   color: var(--cv-ink);
   font-family: var(--cv-font);
+  -webkit-font-smoothing: antialiased;
 }
 
 .cv-root.cv-dark {
-  --cv-paper: rgb(20 16 12);
-  --cv-surface: rgb(27 22 17);
-  --cv-ink: rgb(236 229 214);
-  --cv-sketch: rgb(184 176 160);
-  --cv-mute: rgb(146 138 123);
-  --cv-accent: rgb(240 130 78);
-  --cv-accent2: rgb(108 160 214);
-  --cv-card: rgba(255, 255, 255, 0.035);
-  --cv-card-hi: rgba(255, 255, 255, 0.06);
-  --cv-line: rgba(255, 255, 255, 0.09);
-  --cv-line-hi: rgba(255, 255, 255, 0.16);
-  --cv-done: rgb(79 179 116);
+  --cv-paper: #0f0f0f;
+  --cv-surface: #131213;
+  --cv-ink: #fcfcfc;
+  --cv-sketch: #d4d4d8;
+  --cv-mute: #a1a1aa;
+  --cv-accent: #5c77db;
+  --cv-accent2: #ac84eb;
+  --cv-accent-soft: rgba(92, 119, 219, 0.16);
+  --cv-card: rgba(255, 255, 255, 0.03);
+  --cv-card-hi: #222225;
+  --cv-line: #27272a;
+  --cv-line-hi: #3f3f46;
+  --cv-done: #34d399;
+  color-scheme: dark;
 }
 
 /* ── rail ──
@@ -92,16 +105,16 @@
   gap: 10px;
   margin: 0 16px 10px;
   padding: 0 14px;
-  height: 46px;
-  border: 1px solid var(--cv-line-hi);
-  border-radius: 12px;
+  height: 38px;
+  border: 1px solid var(--cv-line);
+  border-radius: 9px;
   background: var(--cv-card);
   color: var(--cv-mute);
 }
 
 .cv-search:focus-within {
   border-color: var(--cv-accent);
-  box-shadow: 0 0 0 3px rgba(226, 109, 58, 0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cv-accent) 22%, transparent);
 }
 
 .cv-search input {
@@ -111,7 +124,7 @@
   outline: 0;
   background: transparent;
   color: var(--cv-ink);
-  font: 15px var(--cv-font);
+  font: 13px var(--cv-font);
 }
 
 .cv-search input::placeholder { color: var(--cv-mute); }
@@ -216,8 +229,8 @@
   cursor: pointer;
   background: transparent;
   color: var(--cv-ink);
-  font: 700 20px var(--cv-font);
-  letter-spacing: -0.02em;
+  font: 700 13.5px var(--cv-font);
+  letter-spacing: -0.005em;
   text-align: left;
 }
 
@@ -262,22 +275,22 @@
 
 .cv-item:hover { background: var(--cv-card-hi); }
 
-/* The active entry inverts to the paper colour, the way the source does. */
-.cv-item.is-active { background: var(--cv-ink); }
-.cv-item.is-active .cv-item-title { color: var(--cv-paper); font-weight: 600; }
-.cv-item.is-active .cv-item-sub { color: color-mix(in srgb, var(--cv-paper) 65%, transparent); }
+/* The active entry takes the hub's blue tint, like a selected rail item. */
+.cv-item.is-active { background: var(--cv-accent-soft); box-shadow: inset 2px 0 0 var(--cv-accent); }
+.cv-item.is-active .cv-item-title { color: var(--cv-ink); font-weight: 650; }
+.cv-item.is-active .cv-item-sub { color: var(--cv-sketch); }
 
 .cv-item-title {
-  font-size: 16px;
+  font-size: 13.5px;
   line-height: 1.35;
   color: var(--cv-ink);
 }
 
 .cv-item.is-read .cv-item-title { color: var(--cv-mute); }
-.cv-item.is-active.is-read .cv-item-title { color: var(--cv-paper); }
+.cv-item.is-active.is-read .cv-item-title { color: var(--cv-ink); }
 
 .cv-item-sub {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.4;
   color: var(--cv-mute);
 }
@@ -437,70 +450,6 @@
   font-size: 13.5px;
   line-height: 1.6;
   color: var(--cv-sketch);
-}
-
-/* ── frame ── */
-.cv-frame-wrap {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-  background: var(--cv-paper);
-}
-
-.cv-frame-wrap[hidden] { display: none; }
-
-.cv-frame {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
-.cv-frame-loading {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  background: var(--cv-paper);
-  font: 11.5px var(--cv-mono);
-  color: var(--cv-mute);
-}
-
-/* ── locked notice ── */
-.cv-locked {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 40px 28px;
-  text-align: center;
-  color: var(--cv-mute);
-}
-
-.cv-locked h2 {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--cv-ink);
-}
-
-.cv-locked p {
-  margin: 0;
-  max-width: 52ch;
-  font-size: 13px;
-  line-height: 1.65;
-}
-
-.cv-locked code {
-  padding: 1px 5px;
-  border-radius: 5px;
-  background: var(--cv-card-hi);
-  font: 11.5px var(--cv-mono);
-  color: var(--cv-accent);
 }
 
 /* ── pager ── */
@@ -763,7 +712,7 @@
   border-radius: 999px;
   cursor: pointer;
   background: var(--cv-accent);
-  color: var(--cv-paper);
+  color: #ffffff;
   font: 600 15px var(--cv-font);
   transition: filter 0.15s, transform 0.15s;
 }

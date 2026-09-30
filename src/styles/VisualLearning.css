@@ -1,0 +1,96 @@
+/* ── Visual Learning lesson frame ─────────────────────────────────────────
+   Shared by the main sidebar viewer, DSA › Learn › Visual Learning and the
+   problem workspace's Visualize tab. It reads --vl-* tokens when a host sets
+   them (the standalone viewer does) and falls back to the DSA hub's --dsa-*
+   ones, so it matches whichever shell it sits in.
+   ──────────────────────────────────────────────────────────────────────── */
+
+.vlf {
+  --vlf-bg: var(--vl-bg, var(--dsa-bg, #0f0f0f));
+  --vlf-surface: var(--vl-surface, var(--dsa-surface, #141414));
+  --vlf-text: var(--vl-text, var(--dsa-text, #fcfcfc));
+  --vlf-muted: var(--vl-muted, var(--dsa-muted, #a1a1aa));
+  --vlf-border: var(--vl-border, var(--dsa-border, #27272a));
+  --vlf-accent: var(--vl-accent, var(--dsa-blue, #5c77db));
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background: var(--vlf-bg);
+}
+
+.vlf-frame-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: var(--vlf-bg);
+}
+
+.vlf-frame-wrap[hidden] { display: none; }
+
+.vlf-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--vlf-bg);
+}
+
+.vlf-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  background: var(--vlf-bg);
+  color: var(--vlf-muted);
+  font-size: 12px;
+}
+
+.vlf-locked {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 28px;
+  text-align: center;
+  color: var(--vlf-muted);
+}
+
+.vlf-locked-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--vlf-border);
+  border-radius: 12px;
+  background: var(--vlf-surface);
+  color: var(--vlf-accent);
+}
+
+.vlf-locked strong { color: var(--vlf-text); font-size: 15px; }
+.vlf-locked p { max-width: 52ch; margin: 0; font-size: 12.5px; line-height: 1.6; }
+.vlf-locked code { padding: 1px 5px; border-radius: 5px; background: var(--vlf-surface); font-size: 11.5px; }
+
+.vlf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--vlf-border);
+  border-radius: 8px;
+  background: var(--vlf-surface);
+  color: var(--vlf-text);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vlf-btn:hover { border-color: var(--vlf-accent); }

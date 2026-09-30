@@ -40,7 +40,9 @@ export default async function handler(req, res) {
     }
   }
 
-  if (!manifest.judgeAvailable) return res.status(422).json({ error: "Executable test metadata is not available for this problem yet." });
+  // `runnable` problems have sample inputs but no expected outputs: Run shows
+  // what the code returns; only Submit needs a full judge.
+  if (!manifest.judgeAvailable && !manifest.runnable) return res.status(422).json({ error: "Executable test metadata is not available for this problem yet." });
   // Treat an omitted or empty selection as "run all visible tests". The UI can
   // briefly have no active case while switching problems, and that should not
   // turn an otherwise valid run into a 400 response.

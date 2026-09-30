@@ -1,0 +1,475 @@
+/* ── DSA › Learn › Visual Learning ────────────────────────────────────────
+   Built from the hub's own pieces (dsp-page, dsp-module, dsp-item…) and its
+   --dsa-* tokens, so light/dark comes for free. The section's own colour is
+   the hub's blue: "watched" is blue where "solved" stays green, and the
+   primary actions (continue, solve, mark watched) are blue rather than the
+   hub's default purple, so the two kinds of progress never read as one.
+   ──────────────────────────────────────────────────────────────────────── */
+
+.dsa-shell, .dsa-workspace-shell {
+  --dsv-blue: var(--dsa-blue);
+  --dsv-blue-soft: var(--dsp-blue-soft, rgba(92, 119, 219, 0.16));
+  --dsv-blue-line: color-mix(in srgb, var(--dsa-blue) 42%, transparent);
+  --dsv-blue-ink: color-mix(in srgb, var(--dsa-blue) 70%, var(--dsa-text));
+}
+
+/* ── buttons ── */
+.dsp-btn.dsv-btn-primary { border-color: transparent; background: var(--dsv-blue); color: #fff; }
+.dsp-btn.dsv-btn-primary:hover:not(:disabled) { background: color-mix(in srgb, var(--dsv-blue) 86%, #fff); }
+.dsp-btn.dsv-btn-done { border-color: var(--dsv-blue-line); background: var(--dsv-blue-soft); color: var(--dsv-blue-ink); }
+
+/* ── Watch → Solve → Recall band ── */
+.dsv-band {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 22px;
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid var(--dsv-blue-line);
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--dsv-blue) 16%, transparent), transparent 60%),
+    var(--dsa-surface);
+}
+
+.dsv-band-copy { display: grid; align-content: start; gap: 10px; }
+.dsv-band-eyebrow {
+  width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--dsv-blue-soft);
+  color: var(--dsv-blue-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.dsv-band h2 { margin: 0; color: var(--dsa-text); font-size: 20px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+.dsv-band p { margin: 0; max-width: 52ch; color: var(--dsa-muted); font-size: 12.5px; line-height: 1.6; }
+.dsv-band .dsp-btn { width: max-content; margin-top: 4px; }
+
+.dsv-steps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.dsv-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px 11px 12px;
+  border: 1px solid var(--dsa-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--dsa-surface-2) 80%, transparent);
+}
+.dsv-step-index {
+  position: absolute;
+  top: 7px;
+  left: 8px;
+  color: var(--dsa-dim);
+  font-size: 9.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.dsv-step-icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  margin-left: 8px;
+  border-radius: 10px;
+  background: var(--dsv-blue-soft);
+  color: var(--dsv-blue);
+}
+.dsv-step strong { display: block; color: var(--dsa-text); font-size: 13px; font-weight: 650; }
+.dsv-step p { margin: 1px 0 0; color: var(--dsa-dim); font-size: 11.5px; line-height: 1.45; }
+.dsv-step-value { display: grid; justify-items: end; color: var(--dsa-text); font-size: 18px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.dsv-step-value small { max-width: 86px; color: var(--dsa-dim); font-size: 10px; font-weight: 550; text-align: right; line-height: 1.25; }
+
+/* Non-DSA tracks: what the track covers, then where the learner is in it. */
+.dsv-band-chips { margin-top: 2px; }
+.dsv-band-chips .dsp-chip { min-height: 26px; border-color: var(--dsa-border); background: var(--dsa-surface-2); cursor: default; }
+.dsv-where {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  padding: 18px 20px;
+  border: 1px solid var(--dsa-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--dsa-surface-2) 80%, transparent);
+}
+.dsv-where-ring {
+  --pct: 0%;
+  position: relative;
+  width: 112px;
+  height: 112px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--dsv-blue) var(--pct), var(--dsa-border) 0);
+}
+.dsv-where-ring::before { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--dsa-surface); }
+.dsv-where-ring > * { position: relative; }
+.dsv-where-ring b { color: var(--dsa-text); font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+.dsv-where-ring small { margin-top: 4px; color: var(--dsa-dim); font-size: 10.5px; }
+.dsv-where-next { min-width: 0; display: grid; justify-items: start; gap: 3px; }
+.dsv-where-next small { color: var(--dsv-blue-ink); font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.dsv-where-next strong { max-width: 100%; overflow: hidden; color: var(--dsa-text); font-size: 15px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.dsv-where-next span { color: var(--dsa-dim); font-size: 12px; }
+.dsv-where-next .dsp-btn { margin-top: 8px; }
+
+/* ── lesson list ── */
+.dsv-module.is-complete .dsv-module-index { background: var(--dsv-blue-soft); color: var(--dsv-blue); }
+.dsv-module .dsp-progress-track span { background: var(--dsv-blue); }
+.dsp-status.dsv-status.is-passed { color: var(--dsv-blue); }
+.dsv-row { gap: 10px; }
+.dsv-row-problems { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; max-width: 46%; }
+.dsv-play { color: var(--dsv-blue); }
+.dsv-play:hover { background: var(--dsv-blue-soft); }
+
+.dsv-problem-chip {
+  max-width: 220px;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid var(--dsa-border);
+  border-radius: 999px;
+  background: var(--dsa-surface-2);
+  color: var(--dsa-copy);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 550;
+  cursor: pointer;
+}
+.dsv-problem-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dsv-problem-chip svg { flex: 0 0 auto; color: var(--dsa-dim); }
+.dsv-problem-chip:hover { border-color: var(--dsv-blue-line); color: var(--dsa-text); }
+.dsv-problem-chip.is-solved { border-color: color-mix(in srgb, var(--dsa-green) 35%, transparent); background: var(--dsp-green-soft); }
+.dsv-problem-chip.is-solved svg { color: var(--dsa-green); }
+
+/* ── lesson page ── */
+.dsv-lesson-meta { margin-top: -6px; }
+
+.dsv-lesson { display: grid; gap: 16px; }
+
+/* Under the stage: practice first, then the pattern's outline. */
+.dsv-below {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+.dsv-below > p { grid-column: 1 / -1; margin: 0; }
+
+/* The mirror lays a lesson out to the frame's height and never scrolls, so the
+   stage keeps enough room for header, animation, narration and controls. */
+.dsv-stage {
+  height: clamp(780px, calc(100dvh - 40px), 1200px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--dsa-border);
+  border-radius: 14px;
+  background: var(--dsa-bg);
+  box-shadow: var(--dsp-shadow-top);
+}
+
+.dsv-stage-bar {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 0 14px;
+  border-bottom: 1px solid var(--dsa-border);
+  background: var(--dsa-surface);
+}
+.dsv-stage-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--dsv-blue);
+  box-shadow: 0 0 0 4px var(--dsv-blue-soft);
+}
+.dsv-stage-title {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  color: var(--dsa-dim);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dsv-stage-title b { margin-left: 8px; color: var(--dsa-text); font-weight: 650; }
+.dsv-stage-title b::before { content: "/"; margin-right: 8px; color: var(--dsa-border-strong); font-weight: 400; }
+
+.dsv-frame { flex: 1; min-height: 0; }
+
+.dsv-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px;
+  border-top: 1px solid var(--dsa-border);
+  background: var(--dsa-surface);
+}
+.dsv-pager button {
+  max-width: 48%;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--dsa-copy);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.dsv-pager button.is-next { text-align: right; }
+.dsv-pager button span { min-width: 0; display: grid; overflow: hidden; }
+.dsv-pager button span, .dsv-pager button span * { text-overflow: ellipsis; white-space: nowrap; }
+.dsv-pager em { color: var(--dsa-dim); font-size: 10.5px; font-style: normal; font-weight: 550; }
+.dsv-pager button:hover { border-color: var(--dsa-border); background: var(--dsa-hover); color: var(--dsa-text); }
+.dsv-pager button:hover svg { color: var(--dsv-blue); }
+
+/* Theatre mode: the stage takes the whole window; Escape leaves it. */
+.dsv-lesson-page.is-wide .dsv-stage {
+  position: fixed;
+  inset: 12px;
+  z-index: 80;
+  height: auto;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+.dsv-lesson-page.is-wide::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 79;
+  background: color-mix(in srgb, var(--dsa-bg) 70%, transparent);
+  backdrop-filter: blur(3px);
+}
+
+/* ── practice panels ── */
+.dsv-practice-box { border: 1px solid var(--dsv-blue-line); background: color-mix(in srgb, var(--dsv-blue) 6%, var(--dsa-surface)); }
+
+.dsv-practice { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.dsv-practice-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 6px;
+  border-radius: 10px;
+}
+.dsv-practice-row:hover { background: var(--dsa-surface-2); }
+.dsv-practice-state {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--dsa-surface-3);
+  color: var(--dsa-dim);
+}
+.dsv-practice-row.is-solved .dsv-practice-state { background: var(--dsp-green-soft); color: var(--dsa-green); }
+.dsv-practice-title {
+  max-width: 100%;
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--dsa-text);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.dsv-practice-title:hover { text-decoration: underline; text-underline-offset: 3px; }
+.dsv-practice-meta { display: flex; align-items: center; gap: 6px; margin-top: 3px; color: var(--dsa-dim); font-size: 11px; }
+
+.dsv-outline { display: grid; gap: 1px; max-height: 320px; overflow-y: auto; margin: 12px 0 0; padding: 0; list-style: none; }
+.dsv-outline button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--dsa-muted);
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+.dsv-outline button span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dsv-outline button:hover { background: var(--dsa-hover); color: var(--dsa-text); }
+.dsv-outline button.is-current { background: var(--dsv-blue-soft); color: var(--dsa-text); font-weight: 650; box-shadow: inset 2px 0 0 var(--dsv-blue); }
+.dsv-outline-mark {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--dsa-border-strong);
+  border-radius: 50%;
+}
+.dsv-outline button.is-watched .dsv-outline-mark { border-color: var(--dsv-blue); background: var(--dsv-blue); color: #fff; }
+
+/* ── links from the rest of the hub ── */
+
+/* The ▶ label on problem rows that have a lesson. */
+.dsv-visual-badge {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--dsv-blue-line);
+  border-radius: 7px;
+  background: var(--dsv-blue-soft);
+  color: var(--dsv-blue);
+  cursor: pointer;
+}
+.dsv-visual-badge:hover { background: var(--dsv-blue); color: #fff; }
+
+/* "Watch the intro" strip above a pattern's problems. */
+.dsv-intro-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--dsa-border);
+  background: color-mix(in srgb, var(--dsv-blue) 5%, transparent);
+  color: var(--dsa-dim);
+  font-size: 11.5px;
+}
+.dsv-intro-strip > span { display: inline-flex; align-items: center; gap: 5px; margin-right: 2px; color: var(--dsv-blue-ink); font-weight: 650; }
+.dsv-intro-strip button {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid var(--dsv-blue-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dsa-copy);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.dsv-intro-strip button:hover { background: var(--dsv-blue-soft); color: var(--dsa-text); }
+.dsv-intro-strip button.is-watched svg { color: var(--dsv-blue); }
+
+/* ── small screens ── */
+@media (max-width: 1100px) {
+  .dsv-band { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .dsv-band { padding: 16px; }
+  .dsv-row { flex-wrap: wrap; }
+  .dsv-row-problems { order: 5; max-width: none; justify-content: flex-start; width: 100%; padding-left: 42px; }
+  .dsv-stage { height: min(78dvh, 640px); }
+  .dsv-lesson-page.is-wide .dsv-stage { inset: 0; border-radius: 0; }
+  .dsv-pager button { max-width: 50%; }
+}
+
+/* ── Home ────────────────────────────────────────────────────────────────
+   The watched-lessons chip, "Watch the visual first" beside the next
+   problem, and the Learn row (home/HomeLearn.jsx): one card per Learn
+   section with its progress and the next thing to open. */
+.dpx-home-stat.is-visual { font: inherit; font-size: var(--dsa-fs-base, 13px); cursor: pointer; }
+.dpx-home-stat.is-visual svg { color: var(--dsv-blue); }
+.dpx-home-stat.is-visual:hover { border-color: var(--dsv-blue-line); }
+
+.dpx-home-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.dpx-home-card .dpx-home-actions .dpx-btn { margin-top: 0; }
+.dpx-btn.dsv-home-watch { border-color: var(--dsv-blue-line); background: var(--dsv-blue-soft); color: var(--dsv-blue-ink); }
+.dpx-btn.dsv-home-watch:hover { background: color-mix(in srgb, var(--dsv-blue) 22%, transparent); }
+
+/* Six sections: three across, two down; two, then one, on narrower screens.
+   Class names avoid "-card"/"-panel": global.css glasses any such class. */
+.dsv-home-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 1100px) { .dsv-home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .dsv-home-grid { grid-template-columns: minmax(0, 1fr); } }
+.dsv-tile {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--dsa-border);
+  border-radius: 14px;
+  background: var(--dsa-surface);
+  transition: border-color 150ms ease;
+}
+.dsv-tile:hover { border-color: var(--dsa-border-strong); }
+.dsv-tile.is-active { border-color: var(--dsv-blue-line); background: linear-gradient(160deg, color-mix(in srgb, var(--dsv-blue) 9%, transparent), transparent 60%), var(--dsa-surface); }
+.dsv-tile.is-skeleton { min-height: 150px; background: var(--dsa-surface-2); animation: dsv-pulse 1.4s ease-in-out infinite; }
+@keyframes dsv-pulse { 50% { opacity: .55; } }
+
+.dsv-tile-main {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.dsv-tile-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; background: var(--dsv-blue-soft); color: var(--dsv-blue); }
+.dsv-tile-icon.is-purple { background: var(--dsa-purple-soft); color: var(--dsa-purple); }
+.dsv-tile-copy { min-width: 0; display: grid; gap: 2px; }
+.dsv-tile-copy b { color: var(--dsa-text); font-size: var(--dsa-fs-md, 14px); font-weight: 650; }
+.dsv-tile-copy small { overflow: hidden; color: var(--dsa-dim); font-size: var(--dsa-fs-sm, 12px); text-overflow: ellipsis; white-space: nowrap; }
+.dsv-tile-main:hover b { color: var(--dsv-blue-ink); }
+.dsv-tile-badge { padding: 3px 8px; border-radius: 999px; background: var(--dsv-blue-soft); color: var(--dsv-blue-ink); font-size: 10.5px; font-weight: 700; }
+
+.dsv-tile-progress { display: flex; justify-content: space-between; gap: 8px; color: var(--dsa-muted); font-size: var(--dsa-fs-sm, 12px); font-variant-numeric: tabular-nums; }
+.dpx-bar.dsv-home-bar { height: 4px; }
+.dpx-bar.dsv-home-bar > span { background: var(--dsv-blue); }
+
+.dsv-home-next {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 8px 10px;
+  border: 1px solid var(--dsa-border);
+  border-radius: 10px;
+  background: var(--dsa-surface-2);
+  color: var(--dsa-copy);
+  font: inherit;
+  font-size: var(--dsa-fs-sm, 12px);
+  text-align: left;
+  cursor: pointer;
+}
+.dsv-home-next > svg:first-child { color: var(--dsv-blue); }
+.dsv-home-next span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dsv-home-next em { margin-right: 6px; color: var(--dsa-dim); font-style: normal; }
+.dsv-home-next:hover { border-color: var(--dsv-blue-line); color: var(--dsa-text); }
+.dsv-home-next.is-done { display: block; border-style: dashed; color: var(--dsa-dim); cursor: default; }

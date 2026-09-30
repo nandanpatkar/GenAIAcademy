@@ -10,6 +10,7 @@ import { AIFS_PHASES, AIFS_TRACKS, AIFS_TOTAL_LESSONS, AIFS_CONTENT_BASE } from 
 import { makeAifsComponents, extractToc, aifsUrlTransform, AifsCode } from "./AiFromScratchMarkdown";
 import { useTheme } from "../contexts/ThemeContext";
 import { fetchMarkdown } from "../utils/fetchMarkdown";
+import LessonCoach, { AskAiChip, useSelectionAsk } from "../pages/dsa/coach/LessonCoach";
 import "../styles/AiFromScratch.css";
 
 /* The AI from Scratch curriculum, read in-app.
@@ -81,6 +82,9 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
 
   const bodyRef = useRef(null);
   const searchRef = useRef(null);
+  // The AI tutor drawer, and "Ask AI" on text selected in a lesson.
+  const [tutorOpen, setTutorOpen] = useState(false);
+  const [tutorRequest, setTutorRequest] = useState(null);
   const pendingHash = useRef(null);
 
   const lesson = activeSlug ? LESSON_BY_SLUG[activeSlug] : null;
@@ -91,6 +95,9 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
   );
 
   useEffect(() => { setTrackId(initialTrack); }, [initialTrack]);
+
+  const [selection, clearSelection] = useSelectionAsk(bodyRef, Boolean(lesson));
+  const askAbout = (item) => { setTutorOpen(true); setTutorRequest({ id: Date.now(), context: [item] }); clearSelection(); };
 
   /* ── navigation ── */
 
@@ -517,6 +524,16 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
             {lesson ? (
               <button
                 type="button"
+                className={`aifs-complete aifs-tutor-btn${tutorOpen ? " aifs-complete--on" : ""}`}
+                aria-pressed={tutorOpen}
+                onClick={() => setTutorOpen((value) => !value)}
+              >
+                <Sparkles size={14} /> AI tutor
+              </button>
+            ) : null}
+            {lesson ? (
+              <button
+                type="button"
                 className={`aifs-complete${progress[lesson.slug] ? " aifs-complete--on" : ""}`}
                 onClick={() => toggleComplete(lesson.slug)}
               >
@@ -630,6 +647,18 @@ export default function AiFromScratch({ track: initialTrack = "curriculum", less
           </>
         )}
       </div>
+
+      <AskAiChip selection={selection} onAsk={askAbout} />
+      <LessonCoach
+        lesson={lesson}
+        phase={phase}
+        markdown={content}
+        onOpenLesson={openLesson}
+        open={tutorOpen && Boolean(lesson)}
+        onClose={() => setTutorOpen(false)}
+        request={tutorRequest}
+        isDark={dark}
+      />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
   RefreshCw, Table2, Target, Terminal, X, Zap,
 } from "lucide-react";
 import { CHALLENGES, SCHEMA_SUMMARY, SEED_SQL, SNIPPETS } from "../data/sqlLabContent";
+import { loadPGlite } from "../services/pgliteLoader";
 import "./SqlLab.css";
 
 /**
@@ -24,26 +25,8 @@ import "./SqlLab.css";
  * not "you got the right answer by luck".
  */
 
-// PGlite is ~16MB of WASM plus a preloaded data image. Serving that from our own
-// origin would burn Vercel Hobby's 100GB/month bandwidth budget roughly 6,000
-// first-time visits in, so pull it from jsDelivr and fall back to the bundled
-// copy when the CDN is unreachable. Set to false to always serve locally.
-const LOAD_PGLITE_FROM_CDN = true;
-const PGLITE_CDN = "https://cdn.jsdelivr.net/npm/@electric-sql/pglite@0.5.4/dist/index.js";
-
-const loadPGlite = async () => {
-  if (LOAD_PGLITE_FROM_CDN) {
-    try {
-      const mod = await import(/* @vite-ignore */ PGLITE_CDN);
-      if (mod?.PGlite) return mod.PGlite;
-    } catch {
-      // Offline, blocked, or behind a corporate proxy — use the bundled copy.
-    }
-  }
-  const local = await import("@electric-sql/pglite");
-  return local.PGlite;
-};
-
+// PGlite loading (CDN first, bundled copy as fallback) lives in
+// services/pgliteLoader.js so the DSA hub's SQL practice worker shares it.
 // ── plan helpers ─────────────────────────────────────────────────────────────
 
 const flattenPlan = (node, depth = 0, out = []) => {
@@ -134,7 +117,10 @@ function PlanNode({ node, totalTime }) {
 
 // ── main component ───────────────────────────────────────────────────────────
 
-export default function SqlLab({ onClose }) {
+export const SOLVED_KEY = "sql_lab_solved";
+
+// `editorTheme` lets a host that restyles the lab (DSA › Learn) match Monaco to it.
+export default function SqlLab({ onClose, editorTheme = "vs-dark" }) {
   const dbRef = useRef(null);
   const [boot, setBoot] = useState({ state: "loading", message: "Downloading PostgreSQL (WASM)…" });
   const [sql, setSql] = useState(CHALLENGES[0].sql);
@@ -145,7 +131,13 @@ export default function SqlLab({ onClose }) {
   const [tab, setTab] = useState("results");
   const [activeId, setActiveId] = useState(CHALLENGES[0].id);
   const [verdict, setVerdict] = useState(null);
-  const [solved, setSolved] = useState({});
+  // Kept across visits (and read by the DSA hub's Home) — { [challengeId]: true }.
+  const [solved, setSolved] = useState(() => {
+    try { return JSON.parse(localStorage.getItem(SOLVED_KEY) || "{}") || {}; } catch { return {}; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem(SOLVED_KEY, JSON.stringify(solved)); } catch { /* storage unavailable */ }
+  }, [solved]);
   const [indexes, setIndexes] = useState([]);
   const [showHint, setShowHint] = useState(false);
 
@@ -437,7 +429,7 @@ export default function SqlLab({ onClose }) {
               <Editor
                 height="100%"
                 defaultLanguage="sql"
-                theme="vs-dark"
+                theme={editorTheme}
                 value={sql}
                 onChange={(v) => setSql(v ?? "")}
                 options={{

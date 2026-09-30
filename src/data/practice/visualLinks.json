@@ -1,0 +1,917 @@
+{
+  "generatedBy": "scripts/build_visual_links.mjs",
+  "counts": {
+    "lessons": 167,
+    "linkedLessons": 109,
+    "linkedProblems": 110,
+    "intros": 32,
+    "locked": 0
+  },
+  "byLesson": {
+    "two-pointers/two-sum-ii": [
+      "two-sum-ii-input-array-is-sorted"
+    ],
+    "two-pointers/valid-palindrome": [
+      "palindrome-check"
+    ],
+    "two-pointers/three-sum": [
+      "3sum"
+    ],
+    "two-pointers/container-with-most-water": [
+      "container-with-most-water"
+    ],
+    "two-pointers/move-zeroes": [
+      "move-zeroes"
+    ],
+    "two-pointers/sort-colors": [
+      "sort-colors"
+    ],
+    "two-pointers/trapping-rain-water": [
+      "trapping-rain-water"
+    ],
+    "arrays-hashing/two-sum": [
+      "two-sum"
+    ],
+    "arrays-hashing/valid-anagram": [
+      "valid-anagram"
+    ],
+    "arrays-hashing/top-k-frequent": [
+      "top-k-frequent-elements"
+    ],
+    "arrays-hashing/product-except-self": [
+      "product-of-array-except-self"
+    ],
+    "arrays-hashing/longest-consecutive": [
+      "longest-consecutive-sequence-in-an-array-1"
+    ],
+    "sliding-window/max-sum-subarray-k": [
+      "maximum-sum-subarray-of-size-k"
+    ],
+    "sliding-window/max-points-cards": [
+      "maximum-points-you-can-obtain-from-cards-"
+    ],
+    "sliding-window/longest-substring-no-repeat": [
+      "longest-substring-without-repeating-characters"
+    ],
+    "sliding-window/longest-repeating-replacement": [
+      "longest-repeating-character-replacement"
+    ],
+    "sliding-window/min-window-substring": [
+      "minimum-window-substring"
+    ],
+    "sliding-window/permutation-in-string": [
+      "permutation-in-string"
+    ],
+    "sliding-window/sliding-window-maximum": [
+      "sliding-window-maximum"
+    ],
+    "stack/valid-parentheses": [
+      "valid-parentheses"
+    ],
+    "stack/decode-string": [
+      "decode-string"
+    ],
+    "stack/longest-valid-parentheses": [
+      "longest-valid-parentheses"
+    ],
+    "stack/daily-temperatures": [
+      "daily-temperatures"
+    ],
+    "stack/largest-rectangle-histogram": [
+      "largest-rectangle-in-histogram"
+    ],
+    "stack/min-stack": [
+      "min-stack"
+    ],
+    "stack/evaluate-rpn": [
+      "evaluate-reverse-polish-notation"
+    ],
+    "linked-list/reverse-linked-list": [
+      "reverse-linked-list"
+    ],
+    "linked-list/merge-two-sorted-lists": [
+      "merge-two-sorted-lists"
+    ],
+    "linked-list/add-two-numbers": [
+      "add-two-numbers"
+    ],
+    "linked-list/linked-list-cycle": [
+      "linked-list-cycle"
+    ],
+    "linked-list/palindrome-linked-list": [
+      "palindrome-linked-list"
+    ],
+    "linked-list/remove-nth-from-end": [
+      "remove-nth-node-from-end-of-list"
+    ],
+    "linked-list/reorder-list": [
+      "reorder-list"
+    ],
+    "linked-list/swap-nodes-in-pairs": [
+      "swap-nodes-in-pairs"
+    ],
+    "linked-list/lru-cache": [
+      "lru-cache"
+    ],
+    "heap/kth-largest-element": [
+      "kth-largest-element-in-an-array"
+    ],
+    "heap/merge-k-sorted-lists": [
+      "merge-k-sorted-lists"
+    ],
+    "heap/median-from-data-stream": [
+      "find-median-from-data-stream",
+      "find-median-in-a-stream"
+    ],
+    "heap/task-scheduler": [
+      "task-scheduler"
+    ],
+    "binary-search/binary-search": [
+      "binary-search"
+    ],
+    "binary-search/koko-eating-bananas": [
+      "koko-eating-bananas"
+    ],
+    "binary-search/search-rotated-sorted": [
+      "search-in-rotated-sorted-array-i"
+    ],
+    "binary-search/find-min-rotated": [
+      "find-minimum-in-rotated-sorted-array"
+    ],
+    "binary-search/search-2d-matrix": [
+      "search-a-2d-matrix"
+    ],
+    "binary-search/split-array-largest-sum": [
+      "painters-partition"
+    ],
+    "binary-search/kth-smallest-sorted-matrix": [
+      "kth-smallest-element-in-a-sorted-matrix"
+    ],
+    "binary-search/minimum-shipping-capacity": [
+      "capacity-to-ship-packages-within-d-days"
+    ],
+    "dfs/maximum-depth": [
+      "maximum-depth-of-binary-tree"
+    ],
+    "dfs/path-sum": [
+      "path-sum"
+    ],
+    "dfs/validate-bst": [
+      "validate-binary-search-tree"
+    ],
+    "dfs/diameter": [
+      "diameter-of-binary-tree"
+    ],
+    "dfs/invert-tree": [
+      "invert-binary-tree"
+    ],
+    "dfs/same-tree": [
+      "same-tree"
+    ],
+    "dfs/lowest-common-ancestor": [
+      "lowest-common-ancestor-of-a-binary-tree"
+    ],
+    "dfs/binary-tree-max-path-sum": [
+      "binary-tree-maximum-path-sum"
+    ],
+    "dfs/serialize-deserialize": [
+      "serialize-and-deserialize-binary-tree"
+    ],
+    "dfs/copy-graph": [
+      "clone-graph"
+    ],
+    "dfs/flood-fill": [
+      "flood-fill"
+    ],
+    "dfs/number-of-islands": [
+      "number-of-islands"
+    ],
+    "dfs/surrounded-regions": [
+      "surrounded-regions"
+    ],
+    "greedy/best-time-buy-sell-stock": [
+      "best-time-to-buy-and-sell-stock"
+    ],
+    "greedy/jump-game": [
+      "jump-game"
+    ],
+    "greedy/jump-game-ii": [
+      "jump-game-ii"
+    ],
+    "greedy/partition-labels": [
+      "partition-labels"
+    ],
+    "dp/climbing-stairs": [
+      "climbing-stairs"
+    ],
+    "dp/max-subarray": [
+      "maximum-subarray"
+    ],
+    "dp/house-robber": [
+      "maximum-sum-of-non-adjacent-elements"
+    ],
+    "dp/coin-change": [
+      "coin-change"
+    ],
+    "dp/longest-common-subsequence": [
+      "longest-common-subsequence"
+    ],
+    "dp/edit-distance": [
+      "edit-distance"
+    ],
+    "dp/decode-ways": [
+      "decode-ways"
+    ],
+    "dp/unique-paths": [
+      "unique-paths"
+    ],
+    "dp/longest-increasing-subsequence": [
+      "longest-increasing-subsequence"
+    ],
+    "dp/word-break": [
+      "word-break"
+    ],
+    "dp/maximum-profit-job-scheduling": [
+      "maximum-profit-in-job-scheduling"
+    ],
+    "dp/minimum-window-subsequence": [
+      "minimum-window-subsequence"
+    ],
+    "graphs/course-schedule": [
+      "directed-cycle-detection"
+    ],
+    "graphs/course-schedule-ii": [
+      "course-schedule-ii"
+    ],
+    "graphs/network-delay-time": [
+      "network-delay-time"
+    ],
+    "graphs/cheapest-flights": [
+      "cheapest-flights-within-k-stops"
+    ],
+    "graphs/path-minimum-effort": [
+      "path-with-minimum-effort"
+    ],
+    "graphs/find-the-city": [
+      "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance"
+    ],
+    "graphs/connected-components": [
+      "number-of-connected-components-in-an-undirected-graph"
+    ],
+    "graphs/redundant-connection": [
+      "redundant-connection"
+    ],
+    "graphs/word-ladder": [
+      "word-ladder"
+    ],
+    "backtracking/word-search": [
+      "word-search"
+    ],
+    "backtracking/subsets": [
+      "power-set-bit-manipulation"
+    ],
+    "backtracking/permutations": [
+      "permutations"
+    ],
+    "backtracking/letter-combinations": [
+      "letter-combinations-of-a-phone-number"
+    ],
+    "backtracking/generate-parentheses": [
+      "generate-parentheses"
+    ],
+    "backtracking/combination-sum": [
+      "combination-sum"
+    ],
+    "backtracking/palindrome-partitioning": [
+      "palindrome-partitioning"
+    ],
+    "backtracking/n-queens": [
+      "n-queens"
+    ],
+    "bfs/zigzag-level-order": [
+      "binary-tree-zigzag-level-order-traversal"
+    ],
+    "bfs/maximum-width": [
+      "maximum-width-of-bt"
+    ],
+    "bfs/rotting-oranges": [
+      "rotting-oranges"
+    ],
+    "bfs/01-matrix": [
+      "01-matrix"
+    ],
+    "trie/implement-trie": [
+      "implement-trie-prefix-tree"
+    ],
+    "prefix-sum/subarray-sum-equals-k": [
+      "subarray-sum-equals-k"
+    ],
+    "matrices/spiral-matrix": [
+      "print-the-matrix-in-spiral-manner"
+    ],
+    "matrices/rotate-image": [
+      "rotate-matrix-by-90-degrees"
+    ],
+    "matrices/set-matrix-zeroes": [
+      "set-matrix-zeroes"
+    ],
+    "intervals/merge-intervals": [
+      "merge-overlapping-subintervals"
+    ],
+    "intervals/insert-interval": [
+      "insert-interval"
+    ],
+    "intervals/non-overlapping-intervals": [
+      "non-overlapping-intervals"
+    ],
+    "intervals/meeting-rooms-ii": [
+      "meeting-rooms-ii"
+    ],
+    "bit-manipulation/single-number": [
+      "single-number"
+    ],
+    "bit-manipulation/number-of-1-bits": [
+      "number-of-1-bits"
+    ],
+    "bit-manipulation/missing-number": [
+      "missing-number"
+    ]
+  },
+  "byProblem": {
+    "two-sum-ii-input-array-is-sorted": "two-pointers/two-sum-ii",
+    "palindrome-check": "two-pointers/valid-palindrome",
+    "3sum": "two-pointers/three-sum",
+    "container-with-most-water": "two-pointers/container-with-most-water",
+    "move-zeroes": "two-pointers/move-zeroes",
+    "sort-colors": "two-pointers/sort-colors",
+    "trapping-rain-water": "two-pointers/trapping-rain-water",
+    "two-sum": "arrays-hashing/two-sum",
+    "valid-anagram": "arrays-hashing/valid-anagram",
+    "top-k-frequent-elements": "arrays-hashing/top-k-frequent",
+    "product-of-array-except-self": "arrays-hashing/product-except-self",
+    "longest-consecutive-sequence-in-an-array-1": "arrays-hashing/longest-consecutive",
+    "maximum-sum-subarray-of-size-k": "sliding-window/max-sum-subarray-k",
+    "maximum-points-you-can-obtain-from-cards-": "sliding-window/max-points-cards",
+    "longest-substring-without-repeating-characters": "sliding-window/longest-substring-no-repeat",
+    "longest-repeating-character-replacement": "sliding-window/longest-repeating-replacement",
+    "minimum-window-substring": "sliding-window/min-window-substring",
+    "permutation-in-string": "sliding-window/permutation-in-string",
+    "sliding-window-maximum": "sliding-window/sliding-window-maximum",
+    "valid-parentheses": "stack/valid-parentheses",
+    "decode-string": "stack/decode-string",
+    "longest-valid-parentheses": "stack/longest-valid-parentheses",
+    "daily-temperatures": "stack/daily-temperatures",
+    "largest-rectangle-in-histogram": "stack/largest-rectangle-histogram",
+    "min-stack": "stack/min-stack",
+    "evaluate-reverse-polish-notation": "stack/evaluate-rpn",
+    "reverse-linked-list": "linked-list/reverse-linked-list",
+    "merge-two-sorted-lists": "linked-list/merge-two-sorted-lists",
+    "add-two-numbers": "linked-list/add-two-numbers",
+    "linked-list-cycle": "linked-list/linked-list-cycle",
+    "palindrome-linked-list": "linked-list/palindrome-linked-list",
+    "remove-nth-node-from-end-of-list": "linked-list/remove-nth-from-end",
+    "reorder-list": "linked-list/reorder-list",
+    "swap-nodes-in-pairs": "linked-list/swap-nodes-in-pairs",
+    "lru-cache": "linked-list/lru-cache",
+    "kth-largest-element-in-an-array": "heap/kth-largest-element",
+    "merge-k-sorted-lists": "heap/merge-k-sorted-lists",
+    "find-median-from-data-stream": "heap/median-from-data-stream",
+    "find-median-in-a-stream": "heap/median-from-data-stream",
+    "task-scheduler": "heap/task-scheduler",
+    "binary-search": "binary-search/binary-search",
+    "koko-eating-bananas": "binary-search/koko-eating-bananas",
+    "search-in-rotated-sorted-array-i": "binary-search/search-rotated-sorted",
+    "find-minimum-in-rotated-sorted-array": "binary-search/find-min-rotated",
+    "search-a-2d-matrix": "binary-search/search-2d-matrix",
+    "painters-partition": "binary-search/split-array-largest-sum",
+    "kth-smallest-element-in-a-sorted-matrix": "binary-search/kth-smallest-sorted-matrix",
+    "capacity-to-ship-packages-within-d-days": "binary-search/minimum-shipping-capacity",
+    "maximum-depth-of-binary-tree": "dfs/maximum-depth",
+    "path-sum": "dfs/path-sum",
+    "validate-binary-search-tree": "dfs/validate-bst",
+    "diameter-of-binary-tree": "dfs/diameter",
+    "invert-binary-tree": "dfs/invert-tree",
+    "same-tree": "dfs/same-tree",
+    "lowest-common-ancestor-of-a-binary-tree": "dfs/lowest-common-ancestor",
+    "binary-tree-maximum-path-sum": "dfs/binary-tree-max-path-sum",
+    "serialize-and-deserialize-binary-tree": "dfs/serialize-deserialize",
+    "clone-graph": "dfs/copy-graph",
+    "flood-fill": "dfs/flood-fill",
+    "number-of-islands": "dfs/number-of-islands",
+    "surrounded-regions": "dfs/surrounded-regions",
+    "best-time-to-buy-and-sell-stock": "greedy/best-time-buy-sell-stock",
+    "jump-game": "greedy/jump-game",
+    "jump-game-ii": "greedy/jump-game-ii",
+    "partition-labels": "greedy/partition-labels",
+    "climbing-stairs": "dp/climbing-stairs",
+    "maximum-subarray": "dp/max-subarray",
+    "maximum-sum-of-non-adjacent-elements": "dp/house-robber",
+    "coin-change": "dp/coin-change",
+    "longest-common-subsequence": "dp/longest-common-subsequence",
+    "edit-distance": "dp/edit-distance",
+    "decode-ways": "dp/decode-ways",
+    "unique-paths": "dp/unique-paths",
+    "longest-increasing-subsequence": "dp/longest-increasing-subsequence",
+    "word-break": "dp/word-break",
+    "maximum-profit-in-job-scheduling": "dp/maximum-profit-job-scheduling",
+    "minimum-window-subsequence": "dp/minimum-window-subsequence",
+    "directed-cycle-detection": "graphs/course-schedule",
+    "course-schedule-ii": "graphs/course-schedule-ii",
+    "network-delay-time": "graphs/network-delay-time",
+    "cheapest-flights-within-k-stops": "graphs/cheapest-flights",
+    "path-with-minimum-effort": "graphs/path-minimum-effort",
+    "find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance": "graphs/find-the-city",
+    "number-of-connected-components-in-an-undirected-graph": "graphs/connected-components",
+    "redundant-connection": "graphs/redundant-connection",
+    "word-ladder": "graphs/word-ladder",
+    "word-search": "backtracking/word-search",
+    "power-set-bit-manipulation": "backtracking/subsets",
+    "permutations": "backtracking/permutations",
+    "letter-combinations-of-a-phone-number": "backtracking/letter-combinations",
+    "generate-parentheses": "backtracking/generate-parentheses",
+    "combination-sum": "backtracking/combination-sum",
+    "palindrome-partitioning": "backtracking/palindrome-partitioning",
+    "n-queens": "backtracking/n-queens",
+    "binary-tree-zigzag-level-order-traversal": "bfs/zigzag-level-order",
+    "maximum-width-of-bt": "bfs/maximum-width",
+    "rotting-oranges": "bfs/rotting-oranges",
+    "01-matrix": "bfs/01-matrix",
+    "implement-trie-prefix-tree": "trie/implement-trie",
+    "subarray-sum-equals-k": "prefix-sum/subarray-sum-equals-k",
+    "print-the-matrix-in-spiral-manner": "matrices/spiral-matrix",
+    "rotate-matrix-by-90-degrees": "matrices/rotate-image",
+    "set-matrix-zeroes": "matrices/set-matrix-zeroes",
+    "merge-overlapping-subintervals": "intervals/merge-intervals",
+    "insert-interval": "intervals/insert-interval",
+    "non-overlapping-intervals": "intervals/non-overlapping-intervals",
+    "meeting-rooms-ii": "intervals/meeting-rooms-ii",
+    "single-number": "bit-manipulation/single-number",
+    "number-of-1-bits": "bit-manipulation/number-of-1-bits",
+    "missing-number": "bit-manipulation/missing-number"
+  },
+  "groups": {
+    "Two Pointers": {
+      "topics": [
+        "Sliding Window / Two Pointers",
+        "Arrays"
+      ],
+      "intros": [
+        "two-pointers/intro"
+      ],
+      "lessons": [
+        "two-pointers/intro",
+        "two-pointers/two-sum-ii",
+        "two-pointers/valid-palindrome",
+        "two-pointers/three-sum",
+        "two-pointers/container-with-most-water",
+        "two-pointers/valid-triangle-number",
+        "two-pointers/move-zeroes",
+        "two-pointers/sort-colors",
+        "two-pointers/trapping-rain-water"
+      ]
+    },
+    "Arrays & Hashing": {
+      "topics": [
+        "Arrays",
+        "Hashing"
+      ],
+      "intros": [
+        "arrays-hashing/overview"
+      ],
+      "lessons": [
+        "arrays-hashing/overview",
+        "arrays-hashing/two-sum",
+        "arrays-hashing/contains-duplicate",
+        "arrays-hashing/valid-anagram",
+        "arrays-hashing/group-anagrams",
+        "arrays-hashing/top-k-frequent",
+        "arrays-hashing/product-except-self",
+        "arrays-hashing/longest-consecutive",
+        "arrays-hashing/encode-decode"
+      ]
+    },
+    "Sliding Window": {
+      "topics": [
+        "Sliding Window / Two Pointers"
+      ],
+      "intros": [
+        "sliding-window/intro",
+        "sliding-window/variable-intro"
+      ],
+      "lessons": [
+        "sliding-window/intro",
+        "sliding-window/max-sum-subarray-k",
+        "sliding-window/max-sum-distinct-k",
+        "sliding-window/max-points-cards",
+        "sliding-window/variable-intro",
+        "sliding-window/longest-substring-no-repeat",
+        "sliding-window/longest-repeating-replacement",
+        "sliding-window/min-window-substring",
+        "sliding-window/permutation-in-string",
+        "sliding-window/sliding-window-maximum"
+      ]
+    },
+    "Stack": {
+      "topics": [
+        "Stack / Queues"
+      ],
+      "intros": [
+        "stack/intro",
+        "stack/monotonic-intro"
+      ],
+      "lessons": [
+        "stack/intro",
+        "stack/valid-parentheses",
+        "stack/decode-string",
+        "stack/longest-valid-parentheses",
+        "stack/monotonic-intro",
+        "stack/daily-temperatures",
+        "stack/largest-rectangle-histogram",
+        "stack/min-stack",
+        "stack/evaluate-rpn"
+      ]
+    },
+    "Linked List": {
+      "topics": [
+        "Linked List"
+      ],
+      "intros": [
+        "linked-list/intro"
+      ],
+      "lessons": [
+        "linked-list/intro",
+        "linked-list/reverse-linked-list",
+        "linked-list/merge-two-sorted-lists",
+        "linked-list/add-two-numbers",
+        "linked-list/linked-list-cycle",
+        "linked-list/palindrome-linked-list",
+        "linked-list/remove-nth-from-end",
+        "linked-list/reorder-list",
+        "linked-list/swap-nodes-in-pairs",
+        "linked-list/lru-cache"
+      ]
+    },
+    "Heap": {
+      "topics": [
+        "Heaps"
+      ],
+      "intros": [
+        "heap/intro"
+      ],
+      "lessons": [
+        "heap/intro",
+        "heap/kth-largest-element",
+        "heap/k-closest-points",
+        "heap/find-k-closest-elements",
+        "heap/merge-k-sorted-lists",
+        "heap/median-from-data-stream",
+        "heap/task-scheduler"
+      ]
+    },
+    "Binary Search": {
+      "topics": [
+        "Binary Search"
+      ],
+      "intros": [
+        "binary-search/intro"
+      ],
+      "lessons": [
+        "binary-search/intro",
+        "binary-search/binary-search",
+        "binary-search/koko-eating-bananas",
+        "binary-search/search-rotated-sorted",
+        "binary-search/find-min-rotated",
+        "binary-search/search-2d-matrix",
+        "binary-search/split-array-largest-sum",
+        "binary-search/kth-smallest-sorted-matrix",
+        "binary-search/minimum-shipping-capacity"
+      ]
+    },
+    "Depth-First Search": {
+      "topics": [
+        "Binary Trees",
+        "Binary Search Trees",
+        "Graphs",
+        "Recursion"
+      ],
+      "intros": [
+        "dfs/introduction",
+        "dfs/fundamentals",
+        "dfs/return-values",
+        "dfs/passing-values",
+        "dfs/graphs-overview",
+        "dfs/adjacency-list",
+        "dfs/grid-dfs-overview"
+      ],
+      "lessons": [
+        "dfs/introduction",
+        "dfs/fundamentals",
+        "dfs/return-values",
+        "dfs/maximum-depth",
+        "dfs/path-sum",
+        "dfs/passing-values",
+        "dfs/validate-bst",
+        "dfs/calculate-tilt",
+        "dfs/diameter",
+        "dfs/path-sum-ii",
+        "dfs/longest-univalue-path",
+        "dfs/invert-tree",
+        "dfs/same-tree",
+        "dfs/lowest-common-ancestor",
+        "dfs/binary-tree-max-path-sum",
+        "dfs/serialize-deserialize",
+        "dfs/graphs-overview",
+        "dfs/adjacency-list",
+        "dfs/copy-graph",
+        "dfs/graph-valid-tree",
+        "dfs/grid-dfs-overview",
+        "dfs/flood-fill",
+        "dfs/number-of-islands",
+        "dfs/surrounded-regions",
+        "dfs/pacific-atlantic"
+      ]
+    },
+    "Greedy Algorithms": {
+      "topics": [
+        "Greedy Algorithms"
+      ],
+      "intros": [
+        "greedy/overview"
+      ],
+      "lessons": [
+        "greedy/overview",
+        "greedy/best-time-buy-sell-stock",
+        "greedy/gas-station",
+        "greedy/jump-game",
+        "greedy/jump-game-ii",
+        "greedy/partition-labels"
+      ]
+    },
+    "Dynamic Programming": {
+      "topics": [
+        "Dynamic Programming"
+      ],
+      "intros": [
+        "dp/fundamentals",
+        "dp/solving-with-dp"
+      ],
+      "lessons": [
+        "dp/fundamentals",
+        "dp/solving-with-dp",
+        "dp/climbing-stairs",
+        "dp/dice-combinations",
+        "dp/max-subarray",
+        "dp/house-robber",
+        "dp/coin-change",
+        "dp/longest-common-subsequence",
+        "dp/edit-distance",
+        "dp/counting-bits",
+        "dp/decode-ways",
+        "dp/unique-paths",
+        "dp/maximal-square",
+        "dp/longest-increasing-subsequence",
+        "dp/word-break",
+        "dp/maximum-profit-job-scheduling",
+        "dp/paint-house",
+        "dp/paint-house-ii",
+        "dp/minimum-window-subsequence"
+      ]
+    },
+    "Graphs": {
+      "topics": [
+        "Graphs"
+      ],
+      "intros": [
+        "graphs/graphs-overview",
+        "graphs/shortest-path-algorithms",
+        "graphs/union-find"
+      ],
+      "lessons": [
+        "graphs/graphs-overview",
+        "graphs/course-schedule",
+        "graphs/course-schedule-ii",
+        "graphs/shortest-path-algorithms",
+        "graphs/network-delay-time",
+        "graphs/cheapest-flights",
+        "graphs/path-minimum-effort",
+        "graphs/find-the-city",
+        "graphs/union-find",
+        "graphs/connected-components",
+        "graphs/redundant-connection",
+        "graphs/word-ladder"
+      ]
+    },
+    "Backtracking": {
+      "topics": [
+        "Backtracking",
+        "Recursion"
+      ],
+      "intros": [
+        "backtracking/overview",
+        "backtracking/solution-space-trees"
+      ],
+      "lessons": [
+        "backtracking/overview",
+        "backtracking/word-search",
+        "backtracking/solution-space-trees",
+        "backtracking/subsets",
+        "backtracking/permutations",
+        "backtracking/letter-combinations",
+        "backtracking/generate-parentheses",
+        "backtracking/combination-sum",
+        "backtracking/palindrome-partitioning",
+        "backtracking/n-queens"
+      ]
+    },
+    "Breadth-First Search": {
+      "topics": [
+        "Graphs",
+        "Binary Trees"
+      ],
+      "intros": [
+        "bfs/introduction",
+        "bfs/overview",
+        "bfs/graphs-overview"
+      ],
+      "lessons": [
+        "bfs/introduction",
+        "bfs/overview",
+        "bfs/level-order-sum",
+        "bfs/rightmost-node",
+        "bfs/zigzag-level-order",
+        "bfs/maximum-width",
+        "bfs/graphs-overview",
+        "bfs/minimum-knight-moves",
+        "bfs/rotting-oranges",
+        "bfs/01-matrix",
+        "bfs/bus-routes"
+      ]
+    },
+    "Trie": {
+      "topics": [
+        "Tries"
+      ],
+      "intros": [
+        "trie/intro",
+        "trie/prefix-matching"
+      ],
+      "lessons": [
+        "trie/intro",
+        "trie/implement-trie",
+        "trie/prefix-matching"
+      ]
+    },
+    "Prefix Sum": {
+      "topics": [
+        "Arrays"
+      ],
+      "intros": [
+        "prefix-sum/intro"
+      ],
+      "lessons": [
+        "prefix-sum/intro",
+        "prefix-sum/count-vowels-substrings",
+        "prefix-sum/subarray-sum-equals-k"
+      ]
+    },
+    "Matrices": {
+      "topics": [
+        "Arrays"
+      ],
+      "intros": [],
+      "lessons": [
+        "matrices/spiral-matrix",
+        "matrices/rotate-image",
+        "matrices/set-matrix-zeroes"
+      ]
+    },
+    "Intervals": {
+      "topics": [
+        "Arrays",
+        "Greedy Algorithms"
+      ],
+      "intros": [
+        "intervals/overview"
+      ],
+      "lessons": [
+        "intervals/overview",
+        "intervals/merge-intervals",
+        "intervals/insert-interval",
+        "intervals/non-overlapping-intervals",
+        "intervals/meeting-rooms",
+        "intervals/meeting-rooms-ii"
+      ]
+    },
+    "Bit Manipulation": {
+      "topics": [
+        "Bit Manipulation"
+      ],
+      "intros": [
+        "bit-manipulation/overview"
+      ],
+      "lessons": [
+        "bit-manipulation/overview",
+        "bit-manipulation/single-number",
+        "bit-manipulation/number-of-1-bits",
+        "bit-manipulation/missing-number",
+        "bit-manipulation/reverse-bits",
+        "bit-manipulation/sum-of-two-integers"
+      ]
+    }
+  },
+  "byTopic": {
+    "Sliding Window / Two Pointers": [
+      "Two Pointers",
+      "Sliding Window"
+    ],
+    "Arrays": [
+      "Two Pointers",
+      "Arrays & Hashing",
+      "Prefix Sum",
+      "Matrices",
+      "Intervals"
+    ],
+    "Hashing": [
+      "Arrays & Hashing"
+    ],
+    "Stack / Queues": [
+      "Stack"
+    ],
+    "Linked List": [
+      "Linked List"
+    ],
+    "Heaps": [
+      "Heap"
+    ],
+    "Binary Search": [
+      "Binary Search"
+    ],
+    "Binary Trees": [
+      "Depth-First Search",
+      "Breadth-First Search"
+    ],
+    "Binary Search Trees": [
+      "Depth-First Search"
+    ],
+    "Graphs": [
+      "Depth-First Search",
+      "Graphs",
+      "Breadth-First Search"
+    ],
+    "Recursion": [
+      "Depth-First Search",
+      "Backtracking"
+    ],
+    "Greedy Algorithms": [
+      "Greedy Algorithms",
+      "Intervals"
+    ],
+    "Dynamic Programming": [
+      "Dynamic Programming"
+    ],
+    "Backtracking": [
+      "Backtracking"
+    ],
+    "Tries": [
+      "Trie"
+    ],
+    "Bit Manipulation": [
+      "Bit Manipulation"
+    ]
+  },
+  "introTitles": {
+    "two-pointers/intro": "Introduction",
+    "arrays-hashing/overview": "Overview",
+    "sliding-window/intro": "Overview",
+    "sliding-window/variable-intro": "Variable-Size Window",
+    "stack/intro": "Overview",
+    "stack/monotonic-intro": "Monotonic Stack",
+    "linked-list/intro": "Overview",
+    "heap/intro": "Overview",
+    "binary-search/intro": "Overview",
+    "dfs/introduction": "Introduction",
+    "dfs/fundamentals": "Fundamentals",
+    "dfs/return-values": "Return Values",
+    "dfs/passing-values": "Passing Values Down and Up",
+    "dfs/graphs-overview": "Graphs Overview",
+    "dfs/adjacency-list": "Adjacency List",
+    "dfs/grid-dfs-overview": "Matrices",
+    "greedy/overview": "Overview",
+    "dp/fundamentals": "Fundamentals",
+    "dp/solving-with-dp": "Solving a Question with Dynamic Programming",
+    "graphs/graphs-overview": "Overview",
+    "graphs/shortest-path-algorithms": "Shortest Path Algorithms",
+    "graphs/union-find": "Union-Find (DSU)",
+    "backtracking/overview": "Overview",
+    "backtracking/solution-space-trees": "Solution Space Trees",
+    "bfs/introduction": "Introduction",
+    "bfs/overview": "Overview",
+    "bfs/graphs-overview": "Graphs Overview",
+    "trie/intro": "Overview",
+    "trie/prefix-matching": "Prefix Matching",
+    "prefix-sum/intro": "Overview",
+    "intervals/overview": "Overview",
+    "bit-manipulation/overview": "Overview"
+  },
+  "locked": []
+}

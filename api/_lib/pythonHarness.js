@@ -11,11 +11,18 @@ import base64, contextlib, io, json, math, random, time, traceback
 # so the names they use have to exist before the submission is compiled.
 from typing import Any, Deque, Dict, List, Optional, Set, Tuple, Union
 
-class ListNode:
+# takeUforward-style solutions read and write a node's value as \`data\`;
+# the alias lets both conventions run against the same nodes.
+class _DataAlias:
+    @property
+    def data(self): return self.val
+    @data.setter
+    def data(self, value): self.val = value
+class ListNode(_DataAlias):
     def __init__(self, val=0, next=None): self.val, self.next = val, next
-class TreeNode:
+class TreeNode(_DataAlias):
     def __init__(self, val=0, left=None, right=None): self.val, self.left, self.right = val, left, right
-class Node:
+class Node(_DataAlias):
     def __init__(self, val=0, children=None, neighbors=None):
         self.val, self.children = val, children or []
         self.neighbors = neighbors or []
@@ -267,13 +274,16 @@ def _run_case(case):
             else: raise ValueError('This problem does not have an executable entrypoint.')
         # A problem that returns a node serialises an empty answer as [], not None.
         if actual is None and entry.get('returnSerializer'): actual = []
+        # A case with no known expected output is run and shown, not scored.
+        if case.get('unjudged'):
+            return {'id': case['id'], 'status': 'ran', 'passed': True, 'unjudged': True, 'input': case.get('input'), 'actual': actual, 'stdout': captured.getvalue()[-8000:], 'runtimeMs': round((time.perf_counter()-started)*1000, 3), 'hidden': case.get('hidden', False)}
         passed = _equal(actual, case.get('expected'), _CONFIG.get('judge', {}), call_args)
         return {'id': case['id'], 'status': 'passed' if passed else 'wrong_answer', 'passed': passed, 'input': case.get('input'), 'expected': case.get('expected'), 'actual': actual, 'stdout': captured.getvalue()[-8000:], 'runtimeMs': round((time.perf_counter()-started)*1000, 3), 'hidden': case.get('hidden', False)}
     except Exception as error:
         return {'id': case['id'], 'status': 'runtime_error', 'passed': False, 'input': case.get('input'), 'expected': case.get('expected'), 'actual': None, 'stdout': captured.getvalue()[-8000:], 'error': str(error), 'traceback': traceback.format_exc(limit=4)[-8000:], 'runtimeMs': round((time.perf_counter()-started)*1000, 3), 'hidden': case.get('hidden', False)}
 
 _cases = [_run_case(case) for case in _CONFIG['tests']]
-_summary = {'passed': sum(case['passed'] for case in _cases), 'failed': sum(not case['passed'] for case in _cases), 'total': len(_cases)}
+_summary = {'passed': sum(case['passed'] for case in _cases), 'failed': sum(not case['passed'] for case in _cases), 'total': len(_cases), 'unjudged': sum(bool(case.get('unjudged')) for case in _cases)}
 print('${RESULT_MARKER}' + json.dumps({'status': 'completed', 'cases': _cases, 'summary': _summary}, separators=(',', ':')))
 `;
 }
