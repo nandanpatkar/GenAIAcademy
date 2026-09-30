@@ -23,7 +23,7 @@ export const AI_PROVIDERS = {
     icon: "logos:google-gemini",
     color: "#1a73e8",
     mono: "G",
-    defaultModel: "gemini-flash-latest",
+    defaultModel: "gemini-3.8-flash",
     docsUrl: "https://aistudio.google.com/app/apikey",
     fields: [
       { name: "key", label: "Gemini API key", type: "password", placeholder: "Paste your Gemini API key…", required: true },

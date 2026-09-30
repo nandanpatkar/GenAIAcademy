@@ -3,7 +3,7 @@ import { AI_PROVIDERS, getProviderMeta, isProviderConfigured } from "../config/a
 const RETELL_API_KEY = import.meta.env.VITE_RETELL_API_KEY;
 const RETELL_AGENT_ID = import.meta.env.VITE_RETELL_AGENT_ID;
 
-const GEMINI_MODEL = "gemini-flash-latest";
+const GEMINI_MODEL = "gemini-3.8-flash";
 let currentAiProvider = "gemini";
 // Per-provider credentials, keyed by provider id:
 //   { gemini: { key }, "azure-openai": { endpoint, key, model }, glm: {...}, ... }

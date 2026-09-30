@@ -72,7 +72,7 @@ function sendErrorEvent(res, status = 500) {
 
 // ─── AI Providers ─────────────────────────────────────────────────────────────
 async function* streamGemini(messages, systemPrompt, apiKey) {
-  const model = 'gemini-2.0-flash-lite';
+  const model = 'gemini-3.5-flash-lite';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${apiKey}&alt=sse`;
 
   // Build conversation history for multi-turn context
