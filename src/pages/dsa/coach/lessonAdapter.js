@@ -16,18 +16,23 @@ import { AIFS_COURSE, buildLessonPrompt, LESSON_QUICK_ACTIONS, LESSON_TOOL_SPECS
 
 const bundles = new Map();
 
-/** The lesson bundle ({ code, artifacts, quiz }), shared by every caller. */
-export function loadLessonBundle(slug) {
-  if (!bundles.has(slug)) {
-    const request = fetch(`${AIFS_CONTENT_BASE}/bundle/${slug}.json`)
+/**
+ * The lesson bundle ({ code, artifacts, quiz }), shared by every caller.
+ * `base` is the course's content root; AI from Scratch unless a course with
+ * its own bundles (the AWS GenAI study guide) says otherwise.
+ */
+export function loadLessonBundle(slug, base = AIFS_CONTENT_BASE) {
+  const key = `${base}/${slug}`;
+  if (!bundles.has(key)) {
+    const request = fetch(`${base}/bundle/${slug}.json`)
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error(`Couldn't load the lesson files (HTTP ${response.status}).`))))
       .then((data) => { request.value = data; return data; })
-      .catch((error) => { bundles.delete(slug); throw error; });
-    bundles.set(slug, request);
+      .catch((error) => { bundles.delete(key); throw error; });
+    bundles.set(key, request);
   }
-  return bundles.get(slug);
+  return bundles.get(key);
 }
-const cachedBundle = (slug) => bundles.get(slug)?.value || null;
+const cachedBundle = (slug, base = AIFS_CONTENT_BASE) => bundles.get(`${base}/${slug}`)?.value || null;
 
 const clip = (text, max) => {
   const value = String(text || "");
@@ -55,6 +60,7 @@ const AIFS_INTRO = {
 export function createLessonAdapter({
   lesson, phase, getMarkdown, lessons = [], openLesson, isDark = true,
   noteType = "aifs", course = AIFS_COURSE, codeFolder = "AI from Scratch", intro = AIFS_INTRO,
+  bundleBase = AIFS_CONTENT_BASE,
 }) {
   const slug = lesson?.slug;
   const lessonBySlug = new Map(lessons.map((entry) => [entry.slug, entry]));
@@ -75,7 +81,7 @@ export function createLessonAdapter({
     list_code_files: {
       label: () => "Listing the lesson's code",
       run: async () => {
-        const bundle = await loadLessonBundle(slug);
+        const bundle = await loadLessonBundle(slug, bundleBase);
         const files = bundle.code || [];
         return files.length
           ? { text: files.map((file) => `- ${file.path} (${file.lang}, ${String(file.source || "").split("\n").length} lines)`).join("\n"), summary: `${files.length} file${files.length === 1 ? "" : "s"}` }
@@ -85,7 +91,7 @@ export function createLessonAdapter({
     read_code_file: {
       label: (args) => `Reading ${String(args.path || "a code file").split("/").pop()}`,
       run: async (args) => {
-        const files = (await loadLessonBundle(slug)).code || [];
+        const files = (await loadLessonBundle(slug, bundleBase)).code || [];
         const wanted = String(args.path || "").toLowerCase();
         const file = files.find((entry) => entry.path.toLowerCase() === wanted) || files.find((entry) => entry.path.toLowerCase().endsWith(wanted)) || (!wanted ? files[0] : null);
         if (!file) return { text: `No file "${args.path}". Files: ${files.map((entry) => entry.path).join(", ") || "none"}.`, summary: "No match" };
@@ -95,7 +101,7 @@ export function createLessonAdapter({
     read_artifact: {
       label: () => "Reading the lesson's artifact",
       run: async (args) => {
-        const artifacts = (await loadLessonBundle(slug)).artifacts || [];
+        const artifacts = (await loadLessonBundle(slug, bundleBase)).artifacts || [];
         if (!artifacts.length) return { text: "This lesson has no artifact.", summary: "None" };
         const wanted = String(args.name || "").toLowerCase();
         const artifact = artifacts.find((entry) => entry.name.toLowerCase().includes(wanted)) || artifacts[0];
@@ -141,7 +147,7 @@ export function createLessonAdapter({
   };
 
   const contextGroups = () => {
-    const bundle = cachedBundle(slug);
+    const bundle = cachedBundle(slug, bundleBase);
     const loading = !bundle && (lesson?.code || lesson?.artifacts || lesson?.quiz);
     return [
       { id: "lesson", icon: BookOpen, label: "Lesson text", item: LESSON_ITEM },
@@ -170,7 +176,7 @@ export function createLessonAdapter({
   };
 
   const resolveContext = (items) => {
-    const bundle = cachedBundle(slug) || {};
+    const bundle = cachedBundle(slug, bundleBase) || {};
     return items.map((item) => {
       if (item.type === "lesson") {
         const markdown = getMarkdown();
@@ -231,7 +237,7 @@ export function createLessonAdapter({
       context,
       prefs,
       tools: specs,
-      codeFiles: (cachedBundle(slug)?.code || []).map((file) => file.path),
+      codeFiles: (cachedBundle(slug, bundleBase)?.code || []).map((file) => file.path),
       course,
     }),
     quickActions: LESSON_QUICK_ACTIONS,

@@ -344,7 +344,7 @@ export const aifsUrlTransform = (url) =>
 
 /* Mirrors react-markdown's own default: allow relative URLs and the safe
    protocols, drop everything else. */
-function defaultUrlTransform(url) {
+export function defaultUrlTransform(url) {
   const colon = url.indexOf(":");
   const questionMark = url.indexOf("?");
   const hash = url.indexOf("#");

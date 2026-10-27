@@ -7,7 +7,7 @@ import {
   DatabaseZap, Split, ShieldCheck, Braces, ReceiptText, PanelLeft,
   Bot, Workflow, Blocks, Activity, Waypoints, FileCode2,
   FlaskConical, Headphones, Tags, Swords, Briefcase, BadgeCheck, Zap,
-  Webhook, Sigma, Binary, ClipboardCheck,
+  Webhook, Sigma, Binary, ClipboardCheck, Cloud,
 } from "lucide-react";
 
 // Every id here is what Sidebar.jsx's handleNavClick / getActiveId already
@@ -187,6 +187,11 @@ export const SIDEBAR_ITEM_REGISTRY = {
   // The papers that go with those notes: three full MLA-C01 practice tests,
   // sat untimed for study or on the clock for a scored mock.
   mla_practice: { icon: ClipboardCheck, label: "MLA-C01 Practice Exams", description: "Three full 65-question papers — practice mode with explanations, or a timed 210-minute mock" },
+  // AWS Certified Generative AI Developer – Professional (AIP-C01). One viewer
+  // over two tracks, entered scoped like AI from Scratch, plus its five papers.
+  aip_guide: { icon: Cloud, label: "AIP-C01 Study Guide", description: "AWS Certified Generative AI Developer – Professional: 64 lessons with animated figures, labs, AI skills and exam questions" },
+  aip_reference: { icon: Tags, label: "AIP-C01 Exam Guide & Glossary", description: "The exam guide map, in-scope services, the glossary and the verification log" },
+  aip_practice: { icon: ClipboardCheck, label: "AIP-C01 Practice Exams", description: "Five full 75-question papers — practice mode with explanations, or a timed 180-minute mock" },
 
   learn_api: { icon: Webhook, label: "Learn API", description: "Browse 168 live REST endpoints and send real requests from the browser" },
   data_science: { icon: Sigma, label: "Data Science", description: "NumPy, pandas, Matplotlib and machine learning — 111 animated lessons and 382 graded exercises" },
@@ -245,7 +250,7 @@ export const DEFAULT_SIDEBAR_LAYOUT = [
   { id: "learn_api", label: "Learn API", itemIds: ["learn_api"] },
   { id: "agents", label: "Agents", itemIds: ["langchain", "langgraph", "deepagents", "langsmith", "langchain_samples", "strands", "aws_agentcore", "amazon_connect", "agent_library"] },
   { id: "ai_from_scratch", label: "AI from Scratch", itemIds: ["aifs_curriculum", "aifs_certification", "aifs_reference"] },
-  { id: "exams", label: "Exams and Certification", itemIds: ["exams", "mla_practice"] },
+  { id: "exams", label: "Exams and Certification", itemIds: ["exams", "mla_practice", "aip_guide", "aip_reference", "aip_practice"] },
   { id: "library", label: "Library", itemIds: ["manual", "reference", "resources", "blog", "links", "github"] },
   { id: "career", label: "Career", itemIds: ["interview_prep", "interviewer", "gemini_interviewer", "emotional_support", "job_scout", "quiz"] },
   { id: "community", label: "Community", itemIds: ["community", "tasks", "aiml_companion"] },
@@ -388,6 +393,14 @@ const AIFS_ITEM_IDS = [
   "aifs_curriculum",
   "aifs_certification",
   "aifs_reference",
+];
+
+const EXAM_ITEM_IDS = [
+  "exams",
+  "mla_practice",
+  "aip_guide",
+  "aip_reference",
+  "aip_practice",
 ];
 
 // The per-track ids the section first shipped with. They are gone from the
@@ -567,11 +580,11 @@ export const resolveEffectiveLayout = (savedLayout) => {
   aifsGroup.itemIds.push(...AIFS_ITEM_IDS);
 
   // Same migration for Exams and Certification, which sits directly after AI
-  // from Scratch. Without it, anyone with a saved layout would get its entry
-  // appended to "More tools" as an orphan.
+  // from Scratch. Without it, anyone with a saved layout would get its entries
+  // appended to "More tools" as orphans.
   groups.forEach((group) => {
     group.itemIds = group.itemIds.filter(
-      (id) => id !== "exams" && id !== "mla_practice" && !LEGACY_EXAM_ITEM_IDS.includes(id)
+      (id) => !EXAM_ITEM_IDS.includes(id) && !LEGACY_EXAM_ITEM_IDS.includes(id)
     );
   });
   let examsGroup = groups.find((group) => group.id === "exams");
@@ -581,7 +594,7 @@ export const resolveEffectiveLayout = (savedLayout) => {
     groups.splice(aifsIndex === -1 ? groups.length : aifsIndex + 1, 0, examsGroup);
   }
   examsGroup.label = "Exams and Certification";
-  examsGroup.itemIds.push("exams", "mla_practice");
+  examsGroup.itemIds.push(...EXAM_ITEM_IDS);
 
   // About sits last, after More tools. Same migration as every section above:
   // without it, anyone with a saved layout would find Documentation appended to

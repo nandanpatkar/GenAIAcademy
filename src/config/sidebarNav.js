@@ -92,6 +92,9 @@ export function getActiveNavId(p) {
   // One nav item over seven in-viewer tracks, so no extra mapping.
   if (p.showExamsDocs) return "exams";
   if (p.showMlaPractice) return "mla_practice";
+  // The AIP-C01 viewer's track id doubles as the nav id, minus the prefix.
+  if (p.showAwsGenAi) return p.awsGenAiTrack === "reference" ? "aip_reference" : "aip_guide";
+  if (p.showAipPractice) return "aip_practice";
   // Same shape: one nav item over the whole project-documentation viewer.
   if (p.showDocumentation) return "documentation";
   // The AI from Scratch track id doubles as the nav id, minus the prefix.
@@ -168,6 +171,8 @@ export function runNavClick(id, p, ctx = {}) {
   if (p.setShowStrandsDocs) p.setShowStrandsDocs(false);
   if (p.setShowExamsDocs) p.setShowExamsDocs(false);
   if (p.setShowMlaPractice) p.setShowMlaPractice(false);
+  if (p.setShowAwsGenAi) p.setShowAwsGenAi(false);
+  if (p.setShowAipPractice) p.setShowAipPractice(false);
   if (p.setShowAiFromScratch) p.setShowAiFromScratch(false);
   if (p.setShowOnboarding) p.setShowOnboarding(false);
 
@@ -226,6 +231,15 @@ export function runNavClick(id, p, ctx = {}) {
       break;
     case "mla_practice":
       if (p.setShowMlaPractice) p.setShowMlaPractice(true);
+      break;
+    case "aip_guide":
+    case "aip_reference":
+      // One viewer, entered scoped to the track the reader picked.
+      if (p.setAwsGenAiTrack) p.setAwsGenAiTrack(id.replace("aip_", ""));
+      if (p.setShowAwsGenAi) p.setShowAwsGenAi(true);
+      break;
+    case "aip_practice":
+      if (p.setShowAipPractice) p.setShowAipPractice(true);
       break;
     case "documentation":
       if (p.setShowDocumentation) p.setShowDocumentation(true);

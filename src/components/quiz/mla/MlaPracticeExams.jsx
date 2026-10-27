@@ -3,10 +3,7 @@ import {
   X, Play, Clock, ListChecks, Trophy, Loader2, AlertCircle, GraduationCap,
   BookOpen, Timer, RotateCcw, CheckCircle2, Target, CloudOff, Sun, Moon,
 } from "lucide-react";
-import {
-  MLA_PRACTICE_EXAMS, MLA_EXAM_SETS, MLA_EXAM_MINUTES, MLA_PASSING_SCORE,
-  MLA_SCORE_MAX, MLA_CERTIFICATION,
-} from "../../../data/mlaPracticeExams";
+import { MLA_EXAM_CONFIG } from "./examConfig";
 import {
   loadActiveAttempts, loadCompletedAttempts, startAttempt, saveAttempt,
   completeAttempt, abandonAttempts,
@@ -18,20 +15,24 @@ import MlaExamRunner from "./MlaExamRunner";
 import MlaExamResults from "./MlaExamResults";
 import "../../../styles/MlaPracticeExams.css";
 
-/* AWS MLA-C01 practice exams — three full papers, two ways to sit them.
+/* AWS practice exams — full papers, two ways to sit them.
  *
  * Practice mode has no clock and lets any question be checked in place, with
- * the full explanation. Exam mode is the real thing: a 210-minute countdown, no
- * answers until the end, and a score on the AWS 100–1000 scale against the 720
- * pass mark.
+ * the full explanation. Exam mode is the real thing: the certification's
+ * countdown, no answers until the end, and a score on the AWS 100–1000 scale
+ * against its pass mark.
+ *
+ * `config` (examConfig.js) names the bank. It defaults to MLA-C01; the AIP-C01
+ * papers pass their own, and everything below reads the config rather than one
+ * certification's constants.
  *
  * This component owns the flow (landing → running → results → review) and the
  * persistence. The runner and the score report are presentational; every write
  * to Supabase goes through mlaExamProgressService, which falls back to
  * localStorage when nobody is signed in.
  *
- * Question bodies are fetched from public/exams/practice/ on demand — the whole
- * bank is a megabyte, and no one sits three papers at once.
+ * Question bodies are fetched from public/exams/practice/ on demand — a bank is
+ * a few megabytes, and no one sits every paper at once.
  */
 
 const LS_THEME = "mla_exam_theme";
@@ -40,9 +41,8 @@ const SAVE_DEBOUNCE_MS = 2500;
 // re-arm the debounce forever and mean nothing was ever written until the tab
 // closed. A checkpoint therefore always lands at least this often.
 const SAVE_MAX_INTERVAL_MS = 15000;
-const EXAM_SECONDS = MLA_EXAM_MINUTES * 60;
 
-const MODE_COPY = {
+const modeCopy = (config) => ({
   practice: {
     label: "Practice mode",
     icon: BookOpen,
@@ -51,8 +51,16 @@ const MODE_COPY = {
   exam: {
     label: "Exam mode",
     icon: Timer,
-    blurb: `${MLA_EXAM_MINUTES} minutes, answers hidden until you finish, scored out of ${MLA_SCORE_MAX} with ${MLA_PASSING_SCORE} to pass.`,
+    blurb: `${config.minutes} minutes, answers hidden until you finish, scored out of ${config.scoreMax} with ${config.passingScore} to pass.`,
   },
+});
+
+/** "65" when every paper is the same length, "60–65" when they differ. */
+const paperLength = (exams) => {
+  const counts = exams.map((entry) => entry.questionCount);
+  const low = Math.min(...counts);
+  const high = Math.max(...counts);
+  return low === high ? String(low) : `${low}–${high}`;
 };
 
 /** Fetch one paper, refusing the SPA's index.html fallback as a question bank. */
@@ -66,13 +74,16 @@ async function fetchExamQuestions(slug) {
   return payload.questions;
 }
 
-export default function MlaPracticeExams({ onClose }) {
+export default function MlaPracticeExams({ onClose, config = MLA_EXAM_CONFIG }) {
   const { user } = useAuth();
   const { theme } = useTheme();
   const userId = user?.id || null;
+  const { exams: papers, sets, certification } = config;
+  const examSeconds = config.minutes * 60;
+  const bankSlugs = useMemo(() => papers.map((entry) => entry.slug), [papers]);
 
   // The runner follows the app's light/dark switch until someone overrides it
-  // here — sitting a 210-minute paper is exactly the case for reading light on
+  // here — sitting a three-hour paper is exactly the case for reading light on
   // a dark app, or the other way round, without changing the whole workspace.
   const [themeOverride, setThemeOverride] = useState(() => {
     try {
@@ -131,12 +142,12 @@ export default function MlaPracticeExams({ onClose }) {
   // ── Landing data ─────────────────────────────────────────────────────────
   const refreshAttempts = useCallback(async () => {
     const [active, completed] = await Promise.all([
-      loadActiveAttempts(userId),
-      loadCompletedAttempts(userId),
+      loadActiveAttempts(userId, bankSlugs),
+      loadCompletedAttempts(userId, 40, bankSlugs),
     ]);
     setActiveAttempts(active);
     setHistory(completed);
-  }, [userId]);
+  }, [userId, bankSlugs]);
 
   useEffect(() => { refreshAttempts(); }, [refreshAttempts]);
 
@@ -201,13 +212,13 @@ export default function MlaPracticeExams({ onClose }) {
       let nextAttempt = resume ? resumableFor(examMeta.slug, wantedMode) : null;
       if (!nextAttempt) {
         nextAttempt = await startAttempt(userId, examMeta.slug, wantedMode, {
-          secondsRemaining: wantedMode === "exam" ? EXAM_SECONDS : null,
+          secondsRemaining: wantedMode === "exam" ? examSeconds : null,
         });
       }
       // An exam attempt saved before this field existed, or one resumed from a
       // practice run, still needs a clock to count down from.
       if (wantedMode === "exam" && (nextAttempt.secondsRemaining ?? null) === null) {
-        nextAttempt = { ...nextAttempt, secondsRemaining: EXAM_SECONDS };
+        nextAttempt = { ...nextAttempt, secondsRemaining: examSeconds };
       }
       lastSavedAtRef.current = Date.now();
       setQuestions(loaded);
@@ -229,10 +240,10 @@ export default function MlaPracticeExams({ onClose }) {
     pendingRef.current = null;
 
     const merged = { ...attempt, ...snapshot };
-    const graded = gradeAttempt(questions, merged.answers || {});
+    const graded = gradeAttempt(questions, merged.answers || {}, config);
 
     const elapsed = mode === "exam"
-      ? EXAM_SECONDS - (merged.secondsRemaining ?? 0)
+      ? examSeconds - (merged.secondsRemaining ?? 0)
       : Math.max(0, Math.round((Date.now() - new Date(merged.startedAt || Date.now()).getTime()) / 1000));
 
     setElapsedSeconds(elapsed);
@@ -278,6 +289,7 @@ export default function MlaPracticeExams({ onClose }) {
           onFinish={handleFinish}
           onExit={view === "review" ? () => setView("results") : backToLanding}
           themeToggle={themeToggle}
+          config={config}
         />
       </div>
     );
@@ -296,12 +308,13 @@ export default function MlaPracticeExams({ onClose }) {
           onRetake={retake}
           onExit={backToLanding}
           themeToggle={themeToggle}
+          config={config}
         />
       </div>
     );
   }
 
-  const totalQuestions = MLA_PRACTICE_EXAMS.reduce((sum, entry) => sum + entry.questionCount, 0);
+  const totalQuestions = papers.reduce((sum, entry) => sum + entry.questionCount, 0);
 
   const renderExamCard = (entry) => {
     const best = bestByExam[entry.slug];
@@ -386,17 +399,18 @@ export default function MlaPracticeExams({ onClose }) {
       <div className="mla-landing">
         <header className="mla-hero">
           <div className="mla-hero-copy">
-            <span className="mla-eyebrow"><GraduationCap size={15} /> {MLA_CERTIFICATION.code}</span>
-            <h1>{MLA_CERTIFICATION.name}</h1>
+            <span className="mla-eyebrow"><GraduationCap size={15} /> {certification.code}</span>
+            <h1>{certification.name}</h1>
             <p>
-              {MLA_PRACTICE_EXAMS.length} full-length practice papers across {MLA_EXAM_SETS.length} sets,
+              {papers.length} full-length practice papers
+              {sets.length > 1 && <> across {sets.length} sets</>},
               {" "}{totalQuestions} questions, every one with a written explanation. Sit them untimed to
               learn, or on the clock to find out where you actually stand.
             </p>
             <div className="mla-hero-facts">
-              <span><ListChecks size={15} /> 65 questions per paper</span>
-              <span><Clock size={15} /> {MLA_EXAM_MINUTES} minutes in exam mode</span>
-              <span><Trophy size={15} /> {MLA_PASSING_SCORE} of {MLA_SCORE_MAX} to pass</span>
+              <span><ListChecks size={15} /> {paperLength(papers)} questions per paper</span>
+              <span><Clock size={15} /> {config.minutes} minutes in exam mode</span>
+              <span><Trophy size={15} /> {config.passingScore} of {config.scoreMax} to pass</span>
             </div>
           </div>
           <div className="mla-hero-tools">
@@ -410,7 +424,7 @@ export default function MlaPracticeExams({ onClose }) {
         </header>
 
         <div className="mla-mode-cards">
-          {Object.entries(MODE_COPY).map(([id, copy]) => {
+          {Object.entries(modeCopy(config)).map(([id, copy]) => {
             const Icon = copy.icon;
             return (
               <div key={id} className={`mla-mode-card mla-mode-card--${id}`}>
@@ -436,7 +450,7 @@ export default function MlaPracticeExams({ onClose }) {
           <p className="mla-error"><AlertCircle size={16} /> {error}</p>
         )}
 
-        {MLA_EXAM_SETS.map((set) => (
+        {sets.map((set) => (
           <section key={set.id} className="mla-set">
             <div className="mla-set-head">
               <h2>{set.label}</h2>
@@ -445,7 +459,7 @@ export default function MlaPracticeExams({ onClose }) {
             </div>
             <div className="mla-exam-grid">
               {set.examSlugs
-                .map((slug) => MLA_PRACTICE_EXAMS.find((entry) => entry.slug === slug))
+                .map((slug) => papers.find((entry) => entry.slug === slug))
                 .filter(Boolean)
                 .map(renderExamCard)}
             </div>
@@ -463,17 +477,17 @@ export default function MlaPracticeExams({ onClose }) {
               </thead>
               <tbody>
                 {history.slice(0, 12).map((entry) => {
-                  const meta = MLA_PRACTICE_EXAMS.find((e) => e.slug === entry.examSlug);
+                  const meta = papers.find((e) => e.slug === entry.examSlug);
                   return (
                     <tr key={entry.id || `${entry.examSlug}-${entry.completedAt}`}>
                       <td>{meta?.label || entry.examSlug}</td>
                       <td className="mla-history-mode">{entry.mode}</td>
                       <td><strong>{entry.score}</strong></td>
-                      <td>{entry.correctCount}/{meta?.questionCount || 65}</td>
+                      <td>{entry.correctCount}/{meta?.questionCount ?? "—"}</td>
                       <td>
                         <span className={`mla-history-verdict${entry.passed ? " is-pass" : ""}`}>
                           {entry.passed ? <CheckCircle2 size={13} /> : <AlertCircle size={13} />}
-                          {entry.passed ? "Pass" : "Below 720"}
+                          {entry.passed ? "Pass" : `Below ${config.passingScore}`}
                         </span>
                       </td>
                       <td>{entry.completedAt ? new Date(entry.completedAt).toLocaleDateString() : "—"}</td>

@@ -24,6 +24,7 @@
     "build:mla-practice": "python3 scripts/build_mla_practice_exams.py",
     "build:apihub": "python3 scripts/build_apihub_docs.py",
     "build:aifs": "python3 scripts/build_ai_from_scratch.py",
+    "build:aws-genai": "python3 scripts/build_aws_genai.py",
     "build:datascience": "python3 scripts/build_datascience_course.py && python3 scripts/build_datascience_mirror.py",
     "build:chaivisual": "python3 scripts/build_chaivisual_course.py && python3 scripts/build_chaivisual_mirror.py",
     "fetch:chaivisual": "node scripts/fetch_chaivisual_content.mjs",
