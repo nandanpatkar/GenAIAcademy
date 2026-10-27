@@ -89,6 +89,14 @@ agentcore-samples-main/
 # from R2 like the other doc archives below.
 /ai-engineering-from-scratch-main/
 
+# Upstream study guide used only as build input for the AWS GenAI (AIP-C01)
+# viewer and its practice exams (scripts/build_aws_genai.py) — 247 MB, most of
+# it one exported HTML page. What ships is the output under public/aws-genai/
+# (~3 MB of lesson text and bundles, no images) and the five papers under
+# public/exams/ (~10 MB with their WebP diagrams), small enough to commit and
+# serve straight from public/ like the MLA-C01 papers.
+/AWS Genai/
+
 # Generated output of build_agentcore_samples.py, build_langchain_docs.py,
 # build_strands_docs.py and build_manual_data.py — ~234 MB / ~9,980 files
 # across the AgentCore docs+samples, LangChain docs, Strands docs and guides

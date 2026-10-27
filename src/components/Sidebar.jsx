@@ -84,6 +84,8 @@ function Sidebar({
   showStrandsDocs, setShowStrandsDocs,
   showExamsDocs, setShowExamsDocs,
   showMlaPractice, setShowMlaPractice,
+  showAwsGenAi, setShowAwsGenAi, awsGenAiTrack, setAwsGenAiTrack,
+  showAipPractice, setShowAipPractice,
   showDocumentation, setShowDocumentation,
   showAiFromScratch, setShowAiFromScratch, aifsTrack, setAifsTrack,
   showOnboarding, setShowOnboarding,
@@ -334,6 +336,8 @@ function Sidebar({
     if (showStrandsDocs) return "strands";
     if (showExamsDocs) return "exams";
     if (showMlaPractice) return "mla_practice";
+    if (showAwsGenAi) return awsGenAiTrack === "reference" ? "aip_reference" : "aip_guide";
+    if (showAipPractice) return "aip_practice";
     if (showDocumentation) return "documentation";
     if (showAiFromScratch) return `aifs_${aifsTrack === "guides" ? "reference" : aifsTrack || "curriculum"}`;
     if (!activeNode) return "overview";
@@ -406,6 +410,8 @@ function Sidebar({
     if (setShowStrandsDocs) setShowStrandsDocs(false);
     if (setShowExamsDocs) setShowExamsDocs(false);
     if (setShowMlaPractice) setShowMlaPractice(false);
+    if (setShowAwsGenAi) setShowAwsGenAi(false);
+    if (setShowAipPractice) setShowAipPractice(false);
     if (setShowDocumentation) setShowDocumentation(false);
     if (setShowAiFromScratch) setShowAiFromScratch(false);
     if (setShowOnboarding) setShowOnboarding(false);
@@ -451,6 +457,14 @@ function Sidebar({
         break;
       case "mla_practice":
         if (setShowMlaPractice) setShowMlaPractice(true);
+        break;
+      case "aip_guide":
+      case "aip_reference":
+        if (setAwsGenAiTrack) setAwsGenAiTrack(id.replace("aip_", ""));
+        if (setShowAwsGenAi) setShowAwsGenAi(true);
+        break;
+      case "aip_practice":
+        if (setShowAipPractice) setShowAipPractice(true);
         break;
       case "documentation":
         if (setShowDocumentation) setShowDocumentation(true);

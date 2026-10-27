@@ -1,15 +1,18 @@
 /**
- * Scoring for the MLA-C01 practice exams.
+ * Scoring for the AWS practice exams.
  *
- * AWS reports this exam on a scaled 100–1000 range with 720 to pass, not as a
- * raw percentage, so that is what exam mode shows: the raw count is scaled
- * linearly across the range. A linear scale is an approximation — the real
- * exam weights by item difficulty, which the bank does not carry — so the
- * results screen prints the raw count next to the scaled score rather than
- * presenting the scaled number as the whole truth.
+ * AWS reports these exams on a scaled 100–1000 range with a fixed pass mark
+ * (720 for MLA-C01, 750 for AIP-C01), not as a raw percentage, so that is what
+ * exam mode shows: the raw count is scaled linearly across the range. A linear
+ * scale is an approximation — the real exam weights by item difficulty, which
+ * the bank does not carry — so the results screen prints the raw count next to
+ * the scaled score rather than presenting the scaled number as the whole truth.
+ *
+ * `scale` is the bank's config (examConfig.js); only scoreMin, scoreMax and
+ * passingScore are read.
  */
 
-import { MLA_SCORE_MIN, MLA_SCORE_MAX, MLA_PASSING_SCORE } from "../../../data/mlaPracticeExams";
+import { MLA_EXAM_CONFIG } from "./examConfig";
 
 /** Did the learner pick exactly the correct set? Partial credit is not awarded. */
 export const isCorrect = (question, answer) => {
@@ -18,16 +21,16 @@ export const isCorrect = (question, answer) => {
   return question.correct.every((key) => picked.includes(key));
 };
 
-export const scaleScore = (correctCount, total) => {
-  if (!total) return MLA_SCORE_MIN;
+export const scaleScore = (correctCount, total, scale = MLA_EXAM_CONFIG) => {
+  if (!total) return scale.scoreMin;
   const ratio = correctCount / total;
-  return Math.round(MLA_SCORE_MIN + ratio * (MLA_SCORE_MAX - MLA_SCORE_MIN));
+  return Math.round(scale.scoreMin + ratio * (scale.scoreMax - scale.scoreMin));
 };
 
 /** The raw count that first reaches a passing scaled score, for "you needed N". */
-export const questionsNeededToPass = (total) => {
+export const questionsNeededToPass = (total, scale = MLA_EXAM_CONFIG) => {
   if (!total) return 0;
-  const ratio = (MLA_PASSING_SCORE - MLA_SCORE_MIN) / (MLA_SCORE_MAX - MLA_SCORE_MIN);
+  const ratio = (scale.passingScore - scale.scoreMin) / (scale.scoreMax - scale.scoreMin);
   return Math.ceil(ratio * total);
 };
 
@@ -37,7 +40,7 @@ export const questionsNeededToPass = (total) => {
  * `answers` is keyed by question id, holding the option letters picked. An
  * unanswered question counts as wrong, exactly as it would on the real exam.
  */
-export const gradeAttempt = (questions, answers) => {
+export const gradeAttempt = (questions, answers, scale = MLA_EXAM_CONFIG) => {
   const perDomain = {};
   let correctCount = 0;
 
@@ -61,8 +64,8 @@ export const gradeAttempt = (questions, answers) => {
     incorrectCount: answeredCount - correctCount,
     skippedCount: questions.length - answeredCount,
     answeredCount,
-    score: scaleScore(correctCount, questions.length),
-    passed: scaleScore(correctCount, questions.length) >= MLA_PASSING_SCORE,
+    score: scaleScore(correctCount, questions.length, scale),
+    passed: scaleScore(correctCount, questions.length, scale) >= scale.passingScore,
     percent: questions.length ? Math.round((correctCount / questions.length) * 100) : 0,
     domainBreakdown: Object.values(perDomain)
       .map((domain) => ({

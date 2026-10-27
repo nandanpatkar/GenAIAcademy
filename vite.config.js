@@ -245,7 +245,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       watch: {
-        ignored: ["**/agentcore-samples-main/**", "**/api_beam/**"],
+        ignored: ["**/agentcore-samples-main/**", "**/api_beam/**", "**/AWS Genai/**"],
       },
       proxy: {
         // Mirror Vercel's same-origin documentation rewrites in development.

@@ -1,0 +1,1384 @@
+{
+  "cli-auth": {
+    "title": "What happens when you run one AWS CLI command",
+    "grid": [4, 2],
+    "nodes": [
+      {"id": "you", "at": [0, 0], "label": "You · terminal", "sub": "aws cli / boto3", "kind": "client"},
+      {"id": "chain", "at": [1, 0], "label": "Credential chain", "sub": "env · SSO · role", "kind": "security"},
+      {"id": "api", "at": [2, 0], "label": "Service endpoint", "sub": "bedrock-runtime", "kind": "ai"},
+      {"id": "iam", "at": [3, 0], "label": "IAM evaluation", "sub": "policies · SCPs", "kind": "security"},
+      {"id": "sts", "at": [0, 1], "label": "AWS STS", "sub": "get-caller-identity", "kind": "security"},
+      {"id": "cw", "at": [1, 1], "label": "Billing alarm", "sub": "EstimatedCharges", "kind": "monitor"},
+      {"id": "sns", "at": [2, 1], "label": "SNS topic", "sub": "alarm action", "kind": "integration"},
+      {"id": "mail", "at": [3, 1], "label": "Your inbox", "sub": "email subscription", "kind": "client"}
+    ],
+    "edges": [["api", "you", {"bend": -62}]],
+    "steps": [
+      {"path": ["you", "chain"], "label": "Boto3 or the CLI looks for credentials in order: environment variables, an SSO profile, shared config, then a role", "packet": "who am I?"},
+      {"path": ["chain", "api"], "label": "The request is signed with SigV4 and sent to the Regional service endpoint", "packet": "SigV4"},
+      {"path": ["api", "iam"], "label": "The service asks IAM: may this principal call this action on this resource?", "packet": "authorize"},
+      {"path": ["iam", "api", "you"], "label": "An Allow returns the response; no Allow, or any explicit Deny, returns AccessDenied", "note": "explicit Deny always wins", "tone": "ok"},
+      {"path": ["you", "sts"], "label": "aws sts get-caller-identity confirms which identity you are really using before you build anything", "note": "Account · Arn · UserId"},
+      {"path": ["cw", "sns", "mail"], "label": "A CloudWatch billing alarm (the metric lives in us-east-1) emails you through SNS when charges pass your threshold", "note": "ALARM", "tone": "warn"}
+    ]
+  },
+  "llm-generation": {
+    "title": "How an LLM writes an answer, one token at a time",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "prompt", "at": [0, 0], "label": "Prompt text", "sub": "“Summarize this…”", "kind": "client"},
+      {"id": "tok", "at": [1, 0], "label": "Tokenizer", "sub": "text → token IDs", "kind": "compute"},
+      {"id": "model", "at": [2, 0], "label": "Model", "sub": "forward pass", "kind": "ai"},
+      {"id": "sampler", "at": [3, 0], "label": "Sampler", "sub": "temperature · top-p", "kind": "ai"},
+      {"id": "token", "at": [4, 0], "label": "Chosen token", "sub": "appended to input", "kind": "ai"},
+      {"id": "detok", "at": [4, 1], "label": "Detokenize", "sub": "tokens → text", "kind": "compute"},
+      {"id": "answer", "at": [3, 1], "label": "Answer", "sub": "with stopReason", "kind": "client"}
+    ],
+    "edges": [["token", "model", {"bend": -66}]],
+    "steps": [
+      {"path": ["prompt", "tok"], "label": "Text is split into tokens (word pieces). Bills, quotas and the context window all count tokens", "packet": "tokens"},
+      {"path": ["tok", "model"], "label": "Token IDs run through the model, which scores every possible next token"},
+      {"path": ["model", "sampler"], "label": "Temperature, top-p and top-k decide which candidates may be picked", "packet": "probabilities"},
+      {"path": ["sampler", "token"], "label": "One token is chosen", "note": "“The”"},
+      {"path": ["token", "model"], "label": "It is appended to the input and the loop repeats. The model is stateless: it only sees what is in this request", "note": "repeat", "tone": "warn"},
+      {"path": ["token", "detok", "answer"], "label": "It stops at end of turn, a stop sequence or maxTokens, and the tokens become text", "note": "stopReason: end_turn", "tone": "ok"}
+    ]
+  },
+  "semantic-search": {
+    "title": "Embed once, search by meaning forever",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "docs", "at": [0, 0], "label": "Documents", "sub": "in S3", "kind": "storage"},
+      {"id": "chunk", "at": [1, 0], "label": "Chunking", "sub": "split into passages", "kind": "compute"},
+      {"id": "emb1", "at": [2, 0], "label": "Embeddings", "sub": "Titan Text V2", "kind": "ai"},
+      {"id": "vs", "at": [3, 0], "label": "Vector store", "sub": "vectors + text", "kind": "db"},
+      {"id": "q", "at": [0, 1], "label": "User question", "sub": "“can’t log in”", "kind": "client"},
+      {"id": "emb2", "at": [1, 1], "label": "Same model", "sub": "query vector", "kind": "ai"},
+      {"id": "search", "at": [3, 1], "label": "k-NN search", "sub": "cosine + filter", "kind": "analytics"},
+      {"id": "llm", "at": [4, 1], "label": "LLM prompt", "sub": "question + chunks", "kind": "ai"}
+    ],
+    "groups": [
+      {"label": "Offline · ingestion", "nodes": ["docs", "chunk", "emb1", "vs"], "kind": "storage"},
+      {"label": "Online · query", "nodes": ["q", "emb2", "search", "llm"], "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["docs", "chunk", "emb1", "vs"], "label": "Offline: documents are chunked, embedded and stored once, with their text and metadata", "packet": "vectors"},
+      {"path": ["q", "emb2"], "label": "Online: the question is embedded with the same model (mixing models breaks the geometry)", "packet": "query"},
+      {"paths": [["emb2", "search"], ["vs", "search"]], "label": "The store finds the nearest vectors by cosine similarity, optionally narrowed by a metadata filter"},
+      {"path": ["search", "llm"], "label": "The top-k chunks go into the prompt next to the question", "note": "answer + citations", "tone": "ok"}
+    ]
+  },
+  "converse-request": {
+    "title": "One Converse call, end to end",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "app", "at": [0, 1], "label": "Your app", "sub": "Lambda / ECS", "kind": "compute"},
+      {"id": "sdk", "at": [1, 1], "label": "Boto3", "sub": "SigV4 · retries", "kind": "devtools"},
+      {"id": "rt", "at": [2, 1], "label": "bedrock-runtime", "sub": "Converse API", "kind": "ai"},
+      {"id": "iam", "at": [2, 0], "label": "IAM · quotas", "sub": "allow · deny · 429", "kind": "security"},
+      {"id": "fm", "at": [4, 1], "label": "Bedrock model", "sub": "maybe other Region", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["app", "sdk", "rt"], "label": "converse(modelId, messages, system, inferenceConfig) is signed and sent: one format for most chat models", "packet": "request"},
+      {"path": ["rt", "iam"], "label": "Bedrock checks IAM, SCPs and your quota before running anything", "packet": "allowed?"},
+      {"path": ["iam", "rt", "sdk"], "label": "Over your quota: 429 ThrottlingException. The SDK retries with exponential backoff and jitter, never in a tight loop", "note": "429 → backoff", "tone": "warn"},
+      {"path": ["sdk", "rt", "fm"], "label": "The retry is admitted and the model runs inference"},
+      {"path": ["fm", "rt", "sdk", "app"], "label": "Back come output.message, stopReason and usage. The app must resend history next turn: Bedrock is stateless", "note": "stopReason: end_turn", "tone": "ok"}
+    ]
+  },
+  "customization-job": {
+    "title": "From labeled examples to a custom model in production",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "raw", "at": [0, 0], "label": "Raw examples", "sub": "prompt + answer", "kind": "client"},
+      {"id": "clean", "at": [1, 0], "label": "Clean · dedupe", "sub": "mask PII", "kind": "compute"},
+      {"id": "validate", "at": [2, 0], "label": "Validate JSONL", "sub": "local script", "kind": "devtools"},
+      {"id": "s3", "at": [3, 0], "label": "Amazon S3", "sub": "train / validation", "kind": "storage"},
+      {"id": "job", "at": [4, 0], "label": "Custom job", "sub": "IAM service role", "kind": "ai"},
+      {"id": "model", "at": [4, 1.6], "label": "Custom model", "sub": "billed monthly", "kind": "ai"},
+      {"id": "pt", "at": [2, 1.1], "label": "Provisioned", "sub": "Throughput (A)", "kind": "ai"},
+      {"id": "od", "at": [2, 2.1], "label": "On-demand", "sub": "deployment (B)", "kind": "ai"},
+      {"id": "app", "at": [0, 1.6], "label": "Application", "sub": "calls the model", "kind": "compute"}
+    ],
+    "steps": [
+      {"path": ["raw", "clean", "validate"], "label": "Hundreds of examples of exactly the behavior you want: cleaned, deduplicated, PII-masked, validated as JSONL", "packet": "examples"},
+      {"path": ["validate", "s3", "job"], "label": "Training and validation files go to S3; the customization job reads them with its service role", "packet": "JSONL"},
+      {"path": ["job", "model"], "label": "Training (fine-tuning, distillation or reinforcement fine-tuning) produces a custom model", "note": "training tokens × epochs"},
+      {"path": ["model", "pt", "app"], "label": "Option A: Provisioned Throughput for steady, predictable load"},
+      {"path": ["model", "od", "app"], "label": "Option B: an on-demand custom model deployment, paid per token. Facts that change still belong in RAG", "tone": "ok", "note": "style, not facts"}
+    ]
+  },
+  "rag-pipeline": {
+    "title": "Retrieval-Augmented Generation, both halves",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "docs", "at": [0, 0], "label": "Documents", "sub": "S3 · connectors", "kind": "storage"},
+      {"id": "parse", "at": [1, 0], "label": "Parse", "sub": "text · tables", "kind": "compute"},
+      {"id": "chunk", "at": [2, 0], "label": "Chunk", "sub": "size · overlap", "kind": "compute"},
+      {"id": "emb", "at": [3, 0], "label": "Embed", "sub": "embedding model", "kind": "ai"},
+      {"id": "vs", "at": [4, 0], "label": "Vector store", "sub": "vectors + metadata", "kind": "db"},
+      {"id": "q", "at": [0, 1], "label": "User question", "kind": "client"},
+      {"id": "rw", "at": [1, 1], "label": "Rewrite", "sub": "or decompose", "kind": "ai"},
+      {"id": "emb2", "at": [2, 1], "label": "Embed query", "sub": "same model", "kind": "ai"},
+      {"id": "search", "at": [3, 1], "label": "Hybrid search", "sub": "+ metadata filter", "kind": "analytics"},
+      {"id": "rr", "at": [4, 1], "label": "Rerank", "sub": "best first", "kind": "ai"},
+      {"id": "pb", "at": [4, 2], "label": "Prompt builder", "sub": "rules + chunks", "kind": "compute"},
+      {"id": "llm", "at": [3, 2], "label": "Bedrock model", "kind": "ai"},
+      {"id": "gr", "at": [2, 2], "label": "Grounding check", "sub": "Guardrails", "kind": "security"},
+      {"id": "ans", "at": [1, 2], "label": "Answer", "sub": "+ citations", "kind": "client"}
+    ],
+    "steps": [
+      {"path": ["docs", "parse", "chunk", "emb", "vs"], "label": "Ingestion (offline): parse, chunk, embed and store. Update knowledge by re-syncing documents, never by retraining", "packet": "chunks"},
+      {"path": ["q", "rw", "emb2"], "label": "Query (online): optionally rewrite or decompose the question, then embed it with the same model"},
+      {"paths": [["emb2", "search"], ["vs", "search"]], "label": "Semantic or hybrid search returns candidates, narrowed by metadata (department, date, tenant)"},
+      {"path": ["search", "rr", "pb"], "label": "A reranker puts the best passages first; the prompt says “answer only from these sources”"},
+      {"path": ["pb", "llm", "gr", "ans"], "label": "The model answers and a contextual grounding check flags claims the sources do not support", "note": "answer + citations", "tone": "ok"}
+    ]
+  },
+  "kb-retrieve-generate": {
+    "title": "Bedrock Knowledge Bases: Retrieve vs RetrieveAndGenerate",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "s3", "at": [0, 0], "label": "S3 documents", "sub": "+ .metadata.json", "kind": "storage"},
+      {"id": "conn", "at": [0, 1], "label": "Connectors", "sub": "SharePoint · web", "kind": "external"},
+      {"id": "ing", "at": [1, 0.5], "label": "Ingestion job", "sub": "chunk · embed", "kind": "ai"},
+      {"id": "store", "at": [2, 0.5], "label": "Vector store", "sub": "managed or yours", "kind": "db"},
+      {"id": "ret", "at": [3, 0.5], "label": "Retrieve", "sub": "hybrid + rerank", "kind": "analytics"},
+      {"id": "app", "at": [4, 1.4], "label": "Your app", "sub": "Lambda · agent", "kind": "compute"},
+      {"id": "llm", "at": [3, 2], "label": "Bedrock model", "sub": "generates + cites", "kind": "ai"},
+      {"id": "role", "at": [1, 2], "label": "Service role", "sub": "S3 read · model", "kind": "security"}
+    ],
+    "edges": [["role", "ing", {"dashed": true}]],
+    "steps": [
+      {"paths": [["s3", "ing"], ["conn", "ing"]], "label": "A sync (ingestion job) reads S3 and connectors, then parses, chunks and embeds what changed", "packet": "sync"},
+      {"path": ["role", "ing"], "label": "Bedrock assumes the knowledge base's service role to read sources and call the embedding model", "packet": "AssumeRole"},
+      {"path": ["ing", "store"], "label": "Chunks, vectors and metadata land in the store: managed by AWS, or your OpenSearch, Aurora or Neptune"},
+      {"path": ["app", "ret", "store"], "label": "Retrieve: hybrid search with metadata filters and an optional reranker", "packet": "Retrieve"},
+      {"path": ["store", "ret", "app"], "label": "…returns chunks with score, source location and metadata. You build the prompt", "note": "chunks + scores"},
+      {"path": ["app", "ret", "llm", "app"], "label": "RetrieveAndGenerate: one call retrieves, prompts the model and returns an answer with citations", "note": "answer + citations", "tone": "ok"}
+    ]
+  },
+  "rerank-pipeline": {
+    "title": "Over-fetch, rerank, then prove which chunking wins",
+    "grid": [5, 4],
+    "nodes": [
+      {"id": "q", "at": [0, 0], "label": "Question", "kind": "client"},
+      {"id": "search", "at": [1, 0], "label": "Hybrid search", "sub": "20–50 candidates", "kind": "analytics"},
+      {"id": "rr", "at": [2, 0], "label": "Reranker", "sub": "query + passage", "kind": "ai"},
+      {"id": "top", "at": [3, 0], "label": "Top few", "sub": "best first", "kind": "db"},
+      {"id": "prompt", "at": [4, 0], "label": "Prompt", "sub": "fewer tokens", "kind": "ai"},
+      {"id": "golden", "at": [0, 2.1], "label": "Golden set", "sub": "Q + expected doc", "kind": "storage"},
+      {"id": "kbA", "at": [2, 1.2], "label": "KB variant A", "sub": "default chunking", "kind": "db"},
+      {"id": "kbB", "at": [2, 2.1], "label": "KB variant B", "sub": "fixed 300 · 20%", "kind": "db"},
+      {"id": "kbC", "at": [2, 3], "label": "KB variant C", "sub": "hierarchical", "kind": "db"},
+      {"id": "metric", "at": [4, 2.1], "label": "hit@k · MRR", "sub": "or RAG eval job", "kind": "analytics"}
+    ],
+    "steps": [
+      {"path": ["q", "search"], "label": "Search over-fetches: 20–50 candidates by vector or hybrid score", "packet": "top 50"},
+      {"path": ["search", "rr"], "label": "A reranker reads the query and each passage together and re-scores relevance"},
+      {"path": ["rr", "top", "prompt"], "label": "Only the best few reach the prompt: more relevant and cheaper", "note": "fewer, better chunks", "tone": "ok"},
+      {"paths": [["golden", "kbA"], ["golden", "kbB"], ["golden", "kbC"]], "label": "To choose a chunking strategy, run the same golden questions against each variant"},
+      {"paths": [["kbA", "metric"], ["kbB", "metric"], ["kbC", "metric"]], "label": "Score retrieval (hit@k, MRR, or a Bedrock RAG evaluation job) and keep the winner", "note": "variant C wins", "tone": "ok"}
+    ]
+  },
+  "multimodal-pipeline": {
+    "title": "A multimodal pipeline turns messy files into trusted data",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "s3", "at": [0, 1], "label": "Raw files", "sub": "in S3", "kind": "storage"},
+      {"id": "router", "at": [1, 1], "label": "Router", "sub": "by file type", "kind": "compute"},
+      {"id": "img", "at": [2, 0], "label": "Resize · redact", "sub": "images", "kind": "compute"},
+      {"id": "vfm", "at": [3, 0], "label": "Vision FM", "sub": "Converse image", "kind": "ai"},
+      {"id": "pdf", "at": [2, 1], "label": "BDA", "sub": "docs · forms · video", "kind": "ai"},
+      {"id": "audio", "at": [2, 2], "label": "Transcribe", "sub": "speech → text", "kind": "ai"},
+      {"id": "nlp", "at": [3, 2], "label": "Comprehend", "sub": "or an FM", "kind": "ai"},
+      {"id": "validate", "at": [4, 1], "label": "Validate", "sub": "schema · ranges", "kind": "compute"},
+      {"id": "out", "at": [4, 0], "label": "Store", "sub": "DynamoDB · S3", "kind": "db"},
+      {"id": "human", "at": [4, 2], "label": "Human review", "sub": "queue", "kind": "human"}
+    ],
+    "steps": [
+      {"path": ["s3", "router"], "label": "Raw files land in S3 and are routed by type", "packet": "file"},
+      {"path": ["router", "img", "vfm"], "label": "Images: resize and redact, then a vision-capable model reads them through Converse"},
+      {"path": ["router", "pdf"], "label": "PDFs, forms and video: Bedrock Data Automation returns structured output with confidence scores", "note": "JSON + confidence"},
+      {"path": ["router", "audio", "nlp"], "label": "Audio: Transcribe to text, then Comprehend or an FM for entities, sentiment and summaries"},
+      {"paths": [["vfm", "validate"], ["pdf", "validate"], ["nlp", "validate"]], "label": "Every branch is validated: schema, value ranges, confidence"},
+      {"path": ["validate", "out"], "label": "Pass → store it for the rest of the system", "note": "accept", "tone": "ok"},
+      {"path": ["validate", "human"], "label": "Fail or low confidence → a human review queue", "note": "review", "tone": "warn"}
+    ]
+  },
+  "guardrail-sequence": {
+    "title": "A guardrail checks both directions of every call",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "user", "at": [0, 0], "label": "User", "kind": "client"},
+      {"id": "app", "at": [1, 0], "label": "App", "sub": "Lambda", "kind": "compute"},
+      {"id": "gin", "at": [2, 0], "label": "Guardrail · in", "sub": "topics · PII · attack", "kind": "security"},
+      {"id": "fm", "at": [3, 0], "label": "Model", "sub": "any Bedrock FM", "kind": "ai"},
+      {"id": "gout", "at": [4, 0], "label": "Guardrail · out", "sub": "+ grounding check", "kind": "security"},
+      {"id": "blocked", "at": [1, 1], "label": "Blocked reply", "sub": "configured text", "kind": "security"}
+    ],
+    "edges": [["gout", "app", {"bend": -104}]],
+    "steps": [
+      {"path": ["user", "app", "gin"], "label": "The question is evaluated first: content filters, denied topics, word filters, PII, prompt attacks", "packet": "input"},
+      {"path": ["gin", "blocked", "user"], "label": "A violation never reaches the model: the user gets the configured blocked message", "note": "guardrail_intervened", "tone": "bad"},
+      {"path": ["gin", "fm"], "label": "Clean (or PII-masked) input is forwarded to the model", "packet": "masked prompt", "tone": "ok"},
+      {"path": ["fm", "gout"], "label": "The response is checked too: the same policies, plus contextual grounding against the retrieved sources"},
+      {"path": ["gout", "app", "user"], "label": "Allowed, masked or replaced, the final answer goes back. Guardrails reduce risk; they are one layer, not a guarantee", "note": "ANONYMIZED {EMAIL}", "tone": "ok"}
+    ]
+  },
+  "prompt-flow": {
+    "title": "A Bedrock Flow is a flowchart that runs",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "in", "at": [0, 0], "label": "Input node", "sub": "document", "kind": "integration"},
+      {"id": "p1", "at": [1, 0], "label": "Prompt node", "sub": "rewrite question", "kind": "ai"},
+      {"id": "kb", "at": [2, 0], "label": "KB node", "sub": "retrievalQuery", "kind": "db"},
+      {"id": "p2", "at": [3, 0], "label": "Prompt node", "sub": "answer + sources", "kind": "ai"},
+      {"id": "cond", "at": [4, 0], "label": "Condition", "sub": "confidence ≥ 0.8?", "kind": "compute"},
+      {"id": "out1", "at": [4, 1], "label": "Output node", "sub": "answer", "kind": "client"},
+      {"id": "lam", "at": [3, 1], "label": "Lambda node", "sub": "escalate", "kind": "compute"},
+      {"id": "out2", "at": [2, 1], "label": "Output node", "sub": "to human queue", "kind": "human"}
+    ],
+    "steps": [
+      {"path": ["in", "p1", "kb"], "label": "The input flows into a prompt node that rewrites the question; a knowledge base node retrieves", "packet": "{{question}}"},
+      {"path": ["kb", "p2", "cond"], "label": "A second prompt node (a versioned prompt from Prompt Management) answers with sources"},
+      {"path": ["cond", "out1"], "label": "Conditions are evaluated in order: confidence ≥ 0.8 sends the answer straight out", "note": "≥ 0.8", "tone": "ok"},
+      {"path": ["cond", "lam", "out2"], "label": "Otherwise the default branch runs a Lambda node that escalates to a human queue", "note": "default branch", "tone": "warn"}
+    ]
+  },
+  "defense-in-depth": {
+    "title": "Prompt injection is stopped by layers, not by a system prompt",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "user", "at": [0, 0], "label": "User · web data", "sub": "untrusted input", "kind": "client"},
+      {"id": "attack", "at": [0, 1], "label": "Injected text", "sub": "“ignore previous…”", "kind": "external"},
+      {"id": "waf", "at": [1, 0], "label": "WAF + checks", "sub": "rate · size · format", "kind": "security"},
+      {"id": "gin", "at": [2, 0], "label": "Guardrail · in", "sub": "prompt-attack filter", "kind": "security"},
+      {"id": "tpl", "at": [3, 0], "label": "Template", "sub": "data ≠ instructions", "kind": "devtools"},
+      {"id": "fm", "at": [4, 0], "label": "Model", "kind": "ai"},
+      {"id": "gout", "at": [4, 1], "label": "Guardrail · out", "sub": "+ validation", "kind": "security"},
+      {"id": "tools", "at": [3, 1], "label": "Tools", "sub": "least-privilege role", "kind": "compute"},
+      {"id": "logs", "at": [2, 1], "label": "Audit", "sub": "CloudTrail · traces", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["user", "waf", "gin"], "label": "Untrusted input passes WAF and input validation, then the Guardrails prompt-attack filter"},
+      {"path": ["attack", "waf", "gin"], "label": "Text that says “ignore previous instructions” is caught by the prompt-attack filter", "note": "BLOCKED", "tone": "bad"},
+      {"path": ["gin", "tpl", "fm"], "label": "The template keeps your instructions apart from tagged, delimited user data"},
+      {"path": ["fm", "gout", "tools"], "label": "Output is filtered and validated; any action runs under a role that can do only that job"},
+      {"path": ["tools", "logs"], "label": "Everything is logged and alarmed: CloudTrail, invocation logs, guardrail traces", "note": "audit", "tone": "ok"}
+    ]
+  },
+  "genai-gateway": {
+    "title": "A governed GenAI gateway for the whole enterprise",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "web", "at": [0, 0], "label": "Web app", "sub": "Cognito users", "kind": "client"},
+      {"id": "internal", "at": [0, 1], "label": "Internal tools", "sub": "Identity Center", "kind": "client"},
+      {"id": "legacy", "at": [0, 2], "label": "Legacy system", "sub": "emits events", "kind": "external"},
+      {"id": "apigw", "at": [1, 0.5], "label": "API Gateway", "sub": "+ AWS WAF", "kind": "network"},
+      {"id": "eb", "at": [1, 2], "label": "EventBridge", "sub": "or SQS", "kind": "integration"},
+      {"id": "gw", "at": [2, 1], "label": "GenAI gateway", "sub": "auth · quotas", "kind": "compute"},
+      {"id": "gr", "at": [3, 0], "label": "Guardrails", "sub": "central policy", "kind": "security"},
+      {"id": "router", "at": [3, 1], "label": "Model router", "sub": "AppConfig", "kind": "compute"},
+      {"id": "logs", "at": [3, 2], "label": "Logs · metrics", "sub": "cost tags per team", "kind": "monitor"},
+      {"id": "vpce", "at": [4, 1], "label": "VPC endpoint", "sub": "PrivateLink", "kind": "network"},
+      {"id": "br", "at": [4, 0], "label": "Bedrock", "sub": "models · KBs", "kind": "ai"}
+    ],
+    "steps": [
+      {"paths": [["web", "apigw"], ["internal", "apigw"]], "label": "Customers (Cognito) and employees (Identity Center) enter through API Gateway behind WAF"},
+      {"path": ["legacy", "eb", "gw"], "label": "Legacy systems integrate loosely, by events through EventBridge or SQS"},
+      {"path": ["apigw", "gw", "gr"], "label": "Every team uses the same gateway: authentication, quotas, then the central guardrail"},
+      {"path": ["gr", "router", "vpce", "br"], "label": "A config-driven router picks the model and calls Bedrock privately through an interface endpoint", "note": "no internet path", "tone": "ok"},
+      {"path": ["gw", "logs"], "label": "Structured logs, metrics and cost-allocation tags per team make chargeback and audit possible", "note": "chargeback"}
+    ]
+  },
+  "text-to-sql": {
+    "title": "Numbers come from the database, words from the model",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "q", "at": [0, 1], "label": "User question", "kind": "client"},
+      {"id": "router", "at": [1, 1], "label": "Router", "sub": "meaning or math?", "kind": "compute"},
+      {"id": "vs", "at": [2, 0], "label": "Vector store", "sub": "policy passages", "kind": "db"},
+      {"id": "skb", "at": [2, 1], "label": "Structured KB", "sub": "NL to SQL", "kind": "ai"},
+      {"id": "t2s", "at": [2, 2], "w": 146, "label": "LLM writes SQL", "sub": "DIY path", "kind": "ai"},
+      {"id": "val", "at": [3, 2], "label": "SQL validator", "sub": "SELECT · LIMIT", "kind": "security"},
+      {"id": "db", "at": [4, 2], "label": "Database", "sub": "read-only role", "kind": "db"},
+      {"id": "llm", "at": [4, 0.8], "label": "Model explains", "sub": "answer + source", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["q", "router", "vs"], "label": "“What does the refund policy say?” is a meaning lookup, so it goes to vector search"},
+      {"path": ["router", "skb"], "label": "“Total refunds by region last quarter?” needs counting: a structured knowledge base turns it into SQL"},
+      {"path": ["router", "t2s", "val"], "label": "DIY: the model proposes SQL and a validator allows only SELECT on approved tables, with a LIMIT", "packet": "SQL"},
+      {"path": ["val", "db"], "label": "It runs under a read-only database role. A prompt is not a security boundary", "note": "read-only", "tone": "ok"},
+      {"paths": [["db", "llm"], ["skb", "llm"], ["vs", "llm"]], "label": "Rows or passages come back and the model explains the result, citing its source", "tone": "ok"}
+    ]
+  },
+  "data-wrangler": {
+    "title": "Data Wrangler records every cleaning step as a reusable flow",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "src", "at": [0, 0], "label": "Sources", "sub": "S3 · Athena · more", "kind": "storage"},
+      {"id": "imp", "at": [1, 0], "label": "Import", "sub": "sample", "kind": "compute"},
+      {"id": "tr", "at": [2, 0], "label": "Transforms", "sub": "clean · convert", "kind": "compute"},
+      {"id": "ins", "at": [3, 0], "label": "Quality report", "sub": "Data Insights", "kind": "analytics"},
+      {"id": "exp", "at": [4, 0], "label": "Export", "sub": "run at scale", "kind": "compute"},
+      {"id": "s3", "at": [4, 1], "label": "Amazon S3", "kind": "storage"},
+      {"id": "pipe", "at": [3, 1], "label": "SM Pipelines", "sub": "or Feature Store", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["src", "imp", "tr"], "label": "Import a sample, then clean, convert and featurize. Every step is recorded in the flow", "packet": "rows"},
+      {"path": ["tr", "ins"], "label": "The Data Insights and Quality Report flags missing values, duplicates and outliers"},
+      {"path": ["ins", "tr"], "label": "Issues found: back to the transforms", "note": "fix and re-check", "tone": "warn"},
+      {"path": ["ins", "exp"], "label": "Healthy: export the flow", "tone": "ok"},
+      {"paths": [["exp", "s3"], ["exp", "pipe"]], "label": "Run the same steps on the full dataset: write to S3, a SageMaker pipeline or Feature Store", "tone": "ok"}
+    ]
+  },
+  "glue-dq-gate": {
+    "title": "A data-quality gate in front of the knowledge base",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "raw", "at": [0, 0], "label": "Raw S3 data", "sub": "new batch", "kind": "storage"},
+      {"id": "etl", "at": [1, 0], "label": "Glue ETL job", "kind": "analytics"},
+      {"id": "dq", "at": [2, 0], "label": "Data Quality", "sub": "ruleset · score", "kind": "analytics"},
+      {"id": "clean", "at": [3, 0], "label": "Clean prefix", "sub": "S3", "kind": "storage"},
+      {"id": "kb", "at": [4, 0], "label": "KB ingestion", "sub": "Bedrock", "kind": "ai"},
+      {"id": "quar", "at": [3, 1], "label": "Quarantine", "sub": "S3 prefix", "kind": "storage"},
+      {"id": "eb", "at": [2, 1], "label": "EventBridge", "sub": "DQ result event", "kind": "integration"},
+      {"id": "notify", "at": [2, 2], "label": "Notify / stop", "sub": "pipeline", "kind": "human"},
+      {"id": "cw", "at": [1, 1], "label": "CloudWatch", "sub": "DQ metrics", "kind": "monitor"}
+    ],
+    "edges": [["dq", "cw", {"dashed": true}]],
+    "steps": [
+      {"path": ["raw", "etl", "dq"], "label": "A Glue job loads the batch and evaluates the Data Quality ruleset (completeness, uniqueness, row count…)", "packet": "batch"},
+      {"path": ["dq", "clean", "kb"], "label": "Score at or above the threshold (score = percentage of rules passed) → clean prefix → ingestion", "note": "score 94%", "tone": "ok"},
+      {"path": ["dq", "quar"], "label": "Below the threshold → quarantine, so bad data never reaches the knowledge base", "note": "score 61%", "tone": "bad"},
+      {"path": ["dq", "eb", "notify"], "label": "The result event notifies the team or stops the pipeline", "tone": "warn"},
+      {"path": ["dq", "cw"], "label": "Scores are published as CloudWatch metrics, ready for trend alarms"}
+    ]
+  },
+  "audio-insights": {
+    "title": "Audio to insight: Transcribe → Comprehend → model",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "audio", "at": [0, 0], "label": "S3 audio", "sub": "call.wav", "kind": "storage"},
+      {"id": "l1", "at": [1, 0], "label": "Lambda", "sub": "start job", "kind": "compute"},
+      {"id": "tr", "at": [2, 0], "label": "Transcribe", "sub": "batch job", "kind": "ai"},
+      {"id": "tjson", "at": [3, 0], "label": "Transcript", "sub": "JSON in S3", "kind": "storage"},
+      {"id": "l2", "at": [4, 0], "label": "Lambda", "sub": "analyze", "kind": "compute"},
+      {"id": "comp", "at": [4, 1], "label": "Comprehend", "sub": "PII · entities", "kind": "ai"},
+      {"id": "gate", "at": [3, 1], "label": "Gate", "sub": "confidence · PII", "kind": "security"},
+      {"id": "fm", "at": [2, 1], "label": "Bedrock", "sub": "summary", "kind": "ai"},
+      {"id": "store", "at": [1, 1], "label": "Store", "sub": "DynamoDB · S3", "kind": "db"},
+      {"id": "human", "at": [0, 1], "label": "Human review", "kind": "human"}
+    ],
+    "edges": [["gate", "human", {"bend": 74}]],
+    "steps": [
+      {"path": ["audio", "l1", "tr"], "label": "An S3 event starts a Transcribe batch job (live captions would use streaming instead)", "packet": "call.wav"},
+      {"path": ["tr", "tjson", "l2"], "label": "The transcript JSON, with timestamps and speaker labels, lands in S3 and triggers analysis"},
+      {"path": ["l2", "comp", "gate"], "label": "Comprehend extracts PII, entities and sentiment; a gate checks confidence and PII handling"},
+      {"path": ["gate", "fm", "store"], "label": "Pass → a Bedrock model summarizes the redacted text and the result is stored", "tone": "ok", "note": "summary"},
+      {"path": ["gate", "human"], "label": "Fail → human review. Comprehend extracts; it never generates", "tone": "warn", "note": "review"}
+    ]
+  },
+  "opensearch-knn": {
+    "title": "One k-NN query across OpenSearch shards",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "q", "at": [0, 1], "label": "User question", "kind": "client"},
+      {"id": "emb", "at": [1, 1], "label": "Embedding", "sub": "same as ingest", "kind": "ai"},
+      {"id": "knn", "at": [2, 1], "label": "knn query", "sub": "field · k · filter", "kind": "analytics"},
+      {"id": "s1", "at": [3, 0], "label": "Shard 1", "sub": "HNSW · top k", "kind": "db"},
+      {"id": "s2", "at": [3, 1], "label": "Shard 2", "sub": "HNSW · top k", "kind": "db"},
+      {"id": "s3", "at": [3, 2], "label": "Shard 3", "sub": "HNSW · top k", "kind": "db"},
+      {"id": "merge", "at": [4, 1], "label": "Merge", "sub": "to `size` results", "kind": "analytics"},
+      {"id": "ctx", "at": [4, 2], "label": "Context", "sub": "after reranking", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["q", "emb", "knn"], "label": "The question is embedded with the ingest model and sent as a knn query", "packet": "vector"},
+      {"paths": [["knn", "s1"], ["knn", "s2"], ["knn", "s3"]], "label": "Each shard searches its own HNSW graph and returns its top k: shard sizing drives latency"},
+      {"paths": [["s1", "merge"], ["s2", "merge"], ["s3", "merge"]], "label": "The coordinating node merges shard results down to `size` (forget it and you get 10)"},
+      {"path": ["merge", "ctx"], "label": "Optionally rerank, then the best chunks become the model's context", "note": "context", "tone": "ok"}
+    ]
+  },
+  "s3-vectors": {
+    "title": "S3 Vectors: pay for storage and queries, not a running cluster",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "docs", "at": [0, 0], "label": "S3 documents", "kind": "storage"},
+      {"id": "ing", "at": [1, 0], "label": "Ingestion", "sub": "chunk · embed", "kind": "compute"},
+      {"id": "vi", "at": [2, 0.5], "label": "Vector index", "sub": "in a vector bucket", "kind": "storage"},
+      {"id": "q", "at": [0, 1], "label": "User question", "kind": "client"},
+      {"id": "em", "at": [1, 1], "label": "Embed query", "kind": "ai"},
+      {"id": "kb", "at": [3, 0], "label": "Knowledge base", "sub": "uses it as store", "kind": "ai"},
+      {"id": "llm", "at": [3, 1], "label": "Bedrock model", "kind": "ai"},
+      {"id": "os", "at": [4, 0.5], "label": "OpenSearch", "sub": "high-QPS tier", "kind": "db"}
+    ],
+    "edges": [["vi", "os", {"dashed": true}]],
+    "steps": [
+      {"path": ["docs", "ing", "vi"], "label": "Chunks are embedded and written with PutVectors, up to 500 per call, with filterable metadata", "packet": "PutVectors"},
+      {"path": ["q", "em", "vi"], "label": "A query calls QueryVectors with topK and a metadata filter", "packet": "topK + filter"},
+      {"path": ["vi", "llm"], "label": "Matching chunks and metadata feed the model", "tone": "ok"},
+      {"path": ["kb", "vi"], "label": "A Bedrock knowledge base can use the index as its vector store"},
+      {"path": ["vi", "os"], "label": "Hot, high-QPS data can be exported to OpenSearch Serverless; S3 Vectors keeps the cheap long tail", "note": "tiering"}
+    ]
+  },
+  "pgvector-rag": {
+    "title": "pgvector: vectors in the same row as your business data",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "s3", "at": [0, 0], "label": "S3 files", "sub": "PDFs · audio", "kind": "storage"},
+      {"id": "etl", "at": [1, 0], "label": "Lambda / Glue", "sub": "chunk · embed", "kind": "compute"},
+      {"id": "db", "at": [2, 0.5], "label": "Aurora Postgres", "sub": "pgvector table", "kind": "db"},
+      {"id": "kb", "at": [1, 1], "label": "Knowledge base", "sub": "Data API + secret", "kind": "ai"},
+      {"id": "app", "at": [3, 1], "label": "RAG app", "kind": "compute"},
+      {"id": "em", "at": [4, 1], "label": "Embedding", "sub": "query vector", "kind": "ai"},
+      {"id": "llm", "at": [4, 0], "label": "Bedrock model", "kind": "ai"}
+    ],
+    "edges": [["kb", "db", {"dashed": true}]],
+    "steps": [
+      {"path": ["s3", "etl", "db"], "label": "Files are extracted, chunked, embedded and UPSERTed next to the business columns", "packet": "UPSERT"},
+      {"path": ["app", "em", "app"], "label": "The app embeds the question", "packet": "vector"},
+      {"path": ["app", "db"], "label": "One SQL statement: WHERE customer_id = 42 AND created ≥ 2026 ORDER BY embedding <=> $q LIMIT 5", "packet": "SQL", "note": "filter + nearest"},
+      {"path": ["db", "app", "llm"], "label": "Rows (chunk, s3_uri, metadata) come back and become the prompt", "tone": "ok"},
+      {"path": ["kb", "db"], "label": "A Bedrock knowledge base can use the same table through the RDS Data API and a Secrets Manager secret"}
+    ]
+  },
+  "dynamodb-chat-state": {
+    "title": "DynamoDB holds the state a stateless model needs",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "user", "at": [0, 0], "label": "User", "kind": "client"},
+      {"id": "api", "at": [1, 0], "label": "API + Lambda", "kind": "compute"},
+      {"id": "hist", "at": [2, 0], "label": "Chat history", "sub": "DynamoDB · TTL", "kind": "db"},
+      {"id": "cache", "at": [2, 1], "label": "Answer cache", "sub": "DynamoDB · TTL", "kind": "db"},
+      {"id": "fm", "at": [3, 0], "label": "Bedrock", "sub": "Converse", "kind": "ai"},
+      {"id": "streams", "at": [3, 1], "label": "Streams", "sub": "change feed", "kind": "integration"},
+      {"id": "lm", "at": [4, 1], "label": "Lambda", "sub": "index · metrics", "kind": "compute"},
+      {"id": "search", "at": [4, 0], "label": "Search store", "sub": "or audit", "kind": "db"}
+    ],
+    "edges": [["api", "fm", {"bend": 72}]],
+    "steps": [
+      {"path": ["user", "api", "hist"], "label": "Load this session's history by key in single-digit milliseconds", "packet": "GetItem"},
+      {"path": ["api", "cache"], "label": "Exact-match cache lookup on a hash of the normalized request", "note": "miss", "tone": "warn"},
+      {"path": ["api", "fm", "api"], "label": "Miss: call the model with the trimmed history", "packet": "Converse"},
+      {"paths": [["api", "hist"], ["api", "cache"]], "label": "Append the turn and token count; store the answer with a TTL (epoch seconds; expiry is not instant)", "tone": "ok"},
+      {"path": ["hist", "streams", "lm", "search"], "label": "DynamoDB Streams fans changes out to indexing, metrics and audit"}
+    ]
+  },
+  "s3-data-protection": {
+    "title": "Five S3 questions for GenAI data: cost, failure, keys, access, audit",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "up", "at": [0, 0], "label": "Teams · apps", "sub": "upload and read", "kind": "client"},
+      {"id": "ap", "at": [1, 0], "label": "Access point", "sub": "per-team policy", "kind": "network"},
+      {"id": "bucket", "at": [2, 0], "label": "S3 bucket", "sub": "versioning on", "kind": "storage"},
+      {"id": "lc", "at": [3, 0], "label": "Lifecycle", "sub": "IA → Glacier", "kind": "storage"},
+      {"id": "arch", "at": [4, 0], "label": "Deep Archive", "sub": "hours to restore", "kind": "storage"},
+      {"id": "kms", "at": [3, 1], "label": "KMS key", "sub": "+ S3 Bucket Key", "kind": "security"},
+      {"id": "repl", "at": [2, 1], "label": "Replica", "sub": "other Region", "kind": "storage"},
+      {"id": "logs", "at": [1, 1], "label": "Access logs", "sub": "best effort", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["up", "ap", "bucket"], "label": "Each team reaches the shared bucket through its own access point and policy", "packet": "PUT"},
+      {"path": ["bucket", "kms"], "label": "Every new object is encrypted (SSE-S3 by default); SSE-KMS with a Bucket Key cuts KMS request cost", "note": "SSE-KMS"},
+      {"path": ["bucket", "repl"], "label": "Replication copies new objects to another Region; versioning is required on both buckets", "note": "CRR"},
+      {"path": ["bucket", "lc", "arch"], "label": "Lifecycle rules move cold data down the storage classes, ending in Deep Archive", "note": "day 180", "tone": "ok"},
+      {"path": ["bucket", "logs"], "label": "Server access logs record each request, delivered on a best-effort basis"}
+    ]
+  },
+  "agent-classic-loop": {
+    "title": "An agent loop: reason, act, observe, repeat",
+    "grid": [4, 2],
+    "nodes": [
+      {"id": "user", "at": [0, 0], "label": "User app", "sub": "inputText + session", "kind": "client"},
+      {"id": "agent", "at": [1, 0], "label": "Agent", "sub": "InvokeAgent", "kind": "ai"},
+      {"id": "fm", "at": [2, 0], "label": "Model", "sub": "orchestration", "kind": "ai"},
+      {"id": "lam", "at": [2, 1], "label": "Action group", "sub": "Lambda", "kind": "compute"},
+      {"id": "kb", "at": [0, 1], "label": "Knowledge base", "sub": "Retrieve", "kind": "db"}
+    ],
+    "steps": [
+      {"path": ["user", "agent", "fm"], "label": "The agent sends instructions, tool schemas and history to the model", "packet": "orchestrate"},
+      {"path": ["fm", "agent", "lam"], "label": "The model chooses an action, getOrderStatus(order_id), and the action-group Lambda runs it", "packet": "tool call"},
+      {"path": ["lam", "agent", "fm"], "label": "The result is added to the prompt as an observation", "packet": "observation"},
+      {"path": ["fm", "agent", "kb"], "label": "Next it decides to search the knowledge base", "packet": "Retrieve"},
+      {"path": ["kb", "agent", "fm"], "label": "Passages come back as another observation; iteration limits stop a runaway loop"},
+      {"path": ["fm", "agent", "user"], "label": "Enough to answer: the response streams back with a trace of every step", "note": "answer + trace", "tone": "ok"}
+    ]
+  },
+  "supervisor-agents": {
+    "title": "A supervisor splits the work; memory keeps what matters",
+    "grid": [4, 3],
+    "nodes": [
+      {"id": "user", "at": [0, 1], "label": "User request", "kind": "client"},
+      {"id": "sup", "at": [1, 1], "label": "Supervisor", "sub": "split · route · merge", "kind": "ai"},
+      {"id": "c1", "at": [3, 0], "label": "Collaborator 1", "sub": "existing loans", "kind": "ai"},
+      {"id": "c2", "at": [3, 1], "label": "Collaborator 2", "sub": "new mortgages", "kind": "ai"},
+      {"id": "c3", "at": [3, 2], "label": "Collaborator 3", "sub": "general questions", "kind": "ai"},
+      {"id": "st", "at": [1, 2], "label": "Short-term", "sub": "events by session", "kind": "db"},
+      {"id": "lt", "at": [0, 2], "label": "Long-term", "sub": "facts by namespace", "kind": "db"}
+    ],
+    "edges": [["sup", "c3", {"dashed": true}]],
+    "steps": [
+      {"path": ["user", "sup"], "label": "“Refinance my loan and explain today's new-mortgage rates” spans two specialists", "packet": "request"},
+      {"paths": [["sup", "c1"], ["sup", "c2"]], "label": "The supervisor splits the request and hands each part to the right collaborator"},
+      {"paths": [["c1", "sup"], ["c2", "sup"]], "label": "Each specialist answers only its part, with its own small set of tools"},
+      {"path": ["sup", "user"], "label": "The supervisor merges them into one reply", "note": "merged answer", "tone": "ok"},
+      {"path": ["sup", "st", "lt"], "label": "Turns stay in short-term memory; background extraction distills durable facts into long-term memory", "note": "“prefers email”"}
+    ]
+  },
+  "agent-squad-routing": {
+    "title": "Agent Squad routes; Strands agents do the work",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "user", "at": [0, 0], "label": "User", "kind": "client"},
+      {"id": "api", "at": [1, 0], "label": "Chat API", "sub": "front end", "kind": "network"},
+      {"id": "rt", "at": [2, 0], "label": "Runtime", "sub": "AgentCore host", "kind": "compute"},
+      {"id": "squad", "at": [3, 0], "label": "Agent Squad", "sub": "classifier", "kind": "ai"},
+      {"id": "billing", "at": [4, 0], "label": "Billing agent", "sub": "Strands", "kind": "ai"},
+      {"id": "tech", "at": [3, 1], "label": "Tech agent", "sub": "Strands", "kind": "ai"},
+      {"id": "br", "at": [4, 1], "label": "Bedrock model", "sub": "+ the agent's tools", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["user", "api", "rt"], "label": "Requests reach agents hosted in an AgentCore Runtime container: hosting and isolation are not the library's job"},
+      {"path": ["rt", "squad"], "label": "Agent Squad classifies each message, using the conversation so far"},
+      {"path": ["squad", "billing", "br"], "label": "“Why was I charged twice?” → the billing agent, a Strands agent, runs its loop with the model and its tools"},
+      {"path": ["squad", "tech", "br"], "label": "A follow-up about Wi-Fi is routed to the tech-support agent, context kept", "note": "context kept", "tone": "ok"}
+    ]
+  },
+  "agentcore-gateway": {
+    "title": "AgentCore Gateway and Policy: tools with deterministic control",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "agent", "at": [0, 1], "label": "Agent", "sub": "any framework", "kind": "ai"},
+      {"id": "gw", "at": [1, 1], "label": "Gateway", "sub": "inbound JWT / IAM", "kind": "network"},
+      {"id": "pol", "at": [2, 1], "label": "Policy", "sub": "default deny", "kind": "security"},
+      {"id": "id", "at": [2, 0], "label": "Identity", "sub": "outbound OAuth", "kind": "security"},
+      {"id": "t1", "at": [3, 0], "label": "Lambda target", "kind": "compute"},
+      {"id": "t2", "at": [3, 1], "label": "OpenAPI target", "sub": "Salesforce · Jira", "kind": "external"},
+      {"id": "t3", "at": [3, 2], "label": "Remote MCP", "sub": "server", "kind": "external"},
+      {"id": "obs", "at": [4, 1], "label": "Observability", "sub": "traces · evals", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["agent", "gw"], "label": "The agent authenticates with an OAuth JWT or IAM and lists tools over MCP", "packet": "tools/list"},
+      {"path": ["gw", "pol"], "label": "Every tool call is checked by Policy outside the agent's code: default deny, forbid wins", "packet": "tools/call"},
+      {"path": ["pol", "t1"], "label": "Permitted: the call reaches its target", "tone": "ok", "note": "PERMIT"},
+      {"path": ["pol", "id", "t2"], "label": "For a SaaS target, Identity supplies the user's delegated OAuth token: the agent never holds the secret"},
+      {"path": ["pol", "t3"], "label": "A forbidden call (a refund over the limit) is denied deterministically; no prompt can argue past it", "note": "DENY", "tone": "bad"},
+      {"path": ["t2", "obs"], "label": "Every step is traced for Observability and scored by online Evaluations", "tone": "ok"}
+    ]
+  },
+  "code-vs-config": {
+    "title": "Two ways to ship an agent: code it, or configure it",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "dev", "at": [0, 0.5], "label": "agentcore CLI", "sub": "or boto3", "kind": "devtools"},
+      {"id": "code", "at": [1, 0], "label": "Strands code", "sub": "your loop", "kind": "devtools"},
+      {"id": "rt", "at": [2, 0], "label": "Runtime", "sub": "CodeZip · container", "kind": "compute"},
+      {"id": "cfg", "at": [1, 1], "label": "Harness config", "sub": "model · tools", "kind": "devtools"},
+      {"id": "h", "at": [2, 1], "label": "Harness", "sub": "runs in Runtime", "kind": "compute"},
+      {"id": "mem", "at": [3, 0.5], "label": "Memory", "sub": "AgentCore", "kind": "db"},
+      {"id": "br", "at": [4, 0], "label": "Model", "sub": "Bedrock · others", "kind": "ai"},
+      {"id": "tools", "at": [4, 1], "label": "Tools", "sub": "Gateway · MCP", "kind": "compute"}
+    ],
+    "groups": [
+      {"label": "Code path", "nodes": ["code", "rt"], "kind": "devtools"},
+      {"label": "Config path", "nodes": ["cfg", "h"], "kind": "compute"}
+    ],
+    "steps": [
+      {"path": ["dev", "code", "rt"], "label": "Code path: write the agent with Strands and deploy it to AgentCore Runtime"},
+      {"paths": [["rt", "mem"], ["rt", "br"]], "label": "It runs in an isolated session with Memory and a model"},
+      {"path": ["dev", "cfg", "h"], "label": "Config path: declare model, prompt, tools, memory and limits. There is no loop to write"},
+      {"paths": [["h", "mem"], ["h", "tools"]], "label": "The harness (built on Strands) runs the standard loop with your tools; it is the closest replacement for Agents Classic", "tone": "ok"}
+    ]
+  },
+  "tool-use-loop": {
+    "title": "Tool use: the model asks, your code acts",
+    "grid": [4, 2],
+    "nodes": [
+      {"id": "app", "at": [0, 0.5], "label": "Your app", "kind": "compute"},
+      {"id": "br", "at": [2, 0], "label": "Converse", "sub": "toolConfig", "kind": "ai"},
+      {"id": "tool", "at": [2, 1], "label": "Tool code", "sub": "your function", "kind": "compute"},
+      {"id": "human", "at": [3, 0.5], "label": "Approver", "sub": "risky actions", "kind": "human"}
+    ],
+    "steps": [
+      {"path": ["app", "br"], "label": "Send messages plus toolConfig: each tool's name, description and JSON schema", "packet": "toolConfig"},
+      {"path": ["br", "app"], "label": "The model cannot run anything: it stops with stopReason tool_use and a toolUse block", "note": "stopReason: tool_use", "tone": "warn"},
+      {"path": ["app", "tool", "app"], "label": "Your code validates the arguments and runs the tool (Guardrails do not check tool arguments)", "packet": "toolUse.input"},
+      {"path": ["app", "br"], "label": "Send back a user message holding toolResult with the same toolUseId", "packet": "toolResult"},
+      {"path": ["br", "app"], "label": "The model writes the final answer", "note": "end_turn", "tone": "ok"},
+      {"path": ["app", "human", "app"], "label": "Money, deletion, email: pause for a person first, e.g. a Step Functions task-token callback", "note": "approved", "tone": "ok"}
+    ]
+  },
+  "mcp-transport": {
+    "title": "MCP: one protocol between any agent and any tool server",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "host", "at": [0, 0.5], "label": "MCP host", "sub": "the AI app", "kind": "ai"},
+      {"id": "c1", "at": [1, 0], "label": "MCP client 1", "kind": "compute"},
+      {"id": "c2", "at": [1, 1], "label": "MCP client 2", "kind": "compute"},
+      {"id": "s1", "at": [3, 0], "label": "Local server", "sub": "filesystem", "kind": "devtools"},
+      {"id": "s2", "at": [3, 1], "label": "Remote server", "sub": "Lambda · ECS", "kind": "compute"},
+      {"id": "data", "at": [4, 0], "label": "Local files", "kind": "storage"},
+      {"id": "api", "at": [4, 1], "label": "Company API", "kind": "external"}
+    ],
+    "groups": [
+      {"label": "MCP host", "nodes": ["host", "c1", "c2"], "kind": "ai"}
+    ],
+    "edges": [["c1", "s1", {"label": "stdio"}], ["c2", "s2", {"label": "Streamable HTTP"}]],
+    "steps": [
+      {"paths": [["host", "c1"], ["host", "c2"]], "label": "The host runs one MCP client per server it connects to"},
+      {"path": ["c1", "s1"], "label": "Local servers talk over stdio", "packet": "stdio"},
+      {"path": ["c2", "s2"], "label": "Remote servers talk Streamable HTTP, hosted on Lambda, ECS or AgentCore Runtime", "packet": "HTTP"},
+      {"paths": [["s1", "data"], ["s2", "api"]], "label": "Each server exposes its tools, resources and prompts the same way"},
+      {"path": ["s2", "c2", "host"], "label": "Results come back in one standard format: any agent, any tool", "tone": "ok", "note": "tool result"}
+    ]
+  },
+  "quick-landscape": {
+    "title": "Business users vs developers: who builds the agent?",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "bu", "at": [0, 0.5], "label": "Business users", "kind": "client"},
+      {"id": "quick", "at": [1, 0], "label": "Amazon Quick", "sub": "Spaces · Flows", "kind": "ai"},
+      {"id": "qapps", "at": [1, 1], "label": "Q Apps", "sub": "in Q Business", "kind": "ai"},
+      {"id": "src", "at": [2, 0.5], "label": "Company data", "sub": "connected apps", "kind": "storage"},
+      {"id": "ac", "at": [3, 0], "label": "AgentCore", "sub": "harness · Runtime", "kind": "compute"},
+      {"id": "tools", "at": [3, 1], "label": "Gateway", "sub": "tools · Memory", "kind": "compute"},
+      {"id": "dev", "at": [4, 0], "label": "Developers", "kind": "client"},
+      {"id": "st", "at": [4, 1], "label": "Strands Agents", "sub": "open source", "kind": "devtools"}
+    ],
+    "steps": [
+      {"path": ["bu", "quick", "src"], "label": "No-code: business users chat, research and automate in Amazon Quick over connected data"},
+      {"path": ["bu", "qapps", "src"], "label": "Q Apps turn a good prompt into a small shareable card app"},
+      {"path": ["dev", "ac", "tools"], "label": "Developers build customer-facing agents on AgentCore, with Gateway tools and Memory"},
+      {"path": ["dev", "st"], "label": "…or code the loop themselves with Strands Agents", "tone": "ok"}
+    ]
+  },
+  "token-anatomy": {
+    "title": "Where your tokens (and money) go",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "sys", "at": [0, 0], "label": "System + tools", "sub": "sent every call", "kind": "devtools"},
+      {"id": "hist", "at": [0, 1], "label": "Chat history", "sub": "grows each turn", "kind": "db"},
+      {"id": "rag", "at": [0, 2], "label": "RAG chunks", "sub": "k × chunk size", "kind": "db"},
+      {"id": "q", "at": [1, 2], "label": "Question", "kind": "client"},
+      {"id": "inp", "at": [2, 1], "label": "Input tokens", "sub": "counted · billed", "kind": "analytics"},
+      {"id": "model", "at": [3, 1], "label": "Model", "kind": "ai"},
+      {"id": "out", "at": [4, 1], "label": "Output tokens", "sub": "≤ maxTokens", "kind": "analytics"},
+      {"id": "bill", "at": [3, 2], "label": "Bill + quota", "sub": "$ and TPM", "kind": "monitor"}
+    ],
+    "steps": [
+      {"paths": [["sys", "inp"], ["hist", "inp"], ["rag", "inp"], ["q", "inp"]], "label": "Everything you send is input: system prompt and tool definitions, history, retrieved chunks, the question", "packet": "input"},
+      {"path": ["inp", "model", "out"], "label": "The model writes output tokens, usually the pricier kind"},
+      {"paths": [["inp", "bill"], ["out", "bill"]], "label": "Both are billed and both count against tokens-per-minute quotas", "note": "input + output", "tone": "warn"},
+      {"path": ["inp", "model", "out"], "label": "Trim history to a budget, cache the stable prefix, retrieve less, cap maxTokens: same answer, fewer tokens", "note": "fewer tokens", "tone": "ok"}
+    ]
+  },
+  "cache-layers": {
+    "title": "Four cache layers, cheapest first",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "client", "at": [0, 1], "label": "Client", "kind": "client"},
+      {"id": "edge", "at": [1, 1], "label": "Edge cache", "sub": "CloudFront · GET", "kind": "network"},
+      {"id": "app", "at": [2, 1], "label": "App tier", "kind": "compute"},
+      {"id": "exact", "at": [2, 0], "label": "Exact cache", "sub": "hash key · TTL", "kind": "db"},
+      {"id": "sem", "at": [3, 0], "label": "Semantic cache", "sub": "similarity ≥ τ", "kind": "db"},
+      {"id": "br", "at": [3, 2], "label": "Bedrock", "sub": "prompt cache", "kind": "ai"},
+      {"id": "store", "at": [4, 1], "label": "Store answer", "sub": "tenant-safe keys", "kind": "db"}
+    ],
+    "steps": [
+      {"path": ["client", "edge", "app"], "label": "The edge caches GET responses; a POST chat request goes on to the app", "note": "edge miss"},
+      {"path": ["app", "exact"], "label": "Exact-match cache: a hash of model, prompt, parameters, prompt version and tenant", "note": "miss", "tone": "warn"},
+      {"path": ["app", "sem"], "label": "Semantic cache: a paraphrase above the similarity threshold returns a stored answer", "note": "miss", "tone": "warn"},
+      {"path": ["app", "br"], "label": "Call Bedrock: an unchanged prefix (system prompt, documents) is read from the prompt cache", "note": "cacheReadInputTokens"},
+      {"path": ["br", "store"], "label": "Store the answer in the exact and semantic caches, keyed per tenant, with a TTL", "tone": "ok"},
+      {"path": ["client", "edge", "app", "exact"], "label": "Next time, the request stops at the first layer that already knows the answer", "note": "HIT", "tone": "ok"}
+    ]
+  },
+  "latency-pipeline": {
+    "title": "Where the seconds go in one GenAI request",
+    "grid": [4, 2],
+    "nodes": [
+      {"id": "req", "at": [0, 0], "label": "Request", "kind": "client"},
+      {"id": "rw", "at": [1, 0], "label": "Query rewrite", "kind": "ai"},
+      {"id": "ret", "at": [2, 0], "label": "Retrieve", "sub": "+ rerank", "kind": "analytics"},
+      {"id": "pb", "at": [3, 0], "label": "Build prompt", "kind": "compute"},
+      {"id": "m1", "at": [3, 1], "label": "First token", "sub": "TTFT", "kind": "ai"},
+      {"id": "gen", "at": [2, 1], "label": "Generate", "sub": "tokens/second", "kind": "ai"},
+      {"id": "val", "at": [1, 1], "label": "Validate", "sub": "post-process", "kind": "compute"},
+      {"id": "del", "at": [0, 1], "label": "Deliver", "kind": "client"}
+    ],
+    "steps": [
+      {"path": ["req", "rw", "ret"], "label": "Rewrite and retrieval run first; independent calls should run in parallel", "packet": "+300 ms"},
+      {"path": ["ret", "pb", "m1"], "label": "The prompt is assembled and the wait for the first token starts", "note": "TTFT"},
+      {"path": ["m1", "gen"], "label": "Streaming shows tokens as they arrive, so perceived latency drops even when total time does not", "note": "stream", "tone": "ok"},
+      {"path": ["gen", "val", "del"], "label": "Validation and post-processing finish the answer. Profile every stage before optimizing any", "note": "total latency", "tone": "ok"}
+    ]
+  },
+  "cris-routing": {
+    "title": "Cross-Region inference: more capacity, same API call",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "app", "at": [0, 1], "label": "Your app", "sub": "source Region", "kind": "compute"},
+      {"id": "prof", "at": [1, 1], "label": "CRIS profile", "sub": "us. · eu. · global.", "kind": "ai"},
+      {"id": "iam", "at": [1, 0], "label": "IAM · SCP", "sub": "all destinations", "kind": "security"},
+      {"id": "logs", "at": [1, 2], "label": "Trail · metrics", "sub": "in source Region", "kind": "monitor"},
+      {"id": "r1", "at": [3, 0], "label": "Region A", "sub": "capacity full", "kind": "ai"},
+      {"id": "r2", "at": [3, 1], "label": "Region B", "sub": "spare capacity", "kind": "ai"},
+      {"id": "r3", "at": [3, 2], "label": "Region C", "kind": "ai"}
+    ],
+    "edges": [["prof", "r3", {"dashed": true}]],
+    "steps": [
+      {"path": ["app", "prof"], "label": "The app calls a cross-Region inference profile ID from its source Region", "packet": "Converse"},
+      {"path": ["prof", "r1"], "label": "Region A is short of capacity…", "note": "busy", "tone": "warn"},
+      {"path": ["prof", "r2"], "label": "…so Bedrock routes the request to a destination Region with spare capacity", "tone": "ok"},
+      {"path": ["r2", "prof", "app"], "label": "The response returns to the source Region", "tone": "ok"},
+      {"path": ["app", "logs"], "label": "CloudTrail and CloudWatch record the call in the source Region", "note": "audit here"},
+      {"path": ["iam", "prof"], "label": "IAM and SCPs must allow every destination Region the profile can use, or calls fail", "note": "AccessDenied otherwise", "tone": "warn"}
+    ]
+  },
+  "endpoint-picker": {
+    "title": "Pick the SageMaker AI inference option from the workload",
+    "grid": [4, 3],
+    "nodes": [
+      {"id": "req", "at": [0, 1], "label": "Workload", "kind": "client"},
+      {"id": "q", "at": [1, 1], "label": "Payload · time?", "kind": "compute"},
+      {"id": "async", "at": [3, 0], "label": "Async endpoint", "sub": "≤ 1 GB · ≤ 1 hour", "kind": "ai"},
+      {"id": "g", "at": [2, 1], "label": "GPU or VPC?", "sub": "model size", "kind": "compute"},
+      {"id": "rt", "at": [3, 1], "label": "Real-time", "sub": "inference components", "kind": "ai"},
+      {"id": "sv", "at": [3, 2], "label": "Serverless", "sub": "≤ 6 GB · no GPU", "kind": "ai"},
+      {"id": "batch", "at": [1, 2], "label": "Batch transform", "sub": "offline dataset", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["req", "q", "async"], "label": "Payloads up to 1 GB or up to an hour of processing, and queueing is fine: asynchronous endpoint", "note": "async"},
+      {"path": ["q", "g", "rt"], "label": "Interactive and needs a GPU, a VPC or a large model: real-time endpoint, inference components to share instances", "tone": "ok"},
+      {"path": ["g", "sv"], "label": "Interactive but idle most of the time, model fits in 6 GB, cold starts acceptable: serverless (no GPUs)", "note": "cold starts"},
+      {"path": ["q", "batch"], "label": "A whole dataset offline: batch transform"}
+    ]
+  },
+  "model-monitor": {
+    "title": "Model Monitor compares live traffic with a baseline",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "ep", "at": [0, 0], "label": "Endpoint", "sub": "data capture on", "kind": "ai"},
+      {"id": "cap", "at": [1, 0], "label": "Captured I/O", "sub": "in S3", "kind": "storage"},
+      {"id": "job", "at": [2, 0], "label": "Monitoring job", "sub": "on a schedule", "kind": "analytics"},
+      {"id": "base", "at": [2, 1], "label": "Baseline", "sub": "stats · constraints", "kind": "storage"},
+      {"id": "gt", "at": [1, 1], "label": "Ground truth", "sub": "labels in S3", "kind": "storage"},
+      {"id": "rep", "at": [3, 0], "label": "Violations", "sub": "+ CW metrics", "kind": "monitor"},
+      {"id": "al", "at": [4, 0], "label": "Alarm", "sub": "SNS", "kind": "integration"}
+    ],
+    "steps": [
+      {"path": ["ep", "cap"], "label": "The endpoint captures a sample of requests and responses to S3", "packet": "sample"},
+      {"path": ["cap", "job"], "label": "A scheduled monitoring job reads the capture…"},
+      {"paths": [["base", "job"], ["gt", "job"]], "label": "…and compares it with baseline statistics and constraints (model quality also needs ground-truth labels)"},
+      {"path": ["job", "rep", "al"], "label": "Drift beyond the constraints: a violations report, CloudWatch metrics and an alarm", "note": "drift detected", "tone": "warn"}
+    ]
+  },
+  "registry-approval": {
+    "title": "Model Registry: approval status drives deployment",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "reg", "at": [0, 0.5], "label": "New version", "sub": "model package", "kind": "devtools"},
+      {"id": "pend", "at": [1, 0.5], "label": "Pending", "sub": "manual approval", "kind": "human"},
+      {"id": "appr", "at": [2, 0], "label": "Approved", "sub": "emits an event", "kind": "ai"},
+      {"id": "rej", "at": [2, 1], "label": "Rejected", "sub": "no deployment", "kind": "security"},
+      {"id": "cicd", "at": [3, 0], "label": "CI/CD", "sub": "event → deploy", "kind": "devtools"},
+      {"id": "prod", "at": [4, 0], "label": "Production", "sub": "endpoint", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["reg", "pend"], "label": "Every new version enters its model group as PendingManualApproval", "packet": "v7"},
+      {"path": ["pend", "appr", "cicd", "prod"], "label": "Approving it emits an event and the pipeline deploys it. Approval alone deploys nothing", "note": "v7 live", "tone": "ok"},
+      {"path": ["pend", "rej"], "label": "Rejecting a pending version deploys nothing", "tone": "bad"},
+      {"path": ["appr", "rej"], "label": "Roll back: reject the live version and CI/CD redeploys the latest Approved one", "note": "back to v6", "tone": "warn"}
+    ]
+  },
+  "lineage": {
+    "title": "Lineage answers “what trained the model behind this endpoint?”",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "ds", "at": [0, 0], "label": "Dataset", "sub": "S3 URI artifact", "kind": "storage"},
+      {"id": "img", "at": [0, 1], "label": "Training image", "sub": "ECR URI artifact", "kind": "devtools"},
+      {"id": "tj", "at": [1, 0.5], "label": "Training job", "sub": "trial component", "kind": "ai"},
+      {"id": "model", "at": [2, 0.5], "label": "Model", "sub": "artifact", "kind": "ai"},
+      {"id": "pkg", "at": [3, 0.5], "label": "Model package", "sub": "context", "kind": "devtools"},
+      {"id": "ep", "at": [4, 0.5], "label": "Endpoint", "sub": "context", "kind": "ai"}
+    ],
+    "steps": [
+      {"paths": [["ds", "tj"], ["img", "tj"]], "label": "ContributedTo: the data and the container image feed a training job"},
+      {"path": ["tj", "model"], "label": "Produced: the job produces the model artifact"},
+      {"path": ["model", "pkg", "ep"], "label": "ContributedTo, then AssociatedWith: the package is what the endpoint serves"},
+      {"path": ["ep", "pkg", "model", "tj", "ds"], "label": "QueryLineage walks it backwards for an auditor; across accounts, share the lineage group with AWS RAM", "note": "s3://…/train-2026-09", "tone": "ok"}
+    ]
+  },
+  "sm-pipeline": {
+    "title": "SageMaker Pipelines: retrain, evaluate, register",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "proc", "at": [0, 0], "label": "Process", "sub": "clean · split", "kind": "compute"},
+      {"id": "train", "at": [1, 0], "label": "Train", "kind": "ai"},
+      {"id": "eval", "at": [2, 0], "label": "Evaluate", "sub": "processing step", "kind": "analytics"},
+      {"id": "cond", "at": [3, 0], "label": "Condition", "sub": "metric OK?", "kind": "compute"},
+      {"id": "reg", "at": [4, 0], "label": "RegisterModel", "sub": "Model Registry", "kind": "devtools"},
+      {"id": "stop", "at": [3, 1], "label": "Stop", "sub": "run ends", "kind": "security"},
+      {"id": "cm", "at": [4, 1], "label": "CreateModel", "kind": "ai"},
+      {"id": "tr", "at": [4, 2], "label": "Transform", "sub": "batch predictions", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["proc", "train", "eval"], "label": "Steps run as a graph: process, train, evaluate", "packet": "run #42"},
+      {"path": ["eval", "cond"], "label": "A condition step reads the evaluation report"},
+      {"path": ["cond", "reg", "cm", "tr"], "label": "Good enough: register in Model Registry, create the model, run batch predictions", "tone": "ok", "note": "registered"},
+      {"path": ["cond", "stop"], "label": "Below the bar: the run ends and nothing is registered", "tone": "bad"}
+    ]
+  },
+  "lambda-invocation-modes": {
+    "title": "Three ways Lambda gets invoked, three retry stories",
+    "grid": [4, 3],
+    "nodes": [
+      {"id": "c1", "at": [0, 0], "label": "Client waits", "kind": "client"},
+      {"id": "f1", "at": [2, 0], "label": "Function", "sub": "RequestResponse", "kind": "compute"},
+      {"id": "prod", "at": [0, 1], "label": "Producer", "sub": "Invoke Event", "kind": "client"},
+      {"id": "q", "at": [1, 1], "label": "Event queue", "sub": "internal", "kind": "integration"},
+      {"id": "f2", "at": [2, 1], "label": "Function", "sub": "async", "kind": "compute"},
+      {"id": "dlq", "at": [3, 1], "label": "DLQ", "sub": "or on-failure dest.", "kind": "integration"},
+      {"id": "sqs", "at": [0, 2], "label": "SQS · stream", "kind": "integration"},
+      {"id": "poll", "at": [1, 2], "label": "Event poller", "sub": "source mapping", "kind": "compute"},
+      {"id": "f3", "at": [2, 2], "label": "Function", "sub": "batch of records", "kind": "compute"}
+    ],
+    "edges": [["f3", "sqs", {"bend": 72}]],
+    "steps": [
+      {"path": ["c1", "f1", "c1"], "label": "Synchronous: the caller waits for the result or the error (default timeout is just 3 s)", "note": "result", "tone": "ok"},
+      {"path": ["prod", "q"], "label": "Asynchronous: Lambda queues the event and returns 202 at once", "note": "202"},
+      {"path": ["q", "f2", "dlq"], "label": "Failures are retried; after the retries the event goes to a DLQ or an on-failure destination", "note": "failed event", "tone": "warn"},
+      {"path": ["sqs", "poll", "f3"], "label": "Polling: an event source mapping reads batches from SQS or a stream"},
+      {"path": ["f3", "sqs"], "label": "An error returns the batch for retry; report partial batch failures so good records are not redone", "note": "batch returns", "tone": "warn"}
+    ]
+  },
+  "apigw-front-door": {
+    "title": "API Gateway: every check before a model call costs money",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "client", "at": [0, 1], "label": "Client", "kind": "client"},
+      {"id": "waf", "at": [1, 1], "label": "AWS WAF", "sub": "IP · rate · injection", "kind": "security"},
+      {"id": "api", "at": [2, 1], "label": "REST API", "sub": "API Gateway", "kind": "network"},
+      {"id": "auth", "at": [3, 0], "label": "Authorizer", "sub": "Cognito · IAM", "kind": "security"},
+      {"id": "val", "at": [3, 0.95], "label": "Validator", "sub": "schema · size", "kind": "compute"},
+      {"id": "plan", "at": [3, 2.15], "label": "Usage plan", "sub": "rate · burst · quota", "kind": "network"},
+      {"id": "lam", "at": [4, 2], "label": "Lambda", "sub": "budget · Guardrails", "kind": "compute"},
+      {"id": "br", "at": [4, 0.8], "label": "Bedrock", "sub": "streams tokens", "kind": "ai"}
+    ],
+    "edges": [["api", "client", {"bend": -64}]],
+    "steps": [
+      {"path": ["client", "waf", "api"], "label": "WAF filters floods and injection patterns before the API ever sees the request"},
+      {"path": ["api", "auth", "val"], "label": "An authorizer verifies the caller, then a validator rejects malformed or oversized bodies cheaply", "note": "400 / 401 / 403"},
+      {"path": ["val", "plan"], "label": "A usage plan enforces per-client rate, burst and quota; API keys identify, they don't authenticate", "note": "429 when over", "tone": "warn"},
+      {"path": ["plan", "lam", "br"], "label": "Only now does Lambda spend money on a model call"},
+      {"path": ["br", "lam", "api", "client"], "label": "Long answers stream back (REST response streaming) instead of hitting the default 29-second timeout", "note": "STREAM", "tone": "ok"}
+    ]
+  },
+  "appconfig-rollout": {
+    "title": "Switch models without a redeploy, and roll back on an alarm",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "src", "at": [0, 0], "label": "Config source", "sub": "hosted · SSM · S3", "kind": "storage"},
+      {"id": "prof", "at": [1, 0], "label": "Profile", "sub": "+ validators", "kind": "devtools"},
+      {"id": "dep", "at": [2, 0], "label": "Deployment", "sub": "strategy · env", "kind": "devtools"},
+      {"id": "agent", "at": [3, 0], "label": "AppConfig agent", "sub": "localhost:2772", "kind": "compute"},
+      {"id": "fn", "at": [4, 0], "label": "Your function", "sub": "reads modelId", "kind": "compute"},
+      {"id": "cw", "at": [2, 1], "label": "Alarm", "sub": "rollout or bake", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["src", "prof"], "label": "Model ID, temperature, prompt version and kill switches live outside the code; validators check every change", "packet": "modelId: B"},
+      {"path": ["prof", "dep", "agent"], "label": "A deployment strategy rolls the change out gradually, for example 10% of targets at a time"},
+      {"path": ["agent", "fn"], "label": "Functions read the cached value, polled in the background. No redeploy", "note": "model B on 10%", "tone": "ok"},
+      {"path": ["cw", "dep"], "label": "An alarm fires during the rollout or the bake time…", "note": "ALARM", "tone": "bad"},
+      {"path": ["dep", "prof"], "label": "…and AppConfig rolls the configuration back automatically", "note": "rolled back", "tone": "warn"}
+    ]
+  },
+  "prompt-chain": {
+    "title": "A Step Functions prompt chain with a fallback model",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "start", "at": [0, 0.5], "label": "Start", "kind": "client"},
+      {"id": "draft", "at": [1, 0], "label": "Draft", "sub": "Bedrock task", "kind": "ai"},
+      {"id": "fb", "at": [1, 1], "label": "Draft · fallback", "sub": "second model", "kind": "ai"},
+      {"id": "crit", "at": [2, 0.5], "label": "Critique", "sub": "Bedrock task", "kind": "ai"},
+      {"id": "rw", "at": [3, 0.5], "label": "Rewrite", "sub": "Bedrock task", "kind": "ai"},
+      {"id": "end", "at": [4, 0], "label": "End", "sub": "final answer", "kind": "client"},
+      {"id": "fail", "at": [4, 1], "label": "Fail", "sub": "ModelUnavailable", "kind": "security"}
+    ],
+    "steps": [
+      {"path": ["start", "draft", "crit"], "label": "Draft, then critique: each state calls Bedrock directly, no Lambda in between", "packet": "draft"},
+      {"path": ["crit", "rw", "end"], "label": "Rewrite with the critique and the chain finishes, with every run recorded", "tone": "ok", "note": "final answer"},
+      {"path": ["draft", "fb"], "label": "If the draft state fails after its Retry, Catch (States.ALL) routes to a fallback model", "note": "Catch", "tone": "warn"},
+      {"path": ["fb", "crit"], "label": "The fallback draft rejoins the chain"},
+      {"path": ["rw", "fail"], "label": "Retries exhausted later on: fail with a clear error instead of hanging", "note": "ModelUnavailable", "tone": "bad"}
+    ]
+  },
+  "cicd-pipeline": {
+    "title": "Ship a GenAI change only if the golden prompts still pass",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "src", "at": [0, 0], "label": "Source", "sub": "code · prompt · IaC", "kind": "devtools"},
+      {"id": "build", "at": [1, 0], "label": "CodeBuild", "sub": "tests · package", "kind": "devtools"},
+      {"id": "test", "at": [2, 0], "label": "Golden prompts", "sub": "quality gate", "kind": "analytics"},
+      {"id": "appr", "at": [3, 0], "label": "Approval", "sub": "high-risk only", "kind": "human"},
+      {"id": "dep", "at": [4, 0], "label": "CodeDeploy", "sub": "canary 10% · 5 min", "kind": "devtools"},
+      {"id": "hook", "at": [4, 1], "label": "Pre-traffic hook", "sub": "evaluates v8", "kind": "compute"},
+      {"id": "alarm", "at": [3, 1], "label": "Alarms", "sub": "errors · ratings", "kind": "monitor"},
+      {"id": "rb", "at": [2, 1], "label": "Rollback", "sub": "alias stays on v7", "kind": "security"}
+    ],
+    "edges": [["dep", "alarm", {"dashed": true}]],
+    "steps": [
+      {"path": ["src", "build", "test"], "label": "A commit (code, prompt template or IaC) builds, runs unit tests and the golden prompt set", "packet": "v8"},
+      {"path": ["test", "appr", "dep"], "label": "High-risk changes wait for a person (a pending approval fails after 7 days)"},
+      {"path": ["dep", "hook"], "label": "CodeDeploy publishes v8 and a BeforeAllowTraffic hook evaluates it first", "note": "Succeeded", "tone": "ok"},
+      {"path": ["dep", "alarm"], "label": "Traffic shifts 10%, then 100%, while alarms watch errors, latency and guardrail blocks"},
+      {"path": ["alarm", "rb"], "label": "An alarm triggers automatic rollback: the alias stays on v7", "note": "rolled back", "tone": "bad"}
+    ]
+  },
+  "appsync-subscription": {
+    "title": "AppSync subscriptions deliver a slow AI answer piece by piece",
+    "grid": [4, 2],
+    "nodes": [
+      {"id": "client", "at": [0, 0.5], "label": "Client", "sub": "web · mobile", "kind": "client"},
+      {"id": "as", "at": [1, 0.5], "label": "AppSync API", "sub": "GraphQL", "kind": "network"},
+      {"id": "lam", "at": [2, 0.5], "label": "Lambda", "sub": "Event mode", "kind": "compute"},
+      {"id": "br", "at": [3, 0.5], "label": "Bedrock", "sub": "tokens", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["client", "as"], "label": "1. The client opens a subscription over WebSocket", "packet": "subscribe"},
+      {"path": ["client", "as", "lam"], "label": "2–3. A mutation asks the question and AppSync invokes Lambda asynchronously…", "packet": "mutation"},
+      {"path": ["as", "client"], "label": "4. …and answers at once, so no resolver hits its timeout", "note": "accepted"},
+      {"path": ["lam", "br", "lam"], "label": "5–6. Lambda calls Bedrock and receives the tokens", "packet": "tokens"},
+      {"path": ["lam", "as", "client"], "label": "7–8. Each update is published as a mutation and pushed to every subscriber", "note": "subscription event", "tone": "ok"}
+    ]
+  },
+  "edge-placement": {
+    "title": "Outposts and Wavelength extend a Region; Bedrock stays in it",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "phone", "at": [0, 0], "label": "Mobile device", "sub": "on 5G", "kind": "client"},
+      {"id": "wl", "at": [1, 0], "label": "Wavelength", "sub": "edge API + cache", "kind": "compute"},
+      {"id": "onp", "at": [0, 1], "label": "Local data", "sub": "plant · hospital", "kind": "storage"},
+      {"id": "op", "at": [1, 1], "label": "Outposts", "sub": "retrieval · redaction", "kind": "compute"},
+      {"id": "br", "at": [3, 0.5], "label": "Bedrock models", "sub": "managed", "kind": "ai"},
+      {"id": "gr", "at": [4, 0.5], "label": "Guardrails", "kind": "security"}
+    ],
+    "groups": [
+      {"label": "Carrier 5G", "nodes": ["wl"], "kind": "network"},
+      {"label": "Your data center", "nodes": ["onp", "op"], "kind": "storage"},
+      {"label": "Parent AWS Region", "nodes": ["br", "gr"], "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["phone", "wl"], "label": "Mobile users reach compute inside the carrier's 5G network in very few hops", "note": "ultra-low latency", "tone": "ok"},
+      {"path": ["wl", "br"], "label": "Managed Bedrock models stay in the parent Region; the edge forwards what needs a model"},
+      {"path": ["onp", "op"], "label": "On-premises data is processed on Outposts racks right next to it, for residency"},
+      {"path": ["op", "br"], "label": "Only approved, redacted text crosses the service link to the Region", "note": "approved text only", "tone": "warn"},
+      {"path": ["br", "gr"], "label": "Guardrails apply in the Region as usual", "tone": "ok"}
+    ]
+  },
+  "sns-fanout": {
+    "title": "Fan out with SNS, buffer with SQS, park failures in a DLQ",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "up", "at": [0, 1], "label": "S3 upload", "sub": "event", "kind": "storage"},
+      {"id": "topic", "at": [1, 1], "label": "SNS topic", "sub": "doc-processed", "kind": "integration"},
+      {"id": "q1", "at": [2, 0], "label": "Summary queue", "sub": "filter: pdf", "kind": "integration"},
+      {"id": "q2", "at": [2, 1], "label": "Audit queue", "sub": "filter: any", "kind": "integration"},
+      {"id": "lam", "at": [2, 2], "label": "Urgent alert", "sub": "priority: high", "kind": "compute"},
+      {"id": "w1", "at": [3, 0], "label": "Worker", "sub": "Bedrock summary", "kind": "compute"},
+      {"id": "w2", "at": [3, 1], "label": "Worker", "sub": "audit record", "kind": "compute"},
+      {"id": "dlq", "at": [1, 0], "label": "DLQ", "sub": "maxReceiveCount", "kind": "integration"}
+    ],
+    "steps": [
+      {"path": ["up", "topic"], "label": "One upload event is published once, to an SNS topic", "packet": "event"},
+      {"paths": [["topic", "q1"], ["topic", "q2"], ["topic", "lam"]], "label": "Fan-out: each subscription's filter policy decides who receives it. SNS pushes; it does not buffer"},
+      {"paths": [["q1", "w1"], ["q2", "w2"]], "label": "Queues buffer the work and workers pull at their own pace, so the model never sees the burst", "tone": "ok"},
+      {"path": ["q1", "dlq"], "label": "A message that keeps failing moves to the DLQ after maxReceiveCount: alarm, fix, redrive", "note": "DLQ", "tone": "bad"}
+    ]
+  },
+  "eval-job": {
+    "title": "A Bedrock evaluation job gates the release",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "ds", "at": [0, 1], "label": "Golden dataset", "sub": "JSONL in S3", "kind": "storage"},
+      {"id": "job", "at": [1, 1], "label": "Evaluation job", "sub": "managed job", "kind": "analytics"},
+      {"id": "gen", "at": [2, 1], "label": "Generator", "sub": "Bedrock or BYO", "kind": "ai"},
+      {"id": "prog", "at": [3, 0], "label": "Programmatic", "sub": "accuracy · toxicity", "kind": "analytics"},
+      {"id": "judge", "at": [3, 1], "label": "LLM as judge", "sub": "Builtin.* metrics", "kind": "ai"},
+      {"id": "human", "at": [3, 2], "label": "Human team", "sub": "ratings", "kind": "human"},
+      {"id": "rep", "at": [4, 1], "label": "Report", "sub": "S3 + console", "kind": "monitor"},
+      {"id": "gate", "at": [4, 2], "label": "Release gate", "sub": "CI/CD", "kind": "devtools"}
+    ],
+    "steps": [
+      {"path": ["ds", "job", "gen"], "label": "A golden dataset drives the job; the generator answers every prompt (or you bring your own responses)", "packet": "prompts"},
+      {"paths": [["gen", "prog"], ["gen", "judge"], ["gen", "human"]], "label": "Responses are scored programmatically, by a judge model with a rubric, or by people"},
+      {"paths": [["prog", "rep"], ["judge", "rep"], ["human", "rep"]], "label": "Scores and per-item explanations land in a report"},
+      {"path": ["rep", "gate"], "label": "The release ships only if it beats the baseline, then canaries before full traffic", "note": "pass", "tone": "ok"}
+    ]
+  },
+  "rai-lifecycle": {
+    "title": "Responsible AI is a loop, not a launch checklist",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "risk", "at": [0, 0], "label": "Assess risk", "sub": "use case · harms", "kind": "human"},
+      {"id": "design", "at": [1, 0], "label": "Design controls", "kind": "devtools"},
+      {"id": "test", "at": [2, 0], "label": "Tests", "sub": "pre-release", "kind": "analytics"},
+      {"id": "gate", "at": [3, 0], "label": "Release gate", "kind": "compute"},
+      {"id": "prod", "at": [4, 0], "label": "Production", "kind": "ai"},
+      {"id": "run", "at": [1, 1.8], "label": "Runtime guards", "sub": "Guardrails · HITL", "kind": "security"},
+      {"id": "mon", "at": [4, 1.2], "label": "Monitoring", "sub": "logs · scores", "kind": "monitor"},
+      {"id": "audit", "at": [3, 2.1], "label": "Audit trail", "sub": "CloudTrail · reports", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["risk", "design", "test"], "label": "Assess the risks, design controls, then test fairness, safety and robustness before release"},
+      {"path": ["test", "gate", "prod"], "label": "Pass the gate and ship", "tone": "ok"},
+      {"path": ["design", "run", "prod"], "label": "Runtime controls ship with it: Guardrails, human approval, grounding and citations"},
+      {"path": ["prod", "mon", "audit"], "label": "Monitor logs, alarms and sampled judge scores; keep the evidence for audits"},
+      {"path": ["mon", "test"], "label": "Every new failure becomes a new test case", "note": "regression test", "tone": "warn"}
+    ]
+  },
+  "cw-observability": {
+    "title": "CloudWatch for a GenAI app: metrics, logs, alarms",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "app", "at": [0, 0.5], "label": "App + Bedrock", "kind": "compute"},
+      {"id": "met", "at": [1, 0], "label": "Metrics", "sub": "AWS/Bedrock", "kind": "monitor"},
+      {"id": "logs", "at": [1, 1], "label": "Invocation logs", "sub": "CloudWatch Logs", "kind": "monitor"},
+      {"id": "ins", "at": [2, 1], "label": "Logs Insights", "sub": "+ metric filters", "kind": "analytics"},
+      {"id": "alarm", "at": [2, 0], "label": "Alarm", "sub": "M out of N", "kind": "monitor"},
+      {"id": "sns", "at": [3, 0], "label": "SNS", "kind": "integration"},
+      {"id": "ops", "at": [4, 0], "label": "On-call", "sub": "page · ticket", "kind": "human"},
+      {"id": "dash", "at": [3, 1], "label": "Dashboards", "sub": "GenAI observability", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["app", "met"], "label": "Bedrock publishes metrics automatically: invocations, latency, tokens, throttles", "packet": "InvocationThrottles"},
+      {"path": ["app", "logs"], "label": "Model invocation logging is off by default; turn it on to capture every request and response", "note": "turn it on", "tone": "warn"},
+      {"path": ["logs", "ins", "met"], "label": "Logs Insights queries the logs; metric filters turn log patterns into metrics"},
+      {"path": ["met", "alarm", "sns", "ops"], "label": "An alarm (M out of N datapoints) changes state and notifies on-call", "note": "ALARM", "tone": "bad"},
+      {"path": ["ins", "dash"], "label": "Dashboards chart the metrics and log queries, including the ready-made generative AI observability views", "tone": "ok"}
+    ]
+  },
+  "cloudtrail-pipeline": {
+    "title": "CloudTrail records the call, never the prompt",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "call", "at": [0, 0.5], "label": "API call", "sub": "console · SDK", "kind": "client"},
+      {"id": "ct", "at": [1, 0.5], "label": "CloudTrail", "kind": "monitor"},
+      {"id": "eh", "at": [2, 0], "label": "Event history", "sub": "90 days", "kind": "monitor"},
+      {"id": "trail", "at": [2, 1], "label": "Trail", "sub": "+ data events", "kind": "monitor"},
+      {"id": "eb", "at": [3, 0], "label": "EventBridge", "kind": "integration"},
+      {"id": "act", "at": [4, 0], "label": "Auto-response", "sub": "alert · remediate", "kind": "compute"},
+      {"id": "s3", "at": [3, 1], "label": "S3 log files", "sub": "+ signed digests", "kind": "storage"},
+      {"id": "ath", "at": [4, 1], "label": "Athena · SIEM", "kind": "analytics"}
+    ],
+    "steps": [
+      {"path": ["call", "ct"], "label": "Every API call is recorded: who called Converse, on which model, when, from where. Not the prompt content", "packet": "Converse"},
+      {"path": ["ct", "eh"], "label": "Event history keeps 90 days of management events at no charge"},
+      {"path": ["ct", "trail", "s3", "ath"], "label": "A trail (add data events for agents, KBs, flows) delivers files to S3 with integrity digests for analysis"},
+      {"path": ["trail", "eb", "act"], "label": "Matching events can trigger alerts or automatic responses", "tone": "warn", "note": "alert"}
+    ]
+  },
+  "lake-formation-vending": {
+    "title": "Lake Formation decides which rows and columns a query may see",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "user", "at": [0, 0.5], "label": "User or agent", "sub": "runs SQL", "kind": "client"},
+      {"id": "eng", "at": [1, 0.5], "label": "Query engine", "sub": "Athena · EMR · Glue", "kind": "analytics"},
+      {"id": "cat", "at": [2, 0], "label": "Data Catalog", "sub": "metadata", "kind": "analytics"},
+      {"id": "lf", "at": [2, 1], "label": "Lake Formation", "sub": "grants · filters", "kind": "security"},
+      {"id": "s3", "at": [3, 0.5], "label": "S3 data", "sub": "registered", "kind": "storage"},
+      {"id": "ct", "at": [3, 1.3], "label": "CloudTrail", "sub": "audit", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["user", "eng", "cat"], "label": "1. The engine asks the Data Catalog for the table's metadata", "packet": "SELECT …"},
+      {"path": ["cat", "lf"], "label": "2. Lake Formation checks the caller's grants on databases, tables, columns and rows"},
+      {"path": ["lf", "eng"], "label": "3. Credential vending: the engine gets short-lived access to only the allowed data", "packet": "temp creds"},
+      {"path": ["eng", "s3"], "label": "4. It reads S3 and applies the column, row and cell filters"},
+      {"path": ["s3", "eng", "user"], "label": "The user (or the agent acting for them) sees only what they could query directly", "note": "only permitted rows", "tone": "ok"},
+      {"path": ["lf", "ct"], "label": "Grants and data access are audited in CloudTrail"}
+    ]
+  },
+  "identity-center": {
+    "title": "People federate in; applications assume roles",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "emp", "at": [0, 0], "label": "Employee", "sub": "corporate IdP", "kind": "client"},
+      {"id": "ic", "at": [1, 0], "label": "Identity Center", "sub": "SSO · MFA", "kind": "security"},
+      {"id": "ps", "at": [2, 0], "label": "Permission set", "sub": "least privilege", "kind": "security"},
+      {"id": "role", "at": [3, 0], "label": "Role", "sub": "temporary creds", "kind": "security"},
+      {"id": "br", "at": [4, 0.5], "label": "Bedrock", "sub": "approved models", "kind": "ai"},
+      {"id": "app", "at": [0, 1], "label": "Application", "sub": "Lambda · ECS", "kind": "compute"},
+      {"id": "arole", "at": [1, 1], "label": "Execution role", "sub": "no access keys", "kind": "security"},
+      {"id": "mask", "at": [2, 1], "label": "Mask PII", "sub": "before model + logs", "kind": "security"}
+    ],
+    "steps": [
+      {"path": ["emp", "ic", "ps"], "label": "People sign in once through IAM Identity Center (federated, MFA) and choose a permission set"},
+      {"path": ["ps", "role", "br"], "label": "They receive short-lived role credentials, scoped to the approved models", "note": "temporary", "tone": "ok"},
+      {"path": ["app", "arole", "mask", "br"], "label": "Applications use roles, never stored keys, and mask card numbers and IDs before data reaches a model or a log", "tone": "ok"}
+    ]
+  },
+  "org-governance": {
+    "title": "Control Tower: guardrails for a whole organization",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "mgmt", "at": [0, 1], "label": "Management", "sub": "Organizations · CT", "kind": "security"},
+      {"id": "lz", "at": [1, 1], "label": "Landing zone", "kind": "devtools"},
+      {"id": "af", "at": [1, 2], "label": "Account Factory", "sub": "baseline", "kind": "devtools"},
+      {"id": "ou1", "at": [2, 0], "label": "Security OU", "kind": "security"},
+      {"id": "ou2", "at": [2, 1], "label": "Workloads OU", "sub": "GenAI", "kind": "security"},
+      {"id": "ou3", "at": [2, 2], "label": "Sandbox OU", "kind": "security"},
+      {"id": "a1", "at": [3, 0.6], "label": "genai-app-prod", "sub": "account", "kind": "compute"},
+      {"id": "a2", "at": [3, 1.5], "label": "genai-data", "sub": "account", "kind": "storage"},
+      {"id": "log", "at": [4, 1], "label": "Log archive", "sub": "central", "kind": "storage"}
+    ],
+    "steps": [
+      {"path": ["mgmt", "lz"], "label": "Control Tower builds a multi-account landing zone on AWS Organizations"},
+      {"paths": [["lz", "ou1"], ["lz", "ou2"], ["lz", "ou3"]], "label": "Accounts are grouped into organizational units"},
+      {"paths": [["ou2", "a1"], ["ou2", "a2"]], "label": "SCPs and controls on the GenAI OU apply to every account in it, e.g. Bedrock only in two Regions. SCPs never grant", "note": "SCP: deny other Regions", "tone": "warn"},
+      {"path": ["af", "ou2"], "label": "Account Factory vends new accounts with the baseline already applied"},
+      {"paths": [["a1", "log"], ["a2", "log"]], "label": "Logs flow to a central archive; an organization-enforced guardrail covers every model call", "tone": "ok"}
+    ]
+  },
+  "envelope-encryption": {
+    "title": "Envelope encryption with AWS KMS",
+    "grid": [4, 2],
+    "nodes": [
+      {"id": "app", "at": [0, 0.5], "label": "Application", "sub": "or AWS service", "kind": "compute"},
+      {"id": "kms", "at": [2, 0], "label": "AWS KMS", "sub": "key never leaves", "kind": "security"},
+      {"id": "data", "at": [2, 1], "label": "Encrypted data", "sub": "+ encrypted key", "kind": "storage"},
+      {"id": "ct", "at": [3, 0], "label": "CloudTrail", "sub": "every KMS call", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["app", "kms"], "label": "1. GenerateDataKey: ask KMS for a fresh data key", "packet": "GenerateDataKey"},
+      {"path": ["kms", "app"], "label": "2. KMS returns it twice: in plaintext, and encrypted under the KMS key", "packet": "plain + sealed"},
+      {"path": ["app", "data"], "label": "3. Encrypt locally with the plaintext key, discard it, store the sealed key beside the data", "note": "plaintext key discarded", "tone": "ok"},
+      {"path": ["data", "app", "kms"], "label": "4. Later: send the sealed data key back to KMS", "packet": "Decrypt"},
+      {"path": ["kms", "app"], "label": "5. KMS checks the key policy, IAM and grants, then returns the plaintext key", "note": "key policy + IAM", "tone": "ok"},
+      {"path": ["kms", "ct"], "label": "Every KMS call is logged in CloudTrail; rotation creates new key material but does not re-encrypt old data"}
+    ]
+  },
+  "cognito-waf": {
+    "title": "Cognito knows who the user is; WAF stops what they send",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "user", "at": [0, 1], "label": "User", "kind": "client"},
+      {"id": "up", "at": [1, 0], "label": "User pool", "sub": "sign-in · MFA", "kind": "security"},
+      {"id": "ip", "at": [1, 2], "label": "Identity pool", "sub": "AWS credentials", "kind": "security"},
+      {"id": "waf", "at": [2, 1], "label": "AWS WAF", "sub": "web ACL", "kind": "security"},
+      {"id": "s3", "at": [2, 2], "label": "S3 prefix", "sub": "one per user", "kind": "storage"},
+      {"id": "api", "at": [3, 1], "label": "API Gateway", "sub": "checks JWT", "kind": "network"},
+      {"id": "lam", "at": [4, 1], "label": "Lambda", "sub": "calls Bedrock", "kind": "compute"}
+    ],
+    "steps": [
+      {"path": ["user", "up", "user"], "label": "Sign in to the user pool and receive ID and access tokens (JWTs)", "note": "JWT"},
+      {"path": ["user", "waf", "api"], "label": "HTTPS with the access token: WAF screens it first (rate-based rules, managed rules, bots)"},
+      {"path": ["api", "lam"], "label": "API Gateway's Cognito authorizer validates the token; only then is a model called", "tone": "ok"},
+      {"path": ["user", "waf"], "label": "A flood from one IP passes the rate-based rule's limit and is blocked", "note": "403 · rate limit", "tone": "bad"},
+      {"path": ["user", "ip", "s3"], "label": "Optionally an identity pool trades the ID token for scoped AWS credentials, e.g. one S3 prefix per user"}
+    ]
+  },
+  "private-bedrock": {
+    "title": "Calling Bedrock without touching the internet",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "lam", "at": [0, 1], "label": "Lambda", "sub": "private subnet", "kind": "compute"},
+      {"id": "ve1", "at": [1, 0], "label": "VPC endpoint", "sub": "bedrock-runtime", "kind": "network"},
+      {"id": "ve2", "at": [1, 1], "label": "VPC endpoints", "sub": "kms · logs · secrets", "kind": "network"},
+      {"id": "ge", "at": [1, 2], "label": "S3 gateway", "sub": "endpoint route", "kind": "network"},
+      {"id": "br", "at": [3, 0], "label": "Bedrock", "kind": "ai"},
+      {"id": "oth", "at": [3, 1], "label": "KMS · Secrets", "sub": "CloudWatch Logs", "kind": "security"},
+      {"id": "s3", "at": [3, 2], "label": "Amazon S3", "kind": "storage"}
+    ],
+    "groups": [
+      {"label": "Private subnets · no internet gateway", "nodes": ["lam", "ve1", "ve2", "ge"], "kind": "network"}
+    ],
+    "steps": [
+      {"path": ["lam", "ve1", "br"], "label": "Private DNS resolves bedrock-runtime to the interface endpoint's private IP; traffic rides PrivateLink", "note": "no internet", "tone": "ok"},
+      {"path": ["lam", "ve2", "oth"], "label": "KMS, Secrets Manager and CloudWatch Logs need interface endpoints too"},
+      {"path": ["lam", "ge", "s3"], "label": "S3 (and DynamoDB) use free gateway endpoints, a route-table entry. Bedrock has no gateway endpoint"},
+      {"path": ["ve1", "br"], "label": "An endpoint policy can restrict which models may be invoked through the endpoint", "note": "endpoint policy", "tone": "warn"}
+    ]
+  },
+  "kinesis-kb-fresh": {
+    "title": "Streams keep a knowledge base fresh and feed analytics",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "app", "at": [0, 0.5], "label": "Apps", "sub": "PutRecords + key", "kind": "client"},
+      {"id": "kds", "at": [1, 0.5], "label": "Kinesis stream", "sub": "shards", "kind": "analytics"},
+      {"id": "lam", "at": [2, 0], "label": "Lambda", "sub": "source mapping", "kind": "compute"},
+      {"id": "kb", "at": [3, 0], "label": "Knowledge base", "sub": "direct ingestion", "kind": "ai"},
+      {"id": "flink", "at": [2, 1], "label": "Flink", "sub": "enhanced fan-out", "kind": "analytics"},
+      {"id": "s3", "at": [3, 1], "label": "S3 analytics", "kind": "storage"},
+      {"id": "ath", "at": [4, 1], "label": "Athena", "kind": "analytics"},
+      {"id": "qs", "at": [4, 0], "label": "Quick Sight", "sub": "dashboard", "kind": "analytics"}
+    ],
+    "steps": [
+      {"path": ["app", "kds"], "label": "Producers write records with a partition key; the key decides the shard", "packet": "ticket-123"},
+      {"path": ["kds", "lam", "kb"], "label": "A Lambda consumer calls IngestKnowledgeBaseDocuments, so new tickets are searchable within minutes", "tone": "ok"},
+      {"path": ["kds", "flink", "s3"], "label": "Enhanced fan-out gives Flink its own 2 MB/s per shard to write analytics to S3"},
+      {"path": ["s3", "ath", "qs"], "label": "Athena queries S3 in place; Quick Sight draws the dashboard", "tone": "ok"}
+    ]
+  },
+  "contact-center": {
+    "title": "A contact-center assistant: Connect, Lex and Bedrock",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "caller", "at": [0, 1], "label": "Caller", "kind": "client"},
+      {"id": "cn", "at": [1, 1], "label": "Connect flow", "sub": "Connect Customer", "kind": "integration"},
+      {"id": "lex", "at": [2, 1], "label": "Lex bot", "sub": "intents · slots", "kind": "ai"},
+      {"id": "lam", "at": [3, 0], "label": "Lambda", "sub": "fulfillment", "kind": "compute"},
+      {"id": "api", "at": [4, 0], "label": "Order API", "kind": "external"},
+      {"id": "qa", "at": [3, 1], "label": "QnAIntent", "sub": "no intent matched", "kind": "ai"},
+      {"id": "kb", "at": [4, 1], "label": "Knowledge base", "sub": "+ guarded FM", "kind": "db"},
+      {"id": "agent", "at": [3, 2], "label": "Human agent", "sub": "queue", "kind": "human"}
+    ],
+    "steps": [
+      {"path": ["caller", "cn", "lex"], "label": "A call enters a Connect flow and reaches the Lex bot", "packet": "speech"},
+      {"path": ["lex", "lam", "api"], "label": "“Where is order 123?” matches an intent and Lambda fulfills it", "tone": "ok"},
+      {"path": ["lex", "qa", "kb"], "label": "Nothing matches: AMAZON.QnAIntent answers from a knowledge base with a guarded model"},
+      {"path": ["lex", "agent"], "label": "Still stuck: escalate to a human agent", "tone": "warn", "note": "escalate"}
+    ]
+  },
+  "semantic-cache-graphrag": {
+    "title": "Semantic cache first, GraphRAG when it misses",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "q", "at": [0, 0], "label": "User question", "kind": "client"},
+      {"id": "emb", "at": [1, 0], "label": "Embed", "sub": "Bedrock", "kind": "ai"},
+      {"id": "vc", "at": [2, 0], "label": "Valkey cache", "sub": "ElastiCache vectors", "kind": "db"},
+      {"id": "ans", "at": [2, 1], "label": "Cached answer", "sub": "milliseconds", "kind": "client"},
+      {"id": "kb", "at": [3, 0], "label": "Knowledge base", "sub": "GraphRAG", "kind": "ai"},
+      {"id": "na", "at": [4, 0], "label": "Neptune", "sub": "Analytics graph", "kind": "db"},
+      {"id": "fm", "at": [4, 1], "label": "Bedrock model", "sub": "+ Guardrails", "kind": "ai"},
+      {"id": "store", "at": [3, 1], "label": "Store answer", "sub": "with a TTL", "kind": "db"}
+    ],
+    "steps": [
+      {"path": ["q", "emb", "vc"], "label": "Embed the question and look it up in the semantic cache", "packet": "vector"},
+      {"path": ["vc", "ans"], "label": "Similarity at or above the tuned threshold: return the stored answer", "note": "HIT", "tone": "ok"},
+      {"path": ["vc", "kb", "na"], "label": "A miss goes to GraphRAG: retrieve chunks, then expand along graph relationships", "note": "miss", "tone": "warn"},
+      {"path": ["na", "fm"], "label": "The multi-hop context goes to the model"},
+      {"path": ["fm", "store", "vc"], "label": "The answer is stored with a TTL for the next similar question", "note": "TTL", "tone": "ok"}
+    ]
+  },
+  "cdk-deploy": {
+    "title": "Infrastructure as code for a GenAI stack",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "dev", "at": [0, 0], "label": "Developer", "kind": "client"},
+      {"id": "tpl", "at": [1, 0], "label": "Template", "sub": "cdk synth", "kind": "devtools"},
+      {"id": "cs", "at": [2, 0], "label": "Change set", "sub": "review", "kind": "devtools"},
+      {"id": "st", "at": [3, 0], "label": "Stack", "sub": "CloudFormation", "kind": "devtools"},
+      {"id": "res", "at": [4, 0], "label": "Resources", "sub": "guardrail · KB", "kind": "ai"},
+      {"id": "cb", "at": [1, 1], "label": "CodeBuild", "kind": "devtools"},
+      {"id": "ca", "at": [2, 1], "label": "CodeArtifact", "sub": "private repo", "kind": "devtools"},
+      {"id": "pub", "at": [3, 1], "label": "Public registry", "sub": "external connection", "kind": "external"},
+      {"id": "drift", "at": [4, 1], "label": "Drift report", "kind": "monitor"}
+    ],
+    "steps": [
+      {"path": ["dev", "tpl", "cs"], "label": "cdk synth turns code into a CloudFormation template; a change set previews the change (it does not check permissions or quotas)"},
+      {"path": ["cs", "st", "res"], "label": "Execute: the stack creates the guardrail, knowledge base, Lambda functions and roles", "tone": "ok"},
+      {"path": ["cb", "ca", "pub"], "label": "Builds log in to CodeArtifact, which fetches approved public packages on demand", "packet": "pip install"},
+      {"path": ["st", "drift"], "label": "Drift detection finds changes someone made by hand in the console", "tone": "warn", "note": "drifted"}
+    ]
+  },
+  "doc-human-review": {
+    "title": "Machines extract; people review what machines are unsure of",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "scan", "at": [0, 0.5], "label": "Scan or photo", "sub": "in S3", "kind": "storage"},
+      {"id": "tx", "at": [1, 0], "label": "Textract", "sub": "forms · tables", "kind": "ai"},
+      {"id": "rk", "at": [1, 1], "label": "Rekognition", "sub": "moderation", "kind": "ai"},
+      {"id": "chk", "at": [2, 0.5], "label": "Confidence gate", "sub": "≥ threshold?", "kind": "compute"},
+      {"id": "fm", "at": [3, 0], "label": "Bedrock", "sub": "or database load", "kind": "ai"},
+      {"id": "hr", "at": [3, 1], "label": "Human review", "sub": "A2I or own queue", "kind": "human"},
+      {"id": "out", "at": [4, 0.5], "label": "Result", "sub": "structured", "kind": "db"}
+    ],
+    "steps": [
+      {"paths": [["scan", "tx"], ["scan", "rk"]], "label": "Textract reads text, forms and tables; Rekognition checks images for unsafe content"},
+      {"paths": [["tx", "chk"], ["rk", "chk"]], "label": "Every extraction carries a confidence score"},
+      {"path": ["chk", "fm", "out"], "label": "High confidence goes straight through", "tone": "ok"},
+      {"path": ["chk", "hr", "fm"], "label": "Low confidence goes to a person first (A2I is closed to new customers; your own queue works too)", "note": "review", "tone": "warn"}
+    ]
+  },
+  "autoscaling-loop": {
+    "title": "Scale on the right metric; alert on strange spend",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "cw", "at": [0, 0], "label": "Metric", "sub": "per-instance load", "kind": "monitor"},
+      {"id": "al", "at": [1, 0], "label": "Managed alarms", "sub": "don't edit them", "kind": "monitor"},
+      {"id": "pol", "at": [2, 0], "label": "Target tracking", "sub": "policy", "kind": "compute"},
+      {"id": "tgt", "at": [3, 0], "label": "Scalable target", "sub": "SageMaker variant", "kind": "ai"},
+      {"id": "ops", "at": [3, 1], "label": "On-call", "kind": "human"},
+      {"id": "bill", "at": [0, 1], "label": "Billing data", "kind": "analytics"},
+      {"id": "ce", "at": [1, 1], "label": "Cost Explorer", "kind": "analytics"},
+      {"id": "cad", "at": [2, 1], "label": "Cost anomalies", "sub": "detection", "kind": "analytics"},
+      {"id": "sch", "at": [4, 1], "label": "Schedule", "sub": "known peaks", "kind": "compute"}
+    ],
+    "steps": [
+      {"path": ["cw", "al", "pol", "tgt"], "label": "Target tracking keeps a metric near its target by adding or removing capacity", "note": "+2 instances", "tone": "ok"},
+      {"path": ["sch", "tgt"], "label": "Scheduled actions pre-scale for peaks you know about"},
+      {"path": ["bill", "ce", "cad", "ops"], "label": "Cost Anomaly Detection spots an agent stuck in a loop and alerts the team (alerts never cap spend)", "note": "anomaly", "tone": "warn"}
+    ]
+  },
+  "ingest-to-kb": {
+    "title": "Getting documents into S3, and from S3 into the knowledge base",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "onp", "at": [0, 0], "label": "File share", "sub": "NFS · SMB", "kind": "storage"},
+      {"id": "ds", "at": [1, 0], "label": "DataSync", "sub": "agent · TLS", "kind": "integration"},
+      {"id": "partner", "at": [0, 1], "label": "Partner", "sub": "SFTP client", "kind": "external"},
+      {"id": "tf", "at": [1, 1], "label": "Transfer Family", "sub": "SFTP server", "kind": "integration"},
+      {"id": "s3", "at": [2, 0.5], "label": "S3 documents", "kind": "storage"},
+      {"id": "ev", "at": [3, 0.5], "label": "S3 event", "sub": "EventBridge", "kind": "integration"},
+      {"id": "lam", "at": [4, 0], "label": "Lambda", "sub": "StartIngestionJob", "kind": "compute"},
+      {"id": "kb", "at": [4, 1], "label": "Knowledge base", "kind": "ai"}
+    ],
+    "steps": [
+      {"path": ["onp", "ds", "s3"], "label": "DataSync copies the file share to S3 over TLS and verifies every file", "packet": "bulk copy"},
+      {"path": ["partner", "tf", "s3"], "label": "Partners upload over SFTP; Transfer Family lands files in S3, restricted to their home directory", "packet": "SFTP"},
+      {"path": ["s3", "ev", "lam", "kb"], "label": "Each new object triggers an ingestion job, so the knowledge base stays current", "tone": "ok", "note": "synced"}
+    ]
+  },
+  "global-delivery": {
+    "title": "Global delivery for a streaming chat API",
+    "grid": [5, 2],
+    "nodes": [
+      {"id": "user", "at": [0, 0], "label": "User", "kind": "client"},
+      {"id": "r53", "at": [1, 0], "label": "Route 53", "sub": "latency · failover", "kind": "network"},
+      {"id": "cf", "at": [2, 0], "label": "CloudFront", "sub": "+ WAF", "kind": "network"},
+      {"id": "alb", "at": [3, 0], "label": "ALB", "sub": "60 s idle timeout", "kind": "network"},
+      {"id": "ecs", "at": [4, 0], "label": "ECS chat API", "kind": "compute"},
+      {"id": "br", "at": [4, 1], "label": "Bedrock", "sub": "stream response", "kind": "ai"},
+      {"id": "partner", "at": [0, 1], "label": "Partner app", "sub": "allow-listed IPs", "kind": "client"},
+      {"id": "ga", "at": [1, 1], "label": "Accelerator", "sub": "2 anycast IPs", "kind": "network"},
+      {"id": "alb2", "at": [3, 1], "label": "ALB", "sub": "Region A or B", "kind": "network"}
+    ],
+    "edges": [["cf", "user", {"bend": -72}]],
+    "steps": [
+      {"path": ["user", "r53", "cf"], "label": "DNS (a latency or failover record) points users at CloudFront"},
+      {"path": ["cf", "user"], "label": "Static assets come straight from the edge cache (GET and HEAD only)", "note": "cache hit", "tone": "ok"},
+      {"path": ["cf", "alb", "ecs", "br"], "label": "API calls go to the origin: ALB, then ECS, then InvokeModelWithResponseStream"},
+      {"path": ["br", "ecs", "alb", "cf", "user"], "label": "Tokens stream back. Every hop's timeout must outlast the model's longest pause", "note": "504 if a timeout is shorter", "tone": "warn"},
+      {"path": ["partner", "ga", "alb2"], "label": "Partners that allow-list IPs use Global Accelerator's two static anycast addresses", "tone": "ok"}
+    ]
+  },
+  "ebs-efs": {
+    "title": "EBS is one server's disk; EFS is everyone's folder",
+    "grid": [5, 3],
+    "nodes": [
+      {"id": "v1", "at": [0, 0], "label": "EBS gp3", "sub": "AZ 1 volume", "kind": "storage"},
+      {"id": "i1", "at": [1, 0], "label": "GPU instance 1", "sub": "AZ 1", "kind": "compute"},
+      {"id": "snap", "at": [0, 1], "label": "Snapshots", "sub": "Regional", "kind": "storage"},
+      {"id": "v2", "at": [0, 2], "label": "EBS gp3", "sub": "AZ 2 volume", "kind": "storage"},
+      {"id": "i2", "at": [1, 2], "label": "GPU instance 2", "sub": "AZ 2", "kind": "compute"},
+      {"id": "efs", "at": [3, 1], "label": "Amazon EFS", "sub": "Regional · shared", "kind": "storage"},
+      {"id": "lam", "at": [4, 1], "label": "Lambda", "sub": "mounts EFS", "kind": "compute"}
+    ],
+    "steps": [
+      {"paths": [["i1", "v1"], ["i2", "v2"]], "label": "EBS: block storage attached to one instance in one Availability Zone, fast and private", "packet": "block I/O"},
+      {"paths": [["i1", "efs"], ["i2", "efs"], ["lam", "efs"]], "label": "EFS: one Regional file system mounted over NFS by many instances, containers and Lambda", "tone": "ok", "note": "shared tools + configs"},
+      {"path": ["v1", "snap", "v2"], "label": "EBS snapshots are never automatic (use DLM or AWS Backup) and restore into any AZ", "note": "restore in AZ 2", "tone": "warn"}
+    ]
+  }
+}

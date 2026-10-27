@@ -4,14 +4,12 @@ import {
   ArrowLeft, Timer,
 } from "lucide-react";
 import { questionsNeededToPass, formatDuration } from "./scoring";
-import {
-  MLA_PASSING_SCORE, MLA_SCORE_MAX, MLA_SCORE_MIN,
-} from "../../../data/mlaPracticeExams";
+import { MLA_EXAM_CONFIG } from "./examConfig";
 
 /* The score report for a finished attempt.
  *
- * The headline is the AWS-scale score against the 720 pass mark, because that
- * is the number the real result letter carries. Underneath it, the raw count
+ * The headline is the AWS-scale score against the bank's pass mark, because
+ * that is the number the real result letter carries. Underneath it, the raw count
  * and the per-domain split, which are the parts that actually tell a learner
  * what to go back and study.
  */
@@ -20,15 +18,16 @@ const DIAL_CIRCUMFERENCE = 2 * Math.PI * 78;
 
 export default function MlaExamResults({
   exam, result, mode, elapsedSeconds, autoSubmitted, onReview, onRetake, onExit, themeToggle = null,
+  config = MLA_EXAM_CONFIG,
 }) {
   const { score, passed, correctCount, incorrectCount, skippedCount, total, percent, domainBreakdown } = result;
 
   // The dial fills across the reported range, not from zero — a 100 is the
   // floor of the scale, so drawing it as "10% of the way there" would be wrong.
-  const span = MLA_SCORE_MAX - MLA_SCORE_MIN;
-  const filled = Math.max(0, Math.min(1, (score - MLA_SCORE_MIN) / span));
-  const passMarkAngle = ((MLA_PASSING_SCORE - MLA_SCORE_MIN) / span) * 360;
-  const needed = questionsNeededToPass(total);
+  const span = config.scoreMax - config.scoreMin;
+  const filled = Math.max(0, Math.min(1, (score - config.scoreMin) / span));
+  const passMarkAngle = ((config.passingScore - config.scoreMin) / span) * 360;
+  const needed = questionsNeededToPass(total, config);
 
   return (
     <div className="mla-results">
@@ -53,7 +52,7 @@ export default function MlaExamResults({
                   strokeDasharray={`${filled * DIAL_CIRCUMFERENCE} ${DIAL_CIRCUMFERENCE}`}
                 />
               )}
-              {/* The 720 tick, so the score reads against the bar it had to clear. */}
+              {/* The pass-mark tick, so the score reads against the bar it had to clear. */}
               <line
                 className="mla-dial-mark"
                 x1="88" y1="4" x2="88" y2="20"
@@ -62,7 +61,7 @@ export default function MlaExamResults({
             </svg>
             <div className="mla-dial-value">
               <strong>{score}</strong>
-              <small>of {MLA_SCORE_MAX}</small>
+              <small>of {config.scoreMax}</small>
             </div>
           </div>
 
@@ -73,8 +72,8 @@ export default function MlaExamResults({
             <h2>{exam.label || exam.title}</h2>
             <p>
               {passed
-                ? `You scored ${score}, clearing the ${MLA_PASSING_SCORE} pass mark with ${correctCount} of ${total} correct.`
-                : `You scored ${score}. The pass mark is ${MLA_PASSING_SCORE} — about ${needed} of ${total} questions right, and you had ${correctCount}.`}
+                ? `You scored ${score}, clearing the ${config.passingScore} pass mark with ${correctCount} of ${total} correct.`
+                : `You scored ${score}. The pass mark is ${config.passingScore} — about ${needed} of ${total} questions right, and you had ${correctCount}.`}
             </p>
             {autoSubmitted && (
               <p className="mla-verdict-note">
@@ -113,8 +112,8 @@ export default function MlaExamResults({
         <section className="mla-domains">
           <h3>By exam domain</h3>
           <p className="mla-domains-hint">
-            The domain a question belongs to on the MLA-C01 blueprint. Whichever bar is shortest is
-            where the next study session belongs.
+            The domain a question belongs to on the {config.certification.code} blueprint. Whichever
+            bar is shortest is where the next study session belongs.
           </p>
           {domainBreakdown.map((domain) => (
             <div key={domain.name} className="mla-domain">

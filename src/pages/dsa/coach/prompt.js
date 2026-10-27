@@ -269,6 +269,17 @@ export const VISUAL_COURSE = {
   ],
 };
 
+export const AIP_COURSE = {
+  description: "the AWS Certified Generative AI Developer – Professional (AIP-C01) study guide: Amazon Bedrock, retrieval, agents, security, operations and evaluation on AWS",
+  groupLabel: "Module",
+  notes: [
+    "Every lesson follows one template: simple explanation, analogy, the seven questions, technical depth, a worked example, checkpoints, exam-style questions, a hands-on lab, what can go wrong, misconceptions, exam notes and revision cards. Point the learner to the section that answers their question.",
+    "Facts marked ✅ were checked against official AWS pages on the lesson's verified date. Prices, quotas, model IDs and Region lists change: tell the learner to confirm them on the AWS page instead of quoting numbers from memory.",
+    "Runnable labs are offline Python simulations (standard library only); code that calls AWS in a lesson was not run against AWS.",
+    "The exam has 65 scored questions over five domains (31/26/20/12/11%), scaled 100–1,000 with 750 to pass. Teach the scenario keywords and elimination tricks the lesson's exam notes give, and never reveal the answers to the lesson's own quiz.",
+  ],
+};
+
 /**
  * The tutor's prompt for a course lesson. `lesson` is the index entry (title,
  * blurb, type, langs, prereq, time); `phase` the group it sits in; `course`

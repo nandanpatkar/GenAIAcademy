@@ -5,14 +5,14 @@ import {
   Square, CheckSquare, SkipForward, Eye, ChevronDown,
 } from "lucide-react";
 import { isCorrect, formatClock } from "./scoring";
-import { MLA_PASSING_SCORE, MLA_SCORE_MAX } from "../../../data/mlaPracticeExams";
+import { MLA_EXAM_CONFIG } from "./examConfig";
 
 /* The question runner, in three modes.
  *
  *   practice — no clock, and each question can be checked in place, which
  *              reveals the right answer and the full explanation.
- *   exam     — a 210-minute countdown, no way to see an answer, and one
- *              submit at the end.
+ *   exam     — a countdown (config.minutes), no way to see an answer, and
+ *              one submit at the end.
  *   review   — a finished attempt, read-only, every explanation open.
  *
  * The three share this component because they are the same screen with
@@ -47,6 +47,7 @@ export default function MlaExamRunner({
   onFinish,
   onExit,
   themeToggle = null,
+  config = MLA_EXAM_CONFIG,
 }) {
   const isReview = mode === "review";
   const isExam = mode === "exam";
@@ -379,7 +380,7 @@ export default function MlaExamRunner({
             {showModeInfo && (
               <div className="mla-mode-info">
                 {isExam
-                  ? `A full ${questions.length}-question paper on a 210-minute clock. Answers stay hidden until you finish; the score is reported on the AWS scale of ${MLA_SCORE_MAX}, with ${MLA_PASSING_SCORE} to pass.`
+                  ? `A full ${questions.length}-question paper on a ${config.minutes}-minute clock. Answers stay hidden until you finish; the score is reported on the AWS scale of ${config.scoreMax}, with ${config.passingScore} to pass.`
                   : isReview
                     ? "Your finished attempt, with every explanation open. Nothing here changes the result."
                     : "No clock. Check any answer as you go to see whether you were right and read the full explanation."}

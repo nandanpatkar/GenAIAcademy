@@ -1,11 +1,15 @@
 /**
- * mlaExamProgressService.js — attempt persistence for the MLA-C01 practice exams.
+ * mlaExamProgressService.js — attempt persistence for the AWS practice exams.
  *
  * Signed-in learners get one row per attempt in `mla_exam_attempts`
  * (supabase/migrations/20260821_mla_practice_attempts.sql), so an exam paused on
  * one device resumes on another with the clock where they left it. Signed-out
  * learners get the same shape in localStorage, which keeps the runner itself
  * ignorant of which of the two it is talking to.
+ *
+ * The table started with MLA-C01 and now also holds the AIP-C01 papers; a row
+ * names its paper by slug, so the list readers take the bank's slugs and
+ * return only that bank's attempts.
  *
  * Every read returns the same attempt object; every write is best-effort and
  * resolves to null on failure rather than throwing, because losing a
@@ -92,8 +96,11 @@ export const loadActiveAttempt = async (userId, examSlug, mode) => {
   return data?.length ? fromRow(data[0]) : null;
 };
 
+/** Keep only the attempts at papers in `examSlugs` (all of them when omitted). */
+const inBank = (examSlugs) => (attempt) => !examSlugs || examSlugs.includes(attempt.examSlug);
+
 /** Every unfinished attempt, so the landing screen can mark resumable tests. */
-export const loadActiveAttempts = async (userId) => {
+export const loadActiveAttempts = async (userId, examSlugs = null) => {
   if (!userId) {
     const attempts = [];
     try {
@@ -107,15 +114,16 @@ export const loadActiveAttempts = async (userId) => {
     } catch {
       /* ignore — an unreadable store just means nothing to resume */
     }
-    return attempts;
+    return attempts.filter(inBank(examSlugs));
   }
 
-  const { data, error } = await supabase
+  let query = supabase
     .from('mla_exam_attempts')
     .select('*')
     .eq('user_id', userId)
-    .eq('status', 'in_progress')
-    .order('updated_at', { ascending: false });
+    .eq('status', 'in_progress');
+  if (examSlugs) query = query.in('exam_slug', examSlugs);
+  const { data, error } = await query.order('updated_at', { ascending: false });
 
   if (error) {
     console.warn('[mla] could not load attempts:', error.message);
@@ -125,14 +133,16 @@ export const loadActiveAttempts = async (userId) => {
 };
 
 /** Finished attempts, newest first — the score history under each test. */
-export const loadCompletedAttempts = async (userId, limit = 40) => {
-  if (!userId) return readLocal(LS_HISTORY) || [];
+export const loadCompletedAttempts = async (userId, limit = 40, examSlugs = null) => {
+  if (!userId) return (readLocal(LS_HISTORY) || []).filter(inBank(examSlugs));
 
-  const { data, error } = await supabase
+  let query = supabase
     .from('mla_exam_attempts')
     .select('*')
     .eq('user_id', userId)
-    .eq('status', 'completed')
+    .eq('status', 'completed');
+  if (examSlugs) query = query.in('exam_slug', examSlugs);
+  const { data, error } = await query
     .order('completed_at', { ascending: false })
     .limit(limit);
 
@@ -230,8 +240,9 @@ export const completeAttempt = async (userId, attempt, result) => {
 
   if (!userId || !attempt?.id) {
     writeLocal(localKey(attempt.examSlug, attempt.mode), null);
+    // One list serves every bank, so it keeps enough for each to show its own.
     const history = readLocal(LS_HISTORY) || [];
-    writeLocal(LS_HISTORY, [finished, ...history].slice(0, 40));
+    writeLocal(LS_HISTORY, [finished, ...history].slice(0, 80));
     return finished;
   }
 

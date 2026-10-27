@@ -95,7 +95,7 @@ export function AskAiChip({ selection, onAsk }) {
 
 export default function LessonCoach({
   lesson, phase, markdown, onOpenLesson, open, onClose, request, isDark = true,
-  lessons = LESSONS, noteType = "aifs", course, codeFolder, intro,
+  lessons = LESSONS, noteType = "aifs", course, codeFolder, intro, bundleBase,
 }) {
   const [width, setWidth] = useState(readWidth);
   const [, setBundleReady] = useState(0);
@@ -107,9 +107,9 @@ export default function LessonCoach({
   useEffect(() => {
     if (!open || !slug || !(lesson.code || lesson.artifacts || lesson.quiz)) return undefined;
     let alive = true;
-    loadLessonBundle(slug).then(() => { if (alive) setBundleReady((value) => value + 1); }).catch(() => {});
+    loadLessonBundle(slug, bundleBase).then(() => { if (alive) setBundleReady((value) => value + 1); }).catch(() => {});
     return () => { alive = false; };
-  }, [open, slug, lesson]);
+  }, [open, slug, lesson, bundleBase]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -126,8 +126,9 @@ export default function LessonCoach({
     () => createLessonAdapter({
       lesson, phase, getMarkdown: () => markdownRef.current, lessons, openLesson: onOpenLesson, isDark,
       noteType, ...(course && { course }), ...(codeFolder && { codeFolder }), ...(intro && { intro }),
+      ...(bundleBase && { bundleBase }),
     }),
-    [lesson, phase, onOpenLesson, isDark, lessons, noteType, course, codeFolder, intro],
+    [lesson, phase, onOpenLesson, isDark, lessons, noteType, course, codeFolder, intro, bundleBase],
   );
 
   // "Save as note" appends the answer to this lesson's note (the same note
